@@ -1,0 +1,29 @@
+.TransactionAppTabs-list {
+    display: flex !important;
+    flex-direction: row !important;
+    background-color: white;
+    align-items: center;
+    height: 49px;
+}
+
+.TransactionAppTabs-list li {
+    font-weight: 400;
+    font-size: 15px;
+    list-style: none;
+    padding: 5px 5px;
+    cursor: pointer;
+    margin: 0px 7px;
+    border-top: none !important;
+    border-radius: 5%;
+    color: black;
+}
+
+.TransactionAppTabs-list li:hover {
+    background-color: rgba(167, 165, 162, 0.137);
+}
+
+.TransactionAppTabs-content {
+    padding: 15px;
+    /* border: 1px solid black; */
+}
+

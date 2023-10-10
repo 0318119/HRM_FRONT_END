@@ -1,0 +1,156 @@
+.TaSalaryFormHead {
+    background-color: white;
+    font-weight: 700;
+    padding: 5px;
+    color: white;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    background-color: #014f86;
+}
+
+.TaSalaryFormContainer {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    margin-top: 65px !important;
+    overflow: clip !important;
+}
+
+@media screen and (max-width:992px) {
+    .TaSalaryFormContainer{
+        margin-top: 7px !important;
+    }
+}
+
+.TaSalaryFromHeading {
+    /* color: #ffffff; */
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+    padding: 5px 0px;
+    letter-spacing: 1px;
+}
+
+.TaSalaryFormgroup label {
+    color: black;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+
+}
+
+.TaSalaryFormgroup input {
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid darkgray;
+    color: gray;
+}
+
+.TaSalaryFormgroup input:focus {
+    outline: none;
+
+}
+
+.TaSalaryFormgroupSb label {
+    background-color: white;
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 500;
+    padding: 2px;
+
+}
+
+.TaSalaryFormgroupSb span {
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 500;
+    padding: 2px;
+}
+
+.TaSalaryHeaderText span {
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px;
+}
+
+.salarybtncontainer {
+    border-top: 1px solid darkgray;
+    padding: 5px;
+}
+
+
+.TaSalaryFifthLine {
+    border-top: 1px solid darkgray;
+    margin-top: 4px;
+}
+
+.TaSalaryFirstLine {
+    margin-top: 4px;
+    background-color: white;
+}
+
+@media screen and (max-width:768px) {
+    
+}
+
+.TaSalaryFormChildHeader {}
+
+.TaSalaryFormChildHeader span {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    background: white;
+    padding: 5px;
+}
+
+.TaSalaryFormChildHeaderData span {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.63);
+    padding: 5px;
+
+}
+
+.TaSalaryFormChildHeaderData span input {
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid darkgray;
+    color: gray;
+
+}
+
+.TaSalaryFormChildHeaderData span input:focus {
+    outline: none;
+
+}
+
+
+.SalResponse{
+    overflow-x: scroll;
+}
+
+.SalResponse::-webkit-scrollbar {
+    height: 4px;
+}
+
+/* Thumb styles */
+.SalResponse::-webkit-scrollbar-thumb {
+    background-color: #014f86;
+    border-radius: 4px;
+}
+
+/* Track styles when the thumb is being hovered */
+.SalResponse::-webkit-scrollbar-thumb:hover {
+    background-color: #014f86;
+}
+
+/* Track styles when the scrollbar is in its inactive state */
+.SalResponse::-webkit-scrollbar-track {
+    background-color: transparent;
+}

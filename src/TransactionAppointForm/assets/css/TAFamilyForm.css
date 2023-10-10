@@ -1,0 +1,142 @@
+.TaFamilyFormHead {
+    background-color: white;
+    font-weight: 700;
+    padding: 5px;
+    /* border-radius: 4px 4px 0px 0px; */
+    color: white;
+    background-color: #014f86;
+    letter-spacing: 1px;
+}
+
+.TaFamilyFormContainer {
+    background-color: #a9d6e538;
+    margin-top: 64px;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    /* border-radius: 5px; */
+}
+
+.tableDataHead{
+    /* color: white !important; */
+    border-bottom: 1px  solid white;
+}
+
+.TaFamilyFromHeading {
+    /* color: #ffffff; */
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+    padding: 5px 0px;
+    letter-spacing: 1px;
+}
+
+.TaFamilyFormgroup label {
+    color: white;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+
+}
+
+.TaFamilyFormgroup input {
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid darkgray;
+    color: gray;
+}
+
+.TaFamilyFormgroup input:focus {
+    outline: none;
+
+}
+.TaFamilyFormgroup  select{
+            border-radius: 4px;
+                font-size: 12px;
+                border: 1px solid darkgray;
+                color: gray;
+}
+
+.TaFamliyHeaderText span {
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px;
+}
+
+.Familybtncontainer {
+    /* border-top: 1px solid darkgray; */
+    padding: 5px;
+}
+
+
+.TaFamilyFifthLine {
+    border-top: 1px solid darkgray;
+    margin-top: 4px;
+}
+
+.TaFamilyFirstLine {
+    margin-top: 4px;
+    background-color: white;
+}
+.TaFamilyFormgroup .TaFamilyFormControl {
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid darkgray;
+    color: gray;
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+    
+}
+.TaFamilyFormgroup .TaFamilyFormControl label{
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-size: 12px;
+    color: #262837 !important;
+    margin: 0px !important;
+}
+
+.TaFamilyFormgroup .TaFamilyFormControl:focus {
+    outline: none;
+}
+.TaFamilyFormChildHeader span{
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            background: white;
+            padding: 2px;
+}
+.TaFamilyFormChildHeaderData span{
+      font-weight: 500;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            background: rgba(255, 255, 255, 0.63);
+            padding: 2px;
+           
+
+}
+/* @media screen and (max-width:768px) {
+    .Familybtncontainer button {
+        width: 13%;
+    }
+}
+
+@media screen and (max-width:992px) {
+    .Familybtncontainer button {
+            width: 15%;
+        }
+}
+@media screen and (max-width:500px) {
+    .Familybtncontainer button {
+        font-size: 12px;
+            width: 16%;
+    }
+}
+@media screen and (max-width:350px) {
+    .Familybtncontainer button {
+        font-size: 12px;
+        width: 18%;
+    }
+} */

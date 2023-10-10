@@ -1,0 +1,134 @@
+.transaction_Increament_Section{
+    position: absolute;
+    top: 0;
+    left: 0;
+     background-color: rgba(0, 0, 0, 0.315);
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     padding: 50px ;
+     /* height: 100vh; */
+     z-index: 999;
+     overflow: clip;
+}
+
+
+.Transaction_Increment_container {
+    background-color: white;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px !important;
+    margin: 0px;
+    color: white;
+
+    /* border-radius: 5px; */
+}
+
+
+.Transaction_Increment_Header {
+    background-color: #014f86;
+    padding: 5px;
+}
+
+.Increment_Info{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Inrement_Info{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.Inrement_Input {
+    display: flex;
+    flex-direction: column;
+}
+.Inrement_Date{
+    display: flex;
+        flex-direction: row;
+}
+
+.Inrement_Input .input {
+    margin: 0px 5px;
+    width: 47vw !important;
+}
+.Increment_select input{
+    width: 47vw !important;
+}
+
+.Increment_heading {
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.288);
+}
+
+.Edu_input input{
+    margin-left: 5px;
+    width: 27vw !important;
+}
+.Edu_input2 .top {
+    width: 27vw !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+.top label{
+    margin-left: 1px;
+}
+.top input{
+    margin-left: 5px;
+}
+
+.Increment_Info{
+    margin-top: 5px;
+}
+
+
+
+.TCFormHead {
+    width: 100%;
+    font-weight: 600 !important;
+    background-color: #014f86;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width:992px) {
+    .Inrement_Input .input {
+        width: 47vw !important;
+    }
+    .transaction_Increament_Section{
+        overflow: clip;
+        
+    }
+   
+}
+
+@media screen and (max-width:786px) {
+    .Inrement_Input .input {
+        width: 93vw !important;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .Inrement_Input .input {
+        width: 87vw !important;
+    }
+}
+
+.Existing_Container{
+    margin-top: 5px !important;
+}
+.Existing_Heading{
+    padding: 10px;
+    background-color: #014f86;   
+}
+.Existing_Heading p{
+    color: white;
+}

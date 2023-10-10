@@ -1,0 +1,75 @@
+
+.transaction_confirmation_Section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.356);
+    padding: 50px !important;
+
+}
+
+.transaction_confirmation_container {
+    background-color: white;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    color: white;
+    /* border-radius: 5px; */
+}
+
+
+.TC_Heading {
+    background-color: #014f86;
+}
+
+.EmployeeInfo{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+.EmployeeInput{
+    margin-left: 15px;
+}
+.EmployeeInput .input{
+    width: 47vw !important;
+}
+
+.HeadingEI{
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+    /* border-bottom: 1px solid black; */
+}
+
+
+
+
+.TCFormHead{
+width: 100%;
+    font-weight: 600 !important;
+    background-color: #014f86;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width:992px) {
+    .EmployeeInput .input{
+    width: 47vw !important;
+}
+}
+@media screen and (max-width:786px) {
+    .EmployeeInput .input {
+        width: 93vw !important;
+    }
+}
+@media screen and (max-width:420px) {
+    .EmployeeInput .input {
+        width: 87vw !important;
+    }
+}

@@ -1,0 +1,109 @@
+.TaShortsCutFormHead {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 4px 4px 0px 0px;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.TaShortsCutFormContainer {
+    border: 1px solid darkgray;
+    border-radius: 4px;
+    padding: 0px;
+    background-color: #a9d6e538;
+}
+
+.TaShortsCutFromHeading {
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+    padding: 5px 0px;
+    letter-spacing: 1px;
+
+}
+
+.TaShortCutIco{
+    font-weight: 700;
+    color: white;
+    font-size: 20px;
+}
+
+.TaShortCuttext{
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.TaskText{
+    color: white;
+}
+.BoxRow .box{
+background-color: #014f86 !important;
+    margin: 5px 5px;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        box-shadow: 0px 10px 15px -3px rgb(0 0 0 / 28%);
+}
+
+.BoxRow{
+    display: flex;
+    justify-content: center;
+}
+.box1{
+    background-color: #040F0F;
+}
+.box2 {
+    background-color: #BEBFC4;
+}
+.box3 {
+    background-color: #183c28;
+}
+.box4 {
+    background-color: #eec643;
+}
+
+.icotext{
+    color: white;
+    font-size: 16px;
+    text-align: center;
+}
+
+.NotFoundTask{
+    text-align: center;
+    font-size: 18px;
+    
+}
+
+.ResponsiveTable{
+    overflow-x: scroll;
+}
+.ResponsiveTable::-webkit-scrollbar {
+    height: 4px;
+}
+
+/* Thumb styles */
+.ResponsiveTable::-webkit-scrollbar-thumb {
+    background-color: #014f86;
+    border-radius: 4px;
+}
+
+/* Track styles when the thumb is being hovered */
+.ResponsiveTable::-webkit-scrollbar-thumb:hover {
+    background-color: #014f86;
+}
+
+/* Track styles when the scrollbar is in its inactive state */
+.ResponsiveTable::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+

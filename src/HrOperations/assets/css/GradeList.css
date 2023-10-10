@@ -1,0 +1,63 @@
+.GradeListHeader {
+    background-color: white;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 4px 4px 0px 0px;
+    color: white;
+    letter-spacing: 1px;
+    background-color: #014f86;
+}
+
+.GradeListContainer {
+    overflow: hidden;
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.GradeListbtncontainer {
+    border-top: 1px solid darkgray;
+    padding: 5px;
+}
+
+.gradeSearch{
+    color: gray !important;
+    font-size: 14px;
+    width: auto;
+    border: 1px solid darkgray;
+}
+
+.GradeTr th{
+    /* padding: 0px 5px !important; */
+    font-size: 12px  !important;
+    font-weight: 700 !important;
+    white-space: pre;
+}
+   
+ .GradeTable{
+    overflow: hidden;
+        overflow-x: scroll;
+    }
+
+ /* Track styles */
+ .GradeTable::-webkit-scrollbar {
+     height: 4px;
+ }
+
+ /* Thumb styles */
+ .GradeTable::-webkit-scrollbar-thumb {
+     background-color: #014f86;
+     border-radius: 4px;
+ }
+
+ /* Track styles when the thumb is being hovered */
+ .GradeTable::-webkit-scrollbar-thumb:hover {
+     background-color: #014f86;
+ }
+
+ /* Track styles when the scrollbar is in its inactive state */
+ .GradeTable::-webkit-scrollbar-track {
+     background-color: transparent;
+ }

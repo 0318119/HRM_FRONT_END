@@ -1,0 +1,93 @@
+.TCFormCont {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    color: white;
+    /* border-radius: 5px; */
+}
+
+
+.TC_Heading {
+    background-color: #014f86;
+}
+
+.Education_Info{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.EducationInfo{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.EducationInput {
+    display: flex;
+    flex-direction: row;
+    margin-left: 15px;
+}
+
+.EmployeeInput .input {
+    width: 47vw !important;
+}
+.edu_Select select{
+    width: 47vw !important;
+}
+
+.HeadingEI {
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+    /* border-bottom: 1px solid black; */
+}
+
+.Edu_input input{
+    margin-left: 5px;
+    width: 27vw !important;
+}
+.Edu_input2 .top {
+    width: 27vw !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+.top label{
+    margin-left: 1px;
+}
+.top input{
+    margin-left: 5px;
+}
+
+
+
+
+.TCFormHead {
+    width: 100%;
+    font-weight: 600 !important;
+    background-color: #014f86;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width:992px) {
+    .EmployeeInput .input {
+        width: 47vw !important;
+    }
+}
+
+@media screen and (max-width:786px) {
+    .EmployeeInput .input {
+        width: 93vw !important;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .EmployeeInput .input {
+        width: 87vw !important;
+    }
+}

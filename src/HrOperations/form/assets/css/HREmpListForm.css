@@ -1,0 +1,25 @@
+.EmployeeTypeForm{
+    display: flex;
+    align-items: center;
+    flex-wrap:wrap;
+    justify-content: space-around;
+}
+
+
+.EmployeeTypeForm  .form-group{
+    width: 33% !important;
+}
+
+.EmployeeTypeForm .form-group label{
+    /* color: white !important; */
+    letter-spacing: 1px;
+}
+
+.Errormsg{
+    /* color: white !important; */
+    font-size: 11px;
+}
+
+.inputtext{
+    color: black !important;
+}

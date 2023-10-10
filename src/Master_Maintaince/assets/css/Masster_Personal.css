@@ -1,0 +1,26 @@
+.MasterPersonalListHeader  {
+    background-color: white;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+    background-color: #014f86;
+}
+
+.MasterPersonalListContainer {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    margin-top: 55px !important;
+}
+
+.CostListbtncontainer {
+    border-top: 1px solid darkgray;
+    padding: 5px;
+}
+
+.MasterPersonalSearch {
+    color: gray !important;
+    font-size: 14px;
+    width: auto;
+    border: 1px solid darkgray;
+}

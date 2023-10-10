@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+
+span{
+    font-family: 'Arvo', serif;
+}
+select{
+    font-family: 'Arvo', serif;
+}
+option{
+    font-family: 'Arvo', serif;
+}
+h1{ 
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+h2{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+h3{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+h4{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+h5{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+h6{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+}
+p{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+    padding: 0;
+    margin: 0;
+
+}
+
+button{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: white !important;
+    background-color: #014f86 !important;
+    cursor: pointer;
+    border: none !important;
+    padding: 7px;
+    font-style: 12px !important;
+}
+select{
+ /* background: #262837 !important;   */
+ /* color: white !important;   */
+}
+option{
+    /* color: white !important;  */
+}
+a{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    color: #262837;
+    text-decoration: none;
+}
+
+svg{
+    cursor: pointer;
+}
+ul{
+    padding: 0;
+    margin: 0;
+    color: black;
+    /* display: flex; */
+}
+li{
+    list-style: none;
+    color: #262837;
+    padding: 0;
+    margin: 0;
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+}
+
+
+th{
+   
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-transform: capitalize !important;
+    letter-spacing: 1px;
+}
+
+tr{
+    background-color: #a9d6e538 !important;
+}
+
+td{
+    /* color: #ffffff; */
+     padding: 2px;
+    letter-spacing: 1px;
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+    font-size: 14px;
+    text-transform: capitalize  !important;
+}
+input{
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+
+}
+label{
+    color: #262837 !important;
+    /* font-family: 'Roboto Flex', sans-serif; */
+    font-family: 'Arvo', serif;
+
+}
+body{
+    margin: 0px;
+    padding: 0px;
+    overflow-x: clip !important;
+    /* background-color: #a9d6e596 !important; */
+
+    /* background-color: #ffffff; */
+    /* background-color: #ADD8E6; */
+
+}
+/* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
+.tabletdRow{
+    display: flex;
+}
+.editBtnTable{
+    background-color: #014f86 !important;
+    color: white !important;
+    padding: 1px 12px;
+    font-weight: 500;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.deleteBtnTable{
+    background: red !important;
+    color: white !important;
+    padding: 1px 12px;
+    border-radius: 3px;
+    font-weight: 500;
+    margin-left: 10px;
+    cursor: pointer;
+}
+table{
+background-color: transparent !important;
+}
+
+th{
+    padding: 7px !important;
+    white-space: pre;
+}
+td{
+    padding: 7px !important;
+    white-space: pre;
+}
+/* ====================================== */
+
+/* TABLE DATA HEAD =-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.tableDataHead{
+    margin: 0;
+    padding: 14px 12px;
+    margin-top: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+/* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+select:focus{
+    outline: none;
+}
+
+/* ================== */
+.backLink{
+    float: right;
+}
+
+@media screen and (max-width: 768px){
+    .backLink {
+        float: unset !important;
+        display: flex;
+        /* margin-top: 11px; */
+    }
+}
+
+.one{
+display: block;
+}
+.two{
+    display: none;
+}
+
+@media screen and (max-width:786px) {
+    /* td{
+        font-size: 9px;
+    } */
+}

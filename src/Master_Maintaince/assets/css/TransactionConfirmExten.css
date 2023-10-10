@@ -1,0 +1,24 @@
+.TransactionConfirmationEx_listHeader {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    /* border-radius: 4px 4px 0px 0px; */
+    color: white;
+    letter-spacing: 1px;
+}
+
+.TransactionConfirmationEx_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    background-color: #a9d6e538;
+    padding: 0px 0px;
+    /* border-radius: 5px; */
+    margin-top: 10px;
+}
+
+
+
+.TransactionConfirmationEx_listSearch {
+    color: gray !important;
+    font-size: 14px;
+    border: 1px solid darkgray;
+}
