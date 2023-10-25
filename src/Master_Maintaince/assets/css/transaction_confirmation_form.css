@@ -1,54 +1,44 @@
-
-.transaction_confirmation_Section{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 999;
-    background-color: rgba(0, 0, 0, 0.356);
-    padding: 50px !important;
-
+.transaction_confirmation_Section {
+    margin-top: 80px;
 }
-
 .transaction_confirmation_container {
     background-color: white;
     box-shadow: 2px 1px 6px -2px black;
     padding: 0px 0px;
     color: white;
-    /* border-radius: 5px; */
 }
-
-
 .TC_Heading {
     background-color: #014f86;
 }
-
-.EmployeeInfo{
+.transaction_confirmation_container .confirmationFormScrollBox {
+     padding: 0 30px;
+}
+.EmployeeInfo {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
 }
-.EmployeeInput{
-    margin-left: 15px;
+.EmployeeInfo .form-group {
+    width: 48%;
 }
-.EmployeeInput .input{
-    width: 47vw !important;
+.EmployeeInfo .radioBoxConfirmation {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
 }
-
-.HeadingEI{
+.EmployeeInfo .radioBoxConfirmation div {
+    display: flex;
+    flex-direction: row;
+    width: 48%;
+}
+.HeadingEI {
     padding: 15px;
     font-size: 20px;
     color: black;
-    /* border-bottom: 1px solid black; */
 }
-
-
-
-
-.TCFormHead{
-width: 100%;
+.TCFormHead {
+    width: 100%;
     font-weight: 600 !important;
     background-color: #014f86;
     letter-spacing: 1px;
@@ -56,20 +46,22 @@ width: 100%;
     display: flex;
     justify-content: space-between;
 }
-
-
-@media screen and (max-width:992px) {
-    .EmployeeInput .input{
-    width: 47vw !important;
+.transaction_confirmation_container .TAFormBtn{
+    margin: 17px 27px;
+    border-top: 1px solid #807f7f45;
+    padding: 15px 0;
 }
+.transaction_confirmation_container .TAFormBtn button{
+    margin: 0 6px;
 }
-@media screen and (max-width:786px) {
-    .EmployeeInput .input {
-        width: 93vw !important;
+@media screen and (max-width:580px) {
+    .transaction_confirmation_container .confirmationFormScrollBox {
+        height: 250px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0 30px;
     }
-}
-@media screen and (max-width:420px) {
-    .EmployeeInput .input {
-        width: 87vw !important;
+    .EmployeeInfo .form-group {
+        width: 100%;
     }
 }

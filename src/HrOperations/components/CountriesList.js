@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/CountriesList.css";
-import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import EmpListForm from "../form/EmpListForm";
 const config = require('../../config.json')
@@ -87,17 +84,17 @@ function CountriesList() {
   }, [])
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key"))
-  }
-  const API_DELETE_URL = "/countries/DeleteCountry"
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key"))
+  // }
+  // const API_DELETE_URL = "/countries/DeleteCountry"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Country_Code": anyofId,
-  };
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Country_Code": anyofId,
+  // };
 
   return (
     <>
@@ -134,12 +131,11 @@ function CountriesList() {
                       <button className="editBtnTable">Edit</button>
                     </td>
                     <td>
-                      <button onClick={setDeleteAlert} data-key={items?.Country_Code} className="deleteBtnTable">Delete</button>
+                      {/* <button onClick={setDeleteAlert} data-key={items?.Country_Code} className="deleteBtnTable">Delete</button> */}
                     </td>
                   </tr>
                 )
               })}
-             
             </tbody>
           </table>
           </div>
@@ -158,7 +154,7 @@ function CountriesList() {
         </div>
       </div>
     </div>
-      {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+      {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
 
     </>
   );

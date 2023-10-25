@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./../assets/css/Masster_Personal.css";
 import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 const config = require('../../config.json')
 
 function Master_PersonalList() {
@@ -74,7 +74,7 @@ function Master_PersonalList() {
     //                             navigate("/");
     //                         } else {
     //                             localStorage.setItem("refresh",  response.referesh_token);
-    //                             secureLocalStorage.setItem(
+    //                             localStorage.setItem(
     //                                 "access_token",
     //                                 response.access_token
     //                             );

@@ -1,155 +1,57 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-span{
-    font-family: 'Arvo', serif;
-}
-select{
-    font-family: 'Arvo', serif;
-}
-option{
-    font-family: 'Arvo', serif;
-}
-h1{ 
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-h2{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-h3{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-h4{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-h5{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-h6{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-}
-p{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
-    padding: 0;
-    margin: 0;
 
-}
-
-button{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: white !important;
-    background-color: #014f86 !important;
-    cursor: pointer;
-    border: none !important;
-    padding: 7px;
-    font-style: 12px !important;
-}
-select{
- /* background: #262837 !important;   */
- /* color: white !important;   */
-}
-option{
-    /* color: white !important;  */
-}
-a{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    color: #262837;
+h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,th,td,button,div{ 
+    font-family: 'Poppins', sans-serif;
+    outline: none;
     text-decoration: none;
+    margin: 0px;
+    border: none;
 }
-
-svg{
-    cursor: pointer;
+button,h1,h2,h3,h4,h5,h6{
+    color: white;
 }
-ul{
-    padding: 0;
-    margin: 0;
-    color: black;
-    /* display: flex; */
-}
-li{
+ul,li{
     list-style: none;
-    color: #262837;
     padding: 0;
     margin: 0;
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
 }
-
-
-th{
-   
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    font-size: 16px !important;
-    font-weight: 500 !important;
-    text-transform: capitalize !important;
-    letter-spacing: 1px;
-}
-
-tr{
-    background-color: #a9d6e538 !important;
-}
-
-td{
-    /* color: #ffffff; */
-     padding: 2px;
-    letter-spacing: 1px;
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-    font-size: 14px;
-    text-transform: capitalize  !important;
-}
-input{
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-
-}
-label{
-    color: #262837 !important;
-    /* font-family: 'Roboto Flex', sans-serif; */
-    font-family: 'Arvo', serif;
-
+span,strong{
+    display: block;
 }
 body{
     margin: 0px;
     padding: 0px;
     overflow-x: clip !important;
-    /* background-color: #a9d6e596 !important; */
+}
 
-    /* background-color: #ffffff; */
-    /* background-color: #ADD8E6; */
-
+.editBtn{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.deleteBtn{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: red;
 }
 /* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
-.tabletdRow{
+.tabletdRow {
     display: flex;
 }
-.editBtnTable{
+
+.editBtnTable {
     background-color: #014f86 !important;
     color: white !important;
-    padding: 1px 12px;
+    padding: 4px 12px;
     font-weight: 500;
     border-radius: 3px;
     cursor: pointer;
 }
-.deleteBtnTable{
+
+.deleteBtnTable {
     background: red !important;
     color: white !important;
     padding: 1px 12px;
@@ -158,22 +60,21 @@ body{
     margin-left: 10px;
     cursor: pointer;
 }
-table{
-background-color: transparent !important;
+
+table {
+    background-color: transparent !important;
+}
+.ant-select-selector{
+    display: none !important;
+}
+.ant-pagination-options{
+    display: none !important;
 }
 
-th{
-    padding: 7px !important;
-    white-space: pre;
-}
-td{
-    padding: 7px !important;
-    white-space: pre;
-}
 /* ====================================== */
 
 /* TABLE DATA HEAD =-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
-.tableDataHead{
+.tableDataHead {
     margin: 0;
     padding: 14px 12px;
     margin-top: 20px;
@@ -182,16 +83,16 @@ td{
 }
 
 /* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
-select:focus{
+select:focus {
     outline: none;
 }
 
 /* ================== */
-.backLink{
+.backLink {
     float: right;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 768px) {
     .backLink {
         float: unset !important;
         display: flex;
@@ -199,10 +100,11 @@ select:focus{
     }
 }
 
-.one{
-display: block;
+.one {
+    display: block;
 }
-.two{
+
+.two {
     display: none;
 }
 
@@ -210,4 +112,16 @@ display: block;
     /* td{
         font-size: 9px;
     } */
+}
+.ant-select-single{
+    height: 40px !important;
+}
+.ant-select-focused .ant-select-selector{
+    box-shadow: none !important;
+}
+.ant-select-selector{
+    border: 1px solid rgb(225 225 225) !important;
+}
+.ant-select-selector:hover{
+    border: 1px solid rgb(225 225 225) !important;
 }

@@ -1,54 +1,50 @@
-.DepartmentListHeader {
-    background-color: white;
-    font-weight: 700;
-    padding: 5px;
-    border-radius: 4px 4px 0px 0px;
-    color: white;
-    letter-spacing: 1px;
-    background-color: #014f86;
+.maringClass{
+    margin-top: 80px;
 }
-
-.DepartmentListContainer {
-    box-shadow: 2px 1px 6px -2px black;
-    background-color: #a9d6e538;
-    padding: 0px 2px;
-    border-radius: 5px;
-    margin-top: 50px;
-    overflow: clip;
+.DepartmentsFlexBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
-.DivisionListbtncontainer {
-    border-top: 1px solid darkgray;
-    padding: 5px;
+.DepartmentsFlexBox .DepartmentssearchBox{
+    display: flex;
+    align-items: center;
 }
-
-.DepartmentSearch {
-    color: gray !important;
-    font-size: 14px;
-    border: 1px solid darkgray;
+.DepartmentsFlexBox .DepartmentssearchBox input{
+    min-width: 300px;
 }
-
-.dep_table{
-    overflow-x: scroll;
+.formBoxDepartments{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 }
-
-
-.dep_table::-webkit-scrollbar {
-    height: 4px;
+.DepartmentsBtnBox{
+    display: flex;
+    justify-content: end;
 }
-
-/* Thumb styles */
-.dep_table::-webkit-scrollbar-thumb {
-    background-color: #014f86;
-    border-radius: 4px;
+.formBoxDepartments div{
+    width: 50%;
 }
-
-/* Track styles when the thumb is being hovered */
-.dep_table::-webkit-scrollbar-thumb:hover {
-    background-color: #014f86;
+@media screen and (max-width: 768px){
+    .DepartmentsFlexBox{
+        flex-wrap: wrap;
+    }
+    .DepartmentsFlexBox .DepartmentssearchBox {
+        width: 100%;
+    }
+    .DepartmentsFlexBox .DepartmentssearchBox #inputBox{
+        width: 100%;
+    }
+    .DepartmentsFlexBox .DepartmentssearchBox #inputBox input{
+        min-width: unset !important;
+    }
 }
-
-/* Track styles when the scrollbar is in its inactive state */
-.dep_table::-webkit-scrollbar-track {
-    background-color: transparent;
+@media screen and (max-width: 480px){
+    .formBoxDepartments div{
+        width: 100%;
+    }
+    .DepartmentsFlexBox .DepartmentssearchBox {
+        flex-wrap: wrap;
+    }
 }

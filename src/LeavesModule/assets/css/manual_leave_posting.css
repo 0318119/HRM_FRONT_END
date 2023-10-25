@@ -1,4 +1,4 @@
-.Posting_Leaves_listHeader {
+.manual_Leaves_listHeader {
     background-color: #014f86;
     font-weight: 700;
     padding: 5px;
@@ -7,7 +7,7 @@
     letter-spacing: 1px;
 }
 
-.Posting_Leaves_listContainer {
+.Manual_Leaves_listContainer {
     box-shadow: 2px 1px 6px -2px black;
     padding: 0px 0px;
     background-color: #a9d6e538;
@@ -111,4 +111,10 @@
         flex-wrap: wrap;
 
     }
+}
+
+.Required{
+    color: red !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
 }

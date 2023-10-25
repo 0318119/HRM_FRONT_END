@@ -13,8 +13,8 @@ const config = require('../../config.json')
 function Transaction_Appointment_personal() {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
-    var get_company_code = secureLocalStorage.getItem("company_code");
-    var get_Emp_code = secureLocalStorage.getItem("Emp_code");
+    var get_company_code = localStorage.getItem("company_code");
+    var get_Emp_code = localStorage.getItem("Emp_code");
     const navigate = useNavigate()
     const [Err, setErr] = useState(false)
     const showAlert = (message, type) => {
@@ -47,7 +47,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setgetEmpTypeCode(response.data[0][0])
                     }
                 }).catch((error) => {
@@ -82,7 +82,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setgetEmploymentCategory(response.data[0])
                     }
                 }).catch((error) => {
@@ -117,7 +117,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setemploymentLeaveCategory(response.data[0])
                     }
                 }).catch((error) => {
@@ -152,7 +152,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setGetEmploymentPayrollData(response.data[0][0])
                     }
                 }).catch((error) => {
@@ -188,7 +188,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setGetEmploymentShiftData(response.data[0])
                     }
                 }).catch((error) => {
@@ -223,7 +223,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setGetEmploymentDesigData(response.data[0])
                     }
                 }).catch((error) => {
@@ -260,7 +260,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setGetEmploymentCostCenterData(response.data[0])
                     }
                 }).catch((error) => {
@@ -295,7 +295,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setGetEmploymentSectionCodeData(response.data[0])
                     }
                 }).catch((error) => {
@@ -330,7 +330,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setgrade_codeData(response.data[0])
                     }
                 }).catch((error) => {
@@ -365,7 +365,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setEduCodeData(response.data[0])
                     }
                 }).catch((error) => {
@@ -400,7 +400,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setlocation_codeData(response.data[0])
                     }
                 }).catch((error) => {
@@ -435,7 +435,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setreligion_codeData(response.data[0])
                     }
                 }).catch((error) => {
@@ -470,7 +470,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setmaster_all_employeesData(response.data[0])
                     }
                 }).catch((error) => {
@@ -713,7 +713,7 @@ function Transaction_Appointment_personal() {
                     if (response.messsage == "timeout error") { navigate('/') }
                     else {
                         localStorage.setItem("refresh",  response.referesh_token);
-                        secureLocalStorage.setItem("access_token", response.access_token);
+                        localStorage.setItem("access_token", response.access_token);
                         setLoading(false);
                         setBtnEnaledAndDisabled(false);
                         if (response?.message) {

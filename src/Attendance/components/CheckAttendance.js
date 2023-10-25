@@ -53,7 +53,7 @@ function CheckAttendance() {
                     return response.json()
                 }).then(response => {
                     localStorage.setItem("refresh",  response.referesh_token);
-                    secureLocalStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("access_token", response.access_token);
                     setLoading(false);
                     setBtnEnaledAndDisabled(false);
                     setTimeout(() => {

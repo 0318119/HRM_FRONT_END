@@ -1,26 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/TAShortsCut.css";
-import { BsFillCheckSquareFill as FormCheck_ico } from "react-icons/bs";
 import Header from "../components/Includes/Header";
 import { Link, useNavigate } from "react-router-dom";
 import  {BsPlus as Plus_ico} from 'react-icons/bs'
-import { GiHamburgerMenu as Payslip_ico } from 'react-icons/gi'
 import { RxDashboard as RxDashboard_ico } from 'react-icons/rx'
-import { BsClipboardData as BsClipboardData_ico } from 'react-icons/bs'
-import { FaRegStickyNote as FaRegStickyNote_ico } from 'react-icons/fa'
-import secureLocalStorage from "react-secure-storage";
-// import CryptoJS from "crypto-js";
 const config = require('../config.json')
 
  
 
 function TAShortsCut() {
-  // var refresh_token_decrypt  = CryptoJS.AES.decrypt(localStorage.getItem("referesh_token1"), 'referesh_token1');
-  // var refresh_token_string = JSON.parse(refresh_token_decrypt.toString(CryptoJS.enc.Utf8));
-
-  // var access_token_decrypt  = CryptoJS.AES.decrypt(localStorage.getItem("access_token1"), 'access_token1');
-  // var access_token_string = JSON.parse(access_token_decrypt.toString(CryptoJS.enc.Utf8));
-
 
   
   const [isTaskData,setTaskData] = useState([])
@@ -45,8 +33,8 @@ function TAShortsCut() {
         }).then(response => {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
-            secureLocalStorage.setItem("refresh", response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("refresh", response.referesh_token);
+            localStorage.setItem("access_token", response.access_token);
             setTaskData(response.data[0])
           }
         }).catch((error) => {
@@ -99,18 +87,6 @@ function TAShortsCut() {
             <span className="icotext">Leave</span>
             </Link>
           </div>
-          {/* <div className="col-lg-3 box">
-            <Link className="TaShortCuttext">  
-            <span className="TaShortCutIco"><BsClipboardData_ico /></span>
-            <span className="icotext">Payslip</span>
-            </Link>
-          </div> */}
-          {/* <div className="col-lg-3 box">
-            <Link className="TaShortCuttext">
-            <span className="TaShortCutIco"><FaRegStickyNote_ico /></span>
-              <span className="icotext">Tax liability</span>
-            </Link>
-          </div> */}
         </div>
       </div>
       <div className="container mt-4 TaShortsCutFormContainer">
@@ -149,7 +125,7 @@ function TAShortsCut() {
               
             </tbody>
           </table>
-                :<h5 className="NotFoundTask"> Not Found Task Data</h5>}
+                :<h5 className="NotFoundTask text-dark"> Not Found Task Data</h5>}
           </div>
         </div>
       </div>

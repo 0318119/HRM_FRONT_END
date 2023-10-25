@@ -9,7 +9,7 @@ const config = require("../config.json");
 function TAppointmentMasterPayroll() {
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
-  var get_company_code = secureLocalStorage.getItem("company_code");
+  var get_company_code = localStorage.getItem("company_code");
   const navigate = useNavigate();
   const search = useLocation().search;
   var userId = new URLSearchParams(search).get("userId");
@@ -50,7 +50,7 @@ function TAppointmentMasterPayroll() {
                 navigate("/");
               } else {
                 localStorage.setItem("refresh",  response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 setInfo(response.data[0][0]);
               }
             })
@@ -286,7 +286,7 @@ function TAppointmentMasterPayroll() {
                 // navigate("/");
               } else {
                 localStorage.setItem("refresh",  response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 setLoading(false);
                 setBtnEnaledAndDisabled(false);
                 showAlert(response.messsage, "success");

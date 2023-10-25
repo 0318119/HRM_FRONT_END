@@ -42,21 +42,35 @@ import Increment from '../Master_Maintaince/Increment'
 import Get_Attendance from '../Attendance/Get_Attendance'
 import Attendance_Check from '../Attendance/Attendance_Check'
 import Manual_Leave_Deletio from '../Master_Maintaince/Manual_Leave_Deletio';
-import Marriage from '../Master_Maintaince/Marriage';
 import Promotion from '../Master_Maintaince/Promotion'
 import Holidays from '../HrOperations/Holidays'
 import Leave_Applications from '../LeavesModule/Leave_Applications'
 import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
-import Transaction_confirmation_form from '../Master_Maintaince/form/transaction_confirmation_form'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
+import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
 import Transaction_Education_form from '../Master_Maintaince/form/Transaction_Education';
 import LeaveSummary from '../LeavesModule/components/LeaveSummary';
-
+import Transaction_Increment_form from '../Master_Maintaince/form/Transaction_Increment_form';
+import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
+import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
+import ConfirmationExtension from '../Master_Maintaince/form/ConfirmationExtension';
+import ConfirmExtensionWaitingProcess from '../Master_Maintaince/components/ConfirmExtensionWaitingProcess';
+import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
+import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
+import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
+import Transaction_Resignation_process from '../Master_Maintaince/components/Transaction_Resignation_process';
+import PromotionWaitingForm from '../Master_Maintaince/components/PromotionWaitingForm';
+import Transaction_Experience from '../Master_Maintaince/Transaction_Experience';
+import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
+import Transaction_Education from '../Master_Maintaince/Transaction_Education';
+import Family from '../Master_Maintaince/Family'
+import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
+ 
 
 const routing = () => {
   return (
@@ -103,13 +117,11 @@ const routing = () => {
           <Route path="/Attendance_Check" element={<Attendance_Check />} />
           <Route path="/Confirmation_Extensio" element={<Confirmation_Extensio />} />
           <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
-          <Route path="/Marriage" element={<Marriage />} />
           <Route path="/Promotion" element={<Promotion />} />
           <Route path="/Holidays" element={<Holidays />} />
           <Route path="/Leave_Applications" element={<Leave_Applications />} />
           <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
           <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
-          <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
           <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
           <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
           <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
@@ -117,9 +129,26 @@ const routing = () => {
           <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
           <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
           <Route path="/LeaveSummary" element={<LeaveSummary />} />
+          <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
+          <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
+          <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
+          <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
+          <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />
+          <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
+          <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
+          <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
+          <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
+          <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
+          <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
+          <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
+          <Route path="/Transaction_Experience" element={<Transaction_Experience />} />
+          <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
+          <Route path="/Family" element={<Family />} />
+          <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
         </Routes>
       </Router>
     </>
+
   );
 }
 

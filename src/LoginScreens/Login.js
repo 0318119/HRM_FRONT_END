@@ -71,23 +71,8 @@ export const Login = () => {
               localStorage.setItem("refresh", response.referesh_token);
               localStorage.setItem("access_token", response.access_token);
 
-              secureLocalStorage.setItem("Emp_code", response.data[0].Emp_code);
-              secureLocalStorage.setItem("company_code", response.data[0].company_code);
-
-              var referesh = CryptoJS.AES.encrypt(JSON.stringify(response.referesh_token), 'referesh_token1').toString();
-              localStorage.setItem("referesh_token1", referesh);
-
-              var access_token = CryptoJS.AES.encrypt(JSON.stringify(response.referesh_token), 'access_token1').toString();
-              localStorage.setItem("access_token1", access_token);
-
-              var Emp_code = CryptoJS.AES.encrypt(JSON.stringify(response.data[0].Emp_code), 'Emp_code1').toString();
-              localStorage.setItem("Emp_code1", Emp_code);
-
-              var company_code = CryptoJS.AES.encrypt(JSON.stringify(response.data[0].company_code), 'company_code1').toString();
-              localStorage.setItem("company_code1", company_code);
-
-
-
+              localStorage.setItem("Emp_code", response.data[0].Emp_code);
+              localStorage.setItem("company_code", response.data[0].company_code);
               navigate("/TAShortsCut");
             } else {
                 showAlert(response.message, "warning")

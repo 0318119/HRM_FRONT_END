@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EducationLevelList.css";
 import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import EmpListForm from "../form/EmpListForm";
 const config = require('../../config.json')
@@ -86,17 +86,17 @@ function EducationLevelList() {
   }, [])
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key"))
-  }
-  const API_DELETE_URL = "/educationlevel/DeleteEducationLevel"
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key"))
+  // }
+  // const API_DELETE_URL = "/educationlevel/DeleteEducationLevel"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Edu_level_code": anyofId,
-  };
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Edu_level_code": anyofId,
+  // };
 
 
 
@@ -132,7 +132,7 @@ function EducationLevelList() {
                       <button className="editBtnTable">Edit</button>
                     </td>
                     <td>
-                      <button onClick={setDeleteAlert} data-key={items?.Edu_level_code} className="deleteBtnTable">Delete</button>
+                      {/* <button onClick={setDeleteAlert} data-key={items?.Edu_level_code} className="deleteBtnTable">Delete</button> */}
                     </td>
                   </tr>
                 )
@@ -156,7 +156,7 @@ function EducationLevelList() {
         </div>
       </div>
     </div>
-      {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}
+      {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} */}
     </>
   );
 }

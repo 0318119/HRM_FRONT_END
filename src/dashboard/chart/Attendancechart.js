@@ -79,8 +79,8 @@
 //               if (response.messsage == "timeout error") {
 //                 navigate("/");
 //               } else {
-//                 secureLocalStorage.setItem("refresh", response.referesh_token);
-//                 secureLocalStorage.setItem("access_token", response.access_token);
+//                 localStorage.setItem("refresh", response.referesh_token);
+//                 localStorage.setItem("access_token", response.access_token);
 //                 setGetAttendData(response.data[0]);
 //                 console.log("response.data[0]", response.data[0])
 //                 setDataLoader(true);

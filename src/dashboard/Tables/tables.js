@@ -1,7 +1,7 @@
 import React from "react";
 import "../assets/css/tables.css";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import { BsClock as Time_ico } from "react-icons/bs";
 const config = require('../../config.json')
 

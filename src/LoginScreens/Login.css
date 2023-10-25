@@ -64,6 +64,7 @@
     border-left: 0;
     width: 100%;
     color: white;
+    border: 1px solid grey;
 }
 .LoginForm_input select:focus{
     outline: none;

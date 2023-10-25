@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/InstitutionsList.css";    
 import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import EmpListForm from "../form/EmpListForm";
 const config = require('../../config.json')
@@ -71,7 +71,7 @@ function InstitutionsList() {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh",  response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -98,17 +98,17 @@ function InstitutionsList() {
     }, [])  
 
 
-    const [ShowDelModel, setShowDelModel] = useState(false)
-    const setDeleteAlert = async (e) => {
-        setShowDelModel(!ShowDelModel)
-        setanyofId(e.currentTarget.getAttribute("data-key"))
-    }
-    const API_DELETE_URL = "/institutions/DeleteInstitution"
+    // const [ShowDelModel, setShowDelModel] = useState(false)
+    // const setDeleteAlert = async (e) => {
+    //     setShowDelModel(!ShowDelModel)
+    //     setanyofId(e.currentTarget.getAttribute("data-key"))
+    // }
+    // const API_DELETE_URL = "/institutions/DeleteInstitution"
 
-    const [anyofId, setanyofId] = useState(null)
-    const bodyOfdata = {
-        "Inst_code": anyofId,
-    };
+    // const [anyofId, setanyofId] = useState(null)
+    // const bodyOfdata = {
+    //     "Inst_code": anyofId,
+    // };
 
 
 
@@ -154,7 +154,7 @@ function InstitutionsList() {
                                         <td>{items.Inst_fax1}</td>
                                         <td>{items.Sort_key}</td>
                                         <td><button className="editBtnTable">Edit</button></td>
-                                        <td><button onClick={setDeleteAlert} data-key={items?.Inst_code} className="deleteBtnTable">Delete</button></td>
+                                        {/* <td><button onClick={setDeleteAlert} data-key={items?.Inst_code} className="deleteBtnTable">Delete</button></td> */}
                                     </tr>
                                 )
                             })}
@@ -177,7 +177,7 @@ function InstitutionsList() {
                 </div>
             </div>
         </div>
-            {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+            {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
         </>
     );
 }

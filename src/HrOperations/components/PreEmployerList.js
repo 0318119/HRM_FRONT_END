@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/PreEmployerList.css";
 import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import EmpListForm from "../form/EmpListForm";
 const config = require('../../config.json')
@@ -66,7 +66,7 @@ function PreEmployerList() {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh",  response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -94,17 +94,17 @@ function PreEmployerList() {
 
 
 
-    const [ShowDelModel, setShowDelModel] = useState(false)
-    const setDeleteAlert = async (e) => {
-        setShowDelModel(!ShowDelModel)
-        setanyofId(e.currentTarget.getAttribute("data-key"))
-    }
-    const API_DELETE_URL = "/allemployer/DeleteEmployer"
+    // const [ShowDelModel, setShowDelModel] = useState(false)
+    // const setDeleteAlert = async (e) => {
+    //     setShowDelModel(!ShowDelModel)
+    //     setanyofId(e.currentTarget.getAttribute("data-key"))
+    // }
+    // const API_DELETE_URL = "/allemployer/DeleteEmployer"
 
-    const [anyofId, setanyofId] = useState(null)
-    const bodyOfdata = {
-        "Employer_Code": anyofId,
-    };
+    // const [anyofId, setanyofId] = useState(null)
+    // const bodyOfdata = {
+    //     "Employer_Code": anyofId,
+    // };
 
 
 
@@ -143,7 +143,7 @@ function PreEmployerList() {
                                 <td>{items.Employer_Name}</td>
                                 <td>{items.Industry_Flag}</td>
                                 <td><button className="editBtnTable">Edit</button></td>
-                                <td><button onClick={setDeleteAlert} data-key={items?.Employer_Code} className="deleteBtnTable">Delete</button></td>
+                                {/* <td><button onClick={setDeleteAlert} data-key={items?.Employer_Code} className="deleteBtnTable">Delete</button></td> */}
                             </tr>
                                 )
                             })}
@@ -165,7 +165,7 @@ function PreEmployerList() {
                 </div>
             </div>
         </div>
-            { ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />) } 
+            {/* { ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />) }  */}
 </>
     );
 }

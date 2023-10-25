@@ -6,6 +6,7 @@ import secureLocalStorage from "react-secure-storage";
 import { Link, useNavigate } from "react-router-dom";
 import { Check } from "@mui/icons-material";
 import axios from "axios";
+import Country from "./Country.json"
 const config = require('../config.json')
 
 
@@ -13,8 +14,8 @@ const config = require('../config.json')
 function TAPersonalform() {
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
-  var get_company_code = secureLocalStorage.getItem("company_code");
-  var get_Emp_code = secureLocalStorage.getItem("Emp_code");
+  var get_company_code = localStorage.getItem("company_code");
+  var get_Emp_code = localStorage.getItem("Emp_code");
   const navigate = useNavigate()
   const [Err, setErr] = useState(false)
   const showAlert = (message, type) => {
@@ -48,7 +49,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setgetEmpTypeCode(response.data[0][0])
           }
         }).catch((error) => {
@@ -83,7 +84,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setgetEmploymentCategory(response.data[0])
           }
         }).catch((error) => {
@@ -118,7 +119,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setemploymentLeaveCategory(response.data[0])
           }
         }).catch((error) => {
@@ -153,7 +154,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setGetEmploymentPayrollData(response.data[0][0])
           }
         }).catch((error) => {
@@ -189,7 +190,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setGetEmploymentShiftData(response.data[0])
           }
         }).catch((error) => {
@@ -224,7 +225,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setGetEmploymentDesigData(response.data[0])
           }
         }).catch((error) => {
@@ -245,14 +246,14 @@ function TAPersonalform() {
   const [GetEmploymentCostCenterData, setGetEmploymentCostCenterData] = useState([])
   const [GetEmploymentCostCenterErr, setGetEmploymentCostCenterErr] = useState(false)
   async function GetEmploymentCostCenterDataCall() {
-    await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenter`, {
+    await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
       method: "GET",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
     }).then((response) => {
       return response.json()
     }).then(async (response) => {
       if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenter`, {
+        await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
           method: "GET",
           headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
         }).then(response => {
@@ -261,15 +262,17 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
-            setGetEmploymentCostCenterData(response.data[0])
+            localStorage.setItem("access_token", response.access_token);
+            setGetEmploymentCostCenterData(response.data)
           }
         }).catch((error) => {
           setGetEmploymentCostCenterErr(error.message)
         })
       }
       else {
-        setGetEmploymentCostCenterData(response.data[0])
+        setGetEmploymentCostCenterData(response.data)
+        console.log(response.data, 'responselllll')
+
       }
     }).catch((error) => {
       setGetEmploymentCostCenterErr(error.message)
@@ -296,7 +299,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setGetEmploymentSectionCodeData(response.data[0])
           }
         }).catch((error) => {
@@ -331,7 +334,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setgrade_codeData(response.data[0])
           }
         }).catch((error) => {
@@ -366,7 +369,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setEduCodeData(response.data[0])
           }
         }).catch((error) => {
@@ -401,7 +404,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setlocation_codeData(response.data[0])
           }
         }).catch((error) => {
@@ -436,7 +439,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setreligion_codeData(response.data[0])
           }
         }).catch((error) => {
@@ -471,7 +474,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setmaster_all_employeesData(response.data[0])
           }
         }).catch((error) => {
@@ -871,7 +874,7 @@ function TAPersonalform() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setLoading(false);
             setBtnEnaledAndDisabled(false);
             if (response?.message) {
@@ -917,7 +920,6 @@ function TAPersonalform() {
     } else { setcheckCnicDateErr(false) }
 
   }, [CNICExpiryDate, CNICIssueDate])
-
 
 
 
@@ -1043,7 +1045,17 @@ function TAPersonalform() {
               <div className="col-lg-3 col-md-4">
                 <div className="form-group d-flex flex-column infoForm">
                   <label htmlFor="">Blood Group</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setBloodGroup(e.target.value) }} />
+                  <select name="" id="" className="form-control" required onChange={(e) => { setBloodGroup(e.target.value) }}>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B-">B-</option>
+                    <option value="B+">B+</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                  {/* <input type="text" name="" id="" className="form-control" required onChange={(e) => { setBloodGroup(e.target.value) }} /> */}
 
                   <label htmlFor="">*Address Line 2</label>
                   <input type="text" name="" id="" className="form-control" required onChange={(e) => { setAddressLine2(e.target.value) }} />
@@ -1055,7 +1067,14 @@ function TAPersonalform() {
                   <input type="number" name="" id="" className="form-control" required onChange={(e) => { setNTNNo(e.target.value) }} />
 
                   <label htmlFor="">Nationality</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setNationality(e.target.value) }} />
+                  <select name="" id="" className="form-select" required onChange={(e) => { setNationality(e.target.value) }}>
+                    {Country.Country?.map((index,key) => {
+                      return(
+                        <option value={key} >{index.label}</option>
+                      )
+                    })}
+                  </select>
+                  {/* <input type="text" name="" id="" className="form-control" required onChange={(e) => { setNationality(e.target.value) }} /> */}
                 </div>
               </div>
 
@@ -1184,7 +1203,7 @@ function TAPersonalform() {
                   <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{GetEmploymentCostCenterErr ? GetEmploymentCostCenterErr : false}</h6>
                   <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentCostCenterVal(e.target.value) }}>
                     <option selected disabled value="">Select Cost Center</option>
-                    {GetEmploymentCostCenterData.map((items => {
+                    {GetEmploymentCostCenterData?.map((items => {
                       return (<option key={items.Cost_Centre_code} value={items.Cost_Centre_code}>{items.Cost_Centre_name}</option>)
                     }))}
                   </select>

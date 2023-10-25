@@ -51,6 +51,7 @@
 }
 
 .ChartAttendance {
+    border-bottom: 1px solid white;
     color: white !important;
     font-size: 16px;
 }

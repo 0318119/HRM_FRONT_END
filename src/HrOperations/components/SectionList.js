@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/SectionList.css";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import secureLocalStorage from 'react-secure-storage';
 const config = require('../../config.json')
@@ -89,17 +89,17 @@ function SectionList() {
   }, [])
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key"))
-  }
-  const API_DELETE_URL = "/employment_section_code/DeleteEmploymentSectionCode"
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key"))
+  // }
+  // const API_DELETE_URL = "/employment_section_code/DeleteEmploymentSectionCode"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Section_code": anyofId,
-  };
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Section_code": anyofId,
+  // };
 
 
   return (
@@ -144,7 +144,7 @@ function SectionList() {
                     <td>{items.Section_Head}</td>
                     <td>{items.Sort_key}</td>
                     <td><button className="editBtnTable">Edit</button></td>
-                    <td><button onClick={setDeleteAlert} data-key={items?.Section_code} className="deleteBtnTable">Delete</button></td>
+                    {/* <td><button onClick={setDeleteAlert} data-key={items?.Section_code} className="deleteBtnTable">Delete</button></td> */}
                   </tr>
                 )
               })}
@@ -167,7 +167,7 @@ function SectionList() {
         </div>
       </div>
     </div>
-      {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+      {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
 
     </>
   );

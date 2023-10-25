@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/ResignationsList.css";
 import secureLocalStorage from 'react-secure-storage';
 import EmpListForm from "../form/EmpListForm";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 const config = require('../../config.json')
 
@@ -59,7 +59,7 @@ function ResignationsList() {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh",  response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -87,17 +87,17 @@ function ResignationsList() {
     }, [])
 
 
-    const [ShowDelModel, setShowDelModel] = useState(false)
-    const setDeleteAlert = async (e) => {
-        setShowDelModel(!ShowDelModel)
-        setanyofId(e.currentTarget.getAttribute("data-key"))
-    }
-    const API_DELETE_URL = "/employee_resignation/DeleteResignation"
+    // const [ShowDelModel, setShowDelModel] = useState(false)
+    // const setDeleteAlert = async (e) => {
+    //     setShowDelModel(!ShowDelModel)
+    //     setanyofId(e.currentTarget.getAttribute("data-key"))
+    // }
+    // const API_DELETE_URL = "/employee_resignation/DeleteResignation"
 
-    const [anyofId, setanyofId] = useState(null)
-    const bodyOfdata = {
-        "Resign_code": anyofId,
-    }; 
+    // const [anyofId, setanyofId] = useState(null)
+    // const bodyOfdata = {
+    //     "Resign_code": anyofId,
+    // }; 
 
     return (
         <>
@@ -128,7 +128,7 @@ function ResignationsList() {
                                 <td>{items.Resign_abbr}</td>
                                 <td>{items.Sort_key}</td>
                                 <td><button className="editBtnTable">Edit</button></td>
-                                        <td><button onClick={setDeleteAlert} data-key={items?.Resign_code} className="deleteBtnTable">Delete</button></td>
+                                        {/* <td><button onClick={setDeleteAlert} data-key={items?.Resign_code} className="deleteBtnTable">Delete</button></td> */}
                             </tr>
                                 )
                             })}
@@ -150,7 +150,7 @@ function ResignationsList() {
                 </div>
             </div>
         </div>
-            {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+            {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
 
         </>
     );

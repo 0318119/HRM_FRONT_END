@@ -1,0 +1,45 @@
+.SecondaryHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.SecondaryHeader h2{
+    font-weight: 600;
+    margin: 0px;
+    color: black;
+}
+.EmployeeHeading{
+    color: black;
+}
+.SecondaryMainBody{
+    padding: 80px 80px;
+}
+.TableBody{
+    padding-top: 40px;
+}
+.DeleteButton{
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+    color: red;
+}
+.editButton{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.EditModeTag{
+    padding-inline: 15px;
+    padding-block: 5px;
+    border:1px solid rgb(8, 129, 70);
+    color: rgb(8, 129, 70);
+    background-color: rgb(35, 229, 135);
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

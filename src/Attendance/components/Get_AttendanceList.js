@@ -10,6 +10,10 @@ function Get_Attendancelist() {
 
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
+  var Emp_code = localStorage.getItem("Emp_code");
+
+  
+
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false);
@@ -17,7 +21,7 @@ function Get_Attendancelist() {
   const [formErr, setformErr] = useState(false)
   const [AttendanceMon, SetAttendanceMon] = useState("")
   const [AttendanceYear, SetAttendanceYear] = useState("")
-  const [AttendanceID, setAttendanceID] = useState("")
+  const [AttendanceID, setAttendanceID] = useState(null)
   const showAlert = (message, type) => {
     setformErr({
       message: message,
@@ -35,10 +39,14 @@ function Get_Attendancelist() {
 
 
   const AttendanceData = JSON.stringify({
-    "Employee_Id": AttendanceID,
+    "Employee_Id": AttendanceID !== null ? AttendanceID : "-1",
     "Month": AttendanceMon ? AttendanceMon : name == "January" ? "1" : name == "February" ? "2" : name == "March" ? "3" : name == "April" ? "4" : name == "May" ? "5" : name == "June" ? "6" : name == "July" ? "7" : name == "August" ? "8" : name == "September" ? "9" : name == "October" ? "10" : name == "November" ? "11" : name == "December" ? "12" : false ,
     "Year": AttendanceYear ? AttendanceYear : getYear,
-  })
+})
+
+console.log(AttendanceData,"dddddd")
+
+
   const [isOnLoadShow, setOnLoadShow] = useState(false)
   const [isDBtn, setDBtn] = useState(false)
 
@@ -63,7 +71,7 @@ const Attendance = async (e) => {
           return response.json()
         }).then(response => {
           localStorage.setItem("refresh",  response.referesh_token);
-          secureLocalStorage.setItem("access_token", response.access_token);
+          localStorage.setItem("access_token", response.access_token);
           setAttendanceSheet(response?.data?.[0])
           setLoading(false);
           setBtnEnaledAndDisabled(false);
@@ -117,7 +125,7 @@ const Attendance = async (e) => {
           return response.json()
         }).then(response => {
           localStorage.setItem("refresh", response.referesh_token);
-          secureLocalStorage.setItem("access_token", response.access_token);
+          localStorage.setItem("access_token", response.access_token);
           setGetAttendanceName(response?.data)
         }).catch((errs) => {})
       }
@@ -138,13 +146,9 @@ const Attendance = async (e) => {
     const gotoPrint = () => {
       window.print()
     }
-
     btnprint.addEventListener('click', gotoPrint, false)
-
-
     return () => {
       btnprint.removeEventListener('click', gotoPrint, false)
-
     }
   }, [])
 
@@ -167,7 +171,7 @@ const Attendance = async (e) => {
               <div className="form-group w-100 ">
                 <label htmlFor="">Employee Id</label>
                 <select name="" id="" onChange={(e) => setAttendanceID(e.target.value)} className='form-select AttendanceSeleect'>
-                  <option value="select">Select Employee</option>
+                  <option selected={true} value="" >All Employees</option>
                   {getAttendanceName.map((items)=>{
                     return(
                       <option value={items?.Emp_code}>{items?.Emp_code + " " + items.Emp_name}</option>
@@ -216,9 +220,9 @@ const Attendance = async (e) => {
                 <select name="" id="" className='form-select AttendanceSeleect' onChange={(e) => 
                   SetAttendanceYear(e.target.value)
                 }>
-                  <option selected>{getYear}</option>
+                  <option selected={2023 == getYear ? true : false}>{getYear}</option>
                   <option value="2022">2022</option>
-                  <option value="2023">2023</option>
+                  {/* <option value="2023">2023</option> */}
                 </select>
               </div>
               <div>
@@ -245,32 +249,38 @@ const Attendance = async (e) => {
                 <div className='w-100'>
                   <span>
                     {/* <p>Employeen code : {attendanceSheet[0]?.Emp_Code}</p> */}
-                    <p>Name :{attendanceSheet[0]?.Emp_name} </p>
+                    {/* <p>Name :{attendanceSheet[0]?.Emp_name} </p> */}
                   </span>
                   <span>
-                    <p>Section : {attendanceSheet[0]?.Section_name}</p>
+                    {/* <p>Section : {attendanceSheet[0]?.Section_name}</p> */}
                     {/* <p>Description :</p> */}
                   </span>
                 </div>
                 <table className='table table-striped border' >
                   <thead >
                     <tr>
+                      <td>Employee Code</td>
+                      <td>Employee Name</td>
+                      <td>Day</td>
                       <td>Date</td>
                       <td>Time In</td>
                       <td>Time Out</td>
                       <td>Shift Durration</td>
-                      <td>Remarks</td>
+                      {/* <td>Remarks</td> */}
                     </tr>
                   </thead>
                     <tbody >
                     {attendanceSheet.map((items) => {
                       return (
                         <tr>
+                          <th>{items?.Emp_code ? items?.Emp_code : "Empty"}</th>
+                          <th>{items?.Emp_name ? items?.Emp_name : "Empty"}</th>
+                          <th>{items?.Day_Name ? items?.Day_Name : "Empty"}</th>
                           <th>{items?.Attendance_Date ? items?.Attendance_Date.slice(0,10) : "Empty"}</th>
                           <th>{items?.Emp_Time_In_HH ? items?.Emp_Time_In_HH : "--"} : {items?.Emp_Time_In_MM ? items?.Emp_Time_In_MM : "--"}</th>
                           <th>{items?.Emp_Time_Out_HH ? items?.Emp_Time_Out_HH : "--"} : {items?.Emp_Time_Out_MM ? items?.Emp_Time_Out_MM : "--"}</th>
                           <th>{items?.Shift_Duration ? items?.Shift_Duration : ""}</th>
-                          <th>{items?.Remarks}</th>
+                          {/* <th>{items?.Remarks}</th> */}
                         </tr>
                       )
                     })}

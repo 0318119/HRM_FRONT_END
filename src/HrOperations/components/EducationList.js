@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EducationList.css";
 import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import EmpListForm from "../form/EmpListForm";
 const config = require('../../config.json')
@@ -59,7 +59,7 @@ function EducationList() {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh",  response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -85,17 +85,17 @@ function EducationList() {
         GetEmpList()
     }, [])
 
-    const [ShowDelModel, setShowDelModel] = useState(false)
-    const setDeleteAlert = async (e) => {
-        setShowDelModel(!ShowDelModel)
-        setanyofId(e.currentTarget.getAttribute("data-key"))
-    }
-    const API_DELETE_URL = "/eduation_code/DeleteEducation"
+    // const [ShowDelModel, setShowDelModel] = useState(false)
+    // const setDeleteAlert = async (e) => {
+    //     setShowDelModel(!ShowDelModel)
+    //     setanyofId(e.currentTarget.getAttribute("data-key"))
+    // }
+    // const API_DELETE_URL = "/eduation_code/DeleteEducation"
 
-    const [anyofId, setanyofId] = useState(null)
-    const bodyOfdata = {
-        "Edu_code": anyofId,
-    };
+    // const [anyofId, setanyofId] = useState(null)
+    // const bodyOfdata = {
+    //     "Edu_code": anyofId,
+    // };
 
 
     return (
@@ -133,7 +133,7 @@ function EducationList() {
                                         <td>{items.Edu_abbr}</td>
                                         <td>{items.Sort_key}</td>
                                         <td><button className="editBtnTable">Edit</button></td>
-                                        <td><button onClick={setDeleteAlert} data-key={items?.Edu_code} className="deleteBtnTable">Delete</button></td>
+                                        {/* <td><button onClick={setDeleteAlert} data-key={items?.Edu_code} className="deleteBtnTable">Delete</button></td> */}
                                     </tr>
                                 )
                             })}
@@ -156,7 +156,7 @@ function EducationList() {
                 </div>
             </div>
         </div>
-            {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+            {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
           </>
     );
 }

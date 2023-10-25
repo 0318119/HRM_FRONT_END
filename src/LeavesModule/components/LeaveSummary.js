@@ -13,8 +13,8 @@ function LeaveSummary() {
     var userId = new URLSearchParams(search).get('userId')
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
-    var Emp_code = secureLocalStorage.getItem("Emp_code");
-    var Company_code = secureLocalStorage.getItem("company_code");
+    var Emp_code = localStorage.getItem("Emp_code");
+    var Company_code = localStorage.getItem("company_code");
     const [isLeaveSummaryData,setLeaveSummaryData] = useState([])
     const [isLeaveSummaryErr,setLeaveSummaryErr] = useState(false)
     const [isAttachmentsData, setAttachmentsData] = useState([])
@@ -69,7 +69,7 @@ function LeaveSummary() {
               if (response.messsage == "timeout error") { navigate("/") }
               else {
                 localStorage.setItem("refresh", response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 if (response.success) {
                     setLeaveSummaryData(response.data[0]?.[0])
                 }else{
@@ -123,7 +123,7 @@ function LeaveSummary() {
                 navigate("/");
             } else {
                 localStorage.setItem("refresh", response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 if(response.success){
                     setAttachmentsData(response?.data?.[0])
                     setLoading2(false)
@@ -144,82 +144,207 @@ function LeaveSummary() {
             setAttachmentsErr(error.message)
         });
     }
-
-    const approveRejectStep = async (argu,e) => {
-        e.preventDefault(e)
-        await fetch(
-            `${config["baseUrl"]}/leaveApprovals/${argu == "step" ? 'StepBackLeave' : argu == "reject" ? 'RejectLeave' : argu =="approve"? 'ApproveLeave':""}`,
-            {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Tran_Code": userId,
-                    "remarks" : isRemarks
-                })
-            }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.messsage == "unauthorized") {
-                await fetch(
-                    `${config["baseUrl"]}/leaveApprovals/${argu == "step" ? 'StepBackLeave' : argu == "reject" ? 'RejectLeave' : argu =="approve"? 'ApproveLeave':""}`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                            refereshToken: `Bareer ${get_refresh_token}`,
-                        },
-                        body: JSON.stringify({
-                            "Tran_Code": userId,
-                            "remarks" : isRemarks
-                        })
-                    }
-                ).then((response) => {
-                        return response.json();
-                    }).then((response) => {
-                        if (response.messsage == "timeout error") { navigate("/") }
-                        else {
-                            localStorage.setItem("refresh", response.referesh_token);
-                            secureLocalStorage.setItem("access_token", response.access_token);
-                            if (response.success) {
-                                setmodal(false)
-                                showAlert("Done", "success")
-                                setTimeout(() => {
-                                    window.location.reload();
-                                }, 1000)
-                            } else {
-                                showAlert(response.messsage, "warning")
-                            }
-                        }
-                    }).catch((error) => {
-                        showAlert(error.messsage, "warning")
-                    });
-            } else {
-                if (response.success) {
-                    setmodal(false)
-                    showAlert("Done", "success")
-                    console.log("success",response)
-
-                    // setTimeout(() => {
-                    //     window.location.reload();
-                    // }, 1000)
-                } else {
-                    showAlert(response.messsage, "warning")
-                    console.log("warning",response)
-                }
-            }
-        }).catch((error) => {
-            showAlert(error.messsage, "warning")
-            console.log("error",error)
-        });
+    // STEP BACK APPLICATION API CALL ==============================================================
+    const stepBackLeave = async (e) => {
+      await fetch(
+          `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,
+          {
+              method: "POST",
+              headers: {
+                  "content-type": "application/json",
+                  accessToken: `Bareer ${get_access_token}`,
+              },
+              body: JSON.stringify({
+                  "Tran_Code": userId,
+                  "remarks" : isRemarks
+              })
+          }
+      ).then((response) => {
+          return response.json();
+      }).then(async (response) => {
+          if (response.messsage == "unauthorized") {
+              await fetch(
+                  `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,{
+                      method: "POST",
+                      headers: {
+                          "content-type": "application/json",
+                          refereshToken: `Bareer ${get_refresh_token}`,
+                      },
+                      body: JSON.stringify({
+                          "Tran_Code": userId,
+                          "remarks" : isRemarks
+                      })
+                  }
+              ).then((response) => {
+                      return response.json();
+                  }).then((response) => {
+                      if (response.messsage == "timeout error") { navigate("/") }
+                      else {
+                          localStorage.setItem("refresh", response.referesh_token);
+                          localStorage.setItem("access_token", response.access_token);
+                          if (response.success) {
+                            showAlert("You have step back this leave Applicaion.", "success")
+                            setTimeout(() => {
+                              window.location.reload();
+                              setmodal(false)
+                          }, 3000)
+                          } else {
+                              showAlert(response.messsage, "warning")
+                          }
+                      }
+                  }).catch((error) => {
+                      showAlert(error.messsage, "warning")
+                  });
+          } else {
+              if (response.success) {
+                  showAlert("You have step back this leave Applicaion.", "success")
+                  setTimeout(() => {
+                      window.location.reload();
+                      setmodal(false)
+                  }, 3000)
+              } else {
+                  showAlert(response.messsage, "warning")
+              }
+          }
+      }).catch((error) => {
+          showAlert(error.messsage, "warning")
+      });
 
     }
+    // REJECT LEAVE APPLICATION API CALL ============================================
+    const rejectLeaveFun = async (e) => {
+      await fetch(
+          `${config["baseUrl"]}/leaveApprovals/RejectLeave`,
+          {
+              method: "POST",
+              headers: {
+                  "content-type": "application/json",
+                  accessToken: `Bareer ${get_access_token}`,
+              },
+              body: JSON.stringify({
+                  "Tran_Code": userId,
+                  "remarks" : isRemarks
+              })
+          }
+      ).then((response) => {
+          return response.json();
+      }).then(async (response) => {
+          if (response.messsage == "unauthorized") {
+              await fetch(
+                  `${config["baseUrl"]}/leaveApprovals/RejectLeave`,{
+                      method: "POST",
+                      headers: {
+                          "content-type": "application/json",
+                          refereshToken: `Bareer ${get_refresh_token}`,
+                      },
+                      body: JSON.stringify({
+                          "Tran_Code": userId,
+                          "remarks" : isRemarks
+                      })
+                  }
+              ).then((response) => {
+                      return response.json();
+                  }).then((response) => {
+                      if (response.messsage == "timeout error") { navigate("/") }
+                      else {
+                          localStorage.setItem("refresh", response.referesh_token);
+                          localStorage.setItem("access_token", response.access_token);
+                          if (response.success) {
+                            showAlert("You have reject this leave Applicaion.", "success")
+                            setTimeout(() => {
+                              window.location.reload();
+                              setmodal(false)
+                          }, 3000)
+                          } else {
+                              showAlert(response.messsage, "warning")
+                          }
+                      }
+                  }).catch((error) => {
+                      showAlert(error.messsage, "warning")
+                  });
+          } else {
+              if (response.success) {
+                  showAlert("You have reject this leave Applicaion.", "success")
+                  setTimeout(() => {
+                      window.location.reload();
+                      setmodal(false)
+                  }, 3000)
+              } else {
+                  showAlert(response.messsage, "warning")
+              }
+          }
+      }).catch((error) => {
+          showAlert(error.messsage, "warning")
+      });
 
+    }
+    // APPROVED LEAVE APPLICATION API CALL ============================================
+    const approvedLeaveFun = async (e) => {
+      await fetch(
+          `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,
+          {
+              method: "POST",
+              headers: {
+                  "content-type": "application/json",
+                  accessToken: `Bareer ${get_access_token}`,
+              },
+              body: JSON.stringify({
+                "Tran_Code": userId,
+                "remarks" : ""
+            })
+          }
+      ).then((response) => {
+          return response.json();
+      }).then(async (response) => {
+          if (response.messsage == "unauthorized") {
+              await fetch(
+                  `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,{
+                      method: "POST",
+                      headers: {
+                          "content-type": "application/json",
+                          refereshToken: `Bareer ${get_refresh_token}`,
+                      },
+                      body: JSON.stringify({
+                          "Tran_Code": userId,
+                          "remarks" : ""
+                      })
+                  }
+              ).then((response) => {
+                      return response.json();
+                  }).then((response) => {
+                      if (response.messsage == "timeout error") { navigate("/") }
+                      else {
+                          localStorage.setItem("refresh", response.referesh_token);
+                          localStorage.setItem("access_token", response.access_token);
+                          if (response.success) {
+                            showAlert("You have Approved this leave Applicaion.", "success")
+                            setTimeout(() => {
+                              window.location.reload();
+                              setmodal(false)
+                          }, 3000)
+                          } else {
+                              showAlert(response.messsage, "warning")
+                          }
+                      }
+                  }).catch((error) => {
+                      showAlert(error.messsage, "warning")
+                  });
+          } else {
+              if (response.success) {
+                  showAlert("You have Approved this leave Applicaion.", "success")
+                  setTimeout(() => {
+                      window.location.reload();
+                      setmodal(false)
+                  }, 3000)
+              } else {
+                  showAlert(response.messsage, "warning")
+              }
+          }
+      }).catch((error) => {
+          showAlert(error.messsage, "warning")
+      });
 
-
+    }
 
     useEffect(() => {
         getDataOFLeave()
@@ -259,7 +384,6 @@ function LeaveSummary() {
                             <input type="text" className='form-control' value={isLeaveSummaryData?.Leave_Balance_days ? isLeaveSummaryData?.Leave_Balance_days : "Not Found"} readOnly/>
                         </div>
                     </div>
-
                     <div className="leaveSummaryDetailsBox">
                         <div className="form-group">
                             <label htmlFor="">From Date</label>
@@ -286,12 +410,12 @@ function LeaveSummary() {
                     <div className='mx-3 mb-3'>
                         <button className='mx-1' onClick={(e) => {
                             e.preventDefault(e)
-                            setStep("step")
+                            setStep("StepBack")
                             setmodal(true)
                         }}>Step Back</button>
                         <button className='mx-1' onClick={(e) => {
                             e.preventDefault(e)
-                            setStep("approve")
+                            setStep("approved")
                             setmodal(true)
                         }}>Aprove</button>
                         <button className='mx-1' onClick={(e) => {
@@ -342,11 +466,10 @@ function LeaveSummary() {
                           return (
                             <tr>
                               <td>{items?.FileName ? items?.FileName.slice(0, 8) : "Not Found"}</td>
-                              <td>{items?.FileName ? <a href={`${config["baseUrl"]}/${items?.FileName}`} download>{items?.FileName.slice(0, 8)}</a> : "Not Found"}</td>
+                              <td>{items?.FileName ? <a href={`${config["baseUrl"]}/${items?.File_Path}`} download target='_blank'> {items?.FileName.slice(0, 8)}</a> : "Not Found"}</td>
                               <td>{items?.Posting_date ? items?.Posting_date.slice(0, 10) : "Not Found"}</td>
                               <td>{items?.Reason ? items?.Reason : "Not Found"}</td>
                               <td><button className="editBtnTable" onClick={(e) => {
-                                // DeleteAttactmentsFile(items?.Tran_Code)
                               }}>Delete</button></td>
                             </tr>
                           )
@@ -364,7 +487,7 @@ function LeaveSummary() {
         </div>
 
         {
-            modal == true ?
+            modal ?
             <div className="stepBoxMain">
                 <div className="stepBoxInner">
                     <div className=''>
@@ -375,7 +498,7 @@ function LeaveSummary() {
                             )}
                         </ul>
                         <div className='btnBox'>
-                            <button onClick={(e) => approveRejectStep(step,e)}>yes</button>
+                            <button onClick={(e) => step == "StepBack" ? stepBackLeave() : step == "reject" ? rejectLeaveFun() : step == "approved" ? approvedLeaveFun() : false}>yes</button>
                             <button onClick={() => setmodal(false)}>No</button>
                         </div>
                     </div>

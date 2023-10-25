@@ -8,8 +8,8 @@ const config = require('../../config.json')
 function TransactionLeaverDel() {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
-    var Emp_code = secureLocalStorage.getItem("Emp_code");
-    var Company_code = secureLocalStorage.getItem("company_code");
+    var Emp_code = localStorage.getItem("Emp_code");
+    var Company_code = localStorage.getItem("company_code");
     const navigate = useNavigate()
     const [isGetEmpData, setGetEmpData] = useState([])
     const [isGetEmpDataErr,setGetEmpDataErr] = useState(false)
@@ -19,6 +19,8 @@ function TransactionLeaverDel() {
         Department: "",
         Designation: ""
     })
+    const [isGetDataOFLeave, setGetDataOFLeave] = useState([])
+    const [isGetDataOFLeaveErr, setGetDataOFLeaveErr] = useState(false)
 
 
     // GET ALL EMPLOYEES DATA API CALL ================================
@@ -37,7 +39,7 @@ function TransactionLeaverDel() {
               return response.json()
             }).then(response => {
                 localStorage.setItem("refresh", response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 if(response.success){
                     setGetEmpData(response?.data)
                     console.log("check Employee data",response)
@@ -80,7 +82,7 @@ function TransactionLeaverDel() {
               return response.json()
             }).then(response => {
                 localStorage.setItem("refresh", response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 if(response.success){
                     setDepartAndDesign({
                         Department : response.data[0]?.[0]?.Dept_name,
@@ -105,8 +107,7 @@ function TransactionLeaverDel() {
         }).catch((errs) => { setDepartAndDesignErr(errs?.message) })
     }
 
-    const [isGetDataOFLeave,setGetDataOFLeave] = useState([])
-    const [isGetDataOFLeaveErr, setGetDataOFLeaveErr] = useState(false)
+    
 
     // GET DEPARTMENT AND DESIGNATION API CALL ========================
     const getDataOfLeaveDeletion = async (e) => {
@@ -130,7 +131,7 @@ function TransactionLeaverDel() {
                 return response.json()
             }).then(response => {
                 localStorage.setItem("refresh", response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
             }).catch((errs) => { setGetDataOFLeaveErr(errs?.message)})
             }
             else if (response.messsage == "timeout error") { navigate('/') }

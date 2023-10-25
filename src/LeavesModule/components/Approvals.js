@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/css/Approval.css'
 import { useNavigate } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
+import {saveAs} from "file-saver";
 import { Modal } from '@mui/material';
 const config = require('../../config.json')
 
@@ -18,7 +19,8 @@ const Approvals = () => {
     const [trancode, settrancode] = useState("")
     const [isSaveleaveAlert, setSaveleaveAlert] = useState(false)
     const [isRemark_Modal, setRemarkModal] = useState(false)
-    const [remarks, setRemarks] = useState('')
+    const [remarks, setRemarks] = useState("")
+    const [isRejectModal, setRejectModal] = useState(false)
 
     const showAlert = (message, type) => {
         setSaveleaveAlert({
@@ -62,7 +64,7 @@ const Approvals = () => {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh", response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -83,7 +85,7 @@ const Approvals = () => {
 
     const approveRejectStep = async (e, code) => {
         await fetch(
-            `${config["baseUrl"]}/leaveApprovals/${e == "step" ? 'StepBackLeave' : e == "reject" ? 'RejectLeave' : e =="approve"? 'ApproveLeave':""}`,
+            `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,
             {
                 method: "POST",
                 headers: {
@@ -99,7 +101,7 @@ const Approvals = () => {
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
                 await fetch(
-                    `${config["baseUrl"]}/leaveApprovals/${e == "step" ? 'StepBackLeave' : e == "reject" ? 'RejectLeave' : e == "approve" ? 'ApproveLeave' : ""}`,
+                    `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,
                     {
                         method: "POST",
                         headers: {
@@ -118,14 +120,12 @@ const Approvals = () => {
                         if (response.messsage == "timeout error") { navigate("/") }
                         else {
                             localStorage.setItem("refresh", response.referesh_token);
-                            secureLocalStorage.setItem("access_token", response.access_token);
+                            localStorage.setItem("access_token", response.access_token);
                             if (response.success) {
-                                setmodal(false)
-                                alert(response.messsage)
-                                showAlert("Done", "success")
+                                showAlert("You have been approved this leave application", "success")
                                 setTimeout(() => {
                                     window.location.reload();
-                                }, 1000)
+                                }, 3000)
                             } else {
                                 showAlert(response.messsage, "warning")
                                 console.log("response.data",response)
@@ -137,15 +137,12 @@ const Approvals = () => {
                     });
             } else {
                 if (response.success) {
-                    setmodal(false)
-                    alert(response.messsage)
-                    showAlert("Done", "success")
+                    showAlert("You have been approved this leave application", "success")
                     setTimeout(() => {
                         window.location.reload();
-                    }, 1000)
+                    }, 3000)
                 } else {
                     showAlert(response.messsage, "warning")
-                    console.log("response.data",response)
                 }
             }
         }).catch((error) => {
@@ -153,6 +150,147 @@ const Approvals = () => {
         });
 
     }
+
+    const StepBack = async (code) => {
+        await fetch(
+            `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,
+            {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    accessToken: `Bareer ${get_access_token}`,
+                },
+                body: JSON.stringify({
+                    "Tran_Code": code,
+                    "remarks": remarks
+                })
+            }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.messsage == "unauthorized") {
+                await fetch(
+                    `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json",
+                            refereshToken: `Bareer ${get_refresh_token}`,
+                        },
+                        body: JSON.stringify({
+                            "Tran_Code": code,
+                            "remarks" : remarks
+                        })
+                    }
+                )
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((response) => {
+                        if (response.messsage == "timeout error") { navigate("/") }
+                        else {
+                            localStorage.setItem("refresh", response.referesh_token);
+                            localStorage.setItem("access_token", response.access_token);
+                            if (response.success) {
+                                showAlert("You have Stepback this Leave Application.", "success")
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 3000)
+                            } else {
+                                showAlert(response.message, "warning")
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        showAlert(error.messsage, "warning")
+                    });
+            } else {
+                if (response.success) {
+                    showAlert("You have Stepback this Leave Application.", "success")
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000)
+                } else {
+                    showAlert(response.message, "warning")
+                }
+            }
+        }).catch((error) => {
+            showAlert(error.messsage, "warning")
+        });
+
+    }
+
+    const RejectLeave = async (code) => {
+        await fetch(
+            `${config["baseUrl"]}/leaveApprovals/RejectLeave`,
+            {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json",
+                    accessToken: `Bareer ${get_access_token}`,
+                },
+                body: JSON.stringify({
+                    "Tran_Code": code,
+                    "remarks": remarks
+                })
+            }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.messsage == "unauthorized") {
+                await fetch(
+                    `${config["baseUrl"]}/leaveApprovals/RejectLeave`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json",
+                            refereshToken: `Bareer ${get_refresh_token}`,
+                        },
+                        body: JSON.stringify({
+                            "Tran_Code": code,
+                            "remarks": remarks
+                        })
+                    }
+                )
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((response) => {
+                        if (response.messsage == "timeout error") { navigate("/") }
+                        else {
+                            localStorage.setItem("refresh", response.referesh_token);
+                            localStorage.setItem("access_token", response.access_token);
+                            if (response.success) {
+                                showAlert("You have Rejected  Application.", "success")
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 3000)
+                            } else {
+                                showAlert(response.message, "warning")
+                            }
+                        }
+                    })
+                    .catch((error) => {
+                        showAlert(error.messsage, "warning")
+                    });
+            } else {
+                if (response.success) {
+                    showAlert("You have Rejected  Application.", "success")
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000)
+                } else {
+                    showAlert(response.message, "warning")
+                }
+            }
+        }).catch((error) => {
+            showAlert(error.messsage, "warning")
+        });
+
+    }
+
+
+    
 
     useEffect(() => {
         GetApprovalInfo()
@@ -183,6 +321,8 @@ const Approvals = () => {
                                                 <th scope="col">Employee name</th>
                                                 <th scope="col">Location Name</th>
                                                 <th scope="col">Leave Name</th>
+                                                <th scope="col">File</th>
+                                                <th scope="col">Reason</th>
                                                 <th scope="col">Start Date</th>
                                                 <th scope="col">End Date</th>
                                                 <th scope="col">Leave Days</th>
@@ -196,31 +336,36 @@ const Approvals = () => {
                                             {isApprovalData?.map((item) => {
                                                 return (
                                                     <tr>
-                                                        <td scope="row">{item.Tran_Code}</td>
-                                                        <td>{item.EmployeeName}</td>
-                                                        <td>{item.LocationName}</td>
-                                                        <td>{item.Leave_name}</td>
-                                                        <td>{item.StartDate}</td>
-                                                        <td>{item.EndDate}</td>
-                                                        <td>{item.LeaveDays}</td>
-                                                        <td>{item.Status}</td>
-                                                        <td>{item.Posting_date}</td>
+                                                        <td scope="row">{item.Tran_Code ? item?.Tran_Code : "Not Found"}</td>
+                                                        <td>{item?.EmployeeName ? item?.EmployeeName : "Not Found"}</td>
+                                                        <td>{item?.LocationName ? item?.LocationName : "Not Found"}</td>
+                                                        <td>{item?.Leave_name ? item?.Leave_name : "Not Found"}</td>
+                                                        {/* <td>{item?.FileName !==null ? "Downlaod" : "Not Found"}</td> */}
+                                                        <td>{item?.FileName ? <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
+                                                            onClick={(e) => {
+                                                                const imageSource = `${config["baseUrl"]}/${item?.File_Path}`;
+                                                                saveAs(imageSource, "employeesAttachments");
+                                                            }}
+                                                        >Download</a> : "Not Found"}</td>
+                                                        <td>{item?.Reason ? item?.Reason : "Not Found"}</td>
+                                                        <td>{item?.StartDate ? item?.StartDate : "Not Found"}</td>
+                                                        <td>{item?.EndDate ? item?.EndDate  :"Not Found"}</td>
+                                                        <td>{item?.LeaveDays ? item?.LeaveDays : "Not Found"}</td>
+                                                        <td>{item?.Status ? item?.Status : "Not Found"}</td>
+                                                        <td>{item?.Posting_date ? item?.Posting_date : "Not Found"}</td>
                                                         <td>
                                                             <button className='mx-1' onClick={() => {
                                                                 setRemarkModal(true)
-                                                                setStep("step")
-                                                                settrancode(item.Tran_Code, item.remarks)
-                                                                // setmodal(true)
+                                                                settrancode(item?.Tran_Code)
                                                             }}>Step Back</button>
                                                             <button className='mx-1' onClick={() => {
                                                                 setStep("approve")
-                                                                settrancode(item.Tran_Code)
+                                                                settrancode(item?.Tran_Code)
                                                                 setmodal(true)
                                                             }}>Aprove</button>
                                                             <button className='mx-1' onClick={() => {
-                                                                setStep("reject")
-                                                                settrancode(item.Tran_Code)
-                                                                setmodal(true)
+                                                                settrancode(item?.Tran_Code)
+                                                                setRejectModal(true)
                                                             }}>Reject</button>
                                                         </td>
 
@@ -269,18 +414,42 @@ const Approvals = () => {
                 <div className="Remarkmodal">
                     <div className="RemarkmodalInner">
                         <div className=''>
+                            <ul className="px-3">
+                                {isSaveleaveAlert && (
+                                    <li className={`alert alert-${isSaveleaveAlert.type}` + " " + "mt-4"}>{`${isSaveleaveAlert.message}`}</li>
+                                )}
+                            </ul>
                             <h4>Please Give Your Remarks</h4>
                                  <textarea name="" id="" cols="30" rows="7" className='form-control' onChange={(e) => setRemarks(e.target.value)} /> 
                             <div className='btnBox'>
-                                <button onClick={() => approveRejectStep(step, trancode,remarks)}>Submit</button>
+                                <button onClick={() => { StepBack(trancode) }}>Submit</button>
                                 <button onClick={() => setRemarkModal(false)}>Cancel</button>
-
                             </div>
                         </div>
                     </div>
                 </div>
                 :""
-        }
+            }
+            {isRejectModal ?
+                <div className="Remarkmodal">
+                    <div className="RemarkmodalInner">
+                        <div className=''>
+                            <ul className="px-3">
+                                {isSaveleaveAlert && (
+                                    <li className={`alert alert-${isSaveleaveAlert.type}` + " " + "mt-4"}>{`${isSaveleaveAlert.message}`}</li>
+                                )}
+                            </ul>
+                            <h4>Please Give Your Remarks</h4>
+                            <textarea name="" id="" cols="15" rows="5" className='form-control' onChange={(e) => setRemarks(e.target.value)} />
+                            <div className='btnBox'>
+                                <button onClick={() => { RejectLeave(trancode) }}>Submit</button>
+                                <button onClick={() => setRejectModal(false)}>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                : ""
+            }
 
         </>
     )

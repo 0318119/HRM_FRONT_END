@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from "react";
 import "../assets/css/EmployeeCategory.css";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 import { Link } from "react-router-dom";
 const config = require('../../config.json')
@@ -19,32 +19,32 @@ function EmployeeList() {
 
 // =========================GetApi=======//
 
-  const dispatch = useDispatch();
-  const getData = useSelector((state) => state.getData);
-  const apiStatus = useSelector((state) => state.getData.status);
-  const getDataError = useSelector((state) => state.getData.error);
+  // const dispatch = useDispatch();
+  // const getData = useSelector((state) => state.getData);
+  // const apiStatus = useSelector((state) => state.getData.status);
+  // const getDataError = useSelector((state) => state.getData.error);
 
-  // ==================================================
-  const API_URL = "/employment_category/GetEmploymentCategory"
-  // console.log("GetEmploymentTypeCode",getData)
-  useEffect(() => {
-    dispatch(fetchApiData(API_URL));
-  }, [dispatch]);
-
-
+  // // ==================================================
+  // const API_URL = "/employment_category/GetEmploymentCategory"
+  // // console.log("GetEmploymentTypeCode",getData)
+  // useEffect(() => {
+  //   dispatch(fetchApiData(API_URL));
+  // }, [dispatch]);
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key"))
-  }
-  const API_DELETE_URL = "/employment_category/DeleteEmploymentCategory"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Emp_Category_code": anyofId,
-  };
+
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key"))
+  // }
+  // const API_DELETE_URL = "/employment_category/DeleteEmploymentCategory"
+
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Emp_Category_code": anyofId,
+  // };
 
 
 
@@ -57,7 +57,7 @@ function EmployeeList() {
         <span className="EmployeeCatListHeader py-2">Employee Category List</span>
         </div>
         <ul className="p-0 mx-2 mt-2">
-          {getDataError == "Fetched" ? "" : <li className={`alert alert-warning` + " " + "mt-1"}>{`${getDataError}`}</li>}
+          {/* {getDataError == "Fetched" ? "" : <li className={`alert alert-warning` + " " + "mt-1"}>{`${getDataError}`}</li>} */}
         </ul>
         <div className="row  py-1 px-3">
           <div className="col-lg-12 EmpCattableResponsive">     
@@ -72,18 +72,16 @@ function EmployeeList() {
               </tr>
             </thead>
             <tbody>
-              {getData?.data?.data?.[0]?.map((items) => {
-                // console.log("items", items)
+              {/* {getData?.data?.data?.[0]?.map((items) => {
                 return (
                   <tr>
                     <td>{items?.Emp_Category_code}</td>
                     <td>{items?.Emp_Category_name}</td>
                     <td>{items?.Sort_key}</td>
                     <td><button className="editBtnTable">Edit</button></td>
-                    <td><button onClick={setDeleteAlert} data-key={items?.Emp_Category_code} className="deleteBtnTable">Delete</button></td>
                   </tr>
                 )
-              })}
+              })} */}
             </tbody>
           </table>
           </div>
@@ -106,7 +104,7 @@ function EmployeeList() {
       </div>
     </div>
 
-       {ShowDelModel && (<HrDeleteModal {...{setShowDelModel, ShowDelModel,bodyOfdata, API_DELETE_URL}} warningMsg="Opps!" description="Are You Sure!" />)} 
+       {/* {ShowDelModel && (<HrDeleteModal {...{setShowDelModel, ShowDelModel,bodyOfdata, API_DELETE_URL}} warningMsg="Opps!" description="Are You Sure!" />)}  */}
     </>
   );
 }

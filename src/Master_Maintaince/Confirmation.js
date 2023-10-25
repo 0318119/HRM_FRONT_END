@@ -5,9 +5,8 @@ import Transaction_Confirmation from './components/TransactionConfirmation';
 const Confirmation = () => {
     return (
         <>
-            
-                <Header />
-                <Transaction_Confirmation />
+            <Header />
+            <Transaction_Confirmation />
         </>
     )
 }

@@ -5,8 +5,8 @@ import '../assets/css/Transaction_Marriage.css'
 function Transaction_Marri() {
 
     return (
-        <div className="container-fluid mt-5 p-2">
-            <div className="container-fluid mt-5 TransactionMarri_listContainer">
+        <div className="container-fluid">
+            <div className="container-fluid  TransactionMarri_listContainer">
                 <div className="row w-100 mx-0">
                     <span className="TransactionMarri_listHeader">
                         Transaction Marriage

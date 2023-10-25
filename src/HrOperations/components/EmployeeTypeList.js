@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import '../assets/css/EmployeeTypeList.css'
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData  } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData  } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 const config = require('../../config.json')
 
@@ -21,32 +21,31 @@ function EmployeeTypeList(props) {
   ])
 
   // ==============================================
-  const dispatch = useDispatch();
-  const getData = useSelector((state) => state.getData);
-  const apiStatus = useSelector((state) => state.getData.status);
-  const getDataError = useSelector((state) => state.getData.error);
+  // const dispatch = useDispatch();
+  // const getData = useSelector((state) => state.getData);
+  // const apiStatus = useSelector((state) => state.getData.status);
+  // const getDataError = useSelector((state) => state.getData.error);
 
-  // ==================================================
-  const API_URL = "/employment_type_code/GetEmploymentTypeCode"
-  // console.log("GetEmploymentTypeCode",getData)
-  useEffect(() => {
-    dispatch(fetchApiData(API_URL));
-  }, [dispatch]);
-
+  // // ==================================================
+  // const API_URL = "/employment_type_code/GetEmploymentTypeCode"
+  // useEffect(() => {
+  //   dispatch(fetchApiData(API_URL));
+  // }, [dispatch]);
 
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key")) 
-  }
-  const API_DELETE_URL = "/employment_type_code/DeleteEmploymentType"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Empt_Type_code": anyofId,
-  };
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key")) 
+  // }
+  // const API_DELETE_URL = "/employment_type_code/DeleteEmploymentType"
+
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Empt_Type_code": anyofId,
+  // };
  
 
   return (
@@ -59,7 +58,7 @@ function EmployeeTypeList(props) {
           </span>
           </div>
           <ul className="p-0 mx-2 mt-2">
-              {getDataError == "Fetched" ? "" : <li className={`alert alert-warning` + " " + "mt-1"}>{`${getDataError}`}</li>}
+              {/* {getDataError == "Fetched" ? "" : <li className={`alert alert-warning` + " " + "mt-1"}>{`${getDataError}`}</li>} */}
           </ul>
           <div className="row mt-2 p-3">
             <div className="col-lg-12 Tableresponsive">
@@ -76,7 +75,7 @@ function EmployeeTypeList(props) {
                 </tr>
               </thead>
               <tbody className="table-group-divider">
-              {apiStatus == "loading" && (
+              {/* {apiStatus == "loading" && (
                 <div
                   className="d-flex justify-content-center pt-2 w-100"
                   style={{ background: "white" }}
@@ -84,9 +83,8 @@ function EmployeeTypeList(props) {
                   <div class="spinner-border text-primary" role="status">
                   </div>
                 </div>
-              )}
-                {getData?.data?.data?.[0]?.map((items) => {
-                  // console.log("items", items)
+              )} */}
+                {/* {getData?.data?.data?.[0]?.map((items) => {
                   return(
                     <tr>
                       <td>{items?.Empt_Type_code}</td>
@@ -98,7 +96,7 @@ function EmployeeTypeList(props) {
                       <td><button onClick={setDeleteAlert} data-key={items?.Empt_Type_code} className="deleteBtnTable">Delete</button></td>
                 </tr>
                   )
-                })}
+                })} */}
                
               </tbody>
             </table>
@@ -118,7 +116,7 @@ function EmployeeTypeList(props) {
           </div>
         </div>
       </div>
-    {ShowDelModel && (
+    {/* {ShowDelModel && (
       
       <HrDeleteModal {
           ...{
@@ -130,7 +128,7 @@ function EmployeeTypeList(props) {
        description="Are You Sure!"
       />
       
-      )} 
+      )}  */}
  
 
      </>

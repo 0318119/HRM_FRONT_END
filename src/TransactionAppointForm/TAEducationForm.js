@@ -14,12 +14,12 @@ function TAEducationForm() {
   const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
-  var get_company_code = secureLocalStorage.getItem("company_code");
-  var get_Emp_code = secureLocalStorage.getItem("Emp_code");
+  var get_company_code = localStorage.getItem("company_code");
+  var get_Emp_code = localStorage.getItem("Emp_code");
   const search = useLocation().search
   const navigate = useNavigate()
   var userId = new URLSearchParams(search).get('userId')
-  // const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
   // const [dataLoader, setDataLoader] = useState(false);
 
 
@@ -62,7 +62,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setgetinstitute(response.data[0])
           }
         }).catch((error) => {
@@ -94,7 +94,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setgetGradeData(response.data[0])
           }
         }).catch((error) => {
@@ -125,7 +125,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setEduCodeData(response.data[0])
           }
         }).catch((error) => {
@@ -156,7 +156,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setInfo(response.data[0][0])
           }
         }).catch((error) => {
@@ -189,7 +189,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setGetTranEducation(response.data[0])
           }
         }).catch((error) => {
@@ -240,7 +240,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setLoading(false);
             setBtnEnaledAndDisabled(false);
             showAlert(response.messsage, "success")
@@ -299,7 +299,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             if (response.success == "success") {
               setLoading(false);
               setBtnEnaledAndDisabled(false);
@@ -377,7 +377,7 @@ function TAEducationForm() {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setLoading(false);
             setBtnEnaledAndDisabled(false);
             showAlert(response.messsage, "success")

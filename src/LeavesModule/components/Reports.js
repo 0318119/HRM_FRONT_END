@@ -11,6 +11,8 @@ const config = require('../../config.json')
 const Reports = () => {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
+    var Emp_Code = localStorage.getItem("Emp_code");
+    // console.log(Emp_Code,"sssss")
     const navigate = useNavigate()
     const [isSaveleaveAlert, setSaveleaveAlert] = useState(false)
     const [getReportLocation, setReportLocation] = useState([])
@@ -25,6 +27,8 @@ const Reports = () => {
     const [isBranchLocation, setBranchLocation] = useState(null)
     const [isEmployeeCode, setisEmployeeCode] = useState(null)
     const [isDownloadButton, setDownloadButton] = useState(false)
+    const [isloading, setLoading] = useState(false)
+
 
 
 
@@ -69,7 +73,7 @@ const Reports = () => {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh", response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -81,7 +85,8 @@ const Reports = () => {
                         });
                 } else {
                     setReportLocation(response.data[0]);
-                    console.log(response.data, "report")
+                    console.log(response.data, "reportcccc")
+
                 }
             })
             .catch((error) => {
@@ -122,7 +127,7 @@ const Reports = () => {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh", response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -156,7 +161,7 @@ const Reports = () => {
                     return response.json()
                 }).then(response => {
                     localStorage.setItem("refresh", response.referesh_token);
-                    secureLocalStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("access_token", response.access_token);
                     setEmployeeDetail(response?.data[0])
                 }).catch((errs) => {
                 })
@@ -183,7 +188,7 @@ const Reports = () => {
                     accessToken: `Bareer ${get_access_token}`,
                 },
                 body: JSON.stringify({
-                    "Emp_code": isEmployeeCode,
+                    "Emp_code": isEmployeeCode !== null ? isEmployeeCode : Emp_Code,
                 })
             }
         )
@@ -201,7 +206,7 @@ const Reports = () => {
                                 refereshToken: `Bareer ${get_refresh_token}`,
                             },
                             body: JSON.stringify({
-                                "Emp_codes": isEmployeeCode,
+                                "Emp_codes": isEmployeeCode !== null ? isEmployeeCode : Emp_Code,
                             })
                         }
                     )
@@ -212,7 +217,7 @@ const Reports = () => {
                             if (response.messsage == "timeout error") { navigate("/") }
                             else {
                                 localStorage.setItem("refresh", response.referesh_token);
-                                secureLocalStorage.setItem("access_token", response.access_token);
+                                localStorage.setItem("access_token", response.access_token);
                                 // if (response.success) {
                                 //     showAlert("You have Applied Holidays", "success")
                                 // } else {
@@ -229,13 +234,13 @@ const Reports = () => {
                         setDownloadButton(true)
                         setLeaveTransaction(false)
                         setExportBalanceData(response.data[0])
+                        isFailed(false)
                     }else if(response.failed){
                         setFailed(true)
-                    }else{
-                        setLeaveBalance(true)
-                        setDownloadButton(true)
                         setLeaveTransaction(false)
-                        setExportBalanceData(response.data[0])   
+                    }else{
+                        setLeaveTransaction(false)  
+                        setExportBalanceData(response.data[0]) 
                     }
                     
                     console.log("exportdata", response)
@@ -249,10 +254,20 @@ const Reports = () => {
     }
 
     const [isFailed, setFailed] = useState(false)
+    
     const LeaveTransactionReport = async (e) => {
-
-
+        setLoading(true)
         e.preventDefault()
+        // var body = JSON.stringify({
+        //     "Emp_code": isEmployeeCode !== null ? isEmployeeCode : Emp_Code,
+        //     "section": isSectionCode !== null ? isSectionCode : -1,
+        //     "LocationCode": isBranchLocation !== null ? isBranchLocation : -1,
+        //     "FromDate": FromDate,
+        //     "ToDate": ToDate
+        // })
+        // console.log(body,"body")
+        // return
+
         await fetch(
             `${config["baseUrl"]}/leavesReport/LeaveTransactionButton`,
             {
@@ -262,9 +277,9 @@ const Reports = () => {
                     accessToken: `Bareer ${get_access_token}`,
                 },
                 body: JSON.stringify({
-                    "Emp_code": isEmployeeCode,
-                    "section": isSectionCode,
-                    "LocationCode": isBranchLocation,
+                    "Emp_code": isEmployeeCode !== null ? isEmployeeCode : Emp_Code,
+                    "section": isSectionCode !== null ? isSectionCode : -1,
+                    "LocationCode": isBranchLocation !== null ? isBranchLocation : -1,
                     "FromDate": FromDate,
                     "ToDate": ToDate
                 })
@@ -284,9 +299,9 @@ const Reports = () => {
                                 refereshToken: `Bareer ${get_refresh_token}`,
                             },
                             body: JSON.stringify({
-                                "Emp_code": isEmployeeCode,
-                                "section": isSectionCode,
-                                "LocationCode": isBranchLocation,
+                                "Emp_code": isEmployeeCode !== null ? isEmployeeCode : Emp_Code,
+                                "section": isSectionCode !== null ? isSectionCode : -1,
+                                "LocationCode": isBranchLocation !== null ? isBranchLocation : -1,
                                 "FromDate": FromDate,
                                 "ToDate": ToDate
                             })
@@ -299,7 +314,7 @@ const Reports = () => {
                             if (response.messsage == "timeout error") { navigate("/") }
                             else {
                                 localStorage.setItem("refresh", response.referesh_token);
-                                secureLocalStorage.setItem("access_token", response.access_token);
+                                localStorage.setItem("access_token", response.access_token);
                                 // if (response.success) {
                                 //     showAlert("You have Applied Holidays", "success")
                                 // } else {
@@ -316,12 +331,21 @@ const Reports = () => {
                         setLeaveBalance(false)
                         setLeaveTransaction(true)
                         setLeaveTransData(response.data[0])
+                        console.log(response.data,"response.data")
+                        setFailed(false)
+                        setLoading(false)
+
                     } else if (response.failed){
                         setFailed(true)
-                        console.log("failed", response.data[0])
+                        setLeaveBalance(false)
+                        setLoading(false)
+
+
+                        console.log("failed", response)
 
                     }else{
                         setFailed(false)
+                        setLeaveBalance(false)
                         setLeaveTransData(response.data[0])
 
                     }
@@ -354,7 +378,6 @@ const Reports = () => {
         FileSaver.saveAs(data, "data" + fileExtension);
     }
 
-
     return (
         <>
             <div className="container  p-2">
@@ -370,7 +393,7 @@ const Reports = () => {
                             <div className="form-group w-100 ReportDateCont">
                                 <div className=' w-100'>
                                     <label htmlFor="">From Date</label>
-                                    <input type="Date" name="" id="" value={FromDate}   className='form-control' onChange={(e) => setFromDate(e.target.value)} />
+                                    <input type="Date" name="" id="" value={FromDate}    className='form-control' onChange={(e) => setFromDate(e.target.value)} />
                                 </div>
                                 <div className=' w-100'>
                                     <label htmlFor="">To Date</label>
@@ -379,17 +402,19 @@ const Reports = () => {
                             </div>
                             <div className="form-group w-100">
                                 <label htmlFor="">Section</label>
-                                <select name="" id="" className='form-select'  onChange={(e) => { setSectionCode(e.target.value) }}>
+                                <select name="" id="" className='form-select' onChange={(e) => { setSectionCode(e.target.value) }}>
                                     {getSectionLeaveBalance?.map((item) => {
                                         return (
-                                            <option value={item.Section_code}>{item.Section_name ? item.Section_name : "Not Found"}</option>
+                                            <>
+                                                <option value={item?.Section_code}>{item?.Section_name ? item?.Section_name : "Not Found"}</option>
+                                            </>
                                         )
                                     })}
                                 </select>
                             </div>
                             <div className="form-group w-100">
                                 <label htmlFor="">Branch/Location</label>
-                                <select name="" id="" className='form-select' onChange={(e) => { setBranchLocation(e.target.value) }}>
+                                <select name="" id="" className='form-select'  onChange={(e) => { setBranchLocation(e.target.value) }}>
                                     {getReportLocation?.map((item) => {
                                         return (
                                             <option value={item.Loc_code}>{item.Loc_name ? item.Loc_name : "Not Found"}</option>
@@ -407,11 +432,10 @@ const Reports = () => {
                       </div> */}
                             <div className="form-group w-100">
                                 <label htmlFor="">Employee</label>
-                                <select name="" id="" className='form-select' onChange={(e) => setisEmployeeCode(e.target.value)}>
+                                <select  className='form-select' onChange={(e) => setisEmployeeCode(e.target.value)}>
                                     {getEmployeeDetail?.map((item) => {
                                         return (
-                                            <option value={item.Emp_code}>{item.Emp_name ? item.Emp_name : "Not Found"}</option>
-
+                                            <option selected={item.Emp_code == Emp_Code ? true : false} value={item.Emp_code}>{item.Emp_name ? item.Emp_name : "Not Found"}</option>
                                         )
                                     })}
                                 </select>
@@ -428,9 +452,7 @@ const Reports = () => {
                                     View Leave Balances
                                 </button>
 
-                                {isDownloadButton ? <button type="submit" className='btn btn-dark mx-1' onClick={DownloadExcel}>
-                                    Export Leave Balances
-                                </button> : false}
+                               
                                
 
                             </div>
@@ -440,16 +462,29 @@ const Reports = () => {
 
                 </div>
             </div>
-            {isFailedBl == "failed" ? <h5 className='eRRORtXT'>Please Fill Info First</h5> :
-    <>
-    
+            {isFailedBl  ? <h5 className='eRRORtXT'>Please Fill Info First</h5> :
+    <>     
+      
             {isLeaveBalance ?
                 <div className="container px-2">
-                <div className="container-fluid  Approvals_listContainer">
+                            <div className="container-fluid  Reports_listContainer">
                     <div className="row w-100 mx-0">
-                        <span className="Approvals_listHeader">
+                        <span className="Reports_listHeader">
                             Leave Balance
+                              <button type="submit" className='btn btn-dark mx-1' onClick={DownloadExcel}>
+                                    Export Leave Balances
+                              </button> 
                         </span>
+                                    {isloading && (
+                                        <div
+                                            className="d-flex justify-content-center align-items-center w-100"
+                                            style={{ height: "100px", background: "#d3d3d345" }}
+                                        >
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="sr-only"></span>
+                                            </div>
+                                        </div>
+                                    )}
                     </div>
                     <div className="row  p-3">
                         <div className="col-12 approvaltable">
@@ -482,18 +517,29 @@ const Reports = () => {
             }
        
          
-          {isFailed == 'failed' ? <h5 className='eRRORtXT'>Please Fill Info First</h5> :
+          {isFailed  ? <h5 className='eRRORtXT'>Please Fill Info First</h5> :
             
             <>
             {isLeaveTransaction ? <div className="container px-2">
-                <div className="container-fluid  Approvals_listContainer">
+                <div className="container-fluid  Reports_listContainer">
                     <div className="row w-100 mx-0">
-                        <span className="Approvals_listHeader">
+                        <span className="Reports_listHeader">
                             Leave Transaction
                         </span>
                     </div>
+                            {isloading && (
+                                <div
+                                    className="d-flex justify-content-center align-items-center w-100"
+                                    style={{ height: "100px", background: "#d3d3d345" }}
+                                >
+                                    <div class="spinner-border text-primary" role="status">
+                                        <span class="sr-only"></span>
+                                    </div>
+                                </div>
+                            )}
                     <div className="row  p-3">
                         <div className="col-12 approvaltable">
+                            {LeaveTransData.length > 0 ?
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -526,7 +572,9 @@ const Reports = () => {
                                     })}
 
                                 </tbody>
-                            </table>
+                            </table> : 
+                            <span>There is no data</span>
+                            }
                         </div>
                     </div>
                 </div>

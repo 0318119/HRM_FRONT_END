@@ -1,0 +1,270 @@
+.transaction_Promotion_Section {
+    /* display: flex;
+     flex-direction: row;
+     justify-content: center;
+     align-items: center; */
+    margin-top: 50px;
+    width: 100vw;
+    padding: 15px;
+
+}
+
+/* .responsiveform{
+    overflow-y: scroll;
+    height: 80vh;
+} */
+
+.transaction_Promotion_container {
+    background-color: rgba(255, 255, 255, 0.295);
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px !important;
+    margin: 0px;
+    color: white;
+    /* width: 80vw; */
+
+}
+
+
+.transaction_Promotion_Header {
+    background-color: #014f86;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.Inrement_Info {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.Inrement_Input {
+    display: flex;
+    flex-direction: column;
+}
+
+.Promotion_Date {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.Inrement_Input .input {
+    margin: 0px 5px;
+    width: 30vw !important;
+}
+
+
+.Promotion_select input {
+    width: 47vw;
+}
+
+.Promotion_Heading {
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.288);
+}
+
+.Edu_input input {
+    margin-left: 5px;
+    width: 27vw !important;
+}
+
+.Edu_input2 .top {
+    width: 27vw !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 5px;
+}
+
+.top label {
+    margin-left: 1px;
+}
+
+.top input {
+    margin-left: 5px;
+}
+
+.Promotion_Info {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Increment_Table {
+    margin-top: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+
+.TCFormHead {
+    width: 100%;
+    font-weight: 600 !important;
+    background-color: #014f86;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+@media screen and (max-width:992px) {
+    .Inrement_Input .input {
+        width: 37vw !important;
+    }
+
+    .transaction_Promotion_Section {
+        overflow: clip;
+
+    }
+
+    .Promotion_select input {
+        width: 35vw;
+    }
+
+}
+
+@media screen and (max-width:786px) {
+    .Inrement_Input .input {
+        width: 30vw !important;
+    }
+}
+
+@media screen and (max-width:420px) {
+    .Inrement_Input .input {
+        /* width: 87vw !important; */
+    }
+}
+
+.Existing_Container {
+    margin-top: 5px !important;
+}
+
+.Existing_Heading {
+    padding: 10px;
+    background-color: #014f86;
+}
+
+.Existing_Heading p {
+    color: white;
+}
+
+
+@media screen and (max-width: 1150px) {
+    .Promotion_select input {
+        width: 38vw;
+    }
+}
+
+
+
+@media screen and (max-width:500px) {
+    .existingTable {
+        overflow-x: scroll;
+    }
+
+    .revisedTable {
+        overflow-x: scroll;
+    }
+
+    .existingTable::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    /* Track */
+    .existingTable::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px transparent;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    .existingTable::-webkit-scrollbar-thumb {
+        background: #014f86;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .existingTable::-webkit-scrollbar-thumb:hover {
+        background: #014f86;
+    }
+
+    .revisedTable::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    /* Track */
+    .revisedTable::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px transparent;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    .revisedTable::-webkit-scrollbar-thumb {
+        background: #014f86;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .revisedTable::-webkit-scrollbar-thumb:hover {
+        background: #014f86;
+    }
+}
+
+
+/* ///////scroll/////// */
+
+
+.responsiveform::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+.responsiveform::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+.responsiveform::-webkit-scrollbar-thumb {
+    background: #014f86;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.responsiveform::-webkit-scrollbar-thumb:hover {
+    background: #014f86;
+}
+
+
+.existingTable {
+    overflow-x: scroll;
+}
+
+.existingTable::-webkit-scrollbar {
+    height: 4px;
+}
+
+/* Track */
+.existingTable::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+.existingTable::-webkit-scrollbar-thumb {
+    background: #014f86;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.existingTable::-webkit-scrollbar-thumb:hover {
+    background: #014f86;
+}

@@ -12,7 +12,7 @@ function TAFamilyForm() {
 
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
-  var get_company_code = secureLocalStorage.getItem("company_code");
+  var get_company_code = localStorage.getItem("company_code");
   const navigate = useNavigate();
   const search = useLocation().search;
   var userId = new URLSearchParams(search).get("userId");
@@ -132,7 +132,7 @@ function TAFamilyForm() {
                 navigate("/");
               } else {
                 localStorage.setItem("refresh",  response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 setLoading(false);
                 setBtnEnaledAndDisabled(false);
                 showAlert(response.messsage, "success");
@@ -177,7 +177,7 @@ function TAFamilyForm() {
                 if (response.messsage == "timeout error") { navigate('/') }
                 else {
                   localStorage.setItem("refresh",  response.referesh_token);
-                  secureLocalStorage.setItem("access_token", response.access_token);
+                  localStorage.setItem("access_token", response.access_token);
                   setGetTranMarriages(response.data[0])
                 }
             }).catch((error) => {
@@ -229,7 +229,7 @@ function TAFamilyForm() {
                 if (response.messsage == "timeout error") {navigate('/')}
                 else {
                     localStorage.setItem("refresh",  response.referesh_token);
-                    secureLocalStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("access_token", response.access_token);
                     setLoading(false);
                     setBtnEnaledAndDisabled(false);
                     showAler3(response.messsage,"success")
@@ -302,7 +302,7 @@ function TAFamilyForm() {
                 navigate("/");
               } else {
                 localStorage.setItem("refresh",  response.referesh_token);
-                secureLocalStorage.setItem("access_token", response.access_token);
+                localStorage.setItem("access_token", response.access_token);
                 setLoading2(false);
                 setBtnEnaledAndDisabled2(false);
                 showAlert2(response.messsage, "success");
@@ -347,7 +347,7 @@ function TAFamilyForm() {
                 if (response.messsage == "timeout error") { navigate('/') }
                 else {
                   localStorage.setItem("refresh",  response.referesh_token);
-                  secureLocalStorage.setItem("access_token", response.access_token);
+                  localStorage.setItem("access_token", response.access_token);
                   setGetTranFamilies(response.data[0])
                 }
             }).catch((error) => {
@@ -407,7 +407,7 @@ function TAFamilyForm() {
                 if (response.messsage == "timeout error") {navigate('/')}
                 else {
                     localStorage.setItem("refresh",  response.referesh_token);
-                    secureLocalStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("access_token", response.access_token);
                     setLoading(false);
                     setBtnEnaledAndDisabled(false);
                     showAler3(response.messsage,"success")
@@ -474,7 +474,7 @@ function TAFamilyForm() {
                 if (response.messsage == "timeout error") {navigate('/')}
                 else {
                     localStorage.setItem("refresh",  response.referesh_token);
-                    secureLocalStorage.setItem("access_token", response.access_token);
+                    localStorage.setItem("access_token", response.access_token);
                     setLoading2(false);
                     setBtnEnaledAndDisabled2(false);
                     showAlert2(response.messsage,"success")

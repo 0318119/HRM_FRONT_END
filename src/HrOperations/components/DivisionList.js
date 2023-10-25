@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import secureLocalStorage from 'react-secure-storage';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
-import '../assets/css/DivisionList.css'
 const config = require('../../config.json')
 
 function DivisionList() {
@@ -59,7 +55,7 @@ function DivisionList() {
                                 navigate("/");
                             } else {
                                 localStorage.setItem("refresh",  response.referesh_token);
-                                secureLocalStorage.setItem(
+                                localStorage.setItem(
                                     "access_token",
                                     response.access_token
                                 );
@@ -85,17 +81,17 @@ function DivisionList() {
     }, [])
 
 
-    const [ShowDelModel, setShowDelModel] = useState(false)
-    const setDeleteAlert = async (e) => {
-        setShowDelModel(!ShowDelModel)
-        setanyofId(e.currentTarget.getAttribute("data-key"))
-    }
-    const API_DELETE_URL = "/division/DeleteDivision"
+    // const [ShowDelModel, setShowDelModel] = useState(false)
+    // const setDeleteAlert = async (e) => {
+    //     setShowDelModel(!ShowDelModel)
+    //     setanyofId(e.currentTarget.getAttribute("data-key"))
+    // }
+    // const API_DELETE_URL = "/division/DeleteDivision"
 
-    const [anyofId, setanyofId] = useState(null)
-    const bodyOfdata = {
-        "Div_code": anyofId,
-    };    
+    // const [anyofId, setanyofId] = useState(null)
+    // const bodyOfdata = {
+    //     "Div_code": anyofId,
+    // };    
 
 return (
     <>
@@ -117,7 +113,7 @@ return (
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Divisio Code</th>
+                                <th scope="col">Division Code</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Division Head</th>
                                 <th scope="col">Short Key</th>
@@ -134,7 +130,7 @@ return (
                                         <td>{items.Div_abbr}</td>
                                         <td>{items.Div_Head}</td>
                                         <td><button className="editBtnTable">Edit</button></td>
-                                        <td><button onClick={setDeleteAlert} data-key={items?.Div_code} className="deleteBtnTable">Delete</button></td>
+                                        {/* <td><button onClick={setDeleteAlert} data-key={items?.Div_code} className="deleteBtnTable">Delete</button></td> */}
                                     </tr>
                                 )
                             })}
@@ -156,7 +152,7 @@ return (
                 </div>
             </div>
         </div>
-        {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)} 
+        {/* {ShowDelModel && (<HrDeleteModal {...{ setShowDelModel, ShowDelModel, bodyOfdata, API_DELETE_URL }} warningMsg="Opps!" description="Are You Sure!" />)}  */}
 
     </>
     );

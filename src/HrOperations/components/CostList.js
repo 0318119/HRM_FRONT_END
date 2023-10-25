@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/CostList.css";
 import secureLocalStorage from 'react-secure-storage';
 import EmpListForm from "../form/EmpListForm";
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData } from '../../redux/slices/GetSlice';
 import HrDeleteModal from '../Models/DeleteModel/HrDeleteModal'
 const config = require('../../config.json')
 
@@ -13,24 +13,29 @@ function CostList() {
   const [renderInputs, setrenderInputs] = useState([
     { name: "Cost Center Name", type: "text" },
     { name: "Cost Centre Abbr", type: "text", },
-    { name: "Train Cost Bugdet", type: "number" },
-    { name: "Train Cost Actual", type: "number", },
+
+    { name: "Major Code Mgmt", type: "text" },
+    { name: "Major Code Union", type: "text" },
+
     { name: "JV Code1", type: "text" },
     { name: "JV Code", type: "text" },
     { name: "JVCode", type: "text" },
     { name: "Temporary JV Code", type: "text" },
+
     { name: "Employe category 1", type: "number" },
     { name: "Employe category 2", type: "number" },
     { name: "Employe category 3", type: "number" },
     { name: "Functional Cat Code", type: "number" },
-    { name: "Major Code Mgmt", type: "text" },
-    { name: "Major Code Union", type: "text" },
-    { name: "Sort Key", type: "text" },
-    { name: "Total Bugdet Cost", type: "number" },
-    { name: "Azad Kashmir Tax Flag", type: "checkbox", value:"Check" },
+    { name: "Train Cost Bugdet", type: "number" },
+    { name: "Train Cost Actual", type: "number", },
     { name: "Pay Grade Areas code", type: "number" },
     { name: "Business Sector Code", type: "number" },
     { name: "org unit code", type: "number" },
+    { name: "Total Bugdet Cost", type: "number" },
+
+    
+    { name: "Sort Key", type: "text" },
+    { name: "Azad Kashmir Tax Flag", type: "checkbox", value:"Check" },
 
   ])
 
@@ -103,23 +108,23 @@ function CostList() {
   }, [])
 
 
-  const [ShowDelModel, setShowDelModel] = useState(false)
-  const setDeleteAlert = async (e) => {
-    setShowDelModel(!ShowDelModel)
-    setanyofId(e.currentTarget.getAttribute("data-key"))
-  }
-  const API_DELETE_URL = "/employment_cost_center/DeleteCostCenter"
+  // const [ShowDelModel, setShowDelModel] = useState(false)
+  // const setDeleteAlert = async (e) => {
+  //   setShowDelModel(!ShowDelModel)
+  //   setanyofId(e.currentTarget.getAttribute("data-key"))
+  // }
+  // const API_DELETE_URL = "/employment_cost_center/DeleteCostCenter"
 
-  const [anyofId, setanyofId] = useState(null)
-  const bodyOfdata = {
-    "Cost_Centre_code": anyofId,
-  };
+  // const [anyofId, setanyofId] = useState(null)
+  // const bodyOfdata = {
+  //   "Cost_Centre_code": anyofId,
+  // };
 
 
 
   return (
     <>
-    <div className="container-fluid p-2">
+    {/* <div className="container-fluid p-2">
       <div className="container-fluid  CostListContainer">
         <div className="row w-100 mx-0">
         <span className="CostListHeader py-2">Cost Centers List</span>
@@ -163,13 +168,13 @@ function CostList() {
                     <td>{items.Train_Cost_Actual}</td>
                     <td>{items.JV_Code1}</td>
                     <td>{items.Sort_key}</td>
-                    <td><button className="editBtnTable">Edit</button></td>
-                    <td><button onClick={setDeleteAlert} data-key={items?.Cost_Centre_code} className="deleteBtnTable">Delete</button></td>
-                  </tr>
-                )
-              })}
+                    <td><button className="editBtnTable">Edit</button></td> */}
+                    {/* <td><button onClick={setDeleteAlert} data-key={items?.Cost_Centre_code} className="deleteBtnTable">Delete</button></td> */}
+                  {/* </tr> */}
+                {/* ) */}
+              {/* })} */}
              
-            </tbody>
+            {/* </tbody>
           </table>
             </div>
         </div>
@@ -186,8 +191,8 @@ function CostList() {
           </div>
         </div>
       </div>
-    </div>
-      {
+    </div> */}
+      {/* {
         ShowDelModel && (
 
           <HrDeleteModal {
@@ -201,7 +206,7 @@ function CostList() {
           />
 
         )
-      } 
+      }  */}
     </>
   );
 }

@@ -1,4 +1,69 @@
-.EducationLevelListHeader {
+.maringClass {
+    margin-top: 80px;
+}
+
+.EducationLevelListFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EducationLevelListFlexBox .EducationLevelListsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.EducationLevelListFlexBox .EducationLevelListsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxEducationLevel {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.EducationLevelBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxEducationLevel div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .EducationLevelListFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .EducationLevelListFlexBox .EducationLevelListsearchBox {
+        width: 100%;
+    }
+
+    .EducationLevelListFlexBox .EducationLevelListsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .EducationLevelListFlexBox .EducationLevelListsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxEducationLevel div {
+        width: 100%;
+    }
+
+    .EducationLevelListFlexBox .EducationLevelListsearchBox {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+/* .EducationLevelListHeader {
     background-color: white;
     font-weight: 700;
     padding: 5px;
@@ -25,18 +90,15 @@
      height: 4px;
  }
 
- /* Thumb styles */
  .Emop_levels_respo::-webkit-scrollbar-thumb {
      background-color: #014f86;
      border-radius: 4px;
  }
 
- /* Track styles when the thumb is being hovered */
  .Emop_levels_respo::-webkit-scrollbar-thumb:hover {
      background-color: #014f86;
  }
 
- /* Track styles when the scrollbar is in its inactive state */
  .Emop_levels_respo::-webkit-scrollbar-track {
      background-color: transparent;
- }
+ } */

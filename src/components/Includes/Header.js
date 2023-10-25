@@ -17,8 +17,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchApiData  } from '../../redux/slices/GetSlice';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { fetchApiData  } from '../../redux/slices/GetSlice';
 const config = require('../../config.json')
 
 
@@ -39,10 +39,10 @@ const Header = (props) => {
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
 
-  const dispatch = useDispatch();
-  const getData = useSelector((state) => state.getData);
-  const apiStatus = useSelector((state) => state.getData.status);
-  const getDataError = useSelector((state) => state.getData.error);
+  // const dispatch = useDispatch();
+  // const getData = useSelector((state) => state.getData);
+  // const apiStatus = useSelector((state) => state.getData.status);
+  // const getDataError = useSelector((state) => state.getData.error);
 
   async function getMultiLevelDropDown() {
     await fetch(`${config['baseUrl']}/dirmenus/GetDirMenus`, {
@@ -61,7 +61,7 @@ const Header = (props) => {
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);
-            secureLocalStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("access_token", response.access_token);
             setMultilevel(response.data)
             setDataLoader(true);
           }
@@ -72,8 +72,11 @@ const Header = (props) => {
         });
       }
       else {
-        setMultilevel(response.data)
-        setDataLoader(true);
+        if (response.messsage == "timeout error") {navigate("/");}
+        else{
+          setMultilevel(response.data)
+          setDataLoader(true);
+        }
       }
     }).catch((error) => {
       setMultiLevelError(error.message)
@@ -92,6 +95,8 @@ const Header = (props) => {
 
   const logOutHandler = () => {
     secureLocalStorage.clear()
+    localStorage.clear()
+    sessionStorage.clear()
     window.location.href = '/'
   }
   

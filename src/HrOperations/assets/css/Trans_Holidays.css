@@ -1,32 +1,62 @@
-.Transac_Holiday_listHeader {
-    background-color: #014f86;
-    font-weight: 700;
-    padding: 5px;
-    /* border-radius: 4px 4px 0px 0px; */
-    color: white;
-    letter-spacing: 1px;
+.maringClass {
+    margin-top: 80px;
 }
 
-.Transac_Holiday_listContainer {
-    box-shadow: 2px 1px 6px -2px black;
-    padding: 0px 0px;
-    background-color: #a9d6e538;
-    /* border-radius: 5px; */
-    margin-top: 50px;
-}
-.HolidayYearPop{
-    border-bottom: 1px solid gray;
-    font-size: 22px;
+.HolidaysFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.RamdanHolidays{
-    margin-top: 10px;
+.HolidaysFlexBox .HolidaysearchBox {
+    display: flex;
+    align-items: center;
 }
 
-.UpdateHoliday{
-    margin-top: 10px;
+.HolidaysFlexBox .HolidaysearchBox input {
+    min-width: 300px;
 }
 
-.Populateholidays{
-    margin-top: 10px;
+.formBoxHolidays {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.HolidayBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxHolidays div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .HolidaysFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .HolidaysFlexBox .HolidaysearchBox {
+        width: 100%;
+    }
+
+    .HolidaysFlexBox .HolidaysearchBox #inputBox {
+        width: 100%;
+    }
+
+    .HolidaysFlexBox .HolidaysearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxHolidays div {
+        width: 100%;
+    }
+
+    .HolidaysFlexBox .HolidaysearchBox {
+        flex-wrap: wrap;
+    }
 }

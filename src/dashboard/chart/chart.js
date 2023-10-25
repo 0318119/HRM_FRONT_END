@@ -24,9 +24,9 @@ const chart = () => {
               <p>Attendance Summary</p>
             </span>
             <span>
-              <Link className="ChartAttendance" to={'/Get_Attendance'}>Attendance Sheet</Link>
+              <Link className="ChartAttendance" to={'/Get_Attendance'} style={{textDecoration: "underline"}}>Attendance Sheet</Link>
             </span>
-            <select name="" id="" className="chartSelectTag">
+            {/* <select name="" id="" className="chartSelectTag">
               <option value="current_month">Current Month</option>
               <option value="january">January</option>
               <option value="february">February</option>
@@ -40,7 +40,7 @@ const chart = () => {
               <option value="october">October</option>
               <option value="november">November</option>
               <option value="december">December</option>
-            </select>
+            </select> */}
           </div>
         </div>
         <div className="ChartCont mt-5">
