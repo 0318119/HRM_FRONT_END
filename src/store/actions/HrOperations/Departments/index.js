@@ -9,14 +9,14 @@ import baseUrl from '../../../../config.json'
 
 
 
-export const GetDataDepartment = (body) => async (dispatch) => {
+export const GetDataDepartment = (params) => async (dispatch) => {
     try {
         dispatch({
             type: GET_TRANSITION_DEPARTMENT_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/department/GetDepartmentList`, {
+        const response = await fetch(`${baseUrl.baseUrl}/department/GetDepartmentList/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

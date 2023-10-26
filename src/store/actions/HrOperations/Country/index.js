@@ -9,14 +9,14 @@ import baseUrl from '../../../../config.json'
 
 
 
-export const GetDataCountry = (body) => async (dispatch) => {
+export const GetDataCountry = (params) => async (dispatch) => {
     try {
         dispatch({
             type: GET_TRANSITION_COUNTRY_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/countries/GetCountries`, {
+        const response = await fetch(`${baseUrl.baseUrl}/countries/GetCountries/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

@@ -63,3 +63,36 @@ const DesignationScheme = yup.object().shape({
   JD_Desig_Code: yup.number().required("JD_Desig_Code is required")
 });
 export {DesignationScheme};
+
+
+// HR-OPERATIONS ===> Division SCHEME
+const DivisionScheme = yup.object().shape({
+  Div_code: yup.number().required("Div_code is required"),
+  Div_name: yup.string().required("Div_name is required"),
+  Div_abbr: yup.string().required("Div_abbr is required"),
+  Div_Head: yup.number().required("Div_Head is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  division_category_code: yup.number().required("division_category_code is required")
+});
+export {DivisionScheme};
+
+
+// HR-OPERATIONS ===> EDUCATION LEVEL SCHEME
+const EduLevelScheme = yup.object().shape({
+  Edu_level_code: yup.number().required("Edu_level_code is required"),
+  Edu_level_name: yup.string().required("Edu_level_name is required"),
+  Edu_level_abbr: yup.string().required("Edu_level_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EduLevelScheme};
+
+
+// HR-OPERATIONS ===> Division SCHEME
+const EducationScheme = yup.object().shape({
+  Edu_code: yup.number().required("Edu_code is required"),
+  Edu_name: yup.string().required("Edu_name is required"),
+  Edu_abbr: yup.string().required("Edu_abbr is required"),
+  Edu_level_code: yup.number().required("Edu_level_code is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EducationScheme};

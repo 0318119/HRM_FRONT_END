@@ -64,9 +64,7 @@ body{
 table {
     background-color: transparent !important;
 }
-.ant-select-selector{
-    display: none !important;
-}
+
 .ant-pagination-options{
     display: none !important;
 }

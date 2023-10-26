@@ -9,20 +9,19 @@ import { FormCheckBox, FormInput } from '../../components/basic/input/formInput'
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designation_Data_By_Id }) {
+function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designation_Data_By_Id,GetDataDesignation }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
 
-    useEffect(() => {
-        if (isCode !== null) {
-            Get_Designation_Data_By_Id(isCode)
-        }
-    }, [])
+
 
     const EditBack = () => {
         cancel('read')
     }
+
     const submitForm = async (data) => {
         try {
             const isValid = await DesignationScheme.validate(data);
@@ -58,39 +57,46 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
         mode: "onChange",
         resolver: yupResolver(DesignationScheme),
       });
-      useEffect(() => {
-        if (mode == "create") {
-          reset(
-            {
-                Desig_code:  0,
-                Desig_name: "",
-                Desig_abbr: "",
-                Sort_key: "",
-                Job_Evaluation_Flag: "",
-                Dept_code: "",
-                SatAllowance: "",
-                EveAllowance: "",
-                JD_Desig_Code: "",
-            },
-          )
-        } else {
-          reset(
-            {
-                Desig_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code ?
-                Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code : 0,
 
-                Desig_name: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_name,
-                Desig_abbr: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_abbr,
-                Sort_key: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-                Job_Evaluation_Flag: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Job_Evaluation_Flag,
-                Dept_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code,
-                SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
-                EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
-                JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
-            },
-          )
+    useEffect(() => {
+    if (mode == "create") {
+        reset(
+        {
+            Desig_code:  0,
+            Desig_name: "",
+            Desig_abbr: "",
+            Sort_key: "",
+            Job_Evaluation_Flag: "",
+            Dept_code: "",
+            SatAllowance: "",
+            EveAllowance: "",
+            JD_Desig_Code: "",
+        },
+        )
+    } else {
+        reset(
+        {
+            Desig_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code ?
+            Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code : 0,
+
+            Desig_name: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_name,
+            Desig_abbr: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_abbr,
+            Sort_key: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
+            Job_Evaluation_Flag: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Job_Evaluation_Flag,
+            Dept_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code,
+            SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
+            EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
+            JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
+        },
+        )
+    }
+    }, [Red_Designation?.dataSingle?.[0]?.res?.data?.[0]])
+    
+    useEffect(() => {
+        if (isCode !== null) {
+            Get_Designation_Data_By_Id(isCode)
         }
-      }, [Red_Designation?.dataSingle?.[0]?.res?.data?.[0]])
+    }, [])
 
     // DESIGNATION FORM DATA API CALL =========================== 
     async function POST_DESIGNATION_FORM(body) {
@@ -122,6 +128,11 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
+                    GetDataDesignation({ 
+                        pageSize: pageSize,
+                        pageNo: 1,
+                        search: null
+                    })
                 }, 3000);
             }
             else {

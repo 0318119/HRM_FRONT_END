@@ -14,12 +14,13 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id }) {
+function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id,GetDataCountry }) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading,setLoading] = useState(false)
+  const [pageSize, setPageSize] = useState(10);
 
-  // FORM CANCEL FUNCTION =================================================================
+
   const EditBack = () => {
     cancel('read')
   }
@@ -108,6 +109,11 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
           setLoading(false)
           setTimeout(() => {
             cancel('read')
+            GetDataCountry({ 
+              pageSize: pageSize,
+              pageNo: 1,
+              search: null
+            })
           }, 3000);
       }
       else{

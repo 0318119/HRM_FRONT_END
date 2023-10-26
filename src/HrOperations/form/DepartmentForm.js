@@ -11,9 +11,10 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function DepartmentForm({ cancel, mode, isCode, Red_Department,Get_department_Data_By_Id }) {
+function DepartmentForm({ cancel, mode, isCode, Red_Department,Get_department_Data_By_Id,GetDataDepartment }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
+    const [pageSize, setPageSize] = useState(10);
     const [isLoading, setLoading] = useState(false)
 
     const EditBack = () => {
@@ -57,7 +58,6 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department,Get_department_Da
             Get_department_Data_By_Id(isCode)
         }
     }, [])
-      console.log("Red_Department",Red_Department)
 
     useEffect(() => {
         if (mode == "create") {
@@ -121,6 +121,11 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department,Get_department_Da
             setLoading(false)
             setTimeout(() => {
                 cancel('read')
+                GetDataDepartment({
+                    pageSize: pageSize,
+                    pageNo: 1,
+                    search: null
+                })
             }, 3000);
         }
         else{

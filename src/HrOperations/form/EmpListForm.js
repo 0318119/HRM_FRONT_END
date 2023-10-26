@@ -778,7 +778,6 @@ const EducatData = JSON.stringify({
     "Edu_abbr": textInput.Education_Abbrivation,
     "Edu_level_code": numberInput.Education_Level_Code,
     "Sort_key": textInput.Sort_key
-
 })
 const CreateEducation = async (e) => {
     e.preventDefault();
