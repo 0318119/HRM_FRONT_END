@@ -11,7 +11,7 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
+function DepartmentForm({ cancel, mode, isCode, Red_Department,Get_department_Data_By_Id }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -29,6 +29,7 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
             console.error(error);
         }
     };
+    
     const {
         control,
         formState: { errors },
@@ -39,6 +40,7 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
             Dept_code: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code ?
             Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code : 0,
 
+            Dept_name: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_name,
             Dept_abbr: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_abbr,
             Div_code: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Div_code,
             Dept_Head: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_Head,
@@ -49,6 +51,13 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
         mode: "onChange",
         resolver: yupResolver(DepartmentScheme),
     });
+
+    useEffect(() => {
+        if (isCode !== null) {
+            Get_department_Data_By_Id(isCode)
+        }
+    }, [])
+      console.log("Red_Department",Red_Department)
 
     useEffect(() => {
         if (mode == "create") {
@@ -70,6 +79,7 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
                 Dept_code: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code ?
                 Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code : 0,
 
+                Dept_name: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_name,
                 Dept_abbr: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_abbr,
                 Div_code: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Div_code,
                 Dept_Head: Red_Department?.dataSingle?.[0]?.res?.data?.[0]?.Dept_Head,
@@ -80,6 +90,7 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
           )
         }
     }, [Red_Department?.dataSingle?.[0]?.res?.data?.[0]])
+    
     
     // DEPARTMENTS FORM DATA API CALL =========================== 
     async function POST_DEPARTMENT_FORM(body) {
@@ -102,11 +113,10 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
         ).then((response) => {
         return response.json();
         }).then(async (response) => {
-            console.log("response",response)
         if(response.success){
             messageApi.open({
                 type: 'success',
-                content: response?.messsage,
+                content: response?.message || response?.messsage,
             });
             setLoading(false)
             setTimeout(() => {
@@ -116,14 +126,14 @@ function DepartmentForm({ cancel, mode, isCode, Red_Department, }) {
         else{
             messageApi.open({
                 type: 'error',
-                content: response?.messsage || response?.messsage,
+                content: response?.message || response?.messsage,
             });
             setLoading(false)
         }
         }).catch((error) => {
             messageApi.open({
             type: 'error',
-            content: error?.message,
+            content: error?.message || error?.messsage,
             });
             setLoading(false)
         });

@@ -69,6 +69,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
   ];
 
 
+  // COST COUNTRY FORM DATA DELETE API CALL =========================== 
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/countries/DeleteCountry`, {
@@ -93,13 +94,13 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       else {
         messageApi.open({
           type: 'error',
-          content: response?.message,
+          content: response?.message || response?.messsage,
         });
       }
     }).catch((error) => {
       messageApi.open({
         type: 'error',
-        content: error?.message,
+        content: error?.message || error?.messsage,
       });
     });
   }

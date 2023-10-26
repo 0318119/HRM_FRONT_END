@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
-import * as DESIGNATIONS_ACTIONS from "../../store/actions/HrOperations/Departments/index"
+import * as DESIGNATIONS_ACTIONS from "../../store/actions/HrOperations/Designations/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { DesignationScheme } from '../schema';
@@ -17,7 +16,7 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
 
     useEffect(() => {
         if (isCode !== null) {
-            // Get_Designation_Data_By_Id(isCode)
+            Get_Designation_Data_By_Id(isCode)
         }
     }, [])
 
@@ -25,28 +24,29 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
         cancel('read')
     }
     const submitForm = async (data) => {
-        console.log("data",data)
         try {
             const isValid = await DesignationScheme.validate(data);
             if (isValid) {
-                // POST_DEPARTMENT_FORM(data)
-                console.log("data","data")
+                POST_DESIGNATION_FORM(data)
             }
         } catch (error) {
             console.error(error);
             console.log("error","error")
         }
     };
+
+
     const {
         control,
         formState: { errors },
         handleSubmit,
         reset
-    } = useForm({
+      } = useForm({
         defaultValues: {
             Desig_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code ?
             Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code : 0,
 
+            Desig_name: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_name,
             Desig_abbr: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_abbr,
             Sort_key: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
             Job_Evaluation_Flag: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Job_Evaluation_Flag,
@@ -57,70 +57,67 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
         },
         mode: "onChange",
         resolver: yupResolver(DesignationScheme),
-    });
-
-    useEffect(() => {
+      });
+      useEffect(() => {
         if (mode == "create") {
-            reset(
-                {
-                    Desig_code:  0,
-                    Desig_abbr: "",
-                    Sort_key: "",
-                    Job_Evaluation_Flag: "",
-                    Dept_code: "",
-                    SatAllowance: "",
-                    EveAllowance: "",
-                    JD_Desig_Code: "",
-                },
-            )
+          reset(
+            {
+                Desig_code:  0,
+                Desig_name: "",
+                Desig_abbr: "",
+                Sort_key: "",
+                Job_Evaluation_Flag: "",
+                Dept_code: "",
+                SatAllowance: "",
+                EveAllowance: "",
+                JD_Desig_Code: "",
+            },
+          )
         } else {
-            reset(
-                {
-                    Desig_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code ?
-                    Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code : 0,
-        
-                    Desig_abbr: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_abbr,
-                    Sort_key: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-                    Job_Evaluation_Flag: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Job_Evaluation_Flag,
-                    Dept_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code,
-                    SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
-                    EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
-                    JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
-                },
-            )
-        }
-    }, [Red_Designation?.dataSingle?.[0]?.res?.data?.[0]])
-    
+          reset(
+            {
+                Desig_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code ?
+                Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code : 0,
 
-      console.log("Red_Designation",Red_Designation)
+                Desig_name: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_name,
+                Desig_abbr: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_abbr,
+                Sort_key: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
+                Job_Evaluation_Flag: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Job_Evaluation_Flag,
+                Dept_code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_code,
+                SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
+                EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
+                JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
+            },
+          )
+        }
+      }, [Red_Designation?.dataSingle?.[0]?.res?.data?.[0]])
 
     // DESIGNATION FORM DATA API CALL =========================== 
-    async function POST_DEPARTMENT_FORM(body) {
-        return
+    async function POST_DESIGNATION_FORM(body) {
         setLoading(true)
         await fetch(
-            `${baseUrl.baseUrl}/department/AddDepartmentList`, {
+            `${baseUrl.baseUrl}/employment_desig/AddEmploymentDesignation`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
+                "Desig_code" : body.Desig_code,
+                "Desig_name": body.Desig_name,
+                "Desig_abbr": body.Desig_abbr,
+                "Sort_key": body.Sort_key,
+                "Job_Evaluation_Flag": body.Job_Evaluation_Flag,
                 "Dept_code": body.Dept_code,
-                "Dept_name": body.Dept_name,
-                "Dept_abbr": body.Dept_abbr,
-                "Div_code": body.Dept_code,
-                "Dept_Head": body.Dept_Head,
-                "Permanent_Budget": body.Permanent_Budget,
-                "Temporary_Budget": body.Temporary_Budget,
-                "Sort_key": body.Sort_key
+                "SatAllowance": body.SatAllowance,
+                "EveAllowance": body.EveAllowance,
+                "JD_Desig_Code": body.JD_Desig_Code
             }),
         }
         ).then((response) => {
             return response.json();
         }).then(async (response) => {
-            console.log("response", response)
             if (response.success) {
                 messageApi.open({
                     type: 'success',
-                    content: response?.messsage,
+                    content: response?.message || response?.messsage,
                 });
                 setLoading(false)
                 setTimeout(() => {
@@ -130,14 +127,14 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
             else {
                 messageApi.open({
                     type: 'error',
-                    content: response?.messsage || response?.messsage,
+                    content: response?.message || response?.messsage,
                 });
                 setLoading(false)
             }
         }).catch((error) => {
             messageApi.open({
                 type: 'error',
-                content: error?.message,
+                content: error?.message || error?.messsage,
             });
             setLoading(false)
         });
@@ -267,7 +264,7 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
                 </div>
                 <div className='DesignationsBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                    <PrimaryButton title="Save" type={'submit'} loading={isLoading} />
+                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
             </form>
         </>

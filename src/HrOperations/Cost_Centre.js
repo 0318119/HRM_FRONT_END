@@ -13,21 +13,30 @@ import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
 
-const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
+const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode,setCode] = useState(null)
   const [mode, setMode] = useState('read')
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
+  const [isSearchVal,setSearchVal] = useState('')
 
   useEffect(() => {
-    GetCostCentreData({ 
-      pageSize: pageSize,
-      pageNo: page,
-    })
-  }, [page])
+    if(isSearchVal == ''){
+      GetCostCentreData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    }else{
+      GetCostCentreData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: isSearchVal
+      })
+    }
+  }, [page,isSearchVal])
 
   const EditPage = (mode,code) => {
     setCode(code)
@@ -85,6 +94,8 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
       ),
     },
   ];
+
+  // COST CENTRE FORM DATA DELETE API CALL =========================== 
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_cost_center/DeleteCostCenter`, {
@@ -107,6 +118,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
             GetCostCentreData({ 
               pageSize: pageSize,
               pageNo: page,
+              search: null
             })
           }, 5000);
       }
@@ -122,7 +134,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
     }).catch((error) => {
         messageApi.open({
           type: 'error',
-          content: "Somthing went wrong.",
+          content: error?.message || error?.messsage,
         });
         setTimeout(() => {
           messageApi.destroy()
@@ -145,7 +157,9 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
                     <div className="coslistFlexBox">
                           <h4 className="text-dark">Cost Centers List</h4>
                           <div className="costCentersearchBox">
-                            <Input placeholder={'Search Here...'} type="search" />
+                            <Input placeholder={'Search Here...'} type="search" 
+                              onChange={(e) => {setSearchVal(e.target.value)}}
+                            />
                             <Button title="Create" onClick={()=> setMode("create")}/>
                           </div>
                     </div>

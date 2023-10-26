@@ -10,13 +10,15 @@ import baseUrl from '../../../../config.json'
 
 
 export const GetCostCentreData = (params) => async (dispatch) => {
+    // console.log("params",params)
+    // return
     try {
         dispatch({
             type: GET_TRANSITION_COST_CENTRE_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenter/${params.pageNo}/${params.pageSize}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenter/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

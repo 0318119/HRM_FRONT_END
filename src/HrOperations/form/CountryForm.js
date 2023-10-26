@@ -83,7 +83,7 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
     }
   }, [Red_Country?.dataSingle?.[0]?.res?.data?.[0]])
 
-  // COST CENTRE FORM API CALL =========================== 
+  // COST COUNTRY FORM DATA API CALL =========================== 
   async function POST_COUNTRY_FORM(body) {
     setLoading(true)
     await fetch(
@@ -103,7 +103,7 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
       if(response.success){
           messageApi.open({
               type: 'success',
-              content: response?.messsage,
+              content: response?.message || response?.messsage,
           });
           setLoading(false)
           setTimeout(() => {
@@ -111,18 +111,18 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
           }, 3000);
       }
       else{
+        setLoading(false)
           messageApi.open({
               type: 'error',
               content: response?.message || response?.messsage,
           });
-          setLoading(false)
       }
     }).catch((error) => {
+        setLoading(false)
         messageApi.open({
           type: 'error',
-          content: error?.message,
+          content: error?.message || error?.messsage,
         });
-        setLoading(false)
     });
   }
 

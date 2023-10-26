@@ -56,14 +56,14 @@ export const Get_department_Data_By_Id = (body) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/countries/GetCountryById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/department/GetDepartmentById`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Country_Code':body,
+                'Dept_code': body,
             })
         });
         if(response.status === 200) {

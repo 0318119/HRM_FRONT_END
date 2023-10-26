@@ -16,6 +16,10 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null)
     const [mode, setMode] = useState('read')
+    const EditPage = (mode, code) => {
+        setCode(code)
+        setMode(mode)
+    }
 
     const columns = [
         {
@@ -59,7 +63,7 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => setMode('Edit', data?.Dept_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', data?.Dept_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <Popconfirm
                         title="Delete the Department"
                         description="Are you sure to delete the Department?"
@@ -80,6 +84,7 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
         GetDataDepartment()
     }, [])
 
+    // DEPARTMENTS FORM DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
         await fetch(
             `${baseUrl.baseUrl}/department/DeleteDepartmentList`, {
@@ -104,13 +109,13 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
             else {
                 messageApi.open({
                     type: 'error',
-                    content: response?.message,
+                    content: response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
             messageApi.open({
                 type: 'error',
-                content: error?.message,
+                content: error?.message || error?.message,
             });
         });
     }

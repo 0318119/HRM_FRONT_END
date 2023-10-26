@@ -72,6 +72,7 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
         GetDataDesignation()
     }, [])
 
+    // DESIGNATION FORM DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
         await fetch(
             `${baseUrl.baseUrl}/employment_desig/DeleteEmploymentDesignation`, {
@@ -96,13 +97,13 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
             else {
                 messageApi.open({
                     type: 'error',
-                    content: response?.message,
+                    content: response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
             messageApi.open({
                 type: 'error',
-                content: error?.message,
+                content: error?.message || error?.messsage,
             });
         });
     }

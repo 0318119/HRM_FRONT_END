@@ -37,7 +37,7 @@ const CountryScheme = yup.object().shape({
 export {CountryScheme};
 
 
-// HR-OPERATIONS ===> COUNTRY SCHEME
+// HR-OPERATIONS ===> Department SCHEME
 const DepartmentScheme = yup.object().shape({
   Dept_code: yup.number().required("Dept_code is required"),
   Dept_name: yup.string().required("Country_Name is required"),
@@ -50,13 +50,13 @@ const DepartmentScheme = yup.object().shape({
 });
 export {DepartmentScheme};
 
-// HR-OPERATIONS ===> COUNTRY SCHEME
+// HR-OPERATIONS ===> Designation SCHEME
 const DesignationScheme = yup.object().shape({
   Desig_code : yup.number().required("Desig_code is required"),
   Desig_name: yup.string().required("Desig_name is required"),
   Desig_abbr: yup.string().required("Desig_abbr is required"),
   Sort_key: yup.string().required("Sort_key is required"),
-  Job_Evaluation_Flag: yup.boolean().required("Job_Evaluation_Flag is required"),
+  Job_Evaluation_Flag: yup.string().required("Job_Evaluation_Flag is required"),
   Dept_code: yup.number().required("Dept_code is required"),
   SatAllowance: yup.number().required("SatAllowance is required"),
   EveAllowance: yup.number().required("EveAllowance is required"),

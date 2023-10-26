@@ -137,7 +137,7 @@ useEffect(() => {
     }
 }, [Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]])
 
-// COST CENTRE FORM API CALL =========================== 
+// COST CENTRE FORM DATA API CALL =========================== 
 async function POST_COST_CENTRE_FORM(body) {
     setLoading(true)
     await fetch(
@@ -178,7 +178,7 @@ async function POST_COST_CENTRE_FORM(body) {
         if(response.success){
             messageApi.open({
                 type: 'success',
-                content: response?.messsage,
+                content: response?.message || response?.messsage,
             });
             setLoading(false)
             setTimeout(() => {
@@ -188,14 +188,14 @@ async function POST_COST_CENTRE_FORM(body) {
         else{
             messageApi.open({
                 type: 'error',
-                content: response?.message,
+                content: response?.message || response?.messsage,
             });
             setLoading(false)
         }
     }).catch((error) => {
         messageApi.open({
             type: 'error',
-            content: error?.message,
+            content: error?.message || error?.messsage,
         });
         setLoading(false)
     });
