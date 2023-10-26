@@ -63,3 +63,14 @@ const DesignationScheme = yup.object().shape({
   JD_Desig_Code: yup.number().required("JD_Desig_Code is required")
 });
 export {DesignationScheme};
+
+// HR-OPERATIONS ===> Base City SCHEME
+const Base_City_Scheme = yup.object().shape({
+  City_code : yup.number().required("City_code is required"),
+  City_name: yup.string().required("City_name is required"),
+  City_abbr: yup.string().required("City_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  Region_Code: yup.number().required("Region_Code is required"),
+  Province_Code: yup.number().required("Province_Code is required")
+});
+export {Base_City_Scheme};

@@ -201,4 +201,4 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
 function mapStateToProps({ Red_Cost_centre }) {
   return { Red_Cost_centre };
 }
-export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList)
+export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList) 

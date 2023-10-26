@@ -1,0 +1,9 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.RefreshableDataFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
