@@ -5,7 +5,7 @@
 
 # Node artifact files
 node_modules/
-Package-lock/
+Package-lock.json/
 dist/
 
 # Compiled Java class files
@@ -48,4 +48,3 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
-
