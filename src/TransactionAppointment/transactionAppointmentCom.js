@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 import Word from "./Word";
 const config = require("../config.json");
 
@@ -33,6 +34,7 @@ function TransactionAppointmentCom() {
   const [isFileData, setFileData] = useState([])
   const [messageApi, contextHolder] = message.useMessage()
   const [isGetCode, setGetCode] = useState(null)
+  const [isSingleArrayData, setSingleArrayData] = useState([])
 
 
   async function getAppointStatusCall() {
@@ -186,6 +188,7 @@ function TransactionAppointmentCom() {
         //   content: 'Successfully Download',
         // });
         setAppointData(response.data)
+        setSingleArrayData(response?.data?.[0])
         GetAppointLetter(id)
       }
       else {
@@ -235,74 +238,108 @@ function TransactionAppointmentCom() {
         console.log("response.data", response.data)
 
         let htmlContent = `
-          <div>
-            <div style="padding: 30px 50px">
-              <h style="text-align: center;font-size:20px">LETTER OF APPOINTMENT</h>
-              <p>Dear Emp_Name,</p>
-               <p>We are pleased to offer you the position of P4 - P5 in the cadre of P7 at Summit Bank Limited-(SMBL). The position will be based in P6. </p>
-               <p>Your remuneration will be as follows:</p>
-              <table>
-                <thead> 
-                 <tr>
-                  <th>S.No</th>
-                  <th>Salary And Other Cash Benefits</th>
-                  <th>Per Month-(In Rupees)</th>
-                </tr>
-              </thead>
-              <tbody>
-              `;
+  <html>
+    <body>
+     `;
         AppointData.forEach((item, index) => {
           htmlContent += `
-                <tr>
-                  <td>${index + 1}</td>
-                  <td>${item.Allowance_name ? item.Allowance_name : "Not Found"}</td>
-                   <td>${item.Amount ? item.Amount : "Not Found"}</td>
-                </tr>
-               `;
+            <div style="text-align: center; font-size: 20px;">
+             <p>${item.Transaction_Date ? item.Transaction_Date : "Not Found"}</p>
+             <p style="margin-top:15px;">${item.Emp_Name ? item.Emp_Name : "Not Found"}</p>
+             <p style="margin-top:15px;">${item.emp_address_line1 ? item.emp_address_line1 : "Not Found"}</p>
+             <p style="margin-top:15px;">${item.emp_address_line2 ? item.emp_address_line2 : "Not Found"}</p>
+             <p style="margin-top:15px;">${item.emp_phone ? item.emp_phone : "Not Found"}</p>
+           </div>  
+          `;
+        })
+        htmlContent = `
+      <div style="text-align: center; font-size: 20px;">
+        <h1>LETTER OF APPOINTMENT</h1>
+      </div>
+ `;
+        // AppointData.forEach((item, index) => {
+        htmlContent += `
+          <p>Dear ${isSingleArrayData?.Emp_Name ? isSingleArrayData?.Emp_Name : "Not  Found"} </p>
+          <p>We are pleased to offer you the position of ${isSingleArrayData.Desig_name ? isSingleArrayData.Desig_name : "Not Found"} - ${isSingleArrayData.Department ? isSingleArrayData.Department : "Not Found"} <br />
+           in the cadre of ${isSingleArrayData.grade_name ? isSingleArrayData.grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${isSingleArrayData.loc_name ? isSingleArrayData.loc_name : "Not Found"}.</p>
+          `;
+        // })
+        htmlContent += `
+      <p>Your remuneration will be as follows:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Salary And Other Cash Benefits</th>
+            <th>Per Month-(In Rupees)</th>
+          </tr>
+        </thead>
+        <tbody>
+`;
+
+        AppointData.forEach((item, index) => {
+          htmlContent += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${item.Allowance_name ? item.Allowance_name : "Not Found"}</td>
+            <td>${item.Amount ? item.Amount : "Not Found"}</td>
+          </tr>
+  `;
         });
 
         htmlContent += `
-             </tbody>
-             </table>
-             <p>Note: All applicable taxes will be deducted at source.</p>
-                    <p>In addition to the above, you are entitled to the following:</p>
-                    <ul style="padding-left:15px">
-                      <li> Cash reimbursement equivalent to 100 liters petrol per month.</li>
-                      <li>Gratuity, PF, Hospitalization, Group Insurance, Loan entitlement, Leave entitlement <br/> based on Bank’s approved salary and benefit policy.</li>
-                      <li>And all other benefits as per Bank’s approved policy.</li>
-                    </ul>
-                    <p>Your service will be on probation for a period of three months and is liable to termination without assigning any reason and without any notice during the period of probation. Your service will be confirmed after successful completion of the probation period, subject to following:.</p>
-                                           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(i)	Satisfactory references from your present and previous employers.</p>
-                    <p>After confirmation, termination of this contract will require either party i.e. you or the Bank to serve 60 calendar days advance notice or in lieu of notice period, two months Gross Salary will be paid.</p>
-                    <p>You will perform any and all functions assigned to you from time to time and you can be transferred to any location/city at Bank’s discretion.</p>
-                    <p>You will be required to sign Bank’s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary and will abide by all the terms and conditions of the Bank’s HR Policy and Rules & Regulations</p>
-                    <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
-                    <p>In agreement of the terms and conditions here of, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
-                    <p>The proposed date of your assuming the responsibility is Q3 or earlier.</p>
-                    <p>We are confident that you will play a positive role towards the growth and expansion of Summit Bank Limited-SMBL and look forward to a long and mutually rewarding professional relationship.</p>
-                    <p>Warm Regards,<br />
-                      For Company Name
-                    </p>
-                    <p>Name,<br />
-                      Authorised Signatory Designation
-                    </p>
-                    <p><div style="float:right;width:30%;">I have read the above terms and conditions of my appointment. I accept the same.<br />
-                      _____________________ <br />
-                      Applicant Name<br />
-                      Employee Code
-                   </div>
-                      </p>
-                      <p style="clear: both;">Encl:<br />
-                        1) Service Agreement
-                      </p>
-            </div>
-          </div>
-        `;
+        </tbody>
+      </table>
+      <p>Note: All applicable taxes will be deducted at source.</p>
+      <p>In addition to the above, you are entitled to the following:</p>
+      <ul style="padding-left: 15px;">
+        <li>Cash reimbursement equivalent to 100 liters of petrol per month.</li>
+        <li>Gratuity, PF, Hospitalization, Group Insurance, Loan entitlement, Leave entitlement based on Bankâ€™s approved salary and benefit policy.</li>
+        <li>And all other benefits as per Bankâ€™s approved policy.</li>
+      </ul>
+      <p>Your service will be on probation for a period of three months and is liable to termination without assigning any reason and without any notice during the period of probation. Your service will be confirmed after successful completion of the probation period, subject to the following:</p>
+      <p style="text-indent: 2em;">(i) Satisfactory references from your present and previous employers.</p>
+      <p>After confirmation, termination of this contract will require either party, i.e., you or the Bank, to serve 60 calendar days advance notice or, in lieu of the notice period, two months Gross Salary will be paid.</p>
+      <p>You will perform any and all functions assigned to you from time to time, and you can be transferred to any location/city at Bankâ€™s discretion.</p>
+      <p>You will be required to sign Bankâ€™s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary, and will abide by all the terms and conditions of the Bankâ€™s HR Policy and Rules & Regulations.</p>
+      <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
+      <p>In agreement with the terms and conditions herein, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
+      `;
+        AppointData.forEach((item, index) => {
+          htmlContent += `
+          <p>The proposed date of your assuming the responsibility is ${item.ProposedDate ? item.ProposedDate : "Not Found"}  or earlier.</p>
+          `;
+        });
 
+        htmlContent += `
+      <p>We are confident that you will play a positive role towards the growth and expansion of Summit Bank Limited-SMBL and look forward to a long and mutually rewarding professional relationship.</p>
+      <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
+        <span>Sincerely:</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span style="float: right;">Accepted:</span>
+      </div>
+        <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
+        <span>___________</span>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         `;
+        AppointData.forEach((item, index) => {
+          htmlContent += `
+          <span style="float: right;">___________ <br />
+            ${item.Emp_Name ? item.Emp_Name : "Not Found"}
+          </span>
+          `;
+        });
+
+        htmlContent += `
+      </div>
+      <div>Syed Shafaat Husain <br /> Head of Human Resource Division</div>
+    </body>
+  </html>
+`;
 
         console.log("first", htmlContent)
         const blob = new Blob([htmlContent], { type: 'application/msword' });
-        saveAs(blob, isFileData);
+        saveAs(blob, response?.data?.[0]?.FileName);
       }
       else {
         messageApi.open({
@@ -318,15 +355,7 @@ function TransactionAppointmentCom() {
     });
   }
 
-  // const downloadWordFile = () => {
-  //   // const content = <Word /> ;
-  //   const content = <h5>rehman</h5>;
 
-
-  //   const blob = new Blob([content], { type: 'application/msword' });
-
-  //   saveAs(blob, isFileData);
-  // };
 
   useEffect(() => {
     getAppointStatusCall();
