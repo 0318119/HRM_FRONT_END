@@ -11,10 +11,14 @@ import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
+
 const Departments = ({ Red_Department, GetDataDepartment }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null)
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [isSearchVal, setSearchVal] = useState('')
     const [mode, setMode] = useState('read')
     const EditPage = (mode, code) => {
         setCode(code)
@@ -83,6 +87,21 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
     useEffect(() => {
         GetDataDepartment()
     }, [])
+    useEffect(() => {
+        if (isSearchVal == '') {
+            GetDataDepartment({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null
+            })
+        } else {
+            GetDataDepartment({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal
+            })
+        }
+    }, [page, isSearchVal])
 
     // DEPARTMENTS FORM DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
@@ -103,7 +122,11 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
-                    GetDataDepartment()
+                    GetDataDepartment({
+                        pageSize: pageSize,
+                        pageNo: 1,
+                        search: null
+                    })
                 }, 5000);
             }
             else {
@@ -134,7 +157,9 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                                 <div className="DepartmentsFlexBox">
                                     <h4 className="text-dark">Departments List</h4>
                                     <div className="DepartmentssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search" />
+                                        <Input placeholder={'Search Here...'} type="search"
+                                            onChange={(e) => { setSearchVal(e.target.value) }}
+                                        />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
@@ -143,7 +168,20 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                         )}
                         <div>
                             {mode == "read" && (
-                                <Table columns={columns} loading={Red_Department?.loading} dataSource={Red_Department?.data?.[0]?.res?.data?.[0]} scroll={{ x: 10 }} />
+                                <Table 
+                                    columns={columns}
+                                    loading={Red_Department?.loading}
+                                    dataSource={Red_Department?.data?.[0]?.res?.data1} 
+                                    scroll={{ x: 10 }} 
+                                    pagination={{
+                                        defaultCurrent: page,
+                                        total: Red_Department?.data?.[0]?.res?.data3,
+                                        onChange: (p) => {
+                                        setPage(p);
+                                        },
+                                        pageSize: pageSize,
+                                    }}
+                                 />
                             )}
                             {mode == "create" && (
                                 <DepartmentForm cancel={setMode} mode={mode} isCode={null} />

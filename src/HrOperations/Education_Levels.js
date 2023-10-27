@@ -5,59 +5,130 @@ import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EducationLevelForm from './form/EducationLevelForm';
 import './assets/css/EducationLevelList.css'
+import * as EDUCATION_LEVEL_ACTIONS from "../store/actions/HrOperations/Education_level/index"
+import { connect } from "react-redux";
+import { Popconfirm } from 'antd';
+import baseUrl from '../../src/config.json'
+import { message } from 'antd';
+import { useEffect } from 'react';
 
 
 
-const Education_Levels = () => {
+const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  var get_access_token = localStorage.getItem("access_token");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [isCode, setCode] = useState(null)
   const [mode, setMode] = useState('read')
+  const [isSearchVal, setSearchVal] = useState('')
+  const EditPage = (mode, code) => {
+    setCode(code)
+    setMode(mode)
+  }
 
   const columns = [
     {
-      title: 'Division Code',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Education Code',
+      dataIndex: 'Edu_level_code',
+      key: 'Edu_level_code',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'Name',
-      dataIndex: 'Name',
-      key: 'Name',
+      dataIndex: 'Edu_level_name',
+      key: 'Edu_level_name',
     },
     {
-      title: 'Division Head',
-      dataIndex: 'Division Head',
-      key: 'Division Head',
-    },
-    {
-      title: 'Short Key',
-      dataIndex: 'Short Key',
-      key: 'Short Key',
+      title: 'Sort Key',
+      dataIndex: 'Sort_key',
+      key: 'Sort_key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: (data) => (
         <Space size="middle">
-          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit',data?.Edu_level_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <Popconfirm
+            title="Delete the Education Level"
+            description="Are you sure to delete the Education Level?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              handleConfirmDelete(data?.Edu_level_code)
+            }}
+          >
+            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      Abbreviation: 'New York No. 1 Lake Park',
-    },
-  ];
+  useEffect(() => {
+    if(isSearchVal == ''){
+      GetEducationLevelData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    }else{
+      GetEducationLevelData({ 
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page,isSearchVal])
+
+  // EDUCATION LEVEL DATA DELETE API CALL ===========================
+  async function handleConfirmDelete(id) {
+    await fetch(
+      `${baseUrl.baseUrl}/educationlevel/DeleteEducationLevel`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Edu_level_code": id,
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "You have successfully deleted",
+        });
+        setTimeout(() => {
+          GetEducationLevelData({
+            pageSize: pageSize,
+            pageNo: 1,
+            search: null
+          })
+        }, 3000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+    });
+  }
+
+
   return (
     <>
       <div>
         <Header />
       </div>
+      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -66,8 +137,10 @@ const Education_Levels = () => {
               <>
                 <div className="EducationLevelListFlexBox">
                   <h4 className="text-dark">Education Level List</h4>
-                  <div className="EducationLevelListsearchBox"EducationLevelListsearchBox>
-                    <Input placeholder={'Search Here...'} type="search" />
+                  <div className="EducationLevelListsearchBox" EducationLevelListsearchBox>
+                    <Input placeholder={'Search Here...'} type="search" 
+                        onChange={(e) => {setSearchVal(e.target.value)}}
+                    />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -77,13 +150,25 @@ const Education_Levels = () => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
+                <Table columns={columns} 
+                  loading={Red_Education_level?.loading}
+                  dataSource={Red_Education_level?.data?.[0]?.res?.data1} 
+                  scroll={{ x: 10 }} 
+                  pagination={{
+                    defaultCurrent: page,
+                    total: Red_Education_level?.data?.[0]?.res?.data3,
+                    onChange: (p) => {
+                      setPage(p);
+                    },
+                    pageSize: pageSize,
+                  }}
+                />
               )}
               {mode == "create" && (
-                <EducationLevelForm cancel={setMode} />
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={null} />
               )}
               {mode == "Edit" && (
-                <EducationLevelForm cancel={setMode} />
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={isCode} />
               )}
             </div>
 
@@ -94,4 +179,7 @@ const Education_Levels = () => {
   )
 }
 
-export default Education_Levels
+function mapStateToProps({ Red_Education_level }) {
+  return { Red_Education_level };
+}
+export default connect(mapStateToProps, EDUCATION_LEVEL_ACTIONS)(Education_Levels)

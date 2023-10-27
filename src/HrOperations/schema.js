@@ -64,6 +64,7 @@ const DesignationScheme = yup.object().shape({
 });
 export {DesignationScheme};
 
+<<<<<<< HEAD
 // HR-OPERATIONS ===> Base City SCHEME
 const Base_City_Scheme = yup.object().shape({
   City_code : yup.number().required("City_code is required"),
@@ -74,3 +75,53 @@ const Base_City_Scheme = yup.object().shape({
   Province_Code: yup.number().required("Province_Code is required")
 });
 export {Base_City_Scheme};
+=======
+
+// HR-OPERATIONS ===> Division SCHEME
+const DivisionScheme = yup.object().shape({
+  Div_code: yup.number().required("Div_code is required"),
+  Div_name: yup.string().required("Div_name is required"),
+  Div_abbr: yup.string().required("Div_abbr is required"),
+  Div_Head: yup.number().required("Div_Head is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  division_category_code: yup.number().required("division_category_code is required")
+});
+export {DivisionScheme};
+
+
+// HR-OPERATIONS ===> EDUCATION LEVEL SCHEME
+const EduLevelScheme = yup.object().shape({
+  Edu_level_code: yup.number().required("Edu_level_code is required"),
+  Edu_level_name: yup.string().required("Edu_level_name is required"),
+  Edu_level_abbr: yup.string().required("Edu_level_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EduLevelScheme};
+
+
+// HR-OPERATIONS ===> EDUCATION SCHEME
+const EducationScheme = yup.object().shape({
+  Edu_code: yup.number().required("Edu_code is required"),
+  Edu_name: yup.string().required("Edu_name is required"),
+  Edu_abbr: yup.string().required("Edu_abbr is required"),
+  Edu_level_code: yup.number().required("Edu_level_code is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EducationScheme};
+
+
+// HR-OPERATIONS ===> EMPLOYEE TYPE SCHEME
+const EmployeeTypeScheme = yup.object().shape({
+  Empt_Type_code: yup.number().required("Empt_Type_code is required"),
+  Empt_Type_name: yup.string().required("Empt_Type_name is required"),
+  Empt_Type_abbr: yup.string().required("Empt_Type_abbr is required"),
+  Company_Employee_Flag: yup.string().required("Edu_level_code is required"),
+  Emp_Code_Prefix: yup.number().required("Emp_Code_Prefix is required"),
+  PermanantFlag: yup.string().required("PermanantFlag is required"),
+  Retirement_Age: yup.number().required("Retirement_Age is required"),
+  ProbationMonths: yup.date().required("ProbationMonths is required"),
+  AllowChangeProbationMonths: yup.string().required("AllowChangeProbationMonths is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EmployeeTypeScheme};
+>>>>>>> 56bcf0a4d440c2675c576842ec1b0a0be09275a1

@@ -1,22 +1,23 @@
 import {
-    GET_TRANSITION_COST_CENTRE_DATA,
-    GET_TRANSITION_COST_CENTRE_START,
-    GET_TRANSITION_COST_CENTRE_DATA_SINGLE,
-    GET_TRANSITION_COST_CENTRE_END
+    GET_TRANSITION_EMPOYLEE_TYPE_DATA,
+    GET_TRANSITION_EMPOYLEE_TYPE_START,
+    GET_TRANSITION_EMPOYLEE_TYPE_SINGLE,
+    GET_TRANSITION_EMPOYLEE_TYPE_END
 } from '../../types'
 import baseUrl from '../../../../config.json'
 
 
 
 
-export const GetCostCentreData = (params) => async (dispatch) => {
+export const GetEmployeeTypeData = (params) => async (dispatch) => {
+    // ${params.pageNo}/${params.pageSize}/${params.search}
     try {
         dispatch({
-            type: GET_TRANSITION_COST_CENTRE_START,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenter/${params.pageNo}/${params.pageSize}/${params.search}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCode`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -26,14 +27,14 @@ export const GetCostCentreData = (params) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_COST_CENTRE_DATA,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_DATA,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_COST_CENTRE_END,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -41,7 +42,7 @@ export const GetCostCentreData = (params) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_COST_CENTRE_END,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_END,
             payload: false,
             loading: false,
         });
@@ -49,34 +50,34 @@ export const GetCostCentreData = (params) => async (dispatch) => {
     }
 }
 
-export const Get_Cost_Centre_By_ID = (body) => async (dispatch) => {
+export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_COST_CENTRE_START,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_DATA,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/educationlevel/GetEducationLevelById`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Cost_Centre_code':body,
+                'Edu_level_code':body,
             })
         });
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_COST_CENTRE_DATA_SINGLE,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_COST_CENTRE_END,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -84,7 +85,7 @@ export const Get_Cost_Centre_By_ID = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_COST_CENTRE_END,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_END,
             payload: false,
             loading: false,
         });
