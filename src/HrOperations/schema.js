@@ -87,7 +87,7 @@ const EduLevelScheme = yup.object().shape({
 export {EduLevelScheme};
 
 
-// HR-OPERATIONS ===> Division SCHEME
+// HR-OPERATIONS ===> EDUCATION SCHEME
 const EducationScheme = yup.object().shape({
   Edu_code: yup.number().required("Edu_code is required"),
   Edu_name: yup.string().required("Edu_name is required"),
@@ -96,3 +96,19 @@ const EducationScheme = yup.object().shape({
   Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EducationScheme};
+
+
+// HR-OPERATIONS ===> EMPLOYEE TYPE SCHEME
+const EmployeeTypeScheme = yup.object().shape({
+  Empt_Type_code: yup.number().required("Empt_Type_code is required"),
+  Empt_Type_name: yup.string().required("Empt_Type_name is required"),
+  Empt_Type_abbr: yup.string().required("Empt_Type_abbr is required"),
+  Company_Employee_Flag: yup.string().required("Edu_level_code is required"),
+  Emp_Code_Prefix: yup.number().required("Emp_Code_Prefix is required"),
+  PermanantFlag: yup.string().required("PermanantFlag is required"),
+  Retirement_Age: yup.number().required("Retirement_Age is required"),
+  ProbationMonths: yup.date().required("ProbationMonths is required"),
+  AllowChangeProbationMonths: yup.string().required("AllowChangeProbationMonths is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {EmployeeTypeScheme};
