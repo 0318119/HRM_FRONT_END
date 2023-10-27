@@ -9,6 +9,8 @@ import * as COUNTRY_ACTIONS from "../store/actions/HrOperations/Country/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
@@ -54,7 +56,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><FaEdit/></button>
           <Popconfirm
             title="Delete the Country"
             description="Are you sure to delete the Country?"
@@ -64,7 +66,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
               handleConfirmDelete(data?.Country_Code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),
