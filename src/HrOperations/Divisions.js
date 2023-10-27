@@ -8,6 +8,8 @@ import * as DIVISION_ACTIONS from "../store/actions/HrOperations/Divisions/index
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 import './assets/css/DivisionList.css'
 
@@ -52,7 +54,9 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Div_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit', data?.Div_code)} className="editBtn">
+            <FaEdit />
+          </button>
           <Popconfirm
             title="Delete the Division"
             description="Are you sure to delete the Division?"
@@ -62,7 +66,9 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
               handleConfirmDelete(data?.Div_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn">
+              <MdDeleteOutline />
+            </button>
           </Popconfirm>
         </Space>
       ),

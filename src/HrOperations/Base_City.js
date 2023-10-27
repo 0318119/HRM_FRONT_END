@@ -7,6 +7,8 @@ import Base_CityForm from "./form/Base_CityForm";
 import "./assets/css/Base_City.css";
 import { connect } from "react-redux";
 import * as BASE_CITY_ACTIONS from "../store/actions/HrOperations/Base_CIty/index";
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 
 const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
   const [mode, setMode] = useState("read");
@@ -62,10 +64,10 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
             onClick={() => EditPage("Edit", data?.City_code)}
             className="editBtn"
           >
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+             <FaEdit />
           </button>
           <button className="deleteBtn">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
+            <MdDeleteOutline />
           </button>
         </Space>
       ),

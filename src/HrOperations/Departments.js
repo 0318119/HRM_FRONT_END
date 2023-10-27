@@ -9,6 +9,8 @@ import './assets/css/DepartmentList.css'
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
@@ -67,7 +69,9 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Dept_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', data?.Dept_code)} className="editBtn">
+                     <FaEdit />
+                    </button>
                     <Popconfirm
                         title="Delete the Department"
                         description="Are you sure to delete the Department?"
@@ -77,7 +81,9 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                             handleConfirmDelete(data?.Dept_code)
                         }}
                     >
-                        <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                        <button className="deleteBtn">
+                            <MdDeleteOutline />
+                        </button>
                     </Popconfirm>
                 </Space>
             ),

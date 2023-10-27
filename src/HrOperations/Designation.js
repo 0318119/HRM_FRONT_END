@@ -8,6 +8,8 @@ import * as DESIGNATIONS_ACTIONS from "../store/actions/HrOperations/Designation
 import "./assets/css/DesignationsList.css";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
@@ -70,7 +72,9 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn">
+                        <FaEdit />
+                    </button>
                     <Popconfirm
                         title="Delete the Designation"
                         description="Are you sure to delete the Designation?"
@@ -80,7 +84,9 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                             handleConfirmDelete(data?.Desig_code)
                         }}
                     >
-                        <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                        <button className="deleteBtn">
+                            <MdDeleteOutline />
+                        </button>
                     </Popconfirm>
                 </Space>
             ),

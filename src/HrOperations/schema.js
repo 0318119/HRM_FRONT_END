@@ -64,7 +64,6 @@ const DesignationScheme = yup.object().shape({
 });
 export {DesignationScheme};
 
-<<<<<<< HEAD
 // HR-OPERATIONS ===> Base City SCHEME
 const Base_City_Scheme = yup.object().shape({
   City_code : yup.number().required("City_code is required"),
@@ -75,7 +74,6 @@ const Base_City_Scheme = yup.object().shape({
   Province_Code: yup.number().required("Province_Code is required")
 });
 export {Base_City_Scheme};
-=======
 
 // HR-OPERATIONS ===> Division SCHEME
 const DivisionScheme = yup.object().shape({
@@ -124,4 +122,3 @@ const EmployeeTypeScheme = yup.object().shape({
   Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EmployeeTypeScheme};
->>>>>>> 56bcf0a4d440c2675c576842ec1b0a0be09275a1
