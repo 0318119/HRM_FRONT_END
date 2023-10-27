@@ -16,12 +16,32 @@ import { message } from 'antd';
 const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
     const [isCode, setCode] = useState(null)
     const [mode, setMode] = useState('read')
+    const [isSearchVal,setSearchVal] = useState('')
+
     const EditPage = (mode, code) => {
         setCode(code)
         setMode(mode)
-      }
+    }
+
+    useEffect(() => {
+    if(isSearchVal == ''){
+        GetDataDesignation({ 
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+        })
+    }else{
+        GetDataDesignation({ 
+            pageSize: pageSize,
+            pageNo: 1,
+            search: isSearchVal
+        })
+    }
+    }, [page,isSearchVal])
 
     const columns = [
         {
@@ -52,13 +72,12 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                 <Space size="middle">
                     <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <Popconfirm
-                        title="Delete the Department"
-                        description="Are you sure to delete the Department?"
+                        title="Delete the Designation"
+                        description="Are you sure to delete the Designation?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            // handleConfirmDelete(data?.Desig_code)
-                            console.log("data?.Desig_code",data?.Desig_code)
+                            handleConfirmDelete(data?.Desig_code)
                         }}
                     >
                         <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -68,9 +87,6 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
         },
     ];
 
-    useEffect(() => {
-        GetDataDesignation()
-    }, [])
 
     // DESIGNATION FORM DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
@@ -91,7 +107,11 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
-                    GetDataDesignation()
+                    GetDataDesignation({ 
+                        pageSize: pageSize,
+                        pageNo: 1,
+                        search: null
+                    })
                 }, 5000);
             }
             else {
@@ -123,7 +143,9 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                                 <div className="DesignationsFlexBox">
                                     <h4 className="text-dark">Designation List</h4>
                                     <div className="DesignationssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search" />
+                                        <Input placeholder={'Search Here...'} type="search" 
+                                            onChange={(e) => {setSearchVal(e.target.value)}}
+                                        />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
@@ -133,7 +155,19 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
 
                         <div>
                             {mode == "read" && (
-                                <Table columns={columns} loading={Red_Designation?.loading} dataSource={Red_Designation?.data?.[0]?.res?.data?.[0]} scroll={{ x: 10 }} />
+                                <Table columns={columns} 
+                                    loading={Red_Designation?.loading} 
+                                    dataSource={Red_Designation?.data?.[0]?.res?.data1} 
+                                    scroll={{ x: 10 }} 
+                                    pagination={{
+                                        defaultCurrent: page,
+                                        total: Red_Designation?.data?.[0]?.res?.data3,
+                                        onChange: (p) => {
+                                          setPage(p);
+                                        },
+                                        pageSize: pageSize,
+                                      }}
+                                />
                             )}
                             {mode == "create" && (
                                 <DesignationForm cancel={setMode} mode={mode} isCode={null} />

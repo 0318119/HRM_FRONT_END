@@ -9,14 +9,14 @@ import baseUrl from '../../../../config.json'
 
 
 
-export const GetDataDesignation = (body) => async (dispatch) => {
+export const GetDataDesignation = (params) => async (dispatch) => {
     try {
         dispatch({
             type: GET_TRANSITION_DESIGNATION_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignation`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignation/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

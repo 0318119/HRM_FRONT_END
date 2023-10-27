@@ -32,7 +32,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
     }else{
       GetCostCentreData({ 
         pageSize: pageSize,
-        pageNo: page,
+        pageNo: 1,
         search: isSearchVal
       })
     }
@@ -117,7 +117,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
             messageApi.destroy()
             GetCostCentreData({ 
               pageSize: pageSize,
-              pageNo: page,
+              pageNo: 1,
               search: null
             })
           }, 5000);
