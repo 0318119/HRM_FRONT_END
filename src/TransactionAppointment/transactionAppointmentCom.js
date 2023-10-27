@@ -14,6 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 import Word from "./Word";
 const config = require("../config.json");
 
