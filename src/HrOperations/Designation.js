@@ -115,7 +115,7 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                 setTimeout(() => {
                     GetDataDesignation({ 
                         pageSize: pageSize,
-                        pageNo: 1,
+                        pageNo: page,
                         search: null
                     })
                 }, 5000);

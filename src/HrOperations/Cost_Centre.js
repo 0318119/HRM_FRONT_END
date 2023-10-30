@@ -44,6 +44,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
     setCode(code)
     setMode(mode)
   }
+  
   const columns = [
     {
       title: 'Code',
@@ -119,7 +120,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
             messageApi.destroy()
             GetCostCentreData({ 
               pageSize: pageSize,
-              pageNo: 1,
+              pageNo: page,
               search: null
             })
           }, 5000);
@@ -144,6 +145,8 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
     });
   }
 
+
+  console.log("Red_Cost_centre",Red_Cost_centre)
   return (
     <>
       <div>

@@ -117,8 +117,18 @@ const EmployeeTypeScheme = yup.object().shape({
   Emp_Code_Prefix: yup.number().required("Emp_Code_Prefix is required"),
   PermanantFlag: yup.string().required("PermanantFlag is required"),
   Retirement_Age: yup.number().required("Retirement_Age is required"),
-  ProbationMonths: yup.date().required("ProbationMonths is required"),
+  ProbationMonths: yup.number().required("ProbationMonths is required"),
   AllowChangeProbationMonths: yup.string().required("AllowChangeProbationMonths is required"),
   Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EmployeeTypeScheme};
+
+// HR-OPERATIONS ===> EMPLOYEE CAT SCHEME
+const EmployeeCatScheme = yup.object().shape({
+  Emp_Category_code: yup.number().required("Emp_Category_code is required"),
+  Emp_Category_name: yup.string().required("Emp_Category_name is required"),
+  Emp_Category_abbr: yup.string().required("Emp_Category_abbr is required"),
+  graduity_fund_percentage: yup.number().required("graduity_fund_percentage is required"),
+  Sort_key: yup.number().required("Sort_key is required"),
+});
+export {EmployeeCatScheme};

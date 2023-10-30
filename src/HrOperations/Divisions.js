@@ -96,7 +96,7 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
         setTimeout(() => {
           GetDivisionData({
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 5000);

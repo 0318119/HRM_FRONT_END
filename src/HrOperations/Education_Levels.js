@@ -107,7 +107,7 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
         setTimeout(() => {
           GetEducationLevelData({
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 3000);

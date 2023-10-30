@@ -130,7 +130,7 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                 setTimeout(() => {
                     GetDataDepartment({
                         pageSize: pageSize,
-                        pageNo: 1,
+                        pageNo: page,
                         search: null
                     })
                 }, 5000);

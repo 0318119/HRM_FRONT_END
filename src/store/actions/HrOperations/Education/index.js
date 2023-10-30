@@ -10,14 +10,13 @@ import baseUrl from '../../../../config.json'
 
 
 export const GetEducationData = (params) => async (dispatch) => {
-    // /${params.pageNo}/${params.pageSize}/${params.search}
     try {
         dispatch({
             type: GET_TRANSITION_EDUCATION_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/education_code/GetEducation`, {
+        const response = await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCode/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -57,14 +56,14 @@ export const Get_Education_By_ID = (body) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/educationlevel/GetEducationLevelById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/education/GetEducationByCode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Edu_level_code':body,
+                'Edu_code':body,
             })
         });
         if(response.status === 200) {

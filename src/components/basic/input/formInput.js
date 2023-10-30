@@ -110,7 +110,7 @@ const FormSelect = ({
     ...rest
 }) => {
     return (
-         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
+         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', }}>
          {showLabel && (
              <label>
                  {label}
@@ -121,18 +121,13 @@ const FormSelect = ({
              name={name}
              render={({ field }) => {
                  return (
-                    // Selec
-                    <Space wrap>
-                        <Select
-                            {...field}
-                            {...rest}
-                            placeholder={placeholder} name={name} id={name}
-                            style={{
-                                width: 300,
-                            }}
-                            options={options}
-                        />
-                    </Space>
+                    <Select
+                        {...field}
+                        {...rest}
+                        name={name} id={name}
+                        placeholder="Select users"
+                        options={options}
+                    />
                  )
              }}
          />

@@ -95,7 +95,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
         setTimeout(() => {
           GetDataCountry({ 
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 5000);

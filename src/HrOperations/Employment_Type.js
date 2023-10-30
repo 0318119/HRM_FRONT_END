@@ -15,7 +15,7 @@ import { message } from 'antd';
 
 
 
-const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
+const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [page, setPage] = useState(1);
@@ -74,7 +74,7 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              // handleConfirmDelete(data?.Empt_Type_code)
+              handleConfirmDelete(data?.Empt_Type_code)
             }}
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -85,8 +85,22 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
   ];
 
   useEffect(() => {
-    GetEmployeeTypeData()
-  }, [])
+    if(isSearchVal == ''){
+      GetEmployeeTypeData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    }else{
+      GetEmployeeTypeData({ 
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page,isSearchVal])
+
+
   // EDUCATION LEVEL DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
@@ -106,11 +120,11 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-          // GetEducationData({
-          //   pageSize: pageSize,
-          //   pageNo: 1,
-          //   search: null
-          // })
+          GetEmployeeTypeData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+          })
         }, 3000);
       }
       else {
@@ -126,7 +140,7 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
       });
     });
   }
-  console.log("Red_Employee_type table page",Red_Employee_type?.data?.[0]?.res?.data)
+
   return (
     <>
       <div>
@@ -142,7 +156,9 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
                 <div className="EmployeeTypeFlexBox">
                   <h4 className="text-dark">Employee  Type</h4>
                   <div className="EmployeeTypesearchBox">
-                    <Input placeholder={'Search Here...'} type="search" />
+                    <Input placeholder={'Search Here...'} type="search" 
+                        onChange={(e) => {setSearchVal(e.target.value)}}
+                      />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -153,16 +169,24 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
             <div>
               {mode == "read" && (
                 <Table columns={columns} 
-                  loading={Red_Employee_type?.loading}
-                  dataSource={Red_Employee_type?.data?.[0]?.res?.data?.[0]} 
-                  scroll={{ x: 10 }}
+                    loading={Red_Employee_type?.loading}
+                    dataSource={Red_Employee_type?.data?.[0]?.res?.data1}
+                    scroll={{ x: 10 }}
+                    pagination={{
+                      defaultCurrent: page,
+                      total: Red_Employee_type?.data?.[0]?.res?.data3,
+                      onChange: (p) => {
+                        setPage(p);
+                      },
+                      pageSize: pageSize,
+                    }}
                 />
               )}
               {mode == "create" && (
-                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={null}/>
+                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={isCode}/>
+                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 
