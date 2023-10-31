@@ -110,10 +110,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
             GetCostCentreData({ 
               pageSize: pageSize,
               pageNo: page,
-<<<<<<< HEAD
               search: null
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
             })
           }, 5000);
       }
