@@ -72,6 +72,7 @@ import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
  import Base_City from '../HrOperations/Base_City'
  import RefreshableData from '../HrOperations/RefreshableData'
+ import Parameters_Access from '../HrOperations/Parameters_Access';
 
 const routing = () => {
   return (
@@ -148,6 +149,7 @@ const routing = () => {
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
           <Route path="/Base_City" element={<Base_City/>} />
           <Route path="/RefreshableData" element={<RefreshableData/>} />
+          <Route path="/Parameters_Access" element={<Parameters_Access/>} />
         </Routes>
       </Router>
     </>
