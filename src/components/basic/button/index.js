@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import style from './button.module.css'
 import { message } from 'antd';
 
-function Button({ title,onClick }) {
+function Button({ title,onClick,loading }) {
     return (
         <>
             <div className={style.PrimaryButton}>
-                <button onClick={()=>{onClick()}}>{title}</button>
+                <button disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
             </div>
         </>
     )
@@ -48,4 +48,14 @@ function CancelButton({ title,onClick }) {
     )
 }
 
-export {PrimaryButton,CancelButton,Button}
+function DeleteButton({ title,onClick,loading }) {
+    return (
+        <>
+            <div className={style.deleteBtn}>
+                <button disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
+            </div>
+        </>
+    )
+}
+
+export {PrimaryButton,CancelButton,Button,DeleteButton}

@@ -21,9 +21,6 @@ const Country = ({ Red_Country, GetDataCountry }) => {
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
   const [mode, setMode] = useState('read')
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isSearchVal,setSearchVal] = useState('')
   const EditPage = (mode, code) => {
     setCode(code)
     setMode(mode)
@@ -74,7 +71,6 @@ const Country = ({ Red_Country, GetDataCountry }) => {
   ];
 
 
-  // COST COUNTRY FORM DATA DELETE API CALL =========================== 
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/countries/DeleteCountry`, {
@@ -92,42 +88,24 @@ const Country = ({ Red_Country, GetDataCountry }) => {
           type: 'success',
           content: "You have successfully deleted",
         });
-        setTimeout(() => {
-          GetDataCountry({ 
-            pageSize: pageSize,
-            pageNo: 1,
-            search: null
-          })
-        }, 5000);
       }
       else {
         messageApi.open({
           type: 'error',
-          content: response?.message || response?.messsage,
+          content: response?.message,
         });
       }
     }).catch((error) => {
       messageApi.open({
         type: 'error',
-        content: error?.message || error?.messsage,
+        content: "Somthing went wrong.",
       });
     });
   }
+
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetDataCountry({ 
-        pageSize: pageSize,
-        pageNo: page,
-        search: null
-      })
-    }else{
-      GetDataCountry({ 
-        pageSize: pageSize,
-        pageNo: 1,
-        search: isSearchVal
-      })
-    }
-  }, [page,isSearchVal])
+    GetDataCountry()
+  }, [])
 
   return (
     <>
@@ -144,9 +122,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 <div className="CountryFlexBox">
                   <h4 className="text-dark">Country List</h4>
                   <div className="CountrysearchBox">
-                    <Input placeholder={'Search Here...'} type="search" 
-                      onChange={(e) => {setSearchVal(e.target.value)}}
-                    />
+                    <Input placeholder={'Search Here...'} type="search" />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -156,20 +132,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
 
             <div>
               {mode == "read" && (
-                <Table 
-                  columns={columns}
-                  loading={Red_Country?.loading}
-                  dataSource={Red_Country?.data?.[0]?.res?.data1} 
-                  scroll={{ x: 10 }} 
-                  pagination={{
-                    defaultCurrent: page,
-                    total: Red_Country?.data?.[0]?.res?.data3,
-                    onChange: (p) => {
-                      setPage(p);
-                    },
-                    pageSize: pageSize,
-                  }}
-                />
+                <Table columns={columns} loading={Red_Country?.loading} dataSource={Red_Country?.data?.[0]?.res?.data?.[0]} scroll={{ x: 10 }} pagination={false} />
               )}
               {mode == "create" && (
                 <CountryForm cancel={setMode} mode={mode} isCode={null} />

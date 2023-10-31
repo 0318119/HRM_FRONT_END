@@ -16,7 +16,7 @@ export const GetCostCentreData = (params) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenter/${params.pageNo}/${params.pageSize}/${params.search}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenter/${params.pageNo}/${params.pageSize}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

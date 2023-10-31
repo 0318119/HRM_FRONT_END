@@ -15,30 +15,21 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
+const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode,setCode] = useState(null)
   const [mode, setMode] = useState('read')
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [isSearchVal,setSearchVal] = useState('')
+
 
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetCostCentreData({ 
-        pageSize: pageSize,
-        pageNo: page,
-        search: null
-      })
-    }else{
-      GetCostCentreData({ 
-        pageSize: pageSize,
-        pageNo: 1,
-        search: isSearchVal
-      })
-    }
-  }, [page,isSearchVal])
+    GetCostCentreData({ 
+      pageSize: pageSize,
+      pageNo: page,
+    })
+  }, [page])
 
   const EditPage = (mode,code) => {
     setCode(code)
@@ -96,8 +87,6 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
       ),
     },
   ];
-
-  // COST CENTRE FORM DATA DELETE API CALL =========================== 
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_cost_center/DeleteCostCenter`, {
@@ -119,8 +108,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
             messageApi.destroy()
             GetCostCentreData({ 
               pageSize: pageSize,
-              pageNo: 1,
-              search: null
+              pageNo: page,
             })
           }, 5000);
       }
@@ -136,7 +124,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
     }).catch((error) => {
         messageApi.open({
           type: 'error',
-          content: error?.message || error?.messsage,
+          content: "Somthing went wrong.",
         });
         setTimeout(() => {
           messageApi.destroy()
@@ -159,9 +147,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
                     <div className="coslistFlexBox">
                           <h4 className="text-dark">Cost Centers List</h4>
                           <div className="costCentersearchBox">
-                            <Input placeholder={'Search Here...'} type="search" 
-                              onChange={(e) => {setSearchVal(e.target.value)}}
-                            />
+                            <Input placeholder={'Search Here...'} type="search" />
                             <Button title="Create" onClick={()=> setMode("create")}/>
                           </div>
                     </div>
@@ -203,4 +189,4 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
 function mapStateToProps({ Red_Cost_centre }) {
   return { Red_Cost_centre };
 }
-export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList) 
+export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList)
