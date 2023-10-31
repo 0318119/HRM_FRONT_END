@@ -49,7 +49,7 @@ import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
+// import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -70,8 +70,12 @@ import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
- import Base_City from '../HrOperations/Base_City'
- import RefreshableData from '../HrOperations/RefreshableData'
+import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
+import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
+import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
+import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
+import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
+import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
 
 const routing = () => {
   return (
@@ -130,7 +134,7 @@ const routing = () => {
           <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
           <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
           <Route path="/LeaveSummary" element={<LeaveSummary />} />
-          <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
+          {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
           <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
           <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
           <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
@@ -146,8 +150,15 @@ const routing = () => {
           <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
           <Route path="/Family" element={<Family />} />
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
-          <Route path="/Base_City" element={<Base_City/>} />
-          <Route path="/RefreshableData" element={<RefreshableData/>} />
+          {/* payroll */}
+          <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
+          <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
+          <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
+          <Route path="/payroll/oneTimeDeduciton" element={<OneTimeDeduction />} />
+          <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
+          
+          {/* report */}
+          <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         </Routes>
       </Router>
     </>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
+<<<<<<< HEAD
 import * as EMPLOYEE_TYPE_ACTIONS from "../../store/actions/HrOperations/EmployeeType/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -15,10 +16,17 @@ function EmployeeTypeForm({ cancel, mode, isCode, page, Red_Employee_type,GetEmp
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(10);
+=======
+import Select from '../../components/basic/select'
+import { Radio } from 'antd';
+
+function EmployeeTypeForm({ cancel }) {
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
     const EditBack = () => {
         cancel('read')
     }
 
+<<<<<<< HEAD
     const submitForm = async (data) => {
         try {
             const isValid = await EmployeeTypeScheme.validate(data);
@@ -152,14 +160,16 @@ function EmployeeTypeForm({ cancel, mode, isCode, page, Red_Employee_type,GetEmp
         });
     }
 
+=======
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
     return (
         <>
-            {contextHolder}
-            <form onSubmit={handleSubmit(submitForm)}>
+            <div>
                 <h4 className="text-dark">Employee Type</h4>
                 <hr />
                 <div className="form-group formBoxEmployeeType">
+<<<<<<< HEAD
                     <FormInput
                         label={'Emp Type Code'}
                         placeholder={'Emp Type Code'}
@@ -317,19 +327,49 @@ function EmployeeTypeForm({ cancel, mode, isCode, page, Red_Employee_type,GetEmp
                         />
                     </div>
                     
+=======
+                    <Input placeholder={'Employee Type"'} label={'Employee Type"'} type="text" />
+                    <Input placeholder={'Employee Type Abbrivation'} label={'Employee Type Abbrivation'} type="text" />
+                    <Input placeholder={'Company Code'} label={'Company Code'} type="number" />
+                    <Input placeholder={'Sort Key'} label={'Sort Key'} type="text" />
+                </div>
+                <hr />
+                <div className="form-group formBoxEmployeeType">
+                    <Input placeholder={'Retirement Age'} label={'Retirement Age'} type="number" />
+                    <Input placeholder={'Probation Month'} label={'Probation Month'} type="Date" />
+                </div>
+                <hr />
+                <div className="form-group formBoxEmployeeType"> 
+                       <Input placeholder={'Permanant Flag'} label={'Permanant Flag'} type="CheckBox" />
+                       <Input placeholder={'Company Employee Flag'} label={'Company Employee Flag'} type="CheckBox" /> 
+                    <Select
+                        label={"Change Probation Month"}
+                        options={[
+                            {
+                                value: 'jack',
+                                label: 'Jack',
+                            },
+                            {
+                                value: 'lucy',
+                                label: 'Lucy',
+                            },
+                            {
+                                value: 'Yiminghe',
+                                label: 'yiminghe',
+                            },
+
+                        ]}
+                    />
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
                 </div>
                 <div className='EmployeeTypeBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                    <PrimaryButton title="Save" />
                 </div>
-            </form>
+            </div>
 
         </>
     )
 }
 
-
-function mapStateToProps({ Red_Employee_type }) {
-    return { Red_Employee_type };
-}
-export default connect(mapStateToProps, EMPLOYEE_TYPE_ACTIONS)(EmployeeTypeForm)
+export default EmployeeTypeForm

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EducationForm from './form/EducationForm';
 import './assets/css/EducationList.css'
+<<<<<<< HEAD
 import * as EDUCATION_ACTIONS from "../store/actions/HrOperations/Education/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -12,49 +13,42 @@ import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
+=======
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 
 
-const Education = ({ Red_Education, GetEducationData }) => {
-  const [messageApi, contextHolder] = message.useMessage();
-  var get_access_token = localStorage.getItem("access_token");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isCode, setCode] = useState(null)
+const Education = () => {
   const [mode, setMode] = useState('read')
-  const [isSearchVal, setSearchVal] = useState('')
-  const EditPage = (mode, code) => {
-    setCode(code)
-    setMode(mode)
-  }
 
   const columns = [
     {
-      title: 'Education Code',
-      dataIndex: 'Edu_code',
-      key: 'Edu_code',
+      title: 'Division Code',
+      dataIndex: 'name',
+      key: 'name',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Education Name',
-      dataIndex: 'Edu_name',
-      key: 'Edu_name',
+      title: 'Name',
+      dataIndex: 'Name',
+      key: 'Name',
     },
     {
-      title: 'Education Abbreviation',
-      dataIndex: 'Edu_abbr',
-      key: 'Edu_abbr',
+      title: 'Division Head',
+      dataIndex: 'Division Head',
+      key: 'Division Head',
     },
     {
-      title: 'Sort Key',
-      dataIndex: 'Sort_key',
-      key: 'Sort_key',
+      title: 'Short Key',
+      dataIndex: 'Short Key',
+      key: 'Short Key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (data) => (
+      render: (_, record) => (
         <Space size="middle">
+<<<<<<< HEAD
           <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn">
              <FaEdit />
           </button>
@@ -69,11 +63,16 @@ const Education = ({ Red_Education, GetEducationData }) => {
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
+=======
+          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
+<<<<<<< HEAD
   useEffect(() => {
     if(isSearchVal == ''){
       GetEducationData({ 
@@ -131,12 +130,21 @@ const Education = ({ Red_Education, GetEducationData }) => {
   }
 
 
+=======
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      Abbreviation: 'New York No. 1 Lake Park',
+    },
+  ];
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>
         <Header />
       </div>
-      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -146,9 +154,7 @@ const Education = ({ Red_Education, GetEducationData }) => {
                 <div className="EdcuationFlexBox">
                   <h4 className="text-dark">Education List</h4>
                   <div className="EducationsearchBox">
-                    <Input placeholder={'Search Here...'} type="search"
-                      onChange={(e) => { setSearchVal(e.target.value) }}
-                    />
+                    <Input placeholder={'Search Here...'} type="search" />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -158,6 +164,7 @@ const Education = ({ Red_Education, GetEducationData }) => {
 
             <div>
               {mode == "read" && (
+<<<<<<< HEAD
                 <Table columns={columns}
                   dataSource={Red_Education?.data?.[0]?.res?.data1}
                   loading={Red_Education?.loading}
@@ -171,12 +178,15 @@ const Education = ({ Red_Education, GetEducationData }) => {
                     pageSize: pageSize,
                   }}
                 />
+=======
+                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
               )}
               {mode == "create" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={null} />
+                <EducationForm cancel={setMode} />
               )}
               {mode == "Edit" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={isCode} />
+                <EducationForm cancel={setMode} />
               )}
             </div>
 
@@ -187,7 +197,4 @@ const Education = ({ Red_Education, GetEducationData }) => {
   )
 }
 
-function mapStateToProps({ Red_Education }) {
-  return { Red_Education };
-}
-export default connect(mapStateToProps, EDUCATION_ACTIONS)(Education)
+export default Education

@@ -1,7 +1,5 @@
 import * as yup from "yup";
 
-
-// HR-OPERATIONS ===> COST CENTER SCHEME
 const Cost_CentreSchema = yup.object().shape({
   Cost_Centre_code: yup.string().required("Cost_Centre_code is required"),
   Cost_Centre_name: yup.string().required("Cost_Centre_name is required"),
@@ -25,17 +23,16 @@ const Cost_CentreSchema = yup.object().shape({
   Business_Sector_Code: yup.number().required("Business_Sector_Code is required"),
   org_unit_code: yup.number().required("org_unit_code is required"),
 });
+
 export {Cost_CentreSchema};
 
-
-// HR-OPERATIONS ===> COUNTRY SCHEME
 const CountryScheme = yup.object().shape({
   Country_Name: yup.string().required("Country_Name is required"),
   Country_Abbr: yup.string().required("Country_Abbr is required"),
-  SortKey: yup.string().required("SortKey is required"),
+  SortKey: yup.string().required("Country_Abbr is required"),
 });
-export {CountryScheme};
 
+<<<<<<< HEAD
 
 // HR-OPERATIONS ===> Department SCHEME
 const DepartmentScheme = yup.object().shape({
@@ -159,3 +156,6 @@ const GradesScheme = yup.object().shape({
   Car_Amount: yup.number().required("Car_Amount is required"),
 });
 export {GradesScheme};
+=======
+export {CountryScheme};
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a

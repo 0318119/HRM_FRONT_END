@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as COUNTRY_ACTIONS from "../../store/actions/HrOperations/Country/index";
@@ -14,13 +14,11 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id,GetDataCountry }) {
+function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id }) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
-  const [isLoading,setLoading] = useState(false)
-  const [pageSize, setPageSize] = useState(10);
 
-
+  // FORM CANCEL FUNCTION =================================================================
   const EditBack = () => {
     cancel('read')
   }
@@ -84,9 +82,8 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
     }
   }, [Red_Country?.dataSingle?.[0]?.res?.data?.[0]])
 
-  // COST COUNTRY FORM DATA API CALL =========================== 
+  // COST CENTRE FORM API CALL =========================== 
   async function POST_COUNTRY_FORM(body) {
-    setLoading(true)
     await fetch(
       `${baseUrl.baseUrl}/countries/AddCountry`, {
       method: "POST",
@@ -104,30 +101,22 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
       if(response.success){
           messageApi.open({
               type: 'success',
-              content: response?.message || response?.messsage,
+              content: response?.messsage,
           });
-          setLoading(false)
           setTimeout(() => {
             cancel('read')
-            GetDataCountry({ 
-              pageSize: pageSize,
-              pageNo: 1,
-              search: null
-            })
           }, 3000);
       }
       else{
-        setLoading(false)
           messageApi.open({
               type: 'error',
               content: response?.message || response?.messsage,
           });
       }
     }).catch((error) => {
-        setLoading(false)
         messageApi.open({
           type: 'error',
-          content: error?.message || error?.messsage,
+          content: error?.message,
         });
     });
   }
@@ -185,7 +174,7 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
         </div>
         <div className='CountryBtnBox'>
           <CancelButton onClick={EditBack} title={'Cancel'} />
-          <PrimaryButton type={'submit'}  loading={isLoading} title="Save" />
+          <PrimaryButton type={'submit'}  title="Save" />
         </div>
       </form>
     </>

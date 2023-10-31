@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as EDUCATION_ACTIONS from "../../store/actions/HrOperations/Education/index"
@@ -8,17 +9,19 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput } from '../../components/basic/input/formInput';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
+=======
+import React from 'react'
+import Input from '../../components/basic/input'
+import { CancelButton, PrimaryButton } from "../../components/basic/button";
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
-function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, Get_Education_By_ID }) {
-    var get_access_token = localStorage.getItem("access_token");
-    const [messageApi, contextHolder] = message.useMessage();
-    const [isLoading, setLoading] = useState(false)
-    const [pageSize, setPageSize] = useState(10);
+function EducationForm({ cancel }) {
     const EditBack = () => {
         cancel('read')
     }
 
 
+<<<<<<< HEAD
     const submitForm = async (data) => {
         try {
             const isValid = await EducationScheme.validate(data);
@@ -130,81 +133,32 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
         });
     }
 
+=======
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
     return (
         <>
-            {contextHolder}
-            <form onSubmit={handleSubmit(submitForm)}>
+            <div>
                 <h4 className="text-dark">Education List</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
-                    <FormInput
-                        label={'Education Code'}
-                        placeholder={'Education Code'}
-                        id="Edu_code"
-                        name="Edu_code"
-                        type="number"
-                        readOnly
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Education Name'}
-                        placeholder={'Education Name'}
-                        id="Edu_name"
-                        name="Edu_name"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-
-                    <FormInput
-                        label={'Education Abbrivation'}
-                        placeholder={'Education Abbrivation'}
-                        id="Edu_abbr"
-                        name="Edu_abbr"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-
-                    <FormInput
-                        label={'Education Level Code'}
-                        placeholder={'Education Level Code'}
-                        id="Edu_level_code"
-                        name="Edu_level_code"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-
-                    <FormInput
-                        label={'Sort Key'}
-                        placeholder={'Sort Key'}
-                        id="Sort_key"
-                        name="Sort_key"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-
+                    <Input placeholder={'Education Name'} label={'Education Name'} type="text" />
+                    <Input placeholder={'Education Abbrivation'} label={'Education Abbrivation'} type="text" />
+                    <Input placeholder={'Education Level Code'} label={'Education Level Code'} type="number" />
+                    <Input placeholder={'Sort Key'} label={'Sort Key'} type="text" />
                 </div>
+                <hr />
+                {/* <div className="form-group formBoxEducation">
+                    <Input placeholder={'Division Head'} label={'Division Head'} type="number" />
+                    <Input placeholder={'Division Category Code'} label={'Division Category Code'} type="number" />
+                </div> */}
                 <div className='EducationBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                    <PrimaryButton title="Save" />
                 </div>
-            </form>
+            </div>
 
         </>
     )
 }
 
-
-function mapStateToProps({ Red_Education }) {
-    return { Red_Education };
-}
-export default connect(mapStateToProps, EDUCATION_ACTIONS)(EducationForm)
+export default EducationForm

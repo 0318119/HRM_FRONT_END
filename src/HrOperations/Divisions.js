@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DivisionForm from './form/DivisionForm';
+<<<<<<< HEAD
 import * as DIVISION_ACTIONS from "../store/actions/HrOperations/Divisions/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -11,49 +12,43 @@ import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
+=======
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 import './assets/css/DivisionList.css'
 
 
 
-const Divisions = ({ Red_Division, GetDivisionData }) => {
-  const [messageApi, contextHolder] = message.useMessage();
-  var get_access_token = localStorage.getItem("access_token");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isCode, setCode] = useState(null)
+const Divisions = () => {
   const [mode, setMode] = useState('read')
-  const [isSearchVal, setSearchVal] = useState('')
-  const EditPage = (mode, code) => {
-    setCode(code)
-    setMode(mode)
-  }
 
   const columns = [
     {
       title: 'Division Code',
-      dataIndex: 'Div_code',
-      key: 'Div_code',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Division Name',
-      dataIndex: 'Div_name',
-      key: 'Div_name',
+      title: 'Name',
+      dataIndex: 'Name',
+      key: 'Name',
     },
     {
       title: 'Division Head',
-      dataIndex: 'Div_Head',
-      key: 'Div_Head',
+      dataIndex: 'Division Head',
+      key: 'Division Head',
     },
     {
       title: 'Short Key',
-      dataIndex: 'Sort_key',
-      key: 'Sort_key',
+      dataIndex: 'Short Key',
+      key: 'Short Key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (data) => (
+      render: (_, record) => (
         <Space size="middle">
+<<<<<<< HEAD
           <button onClick={() => EditPage('Edit', data?.Div_code)} className="editBtn">
             <FaEdit />
           </button>
@@ -70,11 +65,16 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
               <MdDeleteOutline />
             </button>
           </Popconfirm>
+=======
+          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
+<<<<<<< HEAD
   // DIVISION FORM DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
@@ -131,23 +131,31 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
     }
   }, [page,isSearchVal])
 
+=======
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      Abbreviation: 'New York No. 1 Lake Park',
+    },
+  ];
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>
         <Header />
       </div>
-      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
+
             {mode == "read" && (
               <>
                 <div className="DivisionsFlexBox">
                   <h4 className="text-dark">Division List</h4>
                   <div className="DivisionssearchBox">
-                    <Input placeholder={'Search Here...'} type="search" 
-                      onChange={(e) => {setSearchVal(e.target.value)}}
-                    />
+                    <Input placeholder={'Search Here...'} type="search" />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -157,25 +165,13 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns}
-                  loading={Red_Division?.loading}
-                  dataSource={Red_Division?.data?.[0]?.res?.data1} 
-                  scroll={{ x: 10 }} 
-                  pagination={{
-                    defaultCurrent: page,
-                    total: Red_Division?.data?.[0]?.res?.data3,
-                    onChange: (p) => {
-                      setPage(p);
-                    },
-                    pageSize: pageSize,
-                  }}
-                />
+                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
               )}
               {mode == "create" && (
-                <DivisionForm cancel={setMode} mode={mode} isCode={null} />
+                <DivisionForm cancel={setMode} />
               )}
               {mode == "Edit" && (
-                <DivisionForm cancel={setMode} mode={mode} isCode={isCode} />
+                <DivisionForm cancel={setMode} />
               )}
             </div>
 
@@ -186,7 +182,4 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
   )
 }
 
-function mapStateToProps({ Red_Division }) {
-  return { Red_Division };
-}
-export default connect(mapStateToProps, DIVISION_ACTIONS)(Divisions)
+export default Divisions

@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EmployeeTypeForm from './form/EmployeeTypeForm';
 import './assets/css/EmployeeTypeList.css'
+<<<<<<< HEAD
 import * as EMPLOYEE_TYPE_ACTIONS from "../store/actions/HrOperations/EmployeeType/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -21,50 +22,42 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isCode, setCode] = useState(null)
+=======
+
+
+
+const Employment_Type = () => {
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   const [mode, setMode] = useState('read')
-  const [isSearchVal, setSearchVal] = useState('')
-  const EditPage = (mode, code) => {
-    setCode(code)
-    setMode(mode)
-  }
 
   const columns = [
     {
-      title: 'Code',
-      dataIndex: 'Empt_Type_code',
-      key: 'Empt_Type_code',
+      title: 'Division Code',
+      dataIndex: 'name',
+      key: 'name',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'Name',
-      dataIndex: 'Empt_Type_name',
-      key: 'Empt_Type_name',
+      dataIndex: 'Name',
+      key: 'Name',
     },
     {
-      title: 'Abbreviation',
-      dataIndex: 'Empt_Type_abbr',
-      key: 'Empt_Type_abbr',
+      title: 'Division Head',
+      dataIndex: 'Division Head',
+      key: 'Division Head',
     },
     {
-      title: 'Probation Months',
-      dataIndex: 'ProbationMonths',
-      key: 'ProbationMonths',
-    },
-    {
-      title: 'Retirement Age',
-      dataIndex: 'Retirement_Age',
-      key: 'Retirement_Age',
-    },
-    {
-      title: 'Sort key',
-      dataIndex: 'Sort_key',
-      key: 'Sort_key',
+      title: 'Short Key',
+      dataIndex: 'Short Key',
+      key: 'Short Key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (data) => (
+      render: (_, record) => (
         <Space size="middle">
+<<<<<<< HEAD
           <button onClick={() => EditPage('Edit',data?.Empt_Type_code)} className="editBtn">
             <FaEdit />
           </button>
@@ -79,11 +72,16 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
+=======
+          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
+<<<<<<< HEAD
   useEffect(() => {
     if(isSearchVal == ''){
       GetEmployeeTypeData({ 
@@ -141,12 +139,21 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
     });
   }
 
+=======
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      Abbreviation: 'New York No. 1 Lake Park',
+    },
+  ];
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>
         <Header />
       </div>
-      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -168,6 +175,7 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
 
             <div>
               {mode == "read" && (
+<<<<<<< HEAD
                 <Table columns={columns} 
                     loading={Red_Employee_type?.loading}
                     dataSource={Red_Employee_type?.data?.[0]?.res?.data1}
@@ -187,6 +195,15 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
               )}
               {mode == "Edit" && (
                 <EmployeeTypeForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
+=======
+                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
+              )}
+              {mode == "create" && (
+                <EmployeeTypeForm cancel={setMode} />
+              )}
+              {mode == "Edit" && (
+                <EmployeeTypeForm cancel={setMode} />
+>>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
               )}
             </div>
 
@@ -197,7 +214,4 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
   )
 }
 
-function mapStateToProps({ Red_Employee_type }) {
-  return { Red_Employee_type };
-}
-export default connect(mapStateToProps, EMPLOYEE_TYPE_ACTIONS)(Employment_Type)
+export default Employment_Type
