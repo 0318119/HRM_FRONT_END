@@ -50,21 +50,21 @@ export const GetPositionData = (params) => async (dispatch) => {
     }
 }
 
-export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
+export const Get_Position_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_POSITION_START,
+            type: GET_TRANSITION_POSITION_DATA,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/educationlevel/GetEducationLevelById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/Positions/GetbyPositionscode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'Edu_level_code': body,
+                'Position_Code': body,
             })
         });
         if (response.status === 200) {

@@ -9,6 +9,8 @@ import { message } from 'antd';
 import { Popconfirm } from 'antd';
 import { connect } from "react-redux";
 import * as POSITIONS_DATA_ACTIONS from '../store/actions/HrOperations/Positions/index'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 
 
@@ -22,6 +24,10 @@ const Positions = ({ GetPositionData, Red_Position }) => {
     const [isCode, setCode] = useState(null)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode, setMode] = useState('read')
+    const EditPage = (mode, code) => {
+        setCode(code)
+        setMode(mode)
+    }
 
     const columns = [
         {
@@ -31,35 +37,50 @@ const Positions = ({ GetPositionData, Red_Position }) => {
         },
         {
             title: 'Positon Name',
-            dataIndex: 'Name',
-            key: 'Name',
+            dataIndex: 'PositionName',
+            key: 'PositionName',
         },
         {
             title: 'Position Active Date',
-            dataIndex: 'Division Head',
-            key: 'Division Head',
+            dataIndex: 'Position_Active_Date',
+            key: 'Position_Active_Date',
         },
         {
             title: 'Minimum Salary',
-            dataIndex: 'Short Key',
-            key: 'Short Key',
+            dataIndex: 'Minimum_Salary',
+            key: 'Minimum_Salary',
         },
         {
             title: 'Maximum Salary',
-            dataIndex: 'Short Key',
-            key: 'Short Key',
+            dataIndex: 'Maximum_Salary',
+            key: 'Maximum_Salary',
         },
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
+            render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', data?.Position_Code)} className="editBtn">
+                        <FaEdit />
+                    </button>
+                    <Popconfirm
+                        title="Delete the Department"
+                        description="Are you sure to delete the Department?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => {
+                            // handleConfirmDelete(data?.Dept_code)
+                        }}
+                    >
+                        <button className="deleteBtn">
+                            <MdDeleteOutline />
+                        </button>
+                    </Popconfirm>
                 </Space>
             ),
         },
     ];
+    // console.log(Red_Position.data,'Red_Position')
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -109,10 +130,11 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                 <Table 
                                 columns={columns}
                                 loading={Red_Position?.loading}
-                                dataSource={Red_Position?.date} scroll={{ x: 10 }} 
+                                    dataSource={Red_Position?.data?.[0]?.res?.data1}
+                                     scroll={{ x: 10 }} 
                                     pagination={{
                                         defaultCurrent: page,
-                                        total: Red_Position?.data?.[0]?.res,
+                                        total: Red_Position?.data?.[0]?.res?.data1,
                                         onChange: (p) => {
                                             setPage(p);
                                         },
@@ -122,10 +144,10 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                     />
                             )}
                             {mode == "create" && (
-                                <PositionsForm cancel={setMode} />
+                                <PositionsForm cancel={setMode} mode={mode} isCode={null} />
                             )}
                             {mode == "Edit" && (
-                                <PositionsForm cancel={setMode} />
+                                <PositionsForm  cancel={setMode} isCode={isCode} />
                             )}
                         </div>
 
