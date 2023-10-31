@@ -5,7 +5,6 @@ import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EducationForm from './form/EducationForm';
 import './assets/css/EducationList.css'
-<<<<<<< HEAD
 import * as EDUCATION_ACTIONS from "../store/actions/HrOperations/Education/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -13,8 +12,6 @@ import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 
 
@@ -48,7 +45,6 @@ const Education = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-<<<<<<< HEAD
           <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn">
              <FaEdit />
           </button>
@@ -63,16 +59,11 @@ const Education = () => {
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
-=======
-          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
-<<<<<<< HEAD
   useEffect(() => {
     if(isSearchVal == ''){
       GetEducationData({ 
@@ -130,16 +121,6 @@ const Education = () => {
   }
 
 
-=======
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      Abbreviation: 'New York No. 1 Lake Park',
-    },
-  ];
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>
@@ -164,7 +145,6 @@ const Education = () => {
 
             <div>
               {mode == "read" && (
-<<<<<<< HEAD
                 <Table columns={columns}
                   dataSource={Red_Education?.data?.[0]?.res?.data1}
                   loading={Red_Education?.loading}
@@ -178,9 +158,6 @@ const Education = () => {
                     pageSize: pageSize,
                   }}
                 />
-=======
-                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
               )}
               {mode == "create" && (
                 <EducationForm cancel={setMode} />

@@ -5,15 +5,12 @@ import {Button} from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DepartmentForm from './form/DepartmentForm';
 import './assets/css/DepartmentList.css'
-<<<<<<< HEAD
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 const Departments = () => {
     const [mode, setMode] = useState('read')
@@ -54,7 +51,6 @@ const Departments = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-<<<<<<< HEAD
                     <button onClick={() => EditPage('Edit', data?.Dept_code)} className="editBtn">
                      <FaEdit />
                     </button>
@@ -71,16 +67,13 @@ const Departments = () => {
                             <MdDeleteOutline />
                         </button>
                     </Popconfirm>
-=======
                     <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
                 </Space>
             ),
         },
     ];
 
-<<<<<<< HEAD
     useEffect(() => {
         GetDataDepartment()
     }, [])
@@ -140,7 +133,6 @@ const Departments = () => {
         });
     }
 
-=======
     const data = [
         {
             key: '1',
@@ -149,7 +141,6 @@ const Departments = () => {
             Abbreviation: 'New York No. 1 Lake Park',
         },
     ];
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
     return (
         <>
             <div>

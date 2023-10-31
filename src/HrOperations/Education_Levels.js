@@ -5,7 +5,6 @@ import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EducationLevelForm from './form/EducationLevelForm';
 import './assets/css/EducationLevelList.css'
-<<<<<<< HEAD
 import * as EDUCATION_LEVEL_ACTIONS from "../store/actions/HrOperations/Education_level/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -14,8 +13,6 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 import { useEffect } from 'react';
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 
 
@@ -49,7 +46,6 @@ const Education_Levels = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-<<<<<<< HEAD
           <button onClick={() => EditPage('Edit',data?.Edu_level_code)} className="editBtn">
             <FaEdit />
           </button>
@@ -64,16 +60,11 @@ const Education_Levels = () => {
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
-=======
-          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
-<<<<<<< HEAD
   useEffect(() => {
     if(isSearchVal == ''){
       GetEducationLevelData({ 
@@ -131,16 +122,6 @@ const Education_Levels = () => {
   }
 
 
-=======
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      Abbreviation: 'New York No. 1 Lake Park',
-    },
-  ];
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>

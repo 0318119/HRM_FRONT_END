@@ -4,7 +4,6 @@ import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DivisionForm from './form/DivisionForm';
-<<<<<<< HEAD
 import * as DIVISION_ACTIONS from "../store/actions/HrOperations/Divisions/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -12,8 +11,6 @@ import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 import './assets/css/DivisionList.css'
 
 
@@ -48,7 +45,6 @@ const Divisions = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-<<<<<<< HEAD
           <button onClick={() => EditPage('Edit', data?.Div_code)} className="editBtn">
             <FaEdit />
           </button>
@@ -65,16 +61,11 @@ const Divisions = () => {
               <MdDeleteOutline />
             </button>
           </Popconfirm>
-=======
-          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
         </Space>
       ),
     },
   ];
 
-<<<<<<< HEAD
   // DIVISION FORM DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
@@ -131,16 +122,6 @@ const Divisions = () => {
     }
   }, [page,isSearchVal])
 
-=======
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      Abbreviation: 'New York No. 1 Lake Park',
-    },
-  ];
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
   return (
     <>
       <div>

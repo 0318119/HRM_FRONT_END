@@ -169,7 +169,6 @@ function EmployeeTypeForm({ cancel }) {
                 <h4 className="text-dark">Employee Type</h4>
                 <hr />
                 <div className="form-group formBoxEmployeeType">
-<<<<<<< HEAD
                     <FormInput
                         label={'Emp Type Code'}
                         placeholder={'Emp Type Code'}
@@ -327,40 +326,6 @@ function EmployeeTypeForm({ cancel }) {
                         />
                     </div>
                     
-=======
-                    <Input placeholder={'Employee Type"'} label={'Employee Type"'} type="text" />
-                    <Input placeholder={'Employee Type Abbrivation'} label={'Employee Type Abbrivation'} type="text" />
-                    <Input placeholder={'Company Code'} label={'Company Code'} type="number" />
-                    <Input placeholder={'Sort Key'} label={'Sort Key'} type="text" />
-                </div>
-                <hr />
-                <div className="form-group formBoxEmployeeType">
-                    <Input placeholder={'Retirement Age'} label={'Retirement Age'} type="number" />
-                    <Input placeholder={'Probation Month'} label={'Probation Month'} type="Date" />
-                </div>
-                <hr />
-                <div className="form-group formBoxEmployeeType"> 
-                       <Input placeholder={'Permanant Flag'} label={'Permanant Flag'} type="CheckBox" />
-                       <Input placeholder={'Company Employee Flag'} label={'Company Employee Flag'} type="CheckBox" /> 
-                    <Select
-                        label={"Change Probation Month"}
-                        options={[
-                            {
-                                value: 'jack',
-                                label: 'Jack',
-                            },
-                            {
-                                value: 'lucy',
-                                label: 'Lucy',
-                            },
-                            {
-                                value: 'Yiminghe',
-                                label: 'yiminghe',
-                            },
-
-                        ]}
-                    />
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
                 </div>
                 <div className='EmployeeTypeBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />

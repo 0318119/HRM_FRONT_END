@@ -5,15 +5,12 @@ import {Button} from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DesignationForm from "./form/DesignationForm";
 import "./assets/css/DesignationsList.css";
-<<<<<<< HEAD
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 import { message } from 'antd';
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 
 
@@ -47,7 +44,6 @@ const HR_Designations = () => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-<<<<<<< HEAD
                     <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn">
                         <FaEdit />
                     </button>
@@ -64,16 +60,11 @@ const HR_Designations = () => {
                             <MdDeleteOutline />
                         </button>
                     </Popconfirm>
-=======
-                    <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
                 </Space>
             ),
         },
     ];
 
-<<<<<<< HEAD
 
     // DESIGNATION FORM DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
@@ -115,16 +106,6 @@ const HR_Designations = () => {
         });
     }
     
-=======
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            Abbreviation: 'New York No. 1 Lake Park',
-        },
-    ];
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
     return (
         <>
             <div>

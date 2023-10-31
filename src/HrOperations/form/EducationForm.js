@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as EDUCATION_ACTIONS from "../../store/actions/HrOperations/Education/index"
@@ -9,11 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput } from '../../components/basic/input/formInput';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
-=======
-import React from 'react'
 import Input from '../../components/basic/input'
-import { CancelButton, PrimaryButton } from "../../components/basic/button";
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
 function EducationForm({ cancel }) {
     const EditBack = () => {
@@ -21,7 +16,6 @@ function EducationForm({ cancel }) {
     }
 
 
-<<<<<<< HEAD
     const submitForm = async (data) => {
         try {
             const isValid = await EducationScheme.validate(data);
@@ -133,8 +127,6 @@ function EducationForm({ cancel }) {
         });
     }
 
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
     return (
         <>
             <div>

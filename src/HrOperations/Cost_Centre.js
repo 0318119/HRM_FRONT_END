@@ -22,14 +22,23 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
   const [mode, setMode] = useState('read')
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-
+  const [isSearchVal,setSearchVal] = useState('')
 
   useEffect(() => {
-    GetCostCentreData({ 
-      pageSize: pageSize,
-      pageNo: page,
-    })
-  }, [page])
+    if(isSearchVal == ''){
+      GetCostCentreData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    }else{
+      GetCostCentreData({ 
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page,isSearchVal])
 
   const EditPage = (mode,code) => {
     setCode(code)
@@ -134,8 +143,6 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
     });
   }
 
-
-  console.log("Red_Cost_centre",Red_Cost_centre)
   return (
     <>
       <div>
@@ -151,7 +158,9 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
                     <div className="coslistFlexBox">
                           <h4 className="text-dark">Cost Centers List</h4>
                           <div className="costCentersearchBox">
-                            <Input placeholder={'Search Here...'} type="search" />
+                          <Input placeholder={'Search Here...'} type="search" 
+                              onChange={(e) => {setSearchVal(e.target.value)}}
+                            />
                             <Button title="Create" onClick={()=> setMode("create")}/>
                           </div>
                     </div>

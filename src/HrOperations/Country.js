@@ -88,7 +88,6 @@ const Country = ({ Red_Country, GetDataCountry }) => {
           type: 'success',
           content: "You have successfully deleted",
         });
-<<<<<<< HEAD
         setTimeout(() => {
           GetDataCountry({ 
             pageSize: pageSize,
@@ -96,8 +95,6 @@ const Country = ({ Red_Country, GetDataCountry }) => {
             search: null
           })
         }, 5000);
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
       }
       else {
         messageApi.open({
