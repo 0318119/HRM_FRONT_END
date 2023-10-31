@@ -360,6 +360,7 @@ async function POST_COST_CENTRE_FORM(body) {
                   showLabel={true}
                   errors={errors}
                   control={control}
+                  
               />
               <FormInput 
                   label={'Employe category 3'} 

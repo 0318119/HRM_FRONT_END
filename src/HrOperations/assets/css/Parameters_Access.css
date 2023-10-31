@@ -1,0 +1,9 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.Parameters_AccessFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
