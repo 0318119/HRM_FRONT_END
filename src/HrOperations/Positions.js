@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
@@ -15,27 +15,37 @@ import baseUrl from '../../src/config.json'
 
 
 const Positions = ({ GetPositionData, Red_Position }) => {
+    const [messageApi, contextHolder] = message.useMessage();
+    var get_access_token = localStorage.getItem("access_token");
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [isCode, setCode] = useState(null)
+    const [isSearchVal, setSearchVal] = useState('')
     const [mode, setMode] = useState('read')
 
     const columns = [
         {
             title: 'Postion Code',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
+            dataIndex: 'Position_Code',
+            key: 'Position_Code'
         },
         {
-            title: 'Name',
+            title: 'Positon Name',
             dataIndex: 'Name',
             key: 'Name',
         },
         {
-            title: 'Division Head',
+            title: 'Position Active Date',
             dataIndex: 'Division Head',
             key: 'Division Head',
         },
         {
-            title: 'Short Key',
+            title: 'Minimum Salary',
+            dataIndex: 'Short Key',
+            key: 'Short Key',
+        },
+        {
+            title: 'Maximum Salary',
             dataIndex: 'Short Key',
             key: 'Short Key',
         },
@@ -51,16 +61,27 @@ const Positions = ({ GetPositionData, Red_Position }) => {
         },
     ];
 
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            Abbreviation: 'New York No. 1 Lake Park',
-        },
-    ];
+    useEffect(() => {
+        if (isSearchVal == '') {
+            GetPositionData({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null
+            })
+        } else {
+            GetPositionData({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal
+            })
+        }
+    }, [page, isSearchVal])
+
+
+
     return (
         <>
+            {contextHolder}
             <div>
                 <Header />
             </div>
@@ -73,7 +94,9 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                 <div className="PositionsFlexBox">
                                     <h4 className="text-dark">Positions</h4>
                                     <div className="PositionssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search" />
+                                        <Input placeholder={'Search Here...'} type="search"
+                                            onChange={(e) => { setSearchVal(e.target.value) }}
+                                        />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
@@ -83,7 +106,20 @@ const Positions = ({ GetPositionData, Red_Position }) => {
 
                         <div>
                             {mode == "read" && (
-                                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
+                                <Table 
+                                columns={columns}
+                                loading={Red_Position?.loading}
+                                dataSource={Red_Position?.date} scroll={{ x: 10 }} 
+                                    pagination={{
+                                        defaultCurrent: page,
+                                        total: Red_Position?.data?.[0]?.res,
+                                        onChange: (p) => {
+                                            setPage(p);
+                                        },
+                                        pageSize: pageSize,
+                                    }}
+                                    
+                                    />
                             )}
                             {mode == "create" && (
                                 <PositionsForm cancel={setMode} />
