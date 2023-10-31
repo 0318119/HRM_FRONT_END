@@ -37,7 +37,6 @@ body{
     font-size: 20px;
     color: red;
 }
-
 /* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
 .tabletdRow {
     display: flex;
@@ -65,7 +64,6 @@ body{
 table {
     background-color: transparent !important;
 }
-
 .ant-pagination-options{
     display: none !important;
 }
@@ -123,4 +121,19 @@ select:focus {
 }
 .ant-select-selector:hover{
     border: 1px solid rgb(225 225 225) !important;
+}
+.ant-message-loading{
+    display: flex;
+    align-content: center;
+}
+.ant-message-loading span{
+    color: black;
+}
+.ant-message-error{
+    display: flex;
+    align-items: center;
+}
+.ant-message-success{
+    display: flex;
+    align-items: center;
 }

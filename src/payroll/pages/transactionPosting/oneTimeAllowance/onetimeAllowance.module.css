@@ -1,0 +1,16 @@
+.editButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.TableBody{
+    padding-inline: 80px;
+}
+
+.deleteButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: red;
+}

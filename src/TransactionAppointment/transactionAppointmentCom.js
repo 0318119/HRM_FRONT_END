@@ -257,7 +257,7 @@ function TransactionAppointmentCom() {
       </div>
  `;
         // AppointData.forEach((item, index) => {
-        htmlContent += `
+          htmlContent += `
           <p>Dear ${isSingleArrayData?.Emp_Name ? isSingleArrayData?.Emp_Name : "Not  Found"} </p>
           <p>We are pleased to offer you the position of ${isSingleArrayData.Desig_name ? isSingleArrayData.Desig_name : "Not Found"} - ${isSingleArrayData.Department ? isSingleArrayData.Department : "Not Found"} <br />
            in the cadre of ${isSingleArrayData.grade_name ? isSingleArrayData.grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${isSingleArrayData.loc_name ? isSingleArrayData.loc_name : "Not Found"}.</p>
@@ -293,14 +293,14 @@ function TransactionAppointmentCom() {
       <p>In addition to the above, you are entitled to the following:</p>
       <ul style="padding-left: 15px;">
         <li>Cash reimbursement equivalent to 100 liters of petrol per month.</li>
-        <li>Gratuity, PF, Hospitalization, Group Insurance, Loan entitlement, Leave entitlement based on Bankâ€™s approved salary and benefit policy.</li>
-        <li>And all other benefits as per Bankâ€™s approved policy.</li>
+        <li>Gratuity, PF, Hospitalization, Group Insurance, Loan entitlement, Leave entitlement based on Bank’s approved salary and benefit policy.</li>
+        <li>And all other benefits as per Bank’s approved policy.</li>
       </ul>
       <p>Your service will be on probation for a period of three months and is liable to termination without assigning any reason and without any notice during the period of probation. Your service will be confirmed after successful completion of the probation period, subject to the following:</p>
       <p style="text-indent: 2em;">(i) Satisfactory references from your present and previous employers.</p>
       <p>After confirmation, termination of this contract will require either party, i.e., you or the Bank, to serve 60 calendar days advance notice or, in lieu of the notice period, two months Gross Salary will be paid.</p>
-      <p>You will perform any and all functions assigned to you from time to time, and you can be transferred to any location/city at Bankâ€™s discretion.</p>
-      <p>You will be required to sign Bankâ€™s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary, and will abide by all the terms and conditions of the Bankâ€™s HR Policy and Rules & Regulations.</p>
+      <p>You will perform any and all functions assigned to you from time to time, and you can be transferred to any location/city at Bank’s discretion.</p>
+      <p>You will be required to sign Bank’s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary, and will abide by all the terms and conditions of the Bank’s HR Policy and Rules & Regulations.</p>
       <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
       <p>In agreement with the terms and conditions herein, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
       `;

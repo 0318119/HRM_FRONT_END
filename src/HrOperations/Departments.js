@@ -1,193 +1,96 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
-import { Button } from "../components/basic/button";
+import {Button} from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DepartmentForm from './form/DepartmentForm';
-import * as DEPARTMENT_ACTIONS from "../store/actions/HrOperations/Departments/index"
 import './assets/css/DepartmentList.css'
-import { connect } from "react-redux";
-import { Popconfirm } from 'antd';
-import baseUrl from '../../src/config.json'
-import { message } from 'antd';
 
-
-const Departments = ({ Red_Department, GetDataDepartment }) => {
-    const [messageApi, contextHolder] = message.useMessage();
-    var get_access_token = localStorage.getItem("access_token");
-    const [isCode, setCode] = useState(null)
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [isSearchVal, setSearchVal] = useState('')
+const Departments = () => {
     const [mode, setMode] = useState('read')
-    const EditPage = (mode, code) => {
-        setCode(code)
-        setMode(mode)
-    }
-
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'Dept_code',
-            key: 'Dept_code',
+            dataIndex: 'name',
+            key: 'name',
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Deprt Name',
-            dataIndex: 'Dept_name',
-            key: 'Dept_name',
+            title: 'Name',
+            dataIndex: 'Name',
+            key: 'Name',
         },
         {
             title: 'Division Name',
-            dataIndex: 'Div_code',
-            key: 'Div_code',
+            dataIndex: 'Division Name',
+            key: 'Division Name',
         },
         {
             title: 'Department Head',
-            dataIndex: 'Dept_Head',
-            key: 'Dept_Head',
+            dataIndex: 'Department Head',
+            key: 'Department Head',
         },
         {
             title: 'Payment Budget',
-            dataIndex: 'Permanent_Budget',
-            key: 'Permanent_Budget',
+            dataIndex: 'Payment Budget',
+            key: 'Payment Budget',
         },
         {
             title: 'Temporary Budget',
-            dataIndex: 'Temporary_Budget',
-            key: 'Temporary_Budget',
-        },
-        {
-            title: 'Sort key',
-            dataIndex: 'Sort_key',
-            key: 'Sort_key',
+            dataIndex: 'Temporary Budget',
+            key: 'Department',
         },
         {
             title: 'Action',
             key: 'action',
-            render: (data) => (
+            render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Dept_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <Popconfirm
-                        title="Delete the Department"
-                        description="Are you sure to delete the Department?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => {
-                            handleConfirmDelete(data?.Dept_code)
-                        }}
-                    >
-                        <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                    </Popconfirm>
+                    <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
                 </Space>
             ),
         },
     ];
 
-    useEffect(() => {
-        GetDataDepartment()
-    }, [])
-    useEffect(() => {
-        if (isSearchVal == '') {
-            GetDataDepartment({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null
-            })
-        } else {
-            GetDataDepartment({
-                pageSize: pageSize,
-                pageNo: 1,
-                search: isSearchVal
-            })
-        }
-    }, [page, isSearchVal])
-
-    // DEPARTMENTS FORM DATA DELETE API CALL ===========================
-    async function handleConfirmDelete(id) {
-        await fetch(
-            `${baseUrl.baseUrl}/department/DeleteDepartmentList`, {
-            method: "POST",
-            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-            body: JSON.stringify({
-                "Dept_code": id,
-            }),
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                messageApi.open({
-                    type: 'success',
-                    content: "You have successfully deleted",
-                });
-                setTimeout(() => {
-                    GetDataDepartment({
-                        pageSize: pageSize,
-                        pageNo: 1,
-                        search: null
-                    })
-                }, 5000);
-            }
-            else {
-                messageApi.open({
-                    type: 'error',
-                    content: response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            messageApi.open({
-                type: 'error',
-                content: error?.message || error?.message,
-            });
-        });
-    }
-
+    const data = [
+        {
+            key: '1',
+            name: 'John Brown',
+            age: 32,
+            Abbreviation: 'New York No. 1 Lake Park',
+        },
+    ];
     return (
         <>
             <div>
                 <Header />
             </div>
-            {contextHolder}
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 maringClass">
+
                         {mode == "read" && (
                             <>
                                 <div className="DepartmentsFlexBox">
                                     <h4 className="text-dark">Departments List</h4>
                                     <div className="DepartmentssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
-                                            onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        <Input placeholder={'Search Here...'} type="search" />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
                                 <hr />
                             </>
                         )}
+
                         <div>
                             {mode == "read" && (
-                                <Table 
-                                    columns={columns}
-                                    loading={Red_Department?.loading}
-                                    dataSource={Red_Department?.data?.[0]?.res?.data1} 
-                                    scroll={{ x: 10 }} 
-                                    pagination={{
-                                        defaultCurrent: page,
-                                        total: Red_Department?.data?.[0]?.res?.data3,
-                                        onChange: (p) => {
-                                        setPage(p);
-                                        },
-                                        pageSize: pageSize,
-                                    }}
-                                 />
+                                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
                             )}
                             {mode == "create" && (
-                                <DepartmentForm cancel={setMode} mode={mode} isCode={null} />
+                                <DepartmentForm cancel={setMode} />
                             )}
                             {mode == "Edit" && (
-                                <DepartmentForm cancel={setMode} isCode={isCode} />
+                                <DepartmentForm cancel={setMode} />
                             )}
                         </div>
 
@@ -198,7 +101,4 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
     )
 }
 
-function mapStateToProps({ Red_Department }) {
-    return { Red_Department };
-}
-export default connect(mapStateToProps, DEPARTMENT_ACTIONS)(Departments)
+export default Departments

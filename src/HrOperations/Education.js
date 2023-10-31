@@ -1,127 +1,63 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import EducationForm from './form/EducationForm';
 import './assets/css/EducationList.css'
-import * as EDUCATION_ACTIONS from "../store/actions/HrOperations/Education/index"
-import { connect } from "react-redux";
-import { Popconfirm } from 'antd';
-import baseUrl from '../../src/config.json'
-import { message } from 'antd';
 
 
 
-const Education = ({ Red_Education, GetEducationData }) => {
-  const [messageApi, contextHolder] = message.useMessage();
-  var get_access_token = localStorage.getItem("access_token");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isCode, setCode] = useState(null)
+const Education = () => {
   const [mode, setMode] = useState('read')
-  const [isSearchVal, setSearchVal] = useState('')
-  const EditPage = (mode, code) => {
-    setCode(code)
-    setMode(mode)
-  }
 
   const columns = [
     {
-      title: 'Education Code',
-      dataIndex: 'Edu_code',
-      key: 'Edu_code',
+      title: 'Division Code',
+      dataIndex: 'name',
+      key: 'name',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Education Name',
-      dataIndex: 'Edu_name',
-      key: 'Edu_name',
+      title: 'Name',
+      dataIndex: 'Name',
+      key: 'Name',
     },
     {
-      title: 'Education Abbreviation',
-      dataIndex: 'Edu_abbr',
-      key: 'Edu_abbr',
+      title: 'Division Head',
+      dataIndex: 'Division Head',
+      key: 'Division Head',
     },
     {
-      title: 'Sort Key',
-      dataIndex: 'Sort_key',
-      key: 'Sort_key',
+      title: 'Short Key',
+      dataIndex: 'Short Key',
+      key: 'Short Key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (data) => (
+      render: (_, record) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-          <Popconfirm
-            title="Delete the Education"
-            description="Are you sure to delete the Education?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              handleConfirmDelete(data?.Edu_code)
-            }}
-          >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-          </Popconfirm>
+          <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
         </Space>
       ),
     },
   ];
 
-
-  useEffect(() => {
-    GetEducationData()
-  }, [])
-
-  // EDUCATION LEVEL DATA DELETE API CALL ===========================
-  async function handleConfirmDelete(id) {
-    await fetch(
-      `${baseUrl.baseUrl}/eduation_code/DeleteEducation`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Edu_code": id,
-      }),
-    }
-    ).then((response) => {
-      return response.json();
-    }).then(async (response) => {
-      if (response.success) {
-        messageApi.open({
-          type: 'success',
-          content: "You have successfully deleted",
-        });
-        setTimeout(() => {
-          // GetEducationData({
-          //   pageSize: pageSize,
-          //   pageNo: 1,
-          //   search: null
-          // })
-        }, 3000);
-      }
-      else {
-        messageApi.open({
-          type: 'error',
-          content: response?.message || response?.messsage,
-        });
-      }
-    }).catch((error) => {
-      messageApi.open({
-        type: 'error',
-        content: error?.message || error?.messsage,
-      });
-    });
-  }
-
-
+  const data = [
+    {
+      key: '1',
+      name: 'John Brown',
+      age: 32,
+      Abbreviation: 'New York No. 1 Lake Park',
+    },
+  ];
   return (
     <>
       <div>
         <Header />
       </div>
-      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -131,9 +67,7 @@ const Education = ({ Red_Education, GetEducationData }) => {
                 <div className="EdcuationFlexBox">
                   <h4 className="text-dark">Education List</h4>
                   <div className="EducationsearchBox">
-                    <Input placeholder={'Search Here...'} type="search"
-                      onChange={(e) => { setSearchVal(e.target.value) }}
-                    />
+                    <Input placeholder={'Search Here...'} type="search" />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -143,17 +77,13 @@ const Education = ({ Red_Education, GetEducationData }) => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns}
-                  dataSource={Red_Education?.data?.[0]?.res?.data?.[0]}
-                  loading={Red_Education?.loading}
-                  scroll={{ x: 10 }}
-                />
+                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
               )}
               {mode == "create" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={null} />
+                <EducationForm cancel={setMode} />
               )}
               {mode == "Edit" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={isCode} />
+                <EducationForm cancel={setMode} />
               )}
             </div>
 
@@ -164,7 +94,4 @@ const Education = ({ Red_Education, GetEducationData }) => {
   )
 }
 
-function mapStateToProps({ Red_Education }) {
-  return { Red_Education };
-}
-export default connect(mapStateToProps, EDUCATION_ACTIONS)(Education)
+export default Education

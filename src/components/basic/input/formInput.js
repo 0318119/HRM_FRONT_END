@@ -1,7 +1,8 @@
 import React from "react";
 import style from './input.module.css'
 import { Controller } from 'react-hook-form';
-import { Select, Space } from 'antd';
+import { Select } from 'antd';
+
 
 const FormInput = ({
     control,
@@ -45,7 +46,6 @@ const FormInput = ({
         </div>
     );
 };
-
 const FormCheckBox = ({
     control,
     name,
@@ -71,9 +71,9 @@ const FormCheckBox = ({
                         )}
                         <div className="">
                             <input
-                            {...field}
-                            {...rest}
-                            id={name} type={type} name={name} className="" />
+                                {...field}
+                                {...rest}
+                                id={name} type={type} name={name} className="" />
                             {showLabel && (
                                 <label htmlFor="continue-no" className="">{label}</label>
                             )}
@@ -92,63 +92,11 @@ const FormCheckBox = ({
                     >
                         {errors[name]?.message}
                     </p>
-                : null
+                    : null
             )}
         </div>
     );
 };
 
-const FormSelect = ({
-    control,
-    name,
-    label,
-    errors,
-    options,
-    isShowError,
-    placeholder,
-    showLabel = true,
-    ...rest
-}) => {
-    return (
-         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
-         {showLabel && (
-             <label>
-                 {label}
-             </label>
-         )}
-         <Controller
-             control={control}
-             name={name}
-             render={({ field }) => {
-                 return (
-                    // Selec
-                    <Space wrap>
-                        <Select
-                            {...field}
-                            {...rest}
-                            placeholder={placeholder} name={name} id={name}
-                            style={{
-                                width: 300,
-                            }}
-                            options={options}
-                        />
-                    </Space>
-                 )
-             }}
-         />
-         {errors[name] && (
-             <p
-                 style={{
-                     margin: "5px 0px",
-                     fontSize: "12px",
-                     color: 'red'
-                 }}
-             >
-                 {errors[name]?.message}
-             </p>
-         )}
-     </div>
-    );
-};
 
-export { FormInput, FormCheckBox, FormSelect };
+export { FormInput, FormCheckBox };
