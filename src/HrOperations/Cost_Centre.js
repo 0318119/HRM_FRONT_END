@@ -42,6 +42,8 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
     setCode(code)
     setMode(mode)
   }
+
+
   const columns = [
     {
       title: 'Code',
@@ -176,6 +178,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
                       pagination={{
                         defaultCurrent: page,
                         total: Red_Cost_centre?.data?.[0]?.res?.data3,
+                        
                         onChange: (p) => {
                           setPage(p);
                         },

@@ -31,35 +31,46 @@ const Positions = ({ GetPositionData, Red_Position }) => {
         },
         {
             title: 'Positon Name',
-            dataIndex: 'Name',
-            key: 'Name',
+            dataIndex: 'PositionName',
+            key: 'PositionName',
         },
         {
             title: 'Position Active Date',
-            dataIndex: 'Division Head',
-            key: 'Division Head',
+            dataIndex: 'Position_Active_Date',
+            key: 'Position_Active_Date',
         },
         {
             title: 'Minimum Salary',
-            dataIndex: 'Short Key',
-            key: 'Short Key',
+            dataIndex: 'Minimum_Salary',
+            key: 'Minimum_Salary',
         },
         {
             title: 'Maximum Salary',
-            dataIndex: 'Short Key',
-            key: 'Short Key',
+            dataIndex: 'Maximum_Salary',
+            key: 'Maximum_Salary',
         },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    <button onClick={() => setMode('Edit')} className="editBtn1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <Popconfirm
+                        title="Delete the Cost Centre"
+                        description="Are you sure to delete the Cost Centre?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => {
+                            // handleConfirmDelete(data?.Cost_Centre_code)
+                        }}
+                    >
+                        <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true" /></button>
+                    </Popconfirm>
                 </Space>
             ),
         },
     ];
+    console.log(Red_Position.data,'Red_Position')
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -109,10 +120,11 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                 <Table 
                                 columns={columns}
                                 loading={Red_Position?.loading}
-                                dataSource={Red_Position?.date} scroll={{ x: 10 }} 
+                                    dataSource={Red_Position?.data?.[0]?.res?.data1}
+                                     scroll={{ x: 10 }} 
                                     pagination={{
                                         defaultCurrent: page,
-                                        total: Red_Position?.data?.[0]?.res,
+                                        total: Red_Position?.data?.[0]?.res?.data1,
                                         onChange: (p) => {
                                             setPage(p);
                                         },
