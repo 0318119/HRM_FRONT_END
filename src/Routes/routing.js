@@ -70,16 +70,7 @@ import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
-import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
-import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
-import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
-import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
-import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
-import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
-import Positions from '../HrOperations/Positions'
- import Base_City from '../HrOperations/Base_City'
- import RefreshableData from '../HrOperations/RefreshableData'
- import Parameters_Access from '../HrOperations/Parameters_Access';
+import Base_City from '../HrOperations/Base_City'
 
 const routing = () => {
   return (
@@ -154,18 +145,6 @@ const routing = () => {
           <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
           <Route path="/Family" element={<Family />} />
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
-          {/* payroll */}
-          <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
-          <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
-          <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
-          <Route path="/payroll/oneTimeDeduciton" element={<OneTimeDeduction />} />
-          <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
-          {/* report */}
-          <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
-          <Route path="/Base_City" element={<Base_City/>} />
-          <Route path="/Positions" element={<Positions />} />
-          <Route path="/RefreshableData" element={<RefreshableData/>} />
-          <Route path="/Parameters_Access" element={<Parameters_Access/>} />
         </Routes>
       </Router>
     </>

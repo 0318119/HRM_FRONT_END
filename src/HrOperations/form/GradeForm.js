@@ -1,450 +1,50 @@
-import React, { useState,useEffect } from 'react'
+import React from 'react'
 import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
-import * as GRADES_ACTIONS from "../../store/actions/HrOperations/Grades/index"
-import { connect } from "react-redux";
-import { useForm } from "react-hook-form";
-import { EmployeeTypeScheme } from '../schema';
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FormCheckBox, FormInput, FormSelect } from '../../components/basic/input/formInput';
-import { message } from 'antd';
-import baseUrl from '../../../src/config.json'
 
-function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_Grades_By_ID }) {
-    var get_access_token = localStorage.getItem("access_token");
-    const [messageApi, contextHolder] = message.useMessage();
-    const [isLoading, setLoading] = useState(false)
-    const [pageSize, setPageSize] = useState(10);
+function GradeForm({ cancel }) {
     const EditBack = () => {
         cancel('read')
-    }
-
-    const submitForm = async (data) => {
-        try {
-            const isValid = await EmployeeTypeScheme.validate(data);
-            if (isValid) {
-                // POST_GRADES_FORM(data)
-                console.log("data",data)
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const {
-        control,
-        formState: { errors },
-        handleSubmit,
-        reset
-    } = useForm({
-        defaultValues: {
-            Grade_code: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code ?
-            Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
-
-            Grade_name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_name,
-            Grade_abbr: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_abbr,
-            ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.ProbationMonths,
-            Incentive_Hour_Rate: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Hour_Rate,
-            Incentive_Weekdays_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Weekdays_Limit_Hour,
-            Incentive_Saturday_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Saturday_Limit_Hour,
-            Medical_Insurance_Amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Medical_Insurance_Amount,
-            Meal_Deduction: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Meal_Deduction,
-            Sort_key: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-            Litres_for_Petrol: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Litres_for_Petrol,
-            Insurance_Category: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Insurance_Category,
-            Life_Insurance_Category: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Life_Insurance_Category,
-            Long_Name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Long_Name,
-            job_description_flag: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.job_description_flag,
-            next_promotion_grade: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.next_promotion_grade,
-            Assigning_Critaria_For_Next_Promotion: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Assigning_Critaria_For_Next_Promotion,
-            Overtime_flag: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Overtime_flag,
-            mobile_amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.mobile_amount,
-            Car_Amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Car_Amount,
-        },
-        mode: "onChange",
-        resolver: yupResolver(EmployeeTypeScheme),
-    });
-
-
-    useEffect(() => {
-        if (isCode !== null) {
-            Get_Grades_By_ID(isCode)
-        }
-    }, [])
-
-    useEffect(() => {
-        if (mode == "create") {
-            reset(
-                {
-                    Grade_code: 0,
-                    Grade_name: "",
-                    Grade_abbr: "",
-                    ProbationMonths: "",
-                    Incentive_Hour_Rate: "",
-                    Incentive_Weekdays_Limit_Hour: "",
-                    Incentive_Saturday_Limit_Hour: "",
-                    Medical_Insurance_Amount: "",
-                    Meal_Deduction: "",
-                    Sort_key: "",
-                    Litres_for_Petrol: "",
-                    Insurance_Category: "",
-                    Life_Insurance_Category: "",
-                    Long_Name: "",
-                    job_description_flag: "''",
-                    next_promotion_grade: "",
-                    Assigning_Critaria_For_Next_Promotion: "",
-                    Overtime_flag: "",
-                    mobile_amount: "",
-                    Car_Amount: "",
-                },
-            )
-        } else {
-            reset(
-                {
-                    Grade_code: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code ?
-                    Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
-        
-                    Grade_name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_name,
-                    Grade_abbr: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_abbr,
-                    ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.ProbationMonths,
-                    Incentive_Hour_Rate: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Hour_Rate,
-                    Incentive_Weekdays_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Weekdays_Limit_Hour,
-                    Incentive_Saturday_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Saturday_Limit_Hour,
-                    Medical_Insurance_Amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Medical_Insurance_Amount,
-                    Meal_Deduction: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Meal_Deduction,
-                    Sort_key: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-                    Litres_for_Petrol: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Litres_for_Petrol,
-                    Insurance_Category: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Insurance_Category,
-                    Life_Insurance_Category: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Life_Insurance_Category,
-                    Long_Name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Long_Name,
-                    job_description_flag: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.job_description_flag,
-                    next_promotion_grade: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.next_promotion_grade,
-                    Assigning_Critaria_For_Next_Promotion: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Assigning_Critaria_For_Next_Promotion,
-                    Overtime_flag: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Overtime_flag,
-                    mobile_amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.mobile_amount,
-                    Car_Amount: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Car_Amount,
-                },
-            )
-        }
-    }, [Red_Grades?.dataSingle?.[0]?.res?.data?.[0]])
-
-    // EMPLOYEE TYPE FORM DATA API CALL =========================== 
-    async function POST_GRADES_FORM(body) {
-        setLoading(true)
-        await fetch(
-            `${baseUrl.baseUrl}/employment_type_code/AddEmploymentType`, {
-            method: "POST",
-            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-            body: JSON.stringify({
-                "Empt_Type_code": body.Empt_Type_code,
-                "AllowChangeProbationMonths": body?.AllowChangeProbationMonths,
-                "Company_Employee_Flag": body?.Company_Employee_Flag,
-                "Emp_Code_Prefix": body?.Emp_Code_Prefix,
-                "Empt_Type_abbr": body?.Empt_Type_abbr,
-                "Empt_Type_name": body?.Empt_Type_name,
-                "PermanantFlag": body?.PermanantFlag,
-                "ProbationMonths": body?.ProbationMonths,
-                "Retirement_Age": body?.Retirement_Age,
-                "Sort_key": body?.Sort_key
-            }),
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                messageApi.open({
-                    type: 'success',
-                    content: response?.message || response?.messsage,
-                });
-                setLoading(false)
-                setTimeout(() => {
-                    cancel('read')
-                    GetGradesData({ 
-                        pageSize: pageSize,
-                        pageNo: page,
-                        search: null
-                    })
-                    console.log("page",page)
-                }, 3000);
-            }
-            else {
-                setLoading(false)
-                messageApi.open({
-                    type: 'error',
-                    content: response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            setLoading(false)
-            messageApi.open({
-                type: 'error',
-                content: error?.message || error?.messsage,
-            });
-        });
     }
 
 
     return (
         <>
-             {contextHolder}
-            <form onSubmit={handleSubmit(submitForm)}>
+            <div>
                 <h4 className="text-dark">Grade</h4>
                 <hr />
                 <div className="form-group formBoxGrade">
-                    <FormInput
-                        label={'Grade Code'}
-                        placeholder={'Grade Code'}
-                        id="Grade_code"
-                        name="Grade_code"
-                        type="number"
-                        readOnly
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Grade Name'}
-                        placeholder={'Grade Name'}
-                        id="Grade_name"
-                        name="Grade_name"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Grade Abbrivation'}
-                        placeholder={'Grade Abbrivation'}
-                        id="Grade_abbr"
-                        name="Grade_abbr"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Probation Months'}
-                        placeholder={'Probation Months'}
-                        id="ProbationMonths"
-                        name="ProbationMonths"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Incentive Hour Rate'}
-                        placeholder={'Incentive Hour Rate'}
-                        id="Incentive_Hour_Rate"
-                        name="Incentive_Hour_Rate"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Incentive Weekdays Limit Hour'}
-                        placeholder={'Incentive Weekdays Limit Hour'}
-                        id="Incentive_Weekdays_Limit_Hour"
-                        name="Incentive_Weekdays_Limit_Hour"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Incentive Saturday Limit Hour'}
-                        placeholder={'Incentive Saturday Limit Hour'}
-                        id="Incentive_Saturday_Limit_Hour"
-                        name="Incentive_Saturday_Limit_Hour"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Medical Insurance Amount'}
-                        placeholder={'Medical Insurance Amount'}
-                        id="Medical_Insurance_Amount"
-                        name="Medical_Insurance_Amount"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Meal Deduction'}
-                        placeholder={'Meal Deduction'}
-                        id="Meal_Deduction"
-                        name="Meal_Deduction"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Sort Key'}
-                        placeholder={'Sort Key'}
-                        id="Sort_key"
-                        name="Sort_key"
-                        type="text"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
+                    <Input placeholder={'Grade Name'} label={'Grade Name'} type="text" />
+                    <Input placeholder={'Grade Abbrivation'} label={'Grade Abbrivation'} type="text" />
+                    <Input placeholder={'Probation Months'} label={'Probation Months'} type="number" />
+                    <Input placeholder={'Incentive Hour Rate'} label={'Incentive Hour Rate'} type="number" />
+                    <Input placeholder={'Incentive Weekdays Limit Hour'} label={'Incentive Weekdays Limit Hour'} type="number" />
+                    <Input placeholder={'Incentive Saturday Limit Hour'} label={'Incentive Saturday Limit Hour'} type="number" />
+                    <Input placeholder={'Medical Insurance Amount'} label={'Medical Insurance Amount'} type="number" />
+                    <Input placeholder={'Meal Deduction'} label={'Meal Deduction'} type="number" />
+                    <Input placeholder={'Sort Key'} label={'Sort Key'} type="text" />
                 </div>
                 <hr />
                 <div className="form-group formBoxGrade">
-                    <FormInput
-                        label={'Litres For Petrol'}
-                        placeholder={'Litres For Petrol'}
-                        id="Litres_for_Petrol"
-                        name="Litres_for_Petrol"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Insurance Category'}
-                        placeholder={'Insurance Category'}
-                        id="Insurance_Category"
-                        name="Insurance_Category"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Life Insurance Category'}
-                        placeholder={'Life Insurance Category'}
-                        id="Life_Insurance_Category"
-                        name="Life_Insurance_Category"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Long Name'}
-                        placeholder={'Long Name'}
-                        id="Long_Name"
-                        name="Long_Name"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Next Promotion Grade'}
-                        placeholder={'Next Promotion Grade'}
-                        id="next_promotion_grade"
-                        name="next_promotion_grade"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Assigning Critaria For Next Promotion'}
-                        placeholder={'Assigning Critaria For Next Promotion'}
-                        id="Assigning_Critaria_For_Next_Promotion"
-                        name="Assigning_Critaria_For_Next_Promotion"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Mobile Amount'}
-                        placeholder={'Mobile Amount'}
-                        id="mobile_amount"
-                        name="mobile_amount"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Car Amount'}
-                        placeholder={'Car Amount'}
-                        id="Car_Amount"
-                        name="Car_Amount"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="job_description_flag"
-                            name="job_description_flag"
-                            labelText={'job_description_flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.job_description_flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="job_description_flag"
-                            name="job_description_flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.job_description_flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />  
-                    </div>
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Overtime_flag"
-                            name="Overtime_flag"
-                            labelText={'Overtime Flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Overtime_flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Overtime_flag"
-                            name="Overtime_flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Overtime_flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />  
-                    </div>
+                    <Input placeholder={'Litres For Petrol'} label={'Litres For Petrol'} type="number" />
+                    <Input placeholder={'Insurance Category'} label={'Insurance Category'} type="text" />
+                    <Input placeholder={'Life Insurance Category'} label={'Life Insurance Category'} type="text" />
+                    <Input placeholder={'Long Name'} label={'Long Name'} type="text" />
+                    <Input placeholder={'Job Description Flag'} label={'Job Description Flag'} type="CheckBox" />
+                    <Input placeholder={'Next Promotion Grade'} label={'Next Promotion Grade'} type="number" />
+                    <Input placeholder={'Assigning Critaria For Next Promotion'} label={'Assigning Critaria For Next Promotion'} type="number" />
+                    <Input placeholder={'Overtime Flag'} label={'Overtime Flag'} type="CheckBox" />
+                    <Input placeholder={'Mobile Amount'} label={'Mobile Amount'} type="number" />
+                    <Input placeholder={'Car Amount'} label={'Car Amount'} type="number" />
                 </div>
                 <div className='GradeBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                    <PrimaryButton title="Save" />
                 </div>
-            </form>
+            </div>
 
         </>
     )
 }
 
-function mapStateToProps({ Red_Grades }) {
-    return { Red_Grades };
-  }
-  export default connect(mapStateToProps, GRADES_ACTIONS)(GradeForm)
+export default GradeForm

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import {CancelButton,PrimaryButton } from "../../components/basic/button";
 import * as COST_CENTRE_ACTIONS from "../../store/actions/HrOperations/Cost_Centre/index";
 import { connect } from "react-redux";
-// import { Formik } from 'formik';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {FormInput,FormCheckBox} from '../../components/basic/input/formInput';
@@ -10,16 +9,10 @@ import { Cost_CentreSchema } from '../schema';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-
-
-
-
-
-
-
 function CostCenterForm({cancel, isCode , Get_Cost_Centre_By_ID, Red_Cost_centre, mode}) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
+  const [isLoading,setLoading] = useState(false)
 
 
   
@@ -47,6 +40,7 @@ const {
     defaultValues: {
         Cost_Centre_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code ? 
         Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code : 0,
+
         Cost_Centre_name: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_name,
         Cost_Centre_abbr: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_abbr,
         Train_Cost_Budget: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Train_Cost_Budget,
@@ -136,11 +130,9 @@ useEffect(() => {
     }
 }, [Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]])
 
-// COST CENTRE FORM API CALL =========================== 
-
+// COST CENTRE FORM DATA API CALL =========================== 
 async function POST_COST_CENTRE_FORM(body) {
-    // console.log("chk",chk)
-    // return
+    setLoading(true)
     await fetch(
         `${baseUrl.baseUrl}/employment_cost_center/AddCostCenter`, {
         method: "POST",
@@ -179,8 +171,9 @@ async function POST_COST_CENTRE_FORM(body) {
         if(response.success){
             messageApi.open({
                 type: 'success',
-                content: response?.messsage,
+                content: response?.message || response?.messsage,
             });
+            setLoading(false)
             setTimeout(() => {
                 cancel('read')
             }, 3000);
@@ -188,14 +181,16 @@ async function POST_COST_CENTRE_FORM(body) {
         else{
             messageApi.open({
                 type: 'error',
-                content: response?.message,
+                content: response?.message || response?.messsage,
             });
+            setLoading(false)
         }
     }).catch((error) => {
         messageApi.open({
             type: 'error',
-            content: error?.message,
+            content: error?.message || error?.messsage,
         });
+        setLoading(false)
     });
 }
 
@@ -445,7 +440,7 @@ async function POST_COST_CENTRE_FORM(body) {
           </div>
           <div className='CountryBtnBox'>
               <CancelButton onClick={EditBack} title={'Cancel'}/> :
-              <PrimaryButton type={'submit'} loading={Red_Cost_centre?.loading} title="Save"/>
+              <PrimaryButton type={'submit'} loading={isLoading} title="Save"/>
           </div>
         </form>
     </>

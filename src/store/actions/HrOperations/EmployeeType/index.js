@@ -1,8 +1,8 @@
 import {
-    GET_TRANSITION_EMPLOYEE_TYPE_DATA,
-    GET_TRANSITION_EMPLOYEE_TYPE_START,
-    GET_TRANSITION_EMPLOYEE_TYPE_SINGLE,
-    GET_TRANSITION_EMPLOYEE_TYPE_END
+    GET_TRANSITION_EMPOYLEE_TYPE_DATA,
+    GET_TRANSITION_EMPOYLEE_TYPE_START,
+    GET_TRANSITION_EMPOYLEE_TYPE_SINGLE,
+    GET_TRANSITION_EMPOYLEE_TYPE_END
 } from '../../types'
 import baseUrl from '../../../../config.json'
 
@@ -50,7 +50,7 @@ export const GetEmployeeTypeData = (params) => async (dispatch) => {
 export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPLOYEE_TYPE_START,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_START,
             payload: true,
             loading: true,
         });
@@ -67,14 +67,14 @@ export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPLOYEE_TYPE_SINGLE,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPLOYEE_TYPE_END,
+                type: GET_TRANSITION_EMPOYLEE_TYPE_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -82,7 +82,7 @@ export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_EMPLOYEE_TYPE_END,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_END,
             payload: false,
             loading: false,
         });

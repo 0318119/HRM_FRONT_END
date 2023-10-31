@@ -98,7 +98,6 @@ const FormCheckBox = ({
     );
 };
 
-<<<<<<< HEAD
 const FormSelect = ({
     control,
     name,
@@ -146,7 +145,5 @@ const FormSelect = ({
      </div>
     );
 };
-=======
->>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
 
-export { FormInput, FormCheckBox };
+export { FormInput, FormCheckBox,FormSelect };

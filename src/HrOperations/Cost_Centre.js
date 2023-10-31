@@ -15,7 +15,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
+const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode,setCode] = useState(null)
@@ -44,7 +44,6 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
     setCode(code)
     setMode(mode)
   }
-  
   const columns = [
     {
       title: 'Code',
@@ -97,6 +96,8 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
       ),
     },
   ];
+
+  // COST CENTRE FORM DATA DELETE API CALL =========================== 
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_cost_center/DeleteCostCenter`, {
@@ -118,7 +119,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
             messageApi.destroy()
             GetCostCentreData({ 
               pageSize: pageSize,
-              pageNo: page,
+              pageNo: 1,
               search: null
             })
           }, 5000);
@@ -135,7 +136,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
     }).catch((error) => {
         messageApi.open({
           type: 'error',
-          content: "Somthing went wrong.",
+          content: error?.message || error?.messsage,
         });
         setTimeout(() => {
           messageApi.destroy()
@@ -158,7 +159,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
                     <div className="coslistFlexBox">
                           <h4 className="text-dark">Cost Centers List</h4>
                           <div className="costCentersearchBox">
-                          <Input placeholder={'Search Here...'} type="search" 
+                            <Input placeholder={'Search Here...'} type="search" 
                               onChange={(e) => {setSearchVal(e.target.value)}}
                             />
                             <Button title="Create" onClick={()=> setMode("create")}/>
@@ -202,4 +203,4 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData}) => {
 function mapStateToProps({ Red_Cost_centre }) {
   return { Red_Cost_centre };
 }
-export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList)
+export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(CostCentersList) 
