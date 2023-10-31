@@ -14,7 +14,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { saveAs } from 'file-saver';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 import Word from "./Word";
 const config = require("../config.json");
 
@@ -34,7 +34,6 @@ function TransactionAppointmentCom() {
   const [isFileData, setFileData] = useState([])
   const [messageApi, contextHolder] = message.useMessage()
   const [isGetCode, setGetCode] = useState(null)
-  const [isSingleArrayData, setSingleArrayData] = useState([])
 
 
   async function getAppointStatusCall() {
@@ -188,8 +187,7 @@ function TransactionAppointmentCom() {
         //   content: 'Successfully Download',
         // });
         setAppointData(response.data)
-        setSingleArrayData(response?.data?.[0])
-        GetAppointLetter(id)
+        GetAppointLetter(id, response?.data)
       }
       else {
         // messageApi.open({
@@ -205,16 +203,7 @@ function TransactionAppointmentCom() {
     });
   }
 
-
-  useEffect(() => {
-    // AppointLetter()
-    // if(isGetCode !==null){
-    // }else{
-    //   console.log("Can't run AppointLetter function api call!")
-    // }
-  }, [])
-
-  async function GetAppointLetter(itemid) {
+  async function GetAppointLetter(itemid, DataR) {
     await fetch(
       `${config["baseUrl"]}/tranAppointment/Get_EmployeeletterByEmpCode`, {
       method: "POST",
@@ -234,34 +223,28 @@ function TransactionAppointmentCom() {
           type: 'success',
           content: "Successfully Download",
         });
-        setFileData(response.data[0].FileName);
-        console.log("response.data", response.data)
+        setFileData(response.data[0].FileName, DataR);
+        console.log(DataR, 'DataR')
 
         let htmlContent = `
   <html>
     <body>
      `;
-        AppointData.forEach((item, index) => {
-          htmlContent += `
-            <div style="text-align: center; font-size: 20px;">
-             <p>${item.Transaction_Date ? item.Transaction_Date : "Not Found"}</p>
-             <p style="margin-top:15px;">${item.Emp_Name ? item.Emp_Name : "Not Found"}</p>
-             <p style="margin-top:15px;">${item.emp_address_line1 ? item.emp_address_line1 : "Not Found"}</p>
-             <p style="margin-top:15px;">${item.emp_address_line2 ? item.emp_address_line2 : "Not Found"}</p>
-             <p style="margin-top:15px;">${item.emp_phone ? item.emp_phone : "Not Found"}</p>
-           </div>  
-          `;
-        })
-        htmlContent = `
-      <div style="text-align: center; font-size: 20px;">
-        <h1>LETTER OF APPOINTMENT</h1>
-      </div>
- `;
-        // AppointData.forEach((item, index) => {
+        
         htmlContent += `
-          <p>Dear ${isSingleArrayData?.Emp_Name ? isSingleArrayData?.Emp_Name : "Not  Found"} </p>
-          <p>We are pleased to offer you the position of ${isSingleArrayData.Desig_name ? isSingleArrayData.Desig_name : "Not Found"} - ${isSingleArrayData.Department ? isSingleArrayData.Department : "Not Found"} <br />
-           in the cadre of ${isSingleArrayData.grade_name ? isSingleArrayData.grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${isSingleArrayData.loc_name ? isSingleArrayData.loc_name : "Not Found"}.</p>
+           <div style="margin-top:10px; font-size: 20px; display:block;">
+             <div style="font-size:18px">Date: ${DataR?.[0]?.Transaction_Date ? DataR?.[0]?.Transaction_Date : "Not Found"}</div> <br />
+             <div style="font-size:18px">Name: ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not Found"}</div> <br />
+             <div style="font-size:18px">Address line: ${DataR?.[0]?.emp_address_line1 ? DataR?.[0]?.emp_address_line1 : "Not Found"}</div> <br />
+             <div style="font-size:18px">Address line:  ${DataR?.[0]?.emp_address_line2 ? DataR?.[0]?.emp_address_line2 : "Not Found"}</div> <br />
+             <div style="font-size:18px">Contact No: ${DataR?.[0]?.emp_phone ? DataR?.[0]?.emp_phone : "Not Found"}</div><br />
+           </div> 
+          <div style="text-align: center; font-size: 1px;">
+            <h3>LETTER OF APPOINTMENT</h3>
+          </div>
+          <p>Dear ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not  Found"} </p>
+          <p>We are pleased to offer you the position of ${DataR?.[0].Desig_name ? DataR?.[0].Desig_name : "Not Found"} - ${DataR?.[0].Department ? DataR?.[0].Department : "Not Found"} <br />
+           in the cadre of ${DataR?.[0].grade_name ? DataR?.[0].grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${DataR?.[0].loc_name ? DataR?.[0].loc_name : "Not Found"}.</p>
           `;
         // })
         htmlContent += `
@@ -277,7 +260,7 @@ function TransactionAppointmentCom() {
         <tbody>
 `;
 
-        AppointData.forEach((item, index) => {
+        DataR?.forEach((item, index) => {
           htmlContent += `
           <tr>
             <td>${index + 1}</td>
@@ -305,34 +288,36 @@ function TransactionAppointmentCom() {
       <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
       <p>In agreement with the terms and conditions herein, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
       `;
-        AppointData.forEach((item, index) => {
+        // AppointData.forEach((item, index) => {
           htmlContent += `
-          <p>The proposed date of your assuming the responsibility is ${item.ProposedDate ? item.ProposedDate : "Not Found"}  or earlier.</p>
+          <p>The proposed date of your assuming the responsibility is ${DataR?.[0].ProposedDate ? DataR?.[0].ProposedDate : "Not Found"}  or earlier.</p>
           `;
-        });
+        // });
 
         htmlContent += `
       <p>We are confident that you will play a positive role towards the growth and expansion of Summit Bank Limited-SMBL and look forward to a long and mutually rewarding professional relationship.</p>
       <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
-        <span>Sincerely:</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <span style="float: right;">Accepted:</span>
-      </div>
         <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
-        <span>___________</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         `;
-        AppointData.forEach((item, index) => {
-          htmlContent += `
-          <span style="float: right;">___________ <br />
-            ${item.Emp_Name ? item.Emp_Name : "Not Found"}
-          </span>
-          `;
-        });
-
-        htmlContent += `
+            <span>
+                <span>Sincerely:</span>
+                <span>___________</span>
+                <p></p>Syed Musrufa zaidi <br /> Head of Human Resource Division</p>
+            </span>
+            
+            <span style="float:right; margin-top:15px;">
+                    <span>Accepted:</span>
+                    `;
+                    htmlContent += `
+                    <span style="float: right;">___________ <br />
+                      ${DataR?.[0].Emp_Name ? DataR?.[0].Emp_Name : "Not Found"}
+                    </span>
+                    `;
+                    htmlContent += `
+            </span>
+        
+        </div>
       </div>
-      <div>Syed Shafaat Husain <br /> Head of Human Resource Division</div>
+        
     </body>
   </html>
 `;

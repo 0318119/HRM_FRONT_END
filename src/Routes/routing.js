@@ -70,8 +70,10 @@ import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
- import Base_City from '../HrOperations/Base_City'
- import RefreshableData from '../HrOperations/RefreshableData'
+import Base_City from '../HrOperations/Base_City'
+import RefreshableData from '../HrOperations/RefreshableData'
+import Positions from '../HrOperations/Positions'
+
 
 const routing = () => {
   return (
@@ -147,7 +149,8 @@ const routing = () => {
           <Route path="/Family" element={<Family />} />
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
           <Route path="/Base_City" element={<Base_City/>} />
-          <Route path="/RefreshableData" element={<RefreshableData/>} />
+          <Route path="/RefreshableData" element={<RefreshableData />} />
+          <Route path="/Positions" element={<Positions />} />
         </Routes>
       </Router>
     </>
