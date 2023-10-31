@@ -9,6 +9,8 @@ import { message } from 'antd';
 import { Popconfirm } from 'antd';
 import { connect } from "react-redux";
 import * as POSITIONS_DATA_ACTIONS from '../store/actions/HrOperations/Positions/index'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 
 
@@ -22,6 +24,10 @@ const Positions = ({ GetPositionData, Red_Position }) => {
     const [isCode, setCode] = useState(null)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode, setMode] = useState('read')
+    const EditPage = (mode, code) => {
+        setCode(code)
+        setMode(mode)
+    }
 
     const columns = [
         {
@@ -52,25 +58,29 @@ const Positions = ({ GetPositionData, Red_Position }) => {
         {
             title: 'Action',
             key: 'action',
-            render: (_, record) => (
+            render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => setMode('Edit')} className="editBtn1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', data?.Position_Code)} className="editBtn">
+                        <FaEdit />
+                    </button>
                     <Popconfirm
-                        title="Delete the Cost Centre"
-                        description="Are you sure to delete the Cost Centre?"
+                        title="Delete the Department"
+                        description="Are you sure to delete the Department?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            // handleConfirmDelete(data?.Cost_Centre_code)
+                            // handleConfirmDelete(data?.Dept_code)
                         }}
                     >
-                        <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true" /></button>
+                        <button className="deleteBtn">
+                            <MdDeleteOutline />
+                        </button>
                     </Popconfirm>
                 </Space>
             ),
         },
     ];
-    console.log(Red_Position.data,'Red_Position')
+    // console.log(Red_Position.data,'Red_Position')
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -134,10 +144,10 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                     />
                             )}
                             {mode == "create" && (
-                                <PositionsForm cancel={setMode} />
+                                <PositionsForm cancel={setMode} mode={mode} isCode={null} />
                             )}
                             {mode == "Edit" && (
-                                <PositionsForm cancel={setMode} />
+                                <PositionsForm  cancel={setMode} isCode={isCode} />
                             )}
                         </div>
 

@@ -10,6 +10,8 @@ import * as COST_CENTRE_ACTIONS from "../store/actions/HrOperations/Cost_Centre/
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
@@ -80,7 +82,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit',data?.Cost_Centre_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit',data?.Cost_Centre_code)} className="editBtn"><FaEdit /></button>
           <Popconfirm
             title="Delete the Cost Centre"
             description="Are you sure to delete the Cost Centre?"
@@ -90,7 +92,7 @@ const CostCentersList = ({Red_Cost_centre, GetCostCentreData,onChange}) => {
               handleConfirmDelete(data?.Cost_Centre_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),

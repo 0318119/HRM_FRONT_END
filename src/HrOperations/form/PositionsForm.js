@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
-import * as COST_CENTRE_ACTIONS from "../../store/actions/HrOperations/Cost_Centre/index";
+import * as POSITION_ACTIONS from "../../store/actions/HrOperations/Positions/index";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormCheckBox } from '../../components/basic/input/formInput';
-import { Cost_CentreSchema } from '../schema';
+import { PositionScheme } from '../schema';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
@@ -16,7 +16,7 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre, mode }) {
+function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -30,9 +30,10 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
     }
     const submitForm = async (data) => {
         try {
-            const isValid = await Cost_CentreSchema.validate(data);
+            const isValid = await PositionScheme.validate(data);
             if (isValid) {
-                POST_COST_CENTRE_FORM(data)
+                POST_POSITIONS_FORM(data)
+                console.log(data, "lll")
             }
         } catch (error) {
             console.error(error);
@@ -45,39 +46,54 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
         reset
     } = useForm({
         defaultValues: {
-            Cost_Centre_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code ?
-                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code : 0,
-
-            Cost_Centre_name: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_name,
-            Cost_Centre_abbr: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_abbr,
-            Train_Cost_Budget: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Train_Cost_Budget,
-            Train_Cost_Actual: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Train_Cost_Actual,
-            JV_Code1: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JV_Code1,
-            JV_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JV_Code,
-            JVCode: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JVCode,
-            Temporary_JV_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Temporary_JV_Code,
-            emp_category_1: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_1,
-            emp_category_2: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_2,
-            emp_category_3: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_3,
-            Functional_Category_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Functional_Category_code,
-            Major_Code_Mgmt: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Major_Code_Mgmt,
-            Major_Code_Union: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Major_Code_Union,
-            Sort_Key: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-            total_cost_budget: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.total_cost_budget,
-            Azad_Kashmir_Tax_Flag: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag,
-            Pay_Grade_Areas_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Pay_Grade_Areas_code,
-            Business_Sector_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Business_Sector_Code,
-            org_unit_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.org_unit_code,
+            Position_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Code ?
+                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Code : 0,
+            PositionName : Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.PositionName,
+            Position_Active_Flag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag,
+            Position_Active_Date: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Date,
+            PermanentEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.PermanentEmp_Code,
+            OfficiatingEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.OfficiatingEmp_Code,
+            BackupEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BackupEmp_Code,
+            SupervisorPosition_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SupervisorPosition_Code,
+            company_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.company_code,
+            Desig_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
+            Cost_Centre_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_Code,
+            Section_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
+            Grade_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code,
+            Loc_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Loc_Code,
+            Default_Workflow_levels_For_Leaves_normal: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Default_Workflow_levels_For_Leaves_normal,
+            Default_Workflow_levels_For_Leaves_Special: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Default_Workflow_levels_For_Leaves_Special,
+            Minimum_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Minimum_Salary,
+            Maximum_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Maximum_Salary,
+            Avg_Salary_in_Market_survey: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Avg_Salary_in_Market_survey,
+            Budgeted_Basic_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Basic_Salary,
+            Budgeted_Other_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Other_Salary,
+            Assign_Delegation_to_all_subordinate: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Assign_Delegation_to_all_subordinate,
+            Budgeted_Flag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag,
+            Budget_Type_Name: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Type_Name,
+            Budget_Report_Heading_1: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_1,
+            Budget_Report_Heading_2: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_2,
+            Budget_Report_Heading_3: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_3,
+            Preferable_Gender: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender,
+            updated_on: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_on,
+            updated_by: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_by,
+            SubmitFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag,
+            SubmittedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmittedOn,
+            ApprovedFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag,
+            ApprovedBy: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedBy,
+            ApprovedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedOn,
+            BudgetYear: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetYear,
+            BudgetConfirmFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag,
         },
         mode: "onChange",
-        resolver: yupResolver(Cost_CentreSchema),
+        resolver: yupResolver(PositionScheme),
     });
 
 
 
     useEffect(() => {
         if (isCode !== null) {
-            Get_Cost_Centre_By_ID(isCode)
+            Get_Position_By_ID(isCode)
         }
     }, [])
 
@@ -85,92 +101,139 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
         if (mode == "create") {
             reset(
                 {
-                    Cost_Centre_code: 0,
-                    Cost_Centre_name: "",
-                    Cost_Centre_abbr: "",
-                    Train_Cost_Budget: "",
-                    Train_Cost_Actual: "",
-                    JV_Code1: "",
-                    JV_Code: "",
-                    JVCode: "",
-                    Temporary_JV_Code: "",
-                    emp_category_1: "",
-                    emp_category_2: "",
-                    emp_category_3: "",
-                    Functional_Category_code: "",
-                    Major_Code_Mgmt: "",
-                    Major_Code_Union: "",
-                    Sort_Key: "",
-                    total_cost_budget: "",
-                    Azad_Kashmir_Tax_Flag: "",
-                    Pay_Grade_Areas_code: "",
-                    Business_Sector_Code: "",
-                    org_unit_code: "",
+                    Position_Code: 0,
+                    PositionName: "",
+                    Position_Active_Flag: "",
+                    Position_Active_Date: "",
+                    PermanentEmp_Code: "",
+                    OfficiatingEmp_Code: "",
+                    BackupEmp_Code: "",
+                    SupervisorPosition_Code: "",
+                    company_code: "",
+                    Desig_code: "",
+                    Cost_Centre_Code: "",
+                    Section_code: "",
+                    Grade_code: "",
+                    Loc_Code: "",
+                    Default_Workflow_levels_For_Leaves_normal: "",
+                    Default_Workflow_levels_For_Leaves_Special: "",
+                    Minimum_Salary: "",
+                    Maximum_Salary: "",
+                    Avg_Salary_in_Market_survey: "",
+                    Budgeted_Basic_Salary: "",
+                    Budgeted_Other_Salary: "",
+                    Assign_Delegation_to_all_subordinate:"",
+                    Budgeted_Flag: "",
+                    Budget_Type_Name: "",
+                    Budget_Report_Heading_1: "",
+                    Budget_Report_Heading_2: "",
+                    Budget_Report_Heading_3: "",
+                    Preferable_Gender: "",
+                    updated_on: "",
+                    updated_by: "",
+                    SubmitFlag: "",
+                    SubmittedOn: "",
+                    ApprovedFlag: "",
+                    ApprovedBy: "",
+                    ApprovedOn: "",
+                    BudgetYear: "",
+                    BudgetConfirmFlag: ""
                 },
             )
         } else {
             reset(
                 {
-                    Cost_Centre_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code,
-                    Cost_Centre_name: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_name,
-                    Cost_Centre_abbr: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_abbr,
-                    Train_Cost_Budget: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Train_Cost_Budget,
-                    Train_Cost_Actual: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Train_Cost_Actual,
-                    JV_Code1: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JV_Code1,
-                    JV_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JV_Code,
-                    JVCode: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.JVCode,
-                    Temporary_JV_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Temporary_JV_Code,
-                    emp_category_1: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_1,
-                    emp_category_2: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_2,
-                    emp_category_3: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.emp_category_3,
-                    Functional_Category_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Functional_Category_code,
-                    Major_Code_Mgmt: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Major_Code_Mgmt,
-                    Major_Code_Union: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Major_Code_Union,
-                    Sort_Key: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-                    total_cost_budget: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.total_cost_budget,
-                    Azad_Kashmir_Tax_Flag: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag,
-                    Pay_Grade_Areas_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Pay_Grade_Areas_code,
-                    Business_Sector_Code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Business_Sector_Code,
-                    org_unit_code: Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.org_unit_code,
+                    Position_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Code,
+                    PositionName: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.PositionName,
+                    Position_Active_Flag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag,
+                    Position_Active_Date: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Date,
+                    PermanentEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.PermanentEmp_Code,
+                    OfficiatingEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.OfficiatingEmp_Code,
+                    BackupEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BackupEmp_Code,
+                    SupervisorPosition_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SupervisorPosition_Code,
+                    company_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.company_code,
+                    Desig_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
+                    Cost_Centre_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_Code,
+                    Section_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
+                    Grade_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code,
+                    Loc_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Loc_Code,
+                    Default_Workflow_levels_For_Leaves_normal: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Default_Workflow_levels_For_Leaves_normal,
+                    Default_Workflow_levels_For_Leaves_Special: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Default_Workflow_levels_For_Leaves_Special,
+                    Minimum_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Minimum_Salary,
+                    Maximum_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Maximum_Salary,
+                    Avg_Salary_in_Market_survey: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Avg_Salary_in_Market_survey,
+                    Budgeted_Basic_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Basic_Salary,
+                    Budgeted_Other_Salary: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Other_Salary,
+                    Assign_Delegation_to_all_subordinate: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Assign_Delegation_to_all_subordinate,
+                    Budgeted_Flag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag,
+                    Budget_Type_Name: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Type_Name,
+                    Budget_Report_Heading_1: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_1,
+                    Budget_Report_Heading_2: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_2,
+                    Budget_Report_Heading_3: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_3,
+                    Preferable_Gender: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender,
+                    updated_on: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_on,
+                    updated_by: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_by,
+                    SubmitFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag,
+                    SubmittedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmittedOn,
+                    ApprovedFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag,
+                    ApprovedBy: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedBy,
+                    ApprovedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedOn,
+                    BudgetYear: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetYear,
+                    BudgetConfirmFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag,
                 },
             )
         }
-    }, [Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]])
+    }, [Red_Position?.dataSingle?.[0]?.res?.data?.[0]])
 
     // COST CENTRE FORM DATA API CALL =========================== 
-    async function POST_COST_CENTRE_FORM(body) {
+    async function POST_POSITIONS_FORM(body) {
         setLoading(true)
         await fetch(
-            `${baseUrl.baseUrl}/employment_cost_center/AddCostCenter`, {
+            `${baseUrl.baseUrl}/Positions/AddPosition`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
                 accessToken: `Bareer ${get_access_token}`,
             },
-            body: JSON.stringify({
-                "Cost_Centre_code": body.Cost_Centre_code,
-                "Cost_Centre_name": body.Cost_Centre_name,
-                "Cost_Centre_abbr": body.Cost_Centre_abbr,
-                "Train_Cost_Budget": body.Train_Cost_Budget,
-                "Train_Cost_Actual": body.Train_Cost_Actual,
-                "Train_Cost_Actual": body.Train_Cost_Actual,
-                "JV_Code1": body.JV_Code1,
-                "JV_Code": body.JV_Code,
-                "JVCode": body.JVCode,
-                "Temporary_JV_Code": body.Temporary_JV_Code,
-                "emp_category_1": body.emp_category_1,
-                "emp_category_2": body.emp_category_2,
-                "emp_category_3": body.emp_category_3,
-                "Functional_Category_code": body.Functional_Category_code,
-                "Major_Code_Mgmt": body.Major_Code_Mgmt,
-                "Major_Code_Union": body.Major_Code_Union,
-                "Sort_Key": body.Sort_Key,
-                "total_cost_budget": body.total_cost_budget,
-                "Azad_Kashmir_Tax_Flag": body.Azad_Kashmir_Tax_Flag,
-                "Pay_Grade_Areas_code": body.Pay_Grade_Areas_code,
-                "Business_Sector_Code": body.Business_Sector_Code,
-                "org_unit_code": body.org_unit_code,
-            })
+                body: JSON.stringify({
+                    "Position_Code": body.Position_Code,
+                    "PositionName": body.PositionName,
+                    "Position_Active_Flag": body.Position_Active_Flag,
+                    "Position_Active_Date": body.Position_Active_Date,
+                    "PermanentEmp_Code": body.PermanentEmp_Code,
+                    "OfficiatingEmp_Code": body.OfficiatingEmp_Code,
+                    "BackupEmp_Code": body.BackupEmp_Code,
+                    "SupervisorPosition_Code": body.SupervisorPosition_Code,
+                    "company_code": body.company_code,
+                    "Desig_code": body.Desig_code,
+                    "Cost_Centre_Code": body.Cost_Centre_Code,
+                    "Section_code": body.Section_code,
+                    "Grade_code": body.Grade_code,
+                    "Loc_Code": body.Loc_Code,
+                    "Default_Workflow_levels_For_Leaves_normal": body.Default_Workflow_levels_For_Leaves_normal,
+                    "Default_Workflow_levels_For_Leaves_Special": body.Default_Workflow_levels_For_Leaves_Special,
+                    "Minimum_Salary": body.Minimum_Salary,
+                    "Maximum_Salary": body.Maximum_Salary,
+                    "Avg_Salary_in_Market_survey": body.Avg_Salary_in_Market_survey,
+                    "Budgeted_Basic_Salary": body.Budgeted_Flag,
+                    "Budgeted_Other_Salary": body.Budgeted_Other_Salary,
+                    "Assign_Delegation_to_all_subordinate": body.Assign_Delegation_to_all_subordinate,
+                    "Budgeted_Flag": body.Budgeted_Flag,
+                    "Budget_Type_Name": body.Budget_Type_Name,
+                    "Budget_Report_Heading_1": body.Budget_Report_Heading_1,
+                    "Budget_Report_Heading_2": body.Budget_Report_Heading_2,
+                    "Budget_Report_Heading_3": body.Budget_Report_Heading_3,
+                    "Preferable_Gender": body.Preferable_Gender,
+                    "updated_on": body.updated_on,
+                    "updated_by": body.updated_by,
+                    "SubmitFlag": body.SubmitFlag,
+                    "SubmittedOn": body.SubmittedOn,
+                    "ApprovedFlag": body.ApprovedFlag,
+                    "ApprovedBy": body.ApprovedBy,
+                    "ApprovedOn": body.ApprovedOn,
+                    "BudgetYear": body.BudgetYear,
+                    "BudgetConfirmFlag": body.BudgetConfirmFlag
+                })
         }
         ).then((response) => {
             return response.json();
@@ -205,7 +268,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Cost Centers List</h4>
+                <h4 className="text-dark">Positions</h4>
                 <hr />
                 <div className="form-group formBoxCountry">
                     <FormInput
@@ -222,8 +285,8 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                     <FormInput
                         label={'Position Name'}
                         placeholder={'Position Name'}
-                        id="Position_Name"
-                        name="Position_Name"
+                        id="PositionName"
+                        name="PositionName"
                         type="text"
                         showLabel={true}
                         errors={errors}
@@ -235,11 +298,11 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             type='radio'
                             id="Position_Active_Flag"
                             name="Position_Active_Flag"
-                            labelText={'Position Active Flag'}
+                            labelText={'Position_Active_Flag'}
                             label={"Yes"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -252,7 +315,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'No'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -309,6 +372,16 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                         errors={errors}
                         control={control}
                     />
+                    <FormInput
+                        label={'Company Code'}
+                        placeholder={'Company Code'}
+                        id="company_code"
+                        name="company_code"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
 
                     <FormInput
                         label={'Designation Code'}
@@ -331,7 +404,6 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                         errors={errors}
                         control={control}
                     />
-                    <div className="d-flex">
                         <FormInput
                             label={'Section Code'}
                             placeholder={'Section Code'}
@@ -363,7 +435,6 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             control={control}
                         />
                   
-                    </div>
                 </div>
                 <hr />
                 <div className="form-group formBoxCountry">
@@ -456,7 +527,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={"Male"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -469,7 +540,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'Female'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -527,7 +598,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={"Male"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -540,7 +611,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'Female'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -577,7 +648,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={"Yes"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -590,7 +661,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'No'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -618,7 +689,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={"Yes"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -631,7 +702,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'No'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -678,7 +749,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={"Yes"}
                             value={'Y'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag == "Y" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -691,7 +762,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
                             label={'No'}
                             value={'N'}
                             defaultChecked={
-                                Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag == "N" ? true : false
                             }
                             showLabel={true}
                             errors={errors}
@@ -708,7 +779,7 @@ function PositionsForm({ cancel, isCode, Get_Cost_Centre_By_ID, Red_Cost_centre,
     )
 }
 
-function mapStateToProps({ Red_Cost_centre }) {
-    return { Red_Cost_centre };
+function mapStateToProps({ Red_Position }) {
+    return { Red_Position };
 }
-export default connect(mapStateToProps, COST_CENTRE_ACTIONS)(PositionsForm)
+export default connect(mapStateToProps, POSITION_ACTIONS)(PositionsForm)

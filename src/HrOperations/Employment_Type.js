@@ -8,6 +8,8 @@ import './assets/css/EmployeeTypeList.css'
 import * as EMPLOYEE_TYPE_ACTIONS from "../store/actions/HrOperations/EmployeeType/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
@@ -63,7 +65,9 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit',data?.Empt_Type_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit',data?.Empt_Type_code)} className="editBtn">
+            <FaEdit />
+          </button>
           <Popconfirm
             title="Delete the Employee Type"
             description="Are you sure to delete the Employee Type?"
@@ -73,7 +77,7 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
               // handleConfirmDelete(data?.Empt_Type_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),

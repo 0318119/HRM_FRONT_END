@@ -9,6 +9,8 @@ import * as EDUCATION_ACTIONS from "../store/actions/HrOperations/Education/inde
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
@@ -53,7 +55,9 @@ const Education = ({ Red_Education, GetEducationData }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn">
+             <FaEdit />
+          </button>
           <Popconfirm
             title="Delete the Education"
             description="Are you sure to delete the Education?"
@@ -63,7 +67,7 @@ const Education = ({ Red_Education, GetEducationData }) => {
               handleConfirmDelete(data?.Edu_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),

@@ -73,7 +73,7 @@ import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyFo
 import Base_City from '../HrOperations/Base_City'
 import RefreshableData from '../HrOperations/RefreshableData'
 import Positions from '../HrOperations/Positions'
-
+import Parameters_Access from '../HrOperations/Parameters_Access';
 
 const routing = () => {
   return (
@@ -151,6 +151,7 @@ const routing = () => {
           <Route path="/Base_City" element={<Base_City/>} />
           <Route path="/RefreshableData" element={<RefreshableData />} />
           <Route path="/Positions" element={<Positions />} />
+          <Route path="/Parameters_Access" element={<Parameters_Access/>} />
         </Routes>
       </Router>
     </>
