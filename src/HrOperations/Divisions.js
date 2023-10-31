@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
@@ -15,35 +15,44 @@ import './assets/css/DivisionList.css'
 
 
 
-const Divisions = () => {
+const Divisions = ({ Red_Division, GetDivisionData }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  var get_access_token = localStorage.getItem("access_token");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [isCode, setCode] = useState(null)
   const [mode, setMode] = useState('read')
+  const [isSearchVal, setSearchVal] = useState('')
+  const EditPage = (mode, code) => {
+    setCode(code)
+    setMode(mode)
+  }
 
   const columns = [
     {
       title: 'Division Code',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <a>{text}</a>,
+      dataIndex: 'Div_code',
+      key: 'Div_code',
     },
     {
-      title: 'Name',
-      dataIndex: 'Name',
-      key: 'Name',
+      title: 'Division Name',
+      dataIndex: 'Div_name',
+      key: 'Div_name',
     },
     {
       title: 'Division Head',
-      dataIndex: 'Division Head',
-      key: 'Division Head',
+      dataIndex: 'Div_Head',
+      key: 'Div_Head',
     },
     {
       title: 'Short Key',
-      dataIndex: 'Short Key',
-      key: 'Short Key',
+      dataIndex: 'Sort_key',
+      key: 'Sort_key',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_, record) => (
+      render: (data) => (
         <Space size="middle">
           <button onClick={() => EditPage('Edit', data?.Div_code)} className="editBtn">
             <FaEdit />
@@ -66,29 +75,79 @@ const Divisions = () => {
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      Abbreviation: 'New York No. 1 Lake Park',
-    },
-  ];
+  // DIVISION FORM DATA DELETE API CALL ===========================
+  async function handleConfirmDelete(id) {
+    await fetch(
+      `${baseUrl.baseUrl}/division/DeleteDivision`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Div_code": id,
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "You have successfully deleted",
+        });
+        setTimeout(() => {
+          GetDivisionData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+          })
+        }, 5000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+    });
+  }
+
+  useEffect(() => {
+    if(isSearchVal == ''){
+      GetDivisionData({ 
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    }else{
+      GetDivisionData({ 
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page,isSearchVal])
+
   return (
     <>
       <div>
         <Header />
       </div>
+      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
-
             {mode == "read" && (
               <>
                 <div className="DivisionsFlexBox">
                   <h4 className="text-dark">Division List</h4>
                   <div className="DivisionssearchBox">
-                    <Input placeholder={'Search Here...'} type="search" />
+                    <Input placeholder={'Search Here...'} type="search" 
+                      onChange={(e) => {setSearchVal(e.target.value)}}
+                    />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -98,13 +157,25 @@ const Divisions = () => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
+                <Table columns={columns}
+                  loading={Red_Division?.loading}
+                  dataSource={Red_Division?.data?.[0]?.res?.data1} 
+                  scroll={{ x: 10 }} 
+                  pagination={{
+                    defaultCurrent: page,
+                    total: Red_Division?.data?.[0]?.res?.data3,
+                    onChange: (p) => {
+                      setPage(p);
+                    },
+                    pageSize: pageSize,
+                  }}
+                />
               )}
               {mode == "create" && (
-                <DivisionForm cancel={setMode} />
+                <DivisionForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <DivisionForm cancel={setMode} />
+                <DivisionForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 
@@ -115,4 +186,7 @@ const Divisions = () => {
   )
 }
 
-export default Divisions
+function mapStateToProps({ Red_Division }) {
+  return { Red_Division };
+}
+export default connect(mapStateToProps, DIVISION_ACTIONS)(Divisions)

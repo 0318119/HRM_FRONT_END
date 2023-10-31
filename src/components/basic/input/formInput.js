@@ -98,5 +98,52 @@ const FormCheckBox = ({
     );
 };
 
+const FormSelect = ({
+    control,
+    name,
+    label,
+    errors,
+    options,
+    isShowError,
+    placeholder,
+    showLabel = true,
+    ...rest
+}) => {
+    return (
+         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', }}>
+         {showLabel && (
+             <label>
+                 {label}
+             </label>
+         )}
+         <Controller
+             control={control}
+             name={name}
+             render={({ field }) => {
+                 return (
+                    <Select
+                        {...field}
+                        {...rest}
+                        name={name} id={name}
+                        placeholder="Select users"
+                        options={options}
+                    />
+                 )
+             }}
+         />
+         {errors[name] && (
+             <p
+                 style={{
+                     margin: "5px 0px",
+                     fontSize: "12px",
+                     color: 'red'
+                 }}
+             >
+                 {errors[name]?.message}
+             </p>
+         )}
+     </div>
+    );
+};
 
-export { FormInput, FormCheckBox };
+export { FormInput, FormCheckBox,FormSelect };
