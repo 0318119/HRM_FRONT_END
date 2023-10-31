@@ -12,6 +12,7 @@ import Red_Education_level from "./reducers/HrOperations/Education_level/index";
 import Red_Education from "./reducers/HrOperations/Education/index";
 import Red_Employee_type from "./reducers/HrOperations/EmployeeType/index";
 import Red_Employee_Cat from "./reducers/HrOperations/EmployeeCat/index";
+import Red_Grades from "./reducers/HrOperations/Grades/index";
 
 
 const reducers = combineReducers({
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   Red_Education,
   Red_Employee_type,
   Red_Employee_Cat,
+  Red_Grades
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

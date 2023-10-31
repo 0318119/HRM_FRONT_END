@@ -1,8 +1,8 @@
 import {
-    GET_TRANSITION_EMPLOYEE_TYPE_DATA,
-    GET_TRANSITION_EMPLOYEE_TYPE_START,
-    GET_TRANSITION_EMPLOYEE_TYPE_SINGLE,
-    GET_TRANSITION_EMPLOYEE_TYPE_END
+    GET_TRANSITION_GRADES_DATA,
+    GET_TRANSITION_GRADES_START,
+    GET_TRANSITION_GRADES_SINGLE,
+    GET_TRANSITION_GRADES_END
 } from '../../../actions/types'
 
 
@@ -12,26 +12,26 @@ const initState = {
     loading: false,
 }
 
-const Red_Employee_type = (state = initState, action) => {
+const Red_Grades = (state = initState, action) => {
     switch (action.type) {
-        case GET_TRANSITION_EMPLOYEE_TYPE_START:
+        case GET_TRANSITION_GRADES_START:
             return {
                 ...state,
                 loading: action.loading,
             };
-        case GET_TRANSITION_EMPLOYEE_TYPE_DATA:
+        case GET_TRANSITION_GRADES_DATA:
             return {
                 ...state,
                 data: action.payload,
                 loading: action.loading,
             };
-        case GET_TRANSITION_EMPLOYEE_TYPE_SINGLE:
+        case GET_TRANSITION_GRADES_SINGLE:
             return {
                 ...state,
                 dataSingle: action.payload,
                 loading: action.loading,
             };
-        case GET_TRANSITION_EMPLOYEE_TYPE_END:
+        case GET_TRANSITION_GRADES_END:
             return {
                 ...state,
                 data: action.payload,
@@ -42,4 +42,4 @@ const Red_Employee_type = (state = initState, action) => {
     }
 };
 
-export default Red_Employee_type
+export default Red_Grades

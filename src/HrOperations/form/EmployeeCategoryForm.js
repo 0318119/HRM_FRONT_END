@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as EMPLOYEE_CAT_ACTIONS from "../../store/actions/HrOperations/EmployeeCat/index"
@@ -23,8 +23,7 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
         try {
             const isValid = await EmployeeCatScheme.validate(data);
             if (isValid) {
-                // POST_Emp_Type_FORM(data)
-                console.log("data",data)
+                POST_Emp_Cat_FORM(data)
             }
         } catch (error) {
             console.error(error);
@@ -38,15 +37,8 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
         reset
     } = useForm({
         defaultValues: {
-
-            // Emp_Category_code: yup.number().required("Emp_Category_code is required"),
-            // Emp_Category_name: yup.string().required("Emp_Category_name is required"),
-            // Emp_Category_abbr: yup.string().required("Emp_Category_abbr is required"),
-            // graduity_fund_percentage: yup.number().required("graduity_fund_percentage is required"),
-            // Sort_key: yup.number().required("Sort_key is required"),
-
             Emp_Category_code: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code ?
-            Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code : 0,
+                Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code : 0,
             Emp_Category_name: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_name,
             Emp_Category_abbr: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_abbr,
             graduity_fund_percentage: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.graduity_fund_percentage,
@@ -55,8 +47,6 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
         mode: "onChange",
         resolver: yupResolver(EmployeeCatScheme),
     });
-
-    console.log("Edit Data",Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0])
 
 
     useEffect(() => {
@@ -80,7 +70,7 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
             reset(
                 {
                     Emp_Category_code: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code ?
-                    Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code : 0,
+                        Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_code : 0,
                     Emp_Category_name: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_name,
                     Emp_Category_abbr: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Category_abbr,
                     graduity_fund_percentage: Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]?.graduity_fund_percentage,
@@ -90,24 +80,19 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
         }
     }, [Red_Employee_Cat?.dataSingle?.[0]?.res?.data?.[0]])
 
-    // EMPLOYEE TYPE FORM DATA API CALL =========================== 
-    async function POST_Emp_Type_FORM(body) {
+    // EMPLOYEE CAT FORM DATA API CALL =========================== 
+    async function POST_Emp_Cat_FORM(body) {
         setLoading(true)
         await fetch(
-            `${baseUrl.baseUrl}/employment_type_code/AddEmploymentType`, {
+            `${baseUrl.baseUrl}/employment_category/AddEmploymentCategory`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "Empt_Type_code": body.Empt_Type_code,
-                "AllowChangeProbationMonths": body?.AllowChangeProbationMonths,
-                "Company_Employee_Flag": body?.Company_Employee_Flag,
-                "Emp_Code_Prefix": body?.Emp_Code_Prefix,
-                "Empt_Type_abbr": body?.Empt_Type_abbr,
-                "Empt_Type_name": body?.Empt_Type_name,
-                "PermanantFlag": body?.PermanantFlag,
-                "ProbationMonths": body?.ProbationMonths,
-                "Retirement_Age": body?.Retirement_Age,
-                "Sort_key": body?.Sort_key
+                "Emp_Category_code": body?.Emp_Category_code,
+                "Emp_Category_name": body?.Emp_Category_name,
+                "Emp_Category_abbr": body?.Emp_Category_abbr,
+                "graduity_fund_percentage": body?.graduity_fund_percentage,
+                "Sort_key": body?.Sort_key,
             }),
         }
         ).then((response) => {
@@ -121,7 +106,7 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
-                    GetEmployeeCatData({ 
+                    GetEmployeeCatData({
                         pageSize: pageSize,
                         pageNo: page,
                         search: null
@@ -151,16 +136,58 @@ function EmployeeCategoryForm({ cancel, mode, isCode, page, Red_Employee_Cat, Ge
                 <h4 className="text-dark">Employee Category</h4>
                 <hr />
                 <div className="form-group formBoxDivisions">
-                    <Input placeholder={'Employee Category Name'} label={'Employee Category Name'} type="text" />
-                    <Input placeholder={'Employee Category Abbrivation'} label={'Employee Category Abbrivation'} type="text" />
-                    <Input placeholder={'Graduity Fund Percentage'} label={'Graduity Fund Percentage'} type="number" />
-                    <Input placeholder={'Sort Key'} label={'Sort Key'} type="text" />
+                    <FormInput
+                        label={'Emp Category code'}
+                        placeholder={'Emp Category code'}
+                        id="Emp_Category_code"
+                        name="Emp_Category_code"
+                        type="number"
+                        readOnly
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Emp Category Name'}
+                        placeholder={'Emp Category Name'}
+                        id="Emp_Category_name"
+                        name="Emp_Category_name"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Emp Category Abbreviation'}
+                        placeholder={'Emp Category Abbreviation'}
+                        id="Emp_Category_abbr"
+                        name="Emp_Category_abbr"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Graduity fund percentage'}
+                        placeholder={'Graduity fund percentage'}
+                        id="graduity_fund_percentage"
+                        name="graduity_fund_percentage"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Sort key'}
+                        placeholder={'Sort key'}
+                        id="Sort_key"
+                        name="Sort_key"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
                 </div>
-                <hr />
-                {/* <div className="form-group formBoxDivisions">
-                    <Input placeholder={'Division Head'} label={'Division Head'} type="number" />
-                    <Input placeholder={'Division Category Code'} label={'Division Category Code'} type="number" />
-                </div> */}
                 <div className='EmployeCategoryBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
                     <PrimaryButton type={'submit'} loading={isLoading} title="Save" />

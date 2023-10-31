@@ -1,20 +1,20 @@
 import {
-    GET_TRANSITION_EMPLOYEE_TYPE_DATA,
-    GET_TRANSITION_EMPLOYEE_TYPE_START,
-    GET_TRANSITION_EMPLOYEE_TYPE_SINGLE,
-    GET_TRANSITION_EMPLOYEE_TYPE_END
+    GET_TRANSITION_GRADES_DATA,
+    GET_TRANSITION_GRADES_START,
+    GET_TRANSITION_GRADES_SINGLE,
+    GET_TRANSITION_GRADES_END
 } from '../../types'
 import baseUrl from '../../../../config.json'
 
 
-export const GetEmployeeTypeData = (params) => async (dispatch) => {
+export const GetGradesData = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_TYPE_START,
+            type: GET_TRANSITION_GRADES_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCode/${params.pageNo}/${params.pageSize}/${params.search}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCode/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -24,14 +24,14 @@ export const GetEmployeeTypeData = (params) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_TYPE_DATA,
+                type: GET_TRANSITION_GRADES_DATA,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_TYPE_END,
+                type: GET_TRANSITION_GRADES_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -39,7 +39,7 @@ export const GetEmployeeTypeData = (params) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_TYPE_END,
+            type: GET_TRANSITION_GRADES_END,
             payload: false,
             loading: false,
         });
@@ -47,34 +47,34 @@ export const GetEmployeeTypeData = (params) => async (dispatch) => {
     }
 }
 
-export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
+export const Get_Grades_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPLOYEE_TYPE_START,
+            type: GET_TRANSITION_GRADES_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_type/GetEmploymentTypeById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeByGradeCode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Empt_Type_code':body,
+                'Grade_code':body,
             })
         });
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPLOYEE_TYPE_SINGLE,
+                type: GET_TRANSITION_GRADES_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPLOYEE_TYPE_END,
+                type: GET_TRANSITION_GRADES_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -82,7 +82,7 @@ export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_EMPLOYEE_TYPE_END,
+            type: GET_TRANSITION_GRADES_END,
             payload: false,
             loading: false,
         });
