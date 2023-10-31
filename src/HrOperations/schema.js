@@ -119,6 +119,7 @@ const EmployeeTypeScheme = yup.object().shape({
   Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EmployeeTypeScheme};
+<<<<<<< HEAD
 
 // HR-OPERATIONS ===> EMPLOYEE CAT SCHEME
 const EmployeeCatScheme = yup.object().shape({
@@ -159,3 +160,5 @@ export {GradesScheme};
 =======
 export {CountryScheme};
 >>>>>>> 70b7a20aca351d1933179e5d28c7c83b1ed9087a
+=======
+>>>>>>> 3b8ea5aeea40a5e2e5816495670b9a99d06fec4f

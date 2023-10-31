@@ -70,12 +70,19 @@ import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
+<<<<<<< HEAD
 import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
 import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
 import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
 import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
 import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
 import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
+=======
+import Base_City from '../HrOperations/Base_City'
+import RefreshableData from '../HrOperations/RefreshableData'
+import Positions from '../HrOperations/Positions'
+
+>>>>>>> 3b8ea5aeea40a5e2e5816495670b9a99d06fec4f
 
 const routing = () => {
   return (
@@ -150,6 +157,7 @@ const routing = () => {
           <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
           <Route path="/Family" element={<Family />} />
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
+<<<<<<< HEAD
           {/* payroll */}
           <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
           <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
@@ -159,6 +167,11 @@ const routing = () => {
           
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
+=======
+          <Route path="/Base_City" element={<Base_City/>} />
+          <Route path="/RefreshableData" element={<RefreshableData />} />
+          <Route path="/Positions" element={<Positions />} />
+>>>>>>> 3b8ea5aeea40a5e2e5816495670b9a99d06fec4f
         </Routes>
       </Router>
     </>
