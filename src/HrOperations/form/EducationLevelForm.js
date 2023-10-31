@@ -9,7 +9,7 @@ import { FormCheckBox, FormInput } from '../../components/basic/input/formInput'
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function EducationLevelForm({ cancel, mode, isCode, Red_Education_level, GetEducationLevelData,Get_Education_Level_By_ID }) {
+function EducationLevelForm({ cancel, mode, isCode, page, Red_Education_level, GetEducationLevelData,Get_Education_Level_By_ID }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -103,7 +103,7 @@ function EducationLevelForm({ cancel, mode, isCode, Red_Education_level, GetEduc
                 cancel('read')
                 GetEducationLevelData({ 
                     pageSize: pageSize,
-                    pageNo: 1,
+                    pageNo: page,
                     search: null
                   })
             }, 3000);

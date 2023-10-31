@@ -176,10 +176,10 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                                 />
                             )}
                             {mode == "create" && (
-                                <DesignationForm cancel={setMode} mode={mode} isCode={null} />
+                                <DesignationForm cancel={setMode} mode={mode} isCode={null} page={page}/>
                             )}
                             {mode == "Edit" && (
-                                <DesignationForm cancel={setMode} isCode={isCode} />
+                                <DesignationForm cancel={setMode} isCode={isCode} page={page}/>
                             )}
                         </div>
 

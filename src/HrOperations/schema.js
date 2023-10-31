@@ -23,7 +23,6 @@ const Cost_CentreSchema = yup.object().shape({
   Business_Sector_Code: yup.number().required("Business_Sector_Code is required"),
   org_unit_code: yup.number().required("org_unit_code is required"),
 });
-
 export {Cost_CentreSchema};
 
 const CountryScheme = yup.object().shape({
@@ -125,6 +124,32 @@ const EmployeeCatScheme = yup.object().shape({
   Emp_Category_name: yup.string().required("Emp_Category_name is required"),
   Emp_Category_abbr: yup.string().required("Emp_Category_abbr is required"),
   graduity_fund_percentage: yup.number().required("graduity_fund_percentage is required"),
-  Sort_key: yup.number().required("Sort_key is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EmployeeCatScheme};
+
+
+// HR-OPERATIONS ===> GRADES SCHEME
+const GradesScheme = yup.object().shape({
+  Grade_code: yup.number().required("Grade_code is required"),
+  Grade_name: yup.string().required("Grade_name is required"),
+  Grade_abbr: yup.string().required("Grade_abbr is required"),
+  ProbationMonths: yup.number().required("Probation Months is required"),
+  Incentive_Hour_Rate: yup.number().required("Incentive_Hour_Rate is required"),
+  Incentive_Weekdays_Limit_Hour: yup.number().required("Incentive_Weekdays_Limit_Hour is required"),
+  Incentive_Saturday_Limit_Hour: yup.number().required("Incentive_Saturday_Limit_Hour is required"),
+  Medical_Insurance_Amount: yup.number().required("Medical_Insurance_Amount is required"),
+  Meal_Deduction: yup.number().required("Meal_Deduction is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  Litres_for_Petrol: yup.number().required("Litres_for_Petrol is required"),
+  Insurance_Category: yup.string().required("Insurance_Category is required"),
+  Life_Insurance_Category: yup.string().required("Life_Insurance_Category is required"),
+  Long_Name: yup.string().required("Long_Name is required"),
+  job_description_flag: yup.string().required("job_description_flag is required"),
+  next_promotion_grade: yup.number().required("next_promotion_grade is required"),
+  Assigning_Critaria_For_Next_Promotion: yup.number().required("Assigning_Critaria_For_Next_Promotion is required"),
+  Overtime_flag: yup.string().required("Overtime_flag is required"),
+  mobile_amount: yup.number().required("mobile_amount is required"),
+  Car_Amount: yup.number().required("Car_Amount is required"),
+});
+export {GradesScheme};

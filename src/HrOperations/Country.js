@@ -95,7 +95,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
         setTimeout(() => {
           GetDataCountry({ 
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 5000);
@@ -113,6 +113,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       });
     });
   }
+  
   useEffect(() => {
     if(isSearchVal == ''){
       GetDataCountry({ 
@@ -172,10 +173,10 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 />
               )}
               {mode == "create" && (
-                <CountryForm cancel={setMode} mode={mode} isCode={null} />
+                <CountryForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <CountryForm cancel={setMode} isCode={isCode} />
+                <CountryForm cancel={setMode} isCode={isCode} page={page}/>
               )}
             </div>
 

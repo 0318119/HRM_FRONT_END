@@ -107,7 +107,7 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
         setTimeout(() => {
           GetEducationLevelData({
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 3000);
@@ -169,10 +169,10 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
                 />
               )}
               {mode == "create" && (
-                <EducationLevelForm cancel={setMode} mode={mode} isCode={null} />
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <EducationLevelForm cancel={setMode} mode={mode} isCode={isCode} />
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 

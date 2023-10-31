@@ -10,7 +10,7 @@ import { FormCheckBox, FormInput } from '../../components/basic/input/formInput'
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function DivisionForm({ cancel, mode, isCode, Red_Division, Get_Division_By_ID, GetDivisionData }) {
+function DivisionForm({ cancel, mode, isCode, Red_Division, page, Get_Division_By_ID, GetDivisionData }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -112,7 +112,7 @@ function DivisionForm({ cancel, mode, isCode, Red_Division, Get_Division_By_ID, 
                 cancel('read')
                 GetDivisionData({ 
                     pageSize: pageSize,
-                    pageNo: 1,
+                    pageNo: page,
                     search: null
                 })
             }, 3000);

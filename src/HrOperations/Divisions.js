@@ -96,7 +96,7 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
         setTimeout(() => {
           GetDivisionData({
             pageSize: pageSize,
-            pageNo: 1,
+            pageNo: page,
             search: null
           })
         }, 5000);
@@ -172,10 +172,10 @@ const Divisions = ({ Red_Division, GetDivisionData }) => {
                 />
               )}
               {mode == "create" && (
-                <DivisionForm cancel={setMode} mode={mode} isCode={null} />
+                <DivisionForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <DivisionForm cancel={setMode} mode={mode} isCode={isCode} />
+                <DivisionForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 

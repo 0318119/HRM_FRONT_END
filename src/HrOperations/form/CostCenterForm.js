@@ -9,10 +9,11 @@ import { Cost_CentreSchema } from '../schema';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function CostCenterForm({cancel, isCode , Get_Cost_Centre_By_ID, Red_Cost_centre, mode}) {
+function CostCenterForm({cancel, isCode,page, GetCostCentreData, Get_Cost_Centre_By_ID, Red_Cost_centre, mode}) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading,setLoading] = useState(false)
+  const [pageSize, setPageSize] = useState(10);
 
 
   
@@ -176,6 +177,11 @@ async function POST_COST_CENTRE_FORM(body) {
             setLoading(false)
             setTimeout(() => {
                 cancel('read')
+                GetCostCentreData({
+                    pageSize: pageSize,
+                    pageNo: page,
+                    search: null
+                  })
             }, 3000);
         }
         else{
