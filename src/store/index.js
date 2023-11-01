@@ -37,6 +37,8 @@ const reducers = combineReducers({
   oneTimeAllowance,
   oneTimeDeduction,
   cashAllowance,
+  Red_Education,
+  Red_Employee_type
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

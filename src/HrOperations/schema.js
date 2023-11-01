@@ -117,6 +117,7 @@ const EmployeeTypeScheme = yup.object().shape({
   Sort_key: yup.string().required("Sort_key is required"),
 });
 export {EmployeeTypeScheme};
+<<<<<<< HEAD
 
 
 const PositionScheme = yup.object().shape({
@@ -194,3 +195,5 @@ const GradesScheme = yup.object().shape({
   Car_Amount: yup.number().required("Car_Amount is required"),
 });
 export {GradesScheme};
+=======
+>>>>>>> 5f197b7caaee347171c3ec0da767d3c237fc8afa
