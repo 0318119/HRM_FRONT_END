@@ -1,61 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
+import { connect } from "react-redux";
+import * as REFRESHABLE_DATA_ACTIONS from "../store/actions/HrOperations/RefreshableData/index";
 import "./assets/css/RefreshableData.css";
 import Select from "../components/basic/select";
-const RefreshableData = () => {
-  //   const [mode, setMode] = useState('read')
 
-  //   const columns = [
+const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
+  useEffect(() => {
+    // Red_Refreshable_Data
+    GetRefreshableData();
+  }, []);
 
-  //     {
-  //       title: 'Code',
-  //       dataIndex: 'code',
-  //       key: 'code',
-  //       render: (text) => <a>{text}</a>,
-  //     },
-  //     {
-  //         title: 'City Name',
-  //         dataIndex: 'City Name',
-  //         key: 'City Name',
-  //       },
-  //     {
-  //       title: 'City Abbreviation',
-  //       dataIndex: 'City Abbreviation',
-  //       key: 'City Abbreviation',
-  //     },
-  //     {
-  //       title: 'Province',
-  //       dataIndex: 'Province',
-  //       key: 'Province',
-  //     },
-  //     {
-  //       title: 'Sort Key',
-  //       dataIndex: 'Sort Key',
-  //       key: 'Sort Key',
-  //     },
-  //     {
-  //       title: 'Action',
-  //       key: 'action',
-  //       render: (_, record) => (
-  //         <Space size="middle">
-  //           <button onClick={() => setMode('Edit')} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-  //           <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-  //         </Space>
-  //       ),
-  //     },
-  //   ];
-
-  //   const data = [
-  //     {
-  //       key: '1',
-  //       name: 'John Brown',
-  //       age: 32,
-  //       Abbreviation: 'New York No. 1 Lake Park',
-  //     },
-  //   ];
+  console.log(
+    "hdtfmrtdrhsgentukrytd",
+    Red_Refreshable_Data?.data?.[0]?.res?.data
+  );
 
   return (
     <>
@@ -77,22 +39,16 @@ const RefreshableData = () => {
               <Select
                 label={"Report"}
                 placeholder="Please to Select"
-                options={[
-                  {
-                    value: "jack",
-                    label: "Jack",
-                  },
-                  {
-                    value: "lucy",
-                    label: "Lucy",
-                  },
-                  {
-                    value: "Yiminghe",
-                    label: "yiminghe",
-                  },
-                ]}
+                options={Red_Refreshable_Data?.data?.[0]?.res?.data.map(
+                  (item) => ({
+                    value: item.Parameter_code,
+                    label: item.Parameter_Name,
+                  })
+                )}
               />
             </div>
+
+            <Button title="Post" />
           </div>
         </div>
       </div>
@@ -100,4 +56,10 @@ const RefreshableData = () => {
   );
 };
 
-export default RefreshableData;
+function mapStateToProps({ Red_Refreshable_Data }) {
+  return { Red_Refreshable_Data };
+}
+export default connect(
+  mapStateToProps,
+  REFRESHABLE_DATA_ACTIONS
+)(RefreshableData);
