@@ -98,5 +98,15 @@ const FormCheckBox = ({
     );
 };
 
+const Input=({type, placeholder, label,readonly,value,onChange,max,onEnterPress,name})=>{
+    return (
+        <>
+            <div className={style.Label} id="inputBox">
+                <label className="m-0 p-0">{label}</label>
+                <input onKeyDown={onEnterPress} name={name} maxLength={max} onChange={(e)=>onChange(e)} defaultValue={value} readOnly={readonly} className={style.Input}  type={type} placeholder={placeholder}/>
+            </div>
+        </>
+    )
+}
 
-export { FormInput, FormCheckBox };
+export { FormInput, FormCheckBox,Input };

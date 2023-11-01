@@ -128,6 +128,7 @@ const OneTimeAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, 
         }
         setDelLoading(false)
     }
+ 
     return (
         <>
             {loader ? <Skeleton active /> :

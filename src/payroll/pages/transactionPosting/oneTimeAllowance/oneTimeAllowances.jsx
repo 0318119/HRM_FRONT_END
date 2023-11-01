@@ -9,16 +9,41 @@ import { connect } from "react-redux";
 
 
 
-const OneTimeAllowanceS = ({getOneTimeAllowance,oneTimeAllowance}) => {
-    const [mode,setMode] = useState('read')
-    const [current,setCurrent] = useState()
-    useEffect(()=>{
-        getOneTimeAllowance()
-    },[])
+const OneTimeAllowanceS = ({ getOneTimeAllowance, oneTimeAllowance }) => {
+    const [mode, setMode] = useState('read')
+    const [current, setCurrent] = useState()
+    const [search, setSearch] = useState(null)
+    const [pageNo, setPageNo] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
-    const converter=(w,e)=>{
+    useEffect(() => {
+        getOneTimeAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }, [])
+
+    const converter = (w, e) => {
         setMode(w)
         setCurrent(e)
+    }
+
+    const uniSearch = (w) => {
+        if (w == "") {
+            setSearch(null)
+        }
+        else {
+            setSearch(w)
+        }
+    }
+
+    const onSearchClick = () => {
+        getOneTimeAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
     }
     const columns = [
         {
@@ -36,7 +61,7 @@ const OneTimeAllowanceS = ({getOneTimeAllowance,oneTimeAllowance}) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={()=>{converter('edit',_?.Emp_code)}} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => { converter('edit', _?.Emp_code) }} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </Space>
             ),
         },
@@ -47,13 +72,19 @@ const OneTimeAllowanceS = ({getOneTimeAllowance,oneTimeAllowance}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader title={'Transaction - Onetime Allowance'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Allowance'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
-                {mode=='read'?
-                <Table loading={oneTimeAllowance?.loading} columns={columns} dataSource={oneTimeAllowance?.data[0]} />
-                :
-                <OneTimeAllowanceForm cancel={setMode} currentUser={current}/>
+                {mode == 'read' ?
+                    <Table pagination={{
+                        defaultCurrent: pageNo,
+                        onChange: (p) => {
+                            setPageNo(p);
+                        },
+                        pageSize: pageSize,
+                    }} loading={oneTimeAllowance?.loading} columns={columns} dataSource={oneTimeAllowance?.data} />
+                    :
+                    <OneTimeAllowanceForm cancel={setMode} currentUser={current} />
                 }
             </div>
         </>

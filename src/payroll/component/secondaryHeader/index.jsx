@@ -3,16 +3,31 @@ import Style from './secondaryHeader.module.css'
 import Input from "../../../components/basic/input";
 
 
-const SecondaryHeader = ({ title,total }) => {
+const SecondaryHeader = ({ title, total, searchParam, onSearchClick, isSearch }) => {
+    const AllSearch = (e) => {
+        searchParam(e)
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            onSearchClick()
+        }
+    }
     return (
         <>
             <div className={Style.SecondaryHeaderMain}>
-                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}}>
-                    <div style={{display:'flex',alignItems:'end'}}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                    <div style={{ display: 'flex', alignItems: 'end' }}>
                         <h2>{title}</h2>
-                        <p>{`Total ${total}`}</p>
+                        {isSearch &&
+                            <p>{`Total ${total}`}</p>
+                        }
                     </div>
-                    <Input placeholder={'Search Here..'}/>
+                    {isSearch &&
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <Input onEnterPress={handleKeyDown} onChange={AllSearch} placeholder={'Search Here..'} />
+                            <button onClick={onSearchClick}>Search</button>
+                        </div>
+                    }
                 </div>
             </div>
         </>

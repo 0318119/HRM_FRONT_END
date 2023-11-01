@@ -13,13 +13,7 @@ const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceLi
     const [isNext, setIsNext] = useState(false)
     const [loading, setLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
-    const [allowanceDetail, setAllowanceDetail] = useState({
-        Amount: "",
-        Remarks: "",
-        Allowance_Code: "",
-        Emp_code: "",
-        Deduction_code: ""
-    })
+    
 
     const reset = () => {
         cancel('read')
@@ -58,6 +52,13 @@ const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceLi
             setIsNext(false)
         }
     }
+    const [allowanceDetail, setAllowanceDetail] = useState({
+        Amount: "",
+        Remarks: "",
+        Allowance_Code: "",
+        Emp_code: "",
+        Deduction_code: ""
+    })
     const RemarksChange = (e) => {
         setAllowanceDetail(
             {

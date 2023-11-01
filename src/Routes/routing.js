@@ -156,6 +156,7 @@ const routing = () => {
           <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
           <Route path="/payroll/oneTimeDeduciton" element={<OneTimeDeduction />} />
           <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
+          <Route path="/payroll/cashallowance" element={<CashAllowance />} />
           
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

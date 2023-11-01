@@ -12,9 +12,36 @@ import { connect } from "react-redux";
 const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
     const [mode,setMode] = useState('read')
     const [current,setCurrent] = useState()
-    useEffect(()=>{
-        getFixedAllowance()
-    },[])
+    const [search, setSearch] = useState(null)
+    const [pageNo, setPageNo] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+
+
+    const uniSearch = (w) => {
+        if (w == "") {
+            setSearch(null)
+        }
+        else {
+            setSearch(w)
+        }
+    }
+
+
+    const onSearchClick = () => {
+        getFixedAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }
+
+    useEffect(() => {
+        getFixedAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }, [])
 
     const converter=(w,e)=>{
         setMode(w)
@@ -47,11 +74,17 @@ const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader title={'Transaction - Onetime Allowance'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Fixed Allowance'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?
-                <Table loading={FixedAllowance?.loading} columns={columns} dataSource={FixedAllowance?.data[0]} />
+                <Table pagination={{
+                    defaultCurrent: pageNo,
+                    onChange: (p) => {
+                        setPageNo(p);
+                    },
+                    pageSize: pageSize,
+                }} loading={FixedAllowance?.loading} columns={columns} dataSource={FixedAllowance?.data} />
                 :
                 <FixedAllowanceForm cancel={setMode} currentUser={current}/>
                 }

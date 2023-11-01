@@ -9,12 +9,39 @@ import { connect } from "react-redux";
 
 
 
-const FixedDeduction = ({getFixedDeductionData,getFixedDeduction,FixedDeduction}) => {
+const FixedDeduction = ({getFixedDeductionData,FixedDeduction}) => {
     const [mode,setMode] = useState('read')
     const [current,setCurrent] = useState()
-    useEffect(()=>{
-        getFixedDeductionData()
-    },[])
+    const [search, setSearch] = useState(null)
+    const [pageNo, setPageNo] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+
+
+    const uniSearch = (w) => {
+        if (w == "") {
+            setSearch(null)
+        }
+        else {
+            setSearch(w)
+        }
+    }
+
+
+    const onSearchClick = () => {
+        getFixedDeductionData({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }
+
+    useEffect(() => {
+        getFixedDeductionData({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }, [])
 
     const converter=(w,e)=>{
         setMode(w)
@@ -47,11 +74,17 @@ const FixedDeduction = ({getFixedDeductionData,getFixedDeduction,FixedDeduction}
                 <Header />
             </div>
             <div>
-                <SecondaryHeader title={'Transaction - Fixed Deduciton'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Fixed Deduciton'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?
-                <Table loading={FixedDeduction?.loading} columns={columns} dataSource={FixedDeduction?.data[0]} />
+                <Table pagination={{
+                    defaultCurrent: pageNo,
+                    onChange: (p) => {
+                        setPageNo(p);
+                    },
+                    pageSize: pageSize,
+                }} loading={FixedDeduction?.loading} columns={columns} dataSource={FixedDeduction?.data} />
                 :
                 <FixedDeductionForm cancel={setMode} currentUser={current}/>
                 }
