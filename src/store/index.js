@@ -14,8 +14,10 @@ import Red_Employee_Cat from "./reducers/HrOperations/EmployeeCat/index";
 import Red_Employee_type from "./reducers/HrOperations/EmployeeType/index";
 import Red_Position from './reducers/HrOperations/Positions/index';
 import Red_Grades from "./reducers/HrOperations/Grades/index";
-import FixedAllowance from "./reducers/payroll/FixedAllowance";
-
+import oneTimeAllowance from "./reducers/payroll/oneTimeAllowance/index";
+import FixedAllowance from "./reducers/payroll/FixedAllowance/index";
+import oneTimeDeduction from "./reducers/payroll/OneTImeDeduction/index";
+import cashAllowance from "./reducers/payroll/CashAllowance/index";
 
 const reducers = combineReducers({
   Transition_family,
@@ -31,7 +33,10 @@ const reducers = combineReducers({
   Red_Employee_Cat,
   Red_Position,
   Red_Grades,
-  FixedAllowance
+  FixedAllowance,
+  oneTimeAllowance,
+  oneTimeDeduction,
+  cashAllowance,
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
