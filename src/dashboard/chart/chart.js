@@ -2,7 +2,7 @@ import React from 'react'
 import '../assets/css/chart.css'
 import Attendancechart from '../chart/Attendancechart';
 import { BsFillCalendar2CheckFill as Calender_ico } from "react-icons/bs";
-import Table from "../Tables/tables";
+import Table from "../Tables/AttendanceWeekly";
 import EntryTable from "../Tables/entryTable";
 import SummaryTable from "../Tables/SummaryTable";
 import RequestTable from "../Tables/RequestTable";
@@ -26,28 +26,13 @@ const chart = () => {
             <span>
               <Link className="ChartAttendance" to={'/Get_Attendance'} style={{textDecoration: "underline"}}>Attendance Sheet</Link>
             </span>
-            {/* <select name="" id="" className="chartSelectTag">
-              <option value="current_month">Current Month</option>
-              <option value="january">January</option>
-              <option value="february">February</option>
-              <option value="march">March</option>
-              <option value="april">April</option>
-              <option value="may">May</option>
-              <option value="june">June</option>
-              <option value="july">July</option>
-              <option value="august">August</option>
-              <option value="september">September</option>
-              <option value="october">October</option>
-              <option value="november">November</option>
-              <option value="december">December</option>
-            </select> */}
           </div>
         </div>
         <div className="ChartCont mt-5">
           <Attendancechart />
         </div>
       </div>
-      <div className="row d-flex mt-1 p-1 ChartRow">
+      {/* <div className="row d-flex mt-1 p-1 ChartRow">
         <div className=" col-lg-6  TableCont">
           <Table  />
         </div>
@@ -78,7 +63,7 @@ const chart = () => {
         <div className="col-lg-6  TableCont">
           <HrPolicy />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

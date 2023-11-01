@@ -106,12 +106,12 @@ const Grade = ({GetGradesData, Red_Grades}) => {
         <Space size="middle">
           <button onClick={() => EditPage('Edit', data?.Grade_code)} className="editBtn"><FaEdit /></button>
           <Popconfirm
-            title="Delete the Cost Centre"
-            description="Are you sure to delete the Cost Centre?"
+            title="Delete the Cost Grade"
+            description="Are you sure to delete the Grade?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              handleConfirmDelete(data?.Cost_Centre_code)
+              handleConfirmDelete(data?.Grade_code)
             }}
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -176,9 +176,6 @@ const Grade = ({GetGradesData, Red_Grades}) => {
       });
     });
   }
-
-
-  console.log("Red_Grades Table Page:", Red_Grades)
 
   return (
     <>

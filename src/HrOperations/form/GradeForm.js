@@ -1,10 +1,10 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as GRADES_ACTIONS from "../../store/actions/HrOperations/Grades/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {FormInput,FormCheckBox} from '../../components/basic/input/formInput';
+import { FormInput, FormCheckBox } from '../../components/basic/input/formInput';
 import { GradesScheme } from '../schema';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
@@ -38,11 +38,11 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
     } = useForm({
         defaultValues: {
             Grade_code: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code ?
-            Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
+                Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
 
             Grade_name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_name,
             Grade_abbr: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_abbr,
-            ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.ProbationMonths,
+            ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Probation_Months,
             Incentive_Hour_Rate: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Hour_Rate,
             Incentive_Weekdays_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Weekdays_Limit_Hour,
             Incentive_Saturday_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Saturday_Limit_Hour,
@@ -101,11 +101,11 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
             reset(
                 {
                     Grade_code: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code ?
-                    Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
+                        Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code : 0,
 
                     Grade_name: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_name,
                     Grade_abbr: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Grade_abbr,
-                    ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.ProbationMonths,
+                    ProbationMonths: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Probation_Months,
                     Incentive_Hour_Rate: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Hour_Rate,
                     Incentive_Weekdays_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Weekdays_Limit_Hour,
                     Incentive_Saturday_Limit_Hour: Red_Grades?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Saturday_Limit_Hour,
@@ -128,8 +128,8 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
     }, [Red_Grades?.dataSingle?.[0]?.res?.data?.[0]])
 
 
-     // EMPLOYEE TYPE FORM DATA API CALL =========================== 
-     async function POST_GRADES_FORM(body) {
+    //  GRADE FORM DATA API CALL =========================== 
+    async function POST_GRADES_FORM(body) {
         setLoading(true)
         await fetch(
             `${baseUrl.baseUrl}/grade_code/AddGrade`, {
@@ -139,7 +139,7 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
                 "Grade_code": body?.Grade_code,
                 "Grade_name": body?.Grade_name,
                 "Grade_abbr": body?.Grade_abbr,
-                "ProbationMonths": body?.ProbationMonths,    
+                "ProbationMonths": body?.ProbationMonths,
                 "Incentive_Hour_Rate": body?.Incentive_Hour_Rate,
                 "Incentive_Weekdays_Limit_Hour": body?.Incentive_Weekdays_Limit_Hour,
                 "Incentive_Saturday_Limit_Hour": body?.Incentive_Saturday_Limit_Hour,
@@ -150,11 +150,11 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
                 "Insurance_Category": body?.Insurance_Category,
                 "Life_Insurance_Category": body?.Life_Insurance_Category,
                 "Long_Name": body?.Long_Name,
-                "job_description_flag": body?.Job_Description_Flag,
-                "next_promotion_grade": body?.Next_Promotion_Grade,
+                "job_description_flag": body?.job_description_flag,
+                "next_promotion_grade": body?.next_promotion_grade,
                 "Assigning_Critaria_For_Next_Promotion": body?.Assigning_Critaria_For_Next_Promotion,
-                "Overtime_flag": body?.Overtime_Flag,
-                "mobile_amount": body?.Mobile_Amount,
+                "Overtime_flag": body?.Overtime_flag,
+                "mobile_amount": body?.mobile_amount,
                 "Car_Amount": body?.Car_Amount
             }),
         }
@@ -169,12 +169,11 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
-                    GetGradesData({ 
+                    GetGradesData({
                         pageSize: pageSize,
                         pageNo: page,
                         search: null
                     })
-                    console.log("page",page)
                 }, 3000);
             }
             else {
@@ -412,7 +411,7 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
                             showLabel={true}
                             errors={errors}
                             control={control}
-                        />  
+                        />
                     </div>
                     <div className="d-flex">
                         <FormCheckBox
@@ -441,7 +440,7 @@ function GradeForm({ cancel, mode, isCode, page, Red_Grades, GetGradesData, Get_
                             showLabel={true}
                             errors={errors}
                             control={control}
-                        />  
+                        />
                     </div>
                 </div>
                 <div className='GradeBtnBox'>

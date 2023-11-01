@@ -312,7 +312,7 @@ export default function Attendan1022hart() {
             });
         } else {
           setGetAttendData(response.data[0]);
-          console.log("response.data[0]", response.data[0])
+          // console.log("response.data[0]", response.data[0])
           setDataLoader(true);
         }
       })

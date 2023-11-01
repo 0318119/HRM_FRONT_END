@@ -79,6 +79,12 @@ table {
     text-transform: capitalize;
 }
 
+/* DASHBOARD TABLE BG COLOR */
+.bgTables{
+    background: #d7cfcf33;
+}
+
+
 /* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 select:focus {
     outline: none;
