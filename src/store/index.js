@@ -17,7 +17,7 @@ import Red_Grades from "./reducers/HrOperations/Grades/index";
 import oneTimeAllowance from "./reducers/payroll/oneTimeAllowance/index";
 import FixedAllowance from "./reducers/payroll/FixedAllowance/index";
 import oneTimeDeduction from "./reducers/payroll/OneTImeDeduction/index";
-import cashAllowance from "./reducers/payroll/CashAllowance/index";
+import cashAllowance from "./reducers/payroll/cashAllowance/index";
 
 const reducers = combineReducers({
   Transition_family,
