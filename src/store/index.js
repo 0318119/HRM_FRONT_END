@@ -40,7 +40,6 @@ const reducers = combineReducers({
   Red_Grades,
   FixedAllowance,
   oneTimeAllowance,
-  oneTimeDeduction,
   cashAllowance,
 });
 
