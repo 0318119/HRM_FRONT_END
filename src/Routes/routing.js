@@ -73,7 +73,7 @@ import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyFo
 import Base_City from '../HrOperations/Base_City'
 import RefreshableData from '../HrOperations/RefreshableData'
 import Positions from '../HrOperations/Positions'
-import Parameters_Access from '../HrOperations/Parameters_Access';
+import Download_Parameter_Access from '../HrOperations/Download_Parameter_Access';
 import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
 import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
 import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
@@ -157,7 +157,7 @@ const routing = () => {
           <Route path="/Base_City" element={<Base_City/>} />
           <Route path="/RefreshableData" element={<RefreshableData />} />
           <Route path="/Positions" element={<Positions />} />
-          <Route path="/Parameters_Access" element={<Parameters_Access/>} />
+          <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access/>} />
           {/* payroll */}
           <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
           <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />

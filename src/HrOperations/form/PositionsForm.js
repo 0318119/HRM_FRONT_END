@@ -16,10 +16,12 @@ import baseUrl from '../../config.json'
 
 
 
-function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode }) {
+function PositionsForm({ cancel, isCode, page, GetPositionData, Get_Position_By_ID, Red_Position, mode }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
+    const [pageSize, setPageSize] = useState(10);
+
 
 
 
@@ -33,7 +35,7 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
             const isValid = await PositionScheme.validate(data);
             if (isValid) {
                 POST_POSITIONS_FORM(data)
-                console.log(data, "lll")
+                console.log("data", data)
             }
         } catch (error) {
             console.error(error);
@@ -55,7 +57,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
             OfficiatingEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.OfficiatingEmp_Code,
             BackupEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BackupEmp_Code,
             SupervisorPosition_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SupervisorPosition_Code,
-            company_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.company_code,
             Desig_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
             Cost_Centre_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_Code,
             Section_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
@@ -75,13 +76,9 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
             Budget_Report_Heading_2: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_2,
             Budget_Report_Heading_3: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_3,
             Preferable_Gender: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender,
-            updated_on: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_on,
-            updated_by: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_by,
             SubmitFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag,
             SubmittedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmittedOn,
             ApprovedFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag,
-            ApprovedBy: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedBy,
-            ApprovedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedOn,
             BudgetYear: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetYear,
             BudgetConfirmFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag,
         },
@@ -109,7 +106,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                     OfficiatingEmp_Code: "",
                     BackupEmp_Code: "",
                     SupervisorPosition_Code: "",
-                    company_code: "",
                     Desig_code: "",
                     Cost_Centre_Code: "",
                     Section_code: "",
@@ -129,13 +125,9 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                     Budget_Report_Heading_2: "",
                     Budget_Report_Heading_3: "",
                     Preferable_Gender: "",
-                    updated_on: "",
-                    updated_by: "",
                     SubmitFlag: "",
                     SubmittedOn: "",
                     ApprovedFlag: "",
-                    ApprovedBy: "",
-                    ApprovedOn: "",
                     BudgetYear: "",
                     BudgetConfirmFlag: ""
                 },
@@ -151,7 +143,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                     OfficiatingEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.OfficiatingEmp_Code,
                     BackupEmp_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BackupEmp_Code,
                     SupervisorPosition_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SupervisorPosition_Code,
-                    company_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.company_code,
                     Desig_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
                     Cost_Centre_Code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_Code,
                     Section_code: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
@@ -171,13 +162,9 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                     Budget_Report_Heading_2: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_2,
                     Budget_Report_Heading_3: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budget_Report_Heading_3,
                     Preferable_Gender: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Preferable_Gender,
-                    updated_on: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_on,
-                    updated_by: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.updated_by,
                     SubmitFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmitFlag,
                     SubmittedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.SubmittedOn,
                     ApprovedFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedFlag,
-                    ApprovedBy: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedBy,
-                    ApprovedOn: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.ApprovedOn,
                     BudgetYear: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetYear,
                     BudgetConfirmFlag: Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.BudgetConfirmFlag,
                 },
@@ -195,45 +182,40 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                 "content-type": "application/json",
                 accessToken: `Bareer ${get_access_token}`,
             },
-                body: JSON.stringify({
-                    "Position_Code": body.Position_Code,
-                    "PositionName": body.PositionName,
-                    "Position_Active_Flag": body.Position_Active_Flag,
-                    "Position_Active_Date": body.Position_Active_Date,
-                    "PermanentEmp_Code": body.PermanentEmp_Code,
-                    "OfficiatingEmp_Code": body.OfficiatingEmp_Code,
-                    "BackupEmp_Code": body.BackupEmp_Code,
-                    "SupervisorPosition_Code": body.SupervisorPosition_Code,
-                    "company_code": body.company_code,
-                    "Desig_code": body.Desig_code,
-                    "Cost_Centre_Code": body.Cost_Centre_Code,
-                    "Section_code": body.Section_code,
-                    "Grade_code": body.Grade_code,
-                    "Loc_Code": body.Loc_Code,
-                    "Default_Workflow_levels_For_Leaves_normal": body.Default_Workflow_levels_For_Leaves_normal,
-                    "Default_Workflow_levels_For_Leaves_Special": body.Default_Workflow_levels_For_Leaves_Special,
-                    "Minimum_Salary": body.Minimum_Salary,
-                    "Maximum_Salary": body.Maximum_Salary,
-                    "Avg_Salary_in_Market_survey": body.Avg_Salary_in_Market_survey,
-                    "Budgeted_Basic_Salary": body.Budgeted_Flag,
-                    "Budgeted_Other_Salary": body.Budgeted_Other_Salary,
-                    "Assign_Delegation_to_all_subordinate": body.Assign_Delegation_to_all_subordinate,
-                    "Budgeted_Flag": body.Budgeted_Flag,
-                    "Budget_Type_Name": body.Budget_Type_Name,
-                    "Budget_Report_Heading_1": body.Budget_Report_Heading_1,
-                    "Budget_Report_Heading_2": body.Budget_Report_Heading_2,
-                    "Budget_Report_Heading_3": body.Budget_Report_Heading_3,
-                    "Preferable_Gender": body.Preferable_Gender,
-                    "updated_on": body.updated_on,
-                    "updated_by": body.updated_by,
-                    "SubmitFlag": body.SubmitFlag,
-                    "SubmittedOn": body.SubmittedOn,
-                    "ApprovedFlag": body.ApprovedFlag,
-                    "ApprovedBy": body.ApprovedBy,
-                    "ApprovedOn": body.ApprovedOn,
-                    "BudgetYear": body.BudgetYear,
-                    "BudgetConfirmFlag": body.BudgetConfirmFlag
-                })
+            body: JSON.stringify({
+                "Position_Code": body?.Position_Code,
+                "PositionName": body.PositionName,
+                "Position_Active_Flag": body.Position_Active_Flag,
+                "Position_Active_Date": body.Position_Active_Date,
+                "PermanentEmp_Code": body.PermanentEmp_Code,
+                "OfficiatingEmp_Code": body.OfficiatingEmp_Code,
+                "BackupEmp_Code": body.BackupEmp_Code,
+                "SupervisorPosition_Code": body.SupervisorPosition_Code,
+                "Desig_code": body.Desig_code,
+                "Cost_Centre_Code": body.Cost_Centre_Code,
+                "Section_code": body.Section_code,
+                "Grade_code": body.Grade_code,
+                "Loc_Code": body.Loc_Code,
+                "Default_Workflow_levels_For_Leaves_normal": body.Default_Workflow_levels_For_Leaves_normal,
+                "Default_Workflow_levels_For_Leaves_Special": body.Default_Workflow_levels_For_Leaves_Special,
+                "Minimum_Salary": body.Minimum_Salary,
+                "Maximum_Salary": body.Maximum_Salary,
+                "Avg_Salary_in_Market_survey": body.Avg_Salary_in_Market_survey,
+                "Budgeted_Basic_Salary": body.Budgeted_Basic_Salary,
+                "Budgeted_Other_Salary": body.Budgeted_Other_Salary,
+                "Assign_Delegation_to_all_subordinate": body.Assign_Delegation_to_all_subordinate,
+                "Budgeted_Flag": body.Budgeted_Flag,
+                "Budget_Type_Name": body.Budget_Type_Name,
+                "Budget_Report_Heading_1": body.Budget_Report_Heading_1,
+                "Budget_Report_Heading_2": body.Budget_Report_Heading_2,
+                "Budget_Report_Heading_3": body.Budget_Report_Heading_3,
+                "Preferable_Gender": body.Preferable_Gender,
+                "SubmitFlag": body.SubmitFlag,
+                "SubmittedOn": body.SubmittedOn,
+                "ApprovedFlag": body.ApprovedFlag,
+                "BudgetYear": body.BudgetYear,
+                "BudgetConfirmFlag": body.BudgetConfirmFlag
+            })
         }
         ).then((response) => {
             return response.json();
@@ -246,6 +228,11 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
+                    GetPositionData({
+                        pageSize: pageSize,
+                        pageNo: page,
+                        search: null
+                    })
                 }, 3000);
             }
             else {
@@ -293,35 +280,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         control={control}
                     />
 
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Position_Active_Flag"
-                            name="Position_Active_Flag"
-                            labelText={'Position_Active_Flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Position_Active_Flag"
-                            name="Position_Active_Flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
                     <FormInput
                         label={'Position Active Date'}
                         placeholder={'Position Active Date'}
@@ -367,16 +325,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         placeholder={'Supervisor Position Code'}
                         id="SupervisorPosition_Code"
                         name="SupervisorPosition_Code"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Company Code'}
-                        placeholder={'Company Code'}
-                        id="company_code"
-                        name="company_code"
                         type="number"
                         showLabel={true}
                         errors={errors}
@@ -518,35 +466,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         errors={errors}
                         control={control}
                     />
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Budgeted_Flag"
-                            name="Budgeted_Flag"
-                            labelText={'Budgeted Flag'}
-                            label={"Male"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Budgeted_Flag"
-                            name="Budgeted_Flag"
-                            label={'Female'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
                     <FormInput
                         label={'Budget Type Name'}
                         placeholder={'Budget Type Name'}
@@ -588,7 +507,85 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         control={control}
                     />
                    
-                    
+                    <FormInput
+                        label={'Submitted On'}
+                        placeholder={'Submitted On'}
+                        id="SubmittedOn"
+                        name="SubmittedOn"
+                        type="Date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />                    
+                    <FormInput
+                        label={'Budget Year'}
+                        placeholder={'Budget Year'}
+                        id="BudgetYear"
+                        name="BudgetYear"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <hr />
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Position_Active_Flag"
+                            name="Position_Active_Flag"
+                            labelText={'Position_Active_Flag'}
+                            label={"Yes"}
+                            value={'Y'}
+                            defaultChecked={
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "Y" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Position_Active_Flag"
+                            name="Position_Active_Flag"
+                            label={'No'}
+                            value={'N'}
+                            defaultChecked={
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Position_Active_Flag == "N" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Budgeted_Flag"
+                            name="Budgeted_Flag"
+                            labelText={'Budgeted Flag'}
+                            label={"Male"}
+                            value={'Y'}
+                            defaultChecked={
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "Y" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Budgeted_Flag"
+                            name="Budgeted_Flag"
+                            label={'Female'}
+                            value={'N'}
+                            defaultChecked={
+                                Red_Position?.dataSingle?.[0]?.res?.data?.[0]?.Budgeted_Flag == "N" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
                     <div className="d-flex">
                         <FormCheckBox
                             type='radio'
@@ -618,27 +615,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                             control={control}
                         />
                     </div>
-                    <FormInput
-                        label={'Updated On'}
-                        placeholder={'Updated On'}
-                        id="updated_on"
-                        name="updated_on"
-                        type="Date"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Updated By'}
-                        placeholder={'Updated By'}
-                        id="updated_by"
-                        name="updated_by"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                 
                     <div className="d-flex">
                         <FormCheckBox
                             type='radio'
@@ -668,18 +644,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                             control={control}
                         />
                     </div>
-                    
-                    <FormInput
-                        label={'Submitted On'}
-                        placeholder={'Submitted On'}
-                        id="SubmittedOn"
-                        name="SubmittedOn"
-                        type="Date"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                 
                     <div className="d-flex">
                         <FormCheckBox
                             type='radio'
@@ -709,37 +673,6 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                             control={control}
                         />
                     </div>
-                    
-                    <FormInput
-                        label={'Approved By'}
-                        placeholder={'Approved By'}
-                        id="ApprovedBy"
-                        name="ApprovedBy"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Approved On'}
-                        placeholder={'Approved On'}
-                        id="ApprovedOn"
-                        name="ApprovedOn"
-                        type="Date"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
-                        label={'Budget Year'}
-                        placeholder={'Budget Year'}
-                        id="BudgetYear"
-                        name="BudgetYear"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
                     <div className="d-flex">
                         <FormCheckBox
                             type='radio'

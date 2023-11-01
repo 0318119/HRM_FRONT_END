@@ -69,7 +69,7 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            // handleConfirmDelete(data?.Dept_code)
+                            handleConfirmDelete(data?.Position_Code)
                         }}
                     >
                         <button className="deleteBtn">
@@ -80,7 +80,7 @@ const Positions = ({ GetPositionData, Red_Position }) => {
             ),
         },
     ];
-    // console.log(Red_Position.data,'Red_Position')
+    console.log(Red_Position?.data?.[0]?.res?.data1,'Red_Position')
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -99,6 +99,51 @@ const Positions = ({ GetPositionData, Red_Position }) => {
     }, [page, isSearchVal])
 
 
+    async function handleConfirmDelete(id) {
+        await fetch(
+            `${baseUrl.baseUrl}/Positions/DeletePositions`, {
+            method: "POST",
+            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "Position_Code": id,
+            }),
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                messageApi.open({
+                    type: 'success',
+                    content: "You have successfully deleted",
+                });
+                setTimeout(() => {
+                    messageApi.destroy()
+                    GetPositionData({
+                        pageSize: pageSize,
+                        pageNo: page,
+                        search: null
+                    })
+                }, 5000);
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+                setTimeout(() => {
+                    messageApi.destroy()
+                }, 5000);
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+            setTimeout(() => {
+                messageApi.destroy()
+            }, 5000);
+        });
+    }
 
     return (
         <>
@@ -134,7 +179,7 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                      scroll={{ x: 10 }} 
                                     pagination={{
                                         defaultCurrent: page,
-                                        total: Red_Position?.data?.[0]?.res?.data1,
+                                        total: Red_Position?.data?.[0]?.res?.data3,
                                         onChange: (p) => {
                                             setPage(p);
                                         },
@@ -144,10 +189,10 @@ const Positions = ({ GetPositionData, Red_Position }) => {
                                     />
                             )}
                             {mode == "create" && (
-                                <PositionsForm cancel={setMode} mode={mode} isCode={null} />
+                                <PositionsForm cancel={setMode} mode={mode} isCode={null} page={page} />
                             )}
                             {mode == "Edit" && (
-                                <PositionsForm  cancel={setMode} isCode={isCode} />
+                                <PositionsForm cancel={setMode} isCode={isCode} page={page} />
                             )}
                         </div>
 

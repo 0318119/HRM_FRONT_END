@@ -17,7 +17,7 @@ export const GetPositionData = (params) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/Positions/GetAllPositions/1/2/null`, {
+        const response = await fetch(`${baseUrl.baseUrl}/Positions/GetAllPositions/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

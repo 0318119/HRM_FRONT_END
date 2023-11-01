@@ -127,8 +127,7 @@ const PositionScheme = yup.object().shape({
   PermanentEmp_Code: yup.number().required("PermanentEmp_Code is required"),
   OfficiatingEmp_Code: yup.number().required("OfficiatingEmp_Code is required"),
   BackupEmp_Code: yup.number().required("BackupEmp_Code is required"),
-  SupervisorPosition_Code: yup.number().required("SupervisorPosition_Code is required"),
-  Company_Code: yup.number().required("Company_Code is required"),
+  SupervisorPosition_Code: yup.number().required("Supervisor Position Code is required"),
   Desig_code: yup.number().required("Desig_code is required"),
   Cost_Centre_Code: yup.number().required("Cost_Centre_Code is required"),
   Section_code: yup.number().required("Section_code is required"),
@@ -148,17 +147,16 @@ const PositionScheme = yup.object().shape({
   Budget_Report_Heading_2: yup.string().required("Budget_Report_Heading_2 is required"),
   Budget_Report_Heading_3: yup.string().required("Budget_Report_Heading_3 is required"),
   Preferable_Gender: yup.string().required("Preferable_Gender is required"),
-  updated_on: yup.date().required("updated_on is required"),
-  updated_by: yup.number().required("updated_by is required"),
   SubmitFlag: yup.string().required("SubmitFlag is required"),
   SubmittedOn: yup.date().required("SubmittedOn is required"),
   ApprovedFlag: yup.string().required("ApprovedFlag is required"),
-  ApprovedBy: yup.number().required("ApprovedBy is required"),
-  ApprovedOn: yup.date().required("ApprovedOn is required"),
   BudgetYear: yup.number().required("BudgetYear is required"),
   BudgetConfirmFlag: yup.string().required("BudgetConfirmFlag is required"),
 });
 export { PositionScheme };
+
+
+
 // HR-OPERATIONS ===> EMPLOYEE CAT SCHEME
 const EmployeeCatScheme = yup.object().shape({
   Emp_Category_code: yup.number().required("Emp_Category_code is required"),
