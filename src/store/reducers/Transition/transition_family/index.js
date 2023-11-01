@@ -4,7 +4,7 @@ import {
     GET_TRANSITION_FAMILY_DATA,
     GET_TRANSITION_FAMILY_START,
     GET_TRANSITION_FAMILY_END,
-    GET_TRANSITION_FAMILY_DATA_SINGLE
+    GET_TRANSITION_FAMILY_DATA_SINGLE,
 } from "../../../actions/types";
 
 const initState = {
@@ -29,7 +29,7 @@ const Transition_family = (state = initState, action) => {
         case GET_TRANSITION_FAMILY_DATA_SINGLE:
             return {
                 ...state,
-                data: action.payload,
+                dataSingle: action.payload,
             };
         case GET_TRANSITION_FAMILY_END:
             return {

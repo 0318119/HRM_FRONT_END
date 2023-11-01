@@ -1,106 +1,136 @@
 import React, { useEffect, useState } from "react";
-import "../assets/css/TransactionFamilyForm.css";
-import  Input  from '../../components/basic/input';
-import { Button } from '../../components/basic/button';
-import { DatePicker,Radio } from 'antd';
+import {FormInput} from '../../components/basic/input/formInput';
 import * as Transaction_Family_Actions from "../../store/actions/Transition/transition_family/index";
+import { PrimaryButton, CancelButton } from '../../components/basic/button/index';
 import { connect } from "react-redux";
+import { Skeleton, message } from "antd";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FamilySchema } from '../schema'
 
+function TransactionFamilyForm({ Transition_family, Transition_Family, cancel, Transition_Family_Update }) {
+    useEffect(() => {
+        reset({
+            ControlNo: Transition_family?.dataSingle[0]?.ControlNo,
+            ESS_Sr_No: Transition_family?.dataSingle[0]?.ESS_Sr_No,
+            Emp_code: Transition_family?.dataSingle[0]?.Emp_code,
+            Fam_member_DOB: Transition_family?.dataSingle[0]?.Fam_member_DOB,
+            Fam_member_name: Transition_family?.dataSingle[0]?.Fam_member_name,
+            Fam_member_type: Transition_family?.dataSingle[0]?.Fam_member_type,
+            CNIC_No: Transition_family?.dataSingle[0]?.CNIC_No,
+            FileName: Transition_family?.dataSingle[0]?.FileName,
+        })
+    }, [Transition_family?.dataSingle[0]])
 
+    const EditBack = () => {
+        cancel('read')
+        Transition_Family()
+    }
 
-function TransactionFamilyForm({ Transition_Family_Get_Byid, Transition_family,detailData}) {
-    // useEffect(()=>[
-    //     Transition_Family_Get_Byid(detailData)
-    // ],[])
-    // console.log(detailData,'hi taha')
+    const submitForm = async (data) => {
+        try {
+            const isValid = await FamilySchema.validate(data);
+            if (isValid) {
+                Transition_Family_Update(data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const {
+        control,
+        formState: { errors },
+        handleSubmit,
+        reset
+    } = useForm({
+        defaultValues: {
+            ControlNo: Transition_family?.dataSingle[0]?.ControlNo,
+            ESS_Sr_No: Transition_family?.dataSingle[0]?.ESS_Sr_No,
+            Emp_code: Transition_family?.dataSingle[0]?.Emp_code,
+            Fam_member_DOB: Transition_family?.dataSingle[0]?.Fam_member_DOB,
+            Fam_member_name: Transition_family?.dataSingle[0]?.Fam_member_name,
+            Fam_member_type: Transition_family?.dataSingle[0]?.Fam_member_type,
+            CNIC_No: Transition_family?.dataSingle[0]?.CNIC_No,
+            FileName: Transition_family?.dataSingle[0]?.FileName,
+        },
+        mode: "onChange",
+        resolver: yupResolver(FamilySchema),
+    });
     return (
         <>
-            <div className="container-fluid TransactionFamilyFormContainer">
-                <form className="p-2">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <span className="TransactionFamilyFromHeading">Employee Information</span>
-                            <hr />
+            <div>
+                <h4 className='EmployeeHeading'>Employee Information</h4>
+                <hr />
+                {Transition_family.loading ? <Skeleton active />
+                    :
+                    <form onSubmit={handleSubmit(submitForm)}
+                    >
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <FormInput label={'ESS_Sr_No'} placeholder={'ESS_Sr_No'}
+                                id="ESS_Sr_No"
+                                name="ESS_Sr_No"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
+                            <FormInput label={'Fam_member_DOB'} placeholder={'Fam_member_DOB'}
+                                id="Fam_member_DOB"
+                                type='date'
+                                name="Fam_member_DOB"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
+                            <FormInput label={'Fam_member_name'} placeholder={'Fam_member_name'}
+                                id="Fam_member_name"
+                                name="Fam_member_name"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
                         </div>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="col-12 EmployeeInfoFamily">
-                            <div className=" TransactionFamilyFormgroup">
-                                <Input type="text" name="" id="" placeholder="Enter Your Name" label="Employee Name" />
-                            </div>
-                            <div className="TransactionFamilyFormgroup">
-                                <Input type="text" name="" id="" placeholder="Enter Your Designation" label="Designation" />
-                            </div>
-                            <div className=" TransactionFamilyFormgroup">
-                                <Input type="text" name="" id="" placeholder="Enter Your Department" label="Department" />
-                            </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <FormInput label={'FileName'} placeholder={'FileName'}
+                                id="FileName"
+                                name="FileName"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
+                            <FormInput label={'CNIC_No'} placeholder={'CNIC_No'}
+                                id="CNIC_No"
+                                name="CNIC_No"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
+                            <FormInput label={'Fam_member_type'} placeholder={'Fam_member_type'}
+                                id="Fam_member_type"
+                                name="Fam_member_type"
+                                showLabel={true}
+                                errors={errors}
+                                control={control}
+                            />
                         </div>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="col-md-12">
-                            <span className="TransactionFamilyFromHeading">Marriage Information</span>
-                            <hr />
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+
                         </div>
-                        <div className="col-12 MarriageInfo">
-                            <div className="TransactionFamilyFormgroup">
-                                <Input type="text" required placeholder="Enter Your Spouse Name" label="Spouse Name" />
-                            </div>
-                            <div className="TransactionFamilyFormgroup">
-                                <label htmlFor="">Spouse D.O.B</label>
-                                <DatePicker className="form-control DatePicker" required />
-                            </div>
-                            <div className="TransactionFamilyFormgroup">
-                                <label htmlFor="">Marriage Date</label>
-                                <DatePicker className="form-control DatePicker" required />
-                            </div>
-                        </div>
-                        <div className="col-md-12 col-sm-12 p-2 mt-2">
-                            <div className="TransactionFamilybtncontainer d-flex">
-                                <Button title="Save" />
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <form  className="p-2">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <span className="TransactionFamilyFromHeading">Children History</span>
-                            <hr />
-                        </div>
-                    </div>
-                    <div className="row mt-2">
-                        <div className="col-12 EmployeeInfoFamily">
-                            <div className=" TransactionFamilyFormgroup">
-                                <Input type="text" name="" id="" placeholder="Enter Your Child Name" label="Child Name" />
-                            </div>
-                            <div className="TransactionFamilyFormgroup">
-                                <label htmlFor="">Date Of Birth</label>
-                                <DatePicker className="form-control DatePicker" required />
-                            </div>
-                            <div className="d-flex flex-column TransactionFamilyFormgroup">
-                                <label htmlFor="">Gender</label>
-                                <Radio.Group  className="mt-2">
-                                    <Radio value={1}>Son</Radio>
-                                    <Radio value={2}>Daughter</Radio>
-                                </Radio.Group>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <CancelButton onClick={EditBack} title={'Cancel'} />
+                                <PrimaryButton type='submit' title={'Save'} />
                             </div>
                         </div>
-                        <div className="col-md-12 col-sm-12 p-2 mt-2">
-                            <div className="TransactionChilddBtn d-flex">
-                                <Button title="Save" /> <Button title="Delete" />
-                            </div>
-                        </div>
-                    </div>
-                   
-                </form>
+                    </form>
+                }
             </div>
         </>
-
-
-
-    );
+    )
 }
 function mapStateToProps({ Transition_family }) {
     return { Transition_family };
 }
 export default connect(mapStateToProps, Transaction_Family_Actions)(TransactionFamilyForm);
+
+

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
-import { Button } from "../components/basic/button";
+import {Button} from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
 import DesignationForm from "./form/DesignationForm";
-import * as DESIGNATIONS_ACTIONS from "../store/actions/HrOperations/Designations/index"
 import "./assets/css/DesignationsList.css";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -15,62 +14,35 @@ import { message } from 'antd';
 
 
 
-const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
-    const [messageApi, contextHolder] = message.useMessage();
-    var get_access_token = localStorage.getItem("access_token");
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [isCode, setCode] = useState(null)
+const HR_Designations = () => {
     const [mode, setMode] = useState('read')
-    const [isSearchVal,setSearchVal] = useState('')
-
-    const EditPage = (mode, code) => {
-        setCode(code)
-        setMode(mode)
-    }
-
-    useEffect(() => {
-    if(isSearchVal == ''){
-        GetDataDesignation({ 
-            pageSize: pageSize,
-            pageNo: page,
-            search: null
-        })
-    }else{
-        GetDataDesignation({ 
-            pageSize: pageSize,
-            pageNo: 1,
-            search: isSearchVal
-        })
-    }
-    }, [page,isSearchVal])
 
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'Desig_code',
-            key: 'Desig_code',
+            dataIndex: 'name',
+            key: 'name',
             render: (text) => <a>{text}</a>,
         },
         {
-            title: 'Desig Name',
-            dataIndex: 'Desig_name',
-            key: 'Desig_name',
+            title: 'Name',
+            dataIndex: 'Name',
+            key: 'Name',
         },
         {
-            title: 'Desig Abbreviation',
-            dataIndex: 'Desig_abbr',
-            key: 'Desig_abbr',
+            title: 'Department',
+            dataIndex: 'Department',
+            key: 'Department',
         },
         {
-            title: 'Sort Key',
-            dataIndex: 'Sort_key',
-            key: 'Sort_key',
+            title: 'Short Key',
+            dataIndex: 'Short Key',
+            key: 'Short Key',
         },
         {
             title: 'Action',
             key: 'action',
-            render: (data) => (
+            render: (_, record) => (
                 <Space size="middle">
                     <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn">
                         <FaEdit />
@@ -93,53 +65,19 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
         },
     ];
 
-
-    // DESIGNATION FORM DATA DELETE API CALL ===========================
-    async function handleConfirmDelete(id) {
-        await fetch(
-            `${baseUrl.baseUrl}/employment_desig/DeleteEmploymentDesignation`, {
-            method: "POST",
-            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-            body: JSON.stringify({
-                "Desig_code": id,
-            }),
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                messageApi.open({
-                    type: 'success',
-                    content: "You have successfully deleted",
-                });
-                setTimeout(() => {
-                    GetDataDesignation({ 
-                        pageSize: pageSize,
-                        pageNo: 1,
-                        search: null
-                    })
-                }, 5000);
-            }
-            else {
-                messageApi.open({
-                    type: 'error',
-                    content: response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            messageApi.open({
-                type: 'error',
-                content: error?.message || error?.messsage,
-            });
-        });
-    }
-    
+    const data = [
+        {
+            key: '1',
+            name: 'John Brown',
+            age: 32,
+            Abbreviation: 'New York No. 1 Lake Park',
+        },
+    ];
     return (
         <>
             <div>
                 <Header />
             </div>
-            {contextHolder}
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 maringClass">
@@ -149,9 +87,7 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
                                 <div className="DesignationsFlexBox">
                                     <h4 className="text-dark">Designation List</h4>
                                     <div className="DesignationssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search" 
-                                            onChange={(e) => {setSearchVal(e.target.value)}}
-                                        />
+                                        <Input placeholder={'Search Here...'} type="search" />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
@@ -161,25 +97,13 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
 
                         <div>
                             {mode == "read" && (
-                                <Table columns={columns} 
-                                    loading={Red_Designation?.loading} 
-                                    dataSource={Red_Designation?.data?.[0]?.res?.data1} 
-                                    scroll={{ x: 10 }} 
-                                    pagination={{
-                                        defaultCurrent: page,
-                                        total: Red_Designation?.data?.[0]?.res?.data3,
-                                        onChange: (p) => {
-                                          setPage(p);
-                                        },
-                                        pageSize: pageSize,
-                                      }}
-                                />
+                                <Table columns={columns} dataSource={data} scroll={{ x: 10 }} />
                             )}
                             {mode == "create" && (
-                                <DesignationForm cancel={setMode} mode={mode} isCode={null} />
+                                <DesignationForm cancel={setMode} />
                             )}
                             {mode == "Edit" && (
-                                <DesignationForm cancel={setMode} isCode={isCode} />
+                                <DesignationForm cancel={setMode} />
                             )}
                         </div>
 
@@ -190,7 +114,4 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
     );
 };
 
-function mapStateToProps({ Red_Designation }) {
-    return { Red_Designation };
-}
-export default connect(mapStateToProps, DESIGNATIONS_ACTIONS)(HR_Designations)
+export default HR_Designations;
