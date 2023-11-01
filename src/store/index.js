@@ -26,10 +26,8 @@ const reducers = combineReducers({
   Red_Division,
   Red_Education_level,
   Red_Education,
-  Red_Employee_type,
-  Red_Employee_Cat,
-  Red_Position,
-  Red_Grades
+  Red_Education,
+  Red_Employee_type
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
