@@ -161,7 +161,6 @@ const PositionScheme = yup.object().shape({
   ApprovedBy: yup.number().required("ApprovedBy is required"),
   ApprovedOn: yup.date().required("ApprovedOn is required"),
   BudgetYear: yup.number().required("BudgetYear is required"),
-  BudgetYear: yup.date().required("BudgetYear is required"),
   BudgetConfirmFlag: yup.string().required("BudgetConfirmFlag is required"),
 });
 export { PositionScheme };
