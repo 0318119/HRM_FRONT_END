@@ -1,7 +1,7 @@
 import React from "react";
 import style from './input.module.css'
 
-export default function Input({type, placeholder, label,readonly,value,onChange,max}) {
+export default function Input({type, placeholder, label,readonly,value,onChange,max,onEnterPress}) {
     return (
         <>
             <div className={style.Label} id="inputBox">

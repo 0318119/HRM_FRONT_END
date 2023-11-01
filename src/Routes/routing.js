@@ -80,6 +80,8 @@ import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cas
 import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
 import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
 import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
+import AdvanceSalary from '../payroll/pages/transactionPosting/advanceSalary/advanceSalary'
+import AdvanceSalaryInstallment from '../payroll/pages/transactionPosting/advanceSalaryInstallment/advanceSalaryInstallment'
 
 const routing = () => {
   return (
@@ -162,8 +164,10 @@ const routing = () => {
           <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
           <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
           <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
-          <Route path="/payroll/oneTimeDeduciton" element={<OneTimeDeduction />} />
+          <Route path="/payroll/oneTimeDeduction" element={<OneTimeDeduction />} />
           <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
+          <Route path="/payroll/advancesalary" element={<AdvanceSalary />} />
+          <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
           
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

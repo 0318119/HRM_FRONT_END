@@ -12,10 +12,41 @@ import { connect } from "react-redux";
 const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
     const [mode,setMode] = useState('read')
     const [current,setCurrent] = useState()
-    useEffect(()=>{
-        getOneTimeDeduction()
-    },[])
+    const [search, setSearch] = useState(null)
+    const [pageNo, setPageNo] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
+
+    const uniSearch = (w) => {
+        if (w == "") {
+            setSearch(null)
+        }
+        else {
+            setSearch(w)
+            getOneTimeDeduction({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
+        }
+    }
+
+
+    const onSearchClick = () => {
+        getOneTimeDeduction({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }
+
+    useEffect(() => {
+        getOneTimeDeduction({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }, [])
     const converter=(w,e)=>{
         setMode(w)
         setCurrent(e)
@@ -47,11 +78,17 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader title={'Transaction - Onetime Deduciton'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Deduction'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?
-                <Table loading={oneTimeDeduction?.loading} columns={columns} dataSource={oneTimeDeduction?.data[0]} />
+                <Table pagination={{
+                    defaultCurrent: pageNo,
+                    onChange: (p) => {
+                        setPageNo(p);
+                    },
+                    pageSize: pageSize,
+                }} loading={oneTimeDeduction?.loading} columns={columns} dataSource={oneTimeDeduction?.data} />
                 :
                 <OneTimeDeductionForm cancel={setMode} currentUser={current}/>
                 }

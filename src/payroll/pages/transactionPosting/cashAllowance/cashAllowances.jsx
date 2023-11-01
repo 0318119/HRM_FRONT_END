@@ -3,23 +3,56 @@ import Style from './cashAllowance.module.css'
 import Header from "../../../../components/Includes/Header";
 import SecondaryHeader from "../../../component/secondaryHeader";
 import { Table, Space } from "antd";
-import FixedAllowanceForm from "../../../form/transactionPosting/fixedAllowanceForm";
-import * as fixedAllowance_Action from "../../../../store/actions/payroll/fixedAllowance/index";
+import CashAllowanceForm from "../../../form/transactionPosting/cashAllowance";
+import * as cashAllowance_Action from "../../../../store/actions/payroll/cashAllowance/index";
 import { connect } from "react-redux";
 
 
 
-const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
+const CashAllowance = ({getCashAllowance,cashAllowance}) => {
     const [mode,setMode] = useState('read')
     const [current,setCurrent] = useState()
-    useEffect(()=>{
-        getFixedAllowance()
-    },[])
 
     const converter=(w,e)=>{
         setMode(w)
         setCurrent(e)
     }
+
+    const [search, setSearch] = useState(null)
+    const [pageNo, setPageNo] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
+
+
+    const uniSearch = (w) => {
+        if (w == "") {
+            setSearch(null)
+        }
+        else {
+            setSearch(w)
+            getCashAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
+        }
+    }
+
+
+    const onSearchClick = () => {
+        getCashAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }
+
+    useEffect(() => {
+        getCashAllowance({
+            pageSize: pageSize,
+            pageNo: pageNo,
+            search: search
+        })
+    }, [])
     const columns = [
         {
             title: 'Code',
@@ -47,13 +80,19 @@ const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader title={'Transaction - Cash Allowance'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Cash Allowance'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?
-                <Table loading={FixedAllowance?.loading} columns={columns} dataSource={FixedAllowance?.data[0]} />
+                <Table pagination={{
+                    defaultCurrent: pageNo,
+                    onChange: (p) => {
+                        setPageNo(p);
+                    },
+                    pageSize: pageSize,
+                }} loading={cashAllowance?.loading} columns={columns} dataSource={cashAllowance?.data} />
                 :
-                <FixedAllowanceForm cancel={setMode} currentUser={current}/>
+                <CashAllowanceForm cancel={setMode} currentUser={current}/>
                 }
             </div>
         </>
@@ -62,7 +101,7 @@ const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
 }
 
 
-function mapStateToProps({ FixedAllowance }) {
-    return { FixedAllowance };
+function mapStateToProps({ cashAllowance }) {
+    return { cashAllowance };
 }
-export default connect(mapStateToProps, fixedAllowance_Action)(FixedAllowance);
+export default connect(mapStateToProps, cashAllowance_Action)(CashAllowance);

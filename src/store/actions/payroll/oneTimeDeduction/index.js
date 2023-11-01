@@ -2,12 +2,12 @@ import { GET_ALLOWANCE_START, GET_ALLOWANCE_COMPLETE, GET_ALLOWANCE_END } from "
 import baseURL from '../../../../config.json'
 
 export const getOneTimeDeduction = (body) => async (dispatch, getState) => {
-    try {
+    try {       
         dispatch({
             type: GET_ALLOWANCE_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+        const response = await fetch(`${baseURL.baseUrl}/tranConfirmation/GetEmployeeTranConfirmationList/${body.pageNo}/${body.pageSize}/${body.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -18,7 +18,7 @@ export const getOneTimeDeduction = (body) => async (dispatch, getState) => {
         if (res?.success == "success") {
             dispatch({
                 type: GET_ALLOWANCE_COMPLETE,
-                payload: res.data,
+                payload: res.data1,
             });
         }
         dispatch({
