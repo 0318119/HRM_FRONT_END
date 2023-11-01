@@ -74,6 +74,12 @@ import Base_City from '../HrOperations/Base_City'
 import RefreshableData from '../HrOperations/RefreshableData'
 import Positions from '../HrOperations/Positions'
 import Parameters_Access from '../HrOperations/Parameters_Access';
+import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
+import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
+import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
+import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
+import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
+import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
 
 const routing = () => {
   return (
@@ -152,6 +158,15 @@ const routing = () => {
           <Route path="/RefreshableData" element={<RefreshableData />} />
           <Route path="/Positions" element={<Positions />} />
           <Route path="/Parameters_Access" element={<Parameters_Access/>} />
+          {/* payroll */}
+          <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
+          <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
+          <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
+          <Route path="/payroll/oneTimeDeduciton" element={<OneTimeDeduction />} />
+          <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
+          
+          {/* report */}
+          <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         </Routes>
       </Router>
     </>

@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormCheckBox } from '../../components/basic/input/formInput';
 import { PositionScheme } from '../schema';
 import { message } from 'antd';
-import baseUrl from '../../../src/config.json'
+import baseUrl from '../../config.json'
 
 
 
@@ -276,7 +276,7 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         placeholder={'Position Code'}
                         id="Position_Code"
                         name="Position_Code"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         readOnly
                         errors={errors}
@@ -513,7 +513,7 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         placeholder={'Assign Delegation To All Sub Ordinate'}
                         id="Assign_Delegation_to_all_subordinate"
                         name="Assign_Delegation_to_all_subordinate"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -735,7 +735,7 @@ function PositionsForm({ cancel, isCode, Get_Position_By_ID, Red_Position, mode 
                         placeholder={'Budget Year'}
                         id="BudgetYear"
                         name="BudgetYear"
-                        type="Date"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}

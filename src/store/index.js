@@ -14,7 +14,10 @@ import Red_Employee_Cat from "./reducers/HrOperations/EmployeeCat/index";
 import Red_Employee_type from "./reducers/HrOperations/EmployeeType/index";
 import Red_Position from './reducers/HrOperations/Positions/index';
 import Red_Grades from "./reducers/HrOperations/Grades/index";
-
+import oneTimeAllowance from "./reducers/payroll/oneTimeAllowance/index";
+import FixedAllowance from "./reducers/payroll/FixedAllowance/index";
+import oneTimeDeduction from "./reducers/payroll/OneTImeDeduction/index";
+import cashAllowance from "./reducers/payroll/cashAllowance/index";
 
 const reducers = combineReducers({
   Transition_family,
@@ -26,6 +29,14 @@ const reducers = combineReducers({
   Red_Division,
   Red_Education_level,
   Red_Education,
+  Red_Employee_type,
+  Red_Employee_Cat,
+  Red_Position,
+  Red_Grades,
+  FixedAllowance,
+  oneTimeAllowance,
+  oneTimeDeduction,
+  cashAllowance,
   Red_Education,
   Red_Employee_type
 });
