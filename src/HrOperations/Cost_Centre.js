@@ -43,6 +43,8 @@ const CostCentersList = ({ Red_Cost_centre, GetCostCentreData }) => {
     setCode(code)
     setMode(mode)
   }
+
+
   const columns = [
     {
       title: 'Code',

@@ -16,6 +16,7 @@ import FixedDeduction from "./reducers/payroll/FixedDeduction/index";
 import Red_Employee_Cat from "./reducers/HrOperations/EmployeeCat/index";
 import Red_Position from './reducers/HrOperations/Positions/index';
 import Red_Grades from "./reducers/HrOperations/Grades/index";
+import FixedAllowance from "./reducers/payroll/FixedAllowance";
 
 
 const reducers = combineReducers({
@@ -34,7 +35,8 @@ const reducers = combineReducers({
   FixedDeduction,
   Red_Employee_Cat,
   Red_Position,
-  Red_Grades
+  Red_Grades,
+  FixedAllowance
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
