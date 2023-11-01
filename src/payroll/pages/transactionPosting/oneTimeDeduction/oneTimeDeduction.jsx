@@ -23,6 +23,11 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
         }
         else {
             setSearch(w)
+            getOneTimeDeduction({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
         }
     }
 
@@ -73,7 +78,7 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Deduciton'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Deduction'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?

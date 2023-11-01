@@ -7,11 +7,6 @@ const SecondaryHeader = ({ title, total, searchParam, onSearchClick, isSearch })
     const AllSearch = (e) => {
         searchParam(e)
     }
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            onSearchClick()
-        }
-    }
     return (
         <>
             <div className={Style.SecondaryHeaderMain}>
@@ -24,7 +19,7 @@ const SecondaryHeader = ({ title, total, searchParam, onSearchClick, isSearch })
                     </div>
                     {isSearch &&
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Input onEnterPress={handleKeyDown} onChange={AllSearch} placeholder={'Search Here..'} />
+                            <Input onChange={AllSearch} placeholder={'Search Here..'} />
                             <button onClick={onSearchClick}>Search</button>
                         </div>
                     }

@@ -35,6 +35,11 @@ const OneTimeAllowanceS = ({ getOneTimeAllowance, oneTimeAllowance }) => {
         }
         else {
             setSearch(w)
+            getOneTimeAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
         }
     }
 

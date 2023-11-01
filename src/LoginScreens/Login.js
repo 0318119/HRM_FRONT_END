@@ -73,6 +73,7 @@ export const Login = () => {
 
               localStorage.setItem("Emp_code", response.data[0].Emp_code);
               localStorage.setItem("company_code", response.data[0].company_code);
+              localStorage.setItem("Payroll_Category", response.data[0].Payroll_Category);
               navigate("/TAShortsCut");
             } else {
                 showAlert(response.message, "warning")

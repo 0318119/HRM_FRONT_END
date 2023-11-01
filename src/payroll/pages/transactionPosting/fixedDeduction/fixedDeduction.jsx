@@ -23,6 +23,11 @@ const FixedDeduction = ({getFixedDeductionData,FixedDeduction}) => {
         }
         else {
             setSearch(w)
+            getFixedDeductionData({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
         }
     }
 
@@ -74,7 +79,7 @@ const FixedDeduction = ({getFixedDeductionData,FixedDeduction}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Fixed Deduciton'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Fixed Deduction'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {mode=='read'?

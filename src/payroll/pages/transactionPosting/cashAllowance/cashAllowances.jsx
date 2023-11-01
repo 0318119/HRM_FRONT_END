@@ -29,9 +29,13 @@ const CashAllowance = ({getCashAllowance,cashAllowance}) => {
         }
         else {
             setSearch(w)
+            getCashAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
         }
     }
-    console.log(search,'tahhahtha')
 
 
     const onSearchClick = () => {

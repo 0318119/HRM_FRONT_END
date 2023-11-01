@@ -23,6 +23,11 @@ const FixedAllowance = ({getFixedAllowance,FixedAllowance}) => {
         }
         else {
             setSearch(w)
+            getFixedAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: w
+            })
         }
     }
 

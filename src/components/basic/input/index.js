@@ -6,7 +6,7 @@ export default function Input({type, placeholder, label,readonly,value,onChange,
         <>
             <div className={style.Label} id="inputBox">
                 <label className="m-0 p-0">{label}</label>
-                <input onKeyDown={onEnterPress} maxLength={max} onChange={(e)=>onChange(e.target.value)} value={value} readOnly={readonly} className={style.Input}  type={type} placeholder={placeholder}/>
+                <input maxLength={max} onChange={(e)=>onChange(e.target.value)} value={value} readOnly={readonly} className={style.Input}  type={type} placeholder={placeholder}/>
             </div>
         </>
     )

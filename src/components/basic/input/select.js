@@ -13,7 +13,15 @@ export default function SelectAntd({ label, option, handleChange, type }) {
             })
         )
     }
-    else {
+    else if(type == 'loan'){
+        option?.map((t) =>
+        options.push({
+            value: t?.Loan_code,
+            label: t?.Loan_name,
+        })
+    )
+    }
+    else{
         option?.map((t) =>
             options.push({
                 value: t?.Deduction_code,
