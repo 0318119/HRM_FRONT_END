@@ -15,7 +15,7 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
   }, []);
 
   console.log(
-    "hdtfmrtdrhsgentukrytd",
+    "Refreshable data",
     Red_Refreshable_Data?.data?.[0]?.res?.data
   );
 
@@ -48,7 +48,7 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
               />
             </div>
 
-            <Button title="Post" />
+            <Button title="Post"/>
           </div>
         </div>
       </div>
