@@ -142,7 +142,7 @@ const OneTimeAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, 
                     {isNext &&
                         <>
                             <div style={{ paddingTop: '20px' }}>
-                                <h3 style={{ color: 'black' }}>Onetime Allowance Transaction Information</h3>
+                                <h3 style={{ color: 'black' }}>Transaction Information</h3>
                                 <hr />
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center' }}>

@@ -22,6 +22,7 @@ import FixedDeduction from "./reducers/payroll/FixedDeduction/index";
 import cashAllowance from "./reducers/payroll/cashAllowance/index";
 import advanceSalary from "./reducers/payroll/advanceSalary/index";
 import advanceSalaryInstallment from "./reducers/payroll/advanceSalaryInstallment/index";
+import salaryHold from "./reducers/payroll/salaryHold/index";
 
 
 const reducers = combineReducers({
@@ -44,7 +45,9 @@ const reducers = combineReducers({
   oneTimeAllowance,
   cashAllowance,
   advanceSalary,
-  advanceSalaryInstallment
+  FixedDeduction,
+  advanceSalaryInstallment,
+  salaryHold
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

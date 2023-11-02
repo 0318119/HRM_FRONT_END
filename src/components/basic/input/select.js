@@ -3,7 +3,7 @@ import style from './input.module.css'
 import { Select } from 'antd'
 
 
-export default function SelectAntd({ label, option, handleChange, type }) {
+export default function SelectAntd({ label, option, handleChange, type,defaultValue }) {
     const options = [];
     if (type == 'allowance') {
         option?.map((t) =>
@@ -21,6 +21,14 @@ export default function SelectAntd({ label, option, handleChange, type }) {
         })
     )
     }
+    else if(type == 'month'){
+        option?.map((t) =>
+        options.push({
+            value: t?.value,
+            label: t?.label,
+        })
+    )
+    }
     else{
         option?.map((t) =>
             options.push({
@@ -35,7 +43,7 @@ export default function SelectAntd({ label, option, handleChange, type }) {
         <>
             <div className={style.Label} id="inputBox">
                 <label className="m-0 p-0">{label}</label>
-                <Select labelInValue showSearch filterOption={filterOption} onChange={handleChange} placeholder={"Please select"} allowClear={true} style={{
+                <Select defaultValue={defaultValue} labelInValue showSearch filterOption={filterOption} onChange={handleChange} placeholder={"Please select"} allowClear={true} style={{
                     width: 200,
                 }} options={options} />
             </div>

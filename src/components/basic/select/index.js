@@ -10,7 +10,7 @@ export default function SelectCom({options, label}) {
                 <label className={style.label}>{label}</label>
                 <Select
                     style={{
-                        width: 300,
+                        width: 250,
                     }}
                     options={options}
                 />

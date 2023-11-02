@@ -82,6 +82,8 @@ import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeducti
 import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
 import AdvanceSalary from '../payroll/pages/transactionPosting/advanceSalary/advanceSalary'
 import AdvanceSalaryInstallment from '../payroll/pages/transactionPosting/advanceSalaryInstallment/advanceSalaryInstallment'
+import SalaryHold from '../payroll/pages/transactionPosting/salaryHold/salaryHold'
+
 
 const routing = () => {
   return (
@@ -168,7 +170,7 @@ const routing = () => {
           <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
           <Route path="/payroll/advancesalary" element={<AdvanceSalary />} />
           <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
-          
+          <Route path="/payroll/salaryHold" element={<SalaryHold />} />
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         </Routes>
