@@ -3,7 +3,7 @@ import style from './select.module.css'
 import { Select } from "antd";
 
 export default function SelectCom({options, label}) {
-    console.log(options)
+    // console.log(options)
     return (
         <>
             <div style={{ padding: '10px',display:'flex',flexDirection:'column' }}>

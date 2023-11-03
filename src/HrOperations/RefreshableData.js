@@ -14,11 +14,6 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
     GetRefreshableData();
   }, []);
 
-  console.log(
-    "hdtfmrtdrhsgentukrytd",
-    Red_Refreshable_Data?.data?.[0]?.res?.data
-  );
-
   return (
     <>
       <div>
