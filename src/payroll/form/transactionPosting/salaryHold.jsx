@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from "react";
-import * as advanceSalary_Action from "../../../store/actions/payroll/advanceSalary/index";
+import * as fixedAllowance_Action from "../../../store/actions/payroll/salaryHold/";
 import { connect } from "react-redux";
 import Input from '../../../components/basic/input/index'
 import Select from '../../../components/basic/input/select'
-import { Skeleton, message } from "antd";
-import { Button, CancelButton, DeleteButton } from '../../../components/basic/button/index';
+import { Skeleton, message, Radio } from "antd";
+import { Button, CancelButton } from '../../../components/basic/button/index';
 
-const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowanceDetail, saveAllowanceDetail, cancel, DeleteAllowanceDetail }) => {
+const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceList_Fixed, saveAllowanceDetail_Fixed, cancel, DeleteAllowanceDetail_Fixed }) => {
     const [employee, setEmployee] = useState()
-    const [employeeSallary, setEmployeeSallary] = useState()
+    const [allowanceList, setAllowanceList] = useState()
     const [loader, setLoader] = useState(false)
-    const [isNext, setIsNext] = useState(false)
     const [loading, setLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
-    const [allowanceDetail, setAllowanceDetail] = useState({
-        Amount: "",
-        Remarks: "",
-        Allowance_Code: "",
-        Emp_code: "",
-        Deduction_code: ""
-    })
-    console.log(currentUser, 'asdas')
+
+
     const reset = () => {
         cancel('read')
         setAllowanceDetail({
@@ -36,41 +29,19 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
     }, [])
     const DataLoader = async () => {
         setLoader(true)
-        const employeeData = await getDeductionEmployeeData({ Emp_code: currentUser })
-        const AllowanceDetail = await getAllowanceDetail({Emp_code: currentUser })
-            setAllowanceDetail({
-                Amount: AllowanceDetail[0]?.Amount == undefined ? '0' : AllowanceDetail[0]?.Amount,
-                Remarks: AllowanceDetail[0]?.Remarks == undefined ? '' : AllowanceDetail[0]?.Remarks,
-                Deduction_code: "28",
-                Allowance_Code: 0,
-                Emp_code: employee?.Sequence_no,
-            })
+        const employeeData = await getEmployeeData_Fixed({ Emp_Code: currentUser })
+        const allowanceList = await getAllowanceList_Fixed({ Emp_code: currentUser })
+        setAllowanceList(allowanceList[0])
         setEmployee(employeeData[0]);
         setLoader(false)
     }
-
-    const RemarksChange = (e) => {
-        setAllowanceDetail(
-            {
-                Amount: allowanceDetail.Amount,
-                Remarks: e,
-                Deduction_code: allowanceDetail.Deduction_code,
-                Allowance_Code: allowanceDetail.Allowance_Code,
-                Emp_code: allowanceDetail.Emp_code,
-            }
-        )
-    }
-    const AmountChange = (e) => {
-        setAllowanceDetail(
-            {
-                Amount: e,
-                Remarks: allowanceDetail.Remarks,
-                Deduction_code: allowanceDetail.Deduction_code,
-                Allowance_Code: allowanceDetail.Allowance_Code,
-                Emp_code: allowanceDetail.Emp_code,
-            }
-        )
-    }
+    const [allowanceDetail, setAllowanceDetail] = useState({
+        Amount: "",
+        Remarks: "",
+        Allowance_Code: "",
+        Emp_code: "",
+        Deduction_code: ""
+    })
     const saveAllowance = async () => {
         console.log(allowanceDetail.Amount, 'asdas')
         setLoading(true)
@@ -87,9 +58,14 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
             setLoading(false)
         }
         else {
-            const AllowanceSave = await saveAllowanceDetail({
-                Emp_Code: currentUser,
+            const AllowanceSave = await saveAllowanceDetail_Fixed({
+                Emp_Code: allowanceDetail?.Emp_code,
+                Allowance_code: allowanceDetail?.Allowance_Code,
+                Deduction_code: '0',
+                ADE_flag: "A",
+                FOE_flag: "F",
                 Amount: allowanceDetail?.Amount,
+                Reverse_flag: "N",
                 Remarks: allowanceDetail?.Remarks
             })
             if (AllowanceSave.success == "success") {
@@ -100,6 +76,21 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
             setLoading(false)
         }
     }
+    const DeleteAllowance = async () => {
+        setDelLoading(true)
+        const AllowanceSave = await DeleteAllowanceDetail_Fixed({
+            Emp_Code: allowanceDetail?.Emp_code,
+            Allowance_code: allowanceDetail?.Allowance_Code,
+            Deduction_code: 2,
+        })
+        if (AllowanceSave.success == "success") {
+            message.success('Allowance Deleted');
+            setDelLoading(false)
+            reset()
+        }
+        setDelLoading(false)
+    }
+    console.log(allowanceList,'asdas')
     return (
         <>
             {loader ? <Skeleton active /> :
@@ -108,7 +99,6 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
                         <Input value={employee?.Emp_name} readonly={true} label={'Employee Name'} name={'employeeName'} />
                         <Input value={employee?.Desig_name} readonly={true} label={'Designation'} name={'designation'} />
                         <Input value={employee?.Dept_name} readonly={true} label={'Department'} name={'department'} />
-                        <Input value={employeeSallary?.LastMonthNetSalary?.LastMonthNetSalary == null ? "0.00" : employeeSallary?.LastMonthNetSalary?.LastMonthNetSalary} readonly={true} label={'Last Month Net Salary'} name={'employeeName'} />
                     </div>
                     <>
                         <div style={{ paddingTop: '20px' }}>
@@ -116,8 +106,16 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
                             <hr />
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Input onChange={AmountChange} value={allowanceDetail.Amount} label={'Amount'} name={'Amount'} type={'number'} />
-                            <Input onChange={RemarksChange} value={allowanceDetail.Remarks} label={'Remarks'} name={'Remarks'} max={'50'} />
+                            <Input value={allowanceList?.Salary_hold_description} label={'Description'} name={'Description'} />
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                <label style={{ fontWeight: '600' }}>Salary Hold Flag</label>
+                                <div style={{ display: "flex", alignItems: 'center', paddingBlock: '12px' }}>
+                                    <Radio.Group value={allowanceList?.salary_hold_flag}>
+                                        <Radio value={'Y'}>Yes</Radio>
+                                        <Radio value={'N'}>No</Radio>
+                                    </Radio.Group>
+                                </div>
+                            </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -131,7 +129,7 @@ const OneTimeAllowanceForm = ({ getDeductionEmployeeData, currentUser, getAllowa
         </>
     )
 }
-function mapStateToProps({ FixedDeduction }) {
-    return { FixedDeduction };
+function mapStateToProps({ FixedAllowance }) {
+    return { FixedAllowance };
 }
-export default connect(mapStateToProps, advanceSalary_Action)(OneTimeAllowanceForm);
+export default connect(mapStateToProps, fixedAllowance_Action)(FixedAllowanceForm);
