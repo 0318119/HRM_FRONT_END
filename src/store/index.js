@@ -24,6 +24,7 @@ import advanceSalary from "./reducers/payroll/advanceSalary/index";
 import advanceSalaryInstallment from "./reducers/payroll/advanceSalaryInstallment/index";
 import Red_Download_Access from './reducers/HrOperations/DownloadAccess/index'
 import salaryHold from "./reducers/payroll/salaryHold/index";
+import Red_Master_Personel from "./reducers/HrOperations/MasterPersonel/index"
 
 
 const reducers = combineReducers({
@@ -50,7 +51,8 @@ const reducers = combineReducers({
   Red_Download_Access,
   FixedDeduction,
   advanceSalaryInstallment,
-  salaryHold
+  salaryHold,
+  Red_Master_Personel
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

@@ -2,7 +2,7 @@ import React from "react";
 import style from './select.module.css'
 import { Select } from "antd";
 
-export default function SelectCom({options, label}) {
+export default function SelectCom({options, label,onChange}) {
     // console.log(options)
     return (
         <>
@@ -13,6 +13,8 @@ export default function SelectCom({options, label}) {
                         width: 250,
                     }}
                     options={options}
+                    onChange={(e) => onChange(e)}
+
                 />
             </div>
         </>
