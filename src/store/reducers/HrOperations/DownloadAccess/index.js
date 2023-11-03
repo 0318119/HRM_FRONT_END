@@ -3,6 +3,7 @@ import {
     GET_DOWNLOAD_PARA_ACCESS_START,
     GET_DOWNLOAD_PARA_ACCESS_SINGLE,
     GET_DOWNLOAD_PARA_ACCESS_END,
+    GET_SELECT_USER_DATA
 } from '../../../actions/types'
 
 
@@ -12,7 +13,7 @@ const initState = {
     loading: false,
 }
 
-const Red_Cost_centre = (state = initState, action) => {
+const Red_Download_Access = (state = initState, action) => {
     switch (action.type) {
         case GET_DOWNLOAD_PARA_ACCESS_START:
             return {
@@ -25,7 +26,7 @@ const Red_Cost_centre = (state = initState, action) => {
                 data: action.payload,
                 loading: action.loading,
             };
-        case GET_DOWNLOAD_PARA_ACCESS_SINGLE:
+        case GET_SELECT_USER_DATA:
             return {
                 ...state,
                 dataSingle: action.payload,
@@ -42,4 +43,4 @@ const Red_Cost_centre = (state = initState, action) => {
     }
 };
 
-export default Red_Cost_centre
+export default Red_Download_Access
