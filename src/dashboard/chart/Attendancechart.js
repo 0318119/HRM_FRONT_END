@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import '../assets/css/chart.css'
 import { Link, useNavigate } from "react-router-dom";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+// import {
+//   Chart as ChartJS,  
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend,
+// } from 'chart.js';
+// import  {Bar } from 'react-chartjs-2';
 const config = require("../../config.json");
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// ChartJS.register(
+//   CategoryScale,
+//   LinearScale,
+//   BarElement,
+//   Title,
+//   Tooltip,
+//   Legend
+// );
 
 
 
@@ -265,7 +265,7 @@ export default function Attendan1022hart() {
   return (
 
     <>
-      <Bar options={options} data={data}/>
+      {/* <Bar options={options} data={data}/> */}
     </>
 
   );

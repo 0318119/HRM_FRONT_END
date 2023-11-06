@@ -1,6 +1,6 @@
 import React from 'react'
 import '../assets/css/chart.css'
-import Attendancechart from '../chart/Attendancechart';
+import Attendancechart from './Attendancechart';
 import { BsFillCalendar2CheckFill as Calender_ico } from "react-icons/bs";
 import Table from "../Tables/AttendanceWeekly";
 import EntryTable from "../Tables/entryTable";
