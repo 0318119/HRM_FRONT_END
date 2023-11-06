@@ -85,7 +85,6 @@ const PayrollUploadData = ({getDeductionEmployeeData, getDeductionEmployeeSallar
         )
     }
     const saveAllowance = async () => {
-        console.log(allowanceDetail.Amount,'asdas')
         setLoading(true)
         if (allowanceDetail.Amount == ""||allowanceDetail.Amount==undefined) {
             message.error('Amount is required')

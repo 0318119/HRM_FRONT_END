@@ -100,22 +100,12 @@ export const getAllowanceDetail = (body) => async (dispatch, getState) => {
 export const saveAllowanceDetail = (body) => async (dispatch, getState) => {
     console.log(body, 'body')
     try {
-        const response = await fetch(`${baseURL.baseUrl}/tranPaySlips/Save_TranPaySlips`, {
+        const response = await fetch(`${baseURL.baseUrl}/employee_salary/HistTranPayslips_Save_UploadPayrollData`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                Emp_Code: body?.Emp_Code,
-                Allowance_code: body?.Allowance_code,
-                Deduction_code: body.Deduction_code,
-                ADE_flag: "A",
-                FOE_flag: "O",
-                Amount: body.Amount,
-                Reverse_flag: body.Reverse_flag,
-                Remarks: body.Remarks
-            })
+            body: body
         });
         const res = await response.json()
         return res
@@ -161,6 +151,32 @@ export const getDeductionList = (body) => async (dispatch, getState) => {
         });
         const res = await response.json()
         return res?.data
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+export const DownloadFileFunction = (body) => async (dispatch, getState) => {
+    console.log(body, 'body')
+    try {
+        const response = await fetch(`${baseURL.baseUrl}/employee_salary/Salary_GetOverTimeData`, {
+            method: "POST",
+            headers: {
+                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                From_Date: body?.From_Date,
+                To_Date: body?.To_Date,
+                Emp_code: body?.Emp_Code
+            })
+        });
+        const res = await response.json()
+        return res
     }
     catch (error) {
         console.log(error)
