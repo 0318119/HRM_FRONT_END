@@ -18,6 +18,7 @@ const SalaryHoldMain = ({getFixedAllowance,salaryHold}) => {
 
 
     const uniSearch = (w) => {
+        console.log(w)
         if (w == "") {
             setSearch(null)
         }

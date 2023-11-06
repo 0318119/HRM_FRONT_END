@@ -12,61 +12,64 @@ const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceLi
     const [loader, setLoader] = useState(false)
     const [loading, setLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
-
+    const [allowanceDetail, setAllowanceDetail] = useState({
+        Description: "",
+        Flag: "",
+    })
 
     const reset = () => {
         cancel('read')
         setAllowanceDetail({
-            Amount: "",
-            Remarks: "",
-            Allowance_Code: "",
-            Emp_code: "",
-            Deduction_code: ""
+            Description: "",
+            Flag: "",
         })
     }
     useEffect(() => {
         DataLoader()
     }, [])
+    const DescriptionChange = (e) => {
+        setAllowanceDetail(
+            {
+                Description:e,
+                Flag:allowanceDetail.Flag,
+            }
+        )
+    }
+    const FlagChange = (e) => {
+        setAllowanceDetail(
+            {
+                Description:allowanceDetail.Description,
+                Flag:e.target.value,
+            }
+        )
+    }
     const DataLoader = async () => {
         setLoader(true)
         const employeeData = await getEmployeeData_Fixed({ Emp_Code: currentUser })
         const allowanceList = await getAllowanceList_Fixed({ Emp_code: currentUser })
-        setAllowanceList(allowanceList[0])
+        setAllowanceDetail({
+            Description: allowanceList[0]?.Salary_hold_description == undefined ? '0' : allowanceList[0]?.Salary_hold_description,
+            Flag: allowanceList[0]?.salary_hold_flag == undefined ? '' : allowanceList[0]?.salary_hold_flag,
+        })
         setEmployee(employeeData[0]);
         setLoader(false)
     }
-    const [allowanceDetail, setAllowanceDetail] = useState({
-        Amount: "",
-        Remarks: "",
-        Allowance_Code: "",
-        Emp_code: "",
-        Deduction_code: ""
-    })
+   
     const saveAllowance = async () => {
-        console.log(allowanceDetail.Amount, 'asdas')
         setLoading(true)
-        if (allowanceDetail.Amount == "" || allowanceDetail.Amount == undefined) {
-            message.error('Amount is required')
+        if (allowanceDetail.Description == "" || allowanceDetail.Description == undefined) {
+            message.error('Description is required')
             setLoading(false)
         }
-        else if (allowanceDetail?.Amount?.length > 6) {
-            message.error('Enter valid amount')
-            setLoading(false)
-        }
-        else if (allowanceDetail.Remarks == "" || allowanceDetail.Amount == undefined) {
-            message.error('Remarks is required')
+        else if (allowanceDetail.Flag == "" || allowanceDetail.Flag == undefined) {
+            message.error('Salary Hold Flag is required')
             setLoading(false)
         }
         else {
             const AllowanceSave = await saveAllowanceDetail_Fixed({
-                Emp_Code: allowanceDetail?.Emp_code,
-                Allowance_code: allowanceDetail?.Allowance_Code,
-                Deduction_code: '0',
-                ADE_flag: "A",
-                FOE_flag: "F",
-                Amount: allowanceDetail?.Amount,
-                Reverse_flag: "N",
-                Remarks: allowanceDetail?.Remarks
+                Emp_code: currentUser,
+                Salary_Hold_Flag: allowanceDetail?.Flag,
+                Description: allowanceDetail.Description,
             })
             if (AllowanceSave.success == "success") {
                 message.success('Allowance Created');
@@ -76,21 +79,8 @@ const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceLi
             setLoading(false)
         }
     }
-    const DeleteAllowance = async () => {
-        setDelLoading(true)
-        const AllowanceSave = await DeleteAllowanceDetail_Fixed({
-            Emp_Code: allowanceDetail?.Emp_code,
-            Allowance_code: allowanceDetail?.Allowance_Code,
-            Deduction_code: 2,
-        })
-        if (AllowanceSave.success == "success") {
-            message.success('Allowance Deleted');
-            setDelLoading(false)
-            reset()
-        }
-        setDelLoading(false)
-    }
-    console.log(allowanceList,'asdas')
+
+    
     return (
         <>
             {loader ? <Skeleton active /> :
@@ -106,11 +96,11 @@ const FixedAllowanceForm = ({ currentUser, getEmployeeData_Fixed, getAllowanceLi
                             <hr />
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <Input value={allowanceList?.Salary_hold_description} label={'Description'} name={'Description'} />
+                            <Input onChange={(e)=>DescriptionChange(e.target.value)} value={allowanceDetail?.Description} label={'Description'} name={'Description'} />
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
                                 <label style={{ fontWeight: '600' }}>Salary Hold Flag</label>
                                 <div style={{ display: "flex", alignItems: 'center', paddingBlock: '12px' }}>
-                                    <Radio.Group value={allowanceList?.salary_hold_flag}>
+                                    <Radio.Group onChange={FlagChange} defaultValue={allowanceDetail?.Flag}>
                                         <Radio value={'Y'}>Yes</Radio>
                                         <Radio value={'N'}>No</Radio>
                                     </Radio.Group>

@@ -1,7 +1,7 @@
 import { GET_ALLOWANCE_START, GET_ALLOWANCE_COMPLETE, GET_ALLOWANCE_END } from "../../types"
 import baseURL from '../../../../config.json'
 
-export const getFixedAllowance = (body) => async (dispatch, getState) => {
+export const getOneTimeAllowance = (body) => async (dispatch, getState) => {
     try {       
         dispatch({
             type: GET_ALLOWANCE_START,
@@ -37,7 +37,7 @@ export const getFixedAllowance = (body) => async (dispatch, getState) => {
 }
 
 
-export const getEmployeeData_Fixed = (body) => async (dispatch, getState) => {
+export const getEmployeeData = (body) => async (dispatch, getState) => {
     try {
         const response = await fetch(`${baseURL.baseUrl}/appointments/GetAppointmentsBySeqNo/${body?.Emp_Code}`, {
             method: "GET",
@@ -54,16 +54,38 @@ export const getEmployeeData_Fixed = (body) => async (dispatch, getState) => {
     }
 }
 
-export const getAllowanceList_Fixed = (body) => async (dispatch, getState) => {
+export const getAllowanceList = () => async (dispatch, getState) => {
     try {
-        const response = await fetch(`${baseURL.baseUrl}/employee_salary/Salary_Hold_get_ByEmp`, {
+        const response = await fetch(`${baseURL.baseUrl}/tranPaySlips/GetAllowancesList`, {
+            method: "GET",
+            headers: {
+                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json',
+            },
+        });
+        const res = await response.json()
+        return res?.data
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getAllowanceDetail = (body) => async (dispatch, getState) => {
+    try {
+        const response = await fetch(`${baseURL.baseUrl}/HistoryPayslips/HistTranPayslipsListByCodes`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
-            body:JSON.stringify({
-                Emp_code:body.Emp_code
+            body: JSON.stringify({
+                Emp_code: body?.Emp_code,
+                AllowanceCode: body?.Allowance_Code,
+                DeductionCode: "0",
+                ADEFlag: "A",
+                p_FOEFlag: "O"
             })
         });
         const res = await response.json()
@@ -75,19 +97,24 @@ export const getAllowanceList_Fixed = (body) => async (dispatch, getState) => {
 }
 
 
-export const saveAllowanceDetail_Fixed = (body) => async (dispatch, getState) => {
+export const saveAllowanceDetail = (body) => async (dispatch, getState) => {
     console.log(body, 'body')
     try {
-        const response = await fetch(`${baseURL.baseUrl}/employee_salary/Salary_Hold_Save`, {
+        const response = await fetch(`${baseURL.baseUrl}/tranPaySlips/Save_TranPaySlips`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                Emp_code: body?.Emp_code,
-                Salary_Hold_Flag: body?.Salary_Hold_Flag,
-                Description: body.Description,
+                Emp_Code: body?.Emp_Code,
+                Allowance_code: body?.Allowance_code,
+                Deduction_code: body.Deduction_code,
+                ADE_flag: "A",
+                FOE_flag: "O",
+                Amount: body.Amount,
+                Reverse_flag: body.Reverse_flag,
+                Remarks: body.Remarks
             })
         });
         const res = await response.json()
@@ -98,7 +125,7 @@ export const saveAllowanceDetail_Fixed = (body) => async (dispatch, getState) =>
     }
 }
 
-export const DeleteAllowanceDetail_Fixed = (body) => async (dispatch, getState) => {
+export const DeleteAllowanceDetail = (body) => async (dispatch, getState) => {
     console.log(body, 'body')
     try {
         const response = await fetch(`${baseURL.baseUrl}/tranPaySlips/Delete_TranPaySlips`, {
@@ -112,7 +139,7 @@ export const DeleteAllowanceDetail_Fixed = (body) => async (dispatch, getState) 
                 Allowance_code: body?.Allowance_code,
                 Deduction_code: 0,
                 ADE_flag: "A",
-                FOE_flag: "F"
+                FOE_flag: "O"
             })
         });
         const res = await response.json()
@@ -123,6 +150,19 @@ export const DeleteAllowanceDetail_Fixed = (body) => async (dispatch, getState) 
     }
 }
 
-
-
-
+export const getDeductionList = (body) => async (dispatch, getState) => {
+    try {
+        const response = await fetch(`${baseURL.baseUrl}/deductions/GetDeductionList`, {
+            method: "GET",
+            headers: {
+                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json',
+            },
+        });
+        const res = await response.json()
+        return res?.data
+    }
+    catch (error) {
+        console.log(error)
+    }
+}

@@ -5,7 +5,7 @@ import Input from "../../../components/basic/input";
 
 const SecondaryHeader = ({ title, total, searchParam, onSearchClick, isSearch }) => {
     const AllSearch = (e) => {
-        searchParam(e)
+        searchParam(e.target.value)
     }
     return (
         <>
