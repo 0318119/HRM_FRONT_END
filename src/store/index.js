@@ -24,6 +24,7 @@ import advanceSalary from "./reducers/payroll/advanceSalary/index";
 import advanceSalaryInstallment from "./reducers/payroll/advanceSalaryInstallment/index";
 import salaryHold from "./reducers/payroll/salaryHold/index";
 import PayRollUpload from "./reducers/payroll/payrollUpload/index";
+import HrStop from "./reducers/payroll/hrStop/index";
 
 
 
@@ -50,7 +51,8 @@ const reducers = combineReducers({
   FixedDeduction,
   advanceSalaryInstallment,
   salaryHold,
-  PayRollUpload
+  PayRollUpload,
+  HrStop
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
