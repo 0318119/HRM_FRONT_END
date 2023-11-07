@@ -21,14 +21,17 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
 
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
-
-  useEffect(() => {
-    GET_DOWNLOAD_ACCESS_DATA()
-  },[])
-
-
-
+  const [isCheckedData, setCheckedData] = useState([])
   const [isAllEmployees, setAllEmployees] = useState([])
+  const [isParameter, setParameter] = useState(null)
+  const [isAccessPara, setisAccessPara] = useState([])
+  const [mockData, setMockData] = useState([]);
+  const [targetKeys, setTargetKeys] = useState([]);
+  const [isSetData, setData] = useState([])
+  const [getData, setGetData] = useState([])
+
+
+
   async function AllEmployees() {
     await fetch(
       `${baseUrl.baseUrl}/allemployees/GetEmployeesName`, {
@@ -39,13 +42,132 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
       return response.json();
     }).then(async (response) => {
       if (response.success) {
+        setAllEmployees(response.data)
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+
+  async function AccessParameter() {
+    var chkData = JSON.stringify({
+      "Parameter_code": isParameter,
+      "Emp_code": isCheckedData
+    })
+    console.log("chkData: ", chkData);
+    // return
+    await fetch(
+      `${baseUrl.baseUrl}/refreshable/ParametersAccessUserSubmit`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Parameter_code": isParameter,
+        "Emp_code": isCheckedData
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
         messageApi.open({
           type: 'success',
-          content: "Get Data Successfully",
+          content: "Submit Successfully",
         });
-        setAllEmployees(response.data)
-        console.log(response.data, 'response.')
         setTimeout(() => {
+          window.location.reload()
+          messageApi.destroy()
+        }, 5000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+  async function AccessParameterUser() {
+    
+    await fetch(
+      `${baseUrl.baseUrl}/refreshable/parametersaccessUser`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Parameter_code": isParameter
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        setisAccessPara(response.data)
+        console.log("get users", response.data)
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+  async function DeleteAccessParameter() {
+    await fetch(
+      `${baseUrl.baseUrl}/refreshable/parametersaccessUserDelete`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Parameter_code": isParameter,
+        "Emp_code": isCheckedData
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "Delete Successfully",
+        });
+        setTimeout(() => {
+          window.location.reload()
           messageApi.destroy()
         }, 5000);
       }
@@ -70,52 +192,32 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
   }
 
 
-  const [mockData, setMockData] = useState([]);
-  const [targetKeys, setTargetKeys] = useState([]);
-  useEffect(() => {
-    AllEmployees()
-
-  }, []);
 
  
-const [isCheckedData, setCheckedData] = useState([])
 
-// const [isName,setName] = useState();
-// const [isValue,setValue] = useState();  
-// const chkData = (e) =>  {
-//     if (e.target.checked) {
-//       setCheckedData((prevCheckedData) => [
-//         ...prevCheckedData,
-//         { [e.target.name]: e.target.value },
-        
-        
-//       ]);
-//     } else {
-//       setCheckedData((prevCheckedData) =>
-//         prevCheckedData.filter(
-//           (item) => Object.keys(item)[0] !== e.target.name
-//         )
-//       );
-//     }
-// }
-
-
-const [isSetData,setData] = useState([])
-const [getData,setGetData] = useState([])
-
-const CheckData = (e) => {
-  if (isSetData) {
-    getData.push('isSetData')
-    console.log(getData, ';l;llllS555')
-
-  }
+ 
+const chkData = (e) =>  {
+    if (e.target.checked) {
+      setCheckedData((prevCheckedData) => [
+        ...prevCheckedData,
+          e.target.value,
+      ]);
+    } else {
+      setCheckedData((prevCheckedData) =>
+        prevCheckedData.filter((item) => item !== e.target.value)
+      );
+    }
 }
 
-
-
-
-
-
+  useEffect(() => {
+    AllEmployees()
+    GET_DOWNLOAD_ACCESS_DATA()
+  }, []);
+  useEffect(() => {
+    if (isParameter !== null){
+      AccessParameterUser()
+    }
+  }, [isParameter]);
 
   return (
     <>
@@ -136,8 +238,9 @@ const CheckData = (e) => {
 
             <div>
               <Select
-                label={"Select Expense"}
-                placeholder="Please to Select"
+                label={"Select Expanse"}
+                placeholder="Select Access Expanse"
+                onChange={(e) => { setParameter(e)}}
                 options={Red_Download_Access?.data?.[0]?.res?.data.map(
                   (item) => ({
                     value: item.Parameter_code,
@@ -168,71 +271,65 @@ const CheckData = (e) => {
                    <h6 style={{color:"black",}}>All System User</h6>
                   <div d="scrollableDiv" style={{ height: 400, overflow: 'auto', padding: '0 16px', border: '1px solid rgba(140, 140, 140, 0.35)', }}>
                     <InfiniteScroll dataLength={''} next={''} hasMore={'data.length < 50'}
-                      loader={
-                        <Skeleton  avatar
-                          paragraph={{
-                            rows: 1,
-                          }}
-                          active
-                        />
-                      }
+                      // loader={
+                      //   <Skeleton  avatar
+                      //     paragraph={{
+                      //       rows: 1,
+                      //     }}
+                      //     active
+                      //   />
+                      // }
                       endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                       scrollableTarget="scrollableDiv"
                     >
                       <List
                         dataSource={isAllEmployees}
                         renderItem={(item,index) => (
-                          <List.Item key={item.email}>
+                          <List.Item key={index.Emp_code}>
                             <List.Item.Meta
-                              // avatar={<Avatar src={item.picture.large} />}
-                              title={<li value={item.Emp_code}>
-                                {/* <Checkbox.Group options={isAllEmployees} defaultValue={item.Emp_code}  /> */}
-                                <input type="checkbox" value={item.Emp_code} name={item.Emp_name} 
-                                  // onChange={(e) => {chkData(e)}}
-                                  onChange={(e) => setData(e.target.name && e.target.value)}
+                              title={<li key={index.Emp_code}>
+                                <input type="checkbox" className="mx-2" value={item.Emp_code} name={item.Emp_name}
+                                  onChange={(e) => {chkData(e)}}
                                   />
-                                {console.log(isSetData, "kkkkkkk")}
                                   {
                                   }
                                 {item.Emp_name}</li>
                                 }
-                              // description={item.email}
                             />
-                            {/* <div>Content</div> */}
                           </List.Item>
                         )}
                       />
                     </InfiniteScroll>
                   </div>
-                  <Button title={'Submit'} />
+                  <Button title={'Submit'} onClick={AccessParameter} />
                 </div>
                 <div className="col-2" style={{ height: 400,  padding: '0 16px',display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"column"}}>
-                  <Button title={'Include'}  />
-                  <Button title={'Exclude'} />
+                  <Button title={'Include'} onClick={chkData()} />
+                  <Button title={'Exclude'} onClick={DeleteAccessParameter} />
                 </div>
                 <div className="col-5">
                   <h6 style={{color:"black"}}>All Selected User</h6>
                   <div d="scrollableDiv" style={{ height: 400, overflow: 'auto', padding: '0 16px', border: '1px solid rgba(140, 140, 140, 0.35)', }}>
                     <InfiniteScroll dataLength={''} next={''} hasMore={'data.length < 50'}
-                      loader={
-                        <Skeleton avatar
-                          paragraph={{
-                            rows: 1,
-                          }}
-                          active
-                        />
-                      }
+                      // loader={
+                      //   <Skeleton avatar
+                      //     paragraph={{
+                      //       rows: 1,
+                      //     }}
+                      //     active
+                      //   />
+                      // }
                       endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                       scrollableTarget="scrollableDiv"
                     >
                       <List
-                        dataSource={"data"}
+                        dataSource={isAccessPara}
                         renderItem={(item) => (
-                          <List.Item key={item.email}>
+                          <List.Item >
                             <List.Item.Meta
-                              // avatar={<Avatar src={item.picture.large} />}
-                              // title={<a href="https://ant.design">{item.name.last}</a>}
-                              description={item.email}
+                              title={<li>
+                                <input type="checkbox" className="mx-2" value={item.Emp_code} onChange={(e) => { chkData(e) }}/>
+                                {item.Emp_name}</li>}
                             />
                           </List.Item>
                         )}

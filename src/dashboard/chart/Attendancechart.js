@@ -24,7 +24,7 @@ ChartJS.register(
 
 
 
-export default function Attendan1022hart() {
+export default function Attendancechart() {
 
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
@@ -117,7 +117,7 @@ export default function Attendan1022hart() {
         Status.push({
           Present: element?.Progress,
           PresentBg:"green",
-          PresentStatus:"Present",
+          PresentStatus: element?.Progress,
         });
     }
     else if(element.Attendance_Status == "Absent"){
