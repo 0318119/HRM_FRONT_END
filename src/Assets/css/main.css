@@ -145,3 +145,8 @@ select:focus {
     display: flex;
     align-items: center;
 }
+
+
+.month{
+    width: 200px !important;
+}

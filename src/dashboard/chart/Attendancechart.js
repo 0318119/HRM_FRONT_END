@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from "react";
 import '../assets/css/chart.css'
 import { Link, useNavigate } from "react-router-dom";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from 'recharts';
-import { Column } from '@ant-design/plots';
-
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 const config = require("../../config.json");
 
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
-
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 
@@ -24,6 +29,7 @@ export default function Attendan1022hart() {
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [dataLoader, setDataLoader] = useState(false);
   const [DataErr, setDataErr] = useState('')
@@ -89,66 +95,105 @@ export default function Attendan1022hart() {
       });
   }
 
- const Status = []
+  // const options = {
+  //   responsive: true,
+  //   beginAtZero: true,
+  //   // maintainAspectRatio: false
+  //   plugins: {
+  //     legend: {
+  //       position: 'top',
+  //     },
+  //     title: {
+  //       display: true,
+  //       text: 'jhhhh',
+  //     },
+  //   },
+  // };
 
+  const labels = getAttendData.map((items) =>  items.Date + items.Month);
+  let Status = [];
   getAttendData.forEach((element) => {
     if(element.Attendance_Status == "Present"){
         Status.push({
-          Present:"9.5",
+          Present: element?.Progress,
           PresentBg:"green",
           PresentStatus:"Present",
         });
     }
     else if(element.Attendance_Status == "Absent"){
         Status.push({
-          Absent:"0",
+          Absent: element?.Progress,
           AbsentBg:"red",
           AbsentStatus:"Absent",
         });
     }
   });
-  const data = [
-    {
-      type: 'hh',
-      value: Status.map((items) => {return items.Present}),
-      width: 50
-    },
-  ];
-  const paletteSemanticRed = 'green';
-  const brandColor = '#5B8FF9';
-  const configs = {
-    data,
-    xField: 'type',
-    yField: 'value',
-    seriesField: '',
-    color: ({ type }) => {
-      if (type === 'hh') {
-        return paletteSemanticRed;
-      }
   
-      return brandColor;
+
+  // const options = {
+  //   plugins: {
+  //     legend: {
+  //       display: false,
+  //     },
+  //     tooltips: {
+  //       enabled: true,
+  //       callbacks: {
+  //         title: () => 'Bar Value',
+  //         label: (context) => `Value: ${context.parsed.y}`,
+  //       },
+  //     },
+  //   },
+  //   scales: {
+  //     x: {
+  //       beginAtZero: true,
+  //     },
+  //     y: {
+  //       beginAtZero: true,
+  //     },
+  //   },
+  // };
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        // id: getAttendData.map((items) =>  items.Date),
+        // label: 'Sample Data',
+        data : Status?.map((element) => {
+                return(element.Present || element.Absent)
+              }),
+        backgroundColor: Status?.map((element) => {
+          return(element.PresentBg || element.AbsentBg)
+        }),
+      },
+    ],
+  };
+  const options = {
+    plugins: {
+      legend: {
+        display: true,
+      },
+      tooltips: {
+        callbacks: {
+          title: (tooltipItems) => 'Data Details',
+          label: (context) => {
+            const dataIndex = context.dataIndex;
+            const datasetIndex = context.datasetIndex;
+            const value = data.datasets[datasetIndex].data[dataIndex];
+            return `Value: ${value}`;
+          },
+        },
+      },
     },
-    // label: {
-    //   content: (originData) => {
-    //     const val = parseFloat(originData.value);
-  
-    //     if (val < 0.05) {
-    //       return (val * 100).toFixed(1) + '%';
-    //     }
-    //   },
-    //   offset: 10,
-    // },
-    legend: false,
-    xAxis: {
-      label: {
-        autoHide: true,
-        autoRotate: false,
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
       },
     },
   };
-
-  
-
   useEffect(() => {
     getAttendance();
   }, []);
@@ -158,21 +203,8 @@ export default function Attendan1022hart() {
   return (
 
     <>
-        <Column {...configs} />
-        {/* <BarChart width={600} height={300} data={getAttendData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip cursor={{ fill: 'transparent' }}  />
-          content={<CustomTooltip />}
-          <Legend />
-          <Bar dataKey="present" fill="#8884d8" />
-          <Bar dataKey="absent" fill="#82ca9d" />
-        </BarChart> */}
-
-      {/* <Bar options={options} data={data}/> */}
+      <Bar options={options} data={data}/>
     </>
 
   );
 }
-
