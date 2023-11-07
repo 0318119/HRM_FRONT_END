@@ -1,8 +1,8 @@
 import {
-    GET_TRANSITION_MASTERPERSONEL_DATA,
-    GET_TRANSITION_MASTERPERSONEL_DATA_START,
-    GET_TRANSITION_MASTERPERSONEL_DATA_SINGLE,
-    GET_TRANSITION_MASTERPERSONEL_DATA_END,
+    GET_TRANSITION_INSTITUTION_DATA,
+    GET_TRANSITION_INSTITUTION_DATA_START,
+    GET_TRANSITION_INSTITUTION_DATA_SINGLE,
+    GET_TRANSITION_INSTITUTION_DATA_END,
 } from '../../../actions/types'
 
 
@@ -12,26 +12,26 @@ const initState = {
     loading: false,
 }
 
-const Red_Master_Personel = (state = initState, action) => {
+const Red_Institution = (state = initState, action) => {
     switch (action.type) {
-        case GET_TRANSITION_MASTERPERSONEL_DATA_START:
+        case GET_TRANSITION_INSTITUTION_DATA_START:
             return {
                 ...state,
                 loading: action.loading,
             };
-        case GET_TRANSITION_MASTERPERSONEL_DATA:
+        case GET_TRANSITION_INSTITUTION_DATA:
             return {
                 ...state,
                 data: action.payload,
                 loading: action.loading,
             };
-        case GET_TRANSITION_MASTERPERSONEL_DATA_SINGLE:
+        case GET_TRANSITION_INSTITUTION_DATA_SINGLE:
             return {
                 ...state,
                 dataSingle: action.payload,
                 loading: action.loading,
             };
-        case GET_TRANSITION_MASTERPERSONEL_DATA_END:
+        case GET_TRANSITION_INSTITUTION_DATA_END:
             return {
                 ...state,
                 data: action.payload,
@@ -42,4 +42,4 @@ const Red_Master_Personel = (state = initState, action) => {
     }
 };
 
-export default Red_Master_Personel
+export default Red_Institution

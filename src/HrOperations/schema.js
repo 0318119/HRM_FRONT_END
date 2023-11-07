@@ -189,3 +189,26 @@ const PositionScheme = yup.object().shape({
   BudgetConfirmFlag: yup.string().required("BudgetConfirmFlag is required"),
 });
 export { PositionScheme };
+
+// HR-OPERATIONS ===> Institution SCHEME
+const Institution_Scheme = yup.object().shape({
+  Inst_code : yup.number().required("Inst_code is required"),
+  Inst_name: yup.string().required("Inst_name is required"),
+  Inst_abbr: yup.string().required("Inst_abbr is required"),
+  Inst_type: yup.string().required("Inst_type is required"),
+  Inst_address_line1: yup.string().required("Inst_address_line1 is required"),
+  Inst_address_line2: yup.string().required("Inst_address_line2 is required"),
+  Inst_address_line3: yup.string().required("Inst_address_line3 is required"),
+  Inst_phone1: yup.number().required("Inst_phone1 is required"),
+  Inst_phone2: yup.number().required("Inst_phone2 is required"),
+  Inst_fax1: yup.number().required("Inst_fax1 is required"),
+  Inst_fax2: yup.number().required("Inst_fax2 is required"),
+  Inst_email: yup.string().required("Inst_email is required"),
+  Inst_Web_Site: yup.string().required("Inst_Web_Site is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  Verification_Fee: yup.number().required("Verification_Fee is required")
+});
+export {Institution_Scheme};
+  
+
+    

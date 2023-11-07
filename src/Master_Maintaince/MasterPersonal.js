@@ -4,7 +4,7 @@ import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import "./assets/css/Master_Personal.css";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import * as MasterPersonal_ACTIONS from "../store/actions/HrOperations/MasterPersonal/index";
+import * as MasterPersonal_ACTIONS from "../store/actions/HrOperations/Institution/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -60,26 +60,7 @@ const MasterPersonal = ({ Red_Master_Personel, GetMasterPersonelData }) => {
       dataIndex: 'Emp_name',
       key: 'Emp_name',
     },
-    // {
-    //   title: '',
-    //   dataIndex: '',
-    //   key: '',
-    // },
-    // {
-    //   title: '',
-    //   dataIndex: '',
-    //   key: '',
-    // },
-    // {
-    //   title: '',
-    //   dataIndex: '',
-    //   key: '',
-    // },
-    // {
-    //   title: 'Sort Key',
-    //   dataIndex: 'Sort_key',
-    //   key: 'Sort_key',
-    // },
+ 
     {
       title: 'Action',
       key: 'action',
