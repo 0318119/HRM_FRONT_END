@@ -6,8 +6,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormCheckBox } from '../../components/basic/input/formInput';
 import { MasterPersonal } from '../schema';
+import Select from '../../components/basic/select/index'
 import { message } from 'antd';
-import baseUrl from '../../../src/config.json'
+import baseUrl from '../../config.json'
 
 function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_Master_Personal, mode }) {
     var get_access_token = localStorage.getItem("access_token");
@@ -197,6 +198,37 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
         });
     }
 
+const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
+async function getEmpTypeCodeData() {
+        await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
+            method: "GET",
+            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                setgetEmpTypeCode(response.data,'response.data')
+                console.log(response.data,'response.data')
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+        });
+    }  
+
+useEffect(() => {
+    getEmpTypeCodeData()
+},[])
+
     
     return (
         <>
@@ -205,10 +237,12 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
                 <h4 className="text-dark">Master Personal</h4>
                 <hr />
                 <div className="form-group formBoxCountry">
+                   
                     <div className="d-flex">
+                        
                         <FormCheckBox
                             type='radio'
-                            id="Emp_marital_status" 
+                            id="Emp_marital_status"
                             name="Emp_marital_status"
                             labelText={'Marital Status'}
                             label={"Single"}
@@ -237,38 +271,9 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
                     <div className="d-flex">
                         <FormCheckBox
                             type='radio'
-                            id="Genders"
-                            name="Genders"
-                            labelText={'Genders'}
-                            label={"Male"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Genders == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Genders"
-                            name="Genders"
-                            label={'Female'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Genders == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
                             id="Confirmation_Flag"
                             name="Confirmation_Flag"
-                            labelText={'Confirm Flag'}
+                            labelText={'Confirmation Flag'}
                             label={"Yes"}
                             value={'Y'}
                             defaultChecked={
@@ -292,60 +297,245 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
                             control={control}
                         />
                     </div>
-                 
-
+                   
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_sex_code"
+                            name="Emp_sex_code"
+                            labelText={'Genders'}
+                            label={"Male"}
+                            value={'Y'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "Y" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_sex_code"
+                            name="Emp_sex_code"
+                            label={'Female'}
+                            value={'N'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "N" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
                     <FormInput
-                        label={'Confirmation Date'}
-                        placeholder={'Confirmation Date'}
-                        id="Emp_Confirm_date"
-                        name="Emp_Confirm_date"
+                        label={'Employee Code'}
+                        placeholder={'Employee Code'}
+                        id="Emp_code"
+                        name="Emp_code"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Name'}
+                        placeholder={'Employee Name'}
+                        id="Emp_name"
+                        name="Emp_name"
                         type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
-                    {/* <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Azad_Kashmir_Tax_Flag"
-                            name="Azad_Kashmir_Tax_Flag"
-                            labelText={'Azad_Kashmir_Tax_Flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Azad_Kashmir_Tax_Flag"
-                            name="Azad_Kashmir_Tax_Flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div> */}
-                </div>
-                <hr />
-                <div className="form-group formBoxCountry">
-                    {/* <FormInput
-                        label={'Employe category 1'}
-                        placeholder={'Employe category 1'}
-                        id="emp_category_1"
-                        name="emp_category_1"
-                        type="number"
+                    <FormInput
+                        label={'Employee Father Name'}
+                        placeholder={'Employee Father Name'}
+                        id="Emp_Father_name"
+                        name="Emp_Father_name"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    /> */}
+                    />
+                    
+                    <FormInput
+                        label={'Date Of Birth'}
+                        placeholder={'Date Of Birth'}
+                        id="Emp_birth_date"
+                        name="Emp_birth_date"
+                        type="date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Appointment Date'}
+                        placeholder={'Appointment Date'}
+                        id="Emp_appointment_date"
+                        name="Emp_appointment_date"
+                        type="date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Confirm Date'}
+                        placeholder={'Confirm Date'}
+                        id="Emp_Confirm_date"
+                        name="Emp_Confirm_date"
+                        type="date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    
+                  
+                    <FormInput
+                        label={'Employee address line1'}
+                        placeholder={'Employee address line1'}
+                        id="Emp_address_line1"
+                        name="Emp_address_line1"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee address line2'}
+                        placeholder={'Employee address line2'}
+                        id="Emp_address_line2"
+                        name="Emp_address_line2"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Home telephone1'}
+                        placeholder={'Employee Home telephone1'}
+                        id="Emp_home_tel1"
+                        name="Emp_home_tel1"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Home telephone2'}
+                        placeholder={'Employee Home telephone2'}
+                        id="Emp_home_tel2"
+                        name="Emp_home_tel2"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Office Telephone1'}
+                        placeholder={'Employee Office Telephone1'}
+                        id="Emp_office_tel1"
+                        name="Emp_office_tel1"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Office Telephone2'}
+                        placeholder={'Employee Office Telephone2'}
+                        id="Emp_office_tel2"
+                        name="Emp_office_tel2"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Mobile Number'}
+                        placeholder={'Employee Mobile Number'}
+                        id="Emp_mobile_No"
+                        name="Emp_mobile_No"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee CNIC Number'}
+                        placeholder={'Employee CNIC Number'}
+                        id="Emp_nic_no"
+                        name="Emp_nic_no"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee CNIC Issue Date'}
+                        placeholder={'Employee CNIC Issue Date'}
+                        id="Emp_NIC_Issue_date"
+                        name="Emp_NIC_Issue_date"
+                        type="Date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee CNIC Expiry Date'}
+                        placeholder={'Employee CNIC Expiry Date'}
+                        id="Emp_NIC_Expiry_date"
+                        name="Emp_NIC_Expiry_date"
+                        type="Date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Retirement Age'}
+                        placeholder={'Employee Retirement Age'}
+                        id="Emp_Retirement_age"
+                        name="Emp_Retirement_age"
+                        type="Number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee NTN No'}
+                        placeholder={'Employee NTN No'}
+                        id="Emp_ntn_no"
+                        name="Emp_ntn_no"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Employee Email'}
+                        placeholder={'Employee Email'}
+                        id="Emp_email"
+                        name="Emp_email"
+                        type="Email"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <Select 
+                      label={'Select Type'}
+                      placeholder={'Select Employee Type'}
+                    //    onChange={(e) => setState(e)}
+                      options={getEmpTypeCode.map(
+                            (item) => ({
+                                value: item.Empt_Type_code,
+                                label: item.Empt_Type_name,
+                            })
+                        )}
+                        
+                     />
+                    
+           
+                  
+                    
            
                 </div>
                 <div className='CountryBtnBox'>
