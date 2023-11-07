@@ -6,7 +6,7 @@ import Select from '../../../components/basic/input/select'
 import { Skeleton, message } from "antd";
 import { Button, CancelButton, DeleteButton } from '../../../components/basic/button/index';
 
-const OneTimeAllowanceForm = ({getDeductionEmployeeData, getDeductionEmployeeSallaryData,currentUser,getDeductionList , getEmployeeData, getAllowanceDetail, saveAllowanceDetail, cancel, DeleteAllowanceDetail }) => {
+const PayrollUploadData = ({getDeductionEmployeeData, getDeductionEmployeeSallaryData,currentUser,getDeductionList , getEmployeeData, getAllowanceDetail, saveAllowanceDetail, cancel, DeleteAllowanceDetail }) => {
     const [employee, setEmployee] = useState()
     const [allowanceList, setAllowanceList] = useState()
     const [employeeSallary, setEmployeeSallary] = useState()
@@ -85,7 +85,6 @@ const OneTimeAllowanceForm = ({getDeductionEmployeeData, getDeductionEmployeeSal
         )
     }
     const saveAllowance = async () => {
-        console.log(allowanceDetail.Amount,'asdas')
         setLoading(true)
         if (allowanceDetail.Amount == ""||allowanceDetail.Amount==undefined) {
             message.error('Amount is required')
@@ -173,4 +172,4 @@ const OneTimeAllowanceForm = ({getDeductionEmployeeData, getDeductionEmployeeSal
 function mapStateToProps({ oneTimeDeduction }) {
     return { oneTimeDeduction };
 }
-export default connect(mapStateToProps, oneTimeDeduction_Action)(OneTimeAllowanceForm);
+export default connect(mapStateToProps, oneTimeDeduction_Action)(PayrollUploadData);
