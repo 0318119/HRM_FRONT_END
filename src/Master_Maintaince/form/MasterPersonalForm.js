@@ -524,6 +524,7 @@ useEffect(() => {
                       label={'Select Type'}
                       placeholder={'Select Employee Type'}
                     //    onChange={(e) => setState(e)}
+
                       options={getEmpTypeCode.map(
                             (item) => ({
                                 value: item.Empt_Type_code,
