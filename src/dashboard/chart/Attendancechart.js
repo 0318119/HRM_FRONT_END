@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import '../assets/css/chart.css'
 import { Link, useNavigate } from "react-router-dom";
-import 'chartjs-plugin-datalabels';
+// import 'chartjs-plugin-datalabels';
 import {
   Chart as ChartJS,
   CategoryScale,

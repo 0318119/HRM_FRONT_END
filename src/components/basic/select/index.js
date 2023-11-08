@@ -2,7 +2,7 @@ import React from "react";
 import style from './select.module.css'
 import { Select } from "antd";
 
-export default function SelectCom({options, label, onChange, placeholder}) {
+export default function SelectCom({ options, label, onChange, placeholder}) {
     // console.log(options)
     return (
         <>
@@ -12,6 +12,7 @@ export default function SelectCom({options, label, onChange, placeholder}) {
                     style={{
                         width: 250,
                     }}
+                    
                     options={options}
                     placeholder={placeholder}
                     onChange={(e) => onChange(e)}
