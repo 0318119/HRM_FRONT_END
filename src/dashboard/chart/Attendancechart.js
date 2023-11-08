@@ -319,9 +319,9 @@ export default function Attendancechart() {
 
   return (
 
-    <>
+    <div className="container">
       <Bar options={options} data={data}/>
-    </>
+    </div>
 
   );
 }

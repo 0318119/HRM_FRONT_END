@@ -11,7 +11,6 @@ import { MdDeleteOutline } from 'react-icons/md';
 import MasterPersonalForm from './form/MasterPersonalForm'
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-
 import baseUrl from '../../src/config.json'
 
 const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {

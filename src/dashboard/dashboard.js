@@ -2,7 +2,7 @@ import React, {  useState } from "react";
 import Header from "../components/Includes/Header";
 import  Tabs from '../dashboard/tabs/tabs'
 import '../dashboard/assets/css/dashboard.css'
-import Attendancechart from './chart/chart';
+import Attendancechart from '../dashboard/chart/Attendancechart';
 import AttendanceWeekly from "./Tables/AttendanceWeekly";
 import SummaryTable from "./Tables/SummaryTable";
 import AttendanceSmmy from "./Tables/AttendanceSmmy";
