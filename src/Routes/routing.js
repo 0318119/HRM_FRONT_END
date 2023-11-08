@@ -84,6 +84,10 @@ import AdvanceSalary from '../payroll/pages/transactionPosting/advanceSalary/adv
 import AdvanceSalaryInstallment from '../payroll/pages/transactionPosting/advanceSalaryInstallment/advanceSalaryInstallment'
 import SalaryHold from '../payroll/pages/transactionPosting/salaryHold/salaryHold'
 import PayrollUpload from '../payroll/pages/transactionPosting/payrollUpload/payRollUpload'
+import HrStop from '../payroll/pages/transactionPosting/hrStop/hrStop'
+import HrRelease from '../payroll/pages/transactionPosting/hrRelease/hrRelease'
+
+
 
 const routing = () => {
   return (
@@ -172,6 +176,9 @@ const routing = () => {
           <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
           <Route path="/payroll/salaryHold" element={<SalaryHold />} />
           <Route path="/payroll/payrollUpload" element={<PayrollUpload />} />
+          <Route path="/payroll/hrStop" element={<HrStop />} />
+          <Route path="/payroll/hrRelease" element={<HrRelease />} />
+          
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         </Routes>
