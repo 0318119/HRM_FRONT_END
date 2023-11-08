@@ -32,7 +32,7 @@
 //           <Attendancechart />
 //         </div>
 //       </div>
-//       {/* <div className="row d-flex mt-1 p-1 ChartRow">
+//       <div className="row d-flex mt-1 p-1 ChartRow">
 //         <div className=" col-lg-6  TableCont">
 //           <Table  />
 //         </div>
@@ -63,7 +63,7 @@
 //         <div className="col-lg-6  TableCont">
 //           <HrPolicy />
 //         </div>
-//       </div> */}
+//       </div>
 //     </div>
 //   );
 // }
