@@ -16,6 +16,7 @@
     "antd": "^5.10.1",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "docx": "^8.2.3",
     "file-saver": "^2.0.5",
     "force": "^0.0.3",

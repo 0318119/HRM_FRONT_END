@@ -225,11 +225,7 @@ function TransactionAppointmentCom() {
         setFileData(response.data[0].FileName, DataR);
         console.log(DataR, 'DataR')
 
-        let htmlContent = `
-  <html>
-    <body>
-     `;
-        
+        let htmlContent = `<html><body>`;
         htmlContent += `
            <div style="margin-top:10px; font-size: 20px; display:block;">
              <div style="font-size:18px">Date: ${DataR?.[0]?.Transaction_Date ? DataR?.[0]?.Transaction_Date : "Not Found"}</div> <br />
