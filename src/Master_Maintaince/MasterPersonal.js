@@ -7,12 +7,12 @@ import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
 import * as MASTER_PERSONAL from "../store/actions/MasterMaintaince/MasterPersonal/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
-import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import MasterPersonalForm from './form/MasterPersonalForm'
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
+import baseUrl from '../../src/config.json'
 
 const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -58,26 +58,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
       dataIndex: 'Emp_name',
       key: 'Emp_name',
     },
-    {
-      title: '',
-      dataIndex: '',
-      key: '',
-    },
-    {
-      title: '',
-      dataIndex: '',
-      key: '',
-    },
-    {
-      title: '',
-      dataIndex: '',
-      key: '',
-    },
-    // {
-    //   title: 'Sort Key',
-    //   dataIndex: 'Sort_key',
-    //   key: 'Sort_key',
-    // },
+ 
     {
       title: 'Action',
       key: 'action',
@@ -158,9 +139,8 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
         </>
     );
 };
-
-function mapStateToProps({ Red_Master_Personal }) {
-  return { Red_Master_Personal };
+function mapStateToProps({ Red_Master_Personel }) {
+  return { Red_Master_Personel };
 }
 
 export default connect(mapStateToProps, MASTER_PERSONAL)(MasterPersonal);

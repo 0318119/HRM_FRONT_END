@@ -17,6 +17,7 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
 
+  const [isRefreshable, setRefreshable] = useState([])
   const [isParameter, setParameter] = useState('')
 
 
