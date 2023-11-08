@@ -8,14 +8,15 @@ export const ChangeFlag = (body) => async (dispatch, getState) => {
             type: GET_ALLOWANCE_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/payroll/UndoPayrollYear_Process`, {
+        const response = await fetch(`${baseURL.baseUrl}/payroll/PayrollMonth_Validate`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                payslip_category: 2
+                payroll_month:body?.currentMonth,
+                payrollYear:body?.currentYear.toString()
             })
         });
         const res = await response.json()
