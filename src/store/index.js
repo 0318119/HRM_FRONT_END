@@ -29,7 +29,7 @@ import PayRollUpload from "./reducers/payroll/payrollUpload/index";
 import Red_Institution from "./reducers/HrOperations/Institution/index"
 import HrStop from "./reducers/payroll/hrStop/index";
 import undoPayrollCalculation from "./reducers/payroll/undoPayrollCalculation/index";
-
+import addLoans from "./reducers/payroll/addLoans/index";
 
 
 const reducers = combineReducers({
@@ -61,7 +61,8 @@ const reducers = combineReducers({
   Red_Institution,
   PayRollUpload,
   HrStop,
-  undoPayrollCalculation
+  undoPayrollCalculation,
+  addLoans
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

@@ -88,6 +88,7 @@ import HrStop from '../payroll/pages/transactionPosting/hrStop/hrStop'
 import HrRelease from '../payroll/pages/transactionPosting/hrRelease/hrRelease'
 import ClosingPayrollMonth from '../payroll/pages/transactionPosting/closingPayrollmonth/closingPayrollmonth'
 import UndoPayrollCalculation from '../payroll/pages/transactionPosting/undoPayrollCalculation/undoPayrollCalculation'
+import AddLoans from '../payroll/pages/transactionPosting/addLoans/addLoans'
 
 
 const routing = () => {
@@ -181,6 +182,7 @@ const routing = () => {
           <Route path="/payroll/hrRelease" element={<HrRelease />} />
           <Route path="/payroll/undoPayrollCalculation" element={<UndoPayrollCalculation />} />
           <Route path="/payroll/closingPayrollMonth" element={<ClosingPayrollMonth />} />
+          <Route path="/payroll/addLoans" element={<AddLoans />} />
           
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
