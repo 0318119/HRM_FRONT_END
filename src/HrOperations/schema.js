@@ -211,4 +211,17 @@ const Institution_Scheme = yup.object().shape({
 export {Institution_Scheme};
   
 
+
+
+// HR-OPERATIONS ===> HOLIDAYS
+const Holidays_Scheme = yup.object().shape({
+  
+  Calendar_Date: yup.string().required("Calendar_Date is required"),
+  Date_Type: yup.string().required("Date Type is required"),
+  Holiday_Type: yup.string().required("Holiday Type is required"),
+  Reason: yup.string().required("Reason is required"),
+  ramdan_flag: yup.string().required("ramdan flag is required"),
+
+});
+export { Holidays_Scheme };
     

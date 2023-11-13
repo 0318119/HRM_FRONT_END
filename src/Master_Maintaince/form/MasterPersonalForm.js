@@ -10,7 +10,7 @@ import { MasterPersonal_schema } from '../schema';
 import { message } from 'antd';
 import baseUrl from '../../config.json'
 
-function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_Master_Personal, mode }) {
+function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, GetMasterPersonalData, Red_Master_Personal, mode }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -20,15 +20,8 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
     const EditBack = () => {
         cancel('read')
     }
-    const submitForm = async (data) => {
-        try {
-            const isValid = await MasterPersonal_schema.validate(data);
-            if (isValid) {
-                POST_MASTER_PERSONAL_FORM(data)
-            }
-        } catch (error) {
-            console.error(error);
-        }
+    const submitForm = (data) => {
+        console.log(data,'feild')
     };
     const {
         control,
@@ -100,7 +93,7 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
 
     useEffect(() => {
         if (isCode !== null) {
-            GetMasterPersonalData(isCode)
+            Get_Master_Personal_By_Id(isCode)
         }
     }, [])
 
@@ -158,9 +151,9 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
                     Extended_confirmation_days: "",
                     Permanent_address: "",
                     Nationality: "",
-                    roster_group_code: "",
-                    card_no: "",
-                    position_code : "",
+                    roster_group_code: 20,
+                    card_no: 1,
+                    position_code : 2,
                 },
             )
         } else {
@@ -228,7 +221,7 @@ function MasterPersonalForm({ cancel, isCode, page, GetMasterPersonalData, Red_M
     async function POST_MASTER_PERSONAL_FORM(body) {
         setLoading(true)
         await fetch(
-            `${baseUrl.baseUrl}/employment_cost_center/AddCostCenter`, {
+            `${baseUrl.baseUrl}/allemployees/MasterEmployeesSavePersonel`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
@@ -707,7 +700,7 @@ useEffect(() => {
     return (
         <>
             {contextHolder}
-            <form >
+            <form onSubmit={handleSubmit(submitForm)}>
                 <h4 className="text-dark">Master Personal</h4>
                 <hr />
                 <div className="form-group formBoxCountry">
@@ -842,7 +835,7 @@ useEffect(() => {
                         errors={errors}
                         control={control}
                     />
-                    <FormInput
+                    {/* <FormInput
                         label={'Appointment Date'}
                         placeholder={'Appointment Date'}
                         id="Emp_appointment_date"
@@ -851,7 +844,7 @@ useEffect(() => {
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    />
+                    /> */}
                     <FormInput
                         label={'Confirm Date'}
                         placeholder={'Confirm Date'}
@@ -1044,12 +1037,15 @@ useEffect(() => {
                         id="Employment_Type_code"
                         name="Employment_Type_code"
                         type="number"
-                        options={getEmpTypeCode.map(
+                        options={getEmpTypeCode?.map(
                             (item) => ({
                                 value: item.Empt_Type_code,
                                 label: item.Empt_Type_name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
 
                     />
                     <FormSelect
@@ -1064,6 +1060,9 @@ useEffect(() => {
                                 label: item.Emp_Category_name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
 
                     />
                     <FormSelect
@@ -1078,6 +1077,9 @@ useEffect(() => {
                                 label: item.Leave_Category_name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Pay Category'}
@@ -1091,6 +1093,9 @@ useEffect(() => {
                                 label: item.Payroll_Category_name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Shifts'}
@@ -1104,6 +1109,9 @@ useEffect(() => {
                                 label: item.Shift_Name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Designation'}
@@ -1116,6 +1124,9 @@ useEffect(() => {
                                 label: item.Desig_name,
                             })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Cost Center'}
@@ -1127,6 +1138,9 @@ useEffect(() => {
                             value: item.Cost_Centre_code,
                             label: item.Cost_Centre_name,
                         }))}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Section'}
@@ -1139,6 +1153,9 @@ useEffect(() => {
                             label: item.Section_name,
                         })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Grade'}
@@ -1151,6 +1168,9 @@ useEffect(() => {
                             label: item.Grade_name,
                         })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Education'}
@@ -1163,6 +1183,9 @@ useEffect(() => {
                             label: item.Edu_name,
                         })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Location'}
@@ -1174,7 +1197,11 @@ useEffect(() => {
                             value: item.Loc_code,
                             label: item.Loc_name,
                         })
+                        
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Religion'}
@@ -1187,6 +1214,9 @@ useEffect(() => {
                             label: item.Religion_name,
                         })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormSelect
                         label={'Supervisor'}
@@ -1199,6 +1229,9 @@ useEffect(() => {
                             label: item.Emp_name,
                         })
                         )}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
                     />
                     <FormInput
                         label={'Probability Period (months)'}
@@ -1309,7 +1342,7 @@ useEffect(() => {
                         placeholder={'Telephone 1'}
                         id="Contact_home_tel1"
                         name="Contact_home_tel1"
-                        type="Date"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1319,7 +1352,7 @@ useEffect(() => {
                         placeholder={'Telephone 2'}
                         id="Contact_home_tel2"
                         name="Contact_home_tel2"
-                        type="Date"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}

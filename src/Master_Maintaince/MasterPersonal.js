@@ -22,7 +22,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState('')
 
-  // console.log(Red_Master_Personal, 'Red_Master_Personal')
+  console.log(Red_Master_Personal, 'Red_Master_Personal')
 
   useEffect(() => {
     if (isSearchVal == '') {
@@ -138,8 +138,9 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
         </>
     );
 };
-function mapStateToProps({ Red_Master_Personel }) {
-  return { Red_Master_Personel };
+function mapStateToProps({ Red_Master_Personal }) {
+  return { Red_Master_Personal };
+  
 }
 
 export default connect(mapStateToProps, MASTER_PERSONAL)(MasterPersonal);

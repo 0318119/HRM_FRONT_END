@@ -56,7 +56,6 @@ const MasterPersonal_schema = yup.object().shape({
   Emp_Blood_Group: yup.string().required("Emp_Blood_Group is required"),
   Vehicle_Registration_Number: yup.string().required("Vehicle_Registration_Number is required"),
   Emp_Payroll_Category: yup.number().required("Emp_Payroll_Category is required"),
-  Emp_id: yup.number().required("Emp_id is required"),
   Offer_Letter_date: yup.string().required("Offer_Letter_date is required"),
   Tentative_Joining_date: yup.string().required("Tentative_Joining_date is required"),
   RefferedBy: yup.string().required("RefferedBy is required"),
