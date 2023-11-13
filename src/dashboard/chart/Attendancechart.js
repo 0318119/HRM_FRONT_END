@@ -111,32 +111,46 @@ export default function Attendancechart() {
 
   const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
   let Status = [];
-  getAttendData.forEach((element) => {
-    if(element.Attendance_Status == "Present"){
-        Status.push({
-          Attendance_Status: element?.Attendance_Status,
-          Month: element?.Month,
-          Date : element?.Date,
-          Time_in : element?.Emp_Time_IN,
-          Time_out : element?.Emp_Time_out,
-          Present: element?.Progress,
-          Remarks: element?.Remarks,
-          PresentBg:"green",
-        });
-    }
-    else if(element.Attendance_Status == "Absent"){
-        Status.push({
-          Attendance_Status: element?.Attendance_Status,
-          Month: element?.Month,
-          Date : element?.Date,
-          Time_in : element?.Emp_Time_IN,
-          Time_out : element?.Emp_Time_out,
-          Absent: element?.Progress,
-          Remarks: element?.Remarks,
-          AbsentBg:"red",
-        });
-    }
-  });
+  // getAttendData.forEach((element,index) => {
+  //   if(element.Attendance_Status == "Present" && element.Remarks == "On Time" ){
+  //       Status.push({
+  //         Attendance_Status: element?.Attendance_Status,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Time_in : element?.Emp_Time_IN,
+  //         Time_out : element?.Emp_Time_out,
+  //         Progress: element?.Progress,
+  //         Remarks: element?.Remarks,
+  //         PresentBg:"green",
+  //       });
+  //       console.log("On Time",Status)
+  //   }
+  //   else if(element.Attendance_Status == "Absent" && element.Remarks == "Late"){
+  //       Status.push({
+  //         Attendance_Status: element?.Attendance_Status,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Time_in : element?.Emp_Time_IN,
+  //         Time_out : element?.Emp_Time_out,
+  //         Progress: element?.Progress,
+  //         Remarks: element?.Remarks,
+  //         AbsentBg:"red",
+  //       });
+  //       console.log("Absent",Status)
+  //   }
+  // //   else if(element.Attendance_Status == "Present" && element.Remarks == "Late"){
+  // //     Status.push({
+  // //       Attendance_Status: element?.Attendance_Status,
+  // //       Month: element?.Month,
+  // //       Date : element?.Date,
+  // //       Time_in : element?.Emp_Time_IN,
+  // //       Time_out : element?.Emp_Time_out,
+  // //       Progress: element?.Progress,
+  // //       Remarks: element?.Remarks,
+  // //       AbsentBg:"red",
+  // //     });
+  // // }
+  // });
 
   // console.log("Status",Status)
   
@@ -201,90 +215,52 @@ export default function Attendancechart() {
         enabled: true,
         intersect: true,
         callbacks: {
-          label: function (context,index) {
-            let label = data.labels[context.datasetIndex];
-            console.log("data",data?.datasets[0]?.id)
-            return (
-              console.log("Filter",Status.filter(items => items.Date == data?.datasets[0]?.id))
-              // console.log("Status",Status)
-              // Status.map((element) => {
-              //   return(
-              //     // `Status -${element?.Attendance_Status}`
-              //   )
-              // })
-            );
+          label: function (context) {
+            // let label = data.labels[context.datasetIndex];
+            // let hello = data?.datasets[0]?.id;
+            // let testingData = [];
+            // for (let i = 1; i <= 31; i++) {
+            //   testingData.push({ id: i });
+            // }
+            // return (
+            //   // data?.datasets[0].label == "Present" ?  ` Status - ${data?.datasets[0].label}` : null +
+            //   // data?.datasets[1].label == "Absent" ?  `Status - ${data?.datasets[1].label}` : null
+            //   // data?.datasets[2].label == "Late" ?  `Status - ${data?.datasets[2].label}` : null
+            //   // `Status :: ${Status.filter((items) => items.Date == 21)?.[0]?.Attendance_Status}` + " " +
+            //   // `Time in :: ${Status.filter((items) => items.Date == 21)?.[0]?.Time_in}`  + " " +
+            //   // console.log("hello",hello.filter((id) => id == 21)) + 
+            //   // console.log("hello",context.parsed)
+            //   // "Emp_Time_IN" + data?.datasets[0]?.Emp_Time_IN + " " +
+            //   // "Date" + " " + context.parsed.x + " " + 
+            //   // context.parsed.y 
+            //   // console.log("Filter data",Status.filter((data) => data?.Date === 21)[0]) +
+            //   // console.log("Filter data",Status.filter((data) => data?.Date === 22)[0])
+
+
+
+            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Attendance_Status}` + " " +
+            //   // `Time in :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
+            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
+            //   // console.log("Filter",Status.filter((items) => items.Date == data?.datasets[0]?.id))
+            //   // console.log("object",Status)
+            //   // console.log("StatusNew",Status.filter((items) => data?.datasets[0]?.id[items.Date]))
+            //   // Status.map((element) => {
+            //   //   // console.log("element",element?.Attendance_Status)
+            //   // // console.log("Filter",Status.filter(test => test.Date == data?.datasets?.[0]?.id))
+            //   //   // console.log("id",element.Date)
+            //   //   // return(
+            //   //   //   data?.datasets[0]?.id.map((test) => {
+            //   //   //     return(
+            //   //   //       // element.Date == test ? `Status : ${element?.Attendance_Status}` : ""
+            //   //   //       console.log("object", element.Date == test ? element.filter((chk) => chk.Date == test) : "")
+            //   //   //       // console.log("element.Date",element.Date)
+            //   //   //     )
+            //   //   //   })
+            //   //   // )
+            //   // })
+            // );
           }
         },
-        external: function(context) {
-            var tooltipModel = context.tooltip;
-            // console.log("tooltipModel",tooltipModel)
-            // Tooltip Element
-            var tooltipEl = document.getElementById('chartjs-tooltip');
-    
-            // Create element on first render
-            // if (!tooltipEl) {
-            //     tooltipEl = document.createElement('div');
-            //     tooltipEl.id = 'chartjs-tooltip';
-            //     tooltipEl.innerHTML = '<table></table>';
-            //     // tooltipEl.classList.add("scrollbar");
-            //     document.body.appendChild(tooltipEl);
-            // }
-    
-            // function getBody(bodyItem) {
-            //     return bodyItem.lines;
-            // }
-    
-            // Set Text
-            // if (tooltipModel.body) {
-            //     var titleLines = tooltipModel.title || [];
-            //     var bodyLines = tooltipModel.body.map(getBody);
-    
-            //     var innerHtml = '<thead>';
-    
-            //     titleLines.forEach(function(title) {
-            //         innerHtml += '<tr><th>' + title + '</th></tr>';
-            //     });
-            //     innerHtml += '</thead><tbody >';
-    
-            //     bodyLines.forEach(function(body, i) {
-            //         var colors = tooltipModel.labelColors[i];
-            //         var style = 'background:' + colors.backgroundColor;
-            //         style += '; border-color:' + colors.borderColor;
-            //         style += '; border-width: 2px !important';
-            //         style += '; width: 10px !important';
-            //         style += '; height: 10px !important';
-            //         style += '; display: inline-block !important';
-            //         style += '; margin-right: 3px !important';
-            //         var box = `<span style="${style}"></span>`
-            //         innerHtml += `<tr><td>${box}${body}</td></tr>`;
-    
-            //     });
-            //     innerHtml += '</tbody>';
-    
-            //     var tableRoot = tooltipEl.querySelector('table');
-            //     tableRoot.innerHTML = innerHtml;
-            // }
-    
-            // `this` will be the overall tooltip
-            // var position = this.chart.canvas.getBoundingClientRect();
-    
-            // Display, position, and set styles for font
-            // tooltipEl.style.opacity = 1;
-            // tooltipEl.style.position = 'absolute';
-            // tooltipEl.style.left = position.left + window.pageXOffset + tooltipModel.caretX + 'px';
-            // tooltipEl.style.top = position.top + window.pageYOffset + tooltipModel.caretY + 'px';
-            // tooltipEl.style.fontFamily = tooltipModel._bodyFontFamily;
-            // tooltipEl.style.fontSize = tooltipModel.bodyFontSize + 'px';
-            // tooltipEl.style.fontStyle = tooltipModel._bodyFontStyle;
-            // tooltipEl.style.padding = tooltipModel.yPadding + 'px ' + tooltipModel.xPadding + 'px';
-            // tooltipEl.style.pointerEvents = 'none'; // Use when need to stop mouse events such as Onhover and Scrolling
-            // tooltipEl.style.borderColor = 'blue';
-            // tooltipEl.style.borderRadius = '4px';
-            // tooltipEl.style.backgroundColor = "white";
-            // tooltipEl.style.maxHeight = "100px";
-            // tooltipEl.style.overflowY = "auto";
-            // tooltipEl.style.scrollBehavior = "smooth";   
-       }
       },
     },
     scales: {
@@ -293,20 +269,99 @@ export default function Attendancechart() {
       },
       y: {
         beginAtZero: true,
+        // display: false,
       },
     }
   };
+
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       id: getAttendData.map((items) =>  items.Date),
+  //       // label: [[Status?.map((element) =>  {
+  //       //   return(
+  //       //     element.Attendance_Status == "Present" ? "Present" : 
+  //       //     element.Attendance_Status == "Absent" ?  "Absent" : ""
+  //       //   )
+  //       // } ),]],
+  //       data : Status?.map((element) =>  {
+  //         return(
+  //           element.Attendance_Status == "Present" ? element?.Progress : 
+  //           element.Attendance_Status == "Absent" ?  0.5 : ""
+  //         )
+  //       }),
+  //       // Remarks: Status?.map((element) =>  {
+  //       //   return(
+  //       //     element.Attendance_Status == "Present" ? element.Remarks : 
+  //       //     element.Attendance_Status == "Absent" ? element.Remarks : null
+  //       //   )
+  //       // }),
+  //       // Emp_Time_IN: Status?.map((element) =>  {
+  //       //   return(
+  //       //     element.Attendance_Status == "Present" ? element.Time_in : 
+  //       //     element.Attendance_Status == "Absent" ? element.Time_in : null
+  //       //   )
+  //       // }),
+  //       // Emp_Time_out: Status?.map((element) =>  {
+  //       //   return(
+  //       //     element.Attendance_Status == "Present" ? element.Time_out : 
+  //       //     element.Attendance_Status == "Absent" ? element.Time_out : null
+  //       //   )
+  //       // }),
+  //       backgroundColor: Status?.map((element) => {
+  //         return(
+  //           element?.Attendance_Status == "Present" ? "#1587E7"  : 
+  //           element?.Attendance_Status == "Absent" ? "red" : ""
+  //         )
+  //       }),
+  //       borderColor: Status?.map((element) => {
+  //         return(
+  //           element?.Attendance_Status == "Present" ? "#0c67b3"  : 
+  //           element?.Attendance_Status == "Absent" ? "#db0808" : ""
+  //         )
+  //       }),
+  //       borderWidth: 2,
+  //     },
+  //   ],
+  // };
+
 
   const data = {
     labels,
     datasets: [
       {
-        id: getAttendData.map((items) =>  items.Date),
-        label: 'Sample Data',
-        data : Status?.map((element) =>  element?.Present || element?.Absent ),
-        backgroundColor: Status?.map((element) => {
-          return(element.PresentBg || element.AbsentBg)
-        }),
+        id: 1,
+        label: "Present",
+        data : getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time"? items.Progress : null),
+        backgroundColor: "#1587E7",
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2,
+        // barThickness: 15
+      },
+      {
+        id: 2,
+        label: 'Absent',
+        data :  getAttendData.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late"? 0.5 : null),
+        backgroundColor: "red",
+        borderColor: '#bd1b1b',
+        borderWidth: 2,
+      },
+      {
+        id: 3,
+        label: 'Late',
+        data :  getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late"? items?.Progress : null),
+        backgroundColor: "#d7d730",
+        borderColor: '#cfcf09',
+        borderWidth: 2,
+      },
+      {
+        id: 4,
+        label: 'Holidays',
+        data :  getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday"? 20 : null),
+        backgroundColor: "black",
+        borderColor: 'black',
+        borderWidth: 2,
       },
     ],
   };
@@ -319,9 +374,16 @@ export default function Attendancechart() {
 
   return (
 
-    <div className="container">
-      <Bar options={options} data={data}/>
-    </div>
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 mt-5">
+            <h5 className="mb-3 text-dark text-center"><b>Employee Attendance</b></h5>
+            <Bar options={options} data={data}/>
+          </div>
+        </div>
+      </div>
+    </>
 
   );
 }

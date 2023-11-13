@@ -24,6 +24,7 @@ function AttendanceWeekly() {
       if (response.success) {
         setLoading(false)
         setAttendanceWeekly(response?.data)
+        console.log("weekly",response?.data)
       }
       else {
         setLoading(false)
