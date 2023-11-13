@@ -28,6 +28,8 @@ import Red_Master_Personal from "./reducers/MasterMaintaince/MasterPersonal/inde
 import PayRollUpload from "./reducers/payroll/payrollUpload/index";
 import Red_Institution from "./reducers/HrOperations/Institution/index"
 import HrStop from "./reducers/payroll/hrStop/index";
+import Red_Holidays from "./reducers/HrOperations/Holidays";
+import Red_Location from "./reducers/HrOperations/Location";
 
 
 
@@ -59,7 +61,9 @@ const reducers = combineReducers({
   Red_Master_Personal,
   Red_Institution,
   PayRollUpload,
-  HrStop
+  HrStop,
+  Red_Holidays,
+  Red_Location
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
