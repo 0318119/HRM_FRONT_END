@@ -1,13 +1,13 @@
 import { GET_ALLOWANCE_START, GET_ALLOWANCE_COMPLETE, GET_ALLOWANCE_END } from "../../types"
 import baseURL from '../../../../config.json'
 
-export const ListLoans = (body) => async (dispatch, getState) => {
+export const ListDeduction = (body) => async (dispatch, getState) => {
     try {
         dispatch({
             type: GET_ALLOWANCE_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/loan/GetLoans/${body.pageNo}/${body.pageSize}/${body.search}`, {
+        const response = await fetch(`${baseURL.baseUrl}/deductions/GetallDeductions/${body.pageNo}/${body.pageSize}/${body.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -37,16 +37,16 @@ export const ListLoans = (body) => async (dispatch, getState) => {
 }
 
 
-export const DeleteLoans = (body) => async (dispatch, getState) => {
+export const DeleteDeduction = (body) => async (dispatch, getState) => {
     try {
-        const response = await fetch(`${baseURL.baseUrl}/loan/DeleteLoan`, {
+        const response = await fetch(`${baseURL.baseUrl}/deductions/DeleteDeductions`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                Loan_code: body
+                Deduction_code: body
             })
         });
         const res = await response.json()
@@ -80,7 +80,7 @@ export const getDeductionList = () => async (dispatch, getState) => {
 
 
 
-export const SaveLoans = (body) => async (dispatch, getState) => {
+export const SaveDeduction = (body) => async (dispatch, getState) => {
     try {
         const response = await fetch(`${baseURL.baseUrl}/loan/AddLoan`, {
             method: "POST",
@@ -127,7 +127,7 @@ export const GetUpdateData = (body) => async (dispatch, getState) => {
 }
 
 
-export const UpdateLoansFunction = (body) => async (dispatch, getState) => {
+export const UpdateDeductionFunction = (body) => async (dispatch, getState) => {
     try {
         const response = await fetch(`${baseURL.baseUrl}/loan/AddLoan`, {
             method: "POST",

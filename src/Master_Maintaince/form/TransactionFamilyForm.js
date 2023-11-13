@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {FormInput} from '../../components/basic/input/formInput';
+import { FormInput } from '../../components/basic/input/formInput';
 import * as Transaction_Family_Actions from "../../store/actions/Transition/transition_family/index";
 import { PrimaryButton, CancelButton } from '../../components/basic/button/index';
 import { connect } from "react-redux";
@@ -58,74 +58,72 @@ function TransactionFamilyForm({ Transition_family, Transition_Family, cancel, T
         resolver: yupResolver(FamilySchema),
     });
     return (
-        <>
-            <div>
-                <h4 className='EmployeeHeading'>Employee Information</h4>
-                <hr />
-                {Transition_family.loading ? <Skeleton active />
-                    :
-                    <form onSubmit={handleSubmit(submitForm)}
-                    >
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <FormInput label={'ESS_Sr_No'} placeholder={'ESS_Sr_No'}
-                                id="ESS_Sr_No"
-                                name="ESS_Sr_No"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                            <FormInput label={'Fam_member_DOB'} placeholder={'Fam_member_DOB'}
-                                id="Fam_member_DOB"
-                                type='date'
-                                name="Fam_member_DOB"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                            <FormInput label={'Fam_member_name'} placeholder={'Fam_member_name'}
-                                id="Fam_member_name"
-                                name="Fam_member_name"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <FormInput label={'FileName'} placeholder={'FileName'}
-                                id="FileName"
-                                name="FileName"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                            <FormInput label={'CNIC_No'} placeholder={'CNIC_No'}
-                                id="CNIC_No"
-                                name="CNIC_No"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                            <FormInput label={'Fam_member_type'} placeholder={'Fam_member_type'}
-                                id="Fam_member_type"
-                                name="Fam_member_type"
-                                showLabel={true}
-                                errors={errors}
-                                control={control}
-                            />
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div>
+            <h4 className='EmployeeHeading'>Employee Information</h4>
+            <hr />
+            {Transition_family.loading ? <Skeleton active />
+                :
+                <form onSubmit={handleSubmit(submitForm)}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <FormInput label={'ESS_Sr_No'} placeholder={'ESS_Sr_No'}
+                            id="ESS_Sr_No"
+                            name="ESS_Sr_No"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormInput label={'Fam_member_DOB'} placeholder={'Fam_member_DOB'}
+                            id="Fam_member_DOB"
+                            type='date'
+                            name="Fam_member_DOB"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormInput label={'Fam_member_name'} placeholder={'Fam_member_name'}
+                            id="Fam_member_name"
+                            name="Fam_member_name"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <FormInput label={'FileName'} placeholder={'FileName'}
+                            id="FileName"
+                            name="FileName"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormInput label={'CNIC_No'} placeholder={'CNIC_No'}
+                            id="CNIC_No"
+                            name="CNIC_No"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormInput label={'Fam_member_type'} placeholder={'Fam_member_type'}
+                            id="Fam_member_type"
+                            name="Fam_member_type"
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
 
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <CancelButton onClick={EditBack} title={'Cancel'} />
+                            <PrimaryButton type='submit' title={'Save'} />
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <CancelButton onClick={EditBack} title={'Cancel'} />
-                                <PrimaryButton type='submit' title={'Save'} />
-                            </div>
-                        </div>
-                    </form>
-                }
-            </div>
-        </>
+                    </div>
+                </form>
+            }
+        </div>
     )
 }
 function mapStateToProps({ Transition_family }) {

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Style from './addLoans.module.css'
+import Style from './addDeduction.module.css'
 import Header from "../../../../components/Includes/Header";
 import SecondaryHeader from "../../../component/secondaryHeader";
 import { Table, Space, Popconfirm, message } from "antd";
-import * as AddLoans_Action from "../../../../store/actions/payroll/addLoans/index";
+import * as AddDeduction_Action from "../../../../store/actions/payroll/addDeduction/index";
 import { connect } from "react-redux";
-import AddnewLoans from "./addNewLoans"
-import UpdateLoans from "./UpdateLoans"
+import AddnewLoans from "./addNewDeduction"
+import UpdateLoans from "./UpdateDeduction"
 
-const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
+const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeductionList }) => {
     const [search, setSearch] = useState(null)
     const [pageNo, setPageNo] = useState(1)
     const [pageSize, setPageSize] = useState(10)
@@ -21,7 +21,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     }, [addNew])
 
     useEffect(() => {
-        ListLoans({
+        ListDeduction({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -34,7 +34,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
         }
         else {
             setSearch(w)
-            ListLoans({
+            ListDeduction({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: w
@@ -43,7 +43,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     }
 
     const onSearchClick = () => {
-        ListLoans({
+        ListDeduction({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -52,9 +52,9 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
 
 
     const confirmDelete = async (e) => {
-        const isDelete = await DeleteLoans(e)
+        const isDelete = await DeleteDeduction(e)
         if (isDelete?.success == "success") {
-            ListLoans({
+            ListDeduction({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: search
@@ -67,28 +67,18 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'Loan_code',
-            key: 'Loan_code',
-        },
-        {
-            title: 'Loan Name',
-            dataIndex: 'Loan_name',
-            key: 'Loan_name',
-        },
-        {
-            title: 'Abbreviation',
-            dataIndex: 'Loan_abbr',
-            key: 'Loan_abbr',
+            dataIndex: 'Deduction_code',
+            key: 'Deduction_code',
         },
         {
             title: 'Deduction Name',
-            dataIndex: 'deduction_name',
-            key: 'deduction_name',
+            dataIndex: 'Deduction_name',
+            key: 'Deduction_name',
         },
         {
-            title: 'PF Flag',
-            dataIndex: 'PF_Flag',
-            key: 'PF_Flag',
+            title: 'Abbreviation',
+            dataIndex: 'Deduction_abbr',
+            key: 'Deduction_abbr',
         },
         {
             title: 'Sort Key',
@@ -103,13 +93,13 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
                     <button onClick={() => {
                         setAddnew(false)
                         setIsTable(false)
-                        setIsUpdate(_?.Loan_code)
+                        setIsUpdate(_?.Deduction_code)
                     }
                     } className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <Popconfirm
                         title="Delete the task"
                         description="Are you sure to delete this task?"
-                        onConfirm={() => confirmDelete(_?.Loan_code)}
+                        onConfirm={() => confirmDelete(_?.Deduction_code)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -135,7 +125,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
                             setPageNo(p);
                         },
                         pageSize: pageSize,
-                    }} loading={addLoans?.loading} columns={columns} dataSource={addLoans?.data} />
+                    }} loading={addDeduction?.loading} columns={columns} dataSource={addDeduction?.data} />
                     :
                     <>
                         {addNew == false?
@@ -152,7 +142,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
 }
 
 
-function mapStateToProps({ addLoans }) {
-    return { addLoans };
+function mapStateToProps({ addDeduction }) {
+    return { addDeduction };
 }
-export default connect(mapStateToProps, AddLoans_Action)(AddLoans);
+export default connect(mapStateToProps, AddDeduction_Action)(AddDeduction);

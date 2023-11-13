@@ -15,7 +15,7 @@ const FormInput = ({
     return (
         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
             {showLabel && (
-                <label htmlFor={name}>
+                <label style={{ fontWeight: '600' }} htmlFor={name}>
                     {label}
                 </label>
             )}
@@ -97,7 +97,6 @@ const FormCheckBox = ({
         </div>
     );
 };
-
 const FormSelect = ({
     control,
     name,
@@ -106,55 +105,72 @@ const FormSelect = ({
     options,
     isShowError,
     placeholder,
+    deduction,
     showLabel = true,
     ...rest
 }) => {
+    const options2 = [];
+    if (deduction == 'deduction') {
+        options?.map((t) =>
+            options2.push({
+                value: t?.Deduction_code,
+                label: t?.Deduction_name,
+            })
+        )
+    }
+    else if (deduction == 'deductionFlag') {
+        options?.map((t) =>
+            options2.push({
+                value: t?.value,
+                label: t?.label,
+            })
+        )
+    }
     return (
-         <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', }}>
-         {showLabel && (
-             <label>
-                 {label}
-             </label>
-         )}
-         <Controller
-             control={control}
-             name={name}
-             render={({ field }) => {
-                 return (
-                    <Select
-                        {...field}
-                        {...rest}
-                        name={name} id={name}
-                        placeholder="Select users"
-                        options={options}
-                    />
-                 )
-             }}
-         />
-         {errors[name] && (
-             <p
-                 style={{
-                     margin: "5px 0px",
-                     fontSize: "12px",
-                     color: 'red'
-                 }}
-             >
-                 {errors[name]?.message}
-             </p>
-         )}
-     </div>
+        <div style={{ display: 'flex', flexDirection: 'column', padding: '10px', }}>
+            {showLabel && (
+                <label style={{ fontWeight: '600' }}>
+                    {label}
+                </label>
+            )}
+            <Controller
+                control={control}
+                name={name}
+                render={({ field }) => {
+                    return (
+                        <Select
+                            {...field}
+                            {...rest}
+                            name={name} id={name}
+                            placeholder="Select a person"
+                            options={options2}
+                        />
+                    )
+                }}
+            />
+            {errors[name] && (
+                <p
+                    style={{
+                        margin: "5px 0px",
+                        fontSize: "12px",
+                        color: 'red'
+                    }}
+                >
+                    {errors[name]?.message}
+                </p>
+            )}
+        </div>
     );
 };
-
-const Input=({type, placeholder, label,readonly,value,onChange,max,onEnterPress,name})=>{
+const Input = ({ type, placeholder, label, readonly, value, onChange, max, onEnterPress, name }) => {
     return (
         <>
             <div className={style.Label} id="inputBox">
                 <label className="m-0 p-0">{label}</label>
-                <input onKeyDown={onEnterPress} name={name} maxLength={max} onChange={(e)=>onChange(e)} defaultValue={value} readOnly={readonly} className={style.Input}  type={type} placeholder={placeholder}/>
+                <input onKeyDown={onEnterPress} name={name} maxLength={max} onChange={(e) => onChange(e)} defaultValue={value} readOnly={readonly} className={style.Input} type={type} placeholder={placeholder} />
             </div>
         </>
     )
 }
 
-export { FormInput,FormCheckBox,FormSelect,Input };
+export { FormInput, FormCheckBox, FormSelect, Input };

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Style from './addLoans.module.css'
+import Style from './addAllowance.module.css'
 import Header from "../../../../components/Includes/Header";
 import SecondaryHeader from "../../../component/secondaryHeader";
 import { Table, Space, Popconfirm, message } from "antd";
-import * as AddLoans_Action from "../../../../store/actions/payroll/addLoans/index";
+import * as AddAllowance_Action from "../../../../store/actions/payroll/addAllowance/index";
 import { connect } from "react-redux";
-import AddnewLoans from "./addNewLoans"
-import UpdateLoans from "./UpdateLoans"
+import AddnewLoans from "./addNewAllowance"
+import UpdateLoans from "./UpdateAllownace"
 
-const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
+const AddAllowance = ({ ListAllownace, addAllowance, DeleteAllowance, getAllowanceList }) => {
     const [search, setSearch] = useState(null)
     const [pageNo, setPageNo] = useState(1)
     const [pageSize, setPageSize] = useState(10)
@@ -21,7 +21,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     }, [addNew])
 
     useEffect(() => {
-        ListLoans({
+        ListAllownace({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -34,7 +34,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
         }
         else {
             setSearch(w)
-            ListLoans({
+            ListAllownace({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: w
@@ -43,7 +43,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     }
 
     const onSearchClick = () => {
-        ListLoans({
+        ListAllownace({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -52,9 +52,9 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
 
 
     const confirmDelete = async (e) => {
-        const isDelete = await DeleteLoans(e)
+        const isDelete = await DeleteAllowance(e)
         if (isDelete?.success == "success") {
-            ListLoans({
+            ListAllownace({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: search
@@ -67,28 +67,18 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'Loan_code',
-            key: 'Loan_code',
+            dataIndex: 'Allowance_code',
+            key: 'Allowance_code',
         },
         {
-            title: 'Loan Name',
-            dataIndex: 'Loan_name',
-            key: 'Loan_name',
+            title: 'Allowance Name',
+            dataIndex: 'Allowance_name',
+            key: 'Allowance_name',
         },
         {
             title: 'Abbreviation',
-            dataIndex: 'Loan_abbr',
-            key: 'Loan_abbr',
-        },
-        {
-            title: 'Deduction Name',
-            dataIndex: 'deduction_name',
-            key: 'deduction_name',
-        },
-        {
-            title: 'PF Flag',
-            dataIndex: 'PF_Flag',
-            key: 'PF_Flag',
+            dataIndex: 'Allowance_abbr',
+            key: 'Allowance_abbr',
         },
         {
             title: 'Sort Key',
@@ -103,13 +93,13 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
                     <button onClick={() => {
                         setAddnew(false)
                         setIsTable(false)
-                        setIsUpdate(_?.Loan_code)
+                        setIsUpdate(_?.Allowance_code)
                     }
                     } className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <Popconfirm
                         title="Delete the task"
                         description="Are you sure to delete this task?"
-                        onConfirm={() => confirmDelete(_?.Loan_code)}
+                        onConfirm={() => confirmDelete(_?.Allowance_code)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -125,7 +115,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isAddNew={isTable ? true : false} isTable={setIsTable} addNewFunction={setAddnew} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Loans'} total={'1,000'} />
+                <SecondaryHeader isAddNew={isTable ? true : false} isTable={setIsTable} addNewFunction={setAddnew} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Allowance'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {isTable ?
@@ -135,7 +125,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
                             setPageNo(p);
                         },
                         pageSize: pageSize,
-                    }} loading={addLoans?.loading} columns={columns} dataSource={addLoans?.data} />
+                    }} loading={addAllowance?.loading} columns={columns} dataSource={addAllowance?.data} />
                     :
                     <>
                         {addNew == false?
@@ -152,7 +142,7 @@ const AddLoans = ({ ListLoans, addLoans, DeleteLoans, getDeductionList }) => {
 }
 
 
-function mapStateToProps({ addLoans }) {
-    return { addLoans };
+function mapStateToProps({ addAllowance }) {
+    return { addAllowance };
 }
-export default connect(mapStateToProps, AddLoans_Action)(AddLoans);
+export default connect(mapStateToProps, AddAllowance_Action)(AddAllowance);
