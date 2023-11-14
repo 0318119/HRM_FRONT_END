@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import '../../src/Assets/css/main.css'
 import { Login } from '../LoginScreens/Login';
-import  Dashboard   from '../dashboard/dashboard';
+import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
 import TAEducationForm from '../TransactionAppointForm/TAEducationForm';
 import TAExprienceForm from '../TransactionAppointForm/TAExprienceForm';
 import TASalaryForm from '../TransactionAppointForm/TASalaryForm';
-import TAppointmentMasterPayroll from  '../TransactionAppointForm/TAppointmentMasterPayroll';
+import TAppointmentMasterPayroll from '../TransactionAppointForm/TAppointmentMasterPayroll';
 import TACheckList from '../TransactionAppointForm/TACheckList'
 import TAFamilyForm from '../TransactionAppointForm/TAFamilyForm';
 import TAShortsCut from '../TransactionAppointForm/TAShortsCut'
@@ -49,7 +49,7 @@ import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
+// import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -70,8 +70,9 @@ import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
- import Base_City from '../HrOperations/Base_City'
- import RefreshableData from '../HrOperations/RefreshableData'
+import Base_City from '../HrOperations/Base_City'
+import RefreshableData from '../HrOperations/RefreshableData'
+import Earnings from '../Master_Maintaince/Earnings';
 
 const routing = () => {
   return (
@@ -80,7 +81,7 @@ const routing = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Appointment" element={<Appointment />}/>
+          <Route path="/Appointment" element={<Appointment />} />
           <Route path="/TAPersonalform" element={<TAPersonalform />} />
           <Route path="/TAEducationForm" element={<TAEducationForm />} />
           <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
@@ -130,7 +131,7 @@ const routing = () => {
           <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
           <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
           <Route path="/LeaveSummary" element={<LeaveSummary />} />
-          <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
+          {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
           <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
           <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
           <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
@@ -146,8 +147,9 @@ const routing = () => {
           <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
           <Route path="/Family" element={<Family />} />
           <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
-          <Route path="/Base_City" element={<Base_City/>} />
-          <Route path="/RefreshableData" element={<RefreshableData/>} />
+          <Route path="/Base_City" element={<Base_City />} />
+          <Route path="/RefreshableData" element={<RefreshableData />} />
+          <Route path="/Earnings" element={<Earnings/>} />
         </Routes>
       </Router>
     </>
