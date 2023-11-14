@@ -125,7 +125,7 @@ const FormSelect = ({
                         {...field}
                         {...rest}
                         name={name} id={name}
-                        placeholder="Select users"
+                        placeholder={placeholder}
                         options={options}
                     />
                  )

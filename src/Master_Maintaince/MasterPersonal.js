@@ -22,7 +22,6 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState('')
 
-  console.log(Red_Master_Personal, 'Red_Master_Personal')
 
   useEffect(() => {
     if (isSearchVal == '') {
@@ -129,7 +128,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
                   <MasterPersonalForm cancel={setMode} mode={mode} isCode={null} page={page}/> 
               )}
               {mode == "Edit" && (
-                  <MasterPersonalForm cancel={setMode} isCode={isCode} page={page}/>  
+                  <MasterPersonalForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>  
               )}
             </div>
           </div>
