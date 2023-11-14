@@ -14,6 +14,7 @@ function InstitutionForm({
   cancel,
   mode,
   isCode,
+  page,
   Red_Institution,
   Get_Institution_Data_By_Id,
   GetInstitutionData,
@@ -29,8 +30,8 @@ function InstitutionForm({
     try {
       const isValid = await Institution_Scheme.validate(data);
       if (isValid) {
-        console.log(data, "data");
         POST_Institution_FORM(data);
+        // console.log(data, "data");
       }
     } catch (error) {
       console.error(error, "error message");
@@ -104,10 +105,8 @@ function InstitutionForm({
         Inst_code: Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_code,
         Inst_name: Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_name,
         Inst_type: Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_type,
-        Inst_address_line1:
-          Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_address_line1,
-        Inst_address_line2:
-          Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_address_line2,
+        Inst_address_line1:Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_address_line1,
+        Inst_address_line2:Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_address_line2,
         Inst_address_line3:
           Red_Institution?.dataSingle?.[0]?.res?.data?.[0]?.Inst_address_line3,
         Inst_phone1:
@@ -127,9 +126,10 @@ function InstitutionForm({
     }
   }, [Red_Institution?.dataSingle?.[0]?.res?.data?.[0]]);
 
-  console.log("Red_Institution", Red_Institution);
+  console.log("Red_Institution Form page" ,Red_Institution)
 
-  // BASE CITY FORM DATA API CALL ===========================
+
+  // INSTITUTION CITY FORM DATA API CALL ===========================
   async function POST_Institution_FORM(body) {
     setLoading(true);
     await fetch(`${baseUrl.baseUrl}/institutions/AddInstitution`, {
@@ -139,21 +139,21 @@ function InstitutionForm({
         accessToken: `Bareer ${get_access_token}`,
       },
       body: JSON.stringify({
-        Inst_code: 0,
-        Inst_name: body.Inst_name,
-        Inst_abbr: body.Inst_abbr,
-        Inst_type: body.Inst_type,
-        Inst_address_line1: body.Inst_address_line1,
-        Inst_address_line2: body.Inst_address_line2,
-        Inst_address_line3: body.Inst_address_line3,
-        Inst_phone1: body.Inst_phone1,
-        Inst_phone2: body.Inst_phone2,
-        Inst_fax1: body.Inst_fax1,
-        Inst_fax2: body.Inst_fax2,
-        Inst_email: body.Inst_email,
-        Inst_Web_Site: body.Institution_Website,
-        Sort_key: body.Sort_Key,
-        Verification_Fee: body.Verification_Fee,
+        "Inst_code": body?.Inst_code,
+        "Inst_name": body?.Inst_name,
+        "Inst_abbr": body?.Inst_abbr,
+        "Inst_type": body?.Inst_type,
+        "Inst_address_line1": body?.Inst_address_line1,
+        "Inst_address_line2": body?.Inst_address_line2,
+        "Inst_address_line3": body?.Inst_address_line3,
+        "Inst_phone1": body?.Inst_phone1,
+        "Inst_phone2": body?.Inst_phone2,
+        "Inst_fax1": body?.Inst_fax1,
+        "Inst_fax2": body?.Inst_fax2,
+        "Inst_email": body?.Inst_email,
+        "Inst_Web_Site": body?.Inst_Web_Site,
+        "Sort_key": body?.Sort_key,
+        "Verification_Fee": body?.Verification_Fee,
       }),
     })
       .then((response) => {
@@ -170,7 +170,7 @@ function InstitutionForm({
             cancel("read");
             GetInstitutionData({
               pageSize: 10,
-              pageNo: 1,
+              pageNo: page,
               search: null,
             });
           }, 3000);
@@ -193,8 +193,9 @@ function InstitutionForm({
 
   return (
     <>
-      <div>
-        <h4 className="text-dark">Institutions</h4>
+    {contextHolder}
+      <form onSubmit={handleSubmit(submitForm)}>
+      <h4 className="text-dark">Institutions</h4>
         <hr />
         <div className="form-group formBoxInstitution">
           <FormInput
@@ -212,11 +213,18 @@ function InstitutionForm({
           <FormInput
             placeholder={"Institution Name"}
             label={"Institution Name"}
+            id="Inst_name"
+            name="Inst_name"
             type="text"
+            showLabel={true}
+            errors={errors}
+            control={control}
           />
           <FormInput
             placeholder={"Institution Abbrivation"}
             label={"Institution Abbrivation"}
+            id="Inst_abbr"
+            name="Inst_abbr"
             type="text"
             showLabel={true}
             errors={errors}
@@ -226,11 +234,18 @@ function InstitutionForm({
             placeholder={"Institution Type"}
             label={"Institution Type"}
             type="text"
+            id="Inst_type"
+            name="Inst_type"
+            showLabel={true}
+            errors={errors}
+            control={control}
           />
           <FormInput
             placeholder={"Institution Address line1"}
             label={"Institution Address line1"}
             type="text"
+            id="Inst_address_line1"
+            name="Inst_address_line1"
             showLabel={true}
             errors={errors}
             control={control}
@@ -239,6 +254,8 @@ function InstitutionForm({
             placeholder={"Institution Address line2"}
             label={"Institution Address line2"}
             type="text"
+            id="Inst_address_line2"
+            name="Inst_address_line2"
             showLabel={true}
             errors={errors}
             control={control}
@@ -247,22 +264,8 @@ function InstitutionForm({
             placeholder={"Institution Address line3"}
             label={"Institution Address line3"}
             type="text"
-            showLabel={true}
-            errors={errors}
-            control={control}
-          />
-          <FormInput
-            placeholder={"Institution Type"}
-            label={"Institution Type"}
-            type="text"
-            showLabel={true}
-            errors={errors}
-            control={control}
-          />
-          <FormInput
-            placeholder={"Sort Key"}
-            label={"Sort Key"}
-            type="text"
+            id="Inst_address_line3"
+            name="Inst_address_line3"
             showLabel={true}
             errors={errors}
             control={control}
@@ -274,15 +277,19 @@ function InstitutionForm({
           <FormInput
             placeholder={"Institution Phone1"}
             label={"Institution Phone1"}
-            type="number"
+            type="text"
+            id="Inst_phone1"
+            name="Inst_phone1"
             showLabel={true}
             errors={errors}
             control={control}
           />
-          <FormInput
+           <FormInput
             placeholder={"Institution Phone2"}
             label={"Institution Phone2"}
-            type="number"
+            type="text"
+            name="Inst_phone2"
+            id="inst_phone2" 
             showLabel={true}
             errors={errors}
             control={control}
@@ -290,7 +297,9 @@ function InstitutionForm({
           <FormInput
             placeholder={"Institution Fax1"}
             label={"Institution Fax1"}
-            type="number"
+            type="text"
+            id="Inst_fax1"
+            name="Inst_fax1"
             showLabel={true}
             errors={errors}
             control={control}
@@ -298,7 +307,9 @@ function InstitutionForm({
           <FormInput
             placeholder={"Institution Fax2"}
             label={"Institution Fax2"}
-            type="number"
+            type="text"
+            id="Inst_fax2"
+            name="Inst_fax2"
             showLabel={true}
             errors={errors}
             control={control}
@@ -307,6 +318,8 @@ function InstitutionForm({
             placeholder={"Institution Email"}
             label={"Institution Email"}
             type="text"
+            name="Inst_email"
+            id="Inst_email"
             showLabel={true}
             errors={errors}
             control={control}
@@ -315,6 +328,8 @@ function InstitutionForm({
             placeholder={"Institution Website"}
             label={"Institution Website"}
             type="text"
+            name="Inst_Web_Site"
+            id="Inst_Web_Site"
             showLabel={true}
             errors={errors}
             control={control}
@@ -323,6 +338,8 @@ function InstitutionForm({
             placeholder={"Verification Fee"}
             label={"Verification Fee"}
             type="number"
+            name="Verification_Fee"
+            id="Verification_Fee"
             showLabel={true}
             errors={errors}
             control={control}
@@ -330,6 +347,8 @@ function InstitutionForm({
           <FormInput
             placeholder={"Sort Key"}
             label={"Sort Key"}
+            name="Sort_key"
+            id="Sort_key"
             type="text"
             showLabel={true}
             errors={errors}
@@ -340,7 +359,7 @@ function InstitutionForm({
           <CancelButton onClick={EditBack} title={"Cancel"} />
           <PrimaryButton title="Save" />
         </div>
-      </div>
+      </form>
     </>
   );
 }
