@@ -29,7 +29,6 @@ const Locations = ({ Red_Location, getLocationData }) => {
         setMode(mode)
     }
 
-console.log(Red_Location , 'Red_Location')
     const columns = [
         {
             title: 'Location code',
@@ -43,14 +42,19 @@ console.log(Red_Location , 'Red_Location')
 
         },
         {
-            title: 'Loc_address_line1',
+            title: 'Loc address line1',
             dataIndex: 'Loc_address_line1',
             key: 'Loc_address_line1',
         },
         {
-            title: 'Ramdan flag',
-            dataIndex: 'ramdan_flag',
-            key: 'ramdan_flag',
+            title: 'Loc address line2',
+            dataIndex: 'Loc_address_line2',
+            key: 'Loc_address_line2',
+        },
+        {
+            title: 'Sort key',
+            dataIndex: 'Sort_key',
+            key: 'Sort_key',
         },
 
         {
@@ -58,14 +62,14 @@ console.log(Red_Location , 'Red_Location')
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data)} className="editBtn"><FaEdit /></button>
+                    <button onClick={() => EditPage('Edit', data?.Loc_code)} className="editBtn"><FaEdit /></button>
                     <Popconfirm
-                        title="Delete the Cost Grade"
-                        description="Are you sure to delete the Grade?"
+                        title="Delete the Location "
+                        description="Are you sure to delete the Location?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            handleConfirmDelete(data?.Calendar_Date)
+                            handleConfirmDelete(data?.Loc_code)
                         }}
                     >
                         <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -76,14 +80,14 @@ console.log(Red_Location , 'Red_Location')
     ];
 
 
-    // HOLIDAYS DATA DELETE API CALL ===========================
+    // Location DATA DELETE API CALL ===========================
     async function handleConfirmDelete(id) {
         await fetch(
-            `${baseUrl.baseUrl}/holiday/DeleteHolidays`, {
+            `${baseUrl.baseUrl}/location_code/DeleteLocation`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "Calendar_Date": id,
+                "Loc_code": id,
             }),
         }
         ).then((response) => {
@@ -149,7 +153,9 @@ console.log(Red_Location , 'Red_Location')
                                 <div className="LocationlexBox">
                                     <h4 className="text-dark">Location</h4>
                                     <div className="LocationsearchBox">
-                                        <Input placeholder={'Search Here...'} type="search" />
+                                        <Input placeholder={'Search Here...'} type="search"
+                                            onChange={(e) => { setSearchVal(e.target.value) }}
+                                        />
                                         <Button title="Create" onClick={() => setMode("create")} />
                                     </div>
                                 </div>
@@ -175,10 +181,10 @@ console.log(Red_Location , 'Red_Location')
                                 />
                             )}
                             {mode == "create" && (
-                                <LocationForm cancel={setMode} />
+                                <LocationForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
                             )}
                             {mode == "Edit" && (
-                                <LocationForm cancel={setMode} />
+                                <LocationForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
                             )}
                         </div>
 
