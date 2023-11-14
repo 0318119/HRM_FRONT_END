@@ -25,7 +25,7 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City ,Get_Base_City_Data
       if (isValid) {
           console.log(data, "data");
         POST_BASE_CITY_FORM(data)
-      }
+      } 
     } catch (error) {
       console.error(error, "error message");
     }

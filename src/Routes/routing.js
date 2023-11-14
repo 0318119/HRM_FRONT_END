@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import '../../src/Assets/css/main.css'
 import { Login } from '../LoginScreens/Login';
-import  Dashboard   from '../dashboard/dashboard';
+import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
 import TAEducationForm from '../TransactionAppointForm/TAEducationForm';
 import TAExprienceForm from '../TransactionAppointForm/TAExprienceForm';
 import TASalaryForm from '../TransactionAppointForm/TASalaryForm';
-import TAppointmentMasterPayroll from  '../TransactionAppointForm/TAppointmentMasterPayroll';
+import TAppointmentMasterPayroll from '../TransactionAppointForm/TAppointmentMasterPayroll';
 import TACheckList from '../TransactionAppointForm/TACheckList'
 import TAFamilyForm from '../TransactionAppointForm/TAFamilyForm';
 import TAShortsCut from '../TransactionAppointForm/TAShortsCut'
@@ -86,8 +86,7 @@ import SalaryHold from '../payroll/pages/transactionPosting/salaryHold/salaryHol
 import PayrollUpload from '../payroll/pages/transactionPosting/payrollUpload/payRollUpload'
 import HrStop from '../payroll/pages/transactionPosting/hrStop/hrStop'
 import HrRelease from '../payroll/pages/transactionPosting/hrRelease/hrRelease'
-
-
+import Earnings from '../Master_Maintaince/Earnings';
 
 const routing = () => {
   return (
@@ -96,7 +95,7 @@ const routing = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Appointment" element={<Appointment />}/>
+          <Route path="/Appointment" element={<Appointment />} />
           <Route path="/TAPersonalform" element={<TAPersonalform />} />
           <Route path="/TAEducationForm" element={<TAEducationForm />} />
           <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
@@ -181,6 +180,9 @@ const routing = () => {
           
           {/* report */}
           <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
+          <Route path="/Base_City" element={<Base_City />} />
+          <Route path="/RefreshableData" element={<RefreshableData />} />
+          <Route path="/Earnings" element={<Earnings/>} />
         </Routes>
       </Router>
     </>
