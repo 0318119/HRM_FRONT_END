@@ -2,16 +2,25 @@ import React, { useEffect } from "react";
 import style from './button.module.css'
 import { message } from 'antd';
 
-function Button({ title,onClick,loading }) {
+function Button({ title,onClick,loading,type }) {
     return (
         <>
             <div className={style.PrimaryButton}>
-                <button disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
+                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
             </div>
         </>
     )
 }
 
+function SimpleButton({ title,loading,type }) {
+    return (
+        <>
+            <div className={style.PrimaryButton}>
+                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}}>{loading?'Loading..':title}</button>
+            </div>
+        </>
+    )
+}
 
 function PrimaryButton({ title, loading, type}) {
     const [messageApi, contextHolder] = message.useMessage();
@@ -58,4 +67,4 @@ function DeleteButton({ title,onClick,loading }) {
     )
 }
 
-export {PrimaryButton,CancelButton,Button,DeleteButton}
+export {PrimaryButton,CancelButton,Button,DeleteButton,SimpleButton}
