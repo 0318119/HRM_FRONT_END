@@ -35,6 +35,7 @@ import addLoans from "./reducers/payroll/addLoans/index";
 import addAllowance from "./reducers/payroll/addAllownace/index";
 import addDeduction from "./reducers/payroll/addDeduction/index";
 import addPayroll from "./reducers/payroll/addPayroll/index";
+import Red_MasterEarning from "./reducers/MasterMaintaince/MasterEarning";
 
 
 
@@ -73,7 +74,8 @@ const reducers = combineReducers({
   addLoans,
   addAllowance,
   addDeduction,
-  addPayroll
+  addPayroll,
+  Red_MasterEarning
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

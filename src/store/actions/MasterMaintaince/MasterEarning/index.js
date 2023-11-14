@@ -1,80 +1,79 @@
 import {
-    GET_LOCATION_DATA,
-    GET_LOCATION_DATA_START,
-    GET_LOCATION_DATA_SINGLE,
-    GET_LOCATION_DATA_END
-} from '../../types'
-import baseUrl from '../../../../config.json'
+    GET_MASTER_EARNING_DATA,
+    GET_MASTER_EARNING_DATA_START,
+    GET_MASTER_EARNING_DATA_SINGLE,
+    GET_MASTER_EARNING_DATA_END,
+} from "../../types";
+import baseUrl from "../../../../config.json";
 
-
-export const getLocationData = (params) => async (dispatch) => {
+export const GetMasterEarningData = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_LOCATION_DATA_START,
+            type: GET_MASTER_EARNING_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/location_code/GetLocations/${params.pageNo}/${params.pageSize}/${params.search}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesName/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
-                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
+                accessToken: "Bareer " + localStorage.getItem("access_token"),
+                "Content-Type": "application/json",
             },
         });
         if (response.status === 200) {
-            const res = await response.json()
+            const res = await response.json();
             dispatch({
-                type: GET_LOCATION_DATA,
+                type: GET_MASTER_EARNING_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
-            const res = await response.json()
+            const res = await response.json();
             dispatch({
-                type: GET_LOCATION_DATA_END,
+                type: GET_MASTER_EARNING_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
         }
-    }
-    catch (error) {
+
+    } catch (error) {
         dispatch({
-            type: GET_LOCATION_DATA_END,
+            type: GET_MASTER_EARNING_DATA_END,
             payload: false,
             loading: false,
         });
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
-export const Get_Location_By_ID = (body) => async (dispatch) => {
+export const Get_Master_Earning_Allowance_By_EmpCode = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_LOCATION_DATA_START,
+            type: GET_MASTER_EARNING_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/location_code/GetbyLocationCode`, {
+        const response = await fetch(`${baseUrl.baseUrl}/allowance/getAllowancesByEmpCode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'Loc_code': body,
+                'Emp_code': body,
             })
         });
         if (response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_LOCATION_DATA_SINGLE,
+                type: GET_MASTER_EARNING_DATA_SINGLE,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json()
             dispatch({
-                type: GET_LOCATION_DATA_END,
+                type: GET_MASTER_EARNING_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -82,11 +81,12 @@ export const Get_Location_By_ID = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_LOCATION_DATA_END,
+            type: GET_MASTER_EARNING_DATA_END,
             payload: false,
             loading: false,
         });
         console.log(error)
     }
+
 
 }

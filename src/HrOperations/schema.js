@@ -224,4 +224,42 @@ const Holidays_Scheme = yup.object().shape({
 
 });
 export { Holidays_Scheme };
+
+// HR-OPERATIONS ===> Location
+const Locations_Scheme = yup.object().shape({
+
+  Loc_code: yup.number().required("Loc_code is required"),
+  Loc_name: yup.string().required("Loc_name is required"),
+  Loc_abbr: yup.string().required("Loc_abbr Type is required"),
+  Loc_address_line1: yup.string().required("Loc_address_line1 is required"),
+  Loc_address_line2: yup.string().required("Loc_address_line2 is required"),
+  Loc_address_contact: yup.string().required("Loc_address_contact is required"),
+  Loc_address_phone: yup.string().required("Loc_address_phone is required"),
+  Loc_address_fax: yup.string().required("Loc_address_fax is required"),
+  City_code: yup.number().required("City_code is required"),
+  Level_1_Code: yup.number().required("Level_1_Code is required"),
+  Bank_Code: yup.string().required("Bank_Code is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  eobi_city_code: yup.number().required("eobi_city_code is required"),
+  JV_CODE: yup.string().required("JV_CODE is required"),
+  Branch_Flag: yup.string().required("Branch_Flag is required"),
+  BranchManager_Code: yup.number().required("BranchManager_Code is required"),
+  Branch_Operation_Manager_Code: yup.number().required("Branch_Operation_Manager_Code is required"),
+  evening_banking_peron_limit: yup.number().required("evening_banking_peron_limit is required"),
+  Evening_banking_flag: yup.string().required("Evening_banking_flag is required"),
+  Saturday_banking_peron_limit: yup.string().required("Saturday_banking_peron_limit is required"),
+  Saturday_banking_flag: yup.string().required("Saturday_banking_flag is required"),
+  SatEveningFlag: yup.string().required("SatEveningFlag is required"),
+  Sunday_banking_peron_limit: yup.number().required("Sunday_banking_peron_limit is required"),
+  Sunday_banking_flag: yup.string().required("Sunday_banking_flag is required"),
+  Saturday_Affactive_Date: yup.date().required("Saturday_Affactive_Date is required"),
+  Saturday_InActive_Date: yup.date().required("Saturday_InActive_Date is required"),
+  Evening_Affactive_Date: yup.date().required("Evening_Affactive_Date is required"),
+  Evening_InActive_Date: yup.date().required("Evening_InActive_Date is required"),
+  Sunday_Affactive_Date: yup.date().required("Sunday_Affactive_Date is required"),
+  Sunday_InActive_Date: yup.date().required("Sunday_InActive_Date is required"),
+  Booth_Flag: yup.string().required("Booth_Flag is required"),
+
+});
+export { Locations_Scheme };
     
