@@ -10,6 +10,7 @@ const FormInput = ({
     label,
     errors,
     showLabel = true,
+    type,
     ...rest
 }) => {
     return (
@@ -25,6 +26,7 @@ const FormInput = ({
                 render={({ field }) => {
                     return (
                         <input
+                        type={type}
                             className={style.Input}
                             {...field}
                             {...rest}
@@ -142,7 +144,6 @@ const FormSelect = ({
                             {...field}
                             {...rest}
                             name={name} id={name}
-                            placeholder="Select a person"
                             options={options2}
                         />
                     )

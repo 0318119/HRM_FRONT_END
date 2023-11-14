@@ -57,6 +57,11 @@ const AddNewLoans = ({ getDeductionList, SaveLoans,addNewFunction}) => {
                     message.success('Loan Successfully created')
                     addNewFunction(true)
                 }
+                else{
+                    setLoading(false)
+                    message.error('Something went wrong')
+                    addNewFunction(true)
+                }
             }
         } catch (error) {
             setLoading(false)

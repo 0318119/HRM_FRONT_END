@@ -91,6 +91,9 @@ import UndoPayrollCalculation from '../payroll/pages/transactionPosting/undoPayr
 import AddLoans from '../payroll/pages/transactionPosting/addLoans/addLoans'
 import AddAllowance from '../payroll/pages/transactionPosting/addAllowance/addAllowance'
 import AddDeduction from '../payroll/pages/transactionPosting/addDeduction/addDeduction'
+import AddPayroll from '../payroll/pages/transactionPosting/addPayroll/addPayroll'
+
+
 const routing = () => {
   return (
     <Router>
@@ -184,6 +187,7 @@ const routing = () => {
         <Route path="/payroll/addLoans" element={<AddLoans />} />
         <Route path="/payroll/addallowance" element={<AddAllowance />} />
         <Route path="/payroll/addDeduction" element={<AddDeduction />} />
+        <Route path="/payroll/addPayroll" element={<AddPayroll />} />
         
         {/* report */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

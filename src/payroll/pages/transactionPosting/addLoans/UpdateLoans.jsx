@@ -70,7 +70,12 @@ const UpdateLoans = ({ getDeductionList, UpdateLoansFunction, addNewFunction, up
                 const isSaved = await UpdateLoansFunction({...data,Loan_code:currentUser.Loan_code})
                 if (isSaved.success == "success") {
                     setLoading(false)
-                    message.success('Loan Successfully created')
+                    message.success('Loan Successfully updated')
+                    addNewFunction(true)
+                }
+                else{
+                    setLoading(false)
+                    message.error('Something went wrong')
                     addNewFunction(true)
                 }
             }

@@ -32,6 +32,7 @@ import undoPayrollCalculation from "./reducers/payroll/undoPayrollCalculation/in
 import addLoans from "./reducers/payroll/addLoans/index";
 import addAllowance from "./reducers/payroll/addAllownace/index";
 import addDeduction from "./reducers/payroll/addDeduction/index";
+import addPayroll from "./reducers/payroll/addPayroll/index";
 
 
 
@@ -67,7 +68,8 @@ const reducers = combineReducers({
   undoPayrollCalculation,
   addLoans,
   addAllowance,
-  addDeduction
+  addDeduction,
+  addPayroll
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

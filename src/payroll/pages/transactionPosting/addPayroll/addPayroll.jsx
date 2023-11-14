@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Style from './addDeduction.module.css'
+import Style from './addPayroll.module.css'
 import Header from "../../../../components/Includes/Header";
 import SecondaryHeader from "../../../component/secondaryHeader";
 import { Table, Space, Popconfirm, message } from "antd";
-import * as AddDeduction_Action from "../../../../store/actions/payroll/addDeduction/index";
+import * as AddPayroll_Action from "../../../../store/actions/payroll/addPayroll/index";
 import { connect } from "react-redux";
-import AddnewLoans from "./addNewDeduction"
-import UpdateLoans from "./UpdateDeduction"
+import AddnewLoans from "./addNewPayroll"
+import UpdateLoans from "./UpdatePayroll"
 
-const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeductionList }) => {
+const AddPayroll = ({ ListPayroll, addPayroll, DeleteLoans}) => {
     const [search, setSearch] = useState(null)
     const [pageNo, setPageNo] = useState(1)
     const [pageSize, setPageSize] = useState(10)
@@ -21,7 +21,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
     }, [addNew])
 
     useEffect(() => {
-        ListDeduction({
+        ListPayroll({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -34,7 +34,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
         }
         else {
             setSearch(w)
-            ListDeduction({
+            ListPayroll({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: w
@@ -43,7 +43,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
     }
 
     const onSearchClick = () => {
-        ListDeduction({
+        ListPayroll({
             pageSize: pageSize,
             pageNo: pageNo,
             search: search
@@ -52,9 +52,9 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
 
 
     const confirmDelete = async (e) => {
-        const isDelete = await DeleteDeduction(e)
+        const isDelete = await DeleteLoans(e)
         if (isDelete?.success == "success") {
-            ListDeduction({
+            ListPayroll({
                 pageSize: pageSize,
                 pageNo: pageNo,
                 search: search
@@ -67,18 +67,18 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
     const columns = [
         {
             title: 'Code',
-            dataIndex: 'Deduction_code',
-            key: 'Deduction_code',
+            dataIndex: 'Payroll_Category_code',
+            key: 'Payroll_Category_code',
         },
         {
-            title: 'Deduction Name',
-            dataIndex: 'Deduction_name',
-            key: 'Deduction_name',
+            title: 'Payroll Category Name',
+            dataIndex: 'Payroll_Category_name',
+            key: 'Payroll_Category_name',
         },
         {
             title: 'Abbreviation',
-            dataIndex: 'Deduction_abbr',
-            key: 'Deduction_abbr',
+            dataIndex: 'Payroll_Category_abbr',
+            key: 'Payroll_Category_abbr',
         },
         {
             title: 'Sort Key',
@@ -93,13 +93,13 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
                     <button onClick={() => {
                         setAddnew(false)
                         setIsTable(false)
-                        setIsUpdate(_?.Deduction_code)
+                        setIsUpdate(_?.Payroll_Category_code)
                     }
                     } className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     <Popconfirm
                         title="Delete the task"
                         description="Are you sure to delete this task?"
-                        onConfirm={() => confirmDelete(_?.Deduction_code)}
+                        onConfirm={() => confirmDelete(_?.Payroll_Category_code)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -115,7 +115,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isAddNew={isTable ? true : false} isTable={setIsTable} addNewFunction={setAddnew} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Deduction'} total={'1,000'} />
+                <SecondaryHeader isAddNew={isTable ? true : false} isTable={setIsTable} addNewFunction={setAddnew} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Payroll'} total={'1,000'} />
             </div>
             <div className={Style.TableBody}>
                 {isTable ?
@@ -125,7 +125,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
                             setPageNo(p);
                         },
                         pageSize: pageSize,
-                    }} loading={addDeduction?.loading} columns={columns} dataSource={addDeduction?.data} />
+                    }} loading={addPayroll?.loading} columns={columns} dataSource={addPayroll?.data} />
                     :
                     <>
                         {addNew == false?
@@ -142,7 +142,7 @@ const AddDeduction = ({ ListDeduction, addDeduction, DeleteDeduction, getDeducti
 }
 
 
-function mapStateToProps({ addDeduction }) {
-    return { addDeduction };
+function mapStateToProps({ addPayroll }) {
+    return { addPayroll };
 }
-export default connect(mapStateToProps, AddDeduction_Action)(AddDeduction);
+export default connect(mapStateToProps, AddPayroll_Action)(AddPayroll);

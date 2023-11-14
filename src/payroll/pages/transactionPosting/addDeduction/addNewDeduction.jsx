@@ -3,25 +3,23 @@ import * as AddDeduction_Action from "../../../../store/actions/payroll/addDeduc
 import { connect } from "react-redux";
 import { FormInput, FormSelect } from "../../../../components/basic/input/formInput";
 import { SimpleButton, CancelButton } from "../../../../components/basic/button";
-import {message } from 'antd'
+import { message } from 'antd'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const AddNewDeduciton = ({ getDeductionList, SaveLoans,addNewFunction}) => {
-    const [deductionCode, setDeductionCode] = useState()
-    const [loading,setLoading]=useState(false)
-    useEffect(() => {
-        DataLoader()
-    }, [])
+const AddNewDeduciton = ({SaveDeduction, addNewFunction }) => {
+    const [loading, setLoading] = useState(false)
 
 
-    const AddLoans = yup.object().shape({
-        loanName: yup.string().required("Loan Name is required"),
-        abbreviation: yup.string().required("Abbreviation is required"),
-        deduction: yup.string().required("Allowance is required"),
-        sortKey: yup.string().required("Sort Key is required"),
-        flag: yup.string().required("Flag is required"),
+    const AddDeduction = yup.object().shape({
+        Deduction_name: yup.string().required("Deduction name is required"),
+        Deduction_abbr: yup.string().required("Abbreviation is required"),
+        Fix_Sheet_Col_no: yup.string().required("Fix sheet column number is required"),
+        One_Sheet_Col_no: yup.string().required("One sheet column number is required"),
+        JV_Code: yup.string().required("Jv code is required"),
+        JV_Summary_Code: yup.string().required("Jv summary code  is required"),
+        Sort_key: yup.string().required("sort key is required"),
     });
 
 
@@ -32,29 +30,32 @@ const AddNewDeduciton = ({ getDeductionList, SaveLoans,addNewFunction}) => {
         reset
     } = useForm({
         defaultValues: {
-            loanName: "",
-            abbreviation: "",
-            deduction: "",
-            sortKey: "",
-            flag: "",
+            Deduction_name: "",
+            Deduction_abbr: "",
+            Fix_Sheet_Col_no: "",
+            One_Sheet_Col_no: "",
+            JV_Code: "",
+            JV_Summary_Code: "",
+            Sort_key: "",
         },
         mode: "onChange",
-        resolver: yupResolver(AddLoans),
+        resolver: yupResolver(AddDeduction),
     });
-    const DataLoader = async () => {
-        const deductionList = await getDeductionList()
-        setDeductionCode(deductionList)
-    }
 
     const submitForm = async (data) => {
         setLoading(true)
         try {
-            const isValid = await AddLoans.validate(data);
+            const isValid = await AddDeduction.validate(data);
             if (isValid) {
-                const isSaved = await SaveLoans(data)
-                if(isSaved.success == "success"){
+                const isSaved = await SaveDeduction(data)
+                if (isSaved.success == "success") {
                     setLoading(false)
                     message.success('Loan Successfully created')
+                    addNewFunction(true)
+                }
+                else {
+                    setLoading(false)
+                    message.success('Something went wrong')
                     addNewFunction(true)
                 }
             }
@@ -70,41 +71,38 @@ const AddNewDeduciton = ({ getDeductionList, SaveLoans,addNewFunction}) => {
                 <FormInput
                     errors={errors}
                     control={control}
-                    name={'loanName'} placeholder={'Loan Name'} label={'Loan Name'} />
+                    name={'Deduction_name'} placeholder={'Deduction Name'} label={'Deduction Name'} />
                 <FormInput
                     errors={errors}
                     control={control}
-                    name={'abbreviation'} placeholder={'Abbreviation'} label={'Abbreviation'} />
-                <FormSelect
+                    name={'Deduction_abbr'} placeholder={'Abbreviation'} label={'Abbreviation'} />
+                <FormInput
                     errors={errors}
                     control={control}
-                    deduction={'deduction'}
-                    placeholder={"Select Allowance"}
-                    name={'deduction'} label={'Select Allowance'} options={deductionCode} />
+                    type={'number'}
+                    name={'Fix_Sheet_Col_no'} placeholder={'Fix sheet column number'} label={'Fix sheet column number'} />
+                <FormInput
+                    errors={errors}
+                    control={control}
+                    type={'number'}
+                    name={'One_Sheet_Col_no'} placeholder={'One sheet column number'} label={'One sheet column number'} />
             </div>
             <div className="d-flex">
                 <FormInput
                     errors={errors}
                     control={control}
-                    name={'sortKey'} placeholder={'Sort Key'} label={'Sort Key'} />
-                <FormSelect
-                    deduction={'deductionFlag'}
+                    name={'JV_Code'} placeholder={'Jv code'} label={'Jv code'} />
+                <FormInput
                     errors={errors}
                     control={control}
-                    placeholder={"PF Flag"}
-                    name={'flag'} label={'PF Flag'} options={[
-                        {
-                            value: "Y",
-                            label: "Yes",
-                        },
-                        {
-                            value: "N",
-                            label: "No",
-                        },
-                    ]} />
+                    name={'JV_Summary_Code'} placeholder={'Jv summary code'} label={'Jv summary code'} />
+                <FormInput
+                    errors={errors}
+                    control={control}
+                    name={'Sort_key'} placeholder={'Sort Key'} label={'Sort Key'} />
             </div>
             <div className="d-flex align-items-center justify-content-end">
-                <CancelButton onClick={()=>addNewFunction(true)} title={"Cancel"} />
+                <CancelButton onClick={() => addNewFunction(true)} title={"Cancel"} />
                 <SimpleButton loading={loading} type={'submit'} title={"Submit"} />
             </div>
         </form>

@@ -8,13 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
-    const [deductionCode, setDeductionCode] = useState()
+const AddNewAllowance = ({SaveAllowance, addNewFunction }) => {
     const [loading, setLoading] = useState(false)
-    useEffect(() => {
-        DataLoader()
-    }, [])
-
 
     const AddLoans = yup.object().shape({
         name: yup.string().required("Name is required"),
@@ -45,15 +40,12 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
         incomeTaxExamptionColumn: yup.string().required("Income tax examption column is required"),
         perquisiteFlag: yup.string().required("Perquisite flag is required"),
         description: yup.string().required("Description is required"),
-
-
         bonusFlag: yup.string().required("Bonus Flag is required"),
         showOnLetterFlag: yup.string().required("Show On Letter Flag is required"),
         grossSalaryflag: yup.string().required("Gross Salary Flag is required"),
         fixedTransactionIncrementFlag: yup.string().required("Fixed Transaction Increment Flag is required"),
         advanceFlag: yup.string().required("Advance Flag is required"),
     });
-
 
     const {
         control,
@@ -64,55 +56,56 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
         defaultValues: {
             name: "",
             abbreviation: "",
-            basicFlag: "",
-            appointmentFlag: "",
-            increamentFlag: "",
-            EOBIFlag: "",
-            SESSIFLag: "",
-            overTimeFlag: "",
-            colaFlag: "",
-            specialFlag: "",
-            unionColaFlag: "",
-            LFAFlag: "",
-            LFADefaultFlag: "",
-            taxTreatmentFlag: "",
+            basicFlag: "Y",
+            appointmentFlag: "Y",
+            increamentFlag: "Y",
+            EOBIFlag: "Y",
+            SESSIFLag: "Y",
+            overTimeFlag: "Y",
+            colaFlag: "Y",
+            specialFlag: "Y",
+            unionColaFlag: "Y",
+            LFAFlag: "Y",
+            LFADefaultFlag: "Y",
+            taxTreatmentFlag: "Y",
             textExemptPercentage: "",
             SectionColumnNumber: "",
             FixSheetColumn: "",
             oneSheetColumn: "",
             jvCode: "",
             jvSummaryCode: "",
-            incomeTaxColumn: "",
-            ProjectionFlag: "",
-            cashSalaryFlag: "",
+            incomeTaxColumn: "Y",
+            ProjectionFlag: "Y",
+            cashSalaryFlag: "Y",
             sortKey: "",
             incomeTaxIncomeColumn: "",
             incomeTaxExamptionColumn: "",
-            perquisiteFlag: "",
+            perquisiteFlag: "Y",
             description: "",
-            bonusFlag: "",
-            showOnLetterFlag: "",
-            grossSalaryflag: "",
-            fixedTransactionIncrementFlag: "",
-            advanceFlag: "",
+            bonusFlag: "Y",
+            showOnLetterFlag: "Y",
+            grossSalaryflag: "Y",
+            fixedTransactionIncrementFlag: "Y",
+            advanceFlag: "Y",
         },
         mode: "onChange",
         resolver: yupResolver(AddLoans),
     });
-    const DataLoader = async () => {
-        const deductionList = await getAllowanceList()
-        setDeductionCode(deductionList)
-    }
 
     const submitForm = async (data) => {
         setLoading(true)
         try {
             const isValid = await AddLoans.validate(data);
             if (isValid) {
-                const isSaved = await SaveLoans(data)
+                const isSaved = await SaveAllowance(data)
                 if (isSaved.success == "success") {
                     setLoading(false)
                     message.success('Loan Successfully created')
+                    addNewFunction(true)
+                }
+                else{
+                    setLoading(false)
+                    message.error('Something went wrong')
                     addNewFunction(true)
                 }
             }
@@ -329,11 +322,13 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
                 <FormInput
                     errors={errors}
                     control={control}
+                    type={'number'}
                     name={'textExemptPercentage'} placeholder={'Text Exempt Percentage'} label={'Text Exempt Percentage'} />
                 <FormInput
                     errors={errors}
                     control={control}
-                    name={'SectionColumnNumber'} placeholder={'Section Column Number'} label={'Section Column Number'} />
+                    type={'number'}
+                    name={'SectionColumnNumber'} placeholder={'Section 149 Column Number'} label={'Section 149 Column Number'} />
             </div>
 
 
@@ -342,9 +337,11 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
                 <FormInput
                     errors={errors}
                     control={control}
+                    type={'number'}
                     name={'FixSheetColumn'} placeholder={'Fix Sheet Column'} label={'Fix Sheet Column'} />
                 <FormInput
                     errors={errors}
+                    type={'number'}
                     control={control}
                     name={'oneSheetColumn'} placeholder={'One Sheet Column'} label={'One Sheet Column'} />
                 <FormInput
@@ -360,21 +357,11 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
 
 
             <div className="d-flex">
-                <FormSelect
-                    deduction={'deductionFlag'}
+                <FormInput
                     errors={errors}
                     control={control}
-                    placeholder={"Income Tax Column"}
-                    name={'incomeTaxColumn'} label={'Income Tax Column'} options={[
-                        {
-                            value: "Y",
-                            label: "Yes",
-                        },
-                        {
-                            value: "N",
-                            label: "No",
-                        },
-                    ]} />
+                    type={'number'}
+                    name={'incomeTaxColumn'} placeholder={'Income Tax Column'} label={'Income Tax Column'} />
                 <FormSelect
                     deduction={'deductionFlag'}
                     errors={errors}
@@ -417,10 +404,12 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
                 <FormInput
                     errors={errors}
                     control={control}
+                    type={'number'}
                     name={'incomeTaxIncomeColumn'} placeholder={'Income Tax Income Column'} label={'Income Tax Income Column'} />
                 <FormInput
                     errors={errors}
                     control={control}
+                    type={'number'}
                     name={'incomeTaxExamptionColumn'} placeholder={'Income Tax Examption Column'} label={'Income Tax Examption Column'} />
                 <FormSelect
                     deduction={'deductionFlag'}
@@ -510,8 +499,6 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
 
 
             <div className="d-flex">
-
-
                 <FormSelect
                     deduction={'deductionFlag'}
                     errors={errors}
@@ -528,6 +515,9 @@ const AddNewAllowance = ({ getAllowanceList, SaveLoans, addNewFunction }) => {
                         },
                     ]} />
             </div>
+
+
+
             <div className="d-flex align-items-center justify-content-end">
                 <CancelButton onClick={() => addNewFunction(true)} title={"Cancel"} />
                 <SimpleButton loading={loading} type={'submit'} title={"Submit"} />
