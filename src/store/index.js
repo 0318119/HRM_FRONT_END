@@ -36,7 +36,11 @@ import addAllowance from "./reducers/payroll/addAllownace/index";
 import addDeduction from "./reducers/payroll/addDeduction/index";
 import addPayroll from "./reducers/payroll/addPayroll/index";
 import Red_MasterEarning from "./reducers/MasterMaintaince/MasterEarning";
-
+import Red_Leave_Category from "./reducers/HrOperations/Leave_Category/index"
+import Red_Religion from "./reducers/HrOperations/Religion/index"
+import Red_Resignation from "./reducers/HrOperations/Resignation/index"
+import Red_Section from "./reducers/HrOperations/Section/index"
+import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
 
 
 const reducers = combineReducers({
@@ -75,7 +79,13 @@ const reducers = combineReducers({
   addAllowance,
   addDeduction,
   addPayroll,
-  Red_MasterEarning
+  Red_MasterEarning,
+  Red_Institution,
+  Red_Leave_Category,
+  Red_Religion,
+  Red_Resignation,
+  Red_Section,
+  Red_previous_Employee
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
