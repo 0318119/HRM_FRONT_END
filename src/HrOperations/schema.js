@@ -313,4 +313,47 @@ const Previous_EmpScheme = yup.object().shape({
   Telephone_number: yup.number().required("Telephone_number is required"),
 });
 export {Previous_EmpScheme};
+
+
+const Leave_TypeScheme = yup.object().shape({
+  Leave_type_code: yup.number().required("Leave_type_code is required"),
+  Leave_name: yup.string().required("Leave_name is required"),
+  Leave_type_abbr: yup.string().required("Leave_type_abbr is required"),
+  Leave_Category_code: yup.number().required("Leave_Category_code is required"),
+  Start_date: yup.string().required("Start_date is required"),
+  End_date: yup.string().required("End_date is required"),
+  Annual_Credit: yup.number().required("Annual_Credit is required"),
+  Accumulation_limit: yup.number().required("Accumulation_limit is required"),
+  Proportionate_flag: yup.string().required("Proportionate_flag is required"),
+  Advance_days: yup.number().required("Advance_days is required"),
+  Minimum_days_per_form: yup.number().required("Minimum_days_per_form is required"),
+  Maximum_days_per_form: yup.number().required("Maximum_days_per_form is required"),
+  Life_times: yup.number().required("Life_times is required"),
+  Religion_code: yup.number().required("Religion_code is required"),
+  Increase_Leave_code: yup.number().required("Increase_Leave_code is required"),
+  Join_Confirm_flag: yup.string().required("Join_Confirm_flag is required"),
+  Balance_Check_flag: yup.string().required("Balance_Check_flag is required"),
+  Meal_flag: yup.string().required("Meal_flag is required"),
+  Encashment_flag: yup.string().required("Encashment_flag is required"),
+  Without_pay_flag: yup.string().required("Without_pay_flag is required"),
+  Medical_Certificate_flag: yup.string().required("Medical_Certificate_flag is required"),
+  Medical_Certificate_days: yup.number().required("Medical_Certificate_days is required"),
+  Special_Approval_flag: yup.string().required("Special_Approval_flag is required"),
+  Special_Approval_days: yup.number().required("Special_Approval_days is required"),
+  married_flag: yup.string().required("married_flag is required"),
+  Adjustment_flag: yup.string().required("Adjustment_flag is required"),
+  Adjustment_Leave_code: yup.number().required("Adjustment_Leave_code is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+  On_Confirm_Flag: yup.string().required("On_Confirm_Flag is required"),
+  DaysApplyOn: yup.string().required("DaysApplyOn is required"),
+  SandwichFlag: yup.string().required("SandwichFlag is required"),
+  AttachmentFlag: yup.string().required("AttachmentFlag is required"),
+  AttachmentDays: yup.number().required("AttachmentDays is required"),
+  HREntryStopFlag: yup.string().required("HREntryStopFlag is required"),
+  RepaymentFlag: yup.string().required("RepaymentFlag is required"),
+  GenderFlag: yup.string().required("GenderFlag is required"),
+  CompensatoryFlag: yup.string().required("CompensatoryFlag is required"),
+  
+});
+export { Leave_TypeScheme };
     
