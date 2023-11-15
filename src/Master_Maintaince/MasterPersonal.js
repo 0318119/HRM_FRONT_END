@@ -56,7 +56,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
       dataIndex: 'Emp_name',
       key: 'Emp_name',
     },
- 
+
     {
       title: 'Action',
       key: 'action',
@@ -81,9 +81,9 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
 
 
 
-    return (
-        <>
-            <div>
+  return (
+    <>
+      <div>
         <Header />
       </div>
       {contextHolder}
@@ -109,9 +109,9 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
             <div>
               {mode == "read" && (
                 <>
-                  <Table 
-                      columns={columns} loading={Red_Master_Personal?.loading}
-                      dataSource={Red_Master_Personal?.data[0]?.res?.data1}
+                  <Table
+                    columns={columns} loading={Red_Master_Personal?.loading}
+                    dataSource={Red_Master_Personal?.data[0]?.res?.data1}
                     scroll={{ x: 10 }}
                     pagination={{
                       defaultCurrent: page,
@@ -125,21 +125,21 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
                 </>
               )}
               {mode == "create" && (
-                  <MasterPersonalForm cancel={setMode} mode={mode} isCode={null} page={page}/> 
+                <MasterPersonalForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                  <MasterPersonalForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>  
+                <MasterPersonalForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
               )}
             </div>
           </div>
         </div>
       </div>
-        </>
-    );
+    </>
+  );
 };
 function mapStateToProps({ Red_Master_Personal }) {
   return { Red_Master_Personal };
-  
+
 }
 
 export default connect(mapStateToProps, MASTER_PERSONAL)(MasterPersonal);

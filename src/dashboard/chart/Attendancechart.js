@@ -94,89 +94,48 @@ export default function Attendancechart() {
       });
   }
 
-  // const options = {
-  //   responsive: true,
-  //   beginAtZero: true,
-  //   // maintainAspectRatio: false
-  //   plugins: {
-  //     legend: {
-  //       position: 'top',
-  //     },
-  //     title: {
-  //       display: true,
-  //       text: 'jhhhh',
-  //     },
-  //   },
-  // };
 
-  const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
-  let Status = [];
+  // let Status = [];
   // getAttendData.forEach((element,index) => {
   //   if(element.Attendance_Status == "Present" && element.Remarks == "On Time" ){
   //       Status.push({
-  //         Attendance_Status: element?.Attendance_Status,
+  //         Present_status: element?.Progress,
   //         Month: element?.Month,
   //         Date : element?.Date,
-  //         Time_in : element?.Emp_Time_IN,
-  //         Time_out : element?.Emp_Time_out,
   //         Progress: element?.Progress,
-  //         Remarks: element?.Remarks,
   //         PresentBg:"green",
   //       });
-  //       console.log("On Time",Status)
   //   }
   //   else if(element.Attendance_Status == "Absent" && element.Remarks == "Late"){
   //       Status.push({
-  //         Attendance_Status: element?.Attendance_Status,
+  //         Absent_status: 0.5,
   //         Month: element?.Month,
   //         Date : element?.Date,
-  //         Time_in : element?.Emp_Time_IN,
-  //         Time_out : element?.Emp_Time_out,
   //         Progress: element?.Progress,
-  //         Remarks: element?.Remarks,
   //         AbsentBg:"red",
   //       });
-  //       console.log("Absent",Status)
   //   }
-  // //   else if(element.Attendance_Status == "Present" && element.Remarks == "Late"){
-  // //     Status.push({
-  // //       Attendance_Status: element?.Attendance_Status,
-  // //       Month: element?.Month,
-  // //       Date : element?.Date,
-  // //       Time_in : element?.Emp_Time_IN,
-  // //       Time_out : element?.Emp_Time_out,
-  // //       Progress: element?.Progress,
-  // //       Remarks: element?.Remarks,
-  // //       AbsentBg:"red",
-  // //     });
-  // // }
+  //   else if(element.Attendance_Status == "Present" && element.Remarks == "Late"){
+  //       Status.push({
+  //         Late_status: element?.Progress,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Progress: element?.Progress,
+  //         LateBg:"blue",
+  //       });
+  //   }
+  //   else if(element.DayType == 'Holiday' && element?.DayName == "Saturday" || element?.DayName == "Sunday"){
+  //     Status.push({
+  //       Off_status: 20,
+  //       Month: element?.Month,
+  //       Date : element?.Date,
+  //       Progress: element?.Progress,
+  //       OffBg:"black",
+  //     });
+  // }
   // });
-
   // console.log("Status",Status)
   
-
-  // const options = {
-  //   plugins: {
-  //     legend: {
-  //       display: false,
-  //     },
-  //     tooltips: {
-  //       enabled: true,
-  //       callbacks: {
-  //         title: () => 'Bar Value',
-  //         label: (context) => `Value: ${context.parsed.y}`,
-  //       },
-  //     },
-  //   },
-  //   scales: {
-  //     x: {
-  //       beginAtZero: true,
-  //     },
-  //     y: {
-  //       beginAtZero: true,
-  //     },
-  //   },
-  // };
 
   // const options = {
   //   plugins: {
@@ -207,9 +166,32 @@ export default function Attendancechart() {
   //     },
   //   },
   // };
-  
+
+
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       id: getAttendData.map((items) =>  items.Date),
+  //       data : Status?.map((element) =>  {
+  //         return(
+  //           element.Present_status || element.Absent_status || element.Late_status || element.Off_status
+  //         )
+  //       }),
+  //       backgroundColor: Status?.map((element) => {
+  //         return(
+  //           element.PresentBg || element.AbsentBg || element.LateBg || element.OffBg
+  //         )
+  //       }),
+  //     },
+  //   ],
+  // };
+
 
   const options = {
+    responsive: true,
+    // beginAtZero: true,
+    // maintainAspectRatio: false,
     plugins: {
       tooltip: {
         enabled: true,
@@ -274,58 +256,7 @@ export default function Attendancechart() {
     }
   };
 
-  // const data = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       id: getAttendData.map((items) =>  items.Date),
-  //       // label: [[Status?.map((element) =>  {
-  //       //   return(
-  //       //     element.Attendance_Status == "Present" ? "Present" : 
-  //       //     element.Attendance_Status == "Absent" ?  "Absent" : ""
-  //       //   )
-  //       // } ),]],
-  //       data : Status?.map((element) =>  {
-  //         return(
-  //           element.Attendance_Status == "Present" ? element?.Progress : 
-  //           element.Attendance_Status == "Absent" ?  0.5 : ""
-  //         )
-  //       }),
-  //       // Remarks: Status?.map((element) =>  {
-  //       //   return(
-  //       //     element.Attendance_Status == "Present" ? element.Remarks : 
-  //       //     element.Attendance_Status == "Absent" ? element.Remarks : null
-  //       //   )
-  //       // }),
-  //       // Emp_Time_IN: Status?.map((element) =>  {
-  //       //   return(
-  //       //     element.Attendance_Status == "Present" ? element.Time_in : 
-  //       //     element.Attendance_Status == "Absent" ? element.Time_in : null
-  //       //   )
-  //       // }),
-  //       // Emp_Time_out: Status?.map((element) =>  {
-  //       //   return(
-  //       //     element.Attendance_Status == "Present" ? element.Time_out : 
-  //       //     element.Attendance_Status == "Absent" ? element.Time_out : null
-  //       //   )
-  //       // }),
-  //       backgroundColor: Status?.map((element) => {
-  //         return(
-  //           element?.Attendance_Status == "Present" ? "#1587E7"  : 
-  //           element?.Attendance_Status == "Absent" ? "red" : ""
-  //         )
-  //       }),
-  //       borderColor: Status?.map((element) => {
-  //         return(
-  //           element?.Attendance_Status == "Present" ? "#0c67b3"  : 
-  //           element?.Attendance_Status == "Absent" ? "#db0808" : ""
-  //         )
-  //       }),
-  //       borderWidth: 2,
-  //     },
-  //   ],
-  // };
-
+  const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
 
   const data = {
     labels,
@@ -337,7 +268,6 @@ export default function Attendancechart() {
         backgroundColor: "#1587E7",
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
-        // barThickness: 15
       },
       {
         id: 2,

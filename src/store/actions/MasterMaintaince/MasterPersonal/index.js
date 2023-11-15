@@ -47,7 +47,6 @@ export const GetMasterPersonalData = (params) => async (dispatch) => {
 };
 
 export const Get_Master_Personal_By_Id = (body) => async (dispatch) => {
-    console.log("body",body)
     try {
         dispatch({
             type: GET_MASTER_PERSONAL_START,

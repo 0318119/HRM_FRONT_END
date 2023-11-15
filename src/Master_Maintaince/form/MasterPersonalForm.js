@@ -4,9 +4,8 @@ import * as MASTER_PERSONAL from "../../store/actions/MasterMaintaince/MasterPer
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput, FormCheckBox, FormSelect } from '../../components/basic/input/formInput';
+import { FormInput, FormSelect } from '../../components/basic/input/formInput';
 import { MasterPersonal_schema } from '../schema';
-// import FormSelect from '../../components/basic/select/index'
 import { message } from 'antd';
 import baseUrl from '../../config.json'
 
@@ -44,86 +43,21 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
     const currentDate = new Date();
 
 
+    const data = Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0];
     // FORM CANCEL FUNCTION =================================================================
     const EditBack = () => {
         cancel('read')
     }
     const submitForm = async (data) => {
-        console.log("data",data)
-        // try {
-        //     const isValid = await MasterPersonal_schema.validate(data);
-        //     if (isValid) {
-        //         // Transition_Family_Update(data)
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
+        try {
+            const isValid = await MasterPersonal_schema.validate(data);
+            if (isValid) {
+                POST_MASTER_PERSONAL_FORM(data)
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
-    const {
-        control,
-        formState: { errors },
-        handleSubmit,
-        reset
-    } = useForm({
-        defaultValues: {
-            Emp_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_code ?
-                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_code : 0,
-
-            Emp_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_name,
-            Emp_Father_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Father_name,
-            Emp_sex_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code,
-            Emp_marital_status: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status,
-            Emp_birth_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_birth_date,
-            Emp_Confirm_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Confirm_date,
-            Emp_category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_category,
-            Emp_Leave_category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Leave_category,
-            Emp_address_line1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_address_line1,
-            Emp_address_line2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_address_line2,
-            Emp_home_tel1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_home_tel1,
-            Emp_home_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_home_tel2,
-            Emp_office_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_office_tel2,
-            Emp_mobile_No: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_mobile_No,
-            Emp_nic_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_nic_no,
-            Emp_NIC_Issue_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_NIC_Issue_date,
-            Emp_NIC_Expiry_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_NIC_Expiry_date,
-            Emp_Retirement_age: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Retirement_age,
-            Emp_ntn_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_ntn_no,
-            Emp_email: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_email,
-            Confirmation_Flag: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag,
-            Employment_Type_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Employment_Type_code,
-            Desig_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
-            Grade_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code,
-            Cost_Centre_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code,
-            Section_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
-            Shift_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Shift_code,
-            Loc_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Loc_code,
-            Edu_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code,
-            Supervisor_Code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Supervisor_Code,
-            Religion_Code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Religion_Code,
-            Contact_Person_Name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_Person_Name,
-            Relationship: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Relationship,
-            Contact_address1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_address1,
-            Contact_address2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_address2,
-            Contact_home_tel1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_home_tel1,
-            Contact_home_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_home_tel2,
-            Emp_Blood_Group: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Blood_Group,
-            Vehicle_Registration_Number: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Vehicle_Registration_Number,
-            Emp_Payroll_Category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Payroll_Category,
-            Offer_Letter_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Offer_Letter_date,
-            Tentative_Joining_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Tentative_Joining_date,
-            RefferedBy: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.RefferedBy,
-            Probationary_period_months: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Probationary_period_months,
-            Notice_period_months: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Notice_period_months,
-            Extended_confirmation_days: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Extended_confirmation_days,
-            Permanent_address: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Permanent_address,
-            Nationality: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Nationality,
-            roster_group_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.roster_group_code,
-            card_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.card_no,
-            position_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.position_code,
-        },
-        mode: "onChange",
-        resolver: yupResolver(MasterPersonal_schema),
-    });
 
     useEffect(() => {
         if (isCode !== null) {
@@ -131,131 +65,130 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
         }
     }, [])
 
-
-
-    console.log("Red_Master_Personal",Red_Master_Personal)
+    const {
+        control,
+        formState: { errors },
+        handleSubmit,
+        reset
+    } = useForm({
+        defaultValues: {
+            Emp_name: data?.Emp_name,
+            Emp_Father_name: data?.Emp_Father_name,
+            Emp_sex_code: data?.Emp_sex_code,
+            Emp_marital_status: data?.Emp_marital_status,
+            Emp_birth_date: data?.Emp_birth_date,
+            Emp_Confirm_date: data?.Emp_Confirm_date,
+            Emp_category: data?.Emp_category,
+            Emp_Leave_category: data?.Emp_Leave_category,
+            Emp_address_line1: data?.Emp_address_line1,
+            Emp_address_line2: data?.Emp_address_line2,
+            Emp_home_tel1: data?.Emp_home_tel1,
+            Emp_home_tel2: data?.Emp_home_tel2,
+            Emp_office_tel2: data?.Emp_office_tel2,
+            Emp_mobile_No: data?.Emp_mobile_No,
+            Emp_nic_no: data?.Emp_nic_no,
+            Emp_NIC_Issue_date: data?.Emp_nic_issue_date,
+            Emp_NIC_Expiry_date: data?.Emp_nic_expiry_date,
+            Emp_Retirement_age: data?.Emp_retirement_age,
+            Emp_ntn_no: data?.Emp_ntn_no,
+            Emp_email: data?.Emp_email,
+            Confirmation_Flag: data?.Confirmation_Flag,
+            Employment_Type_code: data?.Employment_Type_code,
+            Desig_code: data?.Desig_code,
+            Grade_code: data?.Grade_code,
+            Cost_Centre_code: data?.Cost_Centre_code,
+            Section_code: data?.Section_code,
+            Shift_code: data?.Shift_code,
+            Loc_code: data?.Loc_code,
+            Edu_code: data?.Edu_code,
+            Supervisor_Code: data?.Supervisor_Code,
+            Religion_Code: data?.Religion_Code,
+            Contact_Person_Name: data?.Contact_Person_Name,
+            Relationship: data?.Relationship,
+            Contact_address1: data?.Contact_address1,
+            Contact_address2: data?.Contact_address2,
+            Contact_home_tel1: data?.Contact_home_tel1,
+            Contact_home_tel2: data?.Contact_home_tel2,
+            Emp_Blood_Group: data?.Emp_Blood_Group,
+            Vehicle_Registration_Number: data?.Vehicle_Registration_Number,
+            Emp_Payroll_Category: data?.Emp_Payroll_Category,
+            Offer_Letter_date: data?.Offer_Letter_date,
+            Tentative_Joining_date: data?.Tentative_Joining_date,
+            RefferedBy: data?.RefferedBy,
+            Probationary_period_months: data?.Probationary_period_months,
+            Notice_period_months: data?.Notice_period_months,
+            Permanent_address: data?.Permanent_address,
+            Nationality: data?.Nationality,
+        },
+        mode: "onChange",
+        resolver: yupResolver(MasterPersonal_schema),
+    });
 
     useEffect(() => {
-        if (mode == "create") {
+        if (mode == "Edit") {
             reset(
                 {
-                    Emp_code: 0,
-                    Emp_name: "",
-                    Emp_Father_name: "",
-                    Emp_sex_code: "",
-                    Emp_marital_status: "",
-                    Emp_birth_date: "",
-                    Emp_Confirm_date: "",
-                    Emp_category: "",
-                    Emp_Leave_category: "",
-                    Emp_address_line1: "",
-                    Emp_address_line2: "",
-                    Emp_home_tel1: "",
-                    Emp_home_tel2: "",
-                    Emp_office_tel1: "",
-                    Emp_office_tel2: "",
-                    Emp_mobile_No: "",
-                    Emp_nic_no: "",
-                    Emp_NIC_Issue_date: "",
-                    Emp_NIC_Expiry_date: "",
-                    Emp_Retirement_age: "",
-                    Emp_ntn_no: "",
-                    Emp_email: "",
-                    Confirmation_Flag: "",
-                    Employment_Type_code: "",
-                    Desig_code: "",
-                    Grade_code: "",
-                    Cost_Centre_code: "",
-                    Section_code: "",
-                    Shift_code: "",
-                    Loc_code: "",
-                    Edu_code: "",
-                    Supervisor_Code: "",
-                    Religion_Code: "",
-                    Contact_Person_Name: "",
-                    Relationship: "",
-                    Contact_address1: "",
-                    Contact_address2: "",
-                    Contact_home_tel1: "",
-                    Contact_home_tel2: "",
-                    Emp_Blood_Group: "",
-                    Vehicle_Registration_Number: "",
-                    Emp_Payroll_Category: "",
-                    Offer_Letter_date: "",
-                    Tentative_Joining_date: "",
-                    RefferedBy: "",
-                    Probationary_period_months: "",
-                    Notice_period_months: "",
-                    Extended_confirmation_days: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Extended_confirmation_days,
-                    Permanent_address: "",
-                    Nationality: "",
-                    roster_group_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.roster_group_code,
-                    card_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.card_no,
-                    position_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.position_code,
+                    Emp_code: data?.Emp_code,
+                    Emp_name: data?.Emp_name,
+                    Emp_Father_name: data?.Emp_Father_name,
+                    Emp_sex_code: data?.Emp_sex_code,
+                    Emp_marital_status: data?.Emp_marital_status,
+                    Emp_birth_date: data?.Emp_birth_date,
+                    Emp_Confirm_date: data?.Emp_Confirm_date,
+                    Emp_category: data?.Emp_category,
+                    Emp_Leave_category: data?.Emp_Leave_category,
+                    Emp_address_line1: data?.Emp_address_line1,
+                    Emp_address_line2: data?.Emp_address_line2,
+                    Emp_home_tel1: data?.Emp_home_tel1,
+                    Emp_home_tel2: data?.Emp_home_tel2,
+                    Emp_office_tel2: data?.Emp_office_tel2,
+                    Emp_mobile_No: data?.Emp_mobile_No,
+                    Emp_nic_no: data?.Emp_nic_no,
+                    Emp_NIC_Issue_date: data?.Emp_nic_issue_date,
+                    Emp_NIC_Expiry_date: data?.Emp_nic_expiry_date,
+                    Emp_Retirement_age: data?.Emp_retirement_age,
+                    Emp_ntn_no: data?.Emp_ntn_no,
+                    Emp_email: data?.Emp_email,
+                    Confirmation_Flag: data?.Confirmation_Flag,
+                    Employment_Type_code: data?.Employment_Type_code,
+                    Desig_code: data?.Desig_code,
+                    Grade_code: data?.Grade_code,
+                    Cost_Centre_code: data?.Cost_Centre_code,
+                    Section_code: data?.Section_code,
+                    Shift_code: data?.Shift_code,
+                    Loc_code: data?.Loc_code,
+                    Edu_code: data?.Edu_code,
+                    Supervisor_Code: data?.Supervisor_Code,
+                    Religion_Code: data?.Religion_Code,
+                    Contact_Person_Name: data?.Contact_Person_Name,
+                    Relationship: data?.Relationship,
+                    Contact_address1: data?.Contact_address1,
+                    Contact_address2: data?.Contact_address2,
+                    Contact_home_tel1: data?.Contact_home_tel1,
+                    Contact_home_tel2: data?.Contact_home_tel2,
+                    Emp_Blood_Group: data?.Emp_Blood_Group,
+                    Vehicle_Registration_Number: data?.Vehicle_Registration_Number,
+                    Emp_Payroll_Category: data?.Emp_Payroll_Category,
+                    Offer_Letter_date: data?.Offer_Letter_date,
+                    Tentative_Joining_date: data?.Tentative_Joining_date,
+                    RefferedBy: data?.RefferedBy,
+                    Probationary_period_months: data?.Probationary_period_months,
+                    Notice_period_months: data?.Notice_period_months,
+                    Extended_confirmation_days: data?.Extended_confirmation_days ? data?.Extended_confirmation_days : currentDate,
+                    Permanent_address: data?.Permanent_address,
+                    Nationality: data?.Nationality,
+                    roster_group_code: data?.roster_group_code ? data?.roster_group_code : 0,
+                    card_no: data?.card_no ? data?.card_no : 0,
+                    position_code: data?.position_code ? data?.position_code : 0,
                 },
             )
-        } else {
-            reset(
-                {
-                    Emp_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_code,
-                    Emp_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_name,
-                    Emp_Father_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Father_name,
-                    Emp_sex_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code,
-                    Emp_marital_status: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status,
-                    Emp_birth_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_birth_date,
-                    Emp_Confirm_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Confirm_date,
-                    Emp_category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_category,
-                    Emp_Leave_category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Leave_category,
-                    Emp_address_line1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_address_line1,
-                    Emp_address_line2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_address_line2,
-                    Emp_home_tel1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_home_tel1,
-                    Emp_home_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_home_tel2,
-                    Emp_office_tel1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_office_tel1,
-                    Emp_office_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_office_tel2,
-                    Emp_mobile_No: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_mobile_No,
-                    Emp_nic_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_nic_no,
-                    Emp_NIC_Issue_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_NIC_Issue_date,
-                    Emp_NIC_Expiry_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_NIC_Expiry_date,
-                    Emp_Retirement_age: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Retirement_age,
-                    Emp_ntn_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_ntn_no,
-                    Emp_email: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_email,
-                    Confirmation_Flag: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag,
-                    Employment_Type_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Employment_Type_code,
-                    Desig_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Desig_code,
-                    Grade_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Grade_code,
-                    Cost_Centre_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Cost_Centre_code,
-                    Section_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Section_code,
-                    Shift_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Shift_code,
-                    Loc_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Loc_code,
-                    Edu_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code,
-                    Supervisor_Code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Supervisor_Code,
-                    Religion_Code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Religion_Code,
-                    Contact_Person_Name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_Person_Name,
-                    Relationship: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Relationship,
-                    Contact_address1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_address1,
-                    Contact_address2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_address2,
-                    Contact_home_tel1: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_home_tel1,
-                    Contact_home_tel2: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Contact_home_tel2,
-                    Emp_Blood_Group: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Blood_Group,
-                    Vehicle_Registration_Number: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Vehicle_Registration_Number,
-                    Emp_Payroll_Category: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Payroll_Category,
-                    Offer_Letter_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Offer_Letter_date,
-                    Tentative_Joining_date: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Tentative_Joining_date,
-                    RefferedBy: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.RefferedBy,
-                    Probationary_period_months: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Probationary_period_months,
-                    Notice_period_months: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Notice_period_months,
-                    Extended_confirmation_days: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Extended_confirmation_days,
-                    Permanent_address: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Permanent_address,
-                    Nationality: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Nationality,
-                    roster_group_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.roster_group_code,
-                    card_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.card_no,
-                    position_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.position_code,
-                },
-            )
-        }
-    }, [Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]])
+        } 
+    }, [data])
 
-    // COST CENTRE FORM DATA API CALL =========================== 
+
+
+
+    // MASTER PERSNOL FORM DATA API CALL =========================== 
     async function POST_MASTER_PERSONAL_FORM(body) {
         setLoading(true)
         await fetch(
@@ -266,19 +199,19 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 accessToken: `Bareer ${get_access_token}`,
             },
             body: JSON.stringify({
-                "Emp_code": body.Emp_code,
-                "Emp_name": body.Edu_name,
-                "Emp_Father_name": body.Emp_Father_name,
-                "Emp_sex_code": body.Emp_sex_code,
+                "Emp_code": isCode,
+                "Emp_name": body?.Emp_name,
+                "Emp_Father_name": body?.Emp_Father_name,
+                "Emp_sex_code": body?.Emp_sex_code,
                 "Emp_marital_status": body.Emp_marital_status,
                 "Emp_birth_date": body.Emp_birth_date,
                 "Emp_Confirm_date": body.Emp_Confirm_date,
                 "Emp_category": body.Emp_category,
                 "Emp_Leave_category": body.Emp_Leave_category,
                 "Emp_address_line1": body.Emp_address_line1,
-                "Emp_address_line2": body.Contact_address2,
-                "Emp_home_tel1": body.Contact_home_tel1,
-                "Emp_home_tel2": body.Contact_home_tel2,
+                "Emp_address_line2": body.Emp_address_line2,
+                "Emp_home_tel1": body.Emp_home_tel1,
+                "Emp_home_tel2": body.Emp_home_tel2,
                 "Emp_office_tel1": body.Emp_office_tel1,
                 "Emp_office_tel2": body.Emp_office_tel2,
                 "Emp_mobile_No": body.Emp_mobile_No,
@@ -299,12 +232,12 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 "Edu_code": body.Edu_code,
                 "Supervisor_Code": body.Supervisor_Code,
                 "Religion_Code": body.Religion_Code,
-                "Contact_Person_Name": body.Contact_Person_,
+                "Contact_Person_Name": body.Contact_Person_Name,
                 "Relationship": body.Relationship,
-                "Contact_address1": body.Contact_Address1,
-                "Contact_address2": body.Contact_Address2,
-                "Contact_home_tel1": body.Contact_Home_tel1,
-                "Contact_home_tel2": body.Contact_home_tel2,
+                "Contact_address1": body.Contact_address1,
+                "Contact_address2": body.Contact_address2,
+                "Contact_home_tel1": body.Contact_home_tel1,
+                "Contact_home_tel2": body.Contact_home_tel1,
                 "Emp_Blood_Group": body.Emp_Blood_Group,
                 "Vehicle_Registration_Number": body.Vehicle_Registration_Number,
                 "Emp_Payroll_Category": body.Emp_Payroll_Category,
@@ -313,12 +246,12 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 "RefferedBy": body.RefferedBy,
                 "Probationary_period_months": body.Probationary_period_months,
                 "Notice_period_months": body.Notice_period_months,
-                "Extended_confirmation_days": body.Extended_confirmation_days ? body.Extended_confirmation_days : currentDate,
+                "Extended_confirmation_days": data?.Extended_confirmation_days,
                 "Permanent_address": body.Permanent_address,
                 "Nationality": body.Nationality,
-                "roster_group_code": body.roster_group_code ? body.roster_group_code : 0,
-                "card_no": body.card_no ? body.card_no : 0,
-                "position_code": body.position_code ? body.position_code : 0,
+                "roster_group_code": data?.roster_group_code,
+                "card_no": data?.card_no,
+                "position_code": data?.position_code,
             })
         }
         ).then((response) => {
@@ -695,17 +628,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 <hr />
                 <div className="form-group formBoxCountry">
                     <FormInput
-                        label={'Employee Code'}
-                        placeholder={'Employee Code'}
-                        id="Emp_code"
-                        name="Emp_code"
-                        type="number"
-                        readOnly={true}
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-                    <FormInput
                         label={'Employee Name'}
                         placeholder={'Employee Name'}
                         id="Emp_name"
@@ -730,27 +652,17 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Date Of Birth'}
                         id="Emp_birth_date"
                         name="Emp_birth_date"
-                        type="date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
-                    {/* <FormInput
-                        label={'Appointment Date'}
-                        placeholder={'Appointment Date'}
-                        id="Emp_appointment_date"
-                        name="Emp_appointment_date"
-                        type="date"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    /> */}
                     <FormInput
                         label={'Confirm Date'}
                         placeholder={'Confirm Date'}
                         id="Emp_Confirm_date"
                         name="Emp_Confirm_date"
-                        type="date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -790,7 +702,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee Home telephone 1'}
                         id="Emp_home_tel1"
                         name="Emp_home_tel1"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -800,7 +712,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee Home telephone 2'}
                         id="Emp_home_tel2"
                         name="Emp_home_tel2"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -810,7 +722,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee Office Telephone 1'}
                         id="Emp_office_tel1"
                         name="Emp_office_tel1"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -820,7 +732,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee Office Telephone 2'}
                         id="Emp_office_tel2"
                         name="Emp_office_tel2"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -830,7 +742,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee Email'}
                         id="Emp_email"
                         name="Emp_email"
-                        type="email"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -860,7 +772,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee CNIC Issue Date'}
                         id="Emp_NIC_Issue_date"
                         name="Emp_NIC_Issue_date"
-                        type="date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -870,7 +782,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Employee CNIC Expiry Date'}
                         id="Emp_NIC_Expiry_date"
                         name="Emp_NIC_Expiry_date"
-                        type="date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -925,96 +837,66 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         errors={errors}
                         control={control}
                     />
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_marital_status"
-                            name="Emp_marital_status"
-                            labelText={'Marital Status'}
-                            label={"Single"}
-                            value={'S'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "S" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_marital_status"
-                            name="Emp_marital_status"
-                            label={'Married'}
-                            value={'M'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "Mz" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Confirmation_Flag"
-                            name="Confirmation_Flag"
-                            labelText={'Confirmation Flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Confirmation_Flag"
-                            name="Confirmation_Flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_sex_code"
-                            name="Emp_sex_code"
-                            labelText={'Genders'}
-                            label={"Male"}
-                            value={'M'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "M" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_sex_code"
-                            name="Emp_sex_code"
-                            label={'Female'}
-                            value={'M'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "M" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
                 </div>
                 <hr />
                 <div className="form-group formBoxCountry">
+                    <FormSelect
+                        label={'Marital Status'}
+                        placeholder='Marital Status'
+                        id="Emp_marital_status"
+                        name="Emp_marital_status"
+                        options={[
+                            {
+                                value: 'M',
+                                label: 'Married',
+                            },
+                            {
+                                value: "N",
+                                label: 'Unmarried',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Confirmation Flag'}
+                        placeholder='Confirmation Flag'
+                        id="Confirmation_Flag"
+                        name="Confirmation_Flag"
+                        options={[
+                            {
+                                value: 'Y',
+                                label: 'Yes',
+                            },
+                            {
+                                value: "N",
+                                label: 'No',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Gender'}
+                        placeholder='Gender'
+                        id="Emp_sex_code"
+                        name="Emp_sex_code"
+                        options={[
+                            {
+                                value: 'M',
+                                label: 'Male',
+                            },
+                            {
+                                value: "F",
+                                label: 'Female',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
                     <FormSelect
                         label={'Form Select Type'}
                         placeholder='Form Select Employee Type'
@@ -1029,11 +911,10 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         showLabel={true}
                         errors={errors}
                         control={control}
-                        type={"text"}
                     />
                     <FormSelect
-                        label={'Form Select Category'}
-                        placeholder='Form Select Category'
+                        label={'Emp Category'}
+                        placeholder='Emp Category'
                         id="Emp_category"
                         name="Emp_category"
                         options={EmployeeCategory.map(
@@ -1042,7 +923,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                                 label: item.Emp_Category_name,
                             })
                         )}
-                        type={"text"}
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1058,7 +938,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                                 label: item.Leave_Category_name,
                             })
                         )}
-                        type={"text"}
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1068,7 +947,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Pay Category'}
                         id="Emp_Payroll_Category"
                         name="Emp_Payroll_Category"
-                        type="number"
                         options={PayCategory?.map(
                             (item) => ({
                                 value: item.Payroll_Category_code,
@@ -1100,7 +978,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Designation'}
                         id="Desig_code"
                         name="Desig_code"
-                        type="text"
                         options={Designation.map((item) => ({
                             value: item.Desig_code,
                             label: item.Desig_name,
@@ -1115,7 +992,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Cost Center'}
                         id="Cost_Centre_code"
                         name="Cost_Centre_code"
-                        type="text"
                         options={CostCenter.map((item) => ({
                             value: item.Cost_Centre_code,
                             label: item.Cost_Centre_name,
@@ -1129,7 +1005,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Section'}
                         id="Section_code"
                         name="Section_code"
-                        type="text"
                         options={Section?.map((item) => ({
                             value: item.Section_code,
                             label: item.Section_name,
@@ -1144,7 +1019,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Grade'}
                         id="Grade_code"
                         name="Grade_code"
-                        type="text"
                         options={Grade.map((item) => ({
                             value: item.Grade_code,
                             label: item.Grade_name,
@@ -1159,7 +1033,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Education'}
                         id="Edu_code"
                         name="Edu_code"
-                        type="text"
                         options={Education.map((item) => ({
                             value: item.Edu_code,
                             label: item.Edu_name,
@@ -1174,7 +1047,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Location'}
                         id="Loc_code"
                         name="Loc_code"
-                        type="text"
                         options={Location?.map((item) => ({
                             value: item.Loc_code,
                             label: item.Loc_name,
@@ -1189,7 +1061,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Religion'}
                         id="Religion_Code"
                         name="Religion_Code"
-                        type="text"
                         options={Religion?.map((item) => ({
                             value: item.Religion_code,
                             label: item.Religion_name,
@@ -1204,7 +1075,6 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Supervisor'}
                         id="Supervisor_Code"
                         name="Supervisor_Code"
-                        type="text"
                         options={Supervisor.map((item) => ({
                             value: item.Emp_code,
                             label: item.Emp_name,
@@ -1249,7 +1119,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Offer Letter'}
                         id="Offer_Letter_date"
                         name="Offer_Letter_date"
-                        type="Date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1259,7 +1129,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Tentative Joining Date'}
                         id="Tentative_Joining_date"
                         name="Tentative_Joining_date"
-                        type="Date"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1312,7 +1182,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Telephone 1'}
                         id="Contact_home_tel1"
                         name="Contact_home_tel1"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1322,7 +1192,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         placeholder={'Telephone 2'}
                         id="Contact_home_tel2"
                         name="Contact_home_tel2"
-                        type="number"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
