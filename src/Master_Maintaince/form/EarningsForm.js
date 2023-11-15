@@ -175,22 +175,20 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     getAllEmpInfo()
   }, [])
   
-  const [isRedData, setRedData] = useState(Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0])
-  console.log(isRedData, 'isRedData')
+  // const [isRedData, setRedData] = useState(Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_name)
+  // console.log(Red_MasterEarning, 'isRedData')
   
   const columns = [
     {
-      title: "Allowance",
-      dataIndex: "Allowance",
-      render: (isRedData) => (
-        <p>{isRedData?.Allowance_name}</p>
-      )
+      title: "Allowance code",
+      dataIndex: "Allowance_code",
+      key: "Allowance_code"
     },
     {
       title: "Amount",
       dataIndex: "Amount",
       render: (data) => (
-          <input type="text" />
+          <input type="text"  />
       )  
     },
     // {
@@ -260,6 +258,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
             <Table
               columns={columns}
               loading={Red_MasterEarning?.loading}
+              dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
             />
           </div>
           <div className="CountryBtnBox">
