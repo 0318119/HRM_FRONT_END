@@ -1,7 +1,7 @@
 import {
     GET_MASTER_PERSONAL_DATA,
     GET_MASTER_PERSONAL_START,
-    GET_DOWNLOAD_PARA_ACCESS_SINGLE,
+    GET_MASTER_PERSONALSINGLE,
     GET_MASTER_PERSONAL_END,
 } from "../../types";
 import baseUrl from "../../../../config.json";
@@ -13,7 +13,7 @@ export const GetMasterPersonalData = (params) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWP/${params.pageNo}/${params.pageSize}/${params.search}`, {
+        const response = await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesName/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -47,13 +47,15 @@ export const GetMasterPersonalData = (params) => async (dispatch) => {
 };
 
 export const Get_Master_Personal_By_Id = (body) => async (dispatch) => {
+    console.log("body",body)
     try {
         dispatch({
             type: GET_MASTER_PERSONAL_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/SP_PER_MasterEmployees_Update`, {
+        // SP_PER_MasterEmployees_Update
+        const response = await fetch(`${baseUrl.baseUrl}/allemployees/MasterEmployeesGetbycode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -66,7 +68,7 @@ export const Get_Master_Personal_By_Id = (body) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_DOWNLOAD_PARA_ACCESS_SINGLE,
+                type: GET_MASTER_PERSONALSINGLE,
                 payload: [{ res }],
                 loading: false,
             });

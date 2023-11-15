@@ -199,17 +199,16 @@ const Institution_Scheme = yup.object().shape({
   Inst_address_line1: yup.string().required("Inst_address_line1 is required"),
   Inst_address_line2: yup.string().required("Inst_address_line2 is required"),
   Inst_address_line3: yup.string().required("Inst_address_line3 is required"),
-  Inst_phone1: yup.number().required("Inst_phone1 is required"),
-  Inst_phone2: yup.number().required("Inst_phone2 is required"),
-  Inst_fax1: yup.number().required("Inst_fax1 is required"),
-  Inst_fax2: yup.number().required("Inst_fax2 is required"),
+  Inst_phone1: yup.string().required("Inst_phone1 is required"),
+  Inst_phone2: yup.string().required("Inst_phone2 is required"),
+  Inst_fax1: yup.string().required("Inst_fax1 is required"),
+  Inst_fax2: yup.string().required("Inst_fax2 is required"),
   Inst_email: yup.string().required("Inst_email is required"),
   Inst_Web_Site: yup.string().required("Inst_Web_Site is required"),
   Sort_key: yup.string().required("Sort_key is required"),
   Verification_Fee: yup.number().required("Verification_Fee is required")
 });
 export {Institution_Scheme};
-  
 
 
 
@@ -262,4 +261,56 @@ const Locations_Scheme = yup.object().shape({
 
 });
 export { Locations_Scheme };
+// HR-OPERATIONS ===> LEAVE CAT SCHEME
+const LeaveCatScheme = yup.object().shape({
+  Leave_Category_code: yup.number().required("Leave_Category_code is required"),
+  Leave_Category_name: yup.string().required("Leave_Category_name is required"),
+  Leave_Category_abbr: yup.string().required("Leave_Category_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {LeaveCatScheme};
+
+// HR-OPERATIONS ===> Religion SCHEME
+const ReligionScheme = yup.object().shape({
+  Religion_code: yup.number().required("Religion_code is required"),
+  Religion_name: yup.string().required("Religion_name is required"),
+  Religion_abbr: yup.string().required("Religion_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {ReligionScheme};
+  
+// HR-OPERATIONS ===> Religion SCHEME
+const ResignationScheme = yup.object().shape({
+  Resign_code: yup.number().required("Resign_code is required"),
+  Resign_reason: yup.string().required("Resign_reason is required"),
+  Resign_abbr: yup.string().required("Resign_abbr is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {ResignationScheme};
+
+// HR-OPERATIONS ===> Section SCHEME
+const SectionScheme = yup.object().shape({
+  Section_code: yup.number().required("Section_code is required"),
+  Section_name: yup.string().required("Section_name is required"),
+  Section_abbr: yup.string().required("Section_abbr is required"),
+  Dept_code: yup.number().required("Dept_code is required"),
+  Section_Head: yup.number().required("Section_Head is required"),
+  Sort_key: yup.string().required("Sort_key is required"),
+});
+export {SectionScheme};
+
+// HR-OPERATIONS ===> Previous-Emp SCHEME
+const Previous_EmpScheme = yup.object().shape({
+  Employer_Code: yup.number().required("Employer_Code is required"),
+  Employer_Name: yup.string().required("Employer_Name is required"),
+  Industry_Flag: yup.string().required("Industry_Flag is required"),
+  Contact_Name: yup.string().required("Contact_Name is required"),
+  Contact_Title: yup.string().required("Contact_Title is required"),
+  Fax_number: yup.number().required("Fax_number is required"),
+  Address_Line_1: yup.string().required("Address_Line_1 is required"),
+  Address_Line_2: yup.string().required("Address_Line_2 is required"),
+  Contact_Title: yup.string().required("Contact_Title is required"),
+  Telephone_number: yup.number().required("Telephone_number is required"),
+});
+export {Previous_EmpScheme};
     

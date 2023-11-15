@@ -15,13 +15,49 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
     const [pageSize, setPageSize] = useState(10);
+    const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
+    const [EmployeeCategory, setEmployeeCategory] = useState([])
+    const [LeaveCategory, setLeaveCategory] = useState([])
+    const [PayCategory, setPayCategory] = useState([])
+    const [Shifts, setShifts] = useState([])
+    const [Designation, setDesignation] = useState([])
+    const [CostCenter, setCostCenter] = useState([])
+    const [Section, setSection] = useState([])
+    const [Grade, setGrade] = useState([])
+    const [Education, setEducation] = useState([])
+    const [Location, setLocation] = useState([])
+    const [Religion, setReligion] = useState([])
+    const [Supervisor, setSupervisor] = useState([])
+    const [getEmpCodeErr, setEmpCodeErr] = message.useMessage();
+    const [EmpCategoryDataErr, setEmpCategoryDataErr] = message.useMessage();
+    const [leaveCatErr, setleaveCatErr] = message.useMessage();
+    const [PayCategoryErr, setPayCategoryErr] = message.useMessage();
+    const [ShiftsCodeErr, setShiftsCodeErr] = message.useMessage();
+    const [DesignationCodeErr, setDesignationCodeErr] = message.useMessage();
+    const [CostCenterCodeErr, setCostCenterCodeErr] = message.useMessage();
+    const [SectionCodeErr, setSectionCodeErr] = message.useMessage();
+    const [GradeCodeErr, setGradeCodeErr] = message.useMessage();
+    const [EducationCodeErr, setEducationCodeErr] = message.useMessage();
+    const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
+    const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
+    const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
+    const currentDate = new Date();
+
 
     // FORM CANCEL FUNCTION =================================================================
     const EditBack = () => {
         cancel('read')
     }
-    const submitForm = (data) => {
-        console.log(data,'feild')
+    const submitForm = async (data) => {
+        console.log("data",data)
+        // try {
+        //     const isValid = await MasterPersonal_schema.validate(data);
+        //     if (isValid) {
+        //         // Transition_Family_Update(data)
+        //     }
+        // } catch (error) {
+        //     console.error(error);
+        // }
     };
     const {
         control,
@@ -32,7 +68,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
         defaultValues: {
             Emp_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_code ?
                 Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_code : 0,
-                
+
             Emp_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_name,
             Emp_Father_name: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Father_name,
             Emp_sex_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code,
@@ -89,13 +125,15 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
         resolver: yupResolver(MasterPersonal_schema),
     });
 
-
-
     useEffect(() => {
         if (isCode !== null) {
             Get_Master_Personal_By_Id(isCode)
         }
     }, [])
+
+
+
+    console.log("Red_Master_Personal",Red_Master_Personal)
 
     useEffect(() => {
         if (mode == "create") {
@@ -148,12 +186,12 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                     RefferedBy: "",
                     Probationary_period_months: "",
                     Notice_period_months: "",
-                    Extended_confirmation_days: "",
+                    Extended_confirmation_days: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Extended_confirmation_days,
                     Permanent_address: "",
                     Nationality: "",
-                    roster_group_code: 20,
-                    card_no: 1,
-                    position_code : 2,
+                    roster_group_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.roster_group_code,
+                    card_no: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.card_no,
+                    position_code: Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.position_code,
                 },
             )
         } else {
@@ -275,12 +313,12 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 "RefferedBy": body.RefferedBy,
                 "Probationary_period_months": body.Probationary_period_months,
                 "Notice_period_months": body.Notice_period_months,
-                "Extended_confirmation_days": body.Extended_confirmation_days,
+                "Extended_confirmation_days": body.Extended_confirmation_days ? body.Extended_confirmation_days : currentDate,
                 "Permanent_address": body.Permanent_address,
                 "Nationality": body.Nationality,
-                "roster_group_code": body.roster_group_code,
-                "card_no": body.card_no,
-                "position_code": body.position_code
+                "roster_group_code": body.roster_group_code ? body.roster_group_code : 0,
+                "card_no": body.card_no ? body.card_no : 0,
+                "position_code": body.position_code ? body.position_code : 0,
             })
         }
         ).then((response) => {
@@ -316,23 +354,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
             setLoading(false)
         });
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
-async function getEmpTypeCodeData() {
+    async function getEmpTypeCodeData() {
         await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -344,49 +366,44 @@ async function getEmpTypeCodeData() {
                 setgetEmpTypeCode(response.data)
             }
             else {
-                messageApi.open({
+                getEmpCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Emp type code :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            getEmpCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Emp type code :" + error?.message || error?.messsage,
             });
         });
     }
-
-const [EmployeeCategory, setEmployeeCategory] = useState([])
-async function EmpCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP
-`, {
+    async function EmpCategoryData() {
+        await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
         ).then((response) => {
             return response.json();
         }).then(async (response) => {
-            if (response.success) {
-                setEmployeeCategory(response.data)
+            if (response?.success) {
+                setEmployeeCategory(response?.data)
             }
             else {
-                messageApi.open({
+                EmpCategoryDataErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Emp Category :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            EmpCategoryDataErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Emp Category :" + error?.message || error?.messsage,
             });
         });
     }
-    
-const [LeaveCategory, setLeaveCategory] = useState([])
-async function LeaveCategoryData() {
-    await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
+    async function LeaveCategoryData() {
+        await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -397,22 +414,20 @@ async function LeaveCategoryData() {
                 setLeaveCategory(response.data)
             }
             else {
-                messageApi.open({
+                leaveCatErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Leave Category :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            leaveCatErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Leave Category :" + error?.message || error?.messsage,
             });
         });
     }
-
-const [LeavePay, setPayCategory] = useState([])
-async function PayCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayroll`, {
+    async function PayCategoryData() {
+        await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayrollWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -421,25 +436,22 @@ async function PayCategoryData() {
         }).then(async (response) => {
             if (response.success) {
                 setPayCategory(response.data)
-                console.log(response.data, 'response.data')
             }
             else {
-                messageApi.open({
+                PayCategoryErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Pay Category :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            PayCategoryErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Pay Category :" + error?.message || error?.messsage,
             });
         });
     }
- 
-const [Shifts, setShifts] = useState([])
-async function ShiftsData() {
-        await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShift`, {
+    async function ShiftsData() {
+        await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShiftWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -448,24 +460,21 @@ async function ShiftsData() {
         }).then(async (response) => {
             if (response.success) {
                 setShifts(response.data)
-                console.log(response.data, 'setShifts.data')
             }
             else {
-                messageApi.open({
+                ShiftsCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Shifts Error :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            ShiftsCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Shifts Error :" + error?.message || error?.messsage,
             });
         });
-    } 
-         
-const [Designation, setDesignation] = useState([])
-async function DesignationData() {
+    }
+    async function DesignationData() {
         await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignationWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -475,24 +484,21 @@ async function DesignationData() {
         }).then(async (response) => {
             if (response.success) {
                 setDesignation(response.data)
-                console.log(response.data, 'setDesignation')
             }
             else {
-                messageApi.open({
+                DesignationCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Designation :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            DesignationCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Designation :" + error?.message || error?.messsage,
             });
         });
-}
-
-const [CostCenter, setCostCenter] = useState([])
-async function CostCenterData() {
+    }
+    async function CostCenterData() {
         await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -502,25 +508,22 @@ async function CostCenterData() {
         }).then(async (response) => {
             if (response.success) {
                 setCostCenter(response.data)
-                console.log(response.data, 'setCostCenter')
             }
             else {
-                messageApi.open({
+                CostCenterCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Cost centre :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            CostCenterCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Cost centre :" + error?.message || error?.messsage,
             });
         });
     }
-
-const [Section, setSection] = useState([])
-async function SectionData() {
-        await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCode`, {
+    async function SectionData() {
+        await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCodeWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -529,23 +532,20 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setSection(response.data)
-                console.log(response.data, 'setSection')
             }
             else {
-                messageApi.open({
+                SectionCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Section :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            SectionCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Section :" + error?.message || error?.messsage,
             });
         });
-    }   
-
-    const [Grade, setGrade] = useState([])
+    }
     async function GradeData() {
         await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCodeWOP`, {
             method: "GET",
@@ -556,23 +556,20 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setGrade(response.data)
-                console.log(response.data, 'setGrade')
             }
             else {
-                messageApi.open({
+                GradeCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Grade Code :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            GradeCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Grade Code :" + error?.message || error?.messsage,
             });
         });
-    } 
-
-    const [Education, setEducation] = useState([])
+    }
     async function EducationData() {
         await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCodeWOP`, {
             method: "GET",
@@ -583,25 +580,22 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setEducation(response.data)
-                console.log(response.data, 'setEducation')
             }
             else {
-                messageApi.open({
+                EducationCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Education :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            EducationCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Education :" + error?.message || error?.messsage,
             });
         });
-    } 
-
-    const [Location, setLocation] = useState([])
+    }
     async function LocationData() {
-        await fetch(`${baseUrl.baseUrl}/location_code/GetEmploymentLocationCode`, {
+        await fetch(`${baseUrl.baseUrl}/location_code/GetLocationsWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -610,25 +604,22 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setLocation(response.data)
-                console.log(response.data, 'setLocation')
             }
             else {
-                messageApi.open({
+                LocationCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Location :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            LocationCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Location :" + error?.message || error?.messsage,
             });
         });
-    } 
-
-    const [Religion, setReligion] = useState([])
+    }
     async function ReligionData() {
-        await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCode`, {
+        await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCodeWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -637,24 +628,22 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setReligion(response.data)
-                console.log(response.data, 'setReligion')
             }
             else {
-                messageApi.open({
+                ReligionCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Religion :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            ReligionCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Religion :" + error?.message || error?.messsage,
             });
         });
     }
-    const [Supervisor, setSupervisor] = useState([])
     async function SupervisorData() {
-        await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesName`, {
+        await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
         }
@@ -663,143 +652,55 @@ async function SectionData() {
         }).then(async (response) => {
             if (response.success) {
                 setSupervisor(response.data)
-                console.log(response.data, 'setSupervisor')
             }
             else {
-                messageApi.open({
+                SupervisorCodeErr.open({
                     type: 'error',
-                    content: response?.message || response?.messsage,
+                    content: "in Supervisor :" + response?.message || response?.messsage,
                 });
             }
         }).catch((error) => {
-            messageApi.open({
+            SupervisorCodeErr.open({
                 type: 'error',
-                content: error?.message || error?.messsage,
+                content: "in Supervisor :" + error?.message || error?.messsage,
             });
         });
-    }         
+    }
 
-useEffect(() => {
-    getEmpTypeCodeData()
-    EmpCategoryData()
-    LeaveCategoryData()
-    PayCategoryData()
-    ShiftsData()
-    DesignationData()
-    CostCenterData()
-    SectionData()
-    GradeData()
-    EducationData()
-    LocationData()
-    ReligionData()
-    SupervisorData()
 
-},[])
+    useEffect(() => {
+        getEmpTypeCodeData()
+        EmpCategoryData()
+        LeaveCategoryData()
+        PayCategoryData()
+        ShiftsData()
+        DesignationData()
+        CostCenterData()
+        SectionData()
+        GradeData()
+        EducationData()
+        LocationData()
+        ReligionData()
+        SupervisorData()
+    }, [])
 
-    
+
     return (
         <>
-            {contextHolder}
+            {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}{setPayCategoryErr}{setShiftsCodeErr}
+            {setDesignationCodeErr}{setCostCenterCodeErr}{setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}
+            {setLocationCodeErr}{setReligionCodeErr}{setSupervisorCodeErr}
             <form onSubmit={handleSubmit(submitForm)}>
                 <h4 className="text-dark">Master Personal</h4>
                 <hr />
                 <div className="form-group formBoxCountry">
-                   
-                    <div className="d-flex">
-                        
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_marital_status"
-                            name="Emp_marital_status"
-                            labelText={'Marital Status'}
-                            label={"Single"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_marital_status"
-                            name="Emp_marital_status"
-                            label={'Married'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Confirmation_Flag"
-                            name="Confirmation_Flag"
-                            labelText={'Confirmation Flag'}
-                            label={"Yes"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Confirmation_Flag"
-                            name="Confirmation_Flag"
-                            label={'No'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
-                   
-                    <div className="d-flex">
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_sex_code"
-                            name="Emp_sex_code"
-                            labelText={'Genders'}
-                            label={"Male"}
-                            value={'Y'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "Y" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                        <FormCheckBox
-                            type='radio'
-                            id="Emp_sex_code"
-                            name="Emp_sex_code"
-                            label={'Female'}
-                            value={'N'}
-                            defaultChecked={
-                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "N" ? true : false
-                            }
-                            showLabel={true}
-                            errors={errors}
-                            control={control}
-                        />
-                    </div>
                     <FormInput
                         label={'Employee Code'}
                         placeholder={'Employee Code'}
                         id="Emp_code"
                         name="Emp_code"
                         type="number"
+                        readOnly={true}
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -824,7 +725,6 @@ useEffect(() => {
                         errors={errors}
                         control={control}
                     />
-                    
                     <FormInput
                         label={'Date Of Birth'}
                         placeholder={'Date Of Birth'}
@@ -865,8 +765,6 @@ useEffect(() => {
                         errors={errors}
                         control={control}
                     />
-                    
-                  
                     <FormInput
                         label={'Employee address line1'}
                         placeholder={'Employee address line1'}
@@ -888,41 +786,41 @@ useEffect(() => {
                         control={control}
                     />
                     <FormInput
-                        label={'Employee Home telephone1'}
-                        placeholder={'Employee Home telephone1'}
+                        label={'Employee Home telephone 1'}
+                        placeholder={'Employee Home telephone 1'}
                         id="Emp_home_tel1"
                         name="Emp_home_tel1"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
                     <FormInput
-                        label={'Employee Home telephone2'}
-                        placeholder={'Employee Home telephone2'}
+                        label={'Employee Home telephone 2'}
+                        placeholder={'Employee Home telephone 2'}
                         id="Emp_home_tel2"
                         name="Emp_home_tel2"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
                     <FormInput
                         label={'Employee Office Telephone1'}
-                        placeholder={'Employee Office Telephone1'}
+                        placeholder={'Employee Office Telephone 1'}
                         id="Emp_office_tel1"
                         name="Emp_office_tel1"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
                     <FormInput
                         label={'Employee Office Telephone2'}
-                        placeholder={'Employee Office Telephone2'}
+                        placeholder={'Employee Office Telephone 2'}
                         id="Emp_office_tel2"
                         name="Emp_office_tel2"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -932,7 +830,7 @@ useEffect(() => {
                         placeholder={'Employee Email'}
                         id="Emp_email"
                         name="Emp_email"
-                        type="Email"
+                        type="email"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -962,7 +860,7 @@ useEffect(() => {
                         placeholder={'Employee CNIC Issue Date'}
                         id="Emp_NIC_Issue_date"
                         name="Emp_NIC_Issue_date"
-                        type="Date"
+                        type="date"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -972,7 +870,7 @@ useEffect(() => {
                         placeholder={'Employee CNIC Expiry Date'}
                         id="Emp_NIC_Expiry_date"
                         name="Emp_NIC_Expiry_date"
-                        type="Date"
+                        type="date"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -982,7 +880,7 @@ useEffect(() => {
                         placeholder={'Employee Retirement Age'}
                         id="Emp_Retirement_age"
                         name="Emp_Retirement_age"
-                        type="Number"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1027,16 +925,101 @@ useEffect(() => {
                         errors={errors}
                         control={control}
                     />
-                    
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_marital_status"
+                            name="Emp_marital_status"
+                            labelText={'Marital Status'}
+                            label={"Single"}
+                            value={'S'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "S" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_marital_status"
+                            name="Emp_marital_status"
+                            label={'Married'}
+                            value={'M'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_marital_status == "Mz" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Confirmation_Flag"
+                            name="Confirmation_Flag"
+                            labelText={'Confirmation Flag'}
+                            label={"Yes"}
+                            value={'Y'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "Y" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Confirmation_Flag"
+                            name="Confirmation_Flag"
+                            label={'No'}
+                            value={'N'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Flag == "N" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
+                    <div className="d-flex">
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_sex_code"
+                            name="Emp_sex_code"
+                            labelText={'Genders'}
+                            label={"Male"}
+                            value={'M'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "M" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                        <FormCheckBox
+                            type='radio'
+                            id="Emp_sex_code"
+                            name="Emp_sex_code"
+                            label={'Female'}
+                            value={'M'}
+                            defaultChecked={
+                                Red_Master_Personal?.dataSingle?.[0]?.res?.data?.[0]?.Emp_sex_code == "M" ? true : false
+                            }
+                            showLabel={true}
+                            errors={errors}
+                            control={control}
+                        />
+                    </div>
                 </div>
                 <hr />
                 <div className="form-group formBoxCountry">
                     <FormSelect
-                        label={'FormSelect Type'}
-                        placeholder={'FormSelect Employee Type'}
+                        label={'Form Select Type'}
+                        placeholder='Form Select Employee Type'
                         id="Employment_Type_code"
                         name="Employment_Type_code"
-                        type="number"
                         options={getEmpTypeCode?.map(
                             (item) => ({
                                 value: item.Empt_Type_code,
@@ -1046,37 +1029,36 @@ useEffect(() => {
                         showLabel={true}
                         errors={errors}
                         control={control}
-
+                        type={"text"}
                     />
                     <FormSelect
-                        label={'FormSelect Category'}
-                        placeholder={'FormSelect Category'}
+                        label={'Form Select Category'}
+                        placeholder='Form Select Category'
                         id="Emp_category"
                         name="Emp_category"
-                        type="number"
                         options={EmployeeCategory.map(
                             (item) => ({
                                 value: item.Emp_Category_code,
                                 label: item.Emp_Category_name,
                             })
                         )}
+                        type={"text"}
                         showLabel={true}
                         errors={errors}
                         control={control}
-
                     />
                     <FormSelect
                         label={'Leave Cat'}
                         placeholder={'Leave Cat'}
                         id="Emp_Leave_category"
                         name="Emp_Leave_category"
-                        type="number"
                         options={LeaveCategory.map(
                             (item) => ({
                                 value: item.Leave_Category_code,
                                 label: item.Leave_Category_name,
                             })
                         )}
+                        type={"text"}
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1087,7 +1069,7 @@ useEffect(() => {
                         id="Emp_Payroll_Category"
                         name="Emp_Payroll_Category"
                         type="number"
-                        options={LeavePay[0]?.map(
+                        options={PayCategory?.map(
                             (item) => ({
                                 value: item.Payroll_Category_code,
                                 label: item.Payroll_Category_name,
@@ -1102,8 +1084,8 @@ useEffect(() => {
                         placeholder={'Shifts'}
                         id="Shift_code"
                         name="Shift_code"
-                        type="number"
-                        options={Shifts[0]?.map(
+                        type="text"
+                        options={Shifts?.map(
                             (item) => ({
                                 value: item.Shift_code,
                                 label: item.Shift_Name,
@@ -1118,11 +1100,11 @@ useEffect(() => {
                         placeholder={'Designation'}
                         id="Desig_code"
                         name="Desig_code"
-                        type="number"
+                        type="text"
                         options={Designation.map((item) => ({
-                                 value: item.Desig_code,
-                                label: item.Desig_name,
-                            })
+                            value: item.Desig_code,
+                            label: item.Desig_name,
+                        })
                         )}
                         showLabel={true}
                         errors={errors}
@@ -1133,7 +1115,7 @@ useEffect(() => {
                         placeholder={'Cost Center'}
                         id="Cost_Centre_code"
                         name="Cost_Centre_code"
-                        type="number"
+                        type="text"
                         options={CostCenter.map((item) => ({
                             value: item.Cost_Centre_code,
                             label: item.Cost_Centre_name,
@@ -1147,8 +1129,8 @@ useEffect(() => {
                         placeholder={'Section'}
                         id="Section_code"
                         name="Section_code"
-                        type="number"
-                        options={Section[0]?.map((item) => ({
+                        type="text"
+                        options={Section?.map((item) => ({
                             value: item.Section_code,
                             label: item.Section_name,
                         })
@@ -1162,7 +1144,7 @@ useEffect(() => {
                         placeholder={'Grade'}
                         id="Grade_code"
                         name="Grade_code"
-                        type="number"
+                        type="text"
                         options={Grade.map((item) => ({
                             value: item.Grade_code,
                             label: item.Grade_name,
@@ -1177,7 +1159,7 @@ useEffect(() => {
                         placeholder={'Education'}
                         id="Edu_code"
                         name="Edu_code"
-                        type="number"
+                        type="text"
                         options={Education.map((item) => ({
                             value: item.Edu_code,
                             label: item.Edu_name,
@@ -1192,12 +1174,11 @@ useEffect(() => {
                         placeholder={'Location'}
                         id="Loc_code"
                         name="Loc_code"
-                        type="number"
-                        options={Location[0]?.map((item) => ({
+                        type="text"
+                        options={Location?.map((item) => ({
                             value: item.Loc_code,
                             label: item.Loc_name,
                         })
-                        
                         )}
                         showLabel={true}
                         errors={errors}
@@ -1208,8 +1189,8 @@ useEffect(() => {
                         placeholder={'Religion'}
                         id="Religion_Code"
                         name="Religion_Code"
-                        type="number"
-                        options={Religion[0]?.map((item) => ({
+                        type="text"
+                        options={Religion?.map((item) => ({
                             value: item.Religion_code,
                             label: item.Religion_name,
                         })
@@ -1223,7 +1204,7 @@ useEffect(() => {
                         placeholder={'Supervisor'}
                         id="Supervisor_Code"
                         name="Supervisor_Code"
-                        type="number"
+                        type="text"
                         options={Supervisor.map((item) => ({
                             value: item.Emp_code,
                             label: item.Emp_name,
@@ -1283,20 +1264,9 @@ useEffect(() => {
                         errors={errors}
                         control={control}
                     />
-
-
-
-
-
-
-
-
-
                 </div>
                 <hr />
                 <div className="form-group formBoxCountry">
-                   
-                    
                     <FormInput
                         label={'Person Name'}
                         placeholder={'Person Name'}
@@ -1359,7 +1329,7 @@ useEffect(() => {
                     />
                 </div>
                 <div className='CountryBtnBox'>
-                    <CancelButton onClick={EditBack} title={'Cancel'} /> 
+                    <CancelButton onClick={EditBack} title={'Cancel'} />
                     <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
             </form>

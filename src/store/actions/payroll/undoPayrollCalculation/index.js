@@ -1,38 +1,6 @@
 import { GET_ALLOWANCE_START, GET_ALLOWANCE_COMPLETE, GET_ALLOWANCE_END } from "../../types"
 import baseURL from '../../../../config.json'
 
-export const getHrInfo = (body) => async (dispatch, getState) => {
-    try {
-        dispatch({
-            type: GET_ALLOWANCE_START,
-            payload: true,
-        });
-        const response = await fetch(`${baseURL.baseUrl}/employee_salary/Get_HR_Stop_Flag`, {
-            method: "GET",
-            headers: {
-                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
-            },
-        });
-        const res = await response.json()
-        if (res?.success == "success") {
-            return res?.data
-        }
-        dispatch({
-            type: GET_ALLOWANCE_END,
-            payload: false,
-        });
-    }
-    catch (error) {
-        dispatch({
-            type: GET_ALLOWANCE_END,
-            payload: false,
-        });
-        console.log(error)
-    }
-}
-
-
 
 export const ChangeFlag = (body) => async (dispatch, getState) => {
     try {
@@ -40,14 +8,14 @@ export const ChangeFlag = (body) => async (dispatch, getState) => {
             type: GET_ALLOWANCE_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/employee_salary/SetHrEntryStopFlag`, {
+        const response = await fetch(`${baseURL.baseUrl}/payroll/UndoPayrollYear_Process`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                StopFlag: body
+                payslip_category: 2
             })
         });
         const res = await response.json()

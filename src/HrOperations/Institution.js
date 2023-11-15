@@ -23,7 +23,7 @@ const Institution = ({ Red_Institution, GetInstitutionData }) => {
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState("");
 
-  console.log(Red_Institution ,'Red_Institution')
+  console.log("Red_Institution table page" ,Red_Institution)
 
   useEffect(() => {
     if (isSearchVal == "") {
@@ -186,7 +186,7 @@ const Institution = ({ Red_Institution, GetInstitutionData }) => {
                 />
               )}
               {mode == "create" && <InstitutionForm cancel={setMode} mode={mode} isCode={null} page={page} />}
-              {mode == "Edit" && <InstitutionForm cancel={setMode} isCode={isCode} page={page} />}
+              {mode == "Edit" && <InstitutionForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
             </div>
           </div>
         </div>

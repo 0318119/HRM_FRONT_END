@@ -1,7 +1,7 @@
 import {
     GET_MASTER_PERSONAL_DATA,
     GET_MASTER_PERSONAL_START,
-    GET_DOWNLOAD_PARA_ACCESS_SINGLE,
+    GET_MASTER_PERSONALSINGLE,
     GET_MASTER_PERSONAL_END,
 } from "../../../actions/types.js";
 
@@ -24,7 +24,7 @@ const Red_Master_Personal = (state = initState, action) => {
                 data: action.payload,
                 loading: action.loading,
             };
-        case GET_DOWNLOAD_PARA_ACCESS_SINGLE:
+        case GET_MASTER_PERSONALSINGLE:
             return {
                 ...state,
                 dataSingle: action.payload,

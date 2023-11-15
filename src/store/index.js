@@ -30,8 +30,17 @@ import Red_Institution from "./reducers/HrOperations/Institution/index"
 import HrStop from "./reducers/payroll/hrStop/index";
 import Red_Holidays from "./reducers/HrOperations/Holidays";
 import Red_Location from "./reducers/HrOperations/Location";
+import undoPayrollCalculation from "./reducers/payroll/undoPayrollCalculation/index";
+import addLoans from "./reducers/payroll/addLoans/index";
+import addAllowance from "./reducers/payroll/addAllownace/index";
+import addDeduction from "./reducers/payroll/addDeduction/index";
+import addPayroll from "./reducers/payroll/addPayroll/index";
 import Red_MasterEarning from "./reducers/MasterMaintaince/MasterEarning";
-
+import Red_Leave_Category from "./reducers/HrOperations/Leave_Category/index"
+import Red_Religion from "./reducers/HrOperations/Religion/index"
+import Red_Resignation from "./reducers/HrOperations/Resignation/index"
+import Red_Section from "./reducers/HrOperations/Section/index"
+import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
 
 
 const reducers = combineReducers({
@@ -65,7 +74,18 @@ const reducers = combineReducers({
   HrStop,
   Red_Holidays,
   Red_Location,
-  Red_MasterEarning
+  undoPayrollCalculation,
+  addLoans,
+  addAllowance,
+  addDeduction,
+  addPayroll,
+  Red_MasterEarning,
+  Red_Institution,
+  Red_Leave_Category,
+  Red_Religion,
+  Red_Resignation,
+  Red_Section,
+  Red_previous_Employee
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
