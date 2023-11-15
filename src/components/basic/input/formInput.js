@@ -4,6 +4,7 @@ import { Controller } from 'react-hook-form';
 import { Select } from 'antd';
 
 
+
 const FormInput = ({
     control,
     name,
@@ -26,7 +27,7 @@ const FormInput = ({
                 render={({ field }) => {
                     return (
                         <input
-                        type={type}
+                            type={type}
                             className={style.Input}
                             {...field}
                             {...rest}
@@ -99,6 +100,7 @@ const FormCheckBox = ({
         </div>
     );
 };
+
 const FormSelect = ({
     control,
     name,
@@ -121,6 +123,13 @@ const FormSelect = ({
         )
     }
     else if (deduction == 'deductionFlag') {
+        options?.map((t) =>
+            options2.push({
+                value: t?.value,
+                label: t?.label,
+            })
+        )
+    } else {
         options?.map((t) =>
             options2.push({
                 value: t?.value,
