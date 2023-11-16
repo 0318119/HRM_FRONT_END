@@ -19,8 +19,6 @@ const Leave_Balance_Upload = () => {
     
 
 
-
-
     // UPLOAD ATTACHMENT API CALL ==========================================
     const formData = new FormData();
     if (isFile !== '') {

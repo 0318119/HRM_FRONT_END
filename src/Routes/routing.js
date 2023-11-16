@@ -92,6 +92,8 @@ import AddLoans from '../payroll/pages/transactionPosting/addLoans/addLoans'
 import AddAllowance from '../payroll/pages/transactionPosting/addAllowance/addAllowance'
 import AddDeduction from '../payroll/pages/transactionPosting/addDeduction/addDeduction'
 import AddPayroll from '../payroll/pages/transactionPosting/addPayroll/addPayroll'
+import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/addpayrollMethod'
+import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
 import Earnings from '../Master_Maintaince/Earnings';
 
 
@@ -189,6 +191,8 @@ const routing = () => {
         <Route path="/payroll/addallowance" element={<AddAllowance />} />
         <Route path="/payroll/addDeduction" element={<AddDeduction />} />
         <Route path="/payroll/addPayroll" element={<AddPayroll />} />
+        <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
+        <Route path="/pdf" element={<AddPayrollMethodPdf />} />
         <Route path="/Earnings" element={<Earnings/>} />
         
         {/* report */}

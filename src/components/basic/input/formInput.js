@@ -113,12 +113,7 @@ const FormSelect = ({
 }) => {
     const options2 = [];
     if (deduction == 'deduction') {
-        options?.map((t) =>
-            options2.push({
-                value: t?.Deduction_code,
-                label: t?.Deduction_name,
-            })
-        )
+        
     }
     else if (deduction == 'deductionFlag') {
         options?.map((t) =>
@@ -144,6 +139,7 @@ const FormSelect = ({
                             {...field}
                             {...rest}
                             name={name} id={name}
+                            placeholder={placeholder}
                             options={options2}
                         />
                     )
