@@ -246,12 +246,12 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 "RefferedBy": body.RefferedBy,
                 "Probationary_period_months": body.Probationary_period_months,
                 "Notice_period_months": body.Notice_period_months,
-                "Extended_confirmation_days": data?.Extended_confirmation_days,
+                "Extended_confirmation_days": data?.Extended_confirmation_days ? data?.Extended_confirmation_days : currentDate,
                 "Permanent_address": body.Permanent_address,
                 "Nationality": body.Nationality,
-                "roster_group_code": data?.roster_group_code,
-                "card_no": data?.card_no,
-                "position_code": data?.position_code,
+                "roster_group_code": data?.roster_group_code ? data?.roster_group_code : 0,
+                "card_no": data?.card_no ? data?.card_no : 0,
+                "position_code": data?.position_code ? data?.position_code : 0,
             })
         }
         ).then((response) => {
@@ -797,6 +797,16 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         errors={errors}
                         control={control}
                     />
+                    {/* <FormInput
+                        label={'Contract Expiry Date'}
+                        placeholder={'Contract Expiry Date'}
+                        id="ContractExpiryDate"
+                        name="ContractExpiryDate"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    /> */}
                     <FormInput
                         label={'Employee NTN No'}
                         placeholder={'Employee NTN No'}

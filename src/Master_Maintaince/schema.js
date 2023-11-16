@@ -10,7 +10,6 @@ const FamilySchema = yup.object().shape({
   Fam_member_name: yup.string().required("Fam_member_name is required"),
   Fam_member_type: yup.string().required("Fam_member_type is required"),
 });
-
 export {FamilySchema};
 
 
@@ -33,8 +32,12 @@ const MasterPersonal_schema = yup.object().shape({
   Emp_office_tel2: yup.string().required("office tel2 is required"),
   Emp_mobile_No: yup.string().required("Emp_mobile_No is required"),
   Emp_nic_no: yup.string().required("Emp_nic_no is required"),
-  Emp_NIC_Issue_date: yup.string().required("Emp_NIC_Issue_date is required"),
-  Emp_NIC_Expiry_date: yup.string().required("Emp_NIC_Expiry_date is required"),
+  Emp_NIC_Issue_date: yup.string().required('Emp NIC Issue date is required'),
+  Emp_NIC_Expiry_date: yup.string().required('Emp NIC Expiry date is required')
+  .test('is-later', 'CNIC Expiry date must be greater than issue date or equal to issue Date,', function (value) {
+    const issueDate = this.parent.Emp_NIC_Issue_date; // Access the issue date from the parent object
+    return moment(value).isAfter(issueDate);
+  }),
   Emp_Retirement_age: yup.number().required("Emp_Retirement_age is required"),
   Emp_ntn_no: yup.string().required("Emp NTN no is required"),
   Emp_email: yup.string().required("Emp email is required"),
@@ -63,14 +66,9 @@ const MasterPersonal_schema = yup.object().shape({
   RefferedBy: yup.string().required("RefferedBy is required"),
   Probationary_period_months: yup.number().required("Probationary period months is required"),
   Notice_period_months: yup.number().required("Notice period months is required"),
-  // Extended_confirmation_days: yup.number().required("Extended confirmation days is required"),
   Permanent_address: yup.string().required("Permanent Address is required"),
   Nationality: yup.string().required("Nationality is required"),
-  // roster_group_code: yup.number().required("roster group code is required"),
-  // card_no: yup.string().required("card_no is required"),
-  // position_code: yup.number().required("position code is required"),
 });
-
 export { MasterPersonal_schema };
 
 
@@ -82,5 +80,4 @@ const MasterEarningSchema = yup.object().shape({
   Fam_member_name: yup.string().required("Fam_member_name is required"),
   Fam_member_type: yup.string().required("Fam_member_type is required"),
 });
-
 export { MasterEarningSchema };

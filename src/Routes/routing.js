@@ -93,6 +93,7 @@ import AddAllowance from '../payroll/pages/transactionPosting/addAllowance/addAl
 import AddDeduction from '../payroll/pages/transactionPosting/addDeduction/addDeduction'
 import AddPayroll from '../payroll/pages/transactionPosting/addPayroll/addPayroll'
 import Earnings from '../Master_Maintaince/Earnings';
+import PaySlip from '../payroll/pages/PaySlip';
 
 
 const routing = () => {
@@ -191,8 +192,10 @@ const routing = () => {
         <Route path="/payroll/addPayroll" element={<AddPayroll />} />
         <Route path="/Earnings" element={<Earnings/>} />
         
-        {/* report */}
+        {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
+        {/* PAY SLIP ============================================================== */}
+        <Route path="/Pay/PaySlip" element={<PaySlip />} />
       </Routes>
     </Router>
 

@@ -63,7 +63,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
       render: (data) => (
         <Space size="middle">
           <button onClick={() => EditPage('Edit', data?.Emp_code)} className="editBtn"><FaEdit /></button>
-          <Popconfirm
+          {/* <Popconfirm
             title="Delete Employee"
             description="Are you sure to delete the Employee?"
             okText="Yes"
@@ -73,7 +73,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
             }}
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
-          </Popconfirm>
+          </Popconfirm> */}
         </Space>
       ),
     },
