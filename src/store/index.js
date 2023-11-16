@@ -41,6 +41,7 @@ import Red_Religion from "./reducers/HrOperations/Religion/index"
 import Red_Resignation from "./reducers/HrOperations/Resignation/index"
 import Red_Section from "./reducers/HrOperations/Section/index"
 import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
+import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive"; 
 
 
 const reducers = combineReducers({
@@ -85,7 +86,8 @@ const reducers = combineReducers({
   Red_Religion,
   Red_Resignation,
   Red_Section,
-  Red_previous_Employee
+  Red_previous_Employee, 
+  Red_MasterActive
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
