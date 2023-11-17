@@ -38,7 +38,7 @@ const MasterPersonal_schema = yup.object().shape({
     const issueDate = this.parent.Emp_NIC_Issue_date; // Access the issue date from the parent object
     return moment(value).isAfter(issueDate);
   }),
-  Emp_Retirement_age: yup.number().required("Emp_Retirement_age is required"),
+  Emp_Retirement_age: yup.number().required("Emp Retirement age is required"),
   Emp_ntn_no: yup.string().required("Emp NTN no is required"),
   Emp_email: yup.string().required("Emp email is required"),
   Confirmation_Flag: yup.string().required("Confirmation_Flag is required"),

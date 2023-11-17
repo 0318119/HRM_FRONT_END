@@ -186,10 +186,10 @@ const Previous_Employers = ({ Red_previous_Employee, GetPreviousEmpData }) => {
                 />
               )}
               {mode == "create" && (
-                <PreEmployerForm cancel={setMode} isCode={null} page={page} />
+                <PreEmployerForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                <PreEmployerForm cancel={setMode} isCode={isCode} page={page} />
+                <PreEmployerForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
               )}
             </div>
           </div>

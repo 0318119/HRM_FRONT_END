@@ -12,6 +12,7 @@ const FormInput = ({
     errors,
     showLabel = true,
     type,
+    maxLenght,
     ...rest
 }) => {
     return (
@@ -27,6 +28,7 @@ const FormInput = ({
                 render={({ field }) => {
                     return (
                         <input
+                        maxLength={maxLenght}
                             type={type}
                             className={style.Input}
                             {...field}

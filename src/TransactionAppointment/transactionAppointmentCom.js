@@ -108,7 +108,6 @@ function TransactionAppointmentCom() {
         "UserCode": getAppointStatus.filter(data => data.Sequence_no == item)[0].UserCode,
         "Replacement_Flag": "N",
         "Replacement_Emp_Code": "1"
-
       })
     }).then((response) => {
       return response.json()
