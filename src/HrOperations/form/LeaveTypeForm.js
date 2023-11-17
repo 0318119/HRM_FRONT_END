@@ -47,9 +47,10 @@ function LeaveCategoryForm({
     reset,
   } = useForm({
     defaultValues: {
-      Leave_type_code: Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_type_code
-        ? Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_type_code
-        : 0,
+      // Leave_type_code: Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]
+      //   ?.Leave_type_code
+      //   ? Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_type_code
+      //   : 0,
 
       Leave_name: Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_name,
       Leave_type_abbr:
@@ -124,14 +125,13 @@ function LeaveCategoryForm({
 
   useEffect(() => {
     if (isCode !== null) {
-        GetLeaveTypeById(isCode);
+      GetLeaveTypeById(isCode);
     }
   }, []);
 
   useEffect(() => {
     if (mode == "create") {
       reset({
-        Leave_type_code: 0,
         Leave_name: "",
         Leave_type_abbr: "",
         Leave_Category_code: "",
@@ -171,11 +171,6 @@ function LeaveCategoryForm({
       });
     } else {
       reset({
-        Leave_type_code: Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]
-          ?.Leave_type_code
-          ? Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_type_code
-          : 0,
-
         Leave_name: Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_name,
         Leave_type_abbr:
           Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]?.Leave_type_abbr,
@@ -251,58 +246,61 @@ function LeaveCategoryForm({
       });
     }
   }, [Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]]);
-  console.log("jfegevj",Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0])
+  console.log("jfegevj", Red_Leave_Type?.dataSingle?.[0]?.res?.data?.[0]);
 
   //  Leave Type FORM DATA API CALL ===========================
   async function POST_Leave_Type_FORM(body) {
     setLoading(true);
-    await fetch(`${baseUrl.baseUrl}/employment_leave_type/AddEmploymentLeaveType`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        accessToken: `Bareer ${get_access_token}`,
-      },
-      body: JSON.stringify({
-        "Leave_type_code": body?.Leave_type_code,
-        "Leave_name": body?.Leave_name,
-        "Leave_type_abbr": body?.Leave_type_abbr,
-        "Leave_Category_code": body?.Leave_Category_code,
-        "Start_date": body?.Start_date,
-        "End_date": body?.End_date,
-        "Annual_Credit": body?.Annual_Credit,
-        "Accumulation_limit": body?.Accumulation_limit,
-        "Proportionate_flag": body?.Proportionate_flag,
-        "Advance_days": body?.Advance_days,
-        "Minimum_days_per_form": body?.Minimum_days_per_form,
-        "Maximum_days_per_form": body?.Maximum_days_per_form,
-        "Life_times": body?.Life_times,
-        "Religion_code": body?.Religion_code,
-        "Increase_Leave_code": body?.Increase_Leave_code,
-        "Join_Confirm_flag": body?.Join_Confirm_flag,
-        "Balance_Check_flag":body?.Balance_Check_flag,
-        "Meal_flag": body?.Meal_flag,
-        "Encashment_flag": body?.Encashment_flag,
-        "Without_pay_flag": body?.Without_pay_flag,
-        "Medical_Certificate_flag": body?.Medical_Certificate_flag,
-        "Medical_Certificate_days": body?.Medical_Certificate_days,
-        "Special_Approval_flag": body?.Special_Approval_flag,
-        "Special_Approval_days": body?.Special_Approval_days,
-        "married_flag": body?.married_flag,
-        "Adjustment_flag": body?.Adjustment_flag,
-        "Adjustment_Leave_code": body?.Adjustment_Leave_code,
-        "Sort_key": body?.Sort_key,
-        "On_Confirm_Flag": body?.On_Confirm_Flag,
-        "job_description_flag": body?.job_description_flag,
-        "DaysApplyOn": body?.DaysApplyOn,
-        "SandwichFlag": body?.SandwichFlag,
-        "AttachmentFlag": body?.AttachmentFlag,
-        "AttachmentDays": body?.AttachmentDays,
-        "HREntryStopFlag": body?.HREntryStopFlag,
-        "RepaymentFlag": body?.RepaymentFlag,
-        "GenderFlag": body?.GenderFlag,
-        "CompensatoryFlag": body?.CompensatoryFlag,
-      }),
-    })
+    await fetch(
+      `${baseUrl.baseUrl}/employment_leave_type/AddEmploymentLeaveType`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          accessToken: `Bareer ${get_access_token}`,
+        },
+        body: JSON.stringify({
+          Leave_type_code:  mode == "create" ? 0 : isCode,
+          Leave_name: body?.Leave_name,
+          Leave_type_abbr: body?.Leave_type_abbr,
+          Leave_Category_code: body?.Leave_Category_code,
+          Start_date: body?.Start_date,
+          End_date: body?.End_date,
+          Annual_Credit: body?.Annual_Credit,
+          Accumulation_limit: body?.Accumulation_limit,
+          Proportionate_flag: body?.Proportionate_flag,
+          Advance_days: body?.Advance_days,
+          Minimum_days_per_form: body?.Minimum_days_per_form,
+          Maximum_days_per_form: body?.Maximum_days_per_form,
+          Life_times: body?.Life_times,
+          Religion_code: body?.Religion_code,
+          Increase_Leave_code: body?.Increase_Leave_code,
+          Join_Confirm_flag: body?.Join_Confirm_flag,
+          Balance_Check_flag: body?.Balance_Check_flag,
+          Meal_flag: body?.Meal_flag,
+          Encashment_flag: body?.Encashment_flag,
+          Without_pay_flag: body?.Without_pay_flag,
+          Medical_Certificate_flag: body?.Medical_Certificate_flag,
+          Medical_Certificate_days: body?.Medical_Certificate_days,
+          Special_Approval_flag: body?.Special_Approval_flag,
+          Special_Approval_days: body?.Special_Approval_days,
+          married_flag: body?.married_flag,
+          Adjustment_flag: body?.Adjustment_flag,
+          Adjustment_Leave_code: body?.Adjustment_Leave_code,
+          Sort_key: body?.Sort_key,
+          On_Confirm_Flag: body?.On_Confirm_Flag,
+          job_description_flag: body?.job_description_flag,
+          DaysApplyOn: body?.DaysApplyOn,
+          SandwichFlag: body?.SandwichFlag,
+          AttachmentFlag: body?.AttachmentFlag,
+          AttachmentDays: body?.AttachmentDays,
+          HREntryStopFlag: body?.HREntryStopFlag,
+          RepaymentFlag: body?.RepaymentFlag,
+          GenderFlag: body?.GenderFlag,
+          CompensatoryFlag: body?.CompensatoryFlag,
+        }),
+      }
+    )
       .then((response) => {
         return response.json();
       })
@@ -345,7 +343,7 @@ function LeaveCategoryForm({
         <h4 className="text-dark">Leave Type</h4>
         <hr />
         <div className="form-group formBoxLeaveType">
-          <FormInput
+          {/* <FormInput
             label={"Leave Code"}
             placeholder={"Leave Code"}
             id="Leave_type_code"
@@ -355,7 +353,7 @@ function LeaveCategoryForm({
             showLabel={true}
             errors={errors}
             control={control}
-          />
+          /> */}
           <FormInput
             label={"Leave Name"}
             placeholder={"Leave Name"}
@@ -381,7 +379,7 @@ function LeaveCategoryForm({
             placeholder={"Leave Category Code"}
             id="Leave_Category_code"
             name="Leave_Category_code"
-            type="text"
+            type="number"
             showLabel={true}
             errors={errors}
             control={control}
@@ -708,7 +706,7 @@ function LeaveCategoryForm({
             label={"Adjustment Leave code"}
             name="Adjustment_Leave_code"
             id="Adjustment_Leave_code"
-            type="text"
+            type="number"
             showLabel={true}
             errors={errors}
             control={control}

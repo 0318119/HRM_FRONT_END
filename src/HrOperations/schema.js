@@ -316,7 +316,7 @@ export {Previous_EmpScheme};
 
 
 const Leave_TypeScheme = yup.object().shape({
-  Leave_type_code: yup.number().required("Leave_type_code is required"),
+  Leave_type_code: yup.number().optional("Leave_type_code is required"),
   Leave_name: yup.string().required("Leave_name is required"),
   Leave_type_abbr: yup.string().required("Leave_type_abbr is required"),
   Leave_Category_code: yup.number().required("Leave_Category_code is required"),
