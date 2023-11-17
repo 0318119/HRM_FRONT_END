@@ -42,6 +42,7 @@ import Red_Resignation from "./reducers/HrOperations/Resignation/index"
 import Red_Section from "./reducers/HrOperations/Section/index"
 import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
 import Red_Leave_Type from "./reducers/HrOperations/LeaveType/index"
+import PdfRender from "./reducers/payroll/pdfRender/index"
 
 
 const reducers = combineReducers({
@@ -87,7 +88,8 @@ const reducers = combineReducers({
   Red_Resignation,
   Red_Section,
   Red_previous_Employee,
-  Red_Leave_Type
+  Red_Leave_Type,
+  PdfRender
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
-import * as AddPayroll_Action from "../../../../store/actions/payroll/addPayroll/index";
+import Style from './pdfRender.module.css'
+import * as PayrollUpload_Action from "../../../../store/actions/payroll/PdfRender/index";
 import { connect } from "react-redux";
-import { FormInput, FormSelect } from "../../../../components/basic/input/formInput";
-import { SimpleButton, CancelButton } from "../../../../components/basic/button";
-import { message } from 'antd'
-import { useForm } from "react-hook-form";
+import * as FileSaver from 'file-saver'
+import XLSX from 'sheetjs-style'
+import { DateTime } from "luxon";
+import SecondaryHeader from "../../../component/secondaryHeader";
+import Header from "../../../../components/Includes/Header";
+import {FormSelect } from "../../../../components/basic/input/formInput";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import {SimpleButton } from "../../../../components/basic/button";
+import {message} from 'antd'
 
-const AddNewPayroll = ({SavePayroll, addNewFunction}) => {
-    const [deductionCode, setDeductionCode] = useState()
+const PdfData = ({ PdfRender, ListPdfData }) => {
     const [loading, setLoading] = useState(false)
-
     const [monthList, setmonthList] = useState([
         {
             "value": 1,
@@ -441,21 +445,15 @@ const AddNewPayroll = ({SavePayroll, addNewFunction}) => {
         }
     ])
 
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+    const fileExtension = '.xlsx';
 
+    
+    
     const AddLoans = yup.object().shape({
-        Payroll_Category_name: yup.string().required("Payrool category name is required"),
-        Payroll_Category_abbr: yup.string().required("Payrool category Abbreviation is required"),
-        Payroll_Month: yup.string().required("Payroll month is required"),
-        Payroll_Year: yup.string().required("Payroll year is required"),
-        Payroll_Last_Month: yup.string().required("Payroll last month is required"),
-        Payroll_Last_Year: yup.string().required("Payroll last year is required"),
-        Payroll_Undo_Flag: yup.string().required("Payroll undo flag is required"),
-        Loan_Completion_Flag: yup.string().required("Loan completion flag is required"),
-        Sort_key: yup.string().required("Sort key is required"),
-        pf_percentage: yup.string().required("PF percentage is required"),
-        active_flag: yup.string().required("Active flag is required"),
+        month: yup.string().required("Month is required"),
+        year: yup.string().required("Year is required"),
     });
-
 
     const {
         control,
@@ -464,156 +462,103 @@ const AddNewPayroll = ({SavePayroll, addNewFunction}) => {
         reset
     } = useForm({
         defaultValues: {
-            Payroll_Category_name: "",
-            Payroll_Category_abbr: "",
-            Payroll_Month: "",
-            Payroll_Year: "",
-            Payroll_Last_Month: "",
-            Payroll_Last_Year: "",
-            Payroll_Undo_Flag: "Y",
-            Loan_Completion_Flag: "Y",
-            Sort_key: "",
-            pf_percentage: "",
-            active_flag: "Y",
+            month: "",
+            year: "",
         },
         mode: "onChange",
         resolver: yupResolver(AddLoans),
     });
-
-    const submitForm = async (data) => {
+    
+    
+    
+    const Request= async(data)=>{
         setLoading(true)
         try {
             const isValid = await AddLoans.validate(data);
             if (isValid) {
-                const isSaved = await SavePayroll(data)
-                if (isSaved.success == "success") {
-                    setLoading(false)
-                    message.success('Loan Successfully created')
-                    addNewFunction(true)
+                const isSaved = await ListPdfData(data)
+                if(isSaved.length > 0){
+                    DownloadExcel(isSaved)
                 }
                 else {
                     setLoading(false)
-                    message.error('Something went wrong')
-                    addNewFunction(true)
+                    message.error('No Data Found')
                 }
+            }
+            else{
+                setLoading(false)
+                message.error('Something went wrong')
             }
         } catch (error) {
             setLoading(false)
             console.error(error);
         }
     }
-
+    const DownloadExcel = async (hjh) => {
+        try {
+            const uniqueEmployeeNames = [... new Set(hjh.map(x => x.Emp_name))];
+            const attendances = uniqueEmployeeNames.map(name => {
+                let attendanceRow = [name];
+                const employeeAttendances = hjh.filter(x => x.Emp_name === name);
+                for (let i = 0; i < employeeAttendances.length; i++) {
+                    const attendance = employeeAttendances[i];
+                    attendanceRow.push(`${attendance.Emp_Time_In_HH}:${attendance.Emp_Time_In_MM}`, `${attendance.Emp_Time_Out_HH}:${attendance.Emp_Time_Out_MM}`, `${attendance.Total_Shift_MM}`);
+                }
+                return attendanceRow;
+            });
+            const numberOfDays = [... new Set(hjh.map(x => x.Attendance_Date))];
+            const ws = XLSX.utils.json_to_sheet([]);
+            let merges = [];
+            for (let i = 0; i < numberOfDays.length * 3; i++) {
+                merges.push({ s: { r: 0, c: 1 + i }, e: { r: 0, c: 3 + i } })
+            }
+            ws['!merges'] = merges;
+            XLSX.utils.sheet_add_aoa(ws, [["Employee Name", ...numberOfDays.map(x => [DateTime.fromSQL(x).toFormat("EEEE"), "", ""])].flat()], { origin: "A1" });
+            XLSX.utils.sheet_add_aoa(ws, [["", ...numberOfDays.map(x => [DateTime.fromSQL(x).toFormat("yyyy LLL dd"), "", ""])].flat()], { origin: "A2" });
+            XLSX.utils.sheet_add_aoa(ws, [['', ...Array(numberOfDays.length).fill(["In", "Out", "Total"]).flat()]], { origin: "A3" });
+            XLSX.utils.sheet_add_aoa(ws, attendances, { origin: "A4" });
+            const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+            const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+            const data = new Blob([excelBuffer], { type: fileType });
+            FileSaver.saveAs(data, "data" + fileExtension);
+            setLoading(false)
+        } catch (error) {
+            console.error(error);
+        }
+    }
     return (
-        <form onSubmit={handleSubmit(submitForm)}>
-            <div className="d-flex">
-                <FormInput
-                    errors={errors}
-                    control={control}
-                    name={'Payroll_Category_name'} placeholder={'Payroll name'} label={'Payroll name'} />
-                <FormInput
-                    errors={errors}
-                    control={control}
-                    name={'Payroll_Category_abbr'} placeholder={'Payrool category Abbreviation'} label={'Payrool category Abbreviation'} />
+        <>
 
-
-                {/* <Select errors={errors} control={control} type={"month"} name={'Payroll_Month'} defaultValue={'November'} label={'Payroll month'} option={monthList} /> */}
-                {/* <Select errors={errors} control={control} type={"month"} name={'Payroll_Year'} label={'Payroll Year'} defaultValue={'2023'} option={monthSalary} /> */}
-
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Payroll month"}
-                    name={'Payroll_Month'} label={'Payroll month'} options={monthList} />
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Payroll Year"}
-                    name={'Payroll_Year'} label={'Payroll Year'} options={monthSalary} />
+            <div>
+                <Header />
             </div>
-            <div className="d-flex">
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Payroll last month"}
-                    name={'Payroll_Last_Month'} label={'Payroll last month'} options={monthList} />
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Payroll last Year"}
-                    name={'Payroll_Last_Year'} label={'Payroll last Year'} options={monthSalary} />
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Payroll undo flag"}
-                    name={'Payroll_Undo_Flag'} label={'Payroll undo flag'} options={[
-                        {
-                            value: "Y",
-                            label: "Yes",
-                        },
-                        {
-                            value: "N",
-                            label: "No",
-                        },
-                    ]} />
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Loan completion flag"}
-                    name={'Loan_Completion_Flag'} label={'Loan completion flag'} options={[
-                        {
-                            value: "Y",
-                            label: "Yes",
-                        },
-                        {
-                            value: "N",
-                            label: "No",
-                        },
-                    ]} />
-
+            <div>
+                <SecondaryHeader isSearch={false} title={'Transaction - Attendance'} total={'1,000'} />
             </div>
-            <div className="d-flex">
-                <FormInput
-                    errors={errors}
-                    control={control}
-                    name={'Sort_key'} placeholder={'Sort key'} label={'Sort key'} />
-                <FormInput
-                    errors={errors}
-                    control={control}
-                    type={'number'}
-                    name={'pf_percentage'} placeholder={'PF percentage'} label={'PF percentage'} />
-                <FormSelect
-                    deduction={'deductionFlag'}
-                    errors={errors}
-                    control={control}
-                    placeholder={"Active flag"}
-                    name={'active_flag'} label={'Active flag'} options={[
-                        {
-                            value: "Y",
-                            label: "Yes",
-                        },
-                        {
-                            value: "N",
-                            label: "No",
-                        },
-                    ]} />
+            <div className={Style.TableBody}>
+                <form onSubmit={handleSubmit(Request)}>
+                <div className="d-flex align-items-end">
+                    <FormSelect
+                        deduction={'deductionFlag'}
+                        errors={errors}
+                        control={control}
+                        placeholder={"Attendance month"}
+                        name={'month'} label={'Attendance month'} options={monthList} />
+                    <FormSelect
+                        deduction={'deductionFlag'}
+                        errors={errors}
+                        control={control}
+                        placeholder={"Attendance year"}
+                        name={'year'} label={'Attendance year'} options={monthSalary} />
+                    <SimpleButton loading={loading} type={'submit'} title={'Submit'}/>
+                </div>
+                </form>
             </div>
-            <div className="d-flex align-items-center justify-content-end">
-                <CancelButton onClick={() => addNewFunction(true)} title={"Cancel"} />
-                <SimpleButton loading={loading} type={'submit'} title={"Submit"} />
-            </div>
-        </form>
+        </>
     )
-
 }
 
-
-function mapStateToProps({ addPayroll }) {
-    return { addPayroll };
+function mapStateToProps({ PdfRender }) {
+    return { PdfRender };
 }
-export default connect(mapStateToProps, AddPayroll_Action)(AddNewPayroll);
+export default connect(mapStateToProps, PayrollUpload_Action)(PdfData);
