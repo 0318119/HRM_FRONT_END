@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { MasterEarningSchema } from "../schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as MASTEREARNING_ACTIONS from "../../store/actions/MasterMaintaince/MasterEarning/index";
-import { FormInput } from "../../components/basic/input/formInput";
+import { FormInput, FormSelect } from "../../components/basic/input/formInput";
 import { message } from "antd";
 import { Space, Table, Tag, Tooltip } from "antd";
 import baseUrl from "../../../src/config.json";
@@ -22,17 +22,23 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       cancel("read");
     };
     const submitForm = async (data) => {
+
         try {
           const isValid = await MasterEarningSchema.validate(data);
         if (isValid) {
-            console.log(data, "data");
           POST_MASTER_EARNING_FORM(data)
+          console.log(data, "data");
+
         } 
       } catch (error) {
         console.error(error, "error message");
       }
     };
   
+
+ 
+   
+   
     const {
       control,
       formState: { errors },
@@ -40,54 +46,73 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       reset,
     } = useForm({
       defaultValues: {
-        City_name: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.City_name,
-        City_abbr: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.City_abbr,
-        Province_Code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Province_Code,
-        Region_Code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Region_Code,
-        Sort_key: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
+        Emp_code:isCode,
+        Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
+        Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
+        Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
+
       },
       mode: "onChange",
       resolver: yupResolver(MasterEarningSchema),
     });
-  
+
+
       useEffect(() => {
         if (isCode !== null) {
           Get_Master_Earning_Allowance_By_EmpCode(isCode)
         }
       }, [])
-  console.log("isCode", isCode)
-  console.log("Red_MasterEarning", 0)
+
    
   useEffect(() => {
+    if(mode == "Edit"){
       reset(
         {
-          Grade_name: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Grade_name,
-          Grade_abbr: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Grade_abbr,
-          ProbationMonths: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Probation_Months,
-          Incentive_Hour_Rate: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Hour_Rate,
-          Incentive_Weekdays_Limit_Hour: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Incentive_Weekdays_Limit_Hour,
-     
+          Emp_code:isCode,
+          Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
+          Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
+          Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
         },
       )
+    }
     
   }, [Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]])
+  
+
+  
+
+  const [RedData, setRedData] = useState(null);
+
+  useEffect(() => {
+    const MasterEarningData = Red_MasterEarning?.dataSingle[0]?.res;
+
+    setRedData(MasterEarningData);
+
+  }, [Red_MasterEarning.dataSingle]);
+
+ 
+  if (RedData?.data) {
+    for (let i = 0; i < RedData?.data.length; i++) {
+      var AllowanceCode = RedData?.data[i]?.Allowance_code
+      var Amount = RedData?.data[i]?.Amount
+    }
+  }
+
   
     // MASTER EARNING FORM DATA API CALL ===========================
     async function POST_MASTER_EARNING_FORM(body) {
       setLoading(true);
-      await fetch(`${baseUrl.baseUrl}/cities/AddCity`, {
+      await fetch(`${baseUrl.baseUrl}/allowance/SaveAllowances`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
           accessToken: `Bareer ${get_access_token}`,
         },
         body: JSON.stringify({
-          "City_code": 0,
-          "City_abbr": body.City_abbr,
-          "City_name": body.City_name,
-          "Province_Code": body.Province_Code,
-          "Region_Code": body.Region_Code,
-          "Sort_key": body.Sort_key, 
+          "Emp_code": isCode,
+          "Allowance_code": AllowanceCode,
+          "Amount": Amount,
+          "Deletion_Flag": body.Deletion_Flag,
         }),
       })
         .then((response) => {
@@ -125,6 +150,8 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
         });
     }
  
+
+
    const [getInfo, setGetInfo] = useState([]) 
   async function getAllEmpInfo(body) {
 
@@ -145,7 +172,6 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       .then(async (response) => {
         if (response.success) {
           setGetInfo(response?.data[0][0])
-          console.log(response?.data[0][0], "response?.data[0][0]")
           // messageApi.open({
           //   type: "success",
           //   content: response?.message || response?.messsage,
@@ -175,39 +201,56 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     getAllEmpInfo()
   }, [])
   
-  const [isRedData, setRedData] = useState(Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0])
-  console.log(isRedData, 'isRedData')
-  
+
+  const [totalAmount, setTotalAmount] = useState(null);
+
+  useEffect(() => {
+    const fetchedTotalAmount = Red_MasterEarning?.dataSingle[0]?.res?.data;
+
+    if (fetchedTotalAmount !== undefined && fetchedTotalAmount !== null) {
+      setTotalAmount(fetchedTotalAmount);
+    }
+  }, [Red_MasterEarning.dataSingle]);
+
+  let sum = 0;
+
+  if (totalAmount) {
+    for (let i = 0; i < totalAmount.length; i++) {
+      sum += totalAmount[i].Amount;
+    }
+  }
+
+
+ 
   const columns = [
     {
-      title: "Allowance",
-      dataIndex: "Allowance",
-      render: (isRedData) => (
-        <p>{isRedData?.Allowance_name}</p>
-      )
+      title: "Allowance_code",
+      dataIndex: "Allowance_code",
+      key: "Allowance_code"
+    },
+    {
+      title: "Allowance Name",
+      dataIndex: "Allowance_name",
+      key: "Allowance_name"
     },
     {
       title: "Amount",
       dataIndex: "Amount",
-      render: (data) => (
-          <input type="text" />
-      )  
+      render: (Amount) => (
+        <FormInput
+        Values={Amount}
+         type="number" 
+         id="Amount" 
+         name="Amount"
+          showLabel={true}
+          errors={errors}
+          control={control}
+         />
+      )
     },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (data) => (
-    //     <Space size="middle">
-    //       <button
-    //         onClick={() => EditPage("Edit", data?.Emp_code)}
-    //         className="editBtn"
-    //       >
-    //         <FaEdit />
-    //       </button>
-    //     </Space>
-    //   ),
-    // },
+
   ];
+  
 
 
 
@@ -215,7 +258,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       <>
   
           {contextHolder}
-        <form >
+        <form onSubmit={handleSubmit(submitForm)}>
           <h4 className="text-dark">MASTER EARNING</h4>
           <hr />
           <div className="form-group formBoxCountry">
@@ -223,9 +266,8 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
                 <FormInput
               label={"Employee Name"}
               placeholder={getInfo?.Emp_name ? getInfo?.Emp_name : 'Not Found'}
-              id="Emp_name"
-              name="Emp_name"
-              type="text"
+              id=""
+              name=""
               readOnly
               showLabel={true}
               errors={errors}
@@ -234,9 +276,8 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
             <FormInput
               label={"Department Name"}
               placeholder={getInfo?.Dept_name ? getInfo?.Dept_name : "not found"}
-              id="City_name"
-              name="City_name"
-              type="text"
+              id=""
+              name=""
               readOnly
               showLabel={true}
               errors={errors}
@@ -245,14 +286,32 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
             <FormInput
               label={"Designation Name"}
               placeholder={getInfo?.Desig_Name ? getInfo?.Desig_Name : 'not Found'}
-              id="City_abbr"
-              name="City_abbr"
-              type="text"
+              id=""
+              name=""
               readOnly
               showLabel={true}
               errors={errors}
               control={control}
             />
+            <FormSelect
+              label={'Deletion Flag '}
+              placeholder='Deletion Flag'
+              id="Deletion_Flag"
+              name="Deletion_Flag"
+              options={[
+                {
+                  value: 'Y',
+                  label: 'Yes',
+                },
+                {
+                  value: "N",
+                  label: 'No',
+                },
+              ]}
+              showLabel={true}
+              errors={errors}
+              control={control}
+            /> 
          
           </div>
           <hr />
@@ -260,10 +319,16 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
             <Table
               columns={columns}
               loading={Red_MasterEarning?.loading}
-            />
+              dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
+            />           
           </div>
+          <div>
+            <span>Total Amount</span>
+            <span>{sum}</span>
+          </div> 
+          
           <div className="CountryBtnBox">
-            <CancelButton  title={"Cancel"} />
+            <CancelButton title={"Cancel"} onClick={EditBack} />
             <PrimaryButton type={"submit"}   title="Save" />
           </div>
         </form>

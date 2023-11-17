@@ -126,7 +126,7 @@ const FormSelect = ({
                 label: t?.label,
             })
         )
-    }else{
+    } else {
         options?.map((t) =>
             options2.push({
                 value: t?.value,
