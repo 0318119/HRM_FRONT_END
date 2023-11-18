@@ -41,6 +41,7 @@ const AddNewLoans = ({ getDeductionList, SaveLoans,addNewFunction}) => {
         mode: "onChange",
         resolver: yupResolver(AddLoans),
     });
+    
     const DataLoader = async () => {
         const deductionList = await getDeductionList()
         setDeductionCode(deductionList)

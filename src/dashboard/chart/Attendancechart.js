@@ -288,7 +288,7 @@ export default function Attendancechart() {
       {
         id: 4,
         label: 'Off',
-        data :  getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday"? 14 : null),
+        data :  getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday"? 9.10 : null),
         backgroundColor: "black",
         borderColor: 'black',
         borderWidth: 2,

@@ -44,6 +44,8 @@ import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
 import Red_Leave_Type from "./reducers/HrOperations/LeaveType/index"
 import PdfRender from "./reducers/payroll/pdfRender/index"
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive"; 
+import Red_Pay_Slip from "./reducers/payroll/PaySlip/index"
+import Red_Attendance_sheet from './reducers/AttendanceSheet/index'
 
 
 const reducers = combineReducers({
@@ -92,7 +94,9 @@ const reducers = combineReducers({
   Red_Leave_Type,
   PdfRender,
   Red_previous_Employee, 
-  Red_MasterActive
+  Red_MasterActive,
+  Red_Pay_Slip,
+  Red_Attendance_sheet
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

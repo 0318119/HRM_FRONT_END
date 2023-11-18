@@ -111,21 +111,19 @@ select:focus {
     display: none;
 }
 
-@media screen and (max-width:786px) {
-    /* td{
-        font-size: 9px;
-    } */
-}
 .ant-select-single{
     height: 40px !important;
-    width: 250px !important;
+    width: 100% !important;
 }
 .ant-select-focused .ant-select-selector{
     box-shadow: none !important;
 }
 .ant-select-selector{
     border: 1px solid rgb(225 225 225) !important;
-    width: 250px !important;
+    width: 100% !important;
+}
+.ant-select-show-arrow .ant-select-selector{
+    width: 100% !important;
 }
 .ant-select-selector:hover{
     border: 1px solid rgb(225 225 225) !important;
