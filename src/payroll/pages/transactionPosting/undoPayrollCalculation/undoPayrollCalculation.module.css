@@ -1,0 +1,35 @@
+.editButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.TableBody{
+    padding-inline: 80px;
+}
+.StopButton{
+    border: 1px solid red;
+    color:red;
+    padding-block: 8px;
+    outline: none;
+    padding-inline: 40px;
+    border-radius: 10px;
+    width: fit-content;
+    background-color: white;
+    transition: 0.3s all;
+}
+
+.StopButton:hover{
+    border: 1px solid red;
+    color:red;
+    padding-block: 8px;
+    outline: none;
+    padding-inline: 40px;
+    border-radius: 10px;
+    width: fit-content;
+    background-color: rgb(254, 183, 183);
+}
+
+.TableBody p{
+    color:red;
+}

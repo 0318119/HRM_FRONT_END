@@ -1,162 +1,370 @@
-// import React, { useState, useEffect } from "react";
-// import Input from "../../components/basic/input";
-// import { CancelButton, PrimaryButton } from "../../components/basic/button";
-// import { connect } from "react-redux";
-// import { useForm } from "react-hook-form";
-// // import { Base_City_Scheme } from "../schema";
-// import { yupResolver } from "@hookform/resolvers/yup";
-// import * as CITY_ACTIONS from "../../store/actions/HrOperations/Base_CIty/index";
-// import { FormInput } from "../../components/basic/input/formInput";
-// import { message } from "antd";
-// import baseUrl from "../../../src/config.json";
+import React, { useState, useEffect } from "react";
+import Input from "../../components/basic/input";
+import { CancelButton, PrimaryButton } from "../../components/basic/button";
+import { connect } from "react-redux";
+import { useForm } from "react-hook-form";
+import { MasterEarningSchema } from "../schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as MASTEREARNING_ACTIONS from "../../store/actions/MasterMaintaince/MasterEarning/index";
+import { FormInput, FormSelect } from "../../components/basic/input/formInput";
+import { message } from "antd";
+import { Space, Table, Tag, Tooltip } from "antd";
+import baseUrl from "../../../src/config.json";
+import { lowerCase } from "@antv/util";
 
-// function EarningsForm({ cancel, mode, isCode, Red_Base_City }) {
-//     var get_access_token = localStorage.getItem("access_token");
-//     const [messageApi, contextHolder] = message.useMessage();
-//     const [isLoading, setLoading] = useState(false);
-  
-//     const EditBack = () => {
-//       cancel("read");
-//     };
-//     // const submitForm = async (data) => {
-//     //     try {
-//     //     const isValid = await Base_City_Scheme.validate(data);
-//     //     if (isValid) {
-//     //         console.log(data, "data");
-//     //       POST_BASE_CITY_FORM(data)
-//     //     } 
-//     //   } catch (error) {
-//     //     console.error(error, "error message");
-//     //   }
-//     // };
-  
-//     // const {
-//     //   control,
-//     //   formState: { errors },
-//     //   handleSubmit,
-//     //   reset,
-//     // } = useForm({
-//     //   defaultValues: {
-//     //     City_code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_code
-//     //       ? Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_code
-//     //       : 0,
-  
-//     //     City_name: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_name,
-//     //     City_abbr: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_abbr,
-//     //     Province_Code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Province_Code,
-//     //     Region_Code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Region_Code,
-//     //     Sort_key: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-//     //   },
-//     //   mode: "onChange",
-//     //   resolver: yupResolver(Base_City_Scheme),
-//     // });
-  
-//     //   useEffect(() => {
-//     //     if (isCode !== null) {
-//     //       Get_Country_Data_By_Id(isCode)
-//     //     }
-//     //   }, [])
-  
-//     // BASE CITY FORM DATA API CALL ===========================
-//     // async function POST_BASE_CITY_FORM(body) {
-//     //   setLoading(true);
-//     //   await fetch(`${baseUrl.baseUrl}/cities/AddCity`, {
-//     //     method: "POST",
-//     //     headers: {
-//     //       "content-type": "application/json",
-//     //       accessToken: `Bareer ${get_access_token}`,
-//     //     },
-//     //     body: JSON.stringify({
-//     //       "City_code": 0,
-//     //       "City_abbr": body.City_abbr,
-//     //       "City_name": body.City_name,
-//     //       "Province_Code": body.Province_Code,
-//     //       "Region_Code": body.Region_Code,
-//     //       "Sort_key": body.Sort_key, 
-//     //     }),
-//     //   })
-//     //     .then((response) => {
-//     //       return response.json();
-//     //     })
-//     //     .then(async (response) => {
-//     //       if (response.success) {
-//     //         messageApi.open({
-//     //           type: "success",
-//     //           content: response?.message || response?.messsage,
-//     //         });
-//     //         setLoading(false);
-//     //         setTimeout(() => {
-//     //           cancel("read");
-//     //         }, 3000);
-//     //       } else {
-//     //         setLoading(false);
-//     //         messageApi.open({
-//     //           type: "error",
-//     //           content: response?.message || response?.messsage,
-//     //         });
-//     //       }
-//     //     })
-//     //     .catch((error) => {
-//     //       setLoading(false);
-//     //       messageApi.open({
-//     //         type: "error",
-//     //         content: error?.message || error?.messsage,
-//     //       });
-//     //     });
-//     // }
-  
-//     return (
-//       <>
-  
-//           {/* {contextHolder} */}
-//         <form >
-//           <h4 className="text-dark">Country List</h4>
-//           <hr />
-//           <div className="form-group formBoxCountry">
-//             <FormInput
-//               label={"City Code"}
-//               placeholder={"City Code"}
-//               // id="City_code"
-//               // name="City_code"
-//               type="number"
-//               readOnly
-//               showLabel={true}
-//             //   errors={errors}
-//             //   control={control}
-//             />
-//             <FormInput
-//               label={"City Name"}
-//               placeholder={"City Name"}
-//               // id="City_name"
-//               // name="City_name"
-//               type="text"
-//               showLabel={true}
-//             //   errors={errors}
-//             //   control={control}
-//             />
-//             <FormInput
-//               label={"City Abbrivation"}
-//               placeholder={"City Abbrivation"}
-//               // id="City_abbr"
-//               // name="City_abbr"
-//               type="text"
-//               showLabel={true}
-//             //   errors={errors}
-//             //   control={control}
-//             />
-           
+function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMasterEarningData, Get_Master_Earning_Allowance_By_EmpCode }) {
+  var get_access_token = localStorage.getItem("access_token");
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isLoading, setLoading] = useState(false);
+  const [pageSize, setPageSize] = useState(10);
 
-//           </div>
-//           <div className="CountryBtnBox">
-//             <CancelButton  title={"Cancel"} />
-//             <PrimaryButton type={"submit"}  title="Save" />
-//           </div>
-//         </form>
-//       </>
-//     );
-//   }
-//   function mapStateToProps({ Red_Base_City }) {
-//     return { Red_Base_City };
-//   }
-//   export default connect(mapStateToProps, CITY_ACTIONS)(EarningsForm);
-  
+
+  const EditBack = () => {
+    cancel("read");
+  };
+  const submitForm = async (data) => {
+
+    try {
+      const isValid = await MasterEarningSchema.validate(data);
+      if (isValid) {
+        POST_MASTER_EARNING_FORM(data)
+        console.log(data, "data");
+
+      }
+    } catch (error) {
+      console.error(error, "error message");
+    }
+  };
+
+
+
+
+
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      Emp_code: isCode,
+      Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
+      Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
+      Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
+
+    },
+    mode: "onChange",
+    resolver: yupResolver(MasterEarningSchema),
+  });
+
+
+  useEffect(() => {
+    if (isCode !== null) {
+      Get_Master_Earning_Allowance_By_EmpCode(isCode)
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (mode == "Edit") {
+      reset(
+        {
+          Emp_code: isCode,
+          Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
+          Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
+          Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
+        },
+      )
+    }
+
+  }, [Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]])
+
+
+
+
+  const [RedData, setRedData] = useState(null);
+
+  useEffect(() => {
+    const MasterEarningData = Red_MasterEarning?.dataSingle[0]?.res;
+
+    setRedData(MasterEarningData);
+
+  }, [Red_MasterEarning.dataSingle]);
+
+
+
+  const [postAllowncesCodes, setPostAllowncesCodes] = useState([])
+  const [postAllowncesAmount, setPostAllowncesAmount] = useState([])
+  if (RedData?.data) {
+    var AllowanceCode1 = [];
+    var Amount1 = [];
+    for (let i = 0; i < RedData?.data.length; i++) {
+      var AllowanceCode = RedData?.data[i]?.Allowance_code
+      var AllowanceAmount = RedData?.data[i]?.Amount
+      Amount1.push(AllowanceAmount)
+      setPostAllowncesAmount([...Amount1])
+      
+    }
+    console.log(Amount1, "Amount1")
+  }
+
+
+
+
+  // MASTER EARNING FORM DATA API CALL ===========================
+  async function POST_MASTER_EARNING_FORM(body) {
+    setLoading(true);
+    var body = JSON.stringify({
+      "Emp_code": isCode,
+      "Allowance_code": AllowanceCode1,
+      "Amount": postAllowncesAmount,
+      "Deletion_Flag": body.Deletion_Flag,
+    })
+    console.log(body, 'body')
+    return
+    await fetch(`${baseUrl.baseUrl}/allowance/SaveAllowances`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accessToken: `Bareer ${get_access_token}`,
+      },
+      body: JSON.stringify({
+        "Emp_code": isCode,
+        "Allowance_code": AllowanceCode1,
+        "Amount": Amount1,
+        "Deletion_Flag": body.Deletion_Flag,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(async (response) => {
+        if (response.success) {
+          messageApi.open({
+            type: "success",
+            content: response?.message || response?.messsage,
+          });
+          setLoading(false);
+          setTimeout(() => {
+            cancel("read");
+            GetMasterEarningData({
+              pageSize: pageSize,
+              pageNo: page,
+              search: null
+            })
+          }, 3000);
+        } else {
+          setLoading(false);
+          messageApi.open({
+            type: "error",
+            content: response?.message || response?.messsage,
+          });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        messageApi.open({
+          type: "error",
+          content: error?.message || error?.messsage,
+        });
+      });
+  }
+
+
+
+  const [getInfo, setGetInfo] = useState([])
+  async function getAllEmpInfo(body) {
+
+    setLoading(true);
+    await fetch(`${baseUrl.baseUrl}/tranConformation/GetEmployeeInfoTranConfirmation`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accessToken: `Bareer ${get_access_token}`,
+      },
+      body: JSON.stringify({
+        "Emp_code": isCode,
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then(async (response) => {
+        if (response.success) {
+          setGetInfo(response?.data[0][0])
+          // messageApi.open({
+          //   type: "success",
+          //   content: response?.message || response?.messsage,
+          // });
+          setLoading(false);
+          // setTimeout(() => {
+          //   cancel("read");
+          // }, 3000);
+        } else {
+          setLoading(false);
+          messageApi.open({
+            type: "error",
+            content: response?.message || response?.messsage,
+          });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        messageApi.open({
+          type: "error",
+          content: error?.message || error?.messsage,
+        });
+      });
+  }
+
+  useEffect(() => {
+    getAllEmpInfo()
+  }, [])
+
+
+  const [totalAmount, setTotalAmount] = useState(null);
+
+  useEffect(() => {
+    const fetchedTotalAmount = Red_MasterEarning?.dataSingle[0]?.res?.data;
+
+    if (fetchedTotalAmount !== undefined && fetchedTotalAmount !== null) {
+      setTotalAmount(fetchedTotalAmount);
+    }
+  }, [Red_MasterEarning.dataSingle]);
+
+  let sum = 0;
+
+  if (totalAmount) {
+    for (let i = 0; i < totalAmount.length; i++) {
+      sum += totalAmount[i].Amount;
+    }
+  }
+
+
+
+  const columns = [
+    {
+      title: "Allowance_code",
+      dataIndex: "Allowance_code",
+      key: "Allowance_code"
+    },
+    {
+      title: "Allowance Name",
+      dataIndex: "Allowance_name",
+      key: "Allowance_name"
+    },
+    {
+      title: "Amount",
+      key: "Amount",
+      render: (_, Amount, index) => {
+        return (
+          <input 
+            defaultValue={_?.Amount}
+            type="text"
+            placeholder="AAA"
+            name={_?.Allowance_code}
+            // onChange={(e) => {
+            //   postAllowncesAmount[index].Amount == e.target.value
+            //   setPostAllowncesAmount([...postAllowncesAmount]
+            //   )
+            // }}
+          />
+
+        )
+      }
+    },
+
+  ];
+
+
+
+
+  return (
+    <>
+
+      {contextHolder}
+      <form onSubmit={handleSubmit(submitForm)}>
+        <h4 className="text-dark">MASTER EARNING</h4>
+        <hr />
+        <div className="form-group formBoxCountry">
+
+          <FormInput
+            label={"Employee Name"}
+            placeholder={getInfo?.Emp_name ? getInfo?.Emp_name : 'Not Found'}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormInput
+            label={"Department Name"}
+            placeholder={getInfo?.Dept_name ? getInfo?.Dept_name : "not found"}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormInput
+            label={"Designation Name"}
+            placeholder={getInfo?.Desig_Name ? getInfo?.Desig_Name : 'not Found'}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormSelect
+            label={'Deletion Flag '}
+            placeholder='Deletion Flag'
+            id="Deletion_Flag"
+            name="Deletion_Flag"
+            options={[
+              {
+                value: 'Y',
+                label: 'Yes',
+              },
+              {
+                value: "N",
+                label: 'No',
+              },
+            ]}
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+
+        </div>
+        <hr />
+        <div className="d-flex">
+          <Table
+            columns={columns}
+            loading={Red_MasterEarning?.loading}
+            dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
+          />
+        </div>
+        <div>
+          <span>Total Amount</span>
+          <span>{sum}</span>
+        </div>
+
+        <div className="CountryBtnBox">
+          <CancelButton title={"Cancel"} onClick={EditBack} />
+          <PrimaryButton type={"submit"} title="Save" />
+        </div>
+      </form>
+    </>
+  );
+}
+function mapStateToProps({ Red_MasterEarning }) {
+  return { Red_MasterEarning };
+}
+export default connect(mapStateToProps, MASTEREARNING_ACTIONS)(EarningsForm);
+
+
+
+

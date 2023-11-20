@@ -1,8 +1,8 @@
 import {
-    GET_TRANSITION_EMPOYLEE_CAT_DATA,
-    GET_TRANSITION_EMPOYLEE_CAT_START,
-    GET_TRANSITION_EMPOYLEE_CAT_SINGLE,
-    GET_TRANSITION_EMPOYLEE_CAT_END
+    GET_TRANSITION_EMPLOYEE_CAT_DATA,
+    GET_TRANSITION_EMPLOYEE_CAT_START,
+    GET_TRANSITION_EMPLOYEE_CAT_SINGLE,
+    GET_TRANSITION_EMPLOYEE_CAT_END
 } from '../../types'
 import baseUrl from '../../../../config.json'
 
@@ -10,7 +10,7 @@ import baseUrl from '../../../../config.json'
 export const GetEmployeeCatData = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_CAT_START,
+            type: GET_TRANSITION_EMPLOYEE_CAT_START,
             payload: true,
             loading: true,
         });
@@ -24,14 +24,14 @@ export const GetEmployeeCatData = (params) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_CAT_DATA,
+                type: GET_TRANSITION_EMPLOYEE_CAT_DATA,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_CAT_END,
+                type: GET_TRANSITION_EMPLOYEE_CAT_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -39,7 +39,7 @@ export const GetEmployeeCatData = (params) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_CAT_END,
+            type: GET_TRANSITION_EMPLOYEE_CAT_END,
             payload: false,
             loading: false,
         });
@@ -50,7 +50,7 @@ export const GetEmployeeCatData = (params) => async (dispatch) => {
 export const Get_Employee_Cat_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_CAT_START,
+            type: GET_TRANSITION_EMPLOYEE_CAT_START,
             payload: true,
             loading: true,
         });
@@ -67,14 +67,14 @@ export const Get_Employee_Cat_By_ID = (body) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_CAT_SINGLE,
+                type: GET_TRANSITION_EMPLOYEE_CAT_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TRANSITION_EMPOYLEE_CAT_END,
+                type: GET_TRANSITION_EMPLOYEE_CAT_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -82,7 +82,7 @@ export const Get_Employee_Cat_By_ID = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_CAT_END,
+            type: GET_TRANSITION_EMPLOYEE_CAT_END,
             payload: false,
             loading: false,
         });

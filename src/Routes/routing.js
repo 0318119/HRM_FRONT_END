@@ -72,87 +72,138 @@ import Family from '../Master_Maintaince/Family'
 import TransactionFamilyForm from '../Master_Maintaince/form/TransactionFamilyForm'
 import Base_City from '../HrOperations/Base_City'
 import RefreshableData from '../HrOperations/RefreshableData'
+import Positions from '../HrOperations/Positions'
+import Download_Parameter_Access from '../HrOperations/Download_Parameter_Access';
+import OneTimeAllowance from '../payroll/pages/transactionPosting/oneTimeAllowance/oneTimeAllowances'
+import FixedAllowance from '../payroll/pages/transactionPosting/fixedAllowance/fixedAllowances'
+import CashAllowance from '../payroll/pages/transactionPosting/cashAllowance/cashAllowances'
+import ConfirmationReport from '../payroll/pages/report/rdlcReport/rdlcReport'
+import OneTimeDeduction from '../payroll/pages/transactionPosting/oneTimeDeduction/oneTimeDeduction'
+import FixedDeduction from '../payroll/pages/transactionPosting/fixedDeduction/fixedDeduction'
+import AdvanceSalary from '../payroll/pages/transactionPosting/advanceSalary/advanceSalary'
+import AdvanceSalaryInstallment from '../payroll/pages/transactionPosting/advanceSalaryInstallment/advanceSalaryInstallment'
+import SalaryHold from '../payroll/pages/transactionPosting/salaryHold/salaryHold'
+import PayrollUpload from '../payroll/pages/transactionPosting/payrollUpload/payRollUpload'
+import HrStop from '../payroll/pages/transactionPosting/hrStop/hrStop'
+import HrRelease from '../payroll/pages/transactionPosting/hrRelease/hrRelease'
+import ClosingPayrollMonth from '../payroll/pages/transactionPosting/closingPayrollmonth/closingPayrollmonth'
+import UndoPayrollCalculation from '../payroll/pages/transactionPosting/undoPayrollCalculation/undoPayrollCalculation'
+import AddLoans from '../payroll/pages/transactionPosting/addLoans/addLoans'
+import AddAllowance from '../payroll/pages/transactionPosting/addAllowance/addAllowance'
+import AddDeduction from '../payroll/pages/transactionPosting/addDeduction/addDeduction'
+import AddPayroll from '../payroll/pages/transactionPosting/addPayroll/addPayroll'
+import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/addpayrollMethod'
+import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
 import Earnings from '../Master_Maintaince/Earnings';
+import PaySlip from '../payroll/pages/PaySlip';
+import Mode_Of_Payments from '../payroll/pages/Setup/modeOfPayments/index'
+
 
 const routing = () => {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Appointment" element={<Appointment />} />
-          <Route path="/TAPersonalform" element={<TAPersonalform />} />
-          <Route path="/TAEducationForm" element={<TAEducationForm />} />
-          <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
-          <Route path="/TASalaryForm" element={<TASalaryForm />} />
-          <Route path="/TAppointmentMasterPayroll" element={<TAppointmentMasterPayroll />} />
-          <Route path="/TACheckList" element={<TACheckList />} />
-          <Route path="/TAFamilyForm" element={<TAFamilyForm />} />
-          <Route path="/TAShortsCut" element={<TAShortsCut />} />
-          <Route path="/Employment_Type" element={<Employment_Type />} />
-          <Route path="/Divisions" element={<Divisions />} />
-          <Route path="/Departments" element={<Departments />} />
-          <Route path="/EmpListForm" element={<EmpListForm />} />
-          <Route path="/Sections" element={<Sections />} />
-          <Route path="/Cost_Centre" element={<Cost_Centre />} />
-          <Route path="/Education_Levels" element={<Education_Levels />} />
-          <Route path="/Employee_Category" element={<Employee_Category />} />
-          <Route path="/Country" element={<Country />} />
-          <Route path="/Grade" element={<Grade />} />
-          <Route path="/Education" element={<Education />} />
-          <Route path="/Designation" element={<Designation />} />
-          <Route path="/Leave_Category" element={<Leave_Category />} />
-          <Route path="/Leave_Types" element={<Leave_Types />} />
-          <Route path="/Previous_Employers" element={<Previous_Employers />} />
-          <Route path="/Transportation" element={<Transportation />} />
-          <Route path="/Institution" element={<Institution />} />
-          <Route path="/Resignation" element={<Resignation />} />
-          <Route path="/Religion" element={<Religion />} />
-          <Route path="/Locations" element={<Locations />} />
-          <Route path="/MasterData_Sec" element={<MasterData_Sec />} />
-          <Route path="/MasterData_Leaves" element={<MasterData_Leaves />} />
-          <Route path="/MasterPersonal" element={<MasterPersonal />} />
-          <Route path="/Confirmation" element={<Confirmation />} />
-          <Route path="/Increment" element={<Increment />} />
-          <Route path="/Get_Attendance" element={<Get_Attendance />} />
-          <Route path="/Attendance_Check" element={<Attendance_Check />} />
-          <Route path="/Confirmation_Extensio" element={<Confirmation_Extensio />} />
-          <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
-          <Route path="/Promotion" element={<Promotion />} />
-          <Route path="/Holidays" element={<Holidays />} />
-          <Route path="/Leave_Applications" element={<Leave_Applications />} />
-          <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-          <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
-          <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
-          <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
-          <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
-          <Route path="/Leave_Report_Balance" element={<Leave_Report_Balance />} />
-          <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
-          <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
-          <Route path="/LeaveSummary" element={<LeaveSummary />} />
-          {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
-          <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
-          <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
-          <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
-          <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />
-          <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
-          <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
-          <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
-          <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
-          <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
-          <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
-          <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
-          <Route path="/Transaction_Experience" element={<Transaction_Experience />} />
-          <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
-          <Route path="/Family" element={<Family />} />
-          <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
-          <Route path="/Base_City" element={<Base_City />} />
-          <Route path="/RefreshableData" element={<RefreshableData />} />
-          <Route path="/Earnings" element={<Earnings/>} />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/Appointment" element={<Appointment />} />
+        <Route path="/TAPersonalform" element={<TAPersonalform />} />
+        <Route path="/TAEducationForm" element={<TAEducationForm />} />
+        <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
+        <Route path="/TASalaryForm" element={<TASalaryForm />} />
+        <Route path="/TAppointmentMasterPayroll" element={<TAppointmentMasterPayroll />} />
+        <Route path="/TACheckList" element={<TACheckList />} />
+        <Route path="/TAFamilyForm" element={<TAFamilyForm />} />
+        <Route path="/TAShortsCut" element={<TAShortsCut />} />
+        <Route path="/Employment_Type" element={<Employment_Type />} />
+        <Route path="/Divisions" element={<Divisions />} />
+        <Route path="/Departments" element={<Departments />} />
+        <Route path="/EmpListForm" element={<EmpListForm />} />
+        <Route path="/Sections" element={<Sections />} />
+        <Route path="/Cost_Centre" element={<Cost_Centre />} />
+        <Route path="/Education_Levels" element={<Education_Levels />} />
+        <Route path="/Employee_Category" element={<Employee_Category />} />
+        <Route path="/Country" element={<Country />} />
+        <Route path="/Grade" element={<Grade />} />
+        <Route path="/Education" element={<Education />} />
+        <Route path="/Designation" element={<Designation />} />
+        <Route path="/Leave_Category" element={<Leave_Category />} />
+        <Route path="/Leave_Types" element={<Leave_Types />} />
+        <Route path="/Previous_Employers" element={<Previous_Employers />} />
+        <Route path="/Transportation" element={<Transportation />} />
+        <Route path="/Institution" element={<Institution />} />
+        <Route path="/Resignation" element={<Resignation />} />
+        <Route path="/Religion" element={<Religion />} />
+        <Route path="/Locations" element={<Locations />} />
+        <Route path="/MasterData_Sec" element={<MasterData_Sec />} />
+        <Route path="/MasterData_Leaves" element={<MasterData_Leaves />} />
+        <Route path="/MasterPersonal" element={<MasterPersonal />} />
+        <Route path="/Confirmation" element={<Confirmation />} />
+        <Route path="/Increment" element={<Increment />} />
+        <Route path="/Get_Attendance" element={<Get_Attendance />} />
+        <Route path="/Attendance_Check" element={<Attendance_Check />} />
+        <Route path="/Confirmation_Extensio" element={<Confirmation_Extensio />} />
+        <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
+        <Route path="/Promotion" element={<Promotion />} />
+        <Route path="/Holidays" element={<Holidays />} />
+        <Route path="/Leave_Applications" element={<Leave_Applications />} />
+        <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
+        <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
+        <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
+        <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
+        <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
+        <Route path="/Leave_Report_Balance" element={<Leave_Report_Balance />} />
+        <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
+        <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
+        <Route path="/LeaveSummary" element={<LeaveSummary />} />
+        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
+        <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
+        <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
+        <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
+        <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />
+        <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
+        <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
+        <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
+        <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
+        <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
+        <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
+        <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
+        <Route path="/Transaction_Experience" element={<Transaction_Experience />} />
+        <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
+        <Route path="/Family" element={<Family />} />
+        <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
+        <Route path="/Base_City" element={<Base_City />} />
+        <Route path="/RefreshableData" element={<RefreshableData />} />
+        <Route path="/Positions" element={<Positions />} />
+        <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access />} />
+        {/* payroll */}
+        <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
+        <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
+        <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
+        <Route path="/payroll/oneTimeDeduction" element={<OneTimeDeduction />} />
+        <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
+        <Route path="/payroll/advancesalary" element={<AdvanceSalary />} />
+        <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
+        <Route path="/payroll/salaryHold" element={<SalaryHold />} />
+        <Route path="/payroll/payrollUpload" element={<PayrollUpload />} />
+        <Route path="/payroll/hrStop" element={<HrStop />} />
+        <Route path="/payroll/hrRelease" element={<HrRelease />} />
+        <Route path="/payroll/undoPayrollCalculation" element={<UndoPayrollCalculation />} />
+        <Route path="/payroll/closingPayrollMonth" element={<ClosingPayrollMonth />} />
+        <Route path="/payroll/addLoans" element={<AddLoans />} />
+        <Route path="/payroll/addallowance" element={<AddAllowance />} />
+        <Route path="/payroll/addDeduction" element={<AddDeduction />} />
+        <Route path="/payroll/addPayroll" element={<AddPayroll />} />
+        <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
+        <Route path="/pdf" element={<AddPayrollMethodPdf />} />
+        <Route path="/Earnings" element={<Earnings/>} />
+        <Route path="/Mode_Of_Payments" element={<Mode_Of_Payments/>} />
+        
+        {/* REPORT =============================================================== */}
+        <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
+        {/* PAY SLIP ============================================================== */}
+        <Route path="/Pay/PaySlip" element={<PaySlip />} />
+      </Routes>
+    </Router>
 
   );
 }

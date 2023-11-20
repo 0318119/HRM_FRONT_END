@@ -63,7 +63,7 @@ export const Get_Education_By_ID = (body) => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Edu_code':body,
+                'Edu_code': body,
             })
         });
         if(response.status === 200) {

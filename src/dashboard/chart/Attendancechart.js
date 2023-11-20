@@ -1,261 +1,34 @@
-// import React, { useState, useEffect } from "react";
-// import '../assets/css/chart.css'
-// // import {
-// //   BarChart,
-// //   Bar,
-// //   XAxis,
-// //   YAxis,
-// //   CartesianGrid,
-// //   Tooltip,
-// //   Legend,
-// // } from "recharts";
-// import { Link, useNavigate } from "react-router-dom";
-// import secureLocalStorage from "react-secure-storage";
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-// } from 'chart.js';
-// import { Bar } from 'react-chartjs-2';
-// const config = require("../../config.json");
-
-// ChartJS.register(
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend
-// );
-
-
-
-// export default function Attendan1022hart() {
-
-//   var get_refresh_token = secureLocalStorage.getItem("refresh");
-//   var get_access_token = secureLocalStorage.getItem("access_token");
-//   const navigate = useNavigate();
-
-//   const [loading, setLoading] = useState(true);
-//   const [dataLoader, setDataLoader] = useState(false);
-//   const [DataErr, setDataErr] = useState('')
-//   const [getAttendData, setGetAttendData] = useState([])
-
-
-//   async function getAttendance() {
-//     await fetch(
-//       `${config["baseUrl"]}/dashboard/GetUserAttendanceSummaryDashboard`,
-//       {
-//         method: "GET",
-//         headers: {
-//           "content-type": "application/json",
-//           accessToken: `Bareer ${get_access_token}`,
-//         },
-//       }
-//     )
-//       .then((response) => {
-//         return response.json();
-//       })
-//       .then(async (response) => {
-//         if (response.messsage == "unauthorized") {
-//           await fetch(
-//             `${config["baseUrl"]}/dashboard/GetUserAttendanceSummaryDashboard`,
-//             {
-//               method: "GET",
-//               headers: {
-//                 "content-type": "application/json",
-//                 refereshToken: `Bareer ${get_refresh_token}`,
-//               },
-//             }
-//           )
-//             .then((response) => {
-//               return response.json();
-//             })
-//             .then((response) => {
-//               if (response.messsage == "timeout error") {
-//                 navigate("/");
-//               } else {
-//                 localStorage.setItem("refresh", response.referesh_token);
-//                 localStorage.setItem("access_token", response.access_token);
-//                 setGetAttendData(response.data[0]);
-//                 console.log("response.data[0]", response.data[0])
-//                 setDataLoader(true);
-//               }
-//             })
-//             .catch((error) => {
-//               setDataErr(error.message);
-//             })
-//             .finally(() => {
-//               setLoading(false);
-//             });
-//         } else {
-//           setGetAttendData(response.data[0]);
-//           setDataLoader(true);
-//         }
-//       })
-//       .catch((error) => {
-//         setDataErr(error.message);
-//       })
-//       .finally(() => {
-//         setLoading(false);
-//       });
-//   }
-
-//   const options = {
-//     responsive: true,
-//     beginAtZero: true,
-//     // maintainAspectRatio: false
-//     scales: {
-//       // y: {
-//       //   display: false,        // show/ hide x-axis
-//       //   grid: {
-//       //     display: false      // show/hide grid line in x-axis
-//       //   },
-//       // },
-//     },
-//     plugins: {
-//       legend: {
-//         position: 'top',
-//       },
-//       title: {
-//         display: true,
-//         text: '',
-//       },
-//     },
-//   };
-
-//   const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
-//     let Present_Status = [];
-//     let Present_Status1 = [];
-
-//     let PresentColor = ''
-//     let AbsentColor = ''
-
-//     getAttendData.forEach((element) => {
-//       if(element.Attendance_Status == "Present"){
-//           PresentColor= "hsl(203, 82%, 47%)"
-//           Present_Status.push("500");
-//       }else if(element.Attendance_Status == "Absent")
-//           Present_Status.push(element.Date);
-//           AbsentColor = 'red'
-//       });
-
-//   const data = {
-//     labels,
-//     datasets: [
-//       {
-//         id: 1,
-//         label: '',
-//         data: Present_Status,
-//         backgroundColor: [PresentColor,AbsentColor],
-//         // borderColor: "black",
-//         // borderWidth: 2,
-//         // barThickness: 30, 
-//       },
-//       // {  
-//       //   label: 'Absent',
-//       //   data: Absent_Status,
-//       //   backgroundColor: '#B24749',
-//       //   // barThickness: 40,
-//       // },
-      
-//       // {
-//       //   id: 2,
-//       //   label: 'Late',
-//       //   data: Absent_Status,
-//       //   backgroundColor: 'rgb(213, 185, 107)',
-//       //   // barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Early',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#3A8C89',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Half Day',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#489FBB',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Absent',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#B24749',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Short Day',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#C08A4F',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Absent for short time',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#565072',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Leave',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#ffc10770',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'Missing',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#ffc10770',
-//       //   barThickness: 30,
-//       // },
-//       // {
-//       //   label: 'OFF',
-//       //   data: getAttendData.map((items) => items[0]?.Remarks),
-//       //   backgroundColor: '#000',
-//       //   barThickness: 30,
-//       // }
-//     ],
-//   };
-
-//   useEffect(() => {
-//     getAttendance();
-//   }, []);
-
-
-
-//   return (
-
-//     <>
-//       <Bar options={options} data={data}/>
-//     </>
-
-//   );
-// }
-
 import React, { useState, useEffect } from "react";
 import '../assets/css/chart.css'
+import { Link, useNavigate } from "react-router-dom";
+// import 'chartjs-plugin-datalabels';
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
   Tooltip,
   Legend,
-} from "recharts";
-import { Link, useNavigate } from "react-router-dom";
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 const config = require("../../config.json");
 
-export default function Attendan1022hart() {
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
+
+
+export default function Attendancechart() {
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
   const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
   const [dataLoader, setDataLoader] = useState(false);
   const [DataErr, setDataErr] = useState('')
@@ -280,14 +53,14 @@ export default function Attendan1022hart() {
         if (response.messsage == "unauthorized") {
           await fetch(
             `${config["baseUrl"]}/dashboard/GetUserAttendanceSummaryDashboard`,
-          {
-            method: "GET",
-            headers: {
-              "content-type": "application/json",
-              refereshToken: `Bareer ${get_refresh_token}`,
-            },
-          }
-    )
+            {
+              method: "GET",
+              headers: {
+                "content-type": "application/json",
+                refereshToken: `Bareer ${get_refresh_token}`,
+              },
+            }
+          )
             .then((response) => {
               return response.json();
             })
@@ -296,10 +69,7 @@ export default function Attendan1022hart() {
                 navigate("/");
               } else {
                 localStorage.setItem("refresh", response.referesh_token);
-                localStorage.setItem(
-                  "access_token",
-                  response.access_token
-                );
+                localStorage.setItem("access_token", response.access_token);
                 setGetAttendData(response.data[0]);
                 setDataLoader(true);
               }
@@ -312,7 +82,7 @@ export default function Attendan1022hart() {
             });
         } else {
           setGetAttendData(response.data[0]);
-          console.log("response.data[0]", response.data[0])
+          console.log("test data",response.data[0])
           setDataLoader(true);
         }
       })
@@ -324,15 +94,207 @@ export default function Attendan1022hart() {
       });
   }
 
-  const data = [
-    {
-      Month: "june",
-      Date: 1,
-      Time_In: "1000",
-      Time_Out: "11",
-      Late: "1",
+
+  // let Status = [];
+  // getAttendData.forEach((element,index) => {
+  //   if(element.Attendance_Status == "Present" && element.Remarks == "On Time" ){
+  //       Status.push({
+  //         Present_status: element?.Progress,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Progress: element?.Progress,
+  //         PresentBg:"green",
+  //       });
+  //   }
+  //   else if(element.Attendance_Status == "Absent" && element.Remarks == "Late"){
+  //       Status.push({
+  //         Absent_status: 0.5,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Progress: element?.Progress,
+  //         AbsentBg:"red",
+  //       });
+  //   }
+  //   else if(element.Attendance_Status == "Present" && element.Remarks == "Late"){
+  //       Status.push({
+  //         Late_status: element?.Progress,
+  //         Month: element?.Month,
+  //         Date : element?.Date,
+  //         Progress: element?.Progress,
+  //         LateBg:"blue",
+  //       });
+  //   }
+  //   else if(element.DayType == 'Holiday' && element?.DayName == "Saturday" || element?.DayName == "Sunday"){
+  //     Status.push({
+  //       Off_status: 20,
+  //       Month: element?.Month,
+  //       Date : element?.Date,
+  //       Progress: element?.Progress,
+  //       OffBg:"black",
+  //     });
+  // }
+  // });
+  // console.log("Status",Status)
+  
+
+  // const options = {
+  //   plugins: {
+  //     datalabels: {
+  //       display: true,
+  //     },
+  //     legend: {
+  //       display: true,
+  //     },
+  //     tooltips: {
+  //       callbacks: {
+  //         title: (tooltipItems) => 'Data Details',
+  //         label: (context) => {
+  //           const dataIndex = context.dataIndex;
+  //           const datasetIndex = context.datasetIndex;
+  //           const value = data.datasets[datasetIndex].data[dataIndex];
+  //           return `Value: ${value}`;
+  //         },
+  //       },
+  //     },
+  //   },
+  //   scales: {
+  //     x: {
+  //       beginAtZero: true,
+  //     },
+  //     y: {
+  //       beginAtZero: true,
+  //     },
+  //   },
+  // };
+
+
+  // const data = {
+  //   labels,
+  //   datasets: [
+  //     {
+  //       id: getAttendData.map((items) =>  items.Date),
+  //       data : Status?.map((element) =>  {
+  //         return(
+  //           element.Present_status || element.Absent_status || element.Late_status || element.Off_status
+  //         )
+  //       }),
+  //       backgroundColor: Status?.map((element) => {
+  //         return(
+  //           element.PresentBg || element.AbsentBg || element.LateBg || element.OffBg
+  //         )
+  //       }),
+  //     },
+  //   ],
+  // };
+
+
+  const options = {
+    responsive: true,
+    // beginAtZero: true,
+    // maintainAspectRatio: false,
+    plugins: {
+      tooltip: {
+        enabled: true,
+        intersect: true,
+        callbacks: {
+          label: function (context) {
+            // let label = data.labels[context.datasetIndex];
+            // let hello = data?.datasets[0]?.id;
+            // let testingData = [];
+            // for (let i = 1; i <= 31; i++) {
+            //   testingData.push({ id: i });
+            // }
+            // return (
+            //   // data?.datasets[0].label == "Present" ?  ` Status - ${data?.datasets[0].label}` : null +
+            //   // data?.datasets[1].label == "Absent" ?  `Status - ${data?.datasets[1].label}` : null
+            //   // data?.datasets[2].label == "Late" ?  `Status - ${data?.datasets[2].label}` : null
+            //   // `Status :: ${Status.filter((items) => items.Date == 21)?.[0]?.Attendance_Status}` + " " +
+            //   // `Time in :: ${Status.filter((items) => items.Date == 21)?.[0]?.Time_in}`  + " " +
+            //   // console.log("hello",hello.filter((id) => id == 21)) + 
+            //   // console.log("hello",context.parsed)
+            //   // "Emp_Time_IN" + data?.datasets[0]?.Emp_Time_IN + " " +
+            //   // "Date" + " " + context.parsed.x + " " + 
+            //   // context.parsed.y 
+            //   // console.log("Filter data",Status.filter((data) => data?.Date === 21)[0]) +
+            //   // console.log("Filter data",Status.filter((data) => data?.Date === 22)[0])
+
+
+
+            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Attendance_Status}` + " " +
+            //   // `Time in :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
+            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
+            //   // console.log("Filter",Status.filter((items) => items.Date == data?.datasets[0]?.id))
+            //   // console.log("object",Status)
+            //   // console.log("StatusNew",Status.filter((items) => data?.datasets[0]?.id[items.Date]))
+            //   // Status.map((element) => {
+            //   //   // console.log("element",element?.Attendance_Status)
+            //   // // console.log("Filter",Status.filter(test => test.Date == data?.datasets?.[0]?.id))
+            //   //   // console.log("id",element.Date)
+            //   //   // return(
+            //   //   //   data?.datasets[0]?.id.map((test) => {
+            //   //   //     return(
+            //   //   //       // element.Date == test ? `Status : ${element?.Attendance_Status}` : ""
+            //   //   //       console.log("object", element.Date == test ? element.filter((chk) => chk.Date == test) : "")
+            //   //   //       // console.log("element.Date",element.Date)
+            //   //   //     )
+            //   //   //   })
+            //   //   // )
+            //   // })
+            // );
+          }
+        },
+      },
     },
-  ];
+    scales: {
+      x: {
+        beginAtZero: true,
+      },
+      y: {
+        beginAtZero: true,
+        // display: false,
+      },
+    }
+  };
+
+  const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        id: 1,
+        label: "Present",
+        data : getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time"? items.Progress : null),
+        backgroundColor: "#1587E7",
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 2,
+      },
+      {
+        id: 2,
+        label: 'Absent',
+        data :  getAttendData.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late"? 0.5 : null),
+        backgroundColor: "red",
+        borderColor: '#bd1b1b',
+        borderWidth: 2,
+      },
+      {
+        id: 3,
+        label: 'Late',
+        data :  getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late"? items?.Progress : null),
+        backgroundColor: "#d7d730",
+        borderColor: '#cfcf09',
+        borderWidth: 2,
+      },
+      {
+        id: 4,
+        label: 'Off',
+        data :  getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday"? 14 : null),
+        backgroundColor: "black",
+        borderColor: 'black',
+        borderWidth: 2,
+      },
+    ],
+  };
 
   useEffect(() => {
     getAttendance();
@@ -342,31 +304,21 @@ export default function Attendan1022hart() {
 
   return (
 
-    <BarChart
-      width={1200}
-      height={300}
-      data={getAttendData}
-      margin={{
-        top: 15,
-      }}
-    >
-      <CartesianGrid strokeDasharray="0.1" className="BarChart" />
-      <XAxis dataKey="Date" fill="white" />
-      <YAxis dataKey="Date" />
-      <Tooltip className="toollip" />
-      <Legend className="BarChart"/>
-
-      {/* <Bar dataKey="Month" fill="#55c061" /> */}
-      <Bar dataKey="Date" fill="#F4EA56" barSize={200} />
-      <Bar dataKey="Emp_Time_IN" fill="#D22730" barSize={200} />
-      <Bar dataKey="Emp_Time_out" fill="black" barSize={200} /> 
-      <Bar dataKey="Remarks" fill="red" barSize={200} /> 
-      {/* <Bar dataKey="Time_In" fill="#F4EA56" /> */}
-      {/* <Bar dataKey="Time_Out" fill="#D22730" /> */}
-      {/* <Bar dataKey="Time_In" fill="#F4EA56" />
-      <Bar dataKey="Time_Out" fill="#D22730" />
-      <Bar dataKey="Late" fill="black" /> */}
-    </BarChart>
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 d-flex justify-content-end">
+            <Link to="/Get_Attendance" className="text-dark mt-3 d-block" style={{background: "#F7F5F5",padding: "10px",borderRadius: "10px"}}><b>Attendance Report</b></Link>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12 mt-5">
+            <h5 className="mb-3 text-dark text-center"><b>Employee Attendance</b></h5>
+            <Bar options={options} data={data}/>
+          </div>
+        </div>
+      </div>
+    </>
 
   );
 }

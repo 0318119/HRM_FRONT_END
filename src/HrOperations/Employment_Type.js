@@ -15,7 +15,7 @@ import { message } from 'antd';
 
 
 
-const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
+const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [page, setPage] = useState(1);
@@ -85,23 +85,22 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
   ];
 
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetEmployeeTypeData({ 
+    if (isSearchVal == '') {
+      GetEmployeeTypeData({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-    }else{
-      GetEmployeeTypeData({ 
+    } else {
+      GetEmployeeTypeData({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-  }, [page,isSearchVal])
+  }, [page, isSearchVal])
 
-
-  // EDUCATION LEVEL DATA DELETE API CALL ===========================
+  // EMPLOYEE TYPE DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_type_code/DeleteEmploymentType`, {
@@ -140,7 +139,7 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
       });
     });
   }
-
+  
   return (
     <>
       <div>
@@ -156,9 +155,9 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
                 <div className="EmployeeTypeFlexBox">
                   <h4 className="text-dark">Employee  Type</h4>
                   <div className="EmployeeTypesearchBox">
-                    <Input placeholder={'Search Here...'} type="search" 
-                        onChange={(e) => {setSearchVal(e.target.value)}}
-                      />
+                    <Input placeholder={'Search Here...'} type="search"
+                      onChange={(e) => { setSearchVal(e.target.value) }}
+                    />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -168,7 +167,8 @@ const Employment_Type = ({ Red_Employee_type, GetEmployeeTypeData }) => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns} 
+                <Table 
+                    columns={columns} 
                     loading={Red_Employee_type?.loading}
                     dataSource={Red_Employee_type?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}

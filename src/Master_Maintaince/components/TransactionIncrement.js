@@ -19,7 +19,7 @@ function TransactionIncrement_list() {
 
     // GET CONFIRMATION DATA API CALL ==========================================
     async function getConfirmationData() {
-        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -30,7 +30,7 @@ function TransactionIncrement_list() {
             return response.json();
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json",
@@ -61,8 +61,8 @@ function TransactionIncrement_list() {
                 if (response.messsage == "timeout error") { navigate("/"); }
                 else {
                     if (response.success) {
-                        setGetIncrementData(response?.data[0])
-                        setGetIncrementDataFilter(response?.data[0])
+                        setGetIncrementData(response?.data)
+                        setGetIncrementDataFilter(response?.data)
                         setDataLoader(true);
                     } else {
                         setDataLoader(false);

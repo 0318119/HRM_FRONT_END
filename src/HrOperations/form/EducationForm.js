@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
 import * as EDUCATION_ACTIONS from "../../store/actions/HrOperations/Education/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { EducationScheme } from '../schema';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput } from '../../components/basic/input/formInput';
+import { FormCheckBox, FormInput } from '../../components/basic/input/formInput';
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, Get_Education_By_ID }) {
+function EducationForm({ cancel, mode, isCode, page,Red_Education, GetEducationData, Get_Education_By_ID }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -17,7 +18,6 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
     const EditBack = () => {
         cancel('read')
     }
-
 
     const submitForm = async (data) => {
         try {
@@ -48,7 +48,6 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
         resolver: yupResolver(EducationScheme),
     });
 
-
     useEffect(() => {
         if (isCode !== null) {
             Get_Education_By_ID(isCode)
@@ -70,17 +69,18 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
             reset(
                 {
                     Edu_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code ?
-                        Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code : 0,
+                    Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code : 0,
                     Edu_name: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_name,
                     Edu_abbr: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_abbr,
                     Edu_level_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_level_code,
-                    Sort_key: Red_Education?.dataSingle?.[0]?.res?.data?.Sort_key,
+                    Sort_key: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
                 },
             )
         }
     }, [Red_Education?.dataSingle?.[0]?.res?.data])
 
-    // EDUCATION  FORM DATA API CALL =========================== 
+
+    // EDUCATION FORM DATA API CALL =========================== 
     async function POST_Education_FORM(body) {
         setLoading(true)
         await fetch(
@@ -89,16 +89,16 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
                 "Edu_abbr": body?.Edu_abbr,
-                "Edu_code": body?.Edu_code,
-                "Edu_name": body?.Edu_name,
+                "Edu_code": body?.Edu_code, 
+                "Edu_name": body?.Edu_name, 
                 "Sort_key": body?.Sort_key,
-                "Edu_level_code": body?.Edu_level_code
+                "Edu_level_code" : body?.Edu_level_code
             }),
         }
         ).then((response) => {
             return response.json();
         }).then(async (response) => {
-            console.log("response.success", response)
+            console.log("response.success",response)
             if (response.success) {
                 messageApi.open({
                     type: 'success',
@@ -109,9 +109,9 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
                     cancel('read')
                     GetEducationData({
                         pageSize: pageSize,
-                        pageNo: 1,
+                        pageNo: page,
                         search: null
-                    })
+                      })
                 }, 3000);
             }
             else {

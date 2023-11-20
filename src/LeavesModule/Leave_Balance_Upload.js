@@ -19,8 +19,6 @@ const Leave_Balance_Upload = () => {
     
 
 
-
-
     // UPLOAD ATTACHMENT API CALL ==========================================
     const formData = new FormData();
     if (isFile !== '') {
@@ -91,7 +89,6 @@ const Leave_Balance_Upload = () => {
             }, 3000);
         })
     }
-
     const getExcelFileData = async (e) => {
         e.preventDefault();
         setExcelbtnLaoding(true)

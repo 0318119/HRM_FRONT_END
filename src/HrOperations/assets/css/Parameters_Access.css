@@ -1,0 +1,48 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.Parameters_AccessFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-container {
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    text-align: center;
+  }
+.list-container h2{
+    color: black;
+    font-size: 25px !important;
+
+}
+  
+  
+  .scrollable-list {
+    max-height: 200px;
+    overflow-y: scroll;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .scrollable-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .scrollable-list ul li {
+    padding: 10px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  li:last-child {
+    border-bottom: none;
+  }
+  

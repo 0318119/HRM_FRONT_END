@@ -75,20 +75,20 @@ const Education = ({ Red_Education, GetEducationData }) => {
   ];
 
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetEducationData({ 
+    if (isSearchVal == '') {
+      GetEducationData({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-    }else{
-      GetEducationData({ 
+    } else {
+      GetEducationData({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-  }, [page,isSearchVal])
+  }, [page, isSearchVal])
 
   // EDUCATION DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
@@ -109,7 +109,7 @@ const Education = ({ Red_Education, GetEducationData }) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-          GetEducationData({ 
+          GetEducationData({
             pageSize: pageSize,
             pageNo: page,
             search: null
@@ -159,8 +159,8 @@ const Education = ({ Red_Education, GetEducationData }) => {
             <div>
               {mode == "read" && (
                 <Table columns={columns}
-                  dataSource={Red_Education?.data?.[0]?.res?.data1}
                   loading={Red_Education?.loading}
+                  dataSource={Red_Education?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
                   pagination={{
                     defaultCurrent: page,
@@ -173,10 +173,10 @@ const Education = ({ Red_Education, GetEducationData }) => {
                 />
               )}
               {mode == "create" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={null} />
+                <EducationForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={isCode} />
+                <EducationForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 

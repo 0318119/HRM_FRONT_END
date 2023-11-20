@@ -14,7 +14,7 @@ import baseUrl from '../../../src/config.json'
 
 
 
-function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id,GetDataCountry }) {
+function CountryForm({ cancel, mode, isCode, page, Red_Country, Get_Country_Data_By_Id,GetDataCountry }) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading,setLoading] = useState(false)
@@ -111,7 +111,7 @@ function CountryForm({ cancel, mode, isCode, Red_Country, Get_Country_Data_By_Id
             cancel('read')
             GetDataCountry({ 
               pageSize: pageSize,
-              pageNo: 1,
+              pageNo: page,
               search: null
             })
           }, 3000);

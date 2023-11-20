@@ -1,91 +1,230 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/tables.css";
-import { BsFillEyeFill as Eye_ico } from "react-icons/bs";
-import { BsFolderFill as Folder_ico } from "react-icons/bs";
+import { Space, Table, Tag, Tooltip } from 'antd';
+import { message } from 'antd';
+import baseUrl from '../../../src/config.json'
+import { Tabs } from 'antd';
 
-const RequestTable = (Data) => {
-  const [tab, setTab] = useState(true);
-  const [tab2, setTab2] = useState(false);
-  const handleTab = () => {
-    setTab2(false);
-    setTab(true);
-  };
-  const handleTab2 = () => {
-    setTab2(true);
-    setTab(false);
-  };
+const RequestTable = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  var get_access_token = localStorage.getItem("access_token");
+  const [isGetMyRequest, setGetMyRequest] = useState([])
+  const [isGetMyApprovalsRequest, setGetMyApprovalsRequest] = useState([])
+
+  const [isLoading, setLoading] = useState({
+    myReqLoad: false,
+    myApprovalLaod: false,
+  })
+
+  async function getMyRequestOfLeave() {
+    setLoading({
+      myReqLoad: true,
+    })
+    await fetch(
+      `${baseUrl.baseUrl}/MyApplication/GetMyLeaveApplications`, {
+      method: "GET",
+      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        setLoading({
+          myReqLoad: false,
+        })
+        setGetMyRequest(response?.data?.[0])
+      }
+      else {
+        setLoading({
+          myReqLoad: false,
+        })
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+      }
+    }).catch((error) => {
+      setLoading({
+        myReqLoad: false,
+      })
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+    });
+  }
+  async function getMyRequestOfLeaveApprovals() {
+    setLoading({
+      myApprovalLaod: true,
+    })
+    await fetch(
+      `${baseUrl.baseUrl}/leaves/GetEssApproval`, {
+      method: "GET",
+      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        setLoading({
+          myApprovalLaod: false,
+        })
+        setGetMyApprovalsRequest(response?.data?.[0])
+      }
+      else {
+        setLoading({
+          myApprovalLaod: false,
+        })
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+      }
+    }).catch((error) => {
+      setLoading({
+        myApprovalLaod: false,
+      })
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+    });
+  }
+
+  useEffect(() => {
+    getMyRequestOfLeave()
+    getMyRequestOfLeaveApprovals()
+  }, [])
+
+
+  const MyReq = [
+    {
+      title: 'Name',
+      dataIndex: 'Emp_name',
+      key: 'Emp_name',
+    },
+    {
+      title: 'Leave name',
+      dataIndex: 'Leave_name',
+      key: 'Leave_name',
+    },
+    {
+      title : "Leave Days",
+      dataIndex: 'LeaveDays',
+      key: 'LeaveDays',
+    },
+    {
+      title: 'Pending With',
+      dataIndex: 'PendingWith',
+      key: 'PendingWith',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'Status',
+      key: 'Status',
+    },
+    {
+      title: 'Posting Date',
+      dataIndex: 'Posting_date',
+      key: 'Posting_date',
+    },
+    {
+      title: 'Start Date',
+      dataIndex: 'StartDate',
+      key: 'StartDate',
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'EndDate',
+      key: 'EndDate',
+    },
+  ];
+
+  const MyReqAppovals = [
+    {
+      title: 'Name',
+      dataIndex: 'EmployeeName',
+      key: 'EmployeeName',
+    },
+    {
+      title: 'Leave name',
+      dataIndex: 'Leave_name',
+      key: 'Leave_name',
+    },
+    {
+      title : "Leave Days",
+      dataIndex: 'LeaveDays',
+      key: 'LeaveDays',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'Status',
+      key: 'Status',
+    },
+    {
+      title: 'Reason',
+      dataIndex: 'Reason',
+      key: 'Reason',
+    },
+    {
+      title: 'Posting Date',
+      dataIndex: 'Posting_date',
+      key: 'Posting_date',
+    },
+    {
+      title: 'Start Date',
+      dataIndex: 'StartDate',
+      key: 'StartDate',
+    },
+    {
+      title: 'End Date',
+      dataIndex: 'EndDate',
+      key: 'EndDate',
+    },
+  ];
+
+  const items = [
+    {
+      key: '1',
+      label: 'My Request',
+      children: <div className="">
+        <h5 className="text-dark mb-2 text-uppercase">My Leave Request</h5>
+        <Table
+          columns={MyReq}
+          loading={isLoading.myReqLoad}
+          pagination={false}
+          dataSource={isGetMyRequest}
+          scroll={{ x: 10, y: 300 }}
+        />
+      </div>,
+    },
+    {
+      key: '2',
+      label: 'My Approvals',
+      children: <div className="">
+        <h5 className="text-dark mb-2 text-uppercase">My Leaves Approvals</h5>
+        <Table
+          columns={MyReqAppovals}
+          loading={isLoading.myApprovalLaod}
+          pagination={false}
+          dataSource={isGetMyApprovalsRequest}
+          scroll={{ x: 10, y: 300 }}
+        />
+      </div>,
+    },
+  ];
+
+
+
   return (
     <>
-      <div className="TableContainer">
-        <div className="d-flex justify-content-between TableHeaderContainer">
-          <span className="d-flex align-items-center" onClick={handleTab}>
-            <Folder_ico /> <p className="m-1">MY REQUEST</p>
-          </span>
-          <span className="d-flex align-items-center" onClick={handleTab2}>
-            <Eye_ico /> <p className="m-1">MY APPROVALS</p>
-          </span>
-        </div>
-        {tab ? (
-          <div className="OverFlowtble">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <td>Type</td>
-                <td></td>
-                <td></td>
-                <td>Value</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>List Appointment</th>
-                <th></th>
-                <th></th>
-                <th>0</th>
-              </tr>
-              <tr>
-                <th>List Appointment</th>
-                <th></th>
-                <th></th>
-                <th>0</th>
-              </tr>
-
-            </tbody>
-          </table>
-          </div>
-        ) : (
-          ""
-        )}
-        {tab2 ? (
-          <div className="OverFlowtble">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <td>S:No</td>
-                <td>Monthly</td>
-                <td>Leave / Attendance</td>
-                <td>Status</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>14</th>
-                <th>july</th>
-                <th>1</th>
-                <th>good</th>
-              </tr>
-              <tr>
-                <th>14</th>
-                <th>july</th>
-                <th>1</th>
-                <th>good</th>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-        ) : (
-          ""
-        )}
+      {contextHolder}
+      <div className="border p-3 rounded bgTables">
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          indicatorSize={(origin) => origin - 16}
+        />
       </div>
     </>
   );

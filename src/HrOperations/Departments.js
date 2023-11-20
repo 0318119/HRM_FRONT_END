@@ -93,6 +93,7 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
     useEffect(() => {
         GetDataDepartment()
     }, [])
+
     useEffect(() => {
         if (isSearchVal == '') {
             GetDataDepartment({
@@ -190,10 +191,10 @@ const Departments = ({ Red_Department, GetDataDepartment }) => {
                                  />
                             )}
                             {mode == "create" && (
-                                <DepartmentForm cancel={setMode} mode={mode} isCode={null} />
+                                <DepartmentForm cancel={setMode} mode={mode} isCode={null} page={page}/>
                             )}
                             {mode == "Edit" && (
-                                <DepartmentForm cancel={setMode} isCode={isCode} />
+                                <DepartmentForm cancel={setMode} isCode={isCode} page={page}/>
                             )}
                         </div>
 

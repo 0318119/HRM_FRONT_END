@@ -15,7 +15,7 @@ import { message } from 'antd';
 
 
 
-const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
+const Employee_Category = ({ Red_Employee_Cat, GetEmployeeCatData }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [page, setPage] = useState(1);
@@ -55,7 +55,7 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit',data?.Emp_Category_code)} className="editBtn">
+          <button onClick={() => EditPage('Edit', data?.Emp_Category_code)} className="editBtn">
             <FaEdit />
           </button>
           <Popconfirm
@@ -64,7 +64,7 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              // handleConfirmDelete(data?.Emp_Category_code)
+              handleConfirmDelete(data?.Emp_Category_code)
             }}
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -73,30 +73,77 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
       ),
     },
   ];
+
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetEmployeeCatData({ 
+    if (isSearchVal == '') {
+      GetEmployeeCatData({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-    }else{
-      GetEmployeeCatData({ 
+    } else {
+      GetEmployeeCatData({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-  }, [page,isSearchVal])
+  }, [page, isSearchVal])
 
-  console.log("Red_Employee_Cat",Red_Employee_Cat)
-  
+  // COST CENTRE FORM DATA DELETE API CALL =========================== 
+  async function handleConfirmDelete(id) {
+    await fetch(
+      `${baseUrl.baseUrl}/employment_category/DeleteEmploymentCategory`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "Emp_Category_code": id,
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "You have successfully deleted",
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+          GetEmployeeCatData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+          })
+        }, 5000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+
 
   return (
     <>
       <div>
         <Header />
       </div>
+      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -106,9 +153,9 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
                 <div className="EmployeeCategoryFlexBox">
                   <h4 className="text-dark">Employee Category</h4>
                   <div className="EmployeeCategorysearchBox">
-                    <Input placeholder={'Search Here...'} type="search" 
-                        onChange={(e) => {setSearchVal(e.target.value)}}
-                      />
+                    <Input placeholder={'Search Here...'} type="search"
+                      onChange={(e) => { setSearchVal(e.target.value) }}
+                    />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -118,8 +165,10 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns} 
-                  dataSource={Red_Employee_Cat?.data?.[0]?.res?.data1} 
+                <Table 
+                  columns={columns}
+                  loading={Red_Employee_Cat?.loading}
+                  dataSource={Red_Employee_Cat?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
                   pagination={{
                     defaultCurrent: page,
@@ -132,10 +181,10 @@ const Employee_Category = ({Red_Employee_Cat,GetEmployeeCatData}) => {
                 />
               )}
               {mode == "create" && (
-                <EmployeeCategoryForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <EmployeeCategoryForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                <EmployeeCategoryForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
+                <EmployeeCategoryForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
               )}
             </div>
 

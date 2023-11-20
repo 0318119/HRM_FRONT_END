@@ -37,7 +37,6 @@ body{
     font-size: 25px;
     color: red;
 }
-
 /* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
 .tabletdRow {
     display: flex;
@@ -65,7 +64,6 @@ body{
 table {
     background-color: transparent !important;
 }
-
 .ant-pagination-options{
     display: none !important;
 }
@@ -80,6 +78,12 @@ table {
     font-weight: 700;
     text-transform: capitalize;
 }
+
+/* DASHBOARD TABLE BG COLOR */
+.bgTables{
+    background: #d7cfcf33;
+}
+
 
 /* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 select:focus {
@@ -114,13 +118,35 @@ select:focus {
 }
 .ant-select-single{
     height: 40px !important;
+    width: 250px !important;
 }
 .ant-select-focused .ant-select-selector{
     box-shadow: none !important;
 }
 .ant-select-selector{
     border: 1px solid rgb(225 225 225) !important;
+    width: 250px !important;
 }
 .ant-select-selector:hover{
     border: 1px solid rgb(225 225 225) !important;
+}
+.ant-message-loading{
+    display: flex;
+    align-content: center;
+}
+.ant-message-loading span{
+    color: black;
+}
+.ant-message-error{
+    display: flex;
+    align-items: center;
+}
+.ant-message-success{
+    display: flex;
+    align-items: center;
+}
+
+
+.month{
+    width: 200px !important;
 }

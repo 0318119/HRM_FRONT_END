@@ -97,6 +97,8 @@ function EmployeeTypeForm({ cancel, mode, isCode, page, Red_Employee_type,GetEmp
         }
     }, [Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]])
 
+    console.log("object",Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0])
+
     // EMPLOYEE TYPE FORM DATA API CALL =========================== 
     async function POST_Emp_Type_FORM(body) {
         setLoading(true)

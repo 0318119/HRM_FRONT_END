@@ -10,7 +10,7 @@ import { FormInput } from "../../components/basic/input/formInput";
 import { message } from "antd";
 import baseUrl from "../../../src/config.json";
 
-function Base_CityForm({ cancel, mode, isCode, Red_Base_City }) {
+function Base_CityForm({ cancel, mode, isCode, Red_Base_City ,Get_Base_City_Data_By_Id,GetBaseCityData}) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading, setLoading] = useState(false);
@@ -18,6 +18,7 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City }) {
   const EditBack = () => {
     cancel("read");
   };
+
   const submitForm = async (data) => {
       try {
       const isValid = await Base_City_Scheme.validate(data);
@@ -51,11 +52,41 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City }) {
     resolver: yupResolver(Base_City_Scheme),
   });
 
-  //   useEffect(() => {
-  //     if (isCode !== null) {
-  //       Get_Country_Data_By_Id(isCode)
-  //     }
-  //   }, [])
+  useEffect(() => {
+    if (isCode !== null) {
+      Get_Base_City_Data_By_Id(isCode)
+    }
+  }, [])
+    
+
+  useEffect(() => {
+      if(mode == "create"){
+          reset(
+              {
+                City_code: 0,
+                City_name: "",
+                City_abbr: "",
+                Province_Code: "",
+                Region_Code: "",
+                Sort_key: "",
+              },
+          )
+      }else{
+          reset(
+              {
+                City_code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_code,
+                City_name: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_name,
+                City_abbr: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.City_abbr,
+                Province_Code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Province_Code,
+                Region_Code: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Region_Code,
+                Sort_key: Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
+             
+              },
+              )
+      }
+  }, [Red_Base_City?.dataSingle?.[0]?.res?.data?.[0]])
+
+   console.log("Red_Base_City",Red_Base_City)
 
   // BASE CITY FORM DATA API CALL ===========================
   async function POST_BASE_CITY_FORM(body) {
@@ -87,6 +118,11 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City }) {
           setLoading(false);
           setTimeout(() => {
             cancel("read");
+            GetBaseCityData({
+              pageSize: 10,
+              pageNo: 1,
+              search: null,
+            });
           }, 3000);
         } else {
           setLoading(false);
@@ -175,7 +211,7 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City }) {
             control={control}
           />
         </div>
-        <div className="CountryBtnBox">
+        <div className="BaseCItyBtnBox">
           <CancelButton onClick={EditBack} title={"Cancel"} />
           <PrimaryButton type={"submit"} loading={isLoading} title="Save" />
         </div>

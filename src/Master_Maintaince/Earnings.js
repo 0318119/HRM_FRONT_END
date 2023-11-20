@@ -6,11 +6,11 @@ import { Space, Table, Tag, Tooltip } from "antd";
 import EarningsForm from "./form/EarningsForm";
 import "./assets/css/Earnings.css";
 import { connect } from "react-redux";
-import * as BASE_CITY_ACTIONS from "../store/actions/HrOperations/Base_CIty/index";
+import * as MASTEREARNING_ACTIONS from "../store/actions/MasterMaintaince/MasterEarning/index";
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 
-const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
+const Earnings = ({ GetMasterEarningData, Red_MasterEarning }) => {
     const [mode, setMode] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null);
@@ -23,17 +23,17 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
         setMode(mode);
     };
 
+
     const columns = [
         {
             title: "Code",
-            dataIndex: "City_code",
-            key: "City_code",
-            render: (text) => <a>{text}</a>,
+            dataIndex: "Emp_code",
+            key: "Emp_code",
         },
         {
             title: "Name",
-            dataIndex: "City_name",
-            key: "City_name",
+            dataIndex: "Emp_name",
+            key: "Emp_name",
         },
         {
             title: "Action",
@@ -41,8 +41,8 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
             render: (data) => (
                 <Space size="middle">
                     <button
-                        onClick={() => EditPage("Edit")}
-                        classN  ame="editBtn"
+                        onClick={() => EditPage("Edit", data?.Emp_code)}
+                        className="editBtn"
                     >
                         <FaEdit />
                     </button>
@@ -51,19 +51,15 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
         },
     ];
 
-    //   useEffect(() => {
-    //     GetBaseCityData()
-    //   }, [])
-
-    useEffect(() => {
+        useEffect(() => {
         if (isSearchVal == "") {
-            GetBaseCityData({
+            GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: page,
                 search: null,
             });
         } else {
-            GetBaseCityData({
+            GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: 1,
                 search: isSearchVal,
@@ -71,7 +67,6 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
         }
     }, [page, isSearchVal]);
 
-    console.log("Red_Base_City table page", Red_Base_City?.data?.[0]?.res?.data1);
 
     return (
         <>
@@ -87,10 +82,10 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
                                     <h4 className="text-dark">Master - Earnings</h4>
                                     <div className="EarningssearchBox">
                                     <label>Search </label>
-                                        <select class="form-select" aria-label="Default select example">
+                                        {/* <select class="form-select" aria-label="Default select example">
                                             <option selected>By Code</option>
                                         </select>
-                                        <label className="Searchtext">Search Text</label>
+                                        <label className="Searchtext">Search Text</label> */}
                                         <Input
                                             type="search"
                                             onChange={(e) => {
@@ -107,12 +102,12 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
                             {mode == "read" && (
                                 <Table
                                     columns={columns}
-                                    loading={Red_Base_City?.loading}
-                                    dataSource={Red_Base_City?.data?.[0]?.res?.data1}
+                                    loading={Red_MasterEarning?.loading}
+                                    dataSource={Red_MasterEarning?.data?.[0]?.res?.data1}
                                     scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,
-                                        total: Red_Base_City?.data?.[0]?.res?.data3,
+                                        total: Red_MasterEarning?.data?.[0]?.res?.data3,
                                         onChange: (p) => {
                                             setPage(p);
                                         },
@@ -120,8 +115,8 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
                                     }}
                                 />
                             )}
-                            {mode == "create" && <EarningsForm cancel={setMode} />}
-                            {mode == "Edit" && <EarningsForm cancel={setMode} />}
+                            {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
+                            {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page}  />}
                         </div>
                     </div>
                 </div>
@@ -129,8 +124,8 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
         </>
     );
 };
-function mapStateToProps({ Red_Base_City }) {
-    return { Red_Base_City };
+function mapStateToProps({ Red_MasterEarning }) {
+    return { Red_MasterEarning };
 }
 
-export default connect(mapStateToProps, BASE_CITY_ACTIONS)(Earnings);
+export default connect(mapStateToProps, MASTEREARNING_ACTIONS)(Earnings);
