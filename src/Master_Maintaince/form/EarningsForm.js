@@ -27,8 +27,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     try {
       const isValid = await MasterEarningSchema.validate(data);
       if (isValid) {
-        POST_MASTER_EARNING_FORM(data)
-        console.log(data, "data");
+        // POST_MASTER_EARNING_FORM(data)
 
       }
     } catch (error) {
@@ -93,20 +92,29 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
 
 
 
-  const [postAllowncesCodes, setPostAllowncesCodes] = useState([])
-  const [postAllowncesAmount, setPostAllowncesAmount] = useState([])
-  if (RedData?.data) {
-    var AllowanceCode1 = [];
-    var Amount1 = [];
-    for (let i = 0; i < RedData?.data.length; i++) {
-      var AllowanceCode = RedData?.data[i]?.Allowance_code
-      var AllowanceAmount = RedData?.data[i]?.Amount
-      Amount1.push(AllowanceAmount)
-      setPostAllowncesAmount([...Amount1])
-      
+  // const [postAllowncesCodes, setPostAllowncesCodes] = useState([])
+  // const [postAllowncesAmount, setPostAllowncesAmount] = useState([])
+  const [postAllownces, setpostAllownces] = useState([])
+
+
+
+  useEffect(() =>  {
+    var temp = []
+    if (RedData?.data.length > 0) {
+      for (var i of RedData?.data) {
+        var obj = {
+          "code": i.Allowance_code,
+          "amount": i.Amount
+        }
+        temp.push(obj)
+        setpostAllownces([...temp])
+      }
     }
-    console.log(Amount1, "Amount1")
-  }
+  }, [RedData?.data])
+ 
+
+
+
 
 
 
@@ -114,26 +122,18 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
   // MASTER EARNING FORM DATA API CALL ===========================
   async function POST_MASTER_EARNING_FORM(body) {
     setLoading(true);
-    var body = JSON.stringify({
-      "Emp_code": isCode,
-      "Allowance_code": AllowanceCode1,
-      "Amount": postAllowncesAmount,
-      "Deletion_Flag": body.Deletion_Flag,
-    })
-    console.log(body, 'body')
-    return
     await fetch(`${baseUrl.baseUrl}/allowance/SaveAllowances`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
         accessToken: `Bareer ${get_access_token}`,
       },
-      body: JSON.stringify({
-        "Emp_code": isCode,
-        "Allowance_code": AllowanceCode1,
-        "Amount": Amount1,
-        "Deletion_Flag": body.Deletion_Flag,
-      }),
+    //   body: JSON.stringify({
+    //     "Emp_code": isCode,
+    //     "Allowance_code": postAllowncesCodes,
+    //     "Amount": postAllowncesAmount,
+    //     "Deletion_Flag": body.Deletion_Flag,
+    // }),
     })
       .then((response) => {
         return response.json();
@@ -242,6 +242,9 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
 
 
 
+  
+
+
   const columns = [
     {
       title: "Allowance_code",
@@ -260,14 +263,16 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
         return (
           <input 
             defaultValue={_?.Amount}
-            type="text"
-            placeholder="AAA"
+            type="number"
+            placeholder="Amount"
             name={_?.Allowance_code}
-            // onChange={(e) => {
-            //   postAllowncesAmount[index].Amount == e.target.value
-            //   setPostAllowncesAmount([...postAllowncesAmount]
-            //   )
-            // }}
+            onChange={(e) => {
+              postAllownces[index].amount = e.target.value
+              setpostAllownces([...postAllownces])
+              // postAllowncesAmount[index].amount = e.target.value
+              // setPostAllowncesAmount([...postAllowncesAmount])
+              // console.log("postAllownces input", postAllownces)
+            }}
           />
 
         )
@@ -345,6 +350,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
             columns={columns}
             loading={Red_MasterEarning?.loading}
             dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
+            pagination={false}
           />
         </div>
         <div>
