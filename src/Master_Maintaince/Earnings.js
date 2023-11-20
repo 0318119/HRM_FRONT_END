@@ -42,7 +42,7 @@ const Earnings = ({ GetBaseCityData, Red_Base_City }) => {
                 <Space size="middle">
                     <button
                         onClick={() => EditPage("Edit")}
-                        className="editBtn"
+                        classN  ame="editBtn"
                     >
                         <FaEdit />
                     </button>
