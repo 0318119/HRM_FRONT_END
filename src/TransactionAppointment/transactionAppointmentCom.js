@@ -356,7 +356,7 @@ function TransactionAppointmentCom() {
             </div>
             <div className="form-group d-flex ml-2 TransAppointFormGroup">
               {/* <label htmlFor="">Excel Record</label> */}
-              <input type="file" className="from-control TAFile" />
+              {/* <input type="file" className="from-control TAFile" /> */}
             </div>
             {/* <div className="form-group ml-2 TransAppointFormGroup">
               <button>Excel Upload</button>

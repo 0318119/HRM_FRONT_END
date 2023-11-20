@@ -10,76 +10,77 @@ import { FormInput, FormSelect } from "../../components/basic/input/formInput";
 import { message } from "antd";
 import { Space, Table, Tag, Tooltip } from "antd";
 import baseUrl from "../../../src/config.json";
+import { lowerCase } from "@antv/util";
 
 function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMasterEarningData, Get_Master_Earning_Allowance_By_EmpCode }) {
-    var get_access_token = localStorage.getItem("access_token");
-    const [messageApi, contextHolder] = message.useMessage();
-    const [isLoading, setLoading] = useState(false);
+  var get_access_token = localStorage.getItem("access_token");
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isLoading, setLoading] = useState(false);
   const [pageSize, setPageSize] = useState(10);
 
-  
-    const EditBack = () => {
-      cancel("read");
-    };
-    const submitForm = async (data) => {
 
-        try {
-          const isValid = await MasterEarningSchema.validate(data);
-        if (isValid) {
-          POST_MASTER_EARNING_FORM(data)
-          console.log(data, "data");
+  const EditBack = () => {
+    cancel("read");
+  };
+  const submitForm = async (data) => {
 
-        } 
-      } catch (error) {
-        console.error(error, "error message");
+    try {
+      const isValid = await MasterEarningSchema.validate(data);
+      if (isValid) {
+        POST_MASTER_EARNING_FORM(data)
+        console.log(data, "data");
+
       }
-    };
-  
-
- 
-   
-   
-    const {
-      control,
-      formState: { errors },
-      handleSubmit,
-      reset,
-    } = useForm({
-      defaultValues: {
-        Emp_code:isCode,
-        Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
-        Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
-        Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
-
-      },
-      mode: "onChange",
-      resolver: yupResolver(MasterEarningSchema),
-    });
+    } catch (error) {
+      console.error(error, "error message");
+    }
+  };
 
 
-      useEffect(() => {
-        if (isCode !== null) {
-          Get_Master_Earning_Allowance_By_EmpCode(isCode)
-        }
-      }, [])
 
-   
+
+
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+  } = useForm({
+    defaultValues: {
+      Emp_code: isCode,
+      Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
+      Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
+      Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
+
+    },
+    mode: "onChange",
+    resolver: yupResolver(MasterEarningSchema),
+  });
+
+
   useEffect(() => {
-    if(mode == "Edit"){
+    if (isCode !== null) {
+      Get_Master_Earning_Allowance_By_EmpCode(isCode)
+    }
+  }, [])
+
+
+  useEffect(() => {
+    if (mode == "Edit") {
       reset(
         {
-          Emp_code:isCode,
+          Emp_code: isCode,
           Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
           Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
           Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
         },
       )
     }
-    
-  }, [Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]])
-  
 
-  
+  }, [Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]])
+
+
+
 
   const [RedData, setRedData] = useState(null);
 
@@ -90,69 +91,88 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
 
   }, [Red_MasterEarning.dataSingle]);
 
- 
+
+
+  const [postAllowncesCodes, setPostAllowncesCodes] = useState([])
+  const [postAllowncesAmount, setPostAllowncesAmount] = useState([])
   if (RedData?.data) {
+    var AllowanceCode1 = [];
+    var Amount1 = [];
     for (let i = 0; i < RedData?.data.length; i++) {
       var AllowanceCode = RedData?.data[i]?.Allowance_code
-      var Amount = RedData?.data[i]?.Amount
+      var AllowanceAmount = RedData?.data[i]?.Amount
+      Amount1.push(AllowanceAmount)
+      setPostAllowncesAmount([...Amount1])
+      
     }
+    console.log(Amount1, "Amount1")
   }
 
-  
-    // MASTER EARNING FORM DATA API CALL ===========================
-    async function POST_MASTER_EARNING_FORM(body) {
-      setLoading(true);
-      await fetch(`${baseUrl.baseUrl}/allowance/SaveAllowances`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          accessToken: `Bareer ${get_access_token}`,
-        },
-        body: JSON.stringify({
-          "Emp_code": isCode,
-          "Allowance_code": AllowanceCode,
-          "Amount": Amount,
-          "Deletion_Flag": body.Deletion_Flag,
-        }),
+
+
+
+  // MASTER EARNING FORM DATA API CALL ===========================
+  async function POST_MASTER_EARNING_FORM(body) {
+    setLoading(true);
+    var body = JSON.stringify({
+      "Emp_code": isCode,
+      "Allowance_code": AllowanceCode1,
+      "Amount": postAllowncesAmount,
+      "Deletion_Flag": body.Deletion_Flag,
+    })
+    console.log(body, 'body')
+    return
+    await fetch(`${baseUrl.baseUrl}/allowance/SaveAllowances`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        accessToken: `Bareer ${get_access_token}`,
+      },
+      body: JSON.stringify({
+        "Emp_code": isCode,
+        "Allowance_code": AllowanceCode1,
+        "Amount": Amount1,
+        "Deletion_Flag": body.Deletion_Flag,
+      }),
+    })
+      .then((response) => {
+        return response.json();
       })
-        .then((response) => {
-          return response.json();
-        })
-        .then(async (response) => {
-          if (response.success) {
-            messageApi.open({
-              type: "success",
-              content: response?.message || response?.messsage,
-            });
-            setLoading(false);
-            setTimeout(() => {
-              cancel("read");
-              GetMasterEarningData({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null
-              })
-            }, 3000);
-          } else {
-            setLoading(false);
-            messageApi.open({
-              type: "error",
-              content: response?.message || response?.messsage,
-            });
-          }
-        })
-        .catch((error) => {
+      .then(async (response) => {
+        if (response.success) {
+          messageApi.open({
+            type: "success",
+            content: response?.message || response?.messsage,
+          });
+          setLoading(false);
+          setTimeout(() => {
+            cancel("read");
+            GetMasterEarningData({
+              pageSize: pageSize,
+              pageNo: page,
+              search: null
+            })
+          }, 3000);
+        } else {
           setLoading(false);
           messageApi.open({
             type: "error",
-            content: error?.message || error?.messsage,
+            content: response?.message || response?.messsage,
           });
+        }
+      })
+      .catch((error) => {
+        setLoading(false);
+        messageApi.open({
+          type: "error",
+          content: error?.message || error?.messsage,
         });
-    }
- 
+      });
+  }
 
 
-   const [getInfo, setGetInfo] = useState([]) 
+
+  const [getInfo, setGetInfo] = useState([])
   async function getAllEmpInfo(body) {
 
     setLoading(true);
@@ -200,7 +220,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
   useEffect(() => {
     getAllEmpInfo()
   }, [])
-  
+
 
   const [totalAmount, setTotalAmount] = useState(null);
 
@@ -221,7 +241,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
   }
 
 
- 
+
   const columns = [
     {
       title: "Allowance_code",
@@ -235,108 +255,116 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     },
     {
       title: "Amount",
-      dataIndex: "Amount",
-      render: (Amount) => (
-        <FormInput
-        Values={Amount}
-         type="number" 
-         id="Amount" 
-         name="Amount"
-          showLabel={true}
-          errors={errors}
-          control={control}
-         />
-      )
+      key: "Amount",
+      render: (_, Amount, index) => {
+        return (
+          <input 
+            defaultValue={_?.Amount}
+            type="text"
+            placeholder="AAA"
+            name={_?.Allowance_code}
+            // onChange={(e) => {
+            //   postAllowncesAmount[index].Amount == e.target.value
+            //   setPostAllowncesAmount([...postAllowncesAmount]
+            //   )
+            // }}
+          />
+
+        )
+      }
     },
 
   ];
-  
 
 
 
-    return (
-      <>
-  
-          {contextHolder}
-        <form onSubmit={handleSubmit(submitForm)}>
-          <h4 className="text-dark">MASTER EARNING</h4>
-          <hr />
-          <div className="form-group formBoxCountry">
 
-                <FormInput
-              label={"Employee Name"}
-              placeholder={getInfo?.Emp_name ? getInfo?.Emp_name : 'Not Found'}
-              id=""
-              name=""
-              readOnly
-              showLabel={true}
-              errors={errors}
-              control={control}
-            />
-            <FormInput
-              label={"Department Name"}
-              placeholder={getInfo?.Dept_name ? getInfo?.Dept_name : "not found"}
-              id=""
-              name=""
-              readOnly
-              showLabel={true}
-              errors={errors}
-              control={control}
-            />
-            <FormInput
-              label={"Designation Name"}
-              placeholder={getInfo?.Desig_Name ? getInfo?.Desig_Name : 'not Found'}
-              id=""
-              name=""
-              readOnly
-              showLabel={true}
-              errors={errors}
-              control={control}
-            />
-            <FormSelect
-              label={'Deletion Flag '}
-              placeholder='Deletion Flag'
-              id="Deletion_Flag"
-              name="Deletion_Flag"
-              options={[
-                {
-                  value: 'Y',
-                  label: 'Yes',
-                },
-                {
-                  value: "N",
-                  label: 'No',
-                },
-              ]}
-              showLabel={true}
-              errors={errors}
-              control={control}
-            /> 
-         
-          </div>
-          <hr />
-          <div className="d-flex">
-            <Table
-              columns={columns}
-              loading={Red_MasterEarning?.loading}
-              dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
-            />           
-          </div>
-          <div>
-            <span>Total Amount</span>
-            <span>{sum}</span>
-          </div> 
-          
-          <div className="CountryBtnBox">
-            <CancelButton title={"Cancel"} onClick={EditBack} />
-            <PrimaryButton type={"submit"}   title="Save" />
-          </div>
-        </form>
-      </>
-    );
-  }
+  return (
+    <>
+
+      {contextHolder}
+      <form onSubmit={handleSubmit(submitForm)}>
+        <h4 className="text-dark">MASTER EARNING</h4>
+        <hr />
+        <div className="form-group formBoxCountry">
+
+          <FormInput
+            label={"Employee Name"}
+            placeholder={getInfo?.Emp_name ? getInfo?.Emp_name : 'Not Found'}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormInput
+            label={"Department Name"}
+            placeholder={getInfo?.Dept_name ? getInfo?.Dept_name : "not found"}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormInput
+            label={"Designation Name"}
+            placeholder={getInfo?.Desig_Name ? getInfo?.Desig_Name : 'not Found'}
+            id=""
+            name=""
+            readOnly
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+          <FormSelect
+            label={'Deletion Flag '}
+            placeholder='Deletion Flag'
+            id="Deletion_Flag"
+            name="Deletion_Flag"
+            options={[
+              {
+                value: 'Y',
+                label: 'Yes',
+              },
+              {
+                value: "N",
+                label: 'No',
+              },
+            ]}
+            showLabel={true}
+            errors={errors}
+            control={control}
+          />
+
+        </div>
+        <hr />
+        <div className="d-flex">
+          <Table
+            columns={columns}
+            loading={Red_MasterEarning?.loading}
+            dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
+          />
+        </div>
+        <div>
+          <span>Total Amount</span>
+          <span>{sum}</span>
+        </div>
+
+        <div className="CountryBtnBox">
+          <CancelButton title={"Cancel"} onClick={EditBack} />
+          <PrimaryButton type={"submit"} title="Save" />
+        </div>
+      </form>
+    </>
+  );
+}
 function mapStateToProps({ Red_MasterEarning }) {
-    return { Red_MasterEarning };
-  }
+  return { Red_MasterEarning };
+}
 export default connect(mapStateToProps, MASTEREARNING_ACTIONS)(EarningsForm);
-  
+
+
+
+
