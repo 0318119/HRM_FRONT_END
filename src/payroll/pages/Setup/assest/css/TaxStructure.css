@@ -1,0 +1,34 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.EdcuationFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EdcuationFlexBox .EducationsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.EdcuationFlexBox .EducationsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxEducation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.EducationBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxEducation div {
+    width: 50%;
+}
