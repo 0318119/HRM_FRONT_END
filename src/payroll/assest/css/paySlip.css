@@ -10,5 +10,7 @@
     padding-bottom: 10px;
 }
 
-.paySlipBox .paySlipBtnBox{}
+.paySlipBox .paySlipBtnBox{
+    display: flex;
+}
 .paySlipBox .paySlipBtnBox button{}

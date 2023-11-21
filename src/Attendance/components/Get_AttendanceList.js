@@ -67,19 +67,24 @@ function Get_Attendancelist({
   }, [])
 
   // ATTENDANCE FORM POST FUNCTION
+  const [btnDownalod,setBtnDownalod] = useState(false)
   const confirm = async (data) => {
       const isWaitFun = await PostAttendancePayload(data)
       if(isWaitFun?.success){
         if(isWaitFun?.data[0].length == 0){
           message.error("No Data Available")
           setLoading(false)
+          setBtnDownalod(false)
         }else{
           setLoading(false)
+          setBtnDownalod(true)
           message.success("Now, You can Download Pdf")
           setAttendanceData(isWaitFun?.data[0])
         }
       }else{
         message.error(isWaitFun?.message || isWaitFun?.messsage)
+        setLoading(false)
+        setBtnDownalod(false)
       }
   }
 
@@ -214,13 +219,10 @@ function Get_Attendancelist({
         </div>
         <div className="row">
           <div className="col-lg-12 d-flex justify-content-end">
-            <PrimaryButton className={isAttendanceData?.length > 0 ? "d-block" : "d-none"} id="Print" title="Download" />
+            <PrimaryButton className={btnDownalod == true ? "d-block" : "d-none"} id="Print" title="Download" />
           </div>
         </div>
         <div class="mt-5 row justify-content-center">
-          {
-            console.log("isAttendanceData",isAttendanceData)
-          }
           {isAttendanceData?.length > 0 && (
             // <Table
             //     columns={columns}

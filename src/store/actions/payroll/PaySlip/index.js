@@ -67,3 +67,22 @@ export const PostPaySlip = (data) => async () => {
       return res;
     }
   };
+
+  export const GETEmpPasswordCall = (data) => async () => {
+    const response = await fetch(`${baseUrl.baseUrl}/allemployeer/GetEmployeeNicNumber`, {
+      method: "POST",
+      headers: {
+        accessToken: "Bareer " + localStorage.getItem("access_token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "Emp_code": data
+      }),
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+  };
