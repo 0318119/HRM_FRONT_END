@@ -314,7 +314,8 @@ function PaySlip({
                         </View>
                         <Text style={styles.CompanyName}>{isPDfData?.[0]?.Company_name ? isPDfData?.[0]?.Company_name : "Empty"}</Text>
                         <Text style={styles.Head}>PaySlip</Text>
-                        <Text style={styles.yearAndName}>for the month of {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"} of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"}</Text>
+                        Payslip for the month of December 2023
+                        <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text>
                         {/* EMPLOYEE INFORMATIONS ================== */}
                         <View style={styles.upperBox}>
                             <View style={styles.row}>
@@ -592,7 +593,7 @@ function PaySlip({
                             <div className='paySlipBtnBox'>
                                 <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
                                 {isDownload &&
-                                    <Button loading={PdfLoader} onClick={PDFRenderData} type={'submit'} title="Download Pay Slip" />
+                                    <Button loading={PdfLoader} onClick={PDFRenderData} type={'submit'} title="Download PaySlip" />
                                 }
                             </div>
                         </form>
@@ -618,7 +619,8 @@ function PaySlip({
                                     </View>
                                     <Text style={styles.CompanyName}>{isPDfData?.[0]?.Company_name ? isPDfData?.[0]?.Company_name : "Empty"}</Text>
                                     <Text style={styles.Head}>PaySlip</Text>
-                                    <Text style={styles.yearAndName}>for the month of {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"} of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"}</Text>
+                                    Payslip for the month of December 2023
+                                    <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text>
                                     {/* EMPLOYEE INFORMATIONS ================== */}
                                     <View style={styles.upperBox}>
                                         <View style={styles.row}>
@@ -668,7 +670,7 @@ function PaySlip({
                                     </View>
                                     {/* ============================================= */}
                                     <View style={styles.upperBox} className="mt-5">
-                                         {/* Allownces ================= */}
+                                        {/* Allownces ================= */}
                                         <View style={styles.row2}>
                                             <Text style={styles.tableHead}>Allowances</Text>
                                             <View style={styles.rowInner}>
