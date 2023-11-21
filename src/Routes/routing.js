@@ -5,6 +5,7 @@ import '../../src/Assets/css/main.css'
 import { Login } from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
+import Appointment2 from '../TransactionAppointment/Appointment2';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
 import TAEducationForm from '../TransactionAppointForm/TAEducationForm';
 import TAExprienceForm from '../TransactionAppointForm/TAExprienceForm';
@@ -104,7 +105,11 @@ const routing = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* //////////////Apointment\\\\\\\\*/}
         <Route path="/Appointment" element={<Appointment />} />
+        <Route path="/Appointment2" element={<Appointment2 />} />
+        {/* //////////////ApointmentEnd \\\\\\\\*/}
+
         <Route path="/TAPersonalform" element={<TAPersonalform />} />
         <Route path="/TAEducationForm" element={<TAEducationForm />} />
         <Route path="/TAExprienceForm" element={<TAExprienceForm />} />

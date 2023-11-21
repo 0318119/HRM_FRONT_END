@@ -334,11 +334,11 @@ function TransactionAppointmentCom() {
     });
   }
 
-
-
   useEffect(() => {
     getAppointStatusCall();
   }, [chkproapi]);
+
+
 
   return (
     <>
@@ -474,7 +474,6 @@ function TransactionAppointmentCom() {
                                 onClick={(e) => {
                                   AppointLetter(items.Sequence_no)
                                 }
-                                  // GetAppointLetter(items.Sequence_no)
                                 }
                               >
                                 {" "}

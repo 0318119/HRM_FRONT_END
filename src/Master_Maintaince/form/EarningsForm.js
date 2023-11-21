@@ -17,27 +17,26 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading, setLoading] = useState(false);
   const [pageSize, setPageSize] = useState(10);
-
+  const [RedData, setRedData] = useState(null);
+  const [postAllownces, setpostAllownces] = useState([])
+  const [totalAmount, setTotalAmount] = useState(null);
+  const [getInfo, setGetInfo] = useState([])
 
   const EditBack = () => {
     cancel("read");
   };
-  const submitForm = async (data) => {
 
+
+  const submitForm = async (data) => {
     try {
       const isValid = await MasterEarningSchema.validate(data);
       if (isValid) {
-        // POST_MASTER_EARNING_FORM(data)
-
+        POST_MASTER_EARNING_FORM(data)
       }
     } catch (error) {
       console.error(error, "error message");
     }
   };
-
-
-
-
 
   const {
     control,
@@ -46,11 +45,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     reset,
   } = useForm({
     defaultValues: {
-      Emp_code: isCode,
-      Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
-      Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
       Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
-
     },
     mode: "onChange",
     resolver: yupResolver(MasterEarningSchema),
@@ -68,54 +63,70 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
     if (mode == "Edit") {
       reset(
         {
-          Emp_code: isCode,
-          Allowance_code: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Allowance_code,
-          Amount: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Amount,
           Deletion_Flag: Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]?.Deletion_Flag,
         },
       )
     }
+  }, [Red_MasterEarning?.dataSingle])
 
-  }, [Red_MasterEarning?.dataSingle?.[0]?.res?.data?.[0]])
-
-
-
-
-  const [RedData, setRedData] = useState(null);
-
+  console.log("Updated Data", Red_MasterEarning)
+  
+  // PUSH ALLOWNCES CODE AND AMOUNT FUNCTION =======================
   useEffect(() => {
-    const MasterEarningData = Red_MasterEarning?.dataSingle[0]?.res;
-
-    setRedData(MasterEarningData);
-
-  }, [Red_MasterEarning.dataSingle]);
-
-
-
-  // const [postAllowncesCodes, setPostAllowncesCodes] = useState([])
-  // const [postAllowncesAmount, setPostAllowncesAmount] = useState([])
-  const [postAllownces, setpostAllownces] = useState([])
-
-
-
-  useEffect(() =>  {
     var temp = []
-    if (RedData?.data.length > 0) {
-      for (var i of RedData?.data) {
+    if (Red_MasterEarning?.dataSingle[0]?.res?.data?.length > 0) {
+      for (var i of Red_MasterEarning?.dataSingle[0]?.res?.data) {
         var obj = {
-          "code": i.Allowance_code,
-          "amount": i.Amount
+          "Allowance_code": i.Allowance_code,
+          "Amount": i.Amount
         }
         temp.push(obj)
         setpostAllownces([...temp])
+        console.log("setPOst",postAllownces)
       }
     }
-  }, [RedData?.data])
- 
+  }, [Red_MasterEarning?.dataSingle[0]?.res?.data])
+  const [isShow,setShow] = useState("hide")
+  // TABLE COLUMNS =====================
+  const columns = [
+    {
+      title: "Allowance_code",
+      dataIndex: "Allowance_code",
+      key: "Allowance_code"
+    },
+    {
+      title: "Allowance Name",
+      dataIndex: "Allowance_name",
+      key: "Allowance_name"
+    },
+    {
+      title: "Amount",
+      key: "Amount",
+      render: (_, Amount, index) => {
+        return (
+          <>
+            {
+              isShow == "hide" ?
+              <span onClick={(e) => {setShow("show")}}>{_?.Amount}</span> :
+                <input
+                  className="form-control"
+                  defaultValue={_?.Amount}
+                  type="number"
+                  placeholder="Amount"
+                  name={_?.Allowance_code}
+                  onChange={(e) => {
+                    postAllownces[index].Amount = e.target.value
+                    setpostAllownces([...postAllownces])
+                  }}
+                />
+            }
+          </>
 
+        )
+      }
+    },
 
-
-
+  ];
 
 
 
@@ -128,12 +139,11 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
         "content-type": "application/json",
         accessToken: `Bareer ${get_access_token}`,
       },
-    //   body: JSON.stringify({
-    //     "Emp_code": isCode,
-    //     "Allowance_code": postAllowncesCodes,
-    //     "Amount": postAllowncesAmount,
-    //     "Deletion_Flag": body.Deletion_Flag,
-    // }),
+      body: JSON.stringify({
+        "Emp_code": isCode,
+        "Allowance": postAllownces,
+        "Deletion_Flag": body.Deletion_Flag,
+      }),
     })
       .then((response) => {
         return response.json();
@@ -170,11 +180,8 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       });
   }
 
-
-
-  const [getInfo, setGetInfo] = useState([])
+  // GET EMPLOYEE INFO CALL ==================
   async function getAllEmpInfo(body) {
-
     setLoading(true);
     await fetch(`${baseUrl.baseUrl}/tranConformation/GetEmployeeInfoTranConfirmation`, {
       method: "POST",
@@ -222,66 +229,18 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
   }, [])
 
 
-  const [totalAmount, setTotalAmount] = useState(null);
-
+  // ALLOWNCES AMOUNT TOTAL FUNCTION ==================
+  const fetchedTotalAmount = Red_MasterEarning?.dataSingle[0]?.res?.data;
   useEffect(() => {
-    const fetchedTotalAmount = Red_MasterEarning?.dataSingle[0]?.res?.data;
-
-    if (fetchedTotalAmount !== undefined && fetchedTotalAmount !== null) {
-      setTotalAmount(fetchedTotalAmount);
-    }
-  }, [Red_MasterEarning.dataSingle]);
-
-  let sum = 0;
-
-  if (totalAmount) {
-    for (let i = 0; i < totalAmount.length; i++) {
-      sum += totalAmount[i].Amount;
-    }
-  }
-
-
-
-  
-
-
-  const columns = [
-    {
-      title: "Allowance_code",
-      dataIndex: "Allowance_code",
-      key: "Allowance_code"
-    },
-    {
-      title: "Allowance Name",
-      dataIndex: "Allowance_name",
-      key: "Allowance_name"
-    },
-    {
-      title: "Amount",
-      key: "Amount",
-      render: (_, Amount, index) => {
-        return (
-          <input 
-            defaultValue={_?.Amount}
-            type="number"
-            placeholder="Amount"
-            name={_?.Allowance_code}
-            onChange={(e) => {
-              postAllownces[index].amount = e.target.value
-              setpostAllownces([...postAllownces])
-              // postAllowncesAmount[index].amount = e.target.value
-              // setPostAllowncesAmount([...postAllowncesAmount])
-              // console.log("postAllownces input", postAllownces)
-            }}
-          />
-
-        )
+    var temp = 0
+    if (fetchedTotalAmount?.length > 0){
+      for (var i of fetchedTotalAmount) {
+          temp = temp + parseInt(i.Amount)
+          setTotalAmount(temp)
+        // }
       }
-    },
-
-  ];
-
-
+    }
+  }, [Red_MasterEarning?.dataSingle]);
 
 
   return (
@@ -345,19 +304,17 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
 
         </div>
         <hr />
-        <div className="d-flex">
+        <div>
           <Table
             columns={columns}
             loading={Red_MasterEarning?.loading}
-            dataSource={Red_MasterEarning?.dataSingle?.[0]?.res?.data}
+            // dataSource={Red_MasterEarning?.dataSingle[0]?.res?.data}
+            dataSource={Red_MasterEarning?.dataSingle[0]?.res?.data.map((item, index) => ({ ...item, key: index }))}
             pagination={false}
           />
-        </div>
-        <div>
           <span>Total Amount</span>
-          <span>{sum}</span>
+          <span>{totalAmount}</span>
         </div>
-
         <div className="CountryBtnBox">
           <CancelButton title={"Cancel"} onClick={EditBack} />
           <PrimaryButton type={"submit"} title="Save" />
