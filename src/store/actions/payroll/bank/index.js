@@ -1,15 +1,15 @@
 import {
-    GET_TAX_STRUCTURE_DATA,
-    GET_TAX_STRUCTURE_DATA_START,
-    GET_TAX_STRUCTURE_DATA_SINGLE,
-    GET_TAX_STRUCTURE_DATA_END
+    GET_Bank_DATA,
+    GET_Bank_DATA_START,
+    GET_Bank_DATA_SINGLE,
+    GET_Bank_DATA_END
 } from "../../types"
 import baseURL from '../../../../config.json'
 
-export const getTaxStructure = (body) => async (dispatch, getState) => {
+export const getBank = (body) => async (dispatch, getState) => {
     try {
         dispatch({
-            type: GET_TAX_STRUCTURE_DATA_START,
+            type: GET_Bank_DATA_START,
             payload: true,
         });
         const response = await fetch(`${baseURL.baseUrl}/taxStructure/Getalltaxstructures/${body.pageNo}/${body.pageSize}/${body.search}`, {
@@ -23,18 +23,18 @@ export const getTaxStructure = (body) => async (dispatch, getState) => {
         console.log(res , 'res')
         if (res?.success == "success") {
             dispatch({
-                type: GET_TAX_STRUCTURE_DATA,
+                type: GET_Bank_DATA,
                 payload: [{res}],
             });
         }
         dispatch({
-            type: GET_TAX_STRUCTURE_DATA_END,
+            type: GET_Bank_DATA_END,
             payload: false,
         });
     }
     catch (error) {
         dispatch({
-            type: GET_TAX_STRUCTURE_DATA_END,
+            type: GET_Bank_DATA_START,
             payload: false,
         });
         console.log(error)
@@ -46,7 +46,7 @@ export const getTaxStructure = (body) => async (dispatch, getState) => {
 export const Get_Tax_Structure_By_Id = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TAX_STRUCTURE_DATA_START,
+            type: GET_Bank_DATA_START,
             payload: true,
             loading: true,
         });
@@ -63,14 +63,14 @@ export const Get_Tax_Structure_By_Id = (body) => async (dispatch) => {
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_TAX_STRUCTURE_DATA_SINGLE,
+                type: GET_Bank_DATA_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_TAX_STRUCTURE_DATA_END,
+                type: GET_Bank_DATA_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -78,7 +78,7 @@ export const Get_Tax_Structure_By_Id = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_TAX_STRUCTURE_DATA_END,
+            type: GET_Bank_DATA_END,
             payload: false,
             loading: false,
         });

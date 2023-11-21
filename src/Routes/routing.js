@@ -97,6 +97,8 @@ import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/i
 import Earnings from '../Master_Maintaince/Earnings';
 import PaySlip from '../payroll/pages/PaySlip';
 import TaxStructure from '../payroll/pages/Setup/TaxStructure'
+import Bank from '../payroll/pages/Setup/Bank'
+
 
 
 const routing = () => {
@@ -197,6 +199,8 @@ const routing = () => {
         <Route path="/pdf" element={<AddPayrollMethodPdf />} />
         <Route path="/Earnings" element={<Earnings/>} />
         <Route path="/Tax_Structure" element={<TaxStructure/>} />
+        <Route path="/Bank" element={<Bank/>} />
+        
         
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

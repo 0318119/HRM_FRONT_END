@@ -45,6 +45,8 @@ const HR_Designations = ({Red_Designation, GetDataDesignation}) => {
     }
     }, [page,isSearchVal])
 
+    console.log(Red_Designation, 'Red_Designation')
+
     const columns = [
         {
             title: 'Code',

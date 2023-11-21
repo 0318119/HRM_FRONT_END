@@ -4,8 +4,8 @@ import Input from "../../../components/basic/input";
 import { Button } from "../../../components/basic/button";
 // import "./assets/css/CostList.css";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import TaxStructureForm from "../../../payroll/pages/Setup/form/TaxStructureForm";
-import * as TAX_STRUCTURE from "../../../store/actions/payroll/taxStructure/index";
+import Bankform from "../../../payroll/pages/Setup/form/Bankform";
+import * as Bank from "../../../store/actions/payroll/bank/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../../../src/config.json'
@@ -14,7 +14,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const TaxStructure = ({ Red_Bank, getTaxStructure  }) => {
+const Bank = ({  Red_Bank, getTaxStructure  }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -162,7 +162,7 @@ async function handleConfirmDelete(id) {
             {mode == "read" && (
               <>
                 <div className="coslistFlexBox">
-                  <h4 className="text-dark">Tax Structure</h4>
+                  <h4 className="text-dark">Bank</h4>
                   <div className="costCentersearchBox">
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
@@ -193,10 +193,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-                <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <Bankform cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <TaxStructureForm cancel={setMode} isCode={isCode} page={page}/>
+                <Bankform cancel={setMode} isCode={isCode} page={page}/>
               )}
             </div>
           </div>
@@ -206,7 +206,7 @@ async function handleConfirmDelete(id) {
   );
 };
 
-function mapStateToProps({Red_Bank }) {
-  return { Red_Bank};
+function mapStateToProps({ Red_Bank }) {
+  return { Red_Bank };
 }
-export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructure) 
+export default connect(mapStateToProps, Bank)(Bank) 
