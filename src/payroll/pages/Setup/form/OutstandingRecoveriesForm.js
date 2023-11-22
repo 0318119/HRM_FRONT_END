@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../../../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../../../components/basic/button";
-import * as TAX_STRUCTURE from "../../../../store/actions/payroll/taxStructure"
+import * as  OutstandingRecoveriesActions from "../../../../store/actions/payroll/outstandingRecoveries/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { TaxStructureSchema } from '../../../../payroll/pages/Setup/schema';
+import { OutstandingRecoveries } from '../schema';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormCheckBox, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';
-import baseUrl from '../../../../../src/config.json'
+import baseUrl from '../../../../config.json'
 
-function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTaxStructure, Get_Tax_Structure_By_Id }) {
+function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstandingRecoveries, GetOutstandingRecoveries, GET_Outstanding_Recoveries_BY_CODE }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -19,16 +19,20 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         cancel('read')
     }
 
+
+
     const submitForm = async (data) => {
         try {
-            const isValid = await TaxStructureSchema.validate(data);
+            const isValid = await OutstandingRecoveries.validate(data);
             if (isValid) {
-                ADD_STRUCTURE_DATA(data)
+                ADD_Outstanding_Recoveries_DATA(data)
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
     const {
         control,
@@ -37,19 +41,18 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         reset
     } = useForm({
         defaultValues: {
-            Tax_Percentage: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Tax_Percentage,
-            Taxable_Income_From: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_From,
-            Taxable_Income_To: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_To,
-            Fixed_Amount: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Fixed_Amount,
+
+            Outstanding_Recovery_code: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_code,
+            Outstanding_Recovery_name: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_name,
+            Final_Settlement_Report_Mandatory_Flag: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Final_Settlement_Report_Mandatory_Flag,
         },
         mode: "onChange",
-        resolver: yupResolver(TaxStructureSchema),
+        resolver: yupResolver(OutstandingRecoveries),
     });
 
     useEffect(() => {
         if (isCode !== null) {
-            Get_Tax_Structure_By_Id(isCode)
-
+            GET_Outstanding_Recoveries_BY_CODE(isCode)
         }
     }, [])
 
@@ -57,41 +60,38 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         if (mode == "create") {
             reset(
                 {
-                    Taxable_Income_From: "",
-                    Taxable_Income_To: "",
-                    Fixed_Amount: "",
-                    Tax_Percentage: ""
+                    Outstanding_Recovery_code: "",
+                    Outstanding_Recovery_name: "",
+                    Final_Settlement_Report_Mandatory_Flag: "",
                 },
             )
         } else {
             reset(
                 {
-                    Tax_Percentage: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Tax_Percentage,
-                    Taxable_Income_From: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_From,
-                    Taxable_Income_To: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_To,
-                    Fixed_Amount: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Fixed_Amount,
+                    Outstanding_Recovery_code: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_code,
+                    Outstanding_Recovery_name: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_name,
+                    Final_Settlement_Report_Mandatory_Flag: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Final_Settlement_Report_Mandatory_Flag,
                 },
             )
         }
-    }, [Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]])
+    }, [Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]])
 
 
 
-    async function ADD_STRUCTURE_DATA(body) {
+    async function ADD_Outstanding_Recoveries_DATA(body) {
 
         setLoading(true);
-        await fetch(`${baseUrl.baseUrl}/taxStructure/AddTaxStructure`, {
+        await fetch(`${baseUrl.baseUrl}/outstandingRecoveries/AddOutstandingrecoveries`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
                 accessToken: `Bareer ${get_access_token}`,
             },
             body: JSON.stringify({
-                "Structure_Code": mode == "create" ? 0 : isCode,
-                "Taxable_Income_From": body.Taxable_Income_From,
-                "Taxable_Income_To": body.Taxable_Income_To,
-                "Fixed_Amount": body.Fixed_Amount,
-                "Tax_Percentage": body.Tax_Percentage
+                // "Bank_code": mode == 'create' ? "0" : isCode,
+                "Outstanding_Recovery_code": body.Outstanding_Recovery_code,
+                "Outstanding_Recovery_name": body.Outstanding_Recovery_name,
+                "Final_Settlement_Report_Mandatory_Flag": body.Final_Settlement_Report_Mandatory_Flag
             }),
         })
             .then((response) => {
@@ -106,7 +106,7 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
                     setLoading(false);
                     setTimeout(() => {
                         cancel("read");
-                        getTaxStructure({
+                        GetOutstandingRecoveries({
                             pageSize: pageSize,
                             pageNo: page,
                             search: null,
@@ -136,55 +136,52 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Tax Structure</h4>
+                <h4 className="text-dark">Bank</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
 
+
                     <FormInput
-                        label={'Tax Percentage'}
-                        placeholder={'Tax Percentage'}
-                        id="Tax_Percentage"
-                        name="Tax_Percentage"
-                        type="number"
+                        label={'Outstanding_Recovery_code'}
+                        placeholder={'Outstanding_Recovery_code'}
+                        id="Outstanding_Recovery_code"
+                        name="Outstanding_Recovery_code"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Taxable Income From'}
-                        placeholder={'Taxable Income From'}
-                        id="Taxable_Income_From"
-                        name="Taxable_Income_From"
-                        type="number"
+                        label={'Bank Abbreviation'}
+                        placeholder={'Bank Abbreviation'}
+                        id="bank_abbr"
+                        name="bank_abbr"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
-                    <FormInput
-                        label={'Taxable Income To'}
-                        placeholder={'Taxable Income To'}
-                        id="Taxable_Income_To"
-                        name="Taxable_Income_To"
-                        type="number"
+                    {/* <FormSelect
+                        label={'Marital Status'}
+                        placeholder='Marital Status'
+                        id="Emp_marital_status"
+                        name="Emp_marital_status"
+                        options={[
+                            {
+                                value: 'M',
+                                label: 'Married',
+                            },
+                            {
+                                value: "N",
+                                label: 'Unmarried',
+                            },
+                        ]}
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    />
-
-                    <FormInput
-                        label={'Fixed Amount'}
-                        placeholder={'Fixed Amount'}
-                        id="Fixed_Amount"
-                        name="Fixed_Amount"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
-
-
+                    /> */}
 
                 </div>
                 <div className='EducationBtnBox'>
@@ -198,7 +195,7 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
 }
 
 
-function mapStateToProps({ Red_TaxStructure }) {
-    return { Red_TaxStructure };
+function mapStateToProps({ Red_outstandingRecoveries }) {
+    return { Red_outstandingRecoveries };
 }
-export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructureForm)
+export default connect(mapStateToProps, OutstandingRecoveriesActions)(OutstandingRecoveriesForm)

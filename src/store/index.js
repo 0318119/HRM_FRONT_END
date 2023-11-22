@@ -46,6 +46,7 @@ import PdfRender from "./reducers/payroll/pdfRender/index"
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive"; 
 import Red_TaxStructure from "./reducers/payroll/taxStructure";
 import Red_Bank from "./reducers/payroll/bank";
+import Red_outstandingRecoveries from "./reducers/payroll/outstandingRecoveries"
 
 const reducers = combineReducers({
   Transition_family,
@@ -95,7 +96,8 @@ const reducers = combineReducers({
   Red_previous_Employee, 
   Red_MasterActive,
   Red_TaxStructure,
-  Red_Bank
+  Red_Bank,
+  Red_outstandingRecoveries
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

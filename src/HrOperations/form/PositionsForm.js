@@ -35,7 +35,6 @@ function PositionsForm({ cancel, isCode, page, GetPositionData, Get_Position_By_
             const isValid = await PositionScheme.validate(data);
             if (isValid) {
                 POST_POSITIONS_FORM(data)
-                console.log("data", data)
             }
         } catch (error) {
             console.error(error);

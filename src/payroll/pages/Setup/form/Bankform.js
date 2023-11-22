@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../../../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../../../components/basic/button";
-import * as TAX_STRUCTURE from "../../../../store/actions/payroll/taxStructure"
+import * as BankActions from "../../../../store/actions/payroll/bank"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { TaxStructureSchema } from '../../../../payroll/pages/Setup/schema';
+import { BankSchema } from '../schema';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormCheckBox, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';
-import baseUrl from '../../../../../src/config.json'
+import baseUrl from '../../../../config.json'
 
-function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTaxStructure ,Get_Tax_Structure_By_Id }) {
+function Bankform({ cancel, mode, page,isCode, Red_Bank, GetBank, GET_BANK_BY_CODE }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -19,16 +19,20 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         cancel('read')
     }
 
+
+
     const submitForm = async (data) => {
         try {
-            const isValid = await TaxStructureSchema.validate(data);
+            const isValid = await BankSchema.validate(data);
             if (isValid) {
-                ADD_STRUCTURE_DATA(data)
+                ADD_Bank_DATA(data)
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+
 
     const {
         control,
@@ -37,66 +41,82 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         reset
     } = useForm({
         defaultValues: {
-            Structure_Code: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Structure_Code ?
-                Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Structure_Code : 0,
-                Tax_Percentage: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Tax_Percentage,
-            Taxable_Income_From: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_From,
-            Taxable_Income_To: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_To,
-            Fixed_Amount: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Fixed_Amount,
+           
+            bank_name: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_name,
+            bank_abbr: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_abbr,
+            Bank_Address1: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address1,
+            Bank_Address2: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address2,
+            Bank_Address3: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address3,
+            Current_Account: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Current_Account,
+            IMDCode: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.IMDCode,
+            Swift: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Swift,
+            Sort_key: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
         },
         mode: "onChange",
-        resolver: yupResolver(TaxStructureSchema),
+        resolver: yupResolver(BankSchema),
     });
 
     useEffect(() => {
         if (isCode !== null) {
-            Get_Tax_Structure_By_Id(isCode)
-            
+            GET_BANK_BY_CODE(isCode)
         }
-    }, [])
+    },[])
 
     useEffect(() => {
         if (mode == "create") {
             reset(
                 {
-                    Structure_Code: "",
-                    Taxable_Income_From: "",
-                    Taxable_Income_To: "",
-                    Fixed_Amount: "",
-                    Tax_Percentage: ""
+                    bank_name: "",
+                    bank_abbr: "",
+                    Sort_key: "",
+                    Bank_Address1: "",
+                    Bank_Address2: "",
+                    Bank_Address3: "",
+                    Current_Account: "",
+                    IMDCode: "",
+                    Swift: ""
                 },
             )
         } else {
             reset(
                 {
-                    Structure_Code: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Structure_Code ?
-                Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Structure_Code : 0,
-                Tax_Percentage: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Tax_Percentage,
-            Taxable_Income_From: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_From,
-            Taxable_Income_To: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Taxable_Income_To,
-            Fixed_Amount: Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]?.Fixed_Amount,
+                  
+                    bank_name: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_name,
+                    bank_abbr: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_abbr,
+                    Bank_Address1: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address1,
+                    Bank_Address2: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address2,
+                    Bank_Address3: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Bank_Address3,
+                    Current_Account: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Current_Account,
+                    IMDCode: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.IMDCode,
+                    Swift: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Swift,
+                    Sort_key: Red_Bank?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
                 },
             )
         }
-    }, [Red_TaxStructure?.dataSingle?.[0]?.res?.data?.[0]])
+    }, [Red_Bank?.dataSingle?.[0]?.res?.data?.[0]])
 
 
 
-    async function ADD_STRUCTURE_DATA(body) {
-    
+    async function ADD_Bank_DATA(body) {
+
         setLoading(true);
-        await fetch(`${baseUrl.baseUrl}/taxStructure/AddTaxStructure`, {
+        await fetch(`${baseUrl.baseUrl}/addbank/AddBank`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
                 accessToken: `Bareer ${get_access_token}`,
             },
             body: JSON.stringify({
-                "Structure_Code": body.Structure_Code,
-                "Taxable_Income_From": body.Taxable_Income_From,
-                "Taxable_Income_To": body.Taxable_Income_To,
-                "Fixed_Amount": body.Fixed_Amount,
-                "Tax_Percentage": body.Tax_Percentage
+                "Bank_code": mode == 'create' ? "0" : isCode,
+                "bank_name": body.bank_name,
+                "bank_abbr": body.bank_abbr,
+                "Sort_key": body.Sort_key,
+                "Bank_Address1": body.Bank_Address1,
+                "Bank_Address2": body.Bank_Address2,
+                "Bank_Address3": body.Bank_Address3,
+                "Current_Account": body.Current_Account,
+                "IMDCode": body.IMDCode,
+                "Swift": body.Swift
             }),
         })
             .then((response) => {
@@ -111,9 +131,9 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
                     setLoading(false);
                     setTimeout(() => {
                         cancel("read");
-                        getTaxStructure({
+                        GetBank({
                             pageSize: pageSize,
-                            pageNo: 1,
+                            pageNo: page,
                             search: null,
                         });
                     }, 3000);
@@ -141,66 +161,109 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Tax Structure</h4>
+                <h4 className="text-dark">Bank</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
+                   
+
                     <FormInput
-                        label={'Structure Code'}
-                        placeholder={'Structure Code'}
-                        id="Structure_Code"
-                        name="Structure_Code"
-                        type="number"
-                        readOnly={isCode ? true : false} 
+                        label={'Bank name'}
+                        placeholder={'Bank name'}
+                        id="bank_name"
+                        name="bank_name"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Tax Percentage'}
-                        placeholder={'Tax Percentage'}
-                        id="Tax_Percentage"
-                        name="Tax_Percentage"
-                        type="number"
+                        label={'Bank Abbreviation'}
+                        placeholder={'Bank Abbreviation'}
+                        id="bank_abbr"
+                        name="bank_abbr"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Taxable Income From'}
-                        placeholder={'Taxable Income From'}
-                        id="Taxable_Income_From"
-                        name="Taxable_Income_From"
-                        type="number"
+                        label={'Sort Key'}
+                        placeholder={'Sort Key'}
+                        id="Sort_key"
+                        name="Sort_key"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Taxable Income To'}
-                        placeholder={'Taxable Income To'}
-                        id="Taxable_Income_To"
-                        name="Taxable_Income_To"
-                        type="number"
+                        label={'Bank Address 1'}
+                        placeholder={'Bank Address 1'}
+                        id="Bank_Address1"
+                        name="Bank_Address1"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Fixed Amount'}
-                        placeholder={'Fixed Amount'}
-                        id="Fixed_Amount"
-                        name="Fixed_Amount"
-                        type="number"
+                        label={'Bank Address 2'}
+                        placeholder={'Bank Address 2'}
+                        id="Bank_Address2"
+                        name="Bank_Address2"
+                        type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
+                    <FormInput
+                        label={'Bank Address 3'}
+                        placeholder={'Bank Address 3'}
+                        id="Bank_Address3"
+                        name="Bank_Address3"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
 
+                    <FormInput
+                        label={'Current Account'}
+                        placeholder={'Current Account'}
+                        id="Current_Account"
+                        name="Current_Account"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+
+                    <FormInput
+                        label={'IMD Code'}
+                        placeholder={'IMD Code'}
+                        id="IMDCode"
+                        name="IMDCode"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+
+                    <FormInput
+                        label={'Swift'}
+                        placeholder={'Swift'}
+                        id="Swift"
+                        name="Swift"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
 
                 </div>
                 <div className='EducationBtnBox'>
@@ -214,7 +277,7 @@ function TaxStructureForm({ cancel, mode, isCode, page, Red_TaxStructure, getTax
 }
 
 
-function mapStateToProps({ Red_TaxStructure }) {
-    return { Red_TaxStructure };
+function mapStateToProps({ Red_Bank }) {
+    return { Red_Bank };
 }
-export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructureForm)
+export default connect(mapStateToProps, BankActions)(Bankform)

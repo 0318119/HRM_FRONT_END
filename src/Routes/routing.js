@@ -98,6 +98,7 @@ import Earnings from '../Master_Maintaince/Earnings';
 import PaySlip from '../payroll/pages/PaySlip';
 import TaxStructure from '../payroll/pages/Setup/TaxStructure'
 import Bank from '../payroll/pages/Setup/Bank'
+import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 
 
 
@@ -200,7 +201,7 @@ const routing = () => {
         <Route path="/Earnings" element={<Earnings/>} />
         <Route path="/Tax_Structure" element={<TaxStructure/>} />
         <Route path="/Bank" element={<Bank/>} />
-        
+        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries/>} />
         
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

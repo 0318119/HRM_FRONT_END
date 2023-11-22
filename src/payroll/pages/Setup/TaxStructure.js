@@ -14,7 +14,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const TaxStructure = ({ Red_Bank, getTaxStructure  }) => {
+const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -48,7 +48,7 @@ const TaxStructure = ({ Red_Bank, getTaxStructure  }) => {
   }
 
 
-  console.log(Red_Bank, 'jjjj')
+  console.log(Red_TaxStructure, 'jjjj')
 
 
   const columns = [
@@ -178,12 +178,12 @@ async function handleConfirmDelete(id) {
               {mode == "read" && (
                 <>
                   <Table 
-                    columns={columns} loading={Red_Bank?.loading}
-                    dataSource={Red_Bank?.data?.[0]?.res?.data1}
+                    columns={columns} loading={Red_TaxStructure?.loading}
+                    dataSource={Red_TaxStructure?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
                     pagination={{
                       defaultCurrent: page,
-                      total: Red_Bank?.data?.[0]?.res?.data3,
+                      total: Red_TaxStructure?.data?.[0]?.res?.data3,
                       onChange: (p) => {
                         setPage(p);
                       },
@@ -206,7 +206,7 @@ async function handleConfirmDelete(id) {
   );
 };
 
-function mapStateToProps({Red_Bank }) {
-  return { Red_Bank};
+function mapStateToProps({Red_TaxStructure }) {
+  return { Red_TaxStructure};
 }
 export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructure) 

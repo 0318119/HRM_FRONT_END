@@ -1,18 +1,18 @@
 import {
-    GET_Bank_DATA,
-    GET_Bank_DATA_START,
-    GET_Bank_DATA_SINGLE,
-    GET_Bank_DATA_END
+    GET_Outstanding_Recoveries_DATA,
+    GET_Outstanding_Recoveries_START,
+    GET_Outstanding_Recoveries_SINGLE,
+    GET_Outstanding_Recoveries_END
 } from "../../types"
 import baseURL from '../../../../config.json'
 
-export const GetBank = (body) => async (dispatch, getState) => {
+export const GetOutstandingRecoveries = (body) => async (dispatch, getState) => {
     try {
         dispatch({
-            type: GET_Bank_DATA_START,
+            type: GET_Outstanding_Recoveries_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/getbank/GetBanks/${body.pageNo}/${body.pageSize}/${body.search}`, {
+        const response = await fetch(`${baseURL.baseUrl}/GetAlloutstandingRecoveries/${body.pageNo}/${body.pageSize}/${body.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -22,18 +22,18 @@ export const GetBank = (body) => async (dispatch, getState) => {
         const res = await response.json()
         if (res?.success == "success") {
             dispatch({
-                type: GET_Bank_DATA,
+                type: GET_Outstanding_Recoveries_DATA,
                 payload: [{res}],
             });
         }
         dispatch({
-            type: GET_Bank_DATA_END,
+            type: GET_Outstanding_Recoveries_END,
             payload: false,
         });
     }
     catch (error) {
         dispatch({
-            type: GET_Bank_DATA_START,
+            type: GET_Outstanding_Recoveries_START,
             payload: false,
         });
         console.log(error)
@@ -42,34 +42,34 @@ export const GetBank = (body) => async (dispatch, getState) => {
 }
 
 
-export const GET_BANK_BY_CODE = (body) => async (dispatch) => {
+export const GET_Outstanding_Recoveries_BY_CODE = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_Bank_DATA_START,
+            type: GET_Outstanding_Recoveries_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/getbycode/GetBankByCode`, {
+        const response = await fetch(`${baseURL.baseUrl}/GetbyOutstandingRecoveriesByCode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                Bank_code : body,
+                Outstanding_Recovery_code : body,
             })
         });
         if(response.status === 200) {
             const res = await response.json()
             dispatch({
-                type: GET_Bank_DATA_SINGLE,
+                type: GET_Outstanding_Recoveries_SINGLE,
                 payload: [{res}],
                 loading: false,
             });
         }else{
             const res = await response.json()
             dispatch({
-                type: GET_Bank_DATA_END,
+                type: GET_Outstanding_Recoveries_END,
                 payload: [{res}],
                 loading: false,
             });
@@ -77,7 +77,7 @@ export const GET_BANK_BY_CODE = (body) => async (dispatch) => {
     }
     catch (error) {
         dispatch({
-            type: GET_Bank_DATA_END,
+            type: GET_Outstanding_Recoveries_END,
             payload: false,
             loading: false,
         });
@@ -85,27 +85,4 @@ export const GET_BANK_BY_CODE = (body) => async (dispatch) => {
     }
 
 }
-
-
-
-// export const DeleteBank = (body) => async (dispatch, getState) => {
-//     try {
-//         const response = await fetch(`${baseURL.baseUrl}/deletebank/DeleteBank`, {
-//             method: "POST",
-//             headers: {
-//                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 Bank_code: body
-                
-//             })
-//         });
-//         const res = await response.json()
-//         return res?.data
-//     }
-//     catch (error) {
-//         console.log(error)
-//     }
-// }
 
