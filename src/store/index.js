@@ -43,7 +43,6 @@ import Red_Section from "./reducers/HrOperations/Section/index"
 import Red_previous_Employee from "./reducers/HrOperations/Previous_Emp/index"
 import Red_Leave_Type from "./reducers/HrOperations/LeaveType/index"
 import PdfRender from "./reducers/payroll/pdfRender/index"
-import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive"; 
 import Red_Pay_Slip from "./reducers/payroll/PaySlip/index"
 import Red_Attendance_sheet from './reducers/AttendanceSheet/index'
 import Red_Manual_Leave_Posting from './reducers/Leave/Manual_Leave_Posting/index'

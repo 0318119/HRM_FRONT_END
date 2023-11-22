@@ -4,7 +4,7 @@ import Input from "../../../components/basic/input";
 import { Button } from "../../../components/basic/button";
 // import "./assets/css/CostList.css";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import Bankform from "./form/BankForm";
+import Bankform from "./form/Bankform";
 import * as BankActions from "../../../store/actions/payroll/bank/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
