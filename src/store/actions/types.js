@@ -221,3 +221,20 @@ export const APPLIED_EMP_DAYS_DATA  = "APPLIED_EMP_DAYS_DATA";
 export const GET_MY_LEAVE_EMP_APPLICATION = "GET_MY_LEAVE_EMP_APPLICATION";
 
 
+// Setup ===> Jv_Code === 
+export const GET_JV_Code_DATA = "GET_JV_Code_DATA";
+export const GET_JV_Code_DATA_START = "GET_JV_Code_DATA_START";
+export const GET_JV_Code_DATA_SINGLE = "GET_JV_Code_DATA_SINGLE";
+export const GET_JV_Code_DATA_END = "GET_JV_Code_DATA_END";
+
+// Setup ===> IncomeTax_Columns === 
+export const GET_IncomeTax_Columns_DATA = "GET_IncomeTax_Columns_DATA";
+export const GET_IncomeTax_Columns_DATA_START = "GET_IncomeTax_Columns_DATA_START";
+export const GET_IncomeTax_Columns_DATA_SINGLE = "GET_IncomeTax_Columns_DATA_SINGLE";
+export const GET_IncomeTax_Columns_DATA_END = "GET_IncomeTax_Columns_DATA_END";
+
+// Setup ===> Bank_Branches === 
+export const GET_Bank_Branches_DATA = "GET_Bank_Branches_DATA";
+export const GET_Bank_Branches_DATA_START = "GET_Bank_Branches_DATA_START";
+export const GET_Bank_Branches_DATA_SINGLE = "GET_Bank_Branches_DATA_SINGLE";
+export const GET_Bank_Branches_DATA_END = "GET_Bank_Branches_DATA_END";
