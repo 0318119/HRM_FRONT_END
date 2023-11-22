@@ -96,6 +96,12 @@ import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/
 import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
 import Earnings from '../Master_Maintaince/Earnings';
 import PaySlip from '../payroll/pages/PaySlip';
+import JV_Code from '../payroll/pages/Setup/JV_Code/index'
+import Income_Tax from '../payroll/pages/Setup/Income_Tax/index'
+import Bank_Branches from '../payroll/pages/Setup/Bank_Branches/index'
+
+
+
 
 
 const routing = () => {
@@ -195,7 +201,14 @@ const routing = () => {
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
         <Route path="/pdf" element={<AddPayrollMethodPdf />} />
         <Route path="/Earnings" element={<Earnings/>} />
-        
+        <Route path="/JV_Codes" element={<JV_Code/>} />
+        <Route path="IncomeTax_Columns" element={<Income_Tax/>} />
+        <Route path="Bank_Branches" element={<Bank_Branches/>} />      
+
+
+
+
+
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}
