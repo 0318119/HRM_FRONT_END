@@ -100,6 +100,10 @@ import JV_Code from '../payroll/pages/Setup/JV_Code/index'
 import Income_Tax from '../payroll/pages/Setup/Income_Tax/index'
 import Bank_Branches from '../payroll/pages/Setup/Bank_Branches/index'
 import Payroll_Master from '../payroll/pages/masterMaintaince/Payroll_Master';
+import TaxStructure from '../payroll/pages/Setup/TaxStructure'
+import Bank from '../payroll/pages/Setup/Bank'
+import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
+
 
 
 const routing = () => {
@@ -207,6 +211,9 @@ const routing = () => {
         <Route path="Bank_Branches" element={<Bank_Branches/>} />      
         <Route path="/Earnings" element={<Earnings />} />
         <Route path="/Payroll_Master" element={<Payroll_Master />} />
+        <Route path="/Tax_Structure" element={<TaxStructure/>} />
+        <Route path="/Bank" element={<Bank/>} />
+        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries/>} />
         
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

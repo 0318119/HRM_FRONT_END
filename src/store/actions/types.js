@@ -249,3 +249,21 @@ export const GET_MASTER_PAYROLL_DATA = "GET_MASTER_PAYROLL_DATA";
 export const GET_MASTER_PAYROLL_DATA_START = "GET_MASTER_PAYROLL_DATA_START";
 export const GET_MASTER_PAYROLL_DATA_SINGLE = "GET_MASTER_PAYROLL_DATA_SINGLE";
 export const GET_MASTER_PAYROLL_DATA_END = "GET_MASTER_PAYROLL_DATA_END";
+// PAYROLL ===> TAX_STRUCTURE === 
+export const GET_TAX_STRUCTURE_DATA = "GET_TAX_STRUCTURE_DATA";
+export const GET_TAX_STRUCTURE_DATA_START = "GET_TAX_STRUCTURE_DATA_START";
+export const GET_TAX_STRUCTURE_DATA_SINGLE = "GET_TAX_STRUCTURE_DATA_SINGLE";
+export const GET_TAX_STRUCTURE_DATA_END = "GET_TAX_STRUCTURE_DATA_END";
+
+
+// PAYROLL ===> Bank === 
+export const GET_Bank_DATA = "GET_Bank_DATA";
+export const GET_Bank_DATA_START = "GET_Bank_DATA_START";
+export const GET_Bank_DATA_SINGLE = "GET_Bank_DATA_SINGLE";
+export const GET_Bank_DATA_END = "GET_Bank_DATA_END";
+
+// PAYROLL ===> Outstanding_Recoveries === 
+export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA";
+export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
+export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
+export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";

@@ -117,6 +117,8 @@ const Leave_Types = ({ Red_Leave_Type, GetLeaveTypeData,DeleteFunLeaveType }) =>
       message.error(isWaitFun?.message || isWaitFun?.messsage)
     }
   }
+
+  
   return (
     <>
       <div>

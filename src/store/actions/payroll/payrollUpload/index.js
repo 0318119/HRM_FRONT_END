@@ -98,7 +98,6 @@ export const getAllowanceDetail = (body) => async (dispatch, getState) => {
 
 
 export const saveAllowanceDetail = (body) => async (dispatch, getState) => {
-    console.log(body, 'body')
     try {
         const response = await fetch(`${baseURL.baseUrl}/employee_salary/HistTranPayslips_Save_UploadPayrollData`, {
             method: "POST",
@@ -116,7 +115,6 @@ export const saveAllowanceDetail = (body) => async (dispatch, getState) => {
 }
 
 export const DeleteAllowanceDetail = (body) => async (dispatch, getState) => {
-    console.log(body, 'body')
     try {
         const response = await fetch(`${baseURL.baseUrl}/tranPaySlips/Delete_TranPaySlips`, {
             method: "POST",
@@ -161,7 +159,6 @@ export const getDeductionList = (body) => async (dispatch, getState) => {
 
 
 export const DownloadFileFunction = (body) => async (dispatch, getState) => {
-    console.log(body, 'body')
     try {
         const response = await fetch(`${baseURL.baseUrl}/employee_salary/Salary_GetOverTimeData`, {
             method: "POST",

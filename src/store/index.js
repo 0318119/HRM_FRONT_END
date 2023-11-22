@@ -53,8 +53,9 @@ import Red_Bank_Branches from "./reducers/payroll/Bank_Branches";
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive";
 import Red_Appointment from "./reducers/Appointments/Appointment";
 import RedMasterPayroll from "./reducers/payroll/masterPayroll";
-
-
+import Red_TaxStructure from "./reducers/payroll/taxStructure";
+import Red_Bank from "./reducers/payroll/bank";
+import Red_outstandingRecoveries from "./reducers/payroll/outstandingRecoveries"
 
 const reducers = combineReducers({
   Transition_family,
@@ -111,7 +112,10 @@ const reducers = combineReducers({
   Red_Bank_Branches,
   Red_MasterActive, 
   Red_Appointment,
-  RedMasterPayroll
+  RedMasterPayroll,
+  Red_TaxStructure,
+  Red_Bank,
+  Red_outstandingRecoveries
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
