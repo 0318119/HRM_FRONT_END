@@ -238,3 +238,14 @@ export const GET_Bank_Branches_DATA = "GET_Bank_Branches_DATA";
 export const GET_Bank_Branches_DATA_START = "GET_Bank_Branches_DATA_START";
 export const GET_Bank_Branches_DATA_SINGLE = "GET_Bank_Branches_DATA_SINGLE";
 export const GET_Bank_Branches_DATA_END = "GET_Bank_Branches_DATA_END";
+// Appointment ===>Appointment  === 
+export const GET_APPOINTMENT_DATA = "GET_APPOINTMENT_DATA";
+export const GET_APPOINTMENT_DATA_START = "GET_APPOINTMENT_DATA_START";
+export const GET_APPOINTMENT_DATA_SINGLE = "GET_APPOINTMENT_DATA_SINGLE";
+export const GET_APPOINTMENT_DATA_END = "GET_APPOINTMENT_DATA_END";
+
+// Payroll ===>Master Payroll  === 
+export const GET_MASTER_PAYROLL_DATA = "GET_MASTER_PAYROLL_DATA";
+export const GET_MASTER_PAYROLL_DATA_START = "GET_MASTER_PAYROLL_DATA_START";
+export const GET_MASTER_PAYROLL_DATA_SINGLE = "GET_MASTER_PAYROLL_DATA_SINGLE";
+export const GET_MASTER_PAYROLL_DATA_END = "GET_MASTER_PAYROLL_DATA_END";

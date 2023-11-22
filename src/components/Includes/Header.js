@@ -58,6 +58,7 @@ const Header = (props) => {
         }).then(response => {
           return response.json()
         }).then(response => {
+          // console.log(response.data , 'response.data menu')
           if (response.messsage == "timeout error") { navigate('/') }
           else {
             localStorage.setItem("refresh",  response.referesh_token);

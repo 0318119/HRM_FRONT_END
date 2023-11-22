@@ -73,9 +73,7 @@ export { MasterPersonal_schema };
 
 
 const MasterEarningSchema = yup.object().shape({
-   
   Deletion_Flag: yup.string().required("Deletion_Flag is required"),
-
 });
 export { MasterEarningSchema };
 

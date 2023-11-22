@@ -24,7 +24,7 @@ function TransactionResignationCom() {
 
     // GET CONFIRMATIONgetResignationData DATA API CALL ==========================================
     async function getResignationData() {
-        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -35,7 +35,7 @@ function TransactionResignationCom() {
             return response.json();
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json",
@@ -66,8 +66,8 @@ function TransactionResignationCom() {
                 if (response.messsage == "timeout error") { navigate("/"); }
                 else {
                     if (response.success) {
-                        setGetResignationData(response?.data[0])
-                        setGetResignationDataFilter(response?.data[0])
+                        setGetResignationData(response?.data)
+                        setGetResignationDataFilter(response?.data)
                         setDataLoader(true);
                     } else {
                         setDataLoader(false);

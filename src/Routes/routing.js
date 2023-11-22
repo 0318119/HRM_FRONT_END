@@ -99,9 +99,7 @@ import PaySlip from '../payroll/pages/PaySlip';
 import JV_Code from '../payroll/pages/Setup/JV_Code/index'
 import Income_Tax from '../payroll/pages/Setup/Income_Tax/index'
 import Bank_Branches from '../payroll/pages/Setup/Bank_Branches/index'
-
-
-
+import Payroll_Master from '../payroll/pages/masterMaintaince/Payroll_Master';
 
 
 const routing = () => {
@@ -110,7 +108,10 @@ const routing = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* //////////////Apointment\\\\\\\\*/}
         <Route path="/Appointment" element={<Appointment />} />
+        {/* //////////////ApointmentEnd \\\\\\\\*/}
+
         <Route path="/TAPersonalform" element={<TAPersonalform />} />
         <Route path="/TAEducationForm" element={<TAEducationForm />} />
         <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
@@ -204,11 +205,9 @@ const routing = () => {
         <Route path="/JV_Codes" element={<JV_Code/>} />
         <Route path="IncomeTax_Columns" element={<Income_Tax/>} />
         <Route path="Bank_Branches" element={<Bank_Branches/>} />      
-
-
-
-
-
+        <Route path="/Earnings" element={<Earnings />} />
+        <Route path="/Payroll_Master" element={<Payroll_Master />} />
+        
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}

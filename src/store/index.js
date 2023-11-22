@@ -50,6 +50,10 @@ import Red_Manual_Leave_Posting from './reducers/Leave/Manual_Leave_Posting/inde
 import Red_JV_Codes from "./reducers/payroll/JV_Codes/index"; 
 import Red_IncomeTax_Column from "./reducers/payroll/IncomeTax_Column";
 import Red_Bank_Branches from "./reducers/payroll/Bank_Branches";
+import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive";
+import Red_Appointment from "./reducers/Appointments/Appointment";
+import RedMasterPayroll from "./reducers/payroll/masterPayroll";
+
 
 
 const reducers = combineReducers({
@@ -104,8 +108,10 @@ const reducers = combineReducers({
   Red_Manual_Leave_Posting,
   Red_JV_Codes, 
   Red_IncomeTax_Column, 
-  Red_Bank_Branches 
-
+  Red_Bank_Branches,
+  Red_MasterActive, 
+  Red_Appointment,
+  RedMasterPayroll
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
