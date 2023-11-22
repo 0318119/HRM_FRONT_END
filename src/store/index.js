@@ -45,6 +45,7 @@ import Red_Leave_Type from "./reducers/HrOperations/LeaveType/index"
 import PdfRender from "./reducers/payroll/pdfRender/index"
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive";
 import Red_Appointment from "./reducers/Appointments/Appointment";
+import RedMasterPayroll from "./reducers/payroll/masterPayroll";
 
 
 
@@ -95,7 +96,8 @@ const reducers = combineReducers({
   PdfRender,
   Red_previous_Employee, 
   Red_MasterActive, 
-  Red_Appointment
+  Red_Appointment,
+  RedMasterPayroll
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

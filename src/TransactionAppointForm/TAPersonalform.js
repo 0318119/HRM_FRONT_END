@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
 import Country from "./Country.json"
-import { PrimaryButton } from "../components/basic/button";
+import { PrimaryButton} from "../components/basic/button";
+import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
@@ -13,7 +14,9 @@ import { Link } from "react-router-dom";
 
 
 
-function TAPersonalform() {
+function TAPersonalform({ cancel, mode, isCode, page }) {
+
+
   var get_access_token = localStorage.getItem("access_token");
   var get_company_code = localStorage.getItem("company_code");
   const [messageApi, contextHolder] = message.useMessage();
@@ -45,8 +48,12 @@ function TAPersonalform() {
   const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
   const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
   const currentDate = new Date();
+  const EditBack = () => {
+    cancel('read')
+  }
 
   async function getEmpTypeCodeData() {
+
     await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -545,9 +552,7 @@ function TAPersonalform() {
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
+     
       {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
       {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
       {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}
@@ -1191,7 +1196,7 @@ function TAPersonalform() {
                   />
                 </div>
                 <div className='CountryBtnBox'>
-                  {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}
+                  <CancelButton onClick={EditBack} title={'Cancel'} />
                   <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
               </form>

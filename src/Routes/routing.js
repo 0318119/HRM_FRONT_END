@@ -5,7 +5,6 @@ import '../../src/Assets/css/main.css'
 import { Login } from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
-import Appointment2 from '../TransactionAppointment/Appointment2';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
 import TAEducationForm from '../TransactionAppointForm/TAEducationForm';
 import TAExprienceForm from '../TransactionAppointForm/TAExprienceForm';
@@ -97,6 +96,7 @@ import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/
 import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
 import Earnings from '../Master_Maintaince/Earnings';
 import PaySlip from '../payroll/pages/PaySlip';
+import Payroll_Master from '../payroll/pages/masterMaintaince/Payroll_Master';
 
 
 const routing = () => {
@@ -107,7 +107,6 @@ const routing = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         {/* //////////////Apointment\\\\\\\\*/}
         <Route path="/Appointment" element={<Appointment />} />
-        <Route path="/Appointment2" element={<Appointment2 />} />
         {/* //////////////ApointmentEnd \\\\\\\\*/}
 
         <Route path="/TAPersonalform" element={<TAPersonalform />} />
@@ -199,7 +198,8 @@ const routing = () => {
         <Route path="/payroll/addPayroll" element={<AddPayroll />} />
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
         <Route path="/pdf" element={<AddPayrollMethodPdf />} />
-        <Route path="/Earnings" element={<Earnings/>} />
+        <Route path="/Earnings" element={<Earnings />} />
+        <Route path="/Payroll_Master" element={<Payroll_Master />} />
         
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />

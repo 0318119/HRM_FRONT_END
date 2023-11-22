@@ -13,7 +13,7 @@ export const GetAppointStatusCall = (params) => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/appointments/GetTranAppointmentsByCompanyCode`, {
+        const response = await fetch(`${baseUrl.baseUrl}/appointments/GetTranAppointmentsByCompanyCode/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -46,47 +46,27 @@ export const GetAppointStatusCall = (params) => async (dispatch) => {
     }
 };
 
-// export const Get_Base_City_Data_By_Id = (body) => async (dispatch) => {
+
+// export const Processed = (body) => async (dispatch, getState) => {
 //     try {
-//         dispatch({
-//             type: GET_TRANSITION_BASE_CITY_START,
-//             payload: true,
-//             loading: true,
-//         });
-//         const response = await fetch(`${baseUrl.baseUrl}/cities/getbyCitiescode`, {
+//         const response = await fetch(`${baseURL.baseUrl}/master_all_employees/ProcessTranAppointment`, {
 //             method: "POST",
 //             headers: {
 //                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
 //                 'Content-Type': 'application/json',
 //             },
 //             body: JSON.stringify({
-//                 'City_code': body,
+//                 Allowance_code: body
 //             })
 //         });
-//         if (response.status === 200) {
-//             const res = await response.json()
-//             dispatch({
-//                 type: GET_TRANSITION_BASE_CITY_DATA_SINGLE,
-//                 payload: [{ res }],
-//                 loading: false,
-//             });
-//         } else {
-//             const res = await response.json()
-//             dispatch({
-//                 type: GET_TRANSITION_BASE_CITY_END,
-//                 payload: [{ res }],
-//                 loading: false,
-//             });
+//         const res = await response.json()
+//         if (res?.success == "success") {
+//             return res;
 //         }
 //     }
 //     catch (error) {
-//         dispatch({
-//             type: GET_TRANSITION_BASE_CITY_END,
-//             payload: false,
-//             loading: false,
-//         });
 //         console.log(error)
 //     }
 
-
 // }
+
