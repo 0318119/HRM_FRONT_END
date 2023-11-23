@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.JVCodeFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.JVCodeFlexBox .JVCodesearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.JVCodeFlexBox .JVCodesearchBox input {
+    min-width: 300px;
+}
+
+.formBoxJVCode {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.JVCodeBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxJVCode div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .JVCodeFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .JVCodeFlexBox .JVCodesearchBox {
+        width: 100%;
+    }
+
+    .JVCodeFlexBox .JVCodesearchBox #inputBox {
+        width: 100%;
+    }
+
+    .JVCodeFlexBox .JVCodesearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .JVCodeFlexBox div {
+        width: 100%;
+    }
+
+    .JVCodeFlexBox .JVCodesearchBox {
+        flex-wrap: wrap;
+    }
+}

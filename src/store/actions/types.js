@@ -196,6 +196,59 @@ export const GET_MASTER_ACTIVE_DATA_START = "GET_MASTER_ACTIVE_DATA_START";
 export const GET_MASTER_ACTIVE_DATA_SINGLE = "GET_MASTER_ACTIVE_DATA_SINGLE";
 export const GET_MASTER_ACTIVE_DATA_END = "GET_MASTER_ACTIVE_DATA_END";
 
+
+// PAY SLIP ===>  
+export const GET_PAY_SLIP_PDF_DATA = "GET_PAY_SLIP_PDF_DATA";
+export const GET_PAY_SLIP_PDF_DATA_START = "GET_PAY_SLIP_PDF_DATA_START";
+export const GET_PAY_SLIP_PDFDATA_SINGLE = "GET_PAY_SLIP_PDFDATA_SINGLE";
+export const GET_PAY_SLIP_PDF_DATA_END = "GET_PAY_SLIP_PDF_DATA_END";
+
+// PAY SLIP ===>  
+export const GET_ATTENDANCE_SHEET_DATA = "GET_ATTENDANCE_SHEET_DATA";
+export const GET_ATTENDANCE_SHEET_START = "GET_ATTENDANCE_SHEET_START";
+export const GET_ATTENDANCE_SHEET_SINGLE = "GET_ATTENDANCE_SHEET_SINGLE";
+export const GET_ATTENDANCE_SHEET_END = "GET_ATTENDANCE_SHEET_END";
+
+// MANUAL LEAVE POSTING ====> LEAVE
+export const GET_MANUAL_LEAVE_POSTING_DATA = "GET_MANUAL_LEAVE_POSTING_DATA";
+export const GET_MANUAL_LEAVE_POSTING_DATA_START = "GET_MANUAL_LEAVE_POSTING_DATA_START";
+export const GET_MANUAL_LEAVE_POSTING_DATA_SINGLE = "GET_MANUAL_LEAVE_POSTING_DATA_SINGLE";
+export const GET_MANUAL_LEAVE_POSTING_DATA_END = "GET_MANUAL_LEAVE_POSTING_DATA_END";
+export const GET_EMP_DATA = "GET_EMP_DATA";
+export const GET_LEAVE_TYPE_DATA = "GET_LEAVE_TYPE_DATA";
+export const SET_EMP_BALANCE_DAYS = "SET_EMP_BALANCE_DAYS";
+export const APPLIED_EMP_DAYS_DATA  = "APPLIED_EMP_DAYS_DATA";
+export const GET_MY_LEAVE_EMP_APPLICATION = "GET_MY_LEAVE_EMP_APPLICATION";
+
+
+// Setup ===> Jv_Code === 
+export const GET_JV_Code_DATA = "GET_JV_Code_DATA";
+export const GET_JV_Code_DATA_START = "GET_JV_Code_DATA_START";
+export const GET_JV_Code_DATA_SINGLE = "GET_JV_Code_DATA_SINGLE";
+export const GET_JV_Code_DATA_END = "GET_JV_Code_DATA_END";
+
+// Setup ===> IncomeTax_Columns === 
+export const GET_IncomeTax_Columns_DATA = "GET_IncomeTax_Columns_DATA";
+export const GET_IncomeTax_Columns_DATA_START = "GET_IncomeTax_Columns_DATA_START";
+export const GET_IncomeTax_Columns_DATA_SINGLE = "GET_IncomeTax_Columns_DATA_SINGLE";
+export const GET_IncomeTax_Columns_DATA_END = "GET_IncomeTax_Columns_DATA_END";
+
+// Setup ===> Bank_Branches === 
+export const GET_Bank_Branches_DATA = "GET_Bank_Branches_DATA";
+export const GET_Bank_Branches_DATA_START = "GET_Bank_Branches_DATA_START";
+export const GET_Bank_Branches_DATA_SINGLE = "GET_Bank_Branches_DATA_SINGLE";
+export const GET_Bank_Branches_DATA_END = "GET_Bank_Branches_DATA_END";
+// Appointment ===>Appointment  === 
+export const GET_APPOINTMENT_DATA = "GET_APPOINTMENT_DATA";
+export const GET_APPOINTMENT_DATA_START = "GET_APPOINTMENT_DATA_START";
+export const GET_APPOINTMENT_DATA_SINGLE = "GET_APPOINTMENT_DATA_SINGLE";
+export const GET_APPOINTMENT_DATA_END = "GET_APPOINTMENT_DATA_END";
+
+// Payroll ===>Master Payroll  === 
+export const GET_MASTER_PAYROLL_DATA = "GET_MASTER_PAYROLL_DATA";
+export const GET_MASTER_PAYROLL_DATA_START = "GET_MASTER_PAYROLL_DATA_START";
+export const GET_MASTER_PAYROLL_DATA_SINGLE = "GET_MASTER_PAYROLL_DATA_SINGLE";
+export const GET_MASTER_PAYROLL_DATA_END = "GET_MASTER_PAYROLL_DATA_END";
 // PAYROLL ===> TAX_STRUCTURE === 
 export const GET_TAX_STRUCTURE_DATA = "GET_TAX_STRUCTURE_DATA";
 export const GET_TAX_STRUCTURE_DATA_START = "GET_TAX_STRUCTURE_DATA_START";
@@ -212,5 +265,5 @@ export const GET_Bank_DATA_END = "GET_Bank_DATA_END";
 // PAYROLL ===> Outstanding_Recoveries === 
 export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA";
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
-export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_Recoveries_SINGLE";
+export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";

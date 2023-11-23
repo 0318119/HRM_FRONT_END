@@ -107,7 +107,7 @@ export const DeleteFunLeaveType = (body) => async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      Leave_type_code: body,
+      "Leave_type_code": body,
     }),
   });
   const res = await response.json();

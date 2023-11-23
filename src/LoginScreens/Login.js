@@ -18,10 +18,6 @@ export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState("")
   const navigate = useNavigate()
-
-
-
-
   const showAlert = (message, type) => {
     setLoginError({
       message: message,
@@ -67,10 +63,8 @@ export const Login = () => {
             setBtnEnaledAndDisabled(false);
             if (response.success) {
               showAlert(response.message, "success")
-
               localStorage.setItem("refresh", response.referesh_token);
               localStorage.setItem("access_token", response.access_token);
-
               localStorage.setItem("Emp_code", response.data[0].Emp_code);
               localStorage.setItem("company_code", response.data[0].company_code);
               localStorage.setItem("Payroll_Category", response.data[0].Payroll_Category);
