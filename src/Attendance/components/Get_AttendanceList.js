@@ -1,121 +1,150 @@
-import { useState, useEffect } from 'react'
-import '../Assets/css/get_Attendance.css'
-import { useNavigate } from 'react-router-dom';
-import { Print } from '@mui/icons-material';
-import { message } from 'antd';
-const config = require('../../config.json')
+import React, { useEffect, useState } from 'react'
+// import '../../assest/css/paySlip.css'
+import { connect } from "react-redux";
+import * as RED_ATTENDANCE_SHEET_ACTION from '../../store/actions/AttendanceSheet/index'
+import { FormInput, FormSelect } from "../../components/basic/input/formInput";
+import { PrimaryButton, CancelButton } from "../../components/basic/button";
+import { message } from 'antd'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Table } from "antd";
+import { Document, Page, Text, View, PDFViewer } from '@react-pdf/renderer';
+import * as yup from "yup";
 
 
-function Get_Attendancelist() {
-  var get_access_token = localStorage.getItem("access_token");
-  var Emp_code = localStorage.getItem("Emp_code");
-  const navigate = useNavigate()
-  const [loading, setLoading] = useState(false);
-  const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
-  const [formErr, setformErr] = useState(false)
-  const [AttendanceMon, SetAttendanceMon] = useState("")
-  const [AttendanceYear, SetAttendanceYear] = useState("")
-  const [AttendanceID, setAttendanceID] = useState(null)
-  const [messageApi, contextHolder] = message.useMessage();
-  const [AllEmpCodeErr, setAllEmpCodeErr] = message.useMessage();
-  const [isLoadingAlert, setLoadingAlert] = message.useMessage();
-  const [attendanceSheet, setAttendanceSheet] = useState([])
-  const [getYear, setYear] = useState(new Date().getFullYear())
-  const [getMonth, setMonth] = useState(new Date().getMonth())
-  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  const [isOnLoadShow, setOnLoadShow] = useState(false)
-  const [isDBtn, setDBtn] = useState(false)
-  const d = new Date();
-  let name = month[d.getMonth()];
-  const [getAttendanceName, setGetAttendanceName] = useState([])
-  const AttendanceData = JSON.stringify({
-    "Employee_Id": AttendanceID !== null ? AttendanceID : "-1",
-    "Month": AttendanceMon ? AttendanceMon : name == "January" ? "1" : name == "February" ? "2" : name == "March" ? "3" : name == "April" ? "4" : name == "May" ? "5" : name == "June" ? "6" : name == "July" ? "7" : name == "August" ? "8" : name == "September" ? "9" : name == "October" ? "10" : name == "November" ? "11" : name == "December" ? "12" : false,
-    "Year": AttendanceYear ? AttendanceYear : getYear,
-  })
+function Get_Attendancelist({
+  Red_Attendance_sheet,
+  GetAllEmp,
+  PostAttendancePayload
+}) {
+  const [isLoading, setLoading] = useState(false)
+  const empData = Red_Attendance_sheet?.data?.[0]?.res?.data
+  const [isAttendanceData, setAttendanceData] = useState([])
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to convert to 1-based index
+  const currentYear = currentDate.getFullYear();
+  console.log("Current Month:", currentMonth);
+  console.log("Current Year:", currentYear);
 
 
+  // ATTENDANCE FOMR SHCEME =====================
+  const AttendanceSheme = yup.object().shape({
+    Employee_Id: yup.string().required("Please Select the employee"),
+    Year: yup.string().required("Please Select the Year"),
+    Month: yup.string().required("Please Select the Month"),
+  });
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      Employee_Id: "",
+      Month: "",
+      Year: "",
+    },
+    mode: "onChange",
+    resolver: yupResolver(AttendanceSheme),
+  });
 
 
-  const Attendance = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setBtnEnaledAndDisabled(true);
-    await fetch(`${config['baseUrl']}/attendance/GetAttendanceSummary`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-      body: AttendanceData
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response?.success) {
-        setAttendanceSheet(response?.data?.[0])
-        setLoading(false);
-        setBtnEnaledAndDisabled(false);
-        messageApi.open({
-          type: 'success',
-          content: "Now,You can Download PDF",
-        });
-        setTimeout(() => {
-          messageApi.destroy()
-          setOnLoadShow(true)
-          setDBtn(true)
-        }, 2000);
-      } else {
-        setLoading(false);
-        setBtnEnaledAndDisabled(false);
-        messageApi.open({
-          type: 'error',
-          content: response?.message || response?.messsage,
-        });
-        setTimeout(() => {
-          messageApi.destroy()
-        }, 2000);
+  // ATTENDANCE FORM VALIDE FUNCTION ===================
+  const submitForm = async (data) => {
+      setLoading(true)
+      try {
+          const isValid = await AttendanceSheme.validate(data);
+          if (isValid) {
+              confirm(data)
+          }
+      } catch (error) {
+          console.error(error);
       }
-    }).catch((errs) => {
-      setLoading(false);
-      setBtnEnaledAndDisabled(false);
-      messageApi.open({
-        type: 'error',
-        content: errs?.message || errs?.messsage,
-      });
-      setTimeout(() => {
-        messageApi.destroy()
-      }, 2000);
-    })
   }
 
-  const getAttendance = async (e) => {
-    await fetch(`${config['baseUrl']}/allemployees/GetEmployeesName`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response?.success == "success") {
-        setGetAttendanceName(response?.data)
-      } else {
-        AllEmpCodeErr.open({
-          type: 'success',
-          content: response?.message || response?.messsage,
-        });
-        setTimeout(() => {
-          AllEmpCodeErr.destroy()
-        }, 2000);
-      }
-    }).catch((errs) => {
-      AllEmpCodeErr.open({
-        type: 'error',
-        content: errs?.message || errs?.messsage,
-      });
-      setTimeout(() => {
-        AllEmpCodeErr.destroy()
-      }, 2000);
-    })
-  }
+  // GET ALL EMPLOYEE DATA =====================
   useEffect(() => {
-    getAttendance();
+    GetAllEmp()
   }, [])
+
+  // ATTENDANCE FORM POST FUNCTION
+  const [btnDownalod,setBtnDownalod] = useState(false)
+  const confirm = async (data) => {
+      const isWaitFun = await PostAttendancePayload(data)
+      if(isWaitFun?.success){
+        if(isWaitFun?.data[0].length == 0){
+          message.error("No Data Available")
+          setLoading(false)
+          setBtnDownalod(false)
+        }else{
+          setLoading(false)
+          setBtnDownalod(true)
+          message.success("Now, You can Download Pdf")
+          setAttendanceData(isWaitFun?.data[0])
+        }
+      }else{
+        message.error(isWaitFun?.message || isWaitFun?.messsage)
+        setLoading(false)
+        setBtnDownalod(false)
+      }
+  }
+
+  // const columns = [
+  //   {
+  //     title: 'Employee Code',
+  //     dataIndex: 'Emp_code',
+  //     key: 'Emp_code',
+  //   },
+  //   {
+  //     title: 'Employee Name',
+  //     dataIndex: 'Emp_name',
+  //     key: 'Emp_name',
+  //   },
+  //   {
+  //     title: '',
+  //     dataIndex: 'Day_Name',
+  //     key: 'Day_Name',
+  //   },
+  //   {
+  //     title: '',
+  //     dataIndex: 'Attendance_Date',
+  //     key: 'Attendance_Date',
+  //   },
+  //   {
+  //     title: 'Time In Hours',
+  //     dataIndex: 'Emp_Time_In_HH',
+  //     key: 'Emp_Time_In_HH',
+  //   },
+  //   {
+  //     title: 'Time out ',
+  //     dataIndex: 'Emp_Time_In_MM',
+  //     key: 'Emp_Time_In_MM',
+  //   },
+  //   {
+  //     title: 'Time out Hours',
+  //     dataIndex: 'Emp_Time_In_HH',
+  //     key: 'Emp_Time_In_HH',
+  //   },
+  //   {
+  //     title: 'Time out Minutes',
+  //     dataIndex: 'Emp_Time_Out_HH',
+  //     key: 'Emp_Time_Out_MM',
+  //   },
+  //   {
+  //     title: 'Shift Durration',
+  //     dataIndex: 'Shift_Duration',
+  //     key: 'Shift_Duration',
+  //   },
+  // ];
+
+  const defaultOption = { value: "-1", label: "All Employees" }; 
+  const options = [
+    defaultOption,
+    ...(empData || []).map((item) => ({
+      value: item.Emp_code,
+      label: item.Emp_name,
+    })),
+  ];
+
   useEffect(() => {
     const btnprint = document.getElementById('Print');
     const gotoPrint = () => {
@@ -126,134 +155,128 @@ function Get_Attendancelist() {
       btnprint.removeEventListener('click', gotoPrint, false)
     }
   }, [])
-  useEffect(() => {
-    if (loading == true) {
-      isLoadingAlert.open({
-        type: 'loading',
-        content: 'Please Wait..',
-        duration: 0,
-      });
-    }
-    else {
-      isLoadingAlert.destroy()
-    }
-  }, [loading])
-
 
 
   return (
     <>
-      {setLoadingAlert}{contextHolder}
-      <div className="container p-2 mt-5" id='Body1'>
-          <div className="row px-3 mt-2 py-2 justify-content-center">
-            <div className="col-lg-8">
-              <div className='AttendanceBox p-5'>
-                <h6><b>Attendance</b></h6>
-                <form action="" className='mt-3' onSubmit={Attendance}>
-                  <div className="w-100">
-                    <label htmlFor="">Employee Id</label>
-                    <select name="" id="" onChange={(e) => setAttendanceID(e.target.value)} className='w-100 form-select'>
-                      <option selected={true} value="" >All Employees</option>
-                      {getAttendanceName.map((items) => {
-                        return (
-                          <option value={items?.Emp_code}>{items?.Emp_code + " " + items.Emp_name}</option>
-                        )
-                      })}
-                    </select>
-                  </div>
-                  <div className="w-100 mt-3">
-                    <label htmlFor="">Month</label>
-                    <select name="" id="" className='form-select w-100' onChange={(e) => SetAttendanceMon(e.target.value)}>
-                      <option selected>
-                        {name}
-                      </option>
-                      <option value="1">January</option>
-                      <option value="2">Febuary</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                    </select>
-                  </div>
-                  <div className="w-100 mt-3">
-                    <label htmlFor="">year</label>
-                    <select name="" id="" className='form-select w-100' onChange={(e) =>
-                      SetAttendanceYear(e.target.value)
-                    }>
-                      <option selected={2023 == getYear ? true : false}>{getYear}</option>
-                      <option value="2022">2022</option>
-                    </select>
-                  </div>
-                  <div>
-                    <button
-                      type='submit'
-                      disabled={btnEnaledAndDisabled}
-                      className="submitBtn">Submit</button>
-                  </div>
-                </form>
+      {/* <div>
+        <Header />
+      </div> */}
+      <div className="container maringClass">
+        <div className="row justify-content-center">
+          <div className="col-lg-8">
+            <form onSubmit={handleSubmit(submitForm)} className='paySlipBox'>
+              <h4 className="text-dark">Attendance</h4>
+              <div className=''>
+                <FormSelect
+                  errors={errors}
+                  control={control}
+                  placeholder={"Select Employee"}
+                  name={'Employee_Id'}
+                  label={'Select Employee'}
+                  options={options}
+                />
+                <FormSelect
+                  errors={errors}
+                  control={control}
+                  placeholder={"Please select a month"}
+                  name={'Month'}
+                  label={'Month'}
+                  defaultValue={currentMonth}
+                  options={[
+                    { value: 1, label: 'January' },
+                    { value: 2, label: 'February' },
+                    { value: 3, label: 'March' },
+                    { value: 4, label: 'April' },
+                    { value: 5, label: 'May' },
+                    { value: 6, label: 'June' },
+                    { value: 7, label: 'July' },
+                    { value: 8, label: 'August' },
+                    { value: 9, label: 'September' },
+                    { value: 10, label: 'October' },
+                    { value: 11, label: 'November' },
+                    { value: 12, label: 'December' },
+                  ]}
+                />
+                <FormSelect
+                  errors={errors}
+                  control={control}
+                  name={'Year'}
+                  placeholder={'Please select a year'}
+                  label={'Please select a year'}
+                  defaultValue={currentYear}
+                  options={[
+                    { value: 2022, label: '2022' },
+                    { value: 2023, label: '2023' },
+                  ]}
+                />
               </div>
-            </div>
-          </div>
-      </div>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 d-flex justify-content-end">
-            <button id="Print" className={isDBtn == false? "d-none" : "d-block"} disabled={isDBtn ? false : true}>Download</button>
+              <div className='paySlipBtnBox'>
+                <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+              </div>
+            </form>
           </div>
         </div>
-      </div>
-      {isOnLoadShow && (
-        <>
-          <div className="container" id="content">
-            <div className="row">
-              <div className="col-lg-12 px-2">
-                <h4 className='HeaderAttendance'>Attendance Sheet</h4>
-                <table className='table table-striped border' >
-                  <thead >
-                    <tr>
-                      <td>Employee Code</td>
-                      <td>Employee Name</td>
-                      <td>Day</td>
-                      <td>Date</td>
-                      <td>Time In</td>
-                      <td>Time Out</td>
-                      <td>Shift Durration</td>
-                      {/* <td>Remarks</td> */}
-                    </tr>
-                  </thead>
-                  <tbody >
-                    {attendanceSheet.map((items) => {
-                      return (
-                        <tr>
-                          <th>{items?.Emp_code ? items?.Emp_code : "Empty"}</th>
-                          <th>{items?.Emp_name ? items?.Emp_name : "Empty"}</th>
-                          <th>{items?.Day_Name ? items?.Day_Name : "Empty"}</th>
-                          <th>{items?.Attendance_Date ? items?.Attendance_Date.slice(0, 10) : "Empty"}</th>
-                          <th>{items?.Emp_Time_In_HH ? items?.Emp_Time_In_HH : "--"} : {items?.Emp_Time_In_MM ? items?.Emp_Time_In_MM : "--"}</th>
-                          <th>{items?.Emp_Time_Out_HH ? items?.Emp_Time_Out_HH : "--"} : {items?.Emp_Time_Out_MM ? items?.Emp_Time_Out_MM : "--"}</th>
-                          <th>{items?.Shift_Duration ? items?.Shift_Duration : ""}</th>
-                          {/* <th>{items?.Remarks}</th> */}
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+        <div className="row">
+          <div className="col-lg-12 d-flex justify-content-end">
+            <PrimaryButton className={btnDownalod == true ? "d-block" : "d-none"} id="Print" title="Download" />
           </div>
-        </>
-      )}
+        </div>
+        <div class="mt-5 row justify-content-center">
+          {isAttendanceData?.length > 0 && (
+            // <Table
+            //     columns={columns}
+            //     loading={isLoading}
+            //     dataSource={isAttendanceData}
+            //     scroll={{ x: 10 }}
+            //     pagination={false}
+            // />
+            <PDFViewer height="750">
+              <Document >
+                <Page size="A4">
+                    <View>
+                        <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold',margin: "20px 0" }}>
+                            Employee Attendance PDF
+                        </Text>
+                        <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Employee Code</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Employee Name</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Day</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Date</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time In Hours</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time In Minutes</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time out Hours</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time out Minutes</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Shift Durration</Text>
+                        </View>
+                        {isAttendanceData.map((item, index) => (
+                          <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_code ? item?.Emp_code : null}</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_name ? item?.Emp_name : null}</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Day_Name ? item?.Day_Name : null}</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Attendance_Date ? item?.Attendance_Date : null}</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_In_HH}</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_In_MM}</Text>
 
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_Out_HH }</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_Out_MM }</Text>
+                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Shift_Duration ? item?.Shift_Duration : null}</Text>
+                          </View>
+                        ))}
+                    </View>
+                </Page>
+              </Document>
+            </PDFViewer>
+          )}
+        </div>
+      </div>
     </>
   )
 }
 
-export default Get_Attendancelist;
+function mapStateToProps({ Red_Attendance_sheet }) {
+  return { Red_Attendance_sheet };
+}
+export default connect(mapStateToProps, RED_ATTENDANCE_SHEET_ACTION)(Get_Attendancelist)
 
 
