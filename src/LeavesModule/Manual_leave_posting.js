@@ -8,6 +8,7 @@ import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
 import { message } from 'antd';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../components/basic/input";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
 
 const config = require('../config.json')
@@ -27,8 +28,9 @@ const Manual_leave_posting = ({
     const emp_all_data = Red_Manual_Leave_Posting?.AllEmployees?.[0]?.res?.data
     const emp_leave_type_data = Red_Manual_Leave_Posting?.leavetype?.[0]?.res
     const emp_leaves_applied = Red_Manual_Leave_Posting?.appliedDays?.[0]?.res?.data?.[0]?.[0]?.Leaves
-    const emp_balanced_days = Red_Manual_Leave_Posting?.EMP_BALANCE_DAYS?.[0]?.res?.data?.[0]?.[0]?.Leave_Balance
-    const leaveCalculations = emp_balanced_days - emp_leaves_applied;
+    const emp_balanced_days = Red_Manual_Leave_Posting?.balanceDays?.[0]?.res?.data?.[0]?.[0]?.Leave_Balance
+    const [leaveCalculations,setleaveCalculations] = useState(emp_balanced_days - emp_leaves_applied);
+    const [halfDayCheck,sethalfDayCheck] = useState(0)
     const [isLeaveReq,setLeaveReq] = useState(Emp_code)
     const [isLeave,setLeave] = useState(null)
     const [isDate, setDate] = useState([
@@ -74,7 +76,7 @@ const Manual_leave_posting = ({
     },[isDate,isLeaveReq])
     
      useEffect(() => {
-        if(emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code !== null){
+        if(emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code){
             GET_EMP_BALANCED_DAYS({
                 code: isLeaveReq,
                 leave_code: emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code,
@@ -82,11 +84,23 @@ const Manual_leave_posting = ({
                 endDate: isDateScd[1].ToDate
             })
         }
-     },[isDateScd])
+     },[isDateScd,emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code])
+
+     const changeBox =(e)=>{
+        if(e.target.checked == true){
+            setleaveCalculations(0.5 - emp_leaves_applied)
+        }else{
+            setleaveCalculations(emp_balanced_days - emp_leaves_applied)
+        }
+        // console.log("e",e.target.checked)
+     }
+    //  useEffect(() => {
+    //     changeBox()
+    // },[])
     
     // console.log("All Employees", emp_all_data)
     // console.log("Emp Leavs Applied", emp_leaves_applied)
-    console.log("Employee leave type", emp_leave_type_data)
+    // console.log("Employee leave type", emp_leave_type_data)
     // console.log("Balanced days", emp_balanced_days)
     // console.log("isDates",isDate)
     // console.log("isLeave",isLeave)
@@ -743,18 +757,24 @@ const Manual_leave_posting = ({
                                     errors={errors}
                                     control={control}
                                 />
-                                <FormInput 
-                                    label={'Applied Days'} 
-                                    placeholder={'Applied Days'}
-                                    readOnly={true}
-                                    id=""
-                                    name=""
-                                    type="number"
-                                    value={emp_leaves_applied}
-                                    showLabel={true}
-                                    errors={errors}
-                                    control={control}
-                                />
+                                <div className='manualLeavePostionHalfDayBox'>
+                                    <FormInput 
+                                        className={'appliedInput'}
+                                        label={'Applied Days'} 
+                                        placeholder={'Applied Days'}
+                                        readOnly={true}
+                                        id=""
+                                        name=""
+                                        type="number"
+                                        value={emp_leaves_applied}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <Input placeholder={false} label={"Half Day"} type="checkbox" className="half_day"
+                                        onChange={(e) => {changeBox(e)}}
+                                    />
+                                </div>
                                 <FormInput 
                                     label={'From Date'}  
                                     placeholder={'From Date'}

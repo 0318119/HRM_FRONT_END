@@ -15,7 +15,7 @@ const initState = {
     AllEmployees: [],
     leavetype: [],
     appliedDays: [],
-    EMP_BALANCE_DAYS:[],
+    balanceDays:[],
     loading: false,
 }
 
@@ -47,7 +47,7 @@ const Red_Manual_Leave_Posting = (state = initState, action) => {
         case SET_EMP_BALANCE_DAYS:
             return {
                 ...state,
-                EMP_BALANCE_DAYS: action.payload,
+                balanceDays: action.payload,
                 loading: action.loading,
             };
         // case GET_MASTER_ACTIVE_DATA_SINGLE:
@@ -62,7 +62,7 @@ const Red_Manual_Leave_Posting = (state = initState, action) => {
                 AllEmployees: action.payload,
                 leavetype: action.payload,
                 appliedDays: action.payload,
-                EMP_BALANCE_DAYS: action.payload,
+                balanceDays: action.payload,
                 loading: action.loading,
             };
         default:

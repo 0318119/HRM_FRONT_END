@@ -13,10 +13,11 @@ const FormInput = ({
     showLabel = true,
     type,
     maxLenght,
+    className,
     ...rest
 }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
+        <div className={className} style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
             {showLabel && (
                 <label style={{ fontWeight: '600' }} htmlFor={name}>
                     {label}
