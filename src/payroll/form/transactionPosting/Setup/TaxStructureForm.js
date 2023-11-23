@@ -4,7 +4,7 @@ import { CancelButton, PrimaryButton } from "../../../../components/basic/button
 import * as TAX_STRUCTURE from "../../../../store/actions/payroll/taxStructure"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { TaxStructureSchema } from '../../../../payroll/pages/Setup/schema';
+import { TaxStructureSchema } from '../Setup/schema';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormCheckBox, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';

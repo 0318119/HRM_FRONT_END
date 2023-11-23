@@ -4,7 +4,7 @@ import { CancelButton, PrimaryButton } from "../../../../components/basic/button
 import * as  OutstandingRecoveriesActions from "../../../../store/actions/payroll/outstandingRecoveries/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { OutstandingRecoveries } from '../schema';
+import { OutstandingRecoveries } from '../Setup/schema';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';
@@ -42,7 +42,6 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
     } = useForm({
         defaultValues: {
 
-            Outstanding_Recovery_code: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_code,
             Outstanding_Recovery_name: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_name,
             Final_Settlement_Report_Mandatory_Flag: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Final_Settlement_Report_Mandatory_Flag,
         },
@@ -60,7 +59,6 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
         if (mode == "create") {
             reset(
                 {
-                    Outstanding_Recovery_code: "",
                     Outstanding_Recovery_name: "",
                     Final_Settlement_Report_Mandatory_Flag: "",
                 },
@@ -68,7 +66,6 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
         } else {
             reset(
                 {
-                    Outstanding_Recovery_code: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_code,
                     Outstanding_Recovery_name: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Outstanding_Recovery_name,
                     Final_Settlement_Report_Mandatory_Flag: Red_outstandingRecoveries?.dataSingle?.[0]?.res?.data?.[0]?.Final_Settlement_Report_Mandatory_Flag,
                 },
@@ -88,8 +85,7 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
                 accessToken: `Bareer ${get_access_token}`,
             },
             body: JSON.stringify({
-                // "Bank_code": mode == 'create' ? "0" : isCode,
-                "Outstanding_Recovery_code": body.Outstanding_Recovery_code,
+                "Outstanding_Recovery_code": mode == 'create' ? "0" : isCode,
                 "Outstanding_Recovery_name": body.Outstanding_Recovery_name,
                 "Final_Settlement_Report_Mandatory_Flag": body.Final_Settlement_Report_Mandatory_Flag
             }),
@@ -136,21 +132,9 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Bank</h4>
+                <h4 className="text-dark">Outstanding Recoveries</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
-
-
-                    <FormInput
-                        label={'Outstanding Recovery Code'}
-                        placeholder={'Outstanding Recovery code'}
-                        id="Outstanding_Recovery_code"
-                        name="Outstanding_Recovery_code"
-                        type="number"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                    />
 
                     <FormInput
                         label={'Outstanding Recovery Name'}
@@ -171,11 +155,11 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
                         options={[
                             {
                                 value: 'M',
-                                label: 'Married',
+                                label: 'Yes',
                             },
                             {
                                 value: "N",
-                                label: 'Unmarried',
+                                label: 'NO',
                             },
                         ]}
                         showLabel={true}

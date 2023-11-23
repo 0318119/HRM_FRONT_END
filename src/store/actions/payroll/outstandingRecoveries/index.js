@@ -12,7 +12,7 @@ export const GetOutstandingRecoveries = (body) => async (dispatch, getState) => 
             type: GET_Outstanding_Recoveries_START,
             payload: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/GetAlloutstandingRecoveries/${body.pageNo}/${body.pageSize}/${body.search}`, {
+        const response = await fetch(`${baseURL.baseUrl}/outstandingRecoveries/GetAlloutstandingRecoveries/${body.pageNo}/${body.pageSize}/${body.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -49,7 +49,7 @@ export const GET_Outstanding_Recoveries_BY_CODE = (body) => async (dispatch) => 
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseURL.baseUrl}/GetbyOutstandingRecoveriesByCode`, {
+        const response = await fetch(`${baseURL.baseUrl}/outstandingRecoveries/GetbyOutstandingRecoveriesByCode`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

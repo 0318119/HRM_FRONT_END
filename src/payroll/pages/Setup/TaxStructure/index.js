@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Header from '../../../components/Includes/Header';
-import Input from "../../../components/basic/input";
-import { Button } from "../../../components/basic/button";
-// import "./assets/css/CostList.css";
+import Header from '../../../../components/Includes/Header';
+import Input from "../../../../components/basic/input";
+import { Button } from "../../../../components/basic/button";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import Bankform from "./form/Bankform";
-import * as BankActions from "../../../store/actions/payroll/bank/index";
+import TaxStructureForm from "../../../form/transactionPosting/Setup/TaxStructureForm";
+import * as TAX_STRUCTURE from "../../../../store/actions/payroll/taxStructure/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
-import baseUrl from '../../../../src/config.json'
+import baseUrl from '../../../../config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const Bank = ({  Red_Bank, GetBank  }) => {
+const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -22,9 +21,23 @@ const Bank = ({  Red_Bank, GetBank  }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState('')
-  // const [search, setSearch] = useState(null)
-  // const [pageNo, setPageNo] = useState(1)
 
+
+  useEffect(() => {
+    if (isSearchVal == '') {
+        getTaxStructure({
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    } else {
+        getTaxStructure({
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page, isSearchVal])
 
   const EditPage = (mode, code) => {
     setCode(code)
@@ -32,59 +45,35 @@ const Bank = ({  Red_Bank, GetBank  }) => {
   }
 
 
+  console.log(Red_TaxStructure, 'jjjj')
 
 
   const columns = [
     {
-      title: 'Bank Code',
-      dataIndex: 'Bank_code',
-      key: 'Bank_code',
+      title: 'Structure Code',
+      dataIndex: 'Structure_Code',
+      key: 'Structure_Code',
     },
     {
-      title: 'Bank Name',
-      dataIndex: 'Bank_name',
-      key: 'Bank_name',
+      title: 'Tax Percentage',
+      dataIndex: 'Tax_Percentage',
+      key: 'Tax_Percentage',
     },
     {
-      title: 'Bank Abbreviation',
-      dataIndex: 'Bank_abbr',
-      key: 'Bank_abbr',
+      title: 'Taxable Income',
+      dataIndex: 'Taxable_Income_From',
+      key: 'Taxable_Income_From',
     },
  
     {
-      title: 'Sort Key',
-      dataIndex: 'Sort_key',
-      key: 'Sort_key',
+      title: 'Taxable Income',
+      dataIndex: 'Taxable_Income_To',
+      key: 'Taxable_Income_To',
     },
     {
-      title: 'Bank Address 1',
-      dataIndex: 'Bank_Address1',
-      key: 'Bank_Address1',
-    },
-    {
-      title: 'Bank Address 2',
-      dataIndex: 'Bank_Address2',
-      key: 'Bank_Address2',
-    },
-    {
-      title: 'Bank Address 3',
-      dataIndex: 'Bank_Address3',
-      key: 'Bank_Address3',
-    },
-    {
-      title: 'Current Account',
-      dataIndex: 'Current_Account',
-      key: 'Current_Account',
-    },
-    {
-      title: 'IMD Code',
-      dataIndex: 'Current_Account',
-      key: 'Current_Account',
-    },
-    {
-      title: 'Swift',
-      dataIndex: 'Swift',
-      key: 'Swift',
+      title: 'Fixed Amount',
+      dataIndex: 'Fixed_Amount',
+      key: 'Fixed_Amount',
     },
     {
       title: 'Action',
@@ -92,14 +81,14 @@ const Bank = ({  Red_Bank, GetBank  }) => {
       render: (data) => (
         <>
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Bank_code)} className="editBtn"><FaEdit /></button>
+          <button onClick={() => EditPage('Edit', data?.Structure_Code)} className="editBtn"><FaEdit /></button>
           <Popconfirm
-            title="Delete the Bank"
-            description="Are you sure to delete the Bank?"
+            title="Delete the Tax Structure"
+            description="Are you sure to delete the Tax Structure?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              handleConfirmDelete(data?.Bank_code) 
+              handleConfirmDelete(data?.Structure_Code) 
             }}
           >
             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -110,14 +99,14 @@ const Bank = ({  Red_Bank, GetBank  }) => {
     },
   ];
 
-  // COST CENTRE FORM DATA DELETE API CALL =========================== 
+  // Payroll setup tax structure FORM DATA DELETE API CALL =========================== 
 async function handleConfirmDelete(id) {
     await fetch(
-      `${baseUrl.baseUrl}/deletebank/DeleteBank`, {
+      `${baseUrl.baseUrl}/taxStructure/DeleteTaxStructure`, {
       method: "POST",
       headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
       body: JSON.stringify({
-        "Bank_code": id,
+        "Structure_Code": id,
       }),
     }
     ).then((response) => {
@@ -130,7 +119,7 @@ async function handleConfirmDelete(id) {
         });
         setTimeout(() => {
           messageApi.destroy()
-          GetBank({
+          getTaxStructure({
             pageSize: pageSize,
             pageNo: page,
             search: null
@@ -157,23 +146,6 @@ async function handleConfirmDelete(id) {
     });
   }
 
-  
-  useEffect(() => {
-    if (isSearchVal == '') {
-      GetBank({
-        pageSize: pageSize,
-        pageNo: page,
-        search: null
-      })
-    } else {
-      GetBank({
-        pageSize: pageSize,
-        pageNo: 1,
-        search: isSearchVal
-      })
-    }
-  }, [page, isSearchVal])
-
   return (
     <>
       <div>
@@ -187,7 +159,7 @@ async function handleConfirmDelete(id) {
             {mode == "read" && (
               <>
                 <div className="coslistFlexBox">
-                  <h4 className="text-dark">Bank</h4>
+                  <h4 className="text-dark">Tax Structure</h4>
                   <div className="costCentersearchBox">
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
@@ -203,12 +175,12 @@ async function handleConfirmDelete(id) {
               {mode == "read" && (
                 <>
                   <Table 
-                    columns={columns} loading={Red_Bank?.loading}
-                    dataSource={Red_Bank?.data?.[0]?.res?.data1}
+                    columns={columns} loading={Red_TaxStructure?.loading}
+                    dataSource={Red_TaxStructure?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
                     pagination={{
                       defaultCurrent: page,
-                      total: Red_Bank?.data?.[0]?.res?.data3,
+                      total: Red_TaxStructure?.data?.[0]?.res?.data3,
                       onChange: (p) => {
                         setPage(p);
                       },
@@ -218,10 +190,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-                <Bankform cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <Bankform cancel={setMode} mode={mode}  isCode={isCode} page={page}/>
+                <TaxStructureForm cancel={setMode} isCode={isCode} page={page}/>
               )}
             </div>
           </div>
@@ -231,7 +203,7 @@ async function handleConfirmDelete(id) {
   );
 };
 
-function mapStateToProps({ Red_Bank }) {
-  return { Red_Bank };
+function mapStateToProps({Red_TaxStructure }) {
+  return { Red_TaxStructure};
 }
-export default connect(mapStateToProps, BankActions)(Bank) 
+export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructure) 
