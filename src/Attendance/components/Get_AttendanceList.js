@@ -126,6 +126,7 @@ function Get_Attendancelist() {
       btnprint.removeEventListener('click', gotoPrint, false)
     }
   }, [])
+  
   useEffect(() => {
     if (loading == true) {
       isLoadingAlert.open({
