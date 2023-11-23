@@ -82,7 +82,7 @@ export default function Attendancechart() {
             });
         } else {
           setGetAttendData(response.data[0]);
-          console.log("test data",response.data[0])
+          console.log("test data", response.data[0])
           setDataLoader(true);
         }
       })
@@ -94,100 +94,6 @@ export default function Attendancechart() {
       });
   }
 
-
-  // let Status = [];
-  // getAttendData.forEach((element,index) => {
-  //   if(element.Attendance_Status == "Present" && element.Remarks == "On Time" ){
-  //       Status.push({
-  //         Present_status: element?.Progress,
-  //         Month: element?.Month,
-  //         Date : element?.Date,
-  //         Progress: element?.Progress,
-  //         PresentBg:"green",
-  //       });
-  //   }
-  //   else if(element.Attendance_Status == "Absent" && element.Remarks == "Late"){
-  //       Status.push({
-  //         Absent_status: 0.5,
-  //         Month: element?.Month,
-  //         Date : element?.Date,
-  //         Progress: element?.Progress,
-  //         AbsentBg:"red",
-  //       });
-  //   }
-  //   else if(element.Attendance_Status == "Present" && element.Remarks == "Late"){
-  //       Status.push({
-  //         Late_status: element?.Progress,
-  //         Month: element?.Month,
-  //         Date : element?.Date,
-  //         Progress: element?.Progress,
-  //         LateBg:"blue",
-  //       });
-  //   }
-  //   else if(element.DayType == 'Holiday' && element?.DayName == "Saturday" || element?.DayName == "Sunday"){
-  //     Status.push({
-  //       Off_status: 20,
-  //       Month: element?.Month,
-  //       Date : element?.Date,
-  //       Progress: element?.Progress,
-  //       OffBg:"black",
-  //     });
-  // }
-  // });
-  // console.log("Status",Status)
-  
-
-  // const options = {
-  //   plugins: {
-  //     datalabels: {
-  //       display: true,
-  //     },
-  //     legend: {
-  //       display: true,
-  //     },
-  //     tooltips: {
-  //       callbacks: {
-  //         title: (tooltipItems) => 'Data Details',
-  //         label: (context) => {
-  //           const dataIndex = context.dataIndex;
-  //           const datasetIndex = context.datasetIndex;
-  //           const value = data.datasets[datasetIndex].data[dataIndex];
-  //           return `Value: ${value}`;
-  //         },
-  //       },
-  //     },
-  //   },
-  //   scales: {
-  //     x: {
-  //       beginAtZero: true,
-  //     },
-  //     y: {
-  //       beginAtZero: true,
-  //     },
-  //   },
-  // };
-
-
-  // const data = {
-  //   labels,
-  //   datasets: [
-  //     {
-  //       id: getAttendData.map((items) =>  items.Date),
-  //       data : Status?.map((element) =>  {
-  //         return(
-  //           element.Present_status || element.Absent_status || element.Late_status || element.Off_status
-  //         )
-  //       }),
-  //       backgroundColor: Status?.map((element) => {
-  //         return(
-  //           element.PresentBg || element.AbsentBg || element.LateBg || element.OffBg
-  //         )
-  //       }),
-  //     },
-  //   ],
-  // };
-
-
   const options = {
     responsive: true,
     // beginAtZero: true,
@@ -197,51 +103,7 @@ export default function Attendancechart() {
         enabled: true,
         intersect: true,
         callbacks: {
-          label: function (context) {
-            // let label = data.labels[context.datasetIndex];
-            // let hello = data?.datasets[0]?.id;
-            // let testingData = [];
-            // for (let i = 1; i <= 31; i++) {
-            //   testingData.push({ id: i });
-            // }
-            // return (
-            //   // data?.datasets[0].label == "Present" ?  ` Status - ${data?.datasets[0].label}` : null +
-            //   // data?.datasets[1].label == "Absent" ?  `Status - ${data?.datasets[1].label}` : null
-            //   // data?.datasets[2].label == "Late" ?  `Status - ${data?.datasets[2].label}` : null
-            //   // `Status :: ${Status.filter((items) => items.Date == 21)?.[0]?.Attendance_Status}` + " " +
-            //   // `Time in :: ${Status.filter((items) => items.Date == 21)?.[0]?.Time_in}`  + " " +
-            //   // console.log("hello",hello.filter((id) => id == 21)) + 
-            //   // console.log("hello",context.parsed)
-            //   // "Emp_Time_IN" + data?.datasets[0]?.Emp_Time_IN + " " +
-            //   // "Date" + " " + context.parsed.x + " " + 
-            //   // context.parsed.y 
-            //   // console.log("Filter data",Status.filter((data) => data?.Date === 21)[0]) +
-            //   // console.log("Filter data",Status.filter((data) => data?.Date === 22)[0])
-
-
-
-            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Attendance_Status}` + " " +
-            //   // `Time in :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
-            //   // `Status :: ${Status.filter((items) => items.Date == 22)?.[0]?.Time_in}`
-            //   // console.log("Filter",Status.filter((items) => items.Date == data?.datasets[0]?.id))
-            //   // console.log("object",Status)
-            //   // console.log("StatusNew",Status.filter((items) => data?.datasets[0]?.id[items.Date]))
-            //   // Status.map((element) => {
-            //   //   // console.log("element",element?.Attendance_Status)
-            //   // // console.log("Filter",Status.filter(test => test.Date == data?.datasets?.[0]?.id))
-            //   //   // console.log("id",element.Date)
-            //   //   // return(
-            //   //   //   data?.datasets[0]?.id.map((test) => {
-            //   //   //     return(
-            //   //   //       // element.Date == test ? `Status : ${element?.Attendance_Status}` : ""
-            //   //   //       console.log("object", element.Date == test ? element.filter((chk) => chk.Date == test) : "")
-            //   //   //       // console.log("element.Date",element.Date)
-            //   //   //     )
-            //   //   //   })
-            //   //   // )
-            //   // })
-            // );
-          }
+          label: (context) => ` Status : ${context?.dataset?.label} `,
         },
       },
     },
@@ -251,20 +113,19 @@ export default function Attendancechart() {
       },
       y: {
         beginAtZero: true,
-        // display: false,
+        display: false,
       },
     }
   };
 
-  const labels = getAttendData.map((items) =>  items.Date + " " + items.Month);
-
+  const labels = getAttendData.map((items) => items.Date + " " + items.Month);
   const data = {
     labels,
     datasets: [
       {
         id: 1,
         label: "Present",
-        data : getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time"? items.Progress : null),
+        data: getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time" ? items.Progress : null),
         backgroundColor: "#1587E7",
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -272,7 +133,7 @@ export default function Attendancechart() {
       {
         id: 2,
         label: 'Absent',
-        data :  getAttendData.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late"? 0.5 : null),
+        data: getAttendData.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late" ? 5.10 : null),
         backgroundColor: "red",
         borderColor: '#bd1b1b',
         borderWidth: 2,
@@ -280,7 +141,7 @@ export default function Attendancechart() {
       {
         id: 3,
         label: 'Late',
-        data :  getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late"? items?.Progress : null),
+        data: getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late" ? items?.Progress : null),
         backgroundColor: "#d7d730",
         borderColor: '#cfcf09',
         borderWidth: 2,
@@ -288,7 +149,7 @@ export default function Attendancechart() {
       {
         id: 4,
         label: 'Off',
-        data :  getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday"? 14 : null),
+        data: getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday" ? 9.10 : null),
         backgroundColor: "black",
         borderColor: 'black',
         borderWidth: 2,
@@ -308,13 +169,17 @@ export default function Attendancechart() {
       <div className="container">
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
-            <Link to="/Get_Attendance" className="text-dark mt-3 d-block" style={{background: "#F7F5F5",padding: "10px",borderRadius: "10px"}}><b>Attendance Report</b></Link>
+            <Link to="/Get_Attendance" className="text-dark mt-3 d-block" style={{ background: "#F7F5F5", padding: "10px", borderRadius: "10px" }}><b>Attendance Report</b></Link>
+          </div>
+          <div className="row">
+            <div className="col-12 mt-5">
+              <h5 className="mb-3 text-dark text-center"><b>Employee Attendance</b></h5>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12 mt-5">
-            <h5 className="mb-3 text-dark text-center"><b>Employee Attendance</b></h5>
-            <Bar options={options} data={data}/>
+        <div className="row" style={{ border: "1px solid #8080804a", borderRadius: "10px" }}>
+          <div className="col-12">
+            <Bar options={options} data={data} />
           </div>
         </div>
       </div>

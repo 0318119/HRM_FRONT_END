@@ -1,3 +1,20 @@
+
+.manual_Leaves_bg{
+    background: #F7F5F5;
+    border-radius: 10px;
+    padding: 10px;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox{
+    display: flex;
+    position: relative;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox .half_day{
+    position: absolute;
+    left: 30%;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox .appliedInput{
+    width: 100%;
+}
 .manual_Leaves_listHeader {
     background-color: #014f86;
     font-weight: 700;

@@ -51,21 +51,38 @@ const Earnings = ({ GetMasterEarningData, Red_MasterEarning }) => {
         },
     ];
 
-        useEffect(() => {
+    useEffect(() => {
         if (isSearchVal == "") {
             GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: page,
                 search: null,
             });
-        } else {
+        }else {
             GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: 1,
                 search: isSearchVal,
             });
         }
+        if (mode == "read") {
+            GetMasterEarningData({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: null,
+            });
+        }
     }, [page, isSearchVal]);
+
+    // useEffect(() => {
+    //     if (mode == "read") {
+    //         GetMasterEarningData({
+    //             pageSize: pageSize,
+    //             pageNo: 1,
+    //             search: null,
+    //         });
+    //     }
+    // }, [mode]);
 
 
     return (
@@ -97,8 +114,6 @@ const Earnings = ({ GetMasterEarningData, Red_MasterEarning }) => {
                                 <hr />
                             </>
                         )}
-
-                        <div>
                             {mode == "read" && (
                                 <Table
                                     columns={columns}
@@ -117,7 +132,6 @@ const Earnings = ({ GetMasterEarningData, Red_MasterEarning }) => {
                             )}
                             {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
                             {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page}  />}
-                        </div>
                     </div>
                 </div>
             </div>

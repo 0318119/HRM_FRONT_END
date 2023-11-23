@@ -1,16 +1,112 @@
 import React, { useState, useEffect } from 'react'
 import '../LeavesModule/assets/css/manual_leave_posting.css'
-import { Link, json, useLocation, useNavigate } from 'react-router-dom';
-import secureLocalStorage from 'react-secure-storage';
-import axios from 'axios';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { connect } from "react-redux";
 import Header from '../components/Includes/Header';
+import * as MANUAL_LEAVE_POSTING_ACTIONS from "../store/actions/Leave/Manual_Leave_Posting/index";
+import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
+import { message } from 'antd';
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "../components/basic/input";
+import { FormInput, FormSelect } from '../components/basic/input/formInput';
+
 const config = require('../config.json')
 
-const Manual_leave_posting = () => {
+const Manual_leave_posting = ({
+    Red_Manual_Leave_Posting,
+    GET_ALL_EMP_DATA,
+    GET_EMP_LEAVE_TYPE_DATA,
+    GET_EMP_APPLIED_LEAVE_DATA,
+    GET_EMP_BALANCED_DAYS
+}) => {
+    var Emp_code = localStorage.getItem("Emp_code");
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
-    var Emp_code = localStorage.getItem("Emp_code");
     var Company_code = localStorage.getItem("company_code");
+    const currentDate = new Date().toISOString().slice(0, 10);
+    const emp_all_data = Red_Manual_Leave_Posting?.AllEmployees?.[0]?.res?.data
+    const emp_leave_type_data = Red_Manual_Leave_Posting?.leavetype?.[0]?.res
+    const emp_leaves_applied = Red_Manual_Leave_Posting?.appliedDays?.[0]?.res?.data?.[0]?.[0]?.Leaves
+    const emp_balanced_days = Red_Manual_Leave_Posting?.balanceDays?.[0]?.res?.data?.[0]?.[0]?.Leave_Balance
+    const [leaveCalculations,setleaveCalculations] = useState(emp_balanced_days - emp_leaves_applied);
+    const [halfDayCheck,sethalfDayCheck] = useState(0)
+    const [isLeaveReq,setLeaveReq] = useState(Emp_code)
+    const [isLeave,setLeave] = useState(null)
+    const [isDate, setDate] = useState([
+        { FromDate: currentDate },
+        { ToDate: currentDate },
+      ]);
+    const [isDateScd, setDateScd] = useState([
+    { FromDate: currentDate },
+    { ToDate: currentDate },
+    ]);
+
+
+    const submitForm = async (data) => {}
+    const {
+        control,
+        formState: { errors },
+        handleSubmit,
+        reset
+    } = useForm({
+        defaultValues: {},
+        mode: "onChange",
+        resolver: yupResolver(),
+    });
+
+    useEffect(() => {
+        GET_ALL_EMP_DATA()
+    }, [])
+
+    useEffect (() => {
+        if(isLeaveReq !== null){
+            GET_EMP_LEAVE_TYPE_DATA(isLeaveReq)
+        }
+    },[isLeaveReq])
+
+    useEffect(() => {
+        if(isLeaveReq !== null){
+            GET_EMP_APPLIED_LEAVE_DATA({
+                code: isLeaveReq,
+                startDate: isDate[0].FromDate,
+                endDate: isDate[1].ToDate
+            })
+        }
+    },[isDate,isLeaveReq])
+    
+     useEffect(() => {
+        if(emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code){
+            GET_EMP_BALANCED_DAYS({
+                code: isLeaveReq,
+                leave_code: emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code,
+                startDate: isDateScd[0].FromDate,
+                endDate: isDateScd[1].ToDate
+            })
+        }
+     },[isDateScd,emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code])
+
+     const changeBox =(e)=>{
+        if(e.target.checked == true){
+            setleaveCalculations(0.5 - emp_leaves_applied)
+        }else{
+            setleaveCalculations(emp_balanced_days - emp_leaves_applied)
+        }
+        // console.log("e",e.target.checked)
+     }
+    //  useEffect(() => {
+    //     changeBox()
+    // },[])
+    
+    // console.log("All Employees", emp_all_data)
+    // console.log("Emp Leavs Applied", emp_leaves_applied)
+    // console.log("Employee leave type", emp_leave_type_data)
+    // console.log("Balanced days", emp_balanced_days)
+    // console.log("isDates",isDate)
+    // console.log("isLeave",isLeave)
+
+    
+
     
     const [loading, setLoading] = useState(false);
     const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
@@ -141,7 +237,6 @@ const Manual_leave_posting = () => {
                 if(response.success){
                     setLeaveTypeLoading(false)
                     setGetLeaveType(response.data[0]);
-                    console.log("get leave type",response.data[0])
                 }else{
                     setGetLeaveTypeErr(response.message);
                 }
@@ -202,14 +297,12 @@ const Manual_leave_posting = () => {
                             }
                         })
                         .catch((error) => {
-                            console.log(error.message)
                         });
                 } else {
                     setStoreBalancedDays(response?.data?.[0]?.[0]?.Leave_Balance)
                 }
             })
             .catch((error) => {
-                console.log(error.message)
             });
     }
     // GET APPLIED DAYS API CALL ===========================================
@@ -255,13 +348,11 @@ const Manual_leave_posting = () => {
                         setAppliedLeave(response?.data[0]?.[0]?.Leaves)
                     }
                 }).catch((error) => {
-                    console.log(error.message)
                 });
             } else {
                 setAppliedLeave(response?.data[0]?.[0]?.Leaves)
             }
         }).catch((error) => {
-            console.log(error.message)
         });
     }
     // SAVE LEAVE APPLICATION API CALL =====================================
@@ -531,7 +622,6 @@ const Manual_leave_posting = () => {
                                 localStorage.setItem("access_token", response.access_token);
                                 if (response.success) {
                                     showAlert("Delete Successfully", "success")
-                                    console.log(response.success, "Delete Successfully")
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 3000)
@@ -559,7 +649,6 @@ const Manual_leave_posting = () => {
             });
     }
 
-
     useEffect(() => {
         GetEmployeesName()
         GetMyLeaveApplications()
@@ -575,7 +664,6 @@ const Manual_leave_posting = () => {
         if(isFromDateScd !== null &&  isToDateScd !== null && isRequesterCode !== null || Emp_code !== null){
           AppliedDaysFun()
         }else{
-          console.log("can't run AppliedDaysFun APi callback")
         }
       }, [isFromDateScd, isToDateScd, isRequesterCode])
 
@@ -583,9 +671,8 @@ const Manual_leave_posting = () => {
         if(isFromDate !== null && isToDate !== null && isLeaveType !== null && isRequesterCode !== null || Emp_code !== null) {
           setBalanceDays()
         }else{
-          console.log("can't run setBalanceDays APi callback")
         }
-      }, [isFromDate, isToDate, isLeaveType,isRequesterCode])
+    }, [isFromDate, isToDate, isLeaveType,isRequesterCode])
 
     useEffect(() => {
         if (isStoreBalancedDays !== null && isAppliedLeave !== null) {
@@ -605,19 +692,139 @@ const Manual_leave_posting = () => {
             setBtnDisabled(false)
           }
         }
-      }, [isStoreBalancedDays, isAppliedLeave, isRemainingdays, isHalfDayFlag])
-
-
-    const currentDate = new Date().toISOString().slice(0, 10);
+    }, [isStoreBalancedDays, isAppliedLeave, isRemainingdays, isHalfDayFlag])
     // const [FromDate, setFromDate] = useState(currentDate)
     // const [ToDate, setToDate] = useState(currentDate)
-
-
 
     return (
         <>
             <div>
                 <Header />
+            </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-9 maringClass manual_Leaves_bg">
+                        <form>
+                            <h5 className='text-dark'><b>Manual Leave Application</b></h5>
+                            <div>
+                                <FormSelect
+                                    label={"Select the requester name"}
+                                    placeholder="please select the requester name"
+                                    id=""
+                                    name=""
+                                    value={emp_all_data?.filter((items) => items?.Emp_code == isLeaveReq)?.[0]?.Emp_name}
+                                    onChange={(e)=> {
+                                        setLeaveReq(e)
+                                    }}
+                                    options={emp_all_data?.map(
+                                        (item) => ({
+                                            value: item.Emp_code,
+                                            label: item.Emp_name,
+                                        })
+                                    )}
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                                 <FormSelect
+                                    label={"Select the leave type"}
+                                    placeholder="please select the leave type"
+                                    id=""
+                                    name=""
+                                    value={emp_leave_type_data?.data?.[0]?.[0]?.leave_name}
+                                    onChange={(e)=> {
+                                        setLeave(e)
+                                    }}
+                                    options={[
+                                        {
+                                            value: emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code,
+                                            label: emp_leave_type_data?.data?.[0]?.[0]?.leave_name
+                                        }
+                                    ]}
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                                <FormInput 
+                                    label={'Balance Days'} 
+                                    placeholder={'Balance Days'}
+                                    readOnly={true}
+                                    id=""
+                                    name=""
+                                    value={leaveCalculations? leaveCalculations : 0}
+                                    type="number"
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                                <div className='manualLeavePostionHalfDayBox'>
+                                    <FormInput 
+                                        className={'appliedInput'}
+                                        label={'Applied Days'} 
+                                        placeholder={'Applied Days'}
+                                        readOnly={true}
+                                        id=""
+                                        name=""
+                                        type="number"
+                                        value={emp_leaves_applied}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <Input placeholder={false} label={"Half Day"} type="checkbox" className="half_day"
+                                        onChange={(e) => {changeBox(e)}}
+                                    />
+                                </div>
+                                <FormInput 
+                                    label={'From Date'}  
+                                    placeholder={'From Date'}
+                                    id=""
+                                    name=""
+                                    type="date"
+                                    defaultValue={currentDate}
+                                    onChange={(e)=> {
+                                        setDate(prevData => {
+                                            const newDate = [...prevData];
+                                            newDate[0].FromDate = e.target.value;
+                                            return newDate;
+                                        });
+                                        setDateScd(prevData => {
+                                            const newDate = [...prevData];
+                                            newDate[1].ToDate = e.target.value;
+                                            return newDate;
+                                        });
+                                    }}
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                                <FormInput 
+                                    label={'To Date'}  
+                                    placeholder={'To Date'}
+                                    defaultValue={currentDate}
+                                    onChange={(e)=> {
+                                        setDate(prevData => {
+                                            const newDate = [...prevData];
+                                            newDate[1].ToDate = e.target.value;
+                                            return newDate;
+                                        });
+                                        setDateScd(prevData => {
+                                            const newDate = [...prevData];
+                                            newDate[1].ToDate = e.target.value;
+                                            return newDate;
+                                        });
+                                    }}
+                                    id=""
+                                    name=""
+                                    type="date"
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div className="container px-2">
                 <div className="container mt-1 Manual_Leaves_listContainer">
@@ -665,7 +872,8 @@ const Manual_leave_posting = () => {
                                     <input type="text" readOnly value={isStoreBalancedDays} className='form-control' />
                                 </div>
                                 <div className="form-group w-100">
-                                    <label htmlFor="" style={{ display: "inline-flex" }}>Applied days
+                                    <label htmlFor="" style={{ display: "inline-flex" }}>
+                                        Applied days
                                         <div class="form-check mx-3">
                                             <input class="form-check-input" type="checkbox" onChange={(e) => {
                                                 setHalfDayFlag(e.target.checked)
@@ -863,4 +1071,8 @@ const Manual_leave_posting = () => {
     )
 }
 
-export default Manual_leave_posting 
+
+function mapStateToProps({ Red_Manual_Leave_Posting }) {
+    return { Red_Manual_Leave_Posting };
+  }
+export default connect(mapStateToProps, MANUAL_LEAVE_POSTING_ACTIONS)(Manual_leave_posting) 

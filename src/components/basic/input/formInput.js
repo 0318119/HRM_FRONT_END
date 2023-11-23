@@ -13,10 +13,11 @@ const FormInput = ({
     showLabel = true,
     type,
     maxLenght,
+    className,
     ...rest
 }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
+        <div className={className} style={{ display: 'flex', flexDirection: 'column', padding: '10px' }}>
             {showLabel && (
                 <label style={{ fontWeight: '600' }} htmlFor={name}>
                     {label}
@@ -113,6 +114,7 @@ const FormSelect = ({
     placeholder,
     deduction,
     showLabel = true,
+    defaultValue,
     ...rest
 }) => {
     const options2 = [];
@@ -147,10 +149,12 @@ const FormSelect = ({
                 render={({ field }) => {
                     return (
                         <Select
+                            style={{width: "100% !important" }}
                             {...field}
                             {...rest}
                             name={name} id={name}
                             placeholder={placeholder}
+                            defaultValue={defaultValue}
                             options={options2}
                         />
                     )

@@ -142,7 +142,7 @@ const MasterData_Leaves = () => {
     
         await fetch(
             `${baseUrl.baseUrl}/allemployees/GetEmployeeDataSelected`, {
-            method: "POST",
+                method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
                 body: JSON.stringify(
                     {
@@ -320,7 +320,7 @@ const MasterData_Leaves = () => {
                     <div className="col-lg-12 maringClass">
                             <>
                                 <div className="MasterActiveFlexBox">
-                                    <h4 className="text-dark">Master Data Active</h4>
+                                    <h4 className="text-dark">Master Data Active And Inactive</h4>
                                     <div className="MasterActivesearchBox">
                                     <Button title="EXPORT EXCEL" onClick={GetExcelActive}  />
                                     </div>

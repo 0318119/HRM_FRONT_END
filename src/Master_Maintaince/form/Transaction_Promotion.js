@@ -108,6 +108,7 @@ const Transaction_Promotion_form = (props) => {
                 if (response.success) {
                     setGetInfo(response?.data[0]?.[0])
                     console.log("Get Promotion Data", response?.data)
+
                 } else {
                     setGetInfoErr(response.message)
                 }
@@ -476,14 +477,14 @@ const Transaction_Promotion_form = (props) => {
     }
     // GET GRADE DATA API CALL =================================================================
     async function gradecodeDataCall() {
-        await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
+        await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
         }).then((response) => {
             return response.json()
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
+                await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
                     method: "GET",
                     headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
                 }).then(response => {
@@ -500,7 +501,7 @@ const Transaction_Promotion_form = (props) => {
                 })
             }
             else {
-                setgrade_codeData(response.data[0])
+                setgrade_codeData(response.data)
             }
         }).catch((error) => {
             setgrade_codeErr(error.message)
@@ -508,14 +509,14 @@ const Transaction_Promotion_form = (props) => {
     }
     // GET EMPLOYMENT CATEGORY DATA API CALL =================================================================
     async function EmploymentCategoryData() {
-        await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategory`, {
+        await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategoryWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
         }).then((response) => {
             return response.json()
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategory`, {
+                await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategoryWOP`, {
                     method: "GET",
                     headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
                 }).then(response => {
@@ -532,7 +533,7 @@ const Transaction_Promotion_form = (props) => {
                 })
             }
             else {
-                setgetEmploymentCategory(response.data[0])
+                setgetEmploymentCategory(response.data)
             }
         }).catch((error) => {
             setgetEmploymentCategoryErr(error.message)
@@ -540,14 +541,14 @@ const Transaction_Promotion_form = (props) => {
     }
     // GET EMPLOYMENT DESIGNATION DATA API CALL =================================================================
     async function GetEmploymentDesigDataCall() {
-        await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignation`, {
+        await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignationWOP`, {
             method: "GET",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
         }).then((response) => {
             return response.json()
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignation`, {
+                await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignationWOP`, {
                     method: "GET",
                     headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
                 }).then(response => {
@@ -564,7 +565,7 @@ const Transaction_Promotion_form = (props) => {
                 })
             }
             else {
-                setGetEmploymentDesigData(response.data[0])
+                setGetEmploymentDesigData(response.data)
 
             }
         }).catch((error) => {
@@ -573,7 +574,7 @@ const Transaction_Promotion_form = (props) => {
     }
     // GET CONFIRM ALL EMPLOYEE DATA API CALL ==========================================
     async function getConfirmEmp() {
-        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+        await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -584,7 +585,7 @@ const Transaction_Promotion_form = (props) => {
             return response.json();
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationList`, {
+                await fetch(`${config["baseUrl"]}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json",
@@ -609,7 +610,7 @@ const Transaction_Promotion_form = (props) => {
                 if (response.messsage == "timeout error") { navigate("/"); }
                 else {
                     if (response.success) {
-                        setSupervisor(response?.data[0])
+                        setSupervisor(response?.data)
                     } else {
                         setSupervisorErr(response.message)
                     }
@@ -620,14 +621,14 @@ const Transaction_Promotion_form = (props) => {
     }
     // GET EMPLOYMENT COST CENTER DATA API CALL =================================================================
     async function GetEmploymentCostCenterDataCall() {
-        await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenter`, {
+        await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
             method: "GET",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
         }).then((response) => {
             return response.json()
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenter`, {
+                await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
                     method: "GET",
                     headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
                 }).then(response => {
@@ -644,7 +645,8 @@ const Transaction_Promotion_form = (props) => {
                 })
             }
             else {
-                setGetEmploymentCostCenterData(response.data[0])
+                setGetEmploymentCostCenterData(response.data)
+                console.log(response.data, "response:asdasdasdsa ")
             }
         }).catch((error) => {
             setGetEmploymentCostCenterErr(error.message)

@@ -46,14 +46,14 @@ function TAEducationForm() {
     })
   }
   async function getinstituteCall() {
-    await fetch(`${config['baseUrl']}/institutions/GetInstitutions`, {
+    await fetch(`${config['baseUrl']}/institutions/GetwithoutPaginationInstitution`, {
       method: "GET",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
     }).then((response) => {
       return response.json()
     }).then(async (response) => {
       if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/institutions/GetInstitutions`, {
+        await fetch(`${config['baseUrl']}/institutions/GetwithoutPaginationInstitution`, {
           method: "GET",
           headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
         }).then(response => {
@@ -70,7 +70,7 @@ function TAEducationForm() {
         })
       }
       else {
-        setgetinstitute(response.data[0])
+        setgetinstitute(response.data)
 
       }
     }).catch((error) => {
@@ -78,14 +78,14 @@ function TAEducationForm() {
     })
   }
   async function getGradeDataCall() {
-    await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
+    await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
     }).then((response) => {
       return response.json()
     }).then(async (response) => {
       if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
+        await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
           method: "GET",
           headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
         }).then(response => {
@@ -102,21 +102,22 @@ function TAEducationForm() {
         })
       }
       else {
-        setgetGradeData(response.data[0])
+        setgetGradeData(response.data)
+
       }
     }).catch((error) => {
       setgetGradeDataErr(error.message)
     })
   }
   async function EduCodeDataCall() {
-    await fetch(`${config['baseUrl']}/education_code/GetEducationCode`, {
+    await fetch(`${config['baseUrl']}/education_code/GetEducationCodeWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
     }).then((response) => {
       return response.json()
     }).then(async (response) => {
       if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/education_code/GetEducationCode`, {
+        await fetch(`${config['baseUrl']}/education_code/GetEducationCodeWOP`, {
           method: "GET",
           headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
         }).then(response => {
@@ -133,7 +134,7 @@ function TAEducationForm() {
         })
       }
       else {
-        setEduCodeData(response.data[0])
+        setEduCodeData(response.data)
       }
     }).catch((error) => {
       setEduCodeDataErr(error.message)
