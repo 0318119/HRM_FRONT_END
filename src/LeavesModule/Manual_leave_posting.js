@@ -5,11 +5,13 @@ import { connect } from "react-redux";
 import Header from '../components/Includes/Header';
 import * as MANUAL_LEAVE_POSTING_ACTIONS from "../store/actions/Leave/Manual_Leave_Posting/index";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
+import * as yup from "yup";
 import { message } from 'antd';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../components/basic/input";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
+import { PrimaryButton } from '../components/basic/button';
 
 const config = require('../config.json')
 
@@ -25,14 +27,15 @@ const Manual_leave_posting = ({
     var get_access_token = localStorage.getItem("access_token");
     var Company_code = localStorage.getItem("company_code");
     const currentDate = new Date().toISOString().slice(0, 10);
-    const emp_all_data = Red_Manual_Leave_Posting?.AllEmployees?.[0]?.res?.data
+    const emp_all_data = Red_Manual_Leave_Posting?.AllEmployees?.[0]
     const emp_leave_type_data = Red_Manual_Leave_Posting?.leavetype?.[0]?.res
-    const emp_leaves_applied = Red_Manual_Leave_Posting?.appliedDays?.[0]?.res?.data?.[0]?.[0]?.Leaves
-    const emp_balanced_days = Red_Manual_Leave_Posting?.balanceDays?.[0]?.res?.data?.[0]?.[0]?.Leave_Balance
-    const [leaveCalculations,setleaveCalculations] = useState(emp_balanced_days - emp_leaves_applied);
+    const emp_leaves_applied = Red_Manual_Leave_Posting?.appliedDays?.[0]?.res
+    const emp_balanced_days = Red_Manual_Leave_Posting?.balanceDays?.[0]?.res
+    const [leaveCalculations,setleaveCalculations] =  useState(0)
     const [halfDayCheck,sethalfDayCheck] = useState(0)
     const [isLeaveReq,setLeaveReq] = useState(Emp_code)
-    const [isLeave,setLeave] = useState(null)
+    const [isLeave,setLeave] = useState(emp_leaves_applied)
+    const [isLeaveReason, setLeaveReason] = useState(null)
     const [isDate, setDate] = useState([
         { FromDate: currentDate },
         { ToDate: currentDate },
@@ -43,13 +46,29 @@ const Manual_leave_posting = ({
     ]);
 
 
-    const submitForm = async (data) => {}
+    // const Scheme = yup.object().shape({
+    //     Emp_code: yup.number().optional("Leave type is required"),
+    //     Leave_type_code: yup.number().optional("Leave type is required"),
+    //     startDate: yup.string().optional("start date is required"),
+    //     endDate: yup.string().optional("end date is required"),
+    //     reason: yup.string().required("start date is required")
+    //   });
+
+    // const submitForm = async (data) => {
+    //     try {
+    //         const isValid = await Scheme.validate(data);
+    //         if (isValid) {
+    //             console.log("data",isValid)
+    //         // POST_COST_CENTRE_FORM(data)
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
     const {
         control,
         formState: { errors },
-        handleSubmit,
-        reset
-    } = useForm({
+    }  = useForm({
         defaultValues: {},
         mode: "onChange",
         resolver: yupResolver(),
@@ -83,281 +102,306 @@ const Manual_leave_posting = ({
                 startDate: isDateScd[0].FromDate,
                 endDate: isDateScd[1].ToDate
             })
+            setLeave(emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code)
+            // setLeave
+            // emp_leave_type_data
         }
-     },[isDateScd,emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code])
+     },[isDateScd,emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code,isLeaveReq])
+     console.log("state",isLeave)
+     useEffect(() => {
+        if(isLeave){
+            setLeave(emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code)
+        }
+     },[isLeave,emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code])
 
+
+     useEffect(() => {
+        if(halfDayCheck == false && emp_balanced_days){
+            setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)
+        }else if(halfDayCheck == true && isDateScd[0].FromDate == isDateScd[1].ToDate){
+            setleaveCalculations(emp_balanced_days - 0.5)
+        }else if(halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate){
+            message.error("To date is should be equal to From Date")
+        }else{setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)}
+    },[emp_balanced_days,emp_leaves_applied,halfDayCheck])
+
+
+    if(emp_all_data?.res?.message == "failed")
+    {message.error("in all Employee :"+emp_all_data?.res?.message)}
+    else if(emp_leaves_applied?.message == "failed")
+    {message.error("in leave Applied :"+emp_leaves_applied?.message)}
+    else if(emp_leave_type_data?.message == "failed")
+    {message.error(emp_leave_type_data?.message)}
+    else if(emp_balanced_days?.message == "failed")
+    {message.error(emp_balanced_days?.message)}
+
+    // HALF DAY FLAG EVENT =================
      const changeBox =(e)=>{
         if(e.target.checked == true){
-            setleaveCalculations(0.5 - emp_leaves_applied)
+            sethalfDayCheck(e.target.checked)
         }else{
-            setleaveCalculations(emp_balanced_days - emp_leaves_applied)
+            sethalfDayCheck(e.target.checked)
         }
-        // console.log("e",e.target.checked)
      }
-    //  useEffect(() => {
-    //     changeBox()
-    // },[])
     
-    // console.log("All Employees", emp_all_data)
-    // console.log("Emp Leavs Applied", emp_leaves_applied)
-    // console.log("Employee leave type", emp_leave_type_data)
-    // console.log("Balanced days", emp_balanced_days)
-    // console.log("isDates",isDate)
-    // console.log("isLeave",isLeave)
-
-    
-
-    
-    const [loading, setLoading] = useState(false);
-    const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
-    const [formErr, setformErr] = useState(false)
-    const navigate = useNavigate()
-    const [getLeaveType, setGetLeaveType] = useState([]);
-    const [getLeaveTypeErr, setGetLeaveTypeErr] = useState(false);
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = (now.getMonth() + 1).toString().padStart(2, '0');
-    const day = now.getDate().toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}-${day}`;
-    const [isFromDate, setFromDate] = useState(formattedDate)
-    const [isToDate, setToDate] = useState(formattedDate)
-    const [isLeaveType, setLeaveType] = useState(null)
-    const [isStoreBalancedDays, setStoreBalancedDays] = useState(0)
-    const [EmployeesName, setGetAttendanceName] = useState([])
-    const [EmployeesNameErr, setGetAttendanceNameErr] = useState(false)
-    const [isRequesterCode, setRequesterCode] = useState(null)
-    const [isFromDateScd, setFromDateScd] = useState(formattedDate)
-    const [isToDateScd, setToDateScd] = useState(formattedDate)
-    const [isAppliedLeave, setAppliedLeave] = useState(1)
-    const [isLeaveReason, setLeaveReason] = useState("")
-    const [isSaveleaveAlert, setSaveleaveAlert] = useState(false)
-    const [isRemainingdays, setRemainingdays] = useState(0)
-    const [isGetLeaveApplication, setGetLeaveApplication] = useState([])
-    const [isGetLeaveApplicationErr, setGetLeaveApplicationErr] = useState(false)
-    const [isTracCodeForEdit, setTracCodeForEdit] = useState(0)
-    const [isDatesErr, setDatesErr] = useState("")
-    const [isEditData, setEditData] = useState([])
-    const [isEditLeaveTypeCode, setEditLeaveTypeCode] = useState(null)
-    const [isShowTags, setShowTags] = useState(false)
-    const [isHalfDayFlag, setHalfDayFlag] = useState(0)
-    const [isFile, setFile] = useState('')
-    const [isEmpCode, setEmpCode] = useState(null)
-    const [isFileErr, setFileErr] = useState(false)
-    const [loading1, setLoading1] = useState(true);
-    const [dataLoader1, setDataLoader1] = useState(false);
-    const [isAttachmentsData, setAttachmentsData] = useState([])
-    const [isAttachmentsErr, setAttachmentsErr] = useState(false)
-    const [loading2, setLoading2] = useState(true);
-    const [dataLoader2, setDataLoader2] = useState(false);
-    const [Required, setRequired] = useState(false)
-    const [isLeaveTypeLoading, setLeaveTypeLoading] = useState("")
-    const [isBtnDisabled, setBtnDisabled] = useState(true)
-    const showAlert = (message, type) => {
-        setSaveleaveAlert({
-            message: message,
-            type: type,
-        })
-    }
+    // const [loading, setLoading] = useState(false);
+    // const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
+    // const [formErr, setformErr] = useState(false)
+    // const navigate = useNavigate()
+    // const [getLeaveType, setGetLeaveType] = useState([]);
+    // const [getLeaveTypeErr, setGetLeaveTypeErr] = useState(false);
+    // const now = new Date();
+    // const year = now.getFullYear();
+    // const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    // const day = now.getDate().toString().padStart(2, '0');
+    // const formattedDate = `${year}-${month}-${day}`;
+    // const [isFromDate, setFromDate] = useState(formattedDate)
+    // const [isToDate, setToDate] = useState(formattedDate)
+    // const [isLeaveType, setLeaveType] = useState(null)
+    // const [isStoreBalancedDays, setStoreBalancedDays] = useState(0)
+    // const [EmployeesName, setGetAttendanceName] = useState([])
+    // const [EmployeesNameErr, setGetAttendanceNameErr] = useState(false)
+    // const [isRequesterCode, setRequesterCode] = useState(null)
+    // const [isFromDateScd, setFromDateScd] = useState(formattedDate)
+    // const [isToDateScd, setToDateScd] = useState(formattedDate)
+    // const [isAppliedLeave, setAppliedLeave] = useState(1)
+    // const [isSaveleaveAlert, setSaveleaveAlert] = useState(false)
+    // const [isRemainingdays, setRemainingdays] = useState(0)
+    // const [isGetLeaveApplication, setGetLeaveApplication] = useState([])
+    // const [isGetLeaveApplicationErr, setGetLeaveApplicationErr] = useState(false)
+    // const [isTracCodeForEdit, setTracCodeForEdit] = useState(0)
+    // const [isDatesErr, setDatesErr] = useState("")
+    // const [isEditData, setEditData] = useState([])
+    // const [isEditLeaveTypeCode, setEditLeaveTypeCode] = useState(null)
+    // const [isShowTags, setShowTags] = useState(false)
+    // const [isHalfDayFlag, setHalfDayFlag] = useState(0)
+    // const [isFile, setFile] = useState('')
+    // const [isEmpCode, setEmpCode] = useState(null)
+    // const [isFileErr, setFileErr] = useState(false)
+    // const [loading1, setLoading1] = useState(true);
+    // const [dataLoader1, setDataLoader1] = useState(false);
+    // const [isAttachmentsData, setAttachmentsData] = useState([])
+    // const [isAttachmentsErr, setAttachmentsErr] = useState(false)
+    // const [loading2, setLoading2] = useState(true);
+    // const [dataLoader2, setDataLoader2] = useState(false);
+    // const [Required, setRequired] = useState(false)
+    // const [isLeaveTypeLoading, setLeaveTypeLoading] = useState("")
+    // const [isBtnDisabled, setBtnDisabled] = useState(true)
+    // const showAlert = (message, type) => {
+    //     setSaveleaveAlert({
+    //         message: message,
+    //         type: type,
+    //     })
+    // }
     
     // GET REQUESTER NAME API CALL =========================================
-    const GetEmployeesName = async (e) => {
-        await fetch(`${config['baseUrl']}/allemployees/GetEmployeesName`, {
-            method: "GET",
-            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-        }).then((response) => {
-            return response.json()
-        }).then(async (response) => {
-            if (response.messsage == "unauthorized") {
-                await fetch(`${config['baseUrl']}/allemployees/GetEmployeesName`, {
-                    method: "GET",
-                    headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-                }).then(response => {
-                    return response.json()
-                }).then(response => {
-                    localStorage.setItem("refresh", response.referesh_token);
-                    localStorage.setItem("access_token", response.access_token);
-                    setGetAttendanceName(response?.data[0])
-                }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
-            }
-            else if (response.messsage == "timeout error") { navigate('/') }
-            else {
-                setGetAttendanceName(response?.data)
-            }
-        }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
-    }
-    // GET LEAVE TYPE API CALL =============================================
-    async function GetLeaveType() {
-        setLeaveTypeLoading(true)
-        await fetch(
-            `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,{
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Emp_code": Emp_code !==null ? Emp_code : isRequesterCode
-                })
-            }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.messsage == "unauthorized") {
-                await fetch(
-                    `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,{
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                            refereshToken: `Bareer ${get_refresh_token}`,
-                        },
-                        body: JSON.stringify({
-                            "Emp_code": Emp_code !==null ? Emp_code : isRequesterCode
-                        })
-                    }
-                ).then((response) => {
-                     return response.json();
-                }).then((response) => {
-                    if (response.messsage == "timeout error") {
-                        navigate("/");
-                    } else {
-                        if(response.success){
-                            localStorage.setItem("refresh", response.referesh_token);
-                            localStorage.setItem("access_token", response.access_token);
-                            setLeaveTypeLoading(false)
-                            setGetLeaveType(response.data[0]);
-                        }else{
-                            setGetLeaveTypeErr(response.message);
-                        }
-                    }
-                }).catch((error) => {
-                    setLeaveTypeLoading("Something went wrong...")
-                    setGetLeaveTypeErr(error.message);
-                });
-            } else {
-                if(response.success){
-                    setLeaveTypeLoading(false)
-                    setGetLeaveType(response.data[0]);
-                }else{
-                    setGetLeaveTypeErr(response.message);
-                }
-            }
-        }).catch((error) => {
-            setLeaveTypeLoading("Something went wrong...")
-            setGetLeaveTypeErr(error.message);
-        });
-    }
-    // GET BALANCED DAYS API CALL ==========================================
-    async function setBalanceDays(e, start, end) {
-        await fetch(
-            `${config["baseUrl"]}/leaves/GetBalanceDays`,
-            {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
-                    "LeaveTypeCode": e !== null && e !== undefined && e !== "" ? e : isLeaveType,
-                    "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
-                    "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
-                })
-            }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then(async (response) => {
-                if (response.messsage == "unauthorized") {
-                    await fetch(
-                        `${config["baseUrl"]}/leaves/GetBalanceDays`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "content-type": "application/json",
-                                refereshToken: `Bareer ${get_refresh_token}`,
-                            },
-                            body: JSON.stringify({
-                                "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
-                                "LeaveTypeCode": e !== null && e !== undefined && e !== "" ? e : isLeaveType,
-                                "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
-                                "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
-                            })
-                        }
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((response) => {
-                            if (response.messsage == "timeout error") { navigate("/") }
-                            else {
-                                localStorage.setItem("refresh", response.referesh_token);
-                                localStorage.setItem("access_token", response.access_token);
-                                setStoreBalancedDays(response?.data?.[0]?.[0]?.Leave_Balance)
-                            }
-                        })
-                        .catch((error) => {
-                        });
-                } else {
-                    setStoreBalancedDays(response?.data?.[0]?.[0]?.Leave_Balance)
-                }
-            })
-            .catch((error) => {
-            });
-    }
-    // GET APPLIED DAYS API CALL ===========================================
-    async function AppliedDaysFun(e, j) {
-        await fetch(
-            `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,{
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
-                    "FromDate": isFromDateScd !== null && isFromDateScd !== undefined && isFromDateScd !== "" ? isFromDateScd : e,
-                    "ToDate": isToDateScd !== null && isToDateScd !== undefined && isToDateScd !== "" ? isToDateScd : j
-                })
-            }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.messsage == "unauthorized") {
-                await fetch(
-                    `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                            refereshToken: `Bareer ${get_refresh_token}`,
-                        },
-                        body: JSON.stringify({
-                            "Emp_code": isRequesterCode,
-                            "FromDate": isFromDateScd,
-                            "ToDate": isToDateScd
-                        })
-                    }
-                ).then((response) => {
-                        return response.json();
-                }).then((response) => {
-                    if (response.messsage == "timeout error") { navigate("/") }
-                    else {
-                        localStorage.setItem("refresh", response.referesh_token);
-                        localStorage.setItem("access_token", response.access_token);
-                        setAppliedLeave(response?.data[0]?.[0]?.Leaves)
-                    }
-                }).catch((error) => {
-                });
-            } else {
-                setAppliedLeave(response?.data[0]?.[0]?.Leaves)
-            }
-        }).catch((error) => {
-        });
-    }
+    // const GetEmployeesName = async (e) => {
+    //     await fetch(`${config['baseUrl']}/allemployees/GetEmployeesName`, {
+    //         method: "GET",
+    //         headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
+    //     }).then((response) => {
+    //         return response.json()
+    //     }).then(async (response) => {
+    //         if (response.messsage == "unauthorized") {
+    //             await fetch(`${config['baseUrl']}/allemployees/GetEmployeesName`, {
+    //                 method: "GET",
+    //                 headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
+    //             }).then(response => {
+    //                 return response.json()
+    //             }).then(response => {
+    //                 localStorage.setItem("refresh", response.referesh_token);
+    //                 localStorage.setItem("access_token", response.access_token);
+    //                 setGetAttendanceName(response?.data[0])
+    //             }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
+    //         }
+    //         else if (response.messsage == "timeout error") { navigate('/') }
+    //         else {
+    //             setGetAttendanceName(response?.data)
+    //         }
+    //     }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
+    // }
+    // // GET LEAVE TYPE API CALL =============================================
+    // async function GetLeaveType() {
+    //     setLeaveTypeLoading(true)
+    //     await fetch(
+    //         `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,{
+    //             method: "POST",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //             body: JSON.stringify({
+    //                 "Emp_code": Emp_code !==null ? Emp_code : isRequesterCode
+    //             })
+    //         }
+    //     ).then((response) => {
+    //         return response.json();
+    //     }).then(async (response) => {
+    //         if (response.messsage == "unauthorized") {
+    //             await fetch(
+    //                 `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,{
+    //                     method: "POST",
+    //                     headers: {
+    //                         "content-type": "application/json",
+    //                         refereshToken: `Bareer ${get_refresh_token}`,
+    //                     },
+    //                     body: JSON.stringify({
+    //                         "Emp_code": Emp_code !==null ? Emp_code : isRequesterCode
+    //                     })
+    //                 }
+    //             ).then((response) => {
+    //                  return response.json();
+    //             }).then((response) => {
+    //                 if (response.messsage == "timeout error") {
+    //                     navigate("/");
+    //                 } else {
+    //                     if(response.success){
+    //                         localStorage.setItem("refresh", response.referesh_token);
+    //                         localStorage.setItem("access_token", response.access_token);
+    //                         setLeaveTypeLoading(false)
+    //                         setGetLeaveType(response.data[0]);
+    //                     }else{
+    //                         setGetLeaveTypeErr(response.message);
+    //                     }
+    //                 }
+    //             }).catch((error) => {
+    //                 setLeaveTypeLoading("Something went wrong...")
+    //                 setGetLeaveTypeErr(error.message);
+    //             });
+    //         } else {
+    //             if(response.success){
+    //                 setLeaveTypeLoading(false)
+    //                 setGetLeaveType(response.data[0]);
+    //             }else{
+    //                 setGetLeaveTypeErr(response.message);
+    //             }
+    //         }
+    //     }).catch((error) => {
+    //         setLeaveTypeLoading("Something went wrong...")
+    //         setGetLeaveTypeErr(error.message);
+    //     });
+    // }
+    // // GET BALANCED DAYS API CALL ==========================================
+    // async function setBalanceDays(e, start, end) {
+    //     await fetch(
+    //         `${config["baseUrl"]}/leaves/GetBalanceDays`,
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //             body: JSON.stringify({
+    //                 "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
+    //                 "LeaveTypeCode": e !== null && e !== undefined && e !== "" ? e : isLeaveType,
+    //                 "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
+    //                 "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
+    //             })
+    //         }
+    //     )
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then(async (response) => {
+    //             if (response.messsage == "unauthorized") {
+    //                 await fetch(
+    //                     `${config["baseUrl"]}/leaves/GetBalanceDays`,
+    //                     {
+    //                         method: "POST",
+    //                         headers: {
+    //                             "content-type": "application/json",
+    //                             refereshToken: `Bareer ${get_refresh_token}`,
+    //                         },
+    //                         body: JSON.stringify({
+    //                             "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
+    //                             "LeaveTypeCode": e !== null && e !== undefined && e !== "" ? e : isLeaveType,
+    //                             "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
+    //                             "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
+    //                         })
+    //                     }
+    //                 )
+    //                     .then((response) => {
+    //                         return response.json();
+    //                     })
+    //                     .then((response) => {
+    //                         if (response.messsage == "timeout error") { navigate("/") }
+    //                         else {
+    //                             localStorage.setItem("refresh", response.referesh_token);
+    //                             localStorage.setItem("access_token", response.access_token);
+    //                             setStoreBalancedDays(response?.data?.[0]?.[0]?.Leave_Balance)
+    //                         }
+    //                     })
+    //                     .catch((error) => {
+    //                     });
+    //             } else {
+    //                 setStoreBalancedDays(response?.data?.[0]?.[0]?.Leave_Balance)
+    //             }
+    //         })
+    //         .catch((error) => {
+    //         });
+    // }
+    // // GET APPLIED DAYS API CALL ===========================================
+    // async function AppliedDaysFun(e, j) {
+    //     await fetch(
+    //         `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,{
+    //             method: "POST",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //             body: JSON.stringify({
+    //                 "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
+    //                 "FromDate": isFromDateScd !== null && isFromDateScd !== undefined && isFromDateScd !== "" ? isFromDateScd : e,
+    //                 "ToDate": isToDateScd !== null && isToDateScd !== undefined && isToDateScd !== "" ? isToDateScd : j
+    //             })
+    //         }
+    //     ).then((response) => {
+    //         return response.json();
+    //     }).then(async (response) => {
+    //         if (response.messsage == "unauthorized") {
+    //             await fetch(
+    //                 `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,
+    //                 {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "content-type": "application/json",
+    //                         refereshToken: `Bareer ${get_refresh_token}`,
+    //                     },
+    //                     body: JSON.stringify({
+    //                         "Emp_code": isRequesterCode,
+    //                         "FromDate": isFromDateScd,
+    //                         "ToDate": isToDateScd
+    //                     })
+    //                 }
+    //             ).then((response) => {
+    //                     return response.json();
+    //             }).then((response) => {
+    //                 if (response.messsage == "timeout error") { navigate("/") }
+    //                 else {
+    //                     localStorage.setItem("refresh", response.referesh_token);
+    //                     localStorage.setItem("access_token", response.access_token);
+    //                     setAppliedLeave(response?.data[0]?.[0]?.Leaves)
+    //                 }
+    //             }).catch((error) => {
+    //             });
+    //         } else {
+    //             setAppliedLeave(response?.data[0]?.[0]?.Leaves)
+    //         }
+    //     }).catch((error) => {
+    //     });
+    // }
     // SAVE LEAVE APPLICATION API CALL =====================================
     const saveLeaveApplication = async (e) => {
         e.preventDefault()
+    if(isDate[0].FromDate == null){
+        message.error("Start Date is required")
+    }else if(isDate[1].ToDate == null){
+        message.error("End Date is required")
+    }else if(isLeave == null){
+        message.error("Leave type is required")
+    }else if(isLeaveReason == null){
+        message.error("Reason is required")
+    }else{
         await fetch(
             `${config["baseUrl"]}/manualLeavePosting/SaveManualLeavePosting`,{
                 method: "POST",
@@ -366,333 +410,277 @@ const Manual_leave_posting = ({
                     accessToken: `Bareer ${get_access_token}`,
                 },
                 body: JSON.stringify({
-                    "Tran_Code": isTracCodeForEdit,
-                    "Emp_code": isRequesterCode,
-                    "Leave_type_code": isLeaveType !== null ? isLeaveType : isEditLeaveTypeCode,
-                    "startDate": isFromDateScd,
-                    "endDate": isToDate,
-                    "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
-                    "reason": isLeaveReason ? isLeaveReason : ""
+                    "Tran_Code": 0,
+                    "Emp_code": isLeaveReq,
+                    "Leave_type_code": isLeave,
+                    "startDate": isDate[0].FromDate,
+                    "endDate": isDate[1].FromDate,
+                    "LeaveDays": halfDayCheck == true ? 0.5 : isLeave,
+                    "reason": isLeaveReason
                 })
             }
         ).then((response) => {
             return response.json();
-        }).then(async (response) => {
-                if (response.messsage == "unauthorized") {
-                    await fetch(
-                        `${config["baseUrl"]}/manualLeavePosting/SaveManualLeavePosting`,{
-                            method: "POST",
-                            headers: {
-                                "content-type": "application/json",
-                                refereshToken: `Bareer ${get_refresh_token}`,
-                            },
-                            body: JSON.stringify({
-                                "Tran_Code": isTracCodeForEdit,
-                                "Emp_code": isRequesterCode,
-                                "Leave_type_code": isLeaveType !== null ? isLeaveType : isEditLeaveTypeCode,
-                                "startDate": isFromDateScd,
-                                "endDate": isToDate,
-                                "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
-                                "reason": isLeaveReason ? isLeaveReason : ""
-                            })
-                        }
-                    ).then((response) => {
-                        return response.json();
-                    }).then((response) => {
-                            if (response.messsage == "timeout error") { navigate("/") }
-                            else {
-                                localStorage.setItem("refresh", response.referesh_token);
-                                localStorage.setItem("access_token", response.access_token);
-                                if (response.success) {
-                                    setTimeout(() => {
-                                        submitLeaveApplication(e)
-                                    }, 2000)
-                                } else {
-                                    showAlert(response.message, "warning")
-                                    setTimeout(() => {
-                                        showAlert("")
-                                    }, 3000)
-                                }
-                            }
-                        }).catch((error) => {
-                            showAlert(error.message, "warning")
-                            setTimeout(() => {
-                                showAlert("")
-                            }, 3000)
-                        });
-                } else {
-                    if (response.success) {
-                        setTimeout(() => {
-                            submitLeaveApplication(e)
-                        }, 2000)
-                    } else {
-                        showAlert(response.message, "warning")
-                        setTimeout(() => {
-                            showAlert("")
-                        }, 3000)
-                    }
-                }
-            }).catch((error) => {
-                showAlert(error.message, "warning")
-                setTimeout(() => {
-                    showAlert("")
-                }, 3000)
-            });
+        }).then((response) => {
+            console.log("response",response)
+        })
+        .catch((error) => {});
     }
-    // SUBMIT LEAVE APPLICATION API CALL ===================================
-    const submitLeaveApplication = async (e) => {
-        e.preventDefault()
-        await fetch(
-            `${config["baseUrl"]}/manualLeavePosting/SubmitManualLeavePosting`,{
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Emp_code": isRequesterCode,
-                    "Leave_type_code": isLeaveType ? isLeaveType : isEditLeaveTypeCode,
-                    "start_date": isFromDateScd,
-                    "end_date": isToDate,
-                    "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
-                    "reason": isLeaveReason ? isLeaveReason : ""
-                })
-            }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.messsage == "unauthorized") {
-                await fetch(
-                    `${config["baseUrl"]}/manualLeavePosting/SubmitManualLeavePosting`,
-                    {
-                        method: "POST",
-                        headers: {
-                            "content-type": "application/json",
-                            refereshToken: `Bareer ${get_refresh_token}`,
-                        },
-                        body: JSON.stringify({
-                            "Emp_code": isRequesterCode,
-                            "Leave_type_code": isLeaveType ? isLeaveType : isEditLeaveTypeCode,
-                            "start_date": isFromDateScd,
-                            "end_date": isToDate,
-                            "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
-                            "reason": isLeaveReason ? isLeaveReason : ""
-                        })
-                    }
-                ).then((response) => {
-                    return response.json();
-                }).then((response) => {
-                    if (response.messsage == "timeout error") { navigate("/") }
-                    else {
-                        localStorage.setItem("refresh", response.referesh_token);
-                        localStorage.setItem("access_token", response.access_token);
-                        if (response.success) {
-                            showAlert("You have been submited leave application.", "success")
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 4000)
-                        } else {
-                            showAlert(response.message, "warning")
-                            setTimeout(() => {
-                                showAlert("")
-                            }, 4000)
-                        }
-                    }
-                }).catch((error) => {
-                    showAlert(error.message, "warning")
-                    setTimeout(() => {
-                        showAlert("")
-                    }, 4000)
-                });
-            } else {
-                if (response.success) {
-                    showAlert("You have been submited leave application.", "success")
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 4000)
-                } else {
-                    showAlert(response.message, "warning")
-                    setTimeout(() => {
-                        showAlert("")
-                    }, 4000)
-                }
-            }
-        }).catch((error) => {
-            showAlert(error.message, "warning")
-            setTimeout(() => {
-                showAlert("")
-            }, 4000)
-        });
     }
-    // GET DATA OF LEAVE APPLICATION API CALL ==============================
-    async function GetMyLeaveApplications() {
-        setLoading1(true)
-        setDataLoader1(false)
-        await fetch(
-            `${config["baseUrl"]}/manualLeavePostiing/getManualLeaveApplicationsByPostedByCode`,
-            {
-                method: "GET",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-            }
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then(async (response) => {
-                if (response.messsage == "unauthorized") {
-                    await fetch(
-                        `${config["baseUrl"]}/manualLeavePostiing/getManualLeaveApplicationsByPostedByCode`,
-                        {
-                            method: "GET",
-                            headers: {
-                                "content-type": "application/json",
-                                refereshToken: `Bareer ${get_refresh_token}`,
-                            },
-                        }
-                    ).then((response) => {
-                        return response.json();
-                    })
-                        .then((response) => {
-                            if (response.messsage == "timeout error") { navigate("/") }
-                            else {
-                                localStorage.setItem("refresh", response.referesh_token);
-                                localStorage.setItem("access_token", response.access_token);
-                                setGetLeaveApplication(response?.data?.[0])
-                                setLoading1(false)
-                                setDataLoader1(true)
-                            }
-                        })
-                        .catch((error) => {
-                            setGetLeaveApplicationErr(error.message)
-                            setLoading1(false)
-                        });
-                } else {
-                    setGetLeaveApplication(response?.data[0])
-                    setLoading1(false)
-                    setDataLoader1(true)
-                }
-            })
-            .catch((error) => { setGetLeaveApplicationErr(error.message) });
-    }
-    // DELETE ATTACHMENT API CALL =========================================
-    const DeleteLeave = async (Emp_Code,start_date,end_date) => {
-        await fetch(
-            `${config["baseUrl"]}/manualLeavePosting/DeleteManualLeaveApplication`,
-            {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    accessToken: `Bareer ${get_access_token}`,
-                },
-                body: JSON.stringify({
-                    "Emp_code": Emp_Code,
-                    "startDate": start_date,
-                    "endDate": end_date,
-                })
-            }
-        ).then((response) => {
-                return response.json();
-            }).then(async (response) => {
-                if (response.messsage == "unauthorized") {
-                    await fetch(
-                        `${config["baseUrl"]}/manualLeavePosting/DeleteManualLeaveApplication`,
-                        {
-                            method: "POST",
-                            headers: {
-                                "content-type": "application/json",
-                                refereshToken: `Bareer ${get_refresh_token}`,
-                            },
-                            body: JSON.stringify({
-                                "Emp_code": Emp_Code,
-                                "startDate": start_date,
-                                "endDate": end_date,
-                            })
-                        }
-                    )
-                        .then((response) => {
-                            return response.json();
-                        })
-                        .then((response) => {
-                            if (response.messsage == "timeout error") { navigate("/") }
-                            else {
-                                localStorage.setItem("refresh", response.referesh_token);
-                                localStorage.setItem("access_token", response.access_token);
-                                if (response.success) {
-                                    showAlert("Delete Successfully", "success")
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 3000)
-                                } else {
-                                    showAlert(response.message, "warning")
-                                }
-                            }
-                        })
-                        .catch((error) => {
-                            showAlert(error.message, "warning")
-                        });
-                } else {
-                    if (response.success) {
-                        showAlert(response.messsage, "success")
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 3000)
-                    } else {
-                        showAlert(response.message, "warning")
-                    }
-                }
-            })
-            .catch((error) => {
-                showAlert(error.message, "warning")
-            });
-    }
+    // // SUBMIT LEAVE APPLICATION API CALL ===================================
+    // const submitLeaveApplication = async (e) => {
+    //     e.preventDefault()
+    //     await fetch(
+    //         `${config["baseUrl"]}/manualLeavePosting/SubmitManualLeavePosting`,{
+    //             method: "POST",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //             body: JSON.stringify({
+    //                 "Emp_code": isRequesterCode,
+    //                 "Leave_type_code": isLeaveType ? isLeaveType : isEditLeaveTypeCode,
+    //                 "start_date": isFromDateScd,
+    //                 "end_date": isToDate,
+    //                 "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
+    //                 "reason": isLeaveReason ? isLeaveReason : ""
+    //             })
+    //         }
+    //     ).then((response) => {
+    //         return response.json();
+    //     }).then(async (response) => {
+    //         if (response.messsage == "unauthorized") {
+    //             await fetch(
+    //                 `${config["baseUrl"]}/manualLeavePosting/SubmitManualLeavePosting`,
+    //                 {
+    //                     method: "POST",
+    //                     headers: {
+    //                         "content-type": "application/json",
+    //                         refereshToken: `Bareer ${get_refresh_token}`,
+    //                     },
+    //                     body: JSON.stringify({
+    //                         "Emp_code": isRequesterCode,
+    //                         "Leave_type_code": isLeaveType ? isLeaveType : isEditLeaveTypeCode,
+    //                         "start_date": isFromDateScd,
+    //                         "end_date": isToDate,
+    //                         "LeaveDays": isHalfDayFlag == true ? 0.5 : isAppliedLeave,
+    //                         "reason": isLeaveReason ? isLeaveReason : ""
+    //                     })
+    //                 }
+    //             ).then((response) => {
+    //                 return response.json();
+    //             }).then((response) => {
+    //                 if (response.messsage == "timeout error") { navigate("/") }
+    //                 else {
+    //                     localStorage.setItem("refresh", response.referesh_token);
+    //                     localStorage.setItem("access_token", response.access_token);
+    //                     if (response.success) {
+    //                         showAlert("You have been submited leave application.", "success")
+    //                         setTimeout(() => {
+    //                             window.location.reload();
+    //                         }, 4000)
+    //                     } else {
+    //                         showAlert(response.message, "warning")
+    //                         setTimeout(() => {
+    //                             showAlert("")
+    //                         }, 4000)
+    //                     }
+    //                 }
+    //             }).catch((error) => {
+    //                 showAlert(error.message, "warning")
+    //                 setTimeout(() => {
+    //                     showAlert("")
+    //                 }, 4000)
+    //             });
+    //         } else {
+    //             if (response.success) {
+    //                 showAlert("You have been submited leave application.", "success")
+    //                 setTimeout(() => {
+    //                     window.location.reload();
+    //                 }, 4000)
+    //             } else {
+    //                 showAlert(response.message, "warning")
+    //                 setTimeout(() => {
+    //                     showAlert("")
+    //                 }, 4000)
+    //             }
+    //         }
+    //     }).catch((error) => {
+    //         showAlert(error.message, "warning")
+    //         setTimeout(() => {
+    //             showAlert("")
+    //         }, 4000)
+    //     });
+    // }
+    // // GET DATA OF LEAVE APPLICATION API CALL ==============================
+    // async function GetMyLeaveApplications() {
+    //     setLoading1(true)
+    //     setDataLoader1(false)
+    //     await fetch(
+    //         `${config["baseUrl"]}/manualLeavePostiing/getManualLeaveApplicationsByPostedByCode`,
+    //         {
+    //             method: "GET",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //         }
+    //     )
+    //         .then((response) => {
+    //             return response.json();
+    //         })
+    //         .then(async (response) => {
+    //             if (response.messsage == "unauthorized") {
+    //                 await fetch(
+    //                     `${config["baseUrl"]}/manualLeavePostiing/getManualLeaveApplicationsByPostedByCode`,
+    //                     {
+    //                         method: "GET",
+    //                         headers: {
+    //                             "content-type": "application/json",
+    //                             refereshToken: `Bareer ${get_refresh_token}`,
+    //                         },
+    //                     }
+    //                 ).then((response) => {
+    //                     return response.json();
+    //                 })
+    //                     .then((response) => {
+    //                         if (response.messsage == "timeout error") { navigate("/") }
+    //                         else {
+    //                             localStorage.setItem("refresh", response.referesh_token);
+    //                             localStorage.setItem("access_token", response.access_token);
+    //                             setGetLeaveApplication(response?.data?.[0])
+    //                             setLoading1(false)
+    //                             setDataLoader1(true)
+    //                         }
+    //                     })
+    //                     .catch((error) => {
+    //                         setGetLeaveApplicationErr(error.message)
+    //                         setLoading1(false)
+    //                     });
+    //             } else {
+    //                 setGetLeaveApplication(response?.data[0])
+    //                 setLoading1(false)
+    //                 setDataLoader1(true)
+    //             }
+    //         })
+    //         .catch((error) => { setGetLeaveApplicationErr(error.message) });
+    // }
+    // // DELETE ATTACHMENT API CALL =========================================
+    // const DeleteLeave = async (Emp_Code,start_date,end_date) => {
+    //     await fetch(
+    //         `${config["baseUrl"]}/manualLeavePosting/DeleteManualLeaveApplication`,
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //                 "content-type": "application/json",
+    //                 accessToken: `Bareer ${get_access_token}`,
+    //             },
+    //             body: JSON.stringify({
+    //                 "Emp_code": Emp_Code,
+    //                 "startDate": start_date,
+    //                 "endDate": end_date,
+    //             })
+    //         }
+    //     ).then((response) => {
+    //             return response.json();
+    //         }).then(async (response) => {
+    //             if (response.messsage == "unauthorized") {
+    //                 await fetch(
+    //                     `${config["baseUrl"]}/manualLeavePosting/DeleteManualLeaveApplication`,
+    //                     {
+    //                         method: "POST",
+    //                         headers: {
+    //                             "content-type": "application/json",
+    //                             refereshToken: `Bareer ${get_refresh_token}`,
+    //                         },
+    //                         body: JSON.stringify({
+    //                             "Emp_code": Emp_Code,
+    //                             "startDate": start_date,
+    //                             "endDate": end_date,
+    //                         })
+    //                     }
+    //                 )
+    //                     .then((response) => {
+    //                         return response.json();
+    //                     })
+    //                     .then((response) => {
+    //                         if (response.messsage == "timeout error") { navigate("/") }
+    //                         else {
+    //                             localStorage.setItem("refresh", response.referesh_token);
+    //                             localStorage.setItem("access_token", response.access_token);
+    //                             if (response.success) {
+    //                                 showAlert("Delete Successfully", "success")
+    //                                     setTimeout(() => {
+    //                                         window.location.reload();
+    //                                     }, 3000)
+    //                             } else {
+    //                                 showAlert(response.message, "warning")
+    //                             }
+    //                         }
+    //                     })
+    //                     .catch((error) => {
+    //                         showAlert(error.message, "warning")
+    //                     });
+    //             } else {
+    //                 if (response.success) {
+    //                     showAlert(response.messsage, "success")
+    //                     setTimeout(() => {
+    //                         window.location.reload();
+    //                     }, 3000)
+    //                 } else {
+    //                     showAlert(response.message, "warning")
+    //                 }
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             showAlert(error.message, "warning")
+    //         });
+    // }
 
-    useEffect(() => {
-        GetEmployeesName()
-        GetMyLeaveApplications()
-    }, [])
+    // useEffect(() => {
+    //     GetEmployeesName()
+    //     GetMyLeaveApplications()
+    // }, [])
 
-    useEffect(() => {
-        if(isRequesterCode !==null || Emp_code !== null) {
-          GetLeaveType()
-        }
-      }, [isRequesterCode])
+    // useEffect(() => {
+    //     if(isRequesterCode !==null || Emp_code !== null) {
+    //       GetLeaveType()
+    //     }
+    //   }, [isRequesterCode])
 
-    useEffect(() => {
-        if(isFromDateScd !== null &&  isToDateScd !== null && isRequesterCode !== null || Emp_code !== null){
-          AppliedDaysFun()
-        }else{
-        }
-      }, [isFromDateScd, isToDateScd, isRequesterCode])
+    // useEffect(() => {
+    //     if(isFromDateScd !== null &&  isToDateScd !== null && isRequesterCode !== null || Emp_code !== null){
+    //       AppliedDaysFun()
+    //     }else{
+    //     }
+    //   }, [isFromDateScd, isToDateScd, isRequesterCode])
 
-    useEffect(() => {
-        if(isFromDate !== null && isToDate !== null && isLeaveType !== null && isRequesterCode !== null || Emp_code !== null) {
-          setBalanceDays()
-        }else{
-        }
-    }, [isFromDate, isToDate, isLeaveType,isRequesterCode])
+    // useEffect(() => {
+    //     if(isFromDate !== null && isToDate !== null && isLeaveType !== null && isRequesterCode !== null || Emp_code !== null) {
+    //       setBalanceDays()
+    //     }else{
+    //     }
+    // }, [isFromDate, isToDate, isLeaveType,isRequesterCode])
 
-    useEffect(() => {
-        if (isStoreBalancedDays !== null && isAppliedLeave !== null) {
-          if (isFromDateScd == isToDateScd || isFromDateScd !== isToDateScd && isHalfDayFlag == false) {
-            if(isStoreBalancedDays == undefined){
-              setRemainingdays("---")
-            }else{
-              setRemainingdays(isStoreBalancedDays - isAppliedLeave)
-              setDatesErr("")
-              setBtnDisabled(false)
-            }
-          }else if (isFromDateScd !== isToDateScd && isHalfDayFlag == true) {
-            setDatesErr("To date is should be equal to From Date")
-            setBtnDisabled(true)
-          }else{
-            setDatesErr("")
-            setBtnDisabled(false)
-          }
-        }
-    }, [isStoreBalancedDays, isAppliedLeave, isRemainingdays, isHalfDayFlag])
+    // useEffect(() => {
+    //     if (isStoreBalancedDays !== null && isAppliedLeave !== null) {
+    //       if (isFromDateScd == isToDateScd || isFromDateScd !== isToDateScd && isHalfDayFlag == false) {
+    //         if(isStoreBalancedDays == undefined){
+    //           setRemainingdays("---")
+    //         }else{
+    //           setRemainingdays(isStoreBalancedDays - isAppliedLeave)
+    //           setDatesErr("")
+    //           setBtnDisabled(false)
+    //         }
+    //       }else if (isFromDateScd !== isToDateScd && isHalfDayFlag == true) {
+    //         setDatesErr("To date is should be equal to From Date")
+    //         setBtnDisabled(true)
+    //       }else{
+    //         setDatesErr("")
+    //         setBtnDisabled(false)
+    //       }
+    //     }
+    // }, [isStoreBalancedDays, isAppliedLeave, isRemainingdays, isHalfDayFlag])
     // const [FromDate, setFromDate] = useState(currentDate)
     // const [ToDate, setToDate] = useState(currentDate)
 
@@ -704,19 +692,20 @@ const Manual_leave_posting = ({
             <div className="container">
                 <div className="row">
                     <div className="col-lg-9 maringClass manual_Leaves_bg">
-                        <form>
+                    {/*  */}
+                        <form onSubmit={saveLeaveApplication}>
                             <h5 className='text-dark'><b>Manual Leave Application</b></h5>
                             <div>
                                 <FormSelect
                                     label={"Select the requester name"}
                                     placeholder="please select the requester name"
-                                    id=""
-                                    name=""
-                                    value={emp_all_data?.filter((items) => items?.Emp_code == isLeaveReq)?.[0]?.Emp_name}
+                                    id="Emp_code"
+                                    name="Emp_code"
+                                    value={emp_all_data?.res?.data?.filter((items) => items?.Emp_code == isLeaveReq)?.[0]?.Emp_name}
                                     onChange={(e)=> {
                                         setLeaveReq(e)
                                     }}
-                                    options={emp_all_data?.map(
+                                    options={emp_all_data?.res?.data?.map(
                                         (item) => ({
                                             value: item.Emp_code,
                                             label: item.Emp_name,
@@ -729,8 +718,8 @@ const Manual_leave_posting = ({
                                  <FormSelect
                                     label={"Select the leave type"}
                                     placeholder="please select the leave type"
-                                    id=""
-                                    name=""
+                                    id="Leave_type_code"
+                                    name="Leave_type_code"
                                     value={emp_leave_type_data?.data?.[0]?.[0]?.leave_name}
                                     onChange={(e)=> {
                                         setLeave(e)
@@ -751,7 +740,7 @@ const Manual_leave_posting = ({
                                     readOnly={true}
                                     id=""
                                     name=""
-                                    value={leaveCalculations? leaveCalculations : 0}
+                                    value={leaveCalculations ? leaveCalculations : 0}
                                     type="number"
                                     showLabel={true}
                                     errors={errors}
@@ -766,7 +755,7 @@ const Manual_leave_posting = ({
                                         id=""
                                         name=""
                                         type="number"
-                                        value={emp_leaves_applied}
+                                        value={halfDayCheck == false ? emp_leaves_applied?.data?.[0]?.[0]?.Leaves : 0.5}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -778,8 +767,8 @@ const Manual_leave_posting = ({
                                 <FormInput 
                                     label={'From Date'}  
                                     placeholder={'From Date'}
-                                    id=""
-                                    name=""
+                                    id="startDate"
+                                    name="startDate"
                                     type="date"
                                     defaultValue={currentDate}
                                     onChange={(e)=> {
@@ -814,19 +803,34 @@ const Manual_leave_posting = ({
                                             return newDate;
                                         });
                                     }}
-                                    id=""
-                                    name=""
+                                    id="endDate"
+                                    name="endDate"
                                     type="date"
                                     showLabel={true}
                                     errors={errors}
                                     control={control}
                                 />
+                                <FormInput 
+                                    label={'Reason'}  
+                                    placeholder={'Please enter reason'}
+                                    id="reason"
+                                    name="reason"
+                                    onChange={(e)=>{setLeaveReason(e.target.value)}}
+                                    type="text"
+                                    showLabel={true}
+                                    errors={errors}
+                                    control={control}
+                                />
+                            </div>
+                            <div className='CountryBtnBox'>
+                                {/* loading={isLoading} */}
+                                <PrimaryButton type={'submit'}  title="Save"/>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div className="container px-2">
+            {/* <div className="container px-2">
                 <div className="container mt-1 Manual_Leaves_listContainer">
                     <div className="row w-100 mx-0">
                         <span className="manual_Leaves_listHeader">
@@ -839,11 +843,9 @@ const Manual_leave_posting = ({
                                 <div className="form-group w-100">
                                     <label htmlFor="">Requester Name</label>
                                     {EmployeesNameErr ? EmployeesNameErr : false}
-                                    {/* {Required ? <p className='Required' >Please Select Requester</p> : false} */}
                                     <select name="" id="" className='form-select'  onChange={(e) => { 
                                         setRequesterCode(e.target.value)
                                         setRequired(false)}}>
-                                        {/* <option value=""  selected disabled>Requester</option> */}
                                         {EmployeesName?.map((item) => {
                                             return (
                                                 <option  value={item?.Emp_code}>{item.Emp_name}</option>
@@ -915,14 +917,14 @@ const Manual_leave_posting = ({
                         <div className="row mt-1 p-2 d-flex justify-content-center">
                             <div className="col-lg-10">
                                 <div className="btnContainer">
-                                    {/* {
+                                    {
                                         isShowTags ?
                                             <>
                                                 <button type="submit" disabled={isBtnDisabled} className='btn btn-dark mx-1 LeaveSubmitbtn' onClick={submitLeaveApplication}>
                                                     Submit
                                             }
                                                 </button>
-                                            </> : */}
+                                            </> : 
                                                 
                                     <button type="submit" disabled={isBtnDisabled} className='btn btn-dark leaveSaveBtn' onClick={saveLeaveApplication}>
                                                 Save
@@ -932,7 +934,7 @@ const Manual_leave_posting = ({
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> */}
             {/* <div className="container px-2">
                 <div className="container Leaves_listContainer">
                     <div className="row w-100 mx-0">
@@ -990,7 +992,7 @@ const Manual_leave_posting = ({
                     </div>
                 </div>
             </div> */}
-            <div className="container px-2">
+            {/* <div className="container px-2">
                 <div className="container Leaves_listContainer">
                     <div className="row w-100 mx-0">
                         <span className="Leaves_listHeader">
@@ -1018,15 +1020,11 @@ const Manual_leave_posting = ({
                                             <table className='table table-striped'>
                                                 <thead>
                                                     <tr>
-                                                        {/* <th scope="col">TranCode</th> */}
                                                         <th scope="col">Employee Name</th>
                                                         <th scope="col">Leave Name</th>
                                                         <th scope="col">Leaves Days</th>
-                                                        {/* <th scope="col">Posting Date</th> */}
                                                         <th scope="col">From Date</th>
                                                         <th scope="col">To Date</th>
-                                                        {/* <th scope="col">Status</th> */}
-                                                        {/* <th scope="col">Pending with</th> */}
                                                         <th scope="col">Delete</th>
                                                     </tr>
                                                 </thead>
@@ -1034,15 +1032,11 @@ const Manual_leave_posting = ({
                                                     {isGetLeaveApplication.map((items) => {
                                                         return (
                                                             <tr>
-                                                                {/* <td>{items?.Tran_Code ? items?.Tran_Code : "Not Found"}</td> */}
                                                                 <td>{items?.Emp_name ? items?.Emp_name : "Not Found"}</td>
                                                                 <td>{items?.Leave_name ? items?.Leave_name : "Not Found"}</td>
                                                                 <td>{items?.Leave_Days ? items?.Leave_Days: "Not Found"}</td>
-                                                                {/* <td>{items?.Posting_date ? items?.Posting_date : "Not Found"}</td> */}
                                                                 <td>{items?.Start_Date ? items?.Start_Date : "Not Found"}</td>
                                                                 <td>{items?.End_Date ? items?.End_Date : "Not Found"}</td>
-                                                                {/* <td>{items?.Status ? items?.Status : "Not Found"}</td> */}
-                                                                {/* <td>{items?.PendingWith ? items?.PendingWith : "Not Found"}</td> */}
                                                                 <td><button className="editBtnTable" onClick={(e) => DeleteLeave(items?.Emp_code, items?.Start_Date, items?.End_Date )} >Delete</button></td>
                                                             </tr>
                                                         )
@@ -1055,17 +1049,17 @@ const Manual_leave_posting = ({
 
                             </div>
                         )}
-                        {/* {isGetLeaveApplicationErr ? isGetLeaveApplicationErr : false} */}
+                        {isGetLeaveApplicationErr ? isGetLeaveApplicationErr : false}
                     </div>
                 </div>
-            </div>
-            {
+            </div> */}
+            {/* {
                 <ul className="px-3" style={{ position: "fixed", bottom: "0", right: "0", widows: "50%" }}>
                     {isSaveleaveAlert && (
                         <li className={`alert alert-${isSaveleaveAlert.type}` + " " + "mt-4"}>{`${isSaveleaveAlert.message}`}</li>
                     )}
                 </ul>
-            }
+            } */}
            
         </>
     )

@@ -63,6 +63,7 @@ const FormCheckBox = ({
     isShowError,
     showLabel = true,
     labelText,
+    onChange,
     ...rest
 }) => {
     return (
@@ -79,7 +80,7 @@ const FormCheckBox = ({
                             <input
                                 {...field}
                                 {...rest}
-                                id={name} type={type} name={name} className="" />
+                                id={name} type={type} name={name} className="" onChange={(e) => onChange(e)} />
                             {showLabel && (
                                 <label htmlFor="continue-no" className="">{label}</label>
                             )}
@@ -115,6 +116,7 @@ const FormSelect = ({
     deduction,
     showLabel = true,
     defaultValue,
+    onChange,
     ...rest
 }) => {
     const options2 = [];
@@ -156,6 +158,7 @@ const FormSelect = ({
                             placeholder={placeholder}
                             defaultValue={defaultValue}
                             options={options2}
+                            onChange={(e) => onChange(e)}
                         />
                     )
                 }}
