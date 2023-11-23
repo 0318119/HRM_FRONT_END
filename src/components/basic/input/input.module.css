@@ -12,6 +12,7 @@
 .Label{
     display: flex;
     padding: 10px;
+    flex-direction: column;
 }
 .Label label{
     font-weight: 600;

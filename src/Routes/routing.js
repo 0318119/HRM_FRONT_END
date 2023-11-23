@@ -29,7 +29,9 @@ import Leave_Category from '../HrOperations/Leave_Category'
 import Leave_Types from '../HrOperations/Leave_Types'
 import Previous_Employers from '../HrOperations/Previous_Employers'
 import Transportation from '../HrOperations/Transportation'
-import Institution from '../HrOperations/Institution'
+import Institution from '../HrOperations/Institution';
+import LateArrival from '../HrOperations/LateArrival'
+import GenerateLateArrival from '../HrOperations/GanerateLateArrival'
 import Resignation from '../HrOperations/Resignation';
 import Religion from '../HrOperations/Religion';
 import Locations from '../HrOperations/Locations';
@@ -143,6 +145,8 @@ const routing = () => {
         <Route path="/Previous_Employers" element={<Previous_Employers />} />
         <Route path="/Transportation" element={<Transportation />} />
         <Route path="/Institution" element={<Institution />} />
+        <Route path="/LateArrival" element={<LateArrival />} />
+        <Route path="/GenerateLateArrival" element={<GenerateLateArrival />} />
         <Route path="/Resignation" element={<Resignation />} />
         <Route path="/Religion" element={<Religion />} />
         <Route path="/Locations" element={<Locations />} />
