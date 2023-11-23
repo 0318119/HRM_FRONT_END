@@ -212,5 +212,5 @@ export const GET_Bank_DATA_END = "GET_Bank_DATA_END";
 // PAYROLL ===> Outstanding_Recoveries === 
 export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA";
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
-export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
+export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_Recoveries_SINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";

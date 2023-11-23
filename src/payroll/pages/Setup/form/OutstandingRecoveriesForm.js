@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { OutstandingRecoveries } from '../schema';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormCheckBox, FormInput } from '../../../../components/basic/input/formInput';
+import { FormSelect, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';
 import baseUrl from '../../../../config.json'
 
@@ -142,32 +142,32 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
 
 
                     <FormInput
-                        label={'Outstanding_Recovery_code'}
-                        placeholder={'Outstanding_Recovery_code'}
+                        label={'Outstanding Recovery Code'}
+                        placeholder={'Outstanding Recovery code'}
                         id="Outstanding_Recovery_code"
                         name="Outstanding_Recovery_code"
-                        type="text"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'Bank Abbreviation'}
-                        placeholder={'Bank Abbreviation'}
-                        id="bank_abbr"
-                        name="bank_abbr"
+                        label={'Outstanding Recovery Name'}
+                        placeholder={'Outstanding Recovery Name'}
+                        id="Outstanding_Recovery_name"
+                        name="Outstanding_Recovery_name"
                         type="text"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
-                    {/* <FormSelect
-                        label={'Marital Status'}
-                        placeholder='Marital Status'
-                        id="Emp_marital_status"
-                        name="Emp_marital_status"
+                    <FormSelect
+                        label={'Final Settlement Report Mandatory Flag'}
+                        placeholder='Final Settlement Report Mandatory Flag'
+                        id="Final_Settlement_Report_Mandatory_Flag"
+                        name="Final_Settlement_Report_Mandatory_Flag"
                         options={[
                             {
                                 value: 'M',
@@ -181,7 +181,8 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    /> */}
+                        type="text"
+                    />
 
                 </div>
                 <div className='EducationBtnBox'>

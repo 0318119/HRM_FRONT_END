@@ -26,7 +26,7 @@ export { BankSchema };
 
 //Outstanding Recoveries
 const OutstandingRecoveries = yup.object().shape({
-    Outstanding_Recovery_code: yup.string().required("Outstanding Recovery Code is required"),
+    Outstanding_Recovery_code: yup.number().required("Outstanding Recovery Code is required"),
     Outstanding_Recovery_name: yup.string().required("Outstanding Recovery Name is required"),
     Final_Settlement_Report_Mandatory_Flag: yup.string().required("Final Settlement Report Mandatory Flag is required"),
 });
