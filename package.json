@@ -28,6 +28,7 @@
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primereact": "^10.1.1",
+    "pdf-lib": "^1.17.1",
     "pspdfkit": "^2023.5.2",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

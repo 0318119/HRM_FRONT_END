@@ -32,7 +32,9 @@ import Leave_Category from '../HrOperations/Leave_Category'
 import Leave_Types from '../HrOperations/Leave_Types'
 import Previous_Employers from '../HrOperations/Previous_Employers'
 import Transportation from '../HrOperations/Transportation'
-import Institution from '../HrOperations/Institution'
+import Institution from '../HrOperations/Institution';
+import LateArrival from '../HrOperations/LateArrival'
+import GenerateLateArrival from '../HrOperations/GanerateLateArrival'
 import Resignation from '../HrOperations/Resignation';
 import Religion from '../HrOperations/Religion';
 import Locations from '../HrOperations/Locations';
@@ -99,6 +101,7 @@ import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/
 import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
 import Earnings from '../Master_Maintaince/Earnings';
 import PaySlip from '../payroll/pages/PaySlip';
+import TaxReport from '../payroll/pages/transactionPosting/taxReport/taxReport';
 import JV_Code from '../payroll/pages/Setup/JV_Code/index'
 import Income_Tax from '../payroll/pages/Setup/Income_Tax/index'
 import Bank_Branches from '../payroll/pages/Setup/Bank_Branches/index'
@@ -145,6 +148,8 @@ const routing = () => {
         <Route path="/Previous_Employers" element={<Previous_Employers />} />
         <Route path="/Transportation" element={<Transportation />} />
         <Route path="/Institution" element={<Institution />} />
+        <Route path="/LateArrival" element={<LateArrival />} />
+        <Route path="/GenerateLateArrival" element={<GenerateLateArrival />} />
         <Route path="/Resignation" element={<Resignation />} />
         <Route path="/Religion" element={<Religion />} />
         <Route path="/Locations" element={<Locations />} />
@@ -208,7 +213,8 @@ const routing = () => {
         <Route path="/payroll/addDeduction" element={<AddDeduction />} />
         <Route path="/payroll/addPayroll" element={<AddPayroll />} />
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
-        <Route path="/pdf" element={<AddPayrollMethodPdf />} />
+        <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
+        <Route path="/payroll/report/taxReport" element={<TaxReport />} />
         <Route path="/Earnings" element={<Earnings/>} />
         <Route path="/JV_Codes" element={<JV_Code/>} />
         <Route path="IncomeTax_Columns" element={<Income_Tax/>} />
