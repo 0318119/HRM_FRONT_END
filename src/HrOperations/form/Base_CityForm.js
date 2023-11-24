@@ -98,7 +98,7 @@ function Base_CityForm({ cancel, mode, isCode, Red_Base_City ,Get_Base_City_Data
         accessToken: `Bareer ${get_access_token}`,
       },
       body: JSON.stringify({
-        "City_code": 0,
+        "City_code": mode == "create" ? 0 :isCode,
         "City_abbr": body.City_abbr,
         "City_name": body.City_name,
         "Province_Code": body.Province_Code,

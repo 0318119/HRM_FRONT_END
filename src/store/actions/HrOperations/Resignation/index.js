@@ -56,7 +56,7 @@ import {
         loading: true,
       });
       const response = await fetch(
-        `${baseUrl.baseUrl}/religion_code/GetbyReligionCode`,
+        `${baseUrl.baseUrl}/employee_resignation/GetResignationByCode`,
         {
           method: "POST",
           headers: {
