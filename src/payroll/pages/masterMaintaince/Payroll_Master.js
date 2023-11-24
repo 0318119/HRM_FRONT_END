@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { CancelButton, PrimaryButton } from "../../../components/basic/button";
+import React, {  useState } from 'react'
+import {  PrimaryButton } from "../../../components/basic/button";
 import './Payroll_Master.css'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -12,8 +12,6 @@ function Payroll_Master() {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
-    
-
 
 
     const submitForm = async (data) => {
@@ -34,109 +32,10 @@ function Payroll_Master() {
         formState: { errors },
         handleSubmit,
     } = useForm({
-        defaultValues: {
-            Sequence_no: "",
-            Mode_Of_Payment: "",
-            Recreation_Club_Flag: "",
-            Meal_Deduction_Flag: "",
-            Union_Flag: "",
-            Overtime_Flag: "",
-            Incentive_Flag: "",
-            SESSI_Flag: "",
-            EOBI_Flag: "",
-            SESSI_Number: "",
-            EOBI_Number: "",
-            Account_Type1: "",
-            Bank_Account_No1: "",
-            Branch_Code1: "",
-            Bank_Amount_1: "",
-            Bank_Percent_1: "",
-            Account_Type2: "",
-            Bank_Account_No2: "",
-            Branch_Code2: "",
-            Bank_Amount_2: "",
-            Bank_Percent_2: "",
-            Account_Type3: "",
-            Bank_Account_No3: "",
-            Branch_Code3: "",
-            Bank_Amount_3: "",
-            Bank_Percent_3: "",
-            Account_Type4: "",
-            Bank_Account_No4: "",
-            Branch_Code4: "",
-            Bank_Amount_4: "",
-            Bank_Percent_4: "",
-            Fuel: "",
-            Fuel_Amount: "",
-            Tax_Exemption: "",
-            UserCode: "",
-        },
+        defaultValues: {},
         mode: "onChange",
         resolver: yupResolver(MasterPayrollSchema),
     });
-
-    // useEffect(() => {
-    //     if (mode == "Edit") {
-    //         reset(
-    //             {
-    //                 Emp_code: data?.Emp_code,
-    //                 Emp_name: data?.Emp_name,
-    //                 Emp_Father_name: data?.Emp_Father_name,
-    //                 Emp_sex_code: data?.Emp_sex_code,
-    //                 Emp_marital_status: data?.Emp_marital_status,
-    //                 Emp_birth_date: data?.Emp_birth_date,
-    //                 Emp_Confirm_date: data?.Emp_Confirm_date,
-    //                 Emp_category: data?.Emp_category,
-    //                 Emp_Leave_category: data?.Emp_Leave_category,
-    //                 Emp_address_line1: data?.Emp_address_line1,
-    //                 Emp_address_line2: data?.Emp_address_line2,
-    //                 Emp_home_tel1: data?.Emp_home_tel1,
-    //                 Emp_home_tel2: data?.Emp_home_tel2,
-    //                 Emp_office_tel2: data?.Emp_office_tel2,
-    //                 Emp_mobile_No: data?.Emp_mobile_No,
-    //                 Emp_nic_no: data?.Emp_nic_no,
-    //                 Emp_NIC_Issue_date: data?.Emp_nic_issue_date,
-    //                 Emp_NIC_Expiry_date: data?.Emp_nic_expiry_date,
-    //                 Emp_Retirement_age: data?.Emp_retirement_age,
-    //                 Emp_ntn_no: data?.Emp_ntn_no,
-    //                 Emp_email: data?.Emp_email,
-    //                 Confirmation_Flag: data?.Confirmation_Flag,
-    //                 Employment_Type_code: data?.Employment_Type_code,
-    //                 Desig_code: data?.Desig_code,
-    //                 Grade_code: data?.Grade_code,
-    //                 Cost_Centre_code: data?.Cost_Centre_code,
-    //                 Section_code: data?.Section_code,
-    //                 Shift_code: data?.Shift_code,
-    //                 Loc_code: data?.Loc_code,
-    //                 Edu_code: data?.Edu_code,
-    //                 Supervisor_Code: data?.Supervisor_Code,
-    //                 Religion_Code: data?.Religion_Code,
-    //                 Contact_Person_Name: data?.Contact_Person_Name,
-    //                 Relationship: data?.Relationship,
-    //                 Contact_address1: data?.Contact_address1,
-    //                 Contact_address2: data?.Contact_address2,
-    //                 Contact_home_tel1: data?.Contact_home_tel1,
-    //                 Contact_home_tel2: data?.Contact_home_tel2,
-    //                 Emp_Blood_Group: data?.Emp_Blood_Group,
-    //                 Vehicle_Registration_Number: data?.Vehicle_Registration_Number,
-    //                 Emp_Payroll_Category: data?.Emp_Payroll_Category,
-    //                 Offer_Letter_date: data?.Offer_Letter_date,
-    //                 Tentative_Joining_date: data?.Tentative_Joining_date,
-    //                 RefferedBy: data?.RefferedBy,
-    //                 Probationary_period_months: data?.Probationary_period_months,
-    //                 Notice_period_months: data?.Notice_period_months,
-    //                 Extended_confirmation_days: data?.Extended_confirmation_days ? data?.Extended_confirmation_days : currentDate,
-    //                 Permanent_address: data?.Permanent_address,
-    //                 Nationality: data?.Nationality,
-    //                 roster_group_code: data?.roster_group_code ? data?.roster_group_code : 0,
-    //                 card_no: data?.card_no ? data?.card_no : 0,
-    //                 position_code: data?.position_code ? data?.position_code : 0,
-    //             },
-    //         )
-    //     }
-    // }, [data])
-
-
 
 
     // MASTER PERSNOL FORM DATA API CALL =========================== 
