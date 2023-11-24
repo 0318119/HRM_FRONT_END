@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
-import Header from '../../../components/Includes/Header';
-import Input from "../../../components/basic/input";
-import { Button } from "../../../components/basic/button";
+import Header from '../../../../components/Includes/Header';
+import Input from "../../../../components/basic/input";
+import { Button } from "../../../../components/basic/button";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import OutstandingRecoveriesFormnkform from "../../../payroll/pages/Setup/form/OutstandingRecoveriesForm";
-import * as OutstandingRecoveriesActions from "../../../store/actions/payroll/outstandingRecoveries/index";
+import OutstandingRecoveriesFormnkform from "../../../../payroll/form/transactionPosting/Setup/OutstandingRecoveriesForm";
+import * as OutstandingRecoveriesActions from "../../../../store/actions/payroll/outstandingRecoveries";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
-import baseUrl from '../../../../src/config.json'
+import baseUrl from '../../../../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecoveries }) => {
+const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecoveries }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null)
@@ -54,14 +54,14 @@ const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecove
             render: (data) => (
                 <>
                     <Space size="middle">
-                        <button onClick={() => EditPage('Edit', data?.Bank_code)} className="editBtn"><FaEdit /></button>
+                        <button onClick={() => EditPage("Edit", data?.Outstanding_Recovery_code)} className="editBtn"><FaEdit /></button>
                         <Popconfirm
                             title="Delete the Outstanding Recoveries"
                             description="Are you sure to delete the Outstanding Recoveries?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => {
-                                handleConfirmDelete(data?.Bank_code)
+                                handleConfirmDelete(data?.Outstanding_Recovery_code)
                             }}
                         >
                             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -75,7 +75,7 @@ const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecove
     // Payroll Outstanding Recoveries FORM DATA DELETE API CALL =========================== 
     async function handleConfirmDelete(id) {
         await fetch(
-            `${baseUrl.baseUrl}/DeleteOutstandingrecoveries`, {
+            `${baseUrl.baseUrl}/outstandingRecoveries/DeleteOutstandingrecoveries`, {
             method: "POST",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
             body: JSON.stringify({
@@ -118,6 +118,8 @@ const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecove
             }, 3000);
         });
     }
+
+
 
 
     useEffect(() => {
@@ -196,4 +198,4 @@ const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecove
 function mapStateToProps({ Red_outstandingRecoveries }) {
     return { Red_outstandingRecoveries };
 }
-export default connect(mapStateToProps, OutstandingRecoveriesActions)(OutstandingRecoveries) 
+export default connect(mapStateToProps, OutstandingRecoveriesActions)(PayrollCategoryAccess) 

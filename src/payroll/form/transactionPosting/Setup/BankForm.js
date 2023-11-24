@@ -4,7 +4,7 @@ import { CancelButton, PrimaryButton } from "../../../../components/basic/button
 import * as BankActions from "../../../../store/actions/payroll/bank"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
-import { BankSchema } from '../schema';
+import { BankSchema } from '../Setup/schema';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormCheckBox, FormInput } from '../../../../components/basic/input/formInput';
 import { message } from 'antd';
