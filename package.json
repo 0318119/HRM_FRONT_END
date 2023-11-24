@@ -17,7 +17,6 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.10.1",
     "axios": "^1.4.0",
-    "bootstrap": "^5.3.1",
     "chart.js": "^4.4.0",
     "d3-org-chart": "^3.1.1",
     "docx": "^8.2.3",

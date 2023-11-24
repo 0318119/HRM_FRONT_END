@@ -1,7 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap/dist/css/";
+// import 'bootstrap/dist/css/bootstrap-reboot.css';
 import '../../src/Assets/css/main.css'
+import '../../src/Assets/css/bootstrap.css'
 import { Login } from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';

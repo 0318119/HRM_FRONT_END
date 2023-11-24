@@ -16,6 +16,7 @@ const initState = {
     leavetype: [],
     appliedDays: [],
     balanceDays:[],
+    getLeaceApplications:[],
     loading: false,
 }
 
@@ -50,12 +51,12 @@ const Red_Manual_Leave_Posting = (state = initState, action) => {
                 balanceDays: action.payload,
                 loading: action.loading,
             };
-        // case GET_MASTER_ACTIVE_DATA_SINGLE:
-        //     return {
-        //         ...state,
-        //         dataSingle: action.payload,
-        //         loading: action.loading,
-        //     };
+        case GET_MY_LEAVE_EMP_APPLICATION:
+            return {
+                ...state,
+                getLeaceApplications: action.payload,
+                loading: action.loading,
+            };
         case GET_MANUAL_LEAVE_POSTING_DATA_END:
             return {
                 ...state,
@@ -63,6 +64,7 @@ const Red_Manual_Leave_Posting = (state = initState, action) => {
                 leavetype: action.payload,
                 appliedDays: action.payload,
                 balanceDays: action.payload,
+                getLeaceApplications: action.payload,
                 loading: action.loading,
             };
         default:

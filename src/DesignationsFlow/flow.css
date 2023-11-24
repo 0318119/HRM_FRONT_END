@@ -1,0 +1,19 @@
+
+.chatMargin{
+    margin-top: 120px;
+    margin-bottom: 50px;
+}
+
+.flowchartBg{
+    background: #f7f5f5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.flowchartBg h5{
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 10px;
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+}

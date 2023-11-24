@@ -212,11 +212,12 @@ import baseUrl from '../config.json'
 import { OrgChart } from 'd3-org-chart';
 import { OrganizationChart } from 'primereact/organizationchart';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-// import 'primereact/resources/themes/';
 import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.css';
 import './flags.css'
+import Header from '../components/Includes/Header';
+import './flow.css'
 
 
 export default function ChartFlow() {
@@ -289,6 +290,7 @@ export default function ChartFlow() {
   ]);
 
   const nodeTemplate = (node) => {
+    console.log("node",node)
     if (node.type === 'person') {
       return (
         <div className="flex flex-column align-items-center">
@@ -301,7 +303,7 @@ export default function ChartFlow() {
       );
     }
 
-    return node.label;
+    // return node.label;
   };
 
 
@@ -367,7 +369,17 @@ export default function ChartFlow() {
             <OrganizationChart value={data} nodeTemplate={nodeTemplate} />
         </div> */}
       <div>
-        <OrganizationChart value={data} selectionMode="multiple" selection={selection} onSelectionChange={(e) => setSelection(e.data)} nodeTemplate={nodeTemplate} />
+        <Header />
+      </div>
+      <div className='container'>
+        <div className="row justify-content-center">
+          <div className="col-lg-10">
+            <div className='chatMargin flowchartBg'>
+              <h5><b>Designations Flow</b></h5>
+              <OrganizationChart value={data} selectionMode="multiple" selection={selection} onSelectionChange={(e) => setSelection(e.data)} nodeTemplate={nodeTemplate} />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
