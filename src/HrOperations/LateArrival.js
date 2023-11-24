@@ -11,9 +11,9 @@ import { Popconfirm } from "antd";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
-import baseUrl from '../../src/config.json'
+import baseUrl from '../config.json'
 
-const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
+const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
@@ -21,24 +21,25 @@ const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState("");
+  
 
-  console.log("Red_Institution table page" ,Red_Institution)
+  // console.log("Red_LateArrival table page" ,Red_LateArrival)
 
-  useEffect(() => {
-    if (isSearchVal == "") {
-      GetInstitutionData({
-        pageSize: pageSize,
-        pageNo: page,
-        search: null,
-      });
-    } else {
-      GetInstitutionData({
-        pageSize: pageSize,
-        pageNo: 1,
-        search: isSearchVal,
-      });
-    }
-  }, [page, isSearchVal]);
+  // useEffect(() => {
+  //   if (isSearchVal == "") {
+  //     GetInstitutionData({
+  //       pageSize: pageSize,
+  //       pageNo: page,
+  //       search: null,
+  //     });
+  //   } else {
+  //     GetInstitutionData({
+  //       pageSize: pageSize,
+  //       pageNo: 1,
+  //       search: isSearchVal,
+  //     });
+  //   }
+  // }, [page, isSearchVal]);
 
   const EditPage = (mode, code) => {
     setCode(code);
@@ -85,7 +86,7 @@ const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              handleConfirmDelete(data?.Inst_code);
+              // handleConfirmDelete(data?.Inst_code);
             }}
           >
             <button className="deleteBtn">
@@ -98,45 +99,45 @@ const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
   ];
 
   // Institute Delete API CALL ===================================================
-  async function handleConfirmDelete(id) {
-    await fetch(
-      `${baseUrl.baseUrl}/institutions/DeleteInstitution`, {
-      method: "POST",
-      headers: { "content-type": "application/json", accessToken : `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Inst_code": id,
-      }),
-    }
-    ).then((response) => {
-      return response.json();
-    }).then(async (response) => {
-      if (response.success) {
-          messageApi.open({
-            type: 'success',
-            content: "You have successfully deleted",
-          });
-          setTimeout(() => {
-            messageApi.destroy()
-            GetInstitutionData({ 
-              pageSize: pageSize,
-              pageNo: page,
-              search: null
-            })
-          }, 3000);
-      }
-      else {
-        messageApi.open({
-          type: 'error',
-          content: response?.message || response?.messsage,
-        });
-      }
-    }).catch((error) => {
-        messageApi.open({
-          type: 'error',
-          content: error?.message || error?.messsage,
-        });
-    });
-  }
+  // async function handleConfirmDelete(id) {
+  //   await fetch(
+  //     `${baseUrl.baseUrl}/institutions/DeleteInstitution`, {
+  //     method: "POST",
+  //     headers: { "content-type": "application/json", accessToken : `Bareer ${get_access_token}` },
+  //     body: JSON.stringify({
+  //       "Inst_code": id,
+  //     }),
+  //   }
+  //   ).then((response) => {
+  //     return response.json();
+  //   }).then(async (response) => {
+  //     if (response.success) {
+  //         messageApi.open({
+  //           type: 'success',
+  //           content: "You have successfully deleted",
+  //         });
+  //         setTimeout(() => {
+  //           messageApi.destroy()
+  //           GetInstitutionData({ 
+  //             pageSize: pageSize,
+  //             pageNo: page,
+  //             search: null
+  //           })
+  //         }, 3000);
+  //     }
+  //     else {
+  //       messageApi.open({
+  //         type: 'error',
+  //         content: response?.message || response?.messsage,
+  //       });
+  //     }
+  //   }).catch((error) => {
+  //       messageApi.open({
+  //         type: 'error',
+  //         content: error?.message || error?.messsage,
+  //       });
+  //   });
+  // }
 
   return (
     <>
@@ -177,12 +178,12 @@ const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
               {mode == "read" && (
                 <Table
                   columns={columns}
-                  loading={Red_Institution?.loading}
-                  dataSource={Red_Institution?.data?.[0]?.res?.data1}
+                  loading={Red_LateArrival?.loading}
+                  dataSource={Red_LateArrival?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
                   pagination={{
                     defaultCurrent: page,
-                    total: Red_Institution?.data?.[0]?.res?.data3,
+                    total: Red_LateArrival?.data?.[0]?.res?.data3,
                     onChange: (p) => {
                       setPage(p);
                     },
@@ -200,7 +201,7 @@ const LateArrival = ({ Red_Institution, GetInstitutionData }) => {
   );
 };
 
-function mapStateToProps({ Red_Institution }) {
-  return { Red_Institution };
+function mapStateToProps({ Red_LateArrival }) {
+  return { Red_LateArrival };
 }
 export default connect(mapStateToProps, INSTITUTION_ACTIONS)(LateArrival);

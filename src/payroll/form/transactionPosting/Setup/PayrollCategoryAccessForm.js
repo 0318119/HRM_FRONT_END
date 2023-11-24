@@ -103,9 +103,7 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_PayrollCate
     }, [Red_PayrollCategoryAccess?.dataSingle?.[0]?.res?.data?.[0]])
 
 
-
     async function ADD_Payroll_Category_Access_DATA(body) {
-
         setLoading(true);
         await fetch(`${baseUrl.baseUrl}/payrollCategories/AddPayrollCategories`, {
             method: "POST",

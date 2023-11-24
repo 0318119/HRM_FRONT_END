@@ -315,7 +315,7 @@ const Manual_leave_posting = ({
                                         errors={errors}
                                         control={control}
                                     />
-                                    <Input placeholder={false} label={"Half Day"} type="checkbox" className="half_day"
+                                    <Input placeholder={false} label={"Half Day"} type="checkbox" id="inputBox" className="half_day"
                                         onChange={(e) => { changeBox(e) }}
                                     />
                                 </div>

@@ -269,3 +269,9 @@ export const GET_Payroll_Catery_Access_DATA = "GET_Payroll_Catery_Access_DATA";
 export const GET_Payroll_Catery_Access_START = "GET_Payroll_Catery_Access_START";
 export const GET_Payroll_Catery_Access_SINGLE = "GET_Payroll_Catery_Access_SINGLE";
 export const GET_Payroll_Catery_Access_END = "GET_Payroll_Catery_Access_END";
+
+// HRSETUPS ===> LATE ARRIVAL === 
+export const GET_LATE_ARRIVAL_DATA = "GET_LATE_ARRIVAL_DATA";
+export const GET_LATE_ARRIVAL_DATA_START = "GET_LATE_ARRIVAL_DATA_STAR";
+export const GET_LATE_ARRIVAL_DATA_SINGLE = "GET_LATE_ARRIVAL_DATA_SINGLE";
+export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
