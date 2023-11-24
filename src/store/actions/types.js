@@ -263,3 +263,10 @@ export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA"
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
 export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";
+
+
+// HRSETUPS ===> LATE ARRIVAL === 
+export const GET_LATE_ARRIVAL_DATA = "GET_LATE_ARRIVAL_DATA";
+export const GET_LATE_ARRIVAL_DATA_START = "GET_LATE_ARRIVAL_DATA_STAR";
+export const GET_LATE_ARRIVAL_DATA_SINGLE = "GET_LATE_ARRIVAL_DATA_SINGLE";
+export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
