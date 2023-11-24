@@ -103,6 +103,7 @@ import Payroll_Master from '../payroll/pages/masterMaintaince/Payroll_Master';
 import TaxStructure from '../payroll/pages/Setup/TaxStructure'
 import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
+import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 
 
 
@@ -214,6 +215,8 @@ const routing = () => {
         <Route path="/Tax_Structure" element={<TaxStructure/>} />
         <Route path="/Bank" element={<Bank/>} />
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries/>} />
+        <Route path="/Payroll_Catery_Access" element={<PayrollCategoryAccess/>} />
+
         
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
