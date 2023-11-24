@@ -10,7 +10,8 @@
 }
 .manual_Leaves_bg .manualLeavePostionHalfDayBox .half_day{
     position: absolute;
-    left: 30%;
+    left: 20%;
+    display: inline-table;
 }
 .manual_Leaves_bg .manualLeavePostionHalfDayBox .appliedInput{
     width: 100%;
@@ -19,7 +20,6 @@
     background-color: #014f86;
     font-weight: 700;
     padding: 5px;
-    /* border-radius: 4px 4px 0px 0px; */
     color: white;
     letter-spacing: 1px;
 }
