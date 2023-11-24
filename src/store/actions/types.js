@@ -263,3 +263,9 @@ export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA"
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
 export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";
+
+// PAYROLL ===> Payroll_Catery_Access === 
+export const GET_Payroll_Catery_Access_DATA = "GET_Payroll_Catery_Access_DATA";
+export const GET_Payroll_Catery_Access_START = "GET_Payroll_Catery_Access_START";
+export const GET_Payroll_Catery_Access_SINGLE = "GET_Payroll_Catery_Access_SINGLE";
+export const GET_Payroll_Catery_Access_END = "GET_Payroll_Catery_Access_END";

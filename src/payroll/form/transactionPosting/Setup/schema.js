@@ -76,3 +76,20 @@ const OutstandingRecoveries = yup.object().shape({
   Final_Settlement_Report_Mandatory_Flag: yup.string().required("Final Settlement Report Mandatory Flag is required"),
 });
 export { OutstandingRecoveries };
+
+//Payroll Category Access
+const PayrollCategoryAccess = yup.object().shape({
+  Payroll_Category_name: yup.string().required("Payroll Category Name is required"),
+  Payroll_Category_abbr: yup.string().required("Payroll Category Abbreviation is required"),
+  Payroll_Month: yup.string().required("Payroll Month is required"),
+  Payroll_Year: yup.string().required("Payroll Year is required"),
+  Payroll_Last_Month: yup.string().required(" Payroll Last Month is required"),
+  Payroll_Last_Year: yup.string().required("Payroll Last Year is required"),
+  Payroll_Undo_Flag: yup.string().required("Payroll Undo Flag is required"),
+  Loan_Completion_Flag: yup.string().required("Loan Completion Flag is required"),
+  Sort_key: yup.string().required("Sort key is required"),
+  pf_percentage: yup.number().required("Pf percentage is required"),
+  active_flag: yup.string().required("Active flag is required"),
+
+});
+export { PayrollCategoryAccess };
