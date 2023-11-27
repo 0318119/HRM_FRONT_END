@@ -135,7 +135,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_outstanding
                 <h4 className="text-dark">Outstanding Recoveries</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
-
                     <FormInput
                         label={'Outstanding Recovery Name'}
                         placeholder={'Outstanding Recovery Name'}
@@ -146,7 +145,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_outstanding
                         errors={errors}
                         control={control}
                     />
-
                     <FormSelect
                         label={'Final Settlement Report Mandatory Flag'}
                         placeholder='Final Settlement Report Mandatory Flag'
@@ -167,7 +165,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_outstanding
                         control={control}
                         type="text"
                     />
-
                 </div>
                 <div className='EducationBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
