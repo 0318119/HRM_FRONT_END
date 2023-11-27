@@ -275,3 +275,9 @@ export const GET_LATE_ARRIVAL_DATA = "GET_LATE_ARRIVAL_DATA";
 export const GET_LATE_ARRIVAL_DATA_START = "GET_LATE_ARRIVAL_DATA_STAR";
 export const GET_LATE_ARRIVAL_DATA_SINGLE = "GET_LATE_ARRIVAL_DATA_SINGLE";
 export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
+
+// HRSETUPS ===> New_Appointment_Report === 
+export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA";
+export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
+export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
+export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";

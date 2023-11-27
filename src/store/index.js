@@ -56,6 +56,7 @@ import Red_Bank from "./reducers/payroll/bank";
 import Red_outstandingRecoveries from "./reducers/payroll/outstandingRecoveries";
 import Red_PayrollCategoryAccess from "./reducers/payroll/PayrollCategoryAccess";
 import Red_LateArrival from "./reducers/HrOperations/Late_Arrival";
+import Red_New_Appointment_Report from "./reducers/HrOperations/New_Appointment_Report/index"
 
 const reducers = combineReducers({
   Transition_family,
@@ -116,7 +117,8 @@ const reducers = combineReducers({
   Red_Bank,
   Red_outstandingRecoveries,
   Red_PayrollCategoryAccess,
-  Red_LateArrival
+  Red_LateArrival,
+  Red_New_Appointment_Report
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

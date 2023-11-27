@@ -111,6 +111,7 @@ import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
+import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 
 
 
@@ -227,7 +228,7 @@ const routing = () => {
         <Route path="/Bank" element={<Bank />} />
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
         <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-
+        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
 
 
         {/* REPORT =============================================================== */}
