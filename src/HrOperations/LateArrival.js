@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
-import { Button } from "../components/basic/button";
-import InstitutionForm from "./form/InstitutionForm";
+import { Button } from "../components/basic/button/index";
+import { CancelButton } from "../components/basic/button/index";
 import "./assets/css/InstitutionsList.css";
 import { Space, Table, Pagination, Tag, Tooltip } from "antd";
 import * as INSTITUTION_ACTIONS from "../store/actions/HrOperations/Institution/index";
@@ -13,7 +13,7 @@ import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 import baseUrl from '../config.json'
 
-const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
+const LateArrival = ({ cancel,  Red_LateArrival, GenerateLateArrival }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
@@ -21,78 +21,66 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState("");
+  const EditBack = () => {
+    cancel(false)
+  };
   
 
-  // console.log("Red_LateArrival table page" ,Red_LateArrival)
 
-  // useEffect(() => {
-  //   if (isSearchVal == "") {
-  //     GetInstitutionData({
-  //       pageSize: pageSize,
-  //       pageNo: page,
-  //       search: null,
-  //     });
-  //   } else {
-  //     GetInstitutionData({
-  //       pageSize: pageSize,
-  //       pageNo: 1,
-  //       search: isSearchVal,
-  //     });
-  //   }
-  // }, [page, isSearchVal]);
-
-  const EditPage = (mode, code) => {
-    setCode(code);
-    setMode(mode);
-  };
 
   const columns = [
     {
-      title: "Code",
+      title: "Emp Code",
       dataIndex: "Inst_code",
       key: "Inst_code",
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Name",
+      title: "Emp Name",
       dataIndex: "Inst_name",
       key: "Inst_name",
     },
     {
-      title: "Institution Abbrevation",
+      title: "Dates",
       dataIndex: "Inst_abbr",
       key: "Inst_abbr",
     },
 
     {
-      title: "Sort Key",
+      title: "Casual",
       dataIndex: "Sort_key",
       key: "Sort_key",
     },
     {
-      title: "Action",
-      key: "action",
+      title: "Leave",
+      dataIndex: "Sort_key",
+      key: "Sort_key",
+    },
+    {
+      title: "Balance",
+      dataIndex: "Sort_key",
+      key: "Sort_key",
+    },
+    {
+      title: "Leave Day to Post",
+      dataIndex: "Sort_key",
+      key: "Sort_key",
+    },
+    {
+      title: "Process",
+      key: "Process",
       render: (data) => (
         <Space size="middle">
-          <button
-            onClick={() => EditPage("Edit", data?.Inst_code)}
-            className="editBtn"
-          >
-            <FaEdit />
-          </button>
-          <Popconfirm
-            title="Delete the Institution"
-            description="Are you sure to delete the Institution?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              // handleConfirmDelete(data?.Inst_code);
-            }}
-          >
-            <button className="deleteBtn">
-              <MdDeleteOutline />
-            </button>
-          </Popconfirm>
+          <input type="Checkedbox" />
+        </Space>
+      ),
+    },
+    {
+      title: "Aprove",
+      key: "Aprove",
+      render: (data) => (
+        <Space size="middle">
+          <input type="Checkedbox" />
         </Space>
       ),
     },
@@ -141,9 +129,6 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
       {contextHolder}
       <div className="container">
         <div className="row">
@@ -153,15 +138,6 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
                 <div className="InstitutionFlexBox">
                   <h4 className="text-dark">Late Arrival</h4>
                   <div className="InstitutionsearchBox">
-                    <Input
-                      placeholder={"Search Here..."}
-                      type="search"
-                      onChange={(e) => {
-                        setSearchVal(e.target.value);
-                      }}
-                    />
-
-                    <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
                 <hr />
@@ -191,8 +167,7 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
                   }}
                 />
               )}
-              {mode == "create" && <InstitutionForm cancel={setMode} mode={mode} isCode={null} page={page} />}
-              {mode == "Edit" && <InstitutionForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
+              <CancelButton onClick={EditBack} title={"Cancel"} />
             </div>
           </div>
         </div>

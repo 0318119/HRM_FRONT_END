@@ -7,48 +7,42 @@ import {
 import baseUrl from "../../../../config.json";
 
 
-export const GenerateLateArrival = (body) => async (dispatch) => {
-    try {
-        dispatch({
-            type: GET_TRANSITION_INSTITUTION_DATA_START,
-            payload: true,
-            loading: true,
-        });
-        const response = await fetch(`${baseUrl.baseUrl}/lateArrival/CreateLateArrivalData`, {
+export const GenerateLateArrivals = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/lateArrival/CreateLateArrivalData`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                "Month": body,
-                "Year": body
-            })
+        body: JSON.stringify({ 
+            "Month": body?.Month,
+            "Year": body?.Year
+         })
         });
-        if (response.status === 200) {
-            const res = await response.json()
-            dispatch({
-                type: GET_TRANSITION_INSTITUTION_DATA_SINGLE,
-                payload: [{ res }],
-                loading: false,
-            });
-        } else {
-            const res = await response.json()
-            dispatch({
-                type: GET_TRANSITION_INSTITUTION_DATA_END,
-                payload: [{ res }],
-                loading: false,
-            });
-        }
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
     }
-    catch (error) {
-        dispatch({
-            type: GET_TRANSITION_INSTITUTION_DATA_END,
-            payload: false,
-            loading: false,
-        });
-        console.log(error)
+}
+
+export const GetGenerateLateArrivalsData = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/lateArrival/CreateLateArrivalData`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Month": body?.Month,
+            "Year": body?.Year
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
     }
-
-
 }

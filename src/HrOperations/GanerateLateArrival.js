@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
-import { FormInput } from "../components/basic/input/formInput";
+import { Input } from "../components/basic/input/formInput";
 import { Button } from "../components/basic/button";
 import Select from "../components/basic/select/index";
-import InstitutionForm from "./form/InstitutionForm";
 import "./assets/css/InstitutionsList.css";
 import { Space, Table, Pagination, Tag, Tooltip } from "antd";
-import * as INSTITUTION_ACTIONS from "../store/actions/HrOperations/Institution/index";
+import * as LATEArrival from "../store/actions/HrOperations/Late_Arrivals/index";
 import { connect } from "react-redux";
 import { Popconfirm } from "antd";
 import { MdDeleteOutline } from "react-icons/md";
@@ -14,8 +13,9 @@ import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 import baseUrl from '../../src/config.json'
 import { set } from "react-hook-form";
+import LateArrivals from './LateArrival'
 
-const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
+const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
@@ -23,59 +23,40 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [isSearchVal, setSearchVal] = useState("");
-  const [isPayrollYear, setPayrollYear] = useState({
-    Month: "",
-    Year: ""
+  const [isPayrollMonth, setPayrollMonth] = useState(null)
+  const [isPayrollYear, setPayrollYear] = useState(null)
+  const [GenerateTable, setGenerateTable] = useState(false)
+  const [Generate, setGenerate] = useState({
+    Month: isPayrollMonth,
+    Year: isPayrollYear
   })
-  
+  const EditPage = (mode) => {
+    setGenerateTable(mode)
+  }
 
-  console.log(isPayrollYear, "isPayrollYear")
 
-
-  const EditPage = (mode, code) => {
-    setCode(code);
-    setMode(mode);
-  };
-
-  async function handleConfirmDelete(id) {
-    await fetch(
-      `${baseUrl.baseUrl}/institutions/DeleteInstitution`, {
-      method: "POST",
-      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Inst_code": id,
-      }),
+  const GenerateData = async () => {
+    const GenerateCreate = await GenerateLateArrivals({
+      Month: isPayrollMonth,
+      Year: isPayrollYear
+    })
+    setGenerateTable(true)
+    if (GenerateCreate.success) {
+      messageApi.open({
+        type: 'success',
+        content: "You have successfully Generated",
+      });
     }
-    ).then((response) => {
-      return response.json();
-    }).then(async (response) => {
-      if (response.success) {
-        messageApi.open({
-          type: 'success',
-          content: "You have successfully deleted",
-        });
-        setTimeout(() => {
-          messageApi.destroy()
-          // GetInstitutionData({
-          //   pageSize: pageSize,
-          //   pageNo: page,
-          //   search: null
-          // })
-        }, 3000);
-      }
-      else {
-        messageApi.open({
-          type: 'error',
-          content: response?.message || response?.messsage,
-        });
-      }
-    }).catch((error) => {
+    else {
       messageApi.open({
         type: 'error',
-        content: error?.message || error?.messsage,
+        content: GenerateCreate?.message || GenerateCreate?.message,
       });
-    });
+    }
   }
+
+
+
 
   return (
     <>
@@ -88,19 +69,27 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
           <div className="col-lg-12 maringClass">
             <h4 className="text-dark">Generate Late Arrivals</h4>
             <div className="d-flex align-items-center">
-              <FormInput
+              <Input
                 label={'Payroll Year'}
+                id={"Year"}
+                name={"Year"}
+                type="number"
+                value={Generate.Year}
                 placeholder={"2023"}
-                onChange={(e) => setPayrollYear(e.target.Year)}
-                type="search" />
-              <FormInput
+                onChange={(e) => setPayrollYear(e.target.value)}
+
+              />
+              <Input
                 label={'Payroll Month'}
                 placeholder={"November"}
-                type="search"
-                onChange={(e) => setPayrollYear(e.target.Month)}
-                 />
+                type="number"
+                name={"Month"}
+                id={"Month"}
+                value={Generate.Month}
+                onChange={(e) => setPayrollMonth(e.target.value)}
+              />
 
-                <Button title={'Generate Data'}/>
+              <Button title={'Generate Data'} onClick={GenerateData} />
             </div>
           </div>
 
@@ -108,25 +97,26 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
           <div className="col-lg-12 maringClass">
             <h4 className="text-dark">Download</h4>
             <div className="d-flex align-items-center">
-              <FormInput
+              <Input
                 label={'Payroll Year'}
                 placeholder={"2023"}
                 type="search" />
-              <FormInput
+
+              <Input
                 label={'Payroll Month'}
                 placeholder={"November"}
                 type="search" />
             </div>
 
             <div className="d-flex align-items-center">
-              <FormInput
+              <Input
                 label={'Location'}
                 placeholder={"Location"}
                 type="search" />
             </div>
 
             <div className="d-flex align-items-center">
-              <FormInput
+              <Input
                 label={'Departments'}
                 placeholder={"Departments"}
                 type="search" />
@@ -134,23 +124,26 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
 
 
             <div className="d-flex align-items-center">
-              <FormInput
+              <Input
                 label={'Units'}
                 placeholder={"Units"}
                 type="search" />
             </div>
           </div>
-
           <div>
-            <Button title={'ExportToExcel'}/>
+            <Button title={'ExportToExcel'} />
           </div>
+          {GenerateTable ? <div>
+            <LateArrivals cancel={EditPage} mode={mode} />
+          </div> : " "}
+
         </div>
       </div>
     </>
   );
 };
 
-function mapStateToProps({ Red_Institution }) {
-  return { Red_Institution };
+function mapStateToProps({ Red_LateArrival }) {
+  return { Red_LateArrival };
 }
-export default connect(mapStateToProps, INSTITUTION_ACTIONS)(GanerateLateArrival);
+export default connect(mapStateToProps, LATEArrival)(GanerateLateArrival);
