@@ -116,8 +116,6 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
             borderColor: 'black',
             marginHorizontal: 10
         },
-
-
         row: {
             flexDirection: 'row',
             borderBottomColor: 'black',
@@ -326,7 +324,14 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
             width:'30%',
             paddingVertical:5
 
-        }
+        },
+        cellone_second1:{
+            width:'80%',
+            textAlign:'center',
+            paddingVertical:5,
+            borderRightColor:borderColor,
+            borderWidth:1
+        },
     });
 
     const submitForm = async (data) => {
@@ -380,7 +385,6 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                                 <Text style={styles.cellseven}>{data?.Taxable_Income}</Text>
                             </View>
                         )}
-
                     </View>
 
 
@@ -389,26 +393,112 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                         <View style={styles.containerAppand}>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Actual Salary</Text>
-                                <Text style={styles.cellone_second}>1,000</Text>
+                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_actual_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Projected Salary</Text>
-                                <Text style={styles.cellone_second}>1,000</Text>
+                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_projected_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Salary</Text>
-                                <Text style={styles.cellone_second}>1,000</Text>
+                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_total_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Exemptions</Text>
-                                <Text style={styles.cellone_second}>1,000</Text>
+                                <Text style={styles.cellone_second}>{DataFromApi[0]?.Exempt_Income}</Text>
                             </View>
-                            <View style={styles.container_Second}>
+                            {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Zakat Exemptions</Text>
                                 <Text style={styles.cellone_second}>1,000</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Net Taxable Salary</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View> */}
+                        </View>
+
+
+                        <View style={styles.containerAppand}>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Claim/Tax Adjustment</Text>
+                                <Text style={styles.cellone_Third_second}>Claim Amount</Text>
+                                <Text style={styles.cellone_Third_third}>Cradit Amount</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Investment</Text>
+                                <Text style={styles.cellone_Third_second}>$234.3</Text>
+                                <Text style={styles.cellone_Third_third}>$54.2</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Markup on Loan</Text>
+                                <Text style={styles.cellone_Third_second}>$54.21</Text>
+                                <Text style={styles.cellone_Third_third}>$11.43</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Donation</Text>
+                                <Text style={styles.cellone_Third_second}>$123.13</Text>
+                                <Text style={styles.cellone_Third_third}>$3.45</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Tax Annuity</Text>
+                                <Text style={styles.cellone_Third_second}>$433.53</Text>
+                                <Text style={styles.cellone_Third_third}>$43.6</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_Third_one}>Advance Tax</Text>
+                                <Text style={styles.cellone_Third_second}>$344.3</Text>
+                                <Text style={styles.cellone_Third_third}>$44.34</Text>
+                            </View>
+                        </View>
+                    </View>
+
+
+                    <View style={styles.tableContainer}>
+                        <View style={styles.container}>
+                            <Text style={styles.cellone}>Exceeding</Text>
+                            <Text style={styles.celltwo}>Not Exceeding</Text>
+                            <Text style={styles.cellthree}>Rate Tax Excess</Text>
+                            <Text style={styles.cellfour}>Fix Tax Amount</Text>
+                            <Text style={styles.cellfive}>Regular Amount</Text>
+                            <Text style={styles.cellsix}>Avg Tax Rate</Text>
+                        </View>
+                        {DataFromApi.map(data =>
+                            <View style={styles.row} key={1}>
+                                <Text style={styles.cellone}>{data?.Allowance_name}</Text>
+                                <Text style={styles.celltwo}>{data?.Actual_Income}</Text>
+                                <Text style={styles.cellthree}>{data?.Projected_Income}</Text>
+                                <Text style={styles.cellfour}>{data?.Total_Income}</Text>
+                                <Text style={styles.cellfive}>{data?.Tax_Exempt_Percentage}</Text>
+                                <Text style={styles.cellsix}>{data?.Exempt_Income}</Text>
+                                <Text style={styles.cellseven}>{data?.Taxable_Income}</Text>
+                            </View>
+                        )}
+                    </View>
+                    
+                    <View style={styles.ThirdColumn}>
+                        <View style={styles.containerAppand}>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Gross Tax</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Total Tax Cradit</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Total Tax Liability</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Less: Tax Deduction Upto Previous month</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Payable in Remaining month</Text>
+                                <Text style={styles.cellone_second}>1,000</Text>
+                            </View>
+                            <View style={styles.container_Second}>
+                                <Text style={styles.cellone_second1}>Balance Tax Amount</Text>
                                 <Text style={styles.cellone_second}>1,000</Text>
                             </View>
                         </View>
