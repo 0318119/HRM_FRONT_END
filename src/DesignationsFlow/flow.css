@@ -52,3 +52,37 @@
     font-size: 15px;
 }
 
+
+
+.mainOrg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    overflow: auto;
+}
+.mainOrg .rootOrgBox{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background: red;
+    width: 300px;
+    padding: 16px 2px;
+    border-radius: 10px;
+    margin: 30px 12px;
+    cursor: pointer;
+}
+.mainOrg .rootOrgBox img{
+    width: 59px;
+    padding-left: 27px;
+}
+.mainOrg .rootOrgBox .contentBoxOrg{
+    margin-left: 16px;
+    border-left: 2px solid gray;
+    padding-left: 14px;
+}
+.mainOrg .rootOrgBox .contentBoxOrg span{
+    font-size: 12px;
+    text-transform: capitalize;
+    font-weight: 500;
+}
