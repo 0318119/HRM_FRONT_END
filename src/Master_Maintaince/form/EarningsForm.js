@@ -86,6 +86,7 @@ function EarningsForm({ cancel, mode, isCode, page, Red_MasterEarning, GetMaster
       }
     }
   }, [Red_MasterEarning?.dataSingle[0]?.res?.data])
+  
   const [isShow,setShow] = useState("hide")
   // TABLE COLUMNS =====================
   const columns = [
