@@ -81,7 +81,7 @@ function TAShortsCut() {
         <Header />
       </div>
       <div className="container maringClass tranAppointBgColor mb-5">
-        <div className="row"><h5><b>Dashboard</b></h5></div>
+        <div className="row"><h5 className="text-dark"><b>Dashboard</b></h5></div>
         <hr />
         <div className="row">
           <div className="col-lg-3 mt-5">
@@ -97,20 +97,20 @@ function TAShortsCut() {
             </Link>
           </div>
           <div className="col-lg-3 mt-5">
-            <Link to="/Pay/PaySlip" className="dashBoxes">
+            <Link to="/payroll/report/taxReport" className="dashBoxes">
               <FaListAlt />
-              <span>TextSlip</span>
+              <span>Tax Slip</span>
             </Link>
           </div>
           <div className="col-lg-3 mt-5">
             <Link to="/Pay/PaySlip" className="dashBoxes">
               <RiFileListFill />
-              <span>PaySlip</span>
+              <span>Pay Slip</span>
             </Link>
           </div>
         </div>
         <hr />
-        <div className="row mt-5"><h5><b>Leave Applications</b></h5></div>
+        <div className="row mt-5"><h5 className="text-dark"><b>Leave Applications</b></h5></div>
         <div className="row">
           <div className="col-lg-12">
             <div>
@@ -125,17 +125,6 @@ function TAShortsCut() {
           </div>
         </div>
       </div>
-      {/* {isTaskData.map((items) => {
-  return (
-    <tr>
-      <td>{items?.TaskName ? items?.TaskName : "Not Found"}</td>
-      <td>{items?.ApplicationName ? items?.ApplicationName : "Not Found"}</td>
-      <td>{items?.Emp_Code ? items?.Emp_Code : "Not Found"}</td>
-      <td>{items?.Created_Date ? items?.Created_Date : "Not Found"}</td>
-      <td><button className="editBtnTable" ><Link to={`/LeaveSummary?userId=${items.Tran_Code}`} target="_blank" style={{ color: "white" }}>View</Link></button></td>
-    </tr>
-  )
-})} */}
     </>
   );
 }

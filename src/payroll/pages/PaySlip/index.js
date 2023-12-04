@@ -96,6 +96,7 @@ function PaySlip({
         control,
         formState: { errors },
         handleSubmit,
+        reset
     } = useForm({
         defaultValues: {
             payslip_year: "",
@@ -479,6 +480,11 @@ function PaySlip({
                             URL.revokeObjectURL(objectUrl);
                             document.body.removeChild(a);
                             setPdfLoader(false)
+                            reset({
+                                payslip_year: "",
+                                payslip_month: "",
+                                Emp_code: "",
+                            })
                         }
                     });
                 })

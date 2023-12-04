@@ -1,45 +1,26 @@
-import React, { useEffect, useState, useRef } from 'react';
-import baseUrl from '../config.json'
-import { OrganizationChart } from 'primereact/organizationchart';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primeflex/primeflex.css';
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.css';
-import './flags.css'
-import Header from '../components/Includes/Header';
+import React, { useEffect, useState } from 'react';
+import { IoIosArrowDown } from "react-icons/io";
+import { Tooltip } from 'antd';
 import User from '../../src/Assets/Images/user.avi'
 import './flow.css'
-import { Spin } from 'antd';
+import baseUrl from '../config.json'
+import Header from '../components/Includes/Header';
+import { Flex, Spin } from 'antd';
+import { message } from 'antd';
+
+
 
 
 export default function ChartFlow() {
-  const [user, setuser] = useState(localStorage.getItem('Emp_code'))
-  const [isChartData, setChartData] = useState([])
-  const [selection, setSelection] = useState([]);
-  const [isTest, setTest] = useState([])
 
-  const testData = async () => {
-    fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-      },
-      body: JSON.stringify({
-        "Emp_code": user
-      }),
-    }).then((response) => { return response.json() })
-      .then((response) => {
-        const combineArrays = (currentArray, prevArrays) => {
-          return [...prevArrays, ...currentArray];
-        };
-        setChartData(combineArrays(response.data, isChartData));
-      })
-      .catch((error) => {
-        console.log("Error :", error)
-      })
-  }
-  const copy = async () => {
+  const [isChartData, setChartData] = useState([])
+  const [user, setuser] = useState(localStorage.getItem('Emp_code'))
+  const [dynamicStates, setDynamicStates] = useState([]);
+  const [hasCode, setHasCode] = useState(true);
+  const [loading, setLoading] = useState(false)
+
+  const OrgData = async () => {
+    setLoading(true)
     fetch(`${baseUrl.baseUrl}/COPY`, {
       method: "POST",
       headers: {
@@ -51,181 +32,111 @@ export default function ChartFlow() {
       }),
     }).then((response) => { return response.json() })
       .then((response) => {
-        setTest(response?.data)
-      })
-      .catch((error) => {
-        console.log("Error :", error)
-      })
+        if (response?.data?.length > 0 && response?.success) {
+          const combineArrays = (currentArray, prevArrays) => {
+            return [...prevArrays, ...currentArray];
+          };
+          setChartData(combineArrays(response?.data, isChartData));
+        } else if (response?.data?.length == 0 && response?.success) {
+            message.error("No data available")
+        } else {
+            message.error(response?.message || response?.messsage)
+        }
+      }).catch((error) => {
+            message.error(error?.message || error?.messsage)
+      }).finally(() => { setLoading(false) })
   }
 
+
+
+  const removeItemByKey = (keyToRemove) => {
+    setDynamicStates(prevStates => prevStates.filter(state => state.code !== keyToRemove));
+  };
+
   useEffect(() => {
-    testData()
-    copy()
+    OrgData()
   }, [user])
 
 
-
-
-
-
-  // console.log("isTest",isTest)
-  // isTest.map((chk) => {console.log("chk",chk)})
-
-  // const chk = [isChartData.filter((chk) => chk.Supervisor_Code !== null)]
-  // const temp = isChartData?.reduce((acc, items) => {
-  //   if (items?.Supervisor_Code !== null) {
-  //     // Find the parent node in the accumulator based on Supervisor_Code
-  //     const parentNode = acc.find(node => node.data.code === items.Supervisor_Code);
-  //     if (parentNode && items?.Supervisor_Code !== null) {
-  //       parentNode.children = parentNode.children || [];
-  //       parentNode.children.push({
-  //         expanded: true,
-  //         type: 'person',
-  //         data: {
-  //           image: User,
-  //           name: items.Emp_name,
-  //           title: items.Desig_name,
-  //           code: items.Emp_code,
-  //           Supervisor_Code: items.Supervisor_Code
-  //         },
-  //         // children: [] // Add children array if needed for this node
-  //       });
-  //     }
-  //   } else {
-  //     acc.push({
-  //       expanded: true,
-  //       type: 'person',
-  //       data: {
-  //         image: User,
-  //         name: items.Emp_name,
-  //         title: items.Desig_name,
-  //         code: items.Emp_code,
-  //         Supervisor_Code: items.Supervisor_Code
-  //       },
-  //       // children: [] // Add children array if needed for this node
-  //     });
-  //   }
-
-  //   return acc;
-  // }, []);
-
-  // const data = [
-  //   {
-  //     expanded: true,
-  //     type: 'person',
-  //     data: {
-  //       image: User,
-  //       name: isChartData?.filter((item) => item?.Supervisor_Code == null)?.[0]?.Emp_name,
-  //       title: isChartData?.filter((item) => item?.Supervisor_Code == null)?.[0]?.Desig_name,
-  //       code : isChartData?.filter((item) => item?.Supervisor_Code == null)?.[0]?.Emp_code
-  //     },
-  //     children: temp
-  //   }
-  // ]
-
-  // const nodeTemplate = (node) => {
-  //   if (node.type === 'person') {
-  //     return (
-  //       <>
-  //         <div className="orgNodeBox" id={node?.data?.code} onClick={(e) => {setuser(e.target.getAttribute('id'))}}>
-  //             <img alt={node.data.name} src={node.data.image} className="w-3rem h-3rem" />
-  //             <div className="orgNodeInnerBox">
-  //               <h5>{node.data.name}</h5>
-  //               <span>{node.data.title}</span>
-  //             </div>
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  // };
-  // const handleId = (e) => {
-  //   setuser(e.target.getAttribute('id'))
-  // }
-  // console.log("user", user)
-
-  {console.log("isTest", isTest)}
 
   return (
     <>
       <div>
         <Header />
       </div>
-      <div className='container-fluid'>
-        <div className="row justify-content-center">
-          <div className="col-lg-11">
-            <div className='chatMargin flowchartBg'>
-              <h5><b>Organization</b></h5>
-
-              {isTest?.map((items) => {
-                return(
-                  <>
-                      <div className='mainOrg'>
-                        {/* MAIN ROOT BOX */}
-                        <div>
-                          <span>{items?.Emp_name}</span>
-                          <p>{items?.Desig_name}</p>
-                        </div>
-                        <div>
-                          <h3>Child 2</h3>
-                          <p>Content for Child 2</p>
-
-                          <div>
-                            <h4>Nested Child</h4>
-                            <p>Content for Nested Child</p>
-                          </div>
-                        </div>
-                      </div>
-                  </>
-                    )
-                  })}
-
-                {/* <div className='rootOrgBox'>
-                  <img src={User} alt="" />
-                  <div className='contentBoxOrg'>
-                    <span>Hamza</span>
-                    <span>Access Director</span>
-                  </div>
-                </div> */}
-
-                {/* <div className='d-flex'>
-
-                  
-                  {isChartData.map((items) => {
-                    if (items.Supervisor_Code !== null) {
-                      return (
-                        <>
-                          <div className='rootOrgBox' id={items.Emp_code} onClick={handleId}>
-                            <img src={User} alt="" />
-                            <div className='contentBoxOrg'>
-                              <span>{items?.Emp_name}</span>
-                              <span>{items?.Desig_name}</span>
-                            </div>
-
-                            <div>
-                              {console.log("object",isChartData.filter((item) => item.Emp_code === item.Supervisor_Code))}
-                            </div>
-                          </div>
-                        </>
-                      )
-                    }
-                  })}
-                </div> */}
-
-              {/* <div className='orgChartLoader'>
-                {isChartData?.length > 0 ?
-                  <OrganizationChart
-                    value={data}
-                    selectionMode="multiple" selection={selection}
-                    onSelectionChange={(e) => setSelection(e.data)}
-                    nodeTemplate={nodeTemplate}
-                  /> : <Spin size="large" className='m-auto' />
-                }
-              </div> */}
-            </div>
-          </div>
+      {loading &&
+        <div className='orgLoader'>
+          <Spin size="large" style={{ marginTop: "180px" }} />
         </div>
+      }
+      <div className='mainOrg mt-5 pt-5'>
+        {isChartData?.map((root) => {
+          if (root?.Supervisor_Code == null) {
+            return (<>
+              <div className="row">
+                <div className={` rootOrgBox  
+                                      ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `` : `rootBoxBottomBorder`}`}
+                  style={{ margin: "39px auto 29px auto" }}>
+                  <div className='d-flex justify-content-center'>
+                    <img src={User} />
+                    <div className='ml-4'>
+                      <Tooltip placement="top" title={`Name : ${root?.Label}`}>
+                        <span>{root?.Label.slice(0, 15)}...</span>
+                      </Tooltip>
+                      <Tooltip placement="top" title={`Designation : ${root?.Desig_name}`}>
+                        <span>{root?.Desig_name.slice(0, 15)}...</span>
+                      </Tooltip>
+                    </div>
+                  </div>
+                  <div className='showableIcon'
+                    onClick={() => {
+                      if (root?.Emp_code) {
+                        if (hasCode) {
+                          const newState = {
+                            "code": root.Emp_code,
+                          };
+                          setDynamicStates(prev => [...prev, newState]);
+                        } else {
+                          removeItemByKey(root.Emp_code);
+                        }
+                        setHasCode(prevHasCode => !prevHasCode);
+                      }
+                    }}
+                  >{root?.subordinates?.length > 1 || root?.subordinates?.length == 1 ? <IoIosArrowDown /> : null}</div>
+                </div>
+              </div>
+              <div className={`row justify-content-center childrensBox 
+                                  ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `d-none` : `d-flex`} 
+                                  ${root?.subordinates?.length > 1 ? `childrenUpperBorder` : null}`}
+                style={root?.subordinates?.length > 1 ? { margin: "35px 0" } : { margin: "10px 0" }}>
+                {
+                  root?.subordinates?.map((items) => {
+                    if (items?.Supervisor_Code == root?.Emp_code) {
+                      return (<>
+                        <div className='rootOrgBox childMiddleBorder' style={{ marginTop: "60px", paddingBottom: "45px" }}>
+                          {/* <img src={arrow} alt={arrow} className='arrow'/> */}
+                          <div className='d-flex justify-content-center'>
+                            <img src={User} />
+                            <div className='ml-4'>
+                              <Tooltip placement="top" title={`Name : ${items?.Label}`}>
+                                <span>{items?.Label.slice(0, 15)}...</span>
+                              </Tooltip>
+                              <Tooltip placement="top" title={`Designation : ${items?.Desig_name}`}>
+                                <p>{items?.Desig_name.slice(0, 15)}...</p>
+                              </Tooltip>
+                            </div>
+                            <button id={items?.Emp_code} onClick={(e) => { e.stopPropagation(); setuser(e.target.getAttribute('id')) }}>more</button>
+                          </div>
+                        </div>
+                      </>)
+                    }
+                  })
+                }
+              </div>
+            </>)
+          }
+        })}
       </div>
     </>
-  );
+  )
 }
-
