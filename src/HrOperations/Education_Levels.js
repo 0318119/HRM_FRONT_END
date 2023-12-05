@@ -86,7 +86,7 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
     }
   }, [page,isSearchVal])
 
-  // EDUCATION LEVEL DATA DELETE API CALL ===========================
+  // EDUCATION LEVEL DATA DELETE API CALL ====================
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/educationlevel/DeleteEducationLevel`, {
