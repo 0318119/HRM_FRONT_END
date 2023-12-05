@@ -65,17 +65,16 @@ export default function ChartFlow() {
         <Header />
       </div>
       {loading &&
-        <div className='orgLoader'>
-          <Spin size="large" style={{ marginTop: "180px" }} />
-        </div>
+          <div className='orgLoader'>
+            <Spin size="large" style={{ marginTop: "180px" }} />
+          </div>
       }
       <div className='mainOrg mt-5 pt-5'>
         {isChartData?.map((root) => {
           if (root?.Supervisor_Code == null) {
             return (<>
               <div className="row">
-                <div className={` rootOrgBox  
-                                      ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `` : `rootBoxBottomBorder`}`}
+                <div className={`rootOrgBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `` : `rootBoxBottomBorder`}`}
                   style={{ margin: "39px auto 29px auto" }}>
                   <div className='d-flex justify-content-center'>
                     <img src={User} />
@@ -105,9 +104,7 @@ export default function ChartFlow() {
                   >{root?.subordinates?.length > 1 || root?.subordinates?.length == 1 ? <IoIosArrowDown /> : null}</div>
                 </div>
               </div>
-              <div className={`row justify-content-center childrensBox 
-                                  ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `d-none` : `d-flex`} 
-                                  ${root?.subordinates?.length > 1 ? `childrenUpperBorder` : null}`}
+              <div className={`row justify-content-center childrensBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `d-none` : `d-flex`} ${root?.subordinates?.length > 1 ? `childrenUpperBorder` : null}`}
                 style={root?.subordinates?.length > 1 ? { margin: "35px 0" } : { margin: "10px 0" }}>
                 {
                   root?.subordinates?.map((items) => {
