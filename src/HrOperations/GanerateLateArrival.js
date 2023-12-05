@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
-import { FormInput } from "../components/basic/input/formInput";
+import { FormInput, FormSelect } from "../components/basic/input/formInput";
 import { PrimaryButton } from "../components/basic/button";
-import  FormSelect  from "../components/basic/select/index";
 import "./assets/css/InstitutionsList.css";
 import * as LATEArrival from "../store/actions/HrOperations/Late_Arrivals/index";
 import { connect } from "react-redux";
 import { message } from "antd";
 import baseUrl from '../../src/config.json'
+import * as FileSaver from 'file-saver'
+import XLSX from 'sheetjs-style'
 import { useForm } from "react-hook-form";
 import LateArrivals from './LateArrival'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,32 +20,36 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
   const [mode, setMode] = useState("read");
+  const [isGeneratedData, setGeneratedData] = useState([]);
   const [GenerateTable, setGenerateTable] = useState(false)
-  const [isSec, setSec] = useState('')
-  const [isLoc , setLoc] = useState('')
-  const [isDept, setDept] = useState('')
-  const [isDiv, setDiv] = useState('')
-  const [isPy, setPy] = useState('')
-  const [isPm, setPm] = useState('')
+  const [useSubmitForm, setUseSubmitForm] = useState(false);
+
   const EditPage = (mode) => {
     setGenerateTable(mode)
   }
 
 
 
-const submitForm = async (data) => {
+  const submitForm = async (data) => {
     try {
       const isValid = await GeneratedDataSchema.validate(data);
       if (isValid) {
-        // GenerateData(data)
-        console.log(data, 'data')
+        if (useSubmitForm == "one"){
+            GenerateData(data);
+          console.log("useSubmitForm", useSubmitForm)
+        }else{
+            GenerateExcelData(data);
+          console.log("two", useSubmitForm)
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  
+
+
+
   const GeneratedDataSchema = yup.object().shape({
     Div_code: yup.number().required("Div Code is required"),
     Dept_code: yup.number().required("Dept Code is required"),
@@ -59,45 +64,97 @@ const submitForm = async (data) => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {},
+    defaultValues: {
+      Div_code: "",
+      Dept_code: "",
+      Section_code: "",
+      Loc_code: "",
+      Payroll_Year: "",
+      Payroll_Month: ""
+    },
     mode: "onChange",
     resolver: yupResolver(GeneratedDataSchema),
   });
 
 
 
-  // const GenerateData = async (data) => {
+  const GenerateData = async (data, e) => {
+    const GenerateCreate = await GenerateLateArrivals({
+      Div_code: data?.Div_code,
+      Dept_code: data?.Dept_code,
+      Section_code: data?.Section_code,
+      Loc_code: data?.Loc_code,
+      Payroll_Year: data?.Payroll_Year,
+      Payroll_Month: data?.Payroll_Month,
+    })
+    setGeneratedData(GenerateCreate.data)
+    if (GenerateCreate.success) {
+      setGenerateTable(true)
+      messageApi.open({
+        type: 'success',
+        content: "You have successfully Generated",
+      });
+    }
+    else {
+      messageApi.open({
+        type: 'error',
+        content: GenerateCreate?.message || GenerateCreate?.message,
+      });
+    }
+  }
 
-  //   const GenerateCreate = await GenerateLateArrivals({
-  //     Div_code: data?.Div_code,
-  //     Dept_code: data?.Dept_code,
-  //     Section_code: data?.Section_code,
-  //     Loc_code: data?.Loc_code,
-  //     Payroll_Year: data?.Payroll_Year,
-  //     Payroll_Month:data?.Payroll_Month,
-  //   })
-  //   console.log(GenerateCreate, 'GenerateCreate')
-  //   setGenerateTable(true)
-  //   if (GenerateCreate.success) {
-  //     messageApi.open({
-  //       type: 'success',
-  //       content: "You have successfully Generated",
-  //     });
-  //   }
-  //   else {
-  //     messageApi.open({
-  //       type: 'error',
-  //       content: GenerateCreate?.message || GenerateCreate?.message,
-  //     });
-  //   }
-  // }
+
+  const GenerateExcelData = async (data) => {
+    try {
+      const GenerateExcel = await GetGenerateLateArrivalsData({
+        Div_code: data?.Div_code,
+        Dept_code: data?.Dept_code,
+        Section_code: data?.Section_code,
+        Loc_code: data?.Loc_code,
+        Payroll_Year: data?.Payroll_Year,
+        Payroll_Month: data?.Payroll_Month,
+      });
+
+      if (GenerateExcel.success) {
+        DownloadExcel(GenerateExcel?.data);
+
+        messageApi.open({
+          type: 'success',
+          content: "Downloading Excel",
+        });
+      } else {
+        messageApi.open({
+          type: 'error',
+          content: GenerateExcel?.message || "Failed to generate Excel",
+        });
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
+  const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+  const fileExtension = '.xlsx';
+
+  const DownloadExcel = async (hjh) => {
+    const ws = XLSX.utils.json_to_sheet(hjh);
+    const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, "data" + fileExtension);
+
+  }
 
 
-  const DeptData = Red_LateArrival?.data?.[0]?.res?.data;
-  const locationData = Red_LateArrival?.locationData?.[0]?.res?.data;
-  const SectionArray = Red_LateArrival?.SectionData?.[0]?.res?.data;
-  const DivisionArray = Red_LateArrival?.divisionData?.[0]?.res?.data;
+  const DeptData = Red_LateArrival?.deptData?.[0]?.res
+  const locationData = Red_LateArrival?.locationData?.[0]?.res;
+  const SectionArray = Red_LateArrival?.SectionData?.[0]?.res;
+  const DivisionArray = Red_LateArrival?.divisionData?.[0]?.res;
 
+  if (DeptData?.message == "failed") { message.error("in Department :" + DeptData?.message) }
+  else if (locationData?.message == "failed") { message.error("in Location :" + locationData?.message) }
+  else if (SectionArray?.message == "failed") { message.error("in Section :" + SectionArray?.message) }
+  else if (DivisionArray?.message == "failed") { message.error("in Division :" + DivisionArray?.message) }
 
 
   useEffect(() => {
@@ -123,7 +180,6 @@ const submitForm = async (data) => {
                 id="Payroll_Year"
                 name="Payroll_Year"
                 type="number"
-                // onChange={(e) => setPy(e.target.value)}
                 placeholder={"Year"}
                 showLabel={true}
                 errors={errors}
@@ -135,24 +191,21 @@ const submitForm = async (data) => {
                 name="Payroll_Month"
                 id="Payroll_Month"
                 type="number"
-                // onChange={(e) => setPm(e.target.value)}
                 showLabel={true}
                 errors={errors}
                 control={control}
-              />              
-
-              
+              />
             </div>
             <div className="d-flex align-items-center">
               <FormSelect
+                className="FormSelect"
                 placeholder={"Locations"}
                 label='Locations'
-                name='Loc_code' 
+                name='Loc_code'
                 id='Loc_code'
                 type='number'
-                // onChange={(e) => setLoc(e)}
                 options={
-                  locationData?.map(item => ({
+                  locationData?.data?.map(item => ({
                     value: item.Loc_code,
                     label: item.Loc_name
                   }))
@@ -160,18 +213,15 @@ const submitForm = async (data) => {
                 showLabel={true}
                 errors={errors}
                 control={control}
-
               />
               <FormSelect
-                deduction={'Departments'} 
                 placeholder={"Departments"}
                 name='Dept_code'
                 label='Dept_code'
                 id='Dept_code'
                 type='number'
-                // onChange={(e) => setDept(e)}
                 options={
-                  DeptData.map(item => ({
+                  DeptData?.data.map(item => ({
                     value: item.Dept_code,
                     label: item.Dept_name
                   }))
@@ -179,7 +229,7 @@ const submitForm = async (data) => {
                 showLabel={true}
                 errors={errors}
                 control={control}
-                 />
+              />
             </div>
             <div className="d-flex align-items-center">
               <FormSelect
@@ -188,26 +238,24 @@ const submitForm = async (data) => {
                 name='Div_code'
                 id='Div_code'
                 type='number'
-                // onChange={(e) => setDiv(e)}
-                  options={
-                  DivisionArray.map(item => ({
+                options={
+                  DivisionArray?.data.map(item => ({
                     value: item.Div_code,
                     label: item.Div_name
                   }))
-                } 
+                }
                 showLabel={true}
                 errors={errors}
                 control={control}
-                />
+              />
               <FormSelect
-                placeholder={"Units"}
                 label={'Units'}
+                placeholder='Units'
                 name='Section_code'
                 id="Section_code"
                 type='number'
-                // onChange={(e) => setSec(e)}
                 options={
-                  SectionArray.map(item => ({
+                  SectionArray?.data.map(item => ({
                     value: item.Section_code,
                     label: item.Section_name
                   }))
@@ -215,103 +263,25 @@ const submitForm = async (data) => {
                 showLabel={true}
                 errors={errors}
                 control={control}
-                 />
+              />
             </div>
-            <PrimaryButton type={"submit"} title="Generate Data" />
 
+            <div className="d-flex" >
+              <PrimaryButton title="Generate Data" id="one" type="submit" 
+                onClick={(e) => {
+                  setUseSubmitForm(e.target.getAttribute('id'));
+                }} 
+              />
+              <PrimaryButton title={'ExportToExcel'} id="two" type="submit"
+                onClick={(e) => {
+                  setUseSubmitForm(e.target.getAttribute('id'));
+                }} 
+               />
+            </div>
           </form>
-
-
-          <div className="col-lg-12 maringClass">
-            <h4 className="text-dark">Download</h4>
-            {/* <div className="d-flex align-items-center">
-              <Input
-                label={'Payroll Year'}
-                placeholder={"2023"}
-                id={'Payroll Year'}
-                type="number"
-                name={'Payroll Year'}
-                onChange={(e) => GetGenData(e.target.value)}
-              />
-
-
-              <Input
-                label={'Payroll Month'}
-                placeholder={"November"}
-                type="number"
-                id="Payroll_Month"
-                name='Payroll_Month'
-                onChange={(e) => GetGenData(e.target.value)}
-              />
-
-            </div>
-            <div className="d-flex align-items-center">
-              <FormSelect
-                deduction={'Locations'}
-                placeholder={"Locations"}
-                name={'Locations'} label={'Locations'}
-                // value={} 
-                onChange={GetGenData}
-                options={
-                  dataArray2.map(item => ({
-                    value: item.Loc_code,
-                    label: item.Loc_name
-                  }))
-                }
-
-              />
-            </div>
-            <div className="d-flex align-items-center">
-              <FormSelect
-                deduction={'Departments'}
-                placeholder={"Departments"}
-                name={'Departments'} label={'Departments'}
-                // value={} 
-                onChange={GetGenData}
-                options={
-                  dataArray.map(item => ({
-                    value: item.Dept_code,
-                    label: item.Dept_name
-                  }))
-                } />
-            </div>
-            
-            <div className="d-flex align-items-center">
-              <FormSelect
-                deduction={'Division'}
-                placeholder={"Division"}
-                label={'Division'}
-                name={'Division'}
-                onChange={GetGenData}
-                options={
-                  DivisionArray.map(item => ({
-                    value: item.Div_code,
-                    label: item.Div_name
-                  }))
-                } />
-            </div>
-            <div className="d-flex align-items-center">
-              <FormSelect
-                deduction={'Units'}
-                placeholder={"Units"}
-                label={'Units'}
-                name={'Units'}
-                onChange={GetGenData}
-                options={
-                  SectionArray.map(item => ({
-                    value: item.Section_code,
-                    label: item.Section_name
-                  }))
-                } />
-            </div> */}
-
-          </div>
-          <div>
-            <PrimaryButton title={'ExportToExcel'} />
-          </div>
           {GenerateTable ? <div>
-            <LateArrivals cancel={EditPage} mode={mode} />
-          </div> : " "}
+            <LateArrivals cancel={EditPage} mode={mode} isGeneratedData={isGeneratedData} />
+          </div> : ""}
 
         </div>
       </div>

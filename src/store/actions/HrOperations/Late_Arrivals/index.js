@@ -18,12 +18,12 @@ export const GenerateLateArrivals = (body) => async (dispatch) => {
                 'Content-Type': 'application/json',
             },
         body: JSON.stringify({ 
-            "Div_code": body,
-            "Dept_code": body,
-            "Section_code": body,
-            "Loc_code": body,
-            "Payroll_Year": body,
-            "Payroll_Month": body
+            "Div_code": body?.Div_code,
+            "Dept_code": body?.Dept_code,
+            "Section_code": body?.Section_code,
+            "Loc_code": body?.Loc_code,
+            "Payroll_Year": body?.Payroll_Year,
+            "Payroll_Month": body?.Payroll_Month
          })
         });
     const res = await response.json();
@@ -34,29 +34,30 @@ export const GenerateLateArrivals = (body) => async (dispatch) => {
     }
 }
 
-// export const GetGenerateLateArrivalsData = (body) => async (dispatch) => {
-//     const response = await fetch(`${baseUrl.baseUrl}/lateArrival/GetLateArrivalData`, {
-//         method: "POST",
-//         headers: {
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             "Div_code": body,
-//             "Dept_code": body,
-//             "Section_code": body,
-//             "Loc_code": body,
-//             "Payroll_Year": body,
-//             "Payroll_Month": body
-//         })
-//     });
-//     const res = await response.json();
-//     if (res?.success) {
-//         return res;
-//     } else {
-//         return res;
-//     }
-// }
+
+export const GetGenerateLateArrivalsData = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/lateArrival/LateArrivalData_DownloadExcel`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Div_code": body?.Div_code,
+            "Dept_code": body?.Dept_code,
+            "Section_code": body?.Section_code,
+            "Loc_code": body?.Loc_code,
+            "Payroll_Year": body?.Payroll_Year,
+            "Payroll_Month": body?.Payroll_Month
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
 
 
 export const GetDataDepartment = (params) => async (dispatch) => {
@@ -219,3 +220,5 @@ export const GetDivisionData = (params) => async (dispatch) => {
         console.log(error)
     }
 }
+
+

@@ -762,7 +762,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     placeholder={'Birth Date'}
                     id="Emp_birth_date"
                     name="Emp_birth_date"
-                    type="text"
+                    type="Date"
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -772,7 +772,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     placeholder={'Offer Letter Date'}
                     id="Offer_Letter_date"
                     name="Offer_Letter_date"
-                    type="text"
+                    type="Date"
                     showLabel={true}
                     errors={errors}
                     control={control}

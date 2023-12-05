@@ -10,8 +10,7 @@ import {
 
 
 const initState = {
-    data: [],
-    dataSingle: [],
+    deptData: [],
     locationData :[],
     SectionData: [],
     divisionData: [],
@@ -28,13 +27,7 @@ const Red_LateArrival = (state = initState, action) => {
         case GET_LATE_ARRIVAL_DATA:
             return {
                 ...state,
-                data: action.payload,
-                loading: action.loading,
-            };
-        case GET_LATE_ARRIVAL_DATA_SINGLE:
-            return {
-                ...state,
-                dataSingle: action.payload,
+                deptData: action.payload,
                 loading: action.loading,
             };
         case GET_LOCATIONS_DATA:
@@ -58,7 +51,7 @@ const Red_LateArrival = (state = initState, action) => {
         case GET_LATE_ARRIVAL_DATA_END:
             return {
                 ...state,
-                data: action.payload,
+                deptData: action.payload,
                 locationData: action.payload,
                 SectionData: action.payload,
                 divisionData: action.payload,

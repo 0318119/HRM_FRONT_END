@@ -47,24 +47,45 @@ export const GetAppointStatusCall = (params) => async (dispatch) => {
 };
 
 
-// export const Processed = (body) => async (dispatch, getState) => {
+// export const Get_Appointment_By_ID = (body) => async (dispatch) => {
 //     try {
-//         const response = await fetch(`${baseURL.baseUrl}/master_all_employees/ProcessTranAppointment`, {
+//         dispatch({
+//             type: GET_APPOINTMENT_DATA,
+//             payload: true,
+//             loading: true,
+//         });
+//         const response = await fetch(`${baseUrl.baseUrl}/Positions/GetbyPositionscode`, {
 //             method: "POST",
 //             headers: {
 //                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
 //                 'Content-Type': 'application/json',
 //             },
 //             body: JSON.stringify({
-//                 Allowance_code: body
+//                 'Position_Code': body,
 //             })
 //         });
-//         const res = await response.json()
-//         if (res?.success == "success") {
-//             return res;
+//         if (response.status === 200) {
+//             const res = await response.json()
+//             dispatch({
+//                 type: GET_APPOINTMENT_DATA_SINGLE,
+//                 payload: [{ res }],
+//                 loading: false,
+//             });
+//         } else {
+//             const res = await response.json()
+//             dispatch({
+//                 type: GET_APPOINTMENT_DATA_END,
+//                 payload: [{ res }],
+//                 loading: false,
+//             });
 //         }
 //     }
 //     catch (error) {
+//         dispatch({
+//             type: GET_APPOINTMENT_DATA_END,
+//             payload: false,
+//             loading: false,
+//         });
 //         console.log(error)
 //     }
 
