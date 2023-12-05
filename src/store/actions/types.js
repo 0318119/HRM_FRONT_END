@@ -279,18 +279,14 @@ export const GET_SECTION_DATA = "GET_SECTION_DATA";
 export const GET_DIVISION_DATA = "GET_DIVISION_DATA";
 export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
 
-<<<<<<< HEAD
-
 // ADDMINSRATION ===> USER PROFILE === 
 export const GET_CHANGE_PROFILE_DATA = "GET_CHANGE_PROFILE_DATA";
 export const GET_CHANGE_PROFILE_DATA_START = "GET_CHANGE_PROFILE_DATA_START";
 export const GET_CHANGE_PROFILE_DATA_SINGLE = "GET_CHANGE_PROFILE_DATA_SINGLE";
 export const GET_CHANGE_PROFILE_DATA_END = "GET_CHANGE_PROFILE_DATA_END";
 
-=======
 // HRSETUPS ===> New_Appointment_Report === 
 export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA";
 export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
 export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
 export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
->>>>>>> 3106d9e2f44b1fb6523b030d98aa1fe4e4995bcf

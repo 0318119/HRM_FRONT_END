@@ -108,12 +108,9 @@ import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
-<<<<<<< HEAD
 import Change_Password from '../Addministration/pages/Change_Password'
-=======
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 
->>>>>>> 3106d9e2f44b1fb6523b030d98aa1fe4e4995bcf
 
 
 
@@ -240,7 +237,6 @@ const routing = () => {
 
         {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
         <Route path="/Change_Password" element={<Change_Password />} />
-
       </Routes>
     </Router>
 

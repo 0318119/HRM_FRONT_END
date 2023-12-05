@@ -257,8 +257,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_PayrollCate
                         control={control}
                         type="text"
                     />
-<<<<<<< HEAD
-=======
 
 
                     <FormSelect
@@ -326,7 +324,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_PayrollCate
                     />
 
 
->>>>>>> 3106d9e2f44b1fb6523b030d98aa1fe4e4995bcf
                 </div>
                 <div className='EducationBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
