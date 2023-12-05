@@ -12,7 +12,7 @@ export const TaxPdfData = (body) => async (dispatch, getState) => {
             body: JSON.stringify({
                 payrollYear:body?.payrollYear,
                 payroll_month:body?.payroll_month,
-                PayrollCategory: "2",
+                PayrollCategory: localStorage.getItem('Payroll_Category'),
                 Emp_Code:body?.Emp_Code
             })
         });
@@ -28,9 +28,6 @@ export const TaxPdfData = (body) => async (dispatch, getState) => {
     }
 
 }
-
-
-
 
 export const GetAllEmp = () => async (dispatch) => {
     try {

@@ -263,3 +263,30 @@ export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA"
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
 export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";
+
+// PAYROLL ===> Payroll_Catery_Access === 
+export const GET_Payroll_Catery_Access_DATA = "GET_Payroll_Catery_Access_DATA";
+export const GET_Payroll_Catery_Access_START = "GET_Payroll_Catery_Access_START";
+export const GET_Payroll_Catery_Access_SINGLE = "GET_Payroll_Catery_Access_SINGLE";
+export const GET_Payroll_Catery_Access_END = "GET_Payroll_Catery_Access_END";
+
+// HRSETUPS ===> LATE ARRIVAL === 
+export const GET_LATE_ARRIVAL_DATA = "GET_LATE_ARRIVAL_DATA";
+export const GET_LATE_ARRIVAL_DATA_START = "GET_LATE_ARRIVAL_DATA_STAR";
+export const GET_LATE_ARRIVAL_DATA_SINGLE = "GET_LATE_ARRIVAL_DATA_SINGLE";
+export const GET_LOCATIONS_DATA = "GET_LOCATIONS_DATA";
+export const GET_SECTION_DATA = "GET_SECTION_DATA";
+export const GET_DIVISION_DATA = "GET_DIVISION_DATA";
+export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
+
+// ADDMINSRATION ===> USER PROFILE === 
+export const GET_CHANGE_PROFILE_DATA = "GET_CHANGE_PROFILE_DATA";
+export const GET_CHANGE_PROFILE_DATA_START = "GET_CHANGE_PROFILE_DATA_START";
+export const GET_CHANGE_PROFILE_DATA_SINGLE = "GET_CHANGE_PROFILE_DATA_SINGLE";
+export const GET_CHANGE_PROFILE_DATA_END = "GET_CHANGE_PROFILE_DATA_END";
+
+// HRSETUPS ===> New_Appointment_Report === 
+export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA";
+export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
+export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
+export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";

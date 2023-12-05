@@ -1,10 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.css";
-// import "bootstrap/dist/css/";
-// import 'bootstrap/dist/css/bootstrap-reboot.css';
+import "bootstrap/dist/css/bootstrap.css";
 import '../../src/Assets/css/main.css'
-import '../../src/Assets/css/bootstrap.css'
 import { Login } from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
@@ -111,6 +108,9 @@ import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
+import Change_Password from '../Addministration/pages/Change_Password'
+import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
+
 
 
 
@@ -216,23 +216,27 @@ const routing = () => {
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
         <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
         <Route path="/payroll/report/taxReport" element={<TaxReport />} />
-        <Route path="/Earnings" element={<Earnings/>} />
-        <Route path="/JV_Codes" element={<JV_Code/>} />
-        <Route path="IncomeTax_Columns" element={<Income_Tax/>} />
-        <Route path="Bank_Branches" element={<Bank_Branches/>} />      
+        <Route path="/Earnings" element={<Earnings />} />
+        <Route path="/JV_Codes" element={<JV_Code />} />
+        <Route path="IncomeTax_Columns" element={<Income_Tax />} />
+        <Route path="Bank_Branches" element={<Bank_Branches />} />
         <Route path="/Earnings" element={<Earnings />} />
         <Route path="/Payroll_Master" element={<Payroll_Master />} />
-        <Route path="/Tax_Structure" element={<TaxStructure/>} />
-        <Route path="/Bank" element={<Bank/>} />
-        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries/>} />
-        <Route path="/Payroll_Catery_Access" element={<PayrollCategoryAccess/>} />
+        <Route path="/Tax_Structure" element={<TaxStructure />} />
+        <Route path="/Bank" element={<Bank />} />
+        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
+        <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
+        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
 
-        
+
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}
         <Route path="/Pay/PaySlip" element={<PaySlip />} />
         <Route path="flow/DesignationsFlowChart" element={<FLow />} />
+
+        {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
+        <Route path="/Change_Password" element={<Change_Password />} />
       </Routes>
     </Router>
 

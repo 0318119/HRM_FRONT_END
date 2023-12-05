@@ -3,8 +3,8 @@ import Header from '../../../../components/Includes/Header';
 import Input from "../../../../components/basic/input";
 import { Button } from "../../../../components/basic/button";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import OutstandingRecoveriesFormnkform from "../../../../payroll/form/transactionPosting/Setup/OutstandingRecoveriesForm";
-import * as OutstandingRecoveriesActions from "../../../../store/actions/payroll/outstandingRecoveries";
+import PayrollCategoryAccessForm from "../../../../payroll/form/transactionPosting/Setup/PayrollCategoryAccessForm";
+import * as PayrollCategoryAccessActions from "../../../../store/actions/payroll/PayrollCategoryAccess";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../../../../src/config.json'
@@ -13,7 +13,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecoveries }) => {
+const PayrollCategoryAccess = ({ Red_PayrollCategoryAccess, GetPayrollCateryAccess }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null)
@@ -34,19 +34,64 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
 
     const columns = [
         {
-            title: 'Outstanding Recovery Code',
-            dataIndex: 'Outstanding_Recovery_code',
-            key: 'Outstanding_Recovery_code',
+            title: 'Payroll Category Code',
+            dataIndex: 'Payroll_Category_code',
+            key: 'Payroll_Category_code',
         },
         {
-            title: 'Outstanding Recovery Name',
-            dataIndex: 'Outstanding_Recovery_name',
-            key: 'Outstanding_Recovery_name',
+            title: 'Payroll Category Name',
+            dataIndex: 'Payroll_Category_name',
+            key: 'Payroll_Category_name',
         },
         {
-            title: 'Final Settlement Report Mandatory Flag',
-            dataIndex: 'Final_Settlement_Report_Mandatory_Flag',
-            key: 'Final_Settlement_Report_Mandatory_Flag',
+            title: 'Payroll Category Abbreviation',
+            dataIndex: 'Payroll_Category_abbr',
+            key: 'Payroll_Category_abbr',
+        },
+        {
+            title: 'Payroll Month',
+            dataIndex: 'Payroll_Month',
+            key: 'Payroll_Month',
+        },
+        {
+            title: 'Payroll Year',
+            dataIndex: 'Payroll_Year',
+            key: 'Payroll_Year',
+        },
+        {
+            title: 'Payroll Last Month',
+            dataIndex: 'Payroll_Last_Month',
+            key: 'Payroll_Last_Month',
+        },
+        {
+            title: 'Payroll Last Year',
+            dataIndex: 'Payroll_Last_Year',
+            key: 'Payroll_Last_Year',
+        },
+        {
+            title: 'Payroll Undo Flag',
+            dataIndex: 'Payroll_Undo_Flag',
+            key: 'Payroll_Undo_Flag',
+        },
+        {
+            title: 'Loan Completion Flag',
+            dataIndex: 'Loan_Completion_Flag',
+            key: 'Loan_Completion_Flag',
+        },
+        {
+            title: 'Sort key',
+            dataIndex: 'Sort_key',
+            key: 'Sort_key',
+        },
+        {
+            title: 'PF Percentage',
+            dataIndex: 'pf_percentage',
+            key: 'pf_percentage',
+        },
+        {
+            title: 'Active flag',
+            dataIndex: 'active_flag',
+            key: 'active_flag',
         },
         {
             title: 'Action',
@@ -54,14 +99,14 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
             render: (data) => (
                 <>
                     <Space size="middle">
-                        <button onClick={() => EditPage("Edit", data?.Outstanding_Recovery_code)} className="editBtn"><FaEdit /></button>
+                        <button onClick={() => EditPage("Edit", data?.Payroll_Category_code)} className="editBtn"><FaEdit /></button>
                         <Popconfirm
-                            title="Delete the Outstanding Recoveries"
-                            description="Are you sure to delete the Outstanding Recoveries?"
+                            title="Delete the Payroll Category Access"
+                            description="Are you sure to delete the Payroll Category Access?"
                             okText="Yes"
                             cancelText="No"
                             onConfirm={() => {
-                                handleConfirmDelete(data?.Outstanding_Recovery_code)
+                                handleConfirmDelete(data?.Payroll_Category_code)
                             }}
                         >
                             <button className="deleteBtn"><MdDeleteOutline /></button>
@@ -72,14 +117,14 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
         },
     ];
 
-    // Payroll Outstanding Recoveries FORM DATA DELETE API CALL =========================== 
+    // Payroll Payroll category access FORM DATA DELETE API CALL =========================== 
     async function handleConfirmDelete(id) {
         await fetch(
-            `${baseUrl.baseUrl}/outstandingRecoveries/DeleteOutstandingrecoveries`, {
+            `${baseUrl.baseUrl}/payrollCategories/DeletePayrollCategories`, {
             method: "POST",
             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "Outstanding_Recovery_code": id,
+                "Payroll_Category_code": id,
             }),
         }
         ).then((response) => {
@@ -92,7 +137,7 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
                 });
                 setTimeout(() => {
                     messageApi.destroy()
-                    GetOutstandingRecoveries({
+                    GetPayrollCateryAccess({
                         pageSize: pageSize,
                         pageNo: page,
                         search: null
@@ -124,13 +169,13 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
 
     useEffect(() => {
         if (isSearchVal == '') {
-            GetOutstandingRecoveries({
+            GetPayrollCateryAccess({
                 pageSize: pageSize,
                 pageNo: page,
                 search: null
             })
         } else {
-            GetOutstandingRecoveries({
+            GetPayrollCateryAccess({
                 pageSize: pageSize,
                 pageNo: 1,
                 search: isSearchVal
@@ -151,7 +196,7 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
                         {mode == "read" && (
                             <>
                                 <div className="coslistFlexBox">
-                                    <h4 className="text-dark">Outstanding Recoveries</h4>
+                                    <h4 className="text-dark">Payroll Category Access</h4>
                                     <div className="costCentersearchBox">
                                         <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
@@ -167,12 +212,12 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
                             {mode == "read" && (
                                 <>
                                     <Table
-                                        columns={columns} loading={Red_outstandingRecoveries?.loading}
-                                        dataSource={Red_outstandingRecoveries?.data?.[0]?.res?.data1}
+                                        columns={columns} loading={Red_PayrollCategoryAccess?.loading}
+                                        dataSource={Red_PayrollCategoryAccess?.data?.[0]?.res?.data1}
                                         scroll={{ x: 10 }}
                                         pagination={{
                                             defaultCurrent: page,
-                                            total: Red_outstandingRecoveries?.data?.[0]?.res?.data3,
+                                            total: Red_PayrollCategoryAccess?.data?.[0]?.res?.data3,
                                             onChange: (p) => {
                                                 setPage(p);
                                             },
@@ -182,10 +227,10 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
                                 </>
                             )}
                             {mode == "create" && (
-                                <OutstandingRecoveriesFormnkform cancel={setMode} mode={mode} isCode={null} page={page} />
+                                <PayrollCategoryAccessForm cancel={setMode} mode={mode} isCode={null} page={page} />
                             )}
                             {mode == "Edit" && (
-                                <OutstandingRecoveriesFormnkform cancel={setMode} mode={mode} isCode={isCode} page={page} />
+                                <PayrollCategoryAccessForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
                             )}
                         </div>
                     </div>
@@ -195,7 +240,7 @@ const PayrollCategoryAccess = ({ Red_outstandingRecoveries, GetOutstandingRecove
     );
 };
 
-function mapStateToProps({ Red_outstandingRecoveries }) {
-    return { Red_outstandingRecoveries };
+function mapStateToProps({ Red_PayrollCategoryAccess }) {
+    return { Red_PayrollCategoryAccess };
 }
-export default connect(mapStateToProps, OutstandingRecoveriesActions)(PayrollCategoryAccess) 
+export default connect(mapStateToProps, PayrollCategoryAccessActions)(PayrollCategoryAccess) 

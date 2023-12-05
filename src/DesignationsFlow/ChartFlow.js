@@ -1,387 +1,139 @@
-// import React, { useEffect, useState } from 'react';
-// import { Tree, TreeNode } from 'react-organizational-chart';
-
-
-
-// function ChartFlow() {
-// const [isChartData,setChartData] = useState([])
-// const testData = async () => {
-//     fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-//         method: "GET",
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//         },
-//     }).then((response) => {return response.json()})
-//     .then((response) => {
-//         console.log("response :",response)
-//     })
-//     .catch((error) => {
-//         console.log("Error :",error)
-//     })
-// }
-// useEffect(() =>{
-//     testData()
-// },[])
-//     return (
-//         <div>
-//             <Tree label={<div>Root</div>}>
-//                 <TreeNode label={<div>Child 1</div>}>
-//                     <TreeNode label={<div>Grand Child</div>} />
-//                 </TreeNode>
-//             </Tree>
-//         </div>
-//     )
-// }
-
-// export default ChartFlow
-
-// import React, { useEffect, useState } from 'react';
-// import Tree from 'react-d3-tree';
-
-
-// export default function ChartFlow() {
-//   const [isChartData,setChartData] = useState([])
-//   const testData = async () => {
-//       fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-//           method: "GET",
-//           headers: {
-//               'Content-Type': 'application/json',
-//               'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//           },
-//       }).then((response) => {return response.json()})
-//       .then((response) => {
-//           console.log("response :",response)
-//       })
-//       .catch((error) => {
-//           console.log("Error :",error)
-//       })
-//   }
-//   useEffect(() =>{
-//       testData()
-//   },[])
-
-//   // This is a simplified example of an org chart with a depth of 2.
-// // Note how deeper levels are defined recursively via the `children` property.
-// const squareNode = {
-//   shape: 'rect',
-//   shapeProps: {
-//     width: "50", // Customize the width of the square
-//     height: "50", // Customize the height of the square
-//     fill: 'lightblue', // Customize the fill color of the square
-//     stroke: 'blue', // Customize the stroke color of the square
-//     strokeWidth: 2, // Customize the stroke width
-//   },
-// };
-// const customLineShape = (linkData, orientation) => {
-//   // Customize the line shape here
-//   // Example: Return a custom path for the link
-//   // console.log("linkData",linkData)
-//   return `M${linkData.source.x},${linkData.source.y}L${linkData.target.x},${linkData.target.y}`;
-// };
-// const orgChart = {
-//   name: 'CEO',
-//   children: [
-//     {
-//       name: 'Manager',
-//       attributes: {
-//         department: 'Production',
-//       },
-//       children: [
-//         {
-//           name: 'Foreman',
-//           attributes: {
-//             department: 'Fabrication',
-//           },
-//           children: [
-//             {
-//               name: 'Worker',
-//             },
-//           ],
-//         },
-//         {
-//           name: 'Foreman',
-//           attributes: {
-//             department: 'Assembly',
-//           },
-//           children: [
-//             {
-//               name: 'Worker',
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
-//   return (
-//     // `<Tree />` will fill width/height of its container; in this case `#treeWrapper`.
-//     <div id="treeWrapper" style={{ width: '100%', height: '100vh' }}>
-//       <Tree data={orgChart} orientation="vertical" translate={{ x: 300, y: 200 }} zoom={0.7} nodeSvgShape={squareNode}  pathFunc={customLineShape} />
-//     </div>
-//   );
-// }
-
-// import React, { useEffect, useState } from 'react';
-// import { Tree, TreeNode } from 'react-organizational-chart';
-
-
-
-// function ChartFlow() {
-// const [isChartData,setChartData] = useState([])
-// const testData = async () => {
-//     fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-//         method: "GET",
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//         },
-//     }).then((response) => {return response.json()})
-//     .then((response) => {
-//         console.log("response :",response)
-//     })
-//     .catch((error) => {
-//         console.log("Error :",error)
-//     })
-// }
-// useEffect(() =>{
-//     testData()
-// },[])
-//     return (
-//         <div>
-//             <Tree label={<div>Root</div>}>
-//                 <TreeNode label={<div>Child 1</div>}>
-//                     <TreeNode label={<div>Grand Child</div>} />
-//                 </TreeNode>
-//             </Tree>
-//         </div>
-//     )
-// }
-
-// export default ChartFlow
-
-
-// 
-// import Tree from 'react-d3-tree';
-// // import * as d3 from 'd3';
-// import 'd3-org-chart';
-// import 'd3-flextree';
-
-
-
-// This is a simplified example of an org chart with a depth of 2.
-// Note how deeper levels are defined recursively via the `children` property.
-// const orgChart = {
-//   name: 'CEO',
-//   children: [
-//     {
-//       name: 'Manager',
-//       attributes: {
-//         department: 'Production',
-//       },
-//       children: [
-//         {
-//           name: 'Foreman',
-//           attributes: {
-//             department: 'Fabrication',
-//           },
-//           children: [
-//             {
-//               name: 'Worker',
-//             },
-//           ],
-//         },
-//         {
-//           name: 'Foreman',
-//           attributes: {
-//             department: 'Assembly',
-//           },
-//           children: [
-//             {
-//               name: 'Worker',
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
-
 import React, { useEffect, useState } from 'react';
-import baseUrl from '../config.json'
-import { OrgChart } from 'd3-org-chart';
-import { OrganizationChart } from 'primereact/organizationchart';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
-import 'primeflex/primeflex.css';
-import 'primeicons/primeicons.css';
-import 'primereact/resources/primereact.css';
-import './flags.css'
-import Header from '../components/Includes/Header';
+import { IoIosArrowDown } from "react-icons/io";
+import { Tooltip } from 'antd';
+import User from '../../src/Assets/Images/user.avi'
 import './flow.css'
+import baseUrl from '../config.json'
+import Header from '../components/Includes/Header';
+import { Flex, Spin } from 'antd';
+import { message } from 'antd';
+
+
 
 
 export default function ChartFlow() {
+
   const [isChartData, setChartData] = useState([])
-  // const testData = async () => {
-  //   fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-  //     method: "GET",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-  //     },
-  //   }).then((response) => { return response.json() })
-  //     .then((response) => {
-  //       console.log("response :", response)
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error :", error)
-  //     })
-  // }
-  // useEffect(() => {
-  //   testData()
-  // }, [])
-  const [selection, setSelection] = useState([]);
-  const [data] = useState([
-    {
-      expanded: true,
-      type: 'person',
-      data: {
-        image: 'https://primefaces.org/cdn/primereact/images/avatar/amyelsner.png',
-        name: 'Amy Elsner',
-        title: 'CEO'
-      },
-      children: [
-        {
-          expanded: true,
-          type: 'person',
-          data: {
-            image: 'https://primefaces.org/cdn/primereact/images/avatar/annafali.png',
-            name: 'Anna Fali',
-            title: 'CMO'
-          },
-          children: [
-            {
-              label: 'Sales'
-            },
-            {
-              label: 'Marketing'
-            }
-          ]
-        },
-        {
-          expanded: true,
-          type: 'person',
-          data: {
-            image: 'https://primefaces.org/cdn/primereact/images/avatar/stephenshaw.png',
-            name: 'Stephen Shaw',
-            title: 'CTO'
-          },
-          children: [
-            {
-              label: 'Development'
-            },
-            {
-              label: 'UI/UX Design'
-            }
-          ]
-        }
-      ]
-    }
-  ]);
+  const [user, setuser] = useState(localStorage.getItem('Emp_code'))
+  const [dynamicStates, setDynamicStates] = useState([]);
+  const [hasCode, setHasCode] = useState(true);
+  const [loading, setLoading] = useState(false)
 
-  const nodeTemplate = (node) => {
-    console.log("node",node)
-    if (node.type === 'person') {
-      return (
-        <div className="flex flex-column align-items-center">
-          <div className="flex flex-column align-items-center">
-            <img alt={node.data.name} src={node.data.image} className="mb-3 w-3rem h-3rem" />
-            <span className="font-bold mb-2">{node.data.name}</span>
-            <span>{node.data.title}</span>
-          </div>
-        </div>
-      );
-    }
-
-    // return node.label;
-  };
-
-
-  const fetchData = async () => {
-    await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
-      method: "GET",
+  const OrgData = async () => {
+    setLoading(true)
+    fetch(`${baseUrl.baseUrl}/COPY`, {
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
         'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
       },
+      body: JSON.stringify({
+        "Emp_code": user
+      }),
     }).then((response) => { return response.json() })
       .then((response) => {
-        const dataFlattened = response;
-        console.log("dataFlattened", dataFlattened)
-        // new OrgChart()
-        // .container('.chart-container')
-        // .data(dataFlattened)
-        // // .nodeWidth((d) => 250)
-        // // .childrenMargin((d) => 40)
-        // .render();
-        new OrgChart()
-          .container('chart-container')
-          .data(dataFlattened)
-          .nodeWidth((d) => 250)
-          .initialZoom(0.7)
-          .nodeHeight((d) => 175)
-          .childrenMargin((d) => 40)
-          .compactMarginBetween((d) => 15)
-          .compactMarginPair((d) => 80)
-          .nodeContent(function (d, state) {
-            // console.log("d",state)
-            return `
-          <h4>${state}</h4>`;
-          })
-          .render();
+        if (response?.data?.length > 0 && response?.success) {
+          const combineArrays = (currentArray, prevArrays) => {
+            return [...prevArrays, ...currentArray];
+          };
+          setChartData(combineArrays(response?.data, isChartData));
+        } else if (response?.data?.length == 0 && response?.success) {
+            message.error("No data available")
+        } else {
+            message.error(response?.message || response?.messsage)
+        }
       }).catch((error) => {
-        // setChartData(error)
-        console.log("error", error)
-      })
-
-    // new OrgChart()
-    // .container('.chart-container')
-    // .data(dataFlattened)
-    // .nodeWidth((d) => 250)
-    // .childrenMargin((d) => 40)response
-    // .render();
-    // .nodeContent(function (d) {
-    //   console.log("d",d)
-    // }).render();
+            message.error(error?.message || error?.messsage)
+      }).finally(() => { setLoading(false) })
+  }
 
 
-    // console.log("response",dataFlattened)
 
+  const removeItemByKey = (keyToRemove) => {
+    setDynamicStates(prevStates => prevStates.filter(state => state.code !== keyToRemove));
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    OrgData()
+  }, [user])
+
+
+
   return (
     <>
-      {/* <div className="chart-container" style={{ height: '100vh', backgroundColor: 'red' }} />; */}
-      {/* <div className="card overflow-x-auto">
-            <OrganizationChart value={data} nodeTemplate={nodeTemplate} />
-        </div> */}
       <div>
         <Header />
       </div>
-      <div className='container'>
-        <div className="row justify-content-center">
-          <div className="col-lg-10">
-            <div className='chatMargin flowchartBg'>
-              <h5><b>Designations Flow</b></h5>
-              <OrganizationChart value={data} selectionMode="multiple" selection={selection} onSelectionChange={(e) => setSelection(e.data)} nodeTemplate={nodeTemplate} />
-            </div>
+      {loading &&
+          <div className='orgLoader'>
+            <Spin size="large" style={{ marginTop: "180px" }} />
           </div>
-        </div>
+      }
+      <div className='mainOrg mt-5 pt-5'>
+        {isChartData?.map((root) => {
+          if (root?.Supervisor_Code == null) {
+            return (<>
+              <div className="row">
+                <div className={`rootOrgBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `` : `rootBoxBottomBorder`}`}
+                  style={{ margin: "39px auto 29px auto" }}>
+                  <div className='d-flex justify-content-center'>
+                    <img src={User} />
+                    <div className='ml-4'>
+                      <Tooltip placement="top" title={`Name : ${root?.Label}`}>
+                        <span>{root?.Label.slice(0, 15)}...</span>
+                      </Tooltip>
+                      <Tooltip placement="top" title={`Designation : ${root?.Desig_name}`}>
+                        <span>{root?.Desig_name.slice(0, 15)}...</span>
+                      </Tooltip>
+                    </div>
+                  </div>
+                  <div className='showableIcon'
+                    onClick={() => {
+                      if (root?.Emp_code) {
+                        if (hasCode) {
+                          const newState = {
+                            "code": root.Emp_code,
+                          };
+                          setDynamicStates(prev => [...prev, newState]);
+                        } else {
+                          removeItemByKey(root.Emp_code);
+                        }
+                        setHasCode(prevHasCode => !prevHasCode);
+                      }
+                    }}
+                  >{root?.subordinates?.length > 1 || root?.subordinates?.length == 1 ? <IoIosArrowDown /> : null}</div>
+                </div>
+              </div>
+              <div className={`row justify-content-center childrensBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `d-none` : `d-flex`} ${root?.subordinates?.length > 1 ? `childrenUpperBorder` : null}`}
+                style={root?.subordinates?.length > 1 ? { margin: "35px 0" } : { margin: "10px 0" }}>
+                {
+                  root?.subordinates?.map((items) => {
+                    if (items?.Supervisor_Code == root?.Emp_code) {
+                      return (<>
+                        <div className='rootOrgBox childMiddleBorder' style={{ marginTop: "60px", paddingBottom: "45px" }}>
+                          {/* <img src={arrow} alt={arrow} className='arrow'/> */}
+                          <div className='d-flex justify-content-center'>
+                            <img src={User} />
+                            <div className='ml-4'>
+                              <Tooltip placement="top" title={`Name : ${items?.Label}`}>
+                                <span>{items?.Label.slice(0, 15)}...</span>
+                              </Tooltip>
+                              <Tooltip placement="top" title={`Designation : ${items?.Desig_name}`}>
+                                <p>{items?.Desig_name.slice(0, 15)}...</p>
+                              </Tooltip>
+                            </div>
+                            <button id={items?.Emp_code} onClick={(e) => { e.stopPropagation(); setuser(e.target.getAttribute('id')) }}>more</button>
+                          </div>
+                        </div>
+                      </>)
+                    }
+                  })
+                }
+              </div>
+            </>)
+          }
+        })}
       </div>
     </>
-  );
+  )
 }
-
