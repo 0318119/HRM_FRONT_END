@@ -1,175 +1,232 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Includes/Header";
-import Input from "../components/basic/input";
-import { Button } from "../components/basic/button";
-import InstitutionForm from "./form/InstitutionForm";
-import "./assets/css/InstitutionsList.css";
-import { Space, Table, Pagination, Tag, Tooltip } from "antd";
-import * as INSTITUTION_ACTIONS from "../store/actions/HrOperations/Institution/index";
+import { Button } from "../components/basic/button/index";
+import { CancelButton } from "../components/basic/button/index";
+import "./assets/css/LateArrivel.css";
+import { Space, Table, Pagination, Checkbox, Tag, Tooltip } from "antd";
+import * as LATEARRIVALS_ACTION from "../store/actions/HrOperations/Late_Arrivals/index";
 import { connect } from "react-redux";
-import { Popconfirm } from "antd";
-import { MdDeleteOutline } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 import baseUrl from '../config.json'
 
-const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
+const LateArrival = ({ cancel, isGeneratedData, Red_LateArrival  }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
   const [mode, setMode] = useState("read");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [isSearchVal, setSearchVal] = useState("");
-  
+  const [apiData2, setApiData2] = useState([]);
+  const [selectedItems2, setSelectedItems2] = useState([]);
+  const [apiData, setApiData] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
-  // console.log("Red_LateArrival table page" ,Red_LateArrival)
-
-  // useEffect(() => {
-  //   if (isSearchVal == "") {
-  //     GetInstitutionData({
-  //       pageSize: pageSize,
-  //       pageNo: page,
-  //       search: null,
-  //     });
-  //   } else {
-  //     GetInstitutionData({
-  //       pageSize: pageSize,
-  //       pageNo: 1,
-  //       search: isSearchVal,
-  //     });
-  //   }
-  // }, [page, isSearchVal]);
-
-  const EditPage = (mode, code) => {
-    setCode(code);
-    setMode(mode);
+  const EditBack = () => {
+    cancel(false)
   };
+
+  
+  const handleCheckboxChange = (index) => {
+    const selectedItem = apiData[index];
+    const updatedItems = selectedItems.some((item) => item.index === index)
+      ? selectedItems.filter((item) => item.index !== index) 
+      : [...selectedItems, { index, item: selectedItem }]; 
+    setSelectedItems(updatedItems);
+  };
+
+  
+  const handleCheckboxChange2 = (index) => {
+    const selectedItem2 = apiData2[index];
+    const updatedItems2 = selectedItems2.some((item) => item.index === index)
+      ? selectedItems2.filter((item) => item.index !== index)
+      : [...selectedItems2, { index, item: selectedItem2 }];
+    setSelectedItems2(updatedItems2);
+  };
+
+
+  async function ApprovedData() {
+    await fetch(
+      `${baseUrl.baseUrl}/lateArrival/LateArrivalDataApprove`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+        body: JSON.stringify({
+          "LateArrivalData": [...selectedItems2.map(item => ({
+            "Emp_code": item?.index?.emp_code,
+            "Dates": item?.index?.dates,
+            "LeaveDate": item?.index?.leave_day_to_post
+          })),
+          ]
+        }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "You have successfully Approved",
+        });
+        setTimeout(() => {
+          messageApi.destroy();
+        }, 5000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+  async function ProcessData() {
+    await fetch(
+      `${baseUrl.baseUrl}/lateArrival/LateArrivalDataProcess`, {
+      method: "POST",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+      body: JSON.stringify({
+        "LateArrivalData": [...selectedItems.map(item => ({
+          "Emp_code": item?.index?.emp_code,
+          "Dates": item?.index?.dates,
+          "LeaveDate": item?.index?.leave_day_to_post
+        })),
+        ]
+      }),
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        messageApi.open({
+          type: 'success',
+          content: "You have successfully Process",
+        });
+        setTimeout(() => {
+          messageApi.destroy();
+        }, 5000);
+      }
+      else {
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setTimeout(() => {
+          messageApi.destroy()
+        }, 5000);
+      }
+    }).catch((error) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setTimeout(() => {
+        messageApi.destroy()
+      }, 5000);
+    });
+  }
+
+
 
   const columns = [
     {
-      title: "Code",
-      dataIndex: "Inst_code",
-      key: "Inst_code",
-      render: (text) => <a>{text}</a>,
+      title: "Emp Code",
+      dataIndex: "emp_code",
+      key: "emp_code",
     },
     {
-      title: "Name",
-      dataIndex: "Inst_name",
-      key: "Inst_name",
+      title: "Emp Name",
+      dataIndex: "emp_name",
+      key: "emp_name",
     },
     {
-      title: "Institution Abbrevation",
-      dataIndex: "Inst_abbr",
-      key: "Inst_abbr",
+      title: "Dates",
+      dataIndex: "dates",
+      key: "dates",
     },
 
     {
-      title: "Sort Key",
-      dataIndex: "Sort_key",
-      key: "Sort_key",
+      title: "Casual",
+      dataIndex: "Casual",
+      key: "Casual",
     },
     {
-      title: "Action",
-      key: "action",
-      render: (data) => (
+      title: "Leave",
+      dataIndex: "Leave",
+      key: "Leave",
+    },
+    {
+      title: "Balance",
+      dataIndex: "Balance",
+      key: "Balance",
+    },
+    {
+      title: "Leave Day",
+      dataIndex: "leave_day_to_post",
+      key: "leave_day_to_post",
+    },
+    {
+      title: "Process",
+      key: "Process",
+      render: (_, index) => (
         <Space size="middle">
-          <button
-            onClick={() => EditPage("Edit", data?.Inst_code)}
-            className="editBtn"
-          >
-            <FaEdit />
-          </button>
-          <Popconfirm
-            title="Delete the Institution"
-            description="Are you sure to delete the Institution?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              // handleConfirmDelete(data?.Inst_code);
-            }}
-          >
-            <button className="deleteBtn">
-              <MdDeleteOutline />
-            </button>
-          </Popconfirm>
+              <li key={index}>
+                <Checkbox
+                  type="checkbox"
+                  onChange={() => handleCheckboxChange2(index)}
+                  checked={selectedItems2.some((selectedItem2) => selectedItem2.index === index)}
+                >
+              </Checkbox>
+              </li>
+        </Space>
+      ),
+    },
+    {
+      title: "Aprove",
+      key: "Aprove",
+      render: (_, index) => (
+        <Space size="middle">
+          <li key={index}>
+            <Checkbox
+              type="checkbox"
+              onChange={() => handleCheckboxChange(index)}
+              checked={selectedItems.some((selectedItem) => selectedItem.index === index)}
+            >
+            </Checkbox>
+          </li>
         </Space>
       ),
     },
   ];
 
-  // Institute Delete API CALL ===================================================
-  // async function handleConfirmDelete(id) {
-  //   await fetch(
-  //     `${baseUrl.baseUrl}/institutions/DeleteInstitution`, {
-  //     method: "POST",
-  //     headers: { "content-type": "application/json", accessToken : `Bareer ${get_access_token}` },
-  //     body: JSON.stringify({
-  //       "Inst_code": id,
-  //     }),
-  //   }
-  //   ).then((response) => {
-  //     return response.json();
-  //   }).then(async (response) => {
-  //     if (response.success) {
-  //         messageApi.open({
-  //           type: 'success',
-  //           content: "You have successfully deleted",
-  //         });
-  //         setTimeout(() => {
-  //           messageApi.destroy()
-  //           GetInstitutionData({ 
-  //             pageSize: pageSize,
-  //             pageNo: page,
-  //             search: null
-  //           })
-  //         }, 3000);
-  //     }
-  //     else {
-  //       messageApi.open({
-  //         type: 'error',
-  //         content: response?.message || response?.messsage,
-  //       });
-  //     }
-  //   }).catch((error) => {
-  //       messageApi.open({
-  //         type: 'error',
-  //         content: error?.message || error?.messsage,
-  //       });
-  //   });
-  // }
+
+ 
+
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
       {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
             {mode == "read" && (
               <>
-                <div className="InstitutionFlexBox">
+                <div className="LateArrivalFlexBox">
                   <h4 className="text-dark">Late Arrival</h4>
-                  <div className="InstitutionsearchBox">
-                    <Input
-                      placeholder={"Search Here..."}
-                      type="search"
-                      onChange={(e) => {
-                        setSearchVal(e.target.value);
-                      }}
-                    />
-
-                    <Button title="Create" onClick={() => setMode("create")} />
+                  <div className="LateArrivalsearchBox">
                   </div>
                 </div>
                 <hr />
                 <div className="d-flex align-items-center">
-                      <Button title={'Process'}/>
-                      <Button title={'ExportToExcel'}/>
-                      <Button title={'Approve'}/>
-                      <Button title={'Report'}/>
+                  <Button title={'Process'} onClick={ProcessData} />
+                  <Button title={'Approve'} onClick={ApprovedData} />
                 </div>
               </>
             )}
@@ -178,21 +235,20 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
               {mode == "read" && (
                 <Table
                   columns={columns}
-                  loading={Red_LateArrival?.loading}
-                  dataSource={Red_LateArrival?.data?.[0]?.res?.data1}
-                  scroll={{ x: 10 }}
-                  pagination={{
-                    defaultCurrent: page,
-                    total: Red_LateArrival?.data?.[0]?.res?.data3,
-                    onChange: (p) => {
-                      setPage(p);
-                    },
-                    pageSize: pageSize,
-                  }}
+                  loading={isGeneratedData?.loading}
+                  dataSource={isGeneratedData}
+                  // scroll={{ x: 10 }}
+                // pagination={{
+                //   defaultCurrent: page,
+                //   total: Red_LateArrival?.data?.[0]?.res?.data3,
+                //   onChange: (p) => {
+                //     setPage(p);
+                //   },
+                //   pageSize: pageSize,
+                // }}
                 />
               )}
-              {mode == "create" && <InstitutionForm cancel={setMode} mode={mode} isCode={null} page={page} />}
-              {mode == "Edit" && <InstitutionForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
+              <CancelButton onClick={EditBack} title={"Cancel"} />
             </div>
           </div>
         </div>
@@ -204,4 +260,4 @@ const LateArrival = ({ Red_LateArrival, GenerateLateArrival }) => {
 function mapStateToProps({ Red_LateArrival }) {
   return { Red_LateArrival };
 }
-export default connect(mapStateToProps, INSTITUTION_ACTIONS)(LateArrival);
+export default connect(mapStateToProps, LATEARRIVALS_ACTION)(LateArrival);

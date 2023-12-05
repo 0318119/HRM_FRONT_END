@@ -108,6 +108,7 @@ import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
+import Change_Password from '../Addministration/pages/Change_Password'
 
 
 
@@ -230,6 +231,10 @@ const routing = () => {
         {/* PAY SLIP ============================================================== */}
         <Route path="/Pay/PaySlip" element={<PaySlip />} />
         <Route path="flow/DesignationsFlowChart" element={<FLow />} />
+
+        {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
+        <Route path="/Change_Password" element={<Change_Password />} />
+
       </Routes>
     </Router>
 

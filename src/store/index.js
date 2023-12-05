@@ -55,6 +55,7 @@ import Red_TaxStructure from "./reducers/payroll/taxStructure";
 import Red_Bank from "./reducers/payroll/bank";
 import Red_outstandingRecoveries from "./reducers/payroll/outstandingRecoveries"
 import Red_LateArrival from "./reducers/HrOperations/Late_Arrival";
+import Red_ChangePassword from "./reducers/Addministration/UserProfile";
 
 const reducers = combineReducers({
   Transition_family,
@@ -114,7 +115,8 @@ const reducers = combineReducers({
   Red_TaxStructure,
   Red_Bank,
   Red_outstandingRecoveries,
-  Red_LateArrival
+  Red_LateArrival,
+  Red_ChangePassword
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

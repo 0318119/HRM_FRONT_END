@@ -48,7 +48,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         setMode(mode);
     };
 
-    console.log(Red_Appointment, 'Red_Appointment')
 
     const columns = [
         {
