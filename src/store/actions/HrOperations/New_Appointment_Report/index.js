@@ -46,7 +46,8 @@ export const GetAllAppoint = () => async (dispatch) => {
     }
 }
 
-export const PostAttendancePayload = (data) => async () => {
+export const PostAppointmentPayload = (data) => async () => {
+    // console.log(data, 'data')
     const response = await fetch(`${baseUrl.baseUrl}/reports/New_Appointment_Report`, {
       method: "POST",
       headers: {
@@ -54,9 +55,8 @@ export const PostAttendancePayload = (data) => async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "Employee_Id": data?.Employee_Id,
-        "Month": data?.Month,
-        "Year": data?.Year,
+        "FromDate": data?.FromDate,
+        "ToDate": data?.ToDate,
       }),
     });
     const res = await response.json();
