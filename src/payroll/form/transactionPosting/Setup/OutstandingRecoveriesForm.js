@@ -132,7 +132,7 @@ function OutstandingRecoveriesForm({ cancel, mode, page, isCode, Red_outstanding
         <>
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Outstanding Recoveries</h4>
+                <h4 className="text-dark">Outstanding Recoveries Form</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
 
