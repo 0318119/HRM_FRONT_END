@@ -58,6 +58,7 @@ import Red_PayrollCategoryAccess from "./reducers/payroll/PayrollCategoryAccess"
 import Red_LateArrival from "./reducers/HrOperations/Late_Arrival";
 import Red_ChangePassword from "./reducers/Addministration/UserProfile";
 import Red_New_Appointment_Report from "./reducers/HrOperations/New_Appointment_Report/index"
+import Red_Access_Control from "./reducers/Addministration/UserProfile/Access_Control/index"
 
 const reducers = combineReducers({
   Transition_family,
@@ -121,7 +122,8 @@ const reducers = combineReducers({
   Red_ChangePassword,
   Red_PayrollCategoryAccess,
   Red_LateArrival,
-  Red_New_Appointment_Report
+  Red_New_Appointment_Report,
+  Red_Access_Control
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

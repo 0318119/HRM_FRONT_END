@@ -51,7 +51,7 @@ import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-// import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
+import Transaction_confirmationForm from '../Master_Maintaince/form/Transaction_confirmation_form';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -110,6 +110,7 @@ import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
+import Access_Control from '../Addministration/pages/Access_Control'
 
 
 
@@ -167,7 +168,7 @@ const routing = () => {
         <Route path="/Holidays" element={<Holidays />} />
         <Route path="/Leave_Applications" element={<Leave_Applications />} />
         <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-        <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
+        {/* <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} /> */}
         <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
         <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
         <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
@@ -175,7 +176,7 @@ const routing = () => {
         <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
         <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
         <Route path="/LeaveSummary" element={<LeaveSummary />} />
-        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
+        <Route path="/Transaction_confirmation_form" element={<Transaction_confirmationForm />} />
         <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
         <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
         <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
@@ -237,6 +238,9 @@ const routing = () => {
 
         {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
         <Route path="/Change_Password" element={<Change_Password />} />
+
+         {/* ADDMINISTRATION ---> Access Control =============================================================== */}
+         <Route path="/Access_Control" element={<Access_Control />} />
       </Routes>
     </Router>
 
