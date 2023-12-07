@@ -238,6 +238,7 @@ export const GET_Bank_Branches_DATA = "GET_Bank_Branches_DATA";
 export const GET_Bank_Branches_DATA_START = "GET_Bank_Branches_DATA_START";
 export const GET_Bank_Branches_DATA_SINGLE = "GET_Bank_Branches_DATA_SINGLE";
 export const GET_Bank_Branches_DATA_END = "GET_Bank_Branches_DATA_END";
+
 // Appointment ===>Appointment  === 
 export const GET_APPOINTMENT_DATA = "GET_APPOINTMENT_DATA";
 export const GET_APPOINTMENT_DATA_START = "GET_APPOINTMENT_DATA_START";
@@ -290,3 +291,9 @@ export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA"
 export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
 export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
 export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
+
+// MASTER MAINTAINCE  ===> Confirmation === 
+export const GET_confirmation_DATA = "GET_confirmation_DATA";
+export const GET_confirmation_START = "GET_confirmation_STARTT";
+export const GET_confirmation_SINGLE = "GET_confirmation_SINGLE";
+export const GET_confirmation_END = "GET_confirmation_END";
