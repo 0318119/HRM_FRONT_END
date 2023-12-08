@@ -19,7 +19,7 @@ import baseUrl from '../../src/config.json'
 const MasterData_Sec = () => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
-    const [isSelectAll, setSelectAll] = useState([])
+   
 
     const [isEmp_Code, setEmp_Code] = useState('')
     const [Transaction_Date, setTransaction_Date] = useState('')
@@ -135,6 +135,8 @@ const MasterData_Sec = () => {
     const [Leave_Category_name, setLeave_Category_name] = useState('')
     const [Position_code, setPosition_code] = useState('')
     const [Fuel_Card_Flag, setFuel_Card_Flag] = useState('')
+    const [AllSelect, setAllSelect] = useState('')
+ 
 
 
     const [SelectedData, setSelectedData] = useState('')
@@ -332,7 +334,7 @@ const MasterData_Sec = () => {
                             <div className="row">
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" />
+                                        <input type="checkbox" className="form-check-input"  name="" id="All" value="Y" onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Select All</label>
                                     </div>
                                 </div>
@@ -340,101 +342,101 @@ const MasterData_Sec = () => {
                             <div className="row d-flex">
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setTransaction_Date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setTransaction_Date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Transaction Date</label>
                                     </div>
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_name(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_name(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Name</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Father_name(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Father_name(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Father Name</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_sex_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_sex_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Gender</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_marital_status(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_marital_status(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Marital Status</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_birth_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_birth_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Date OF Birth</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_appointment_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_appointment_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Appointment Date</label>
                                     </div>
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Confirm_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Confirm_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Confirmation Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setConfirmation_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setConfirmation_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Confirmation Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_category(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Category</label>
                                     </div>
                                     {/* <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setConfi(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setConfi(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Confirmation Extended</label>
                                     </div> */}
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_address_line1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_address_line1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Address Line1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_address_line2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_address_line2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Address Line2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_home_tel1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_home_tel1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Home tel1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_home_tel2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_home_tel2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Home tel2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_office_tel1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_office_tel1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Office tel</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_office_tel2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_office_tel2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Office tel2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_mobile_No(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_mobile_No(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Mobile No</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_nic_no(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_nic_no(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Cnic NO</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_retirement_age(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_retirement_age(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Retirement Age</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_ntn_no(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_ntn_no(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">NTN No</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_nic_issue_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_nic_issue_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">CNIC Issue Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_nic_expiry_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_nic_expiry_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">CNIC Expiry Date</label>
                                     </div>
 
@@ -442,194 +444,194 @@ const MasterData_Sec = () => {
                                 <div className="col-md-2">
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_email(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_email(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Email Address</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmployment_Type_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmployment_Type_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employement Type Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setDesig_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setDesig_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Desination Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setCost_Centre_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setCost_Centre_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">CostCenter Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setGrade_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setGrade_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Grade Code</label>
                                     </div>
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSection_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSection_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Section Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setDept_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setDept_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Department Code</label>
                                     </div>
                                     {/* <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" onChange={(e) => set(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" onChange={(e) => set(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Division Code</label>
                                     </div> */}
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setShift_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setShift_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Shift Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setLoc_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setLoc_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Location Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setTransport_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setTransport_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Transport Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEdu_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEdu_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Education Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSupervisor_Code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSupervisor_Code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Supervisor Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setReligion_Code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setReligion_Code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Religion Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setDeletion_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setDeletion_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Deletion Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setContact_Person_Name(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setContact_Person_Name(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Contact Person Name</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setRelationship(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setRelationship(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Relationship</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setContact_address1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setContact_address1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Contact Address1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setContact_address2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setContact_address2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Contact Address2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setContact_home_tel1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setContact_home_tel1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Contact Home tel1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setContact_home_tel2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setContact_home_tel2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Contact Home  tel2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Blood_Group(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Blood_Group(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Blood group</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setVehicle_Registration_Number(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setVehicle_Registration_Number(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Vehicle Registration</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Payroll_Category(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Payroll_Category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Payroll Cat Name</label>
                                     </div>
                                 </div>
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setMode_Of_Payment(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setMode_Of_Payment(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Mode Of payment</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Amount_1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Amount_1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bank Amount No1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBranch_Code1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBranch_Code1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch Code1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Percent_1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Percent_1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch percent1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Amount_2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Amount_2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bank Amount 2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBranch_Code2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBranch_Code2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch Code2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Percent_2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Percent_2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch percent2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Amount_3(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Amount_3(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bank Account No3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBranch_Code3(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBranch_Code3(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch Code3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Percent_3(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Percent_3(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch percent3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Amount_4(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Amount_4(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bank Amount No4</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBranch_Code4(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBranch_Code4(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch Code4</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Percent_4(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Percent_4(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Branch percent4</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSESSI_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSESSI_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">SESSI Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEOBI_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEOBI_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">EOBIFlag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setUnion_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setUnion_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">UNION Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setRecreation_Club_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setRecreation_Club_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">ReCreation Club Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setMeal_Deduction_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setMeal_Deduction_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Meal Deduction Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setOvertime_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setOvertime_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Over Time Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setIncentive_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setIncentive_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Incentive Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBonus_Type(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBonus_Type(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bonus Type</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSalary_Hold_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSalary_Hold_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Salary Hold Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSalary_Hold_Date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSalary_Hold_Date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Salary Hold Date</label>
                                     </div>
 
@@ -637,112 +639,112 @@ const MasterData_Sec = () => {
                                 <div className="col-md-2">
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSalary_Hold_Description(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSalary_Hold_Description(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Salary Hold Description</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setTax_Exemption_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setTax_Exemption_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Tax Exemption Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEOBI_Number(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEOBI_Number(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">EOBI No.</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSESSI_Number(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSESSI_Number(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">SESSI No.</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setACCOUNT_TYPE1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setACCOUNT_TYPE1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account Type1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setACCOUNT_TYPE2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setACCOUNT_TYPE2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account Type2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setACCOUNT_TYPE3(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setACCOUNT_TYPE3(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account Type3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setACCOUNT_TYPE4(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setACCOUNT_TYPE4(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account Type3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Account_No1(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Account_No1(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account No.1</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Account_No2(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Account_No2(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account No.2</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Account_No3(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Account_No3(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account No.3</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBank_Account_No4(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBank_Account_No4(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Account No.4</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setInterest_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setInterest_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Interest Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setZakat_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setZakat_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Zakat Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPF_Nomination_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPF_Nomination_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">PF Nomination Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPF_Nomination_Date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPF_Nomination_Date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">PF Nomination Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setCar_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setCar_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Car Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setCar_value(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setCar_value(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Car Value</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setBonus_Factor(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setBonus_Factor(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Bonus Factor</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setFuel_Card_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setFuel_Card_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Fuel Card Flag</label>
                                     </div>
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_hr_category(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_hr_category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Hr Cat</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setOffer_Letter_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setOffer_Letter_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Offer Letter Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setTentative_Joining_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setTentative_Joining_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Tentative Joining Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setRefferedBy(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setRefferedBy(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Reffered by</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setProbationary_period_months(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setProbationary_period_months(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Probation month </label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setNotice_period_months(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setNotice_period_months(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Notice Month</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setExtended_confirmation_days(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setExtended_confirmation_days(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Extended Confirmation Days</label>
                                     </div>
                                 </div>
@@ -750,76 +752,76 @@ const MasterData_Sec = () => {
 
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPermanent_address(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPermanent_address(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Permanent Address</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setNationality(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setNationality(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Nationality</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSub_company_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSub_company_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Sub Company Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setRoster_group_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setRoster_group_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Roster Group Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setCard_no(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setCard_no(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Card No</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setSharia_Flag(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setSharia_Flag(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Sharia Flag</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setCompany_Code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setCompany_Code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Company Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setOld_Company_Code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setOld_Company_Code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Old Company Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setOld_Emp_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setOld_Emp_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Old Employee Code</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setId(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setId(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Id</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPayroll_Year(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPayroll_Year(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Payroll Year</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPayroll_Month(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPayroll_Month(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Payroll Month</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setLeave_Category_name(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setLeave_Category_name(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Leave Cat Name</label>
                                     </div>
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_Leave_category(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Leave_category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Leave Category</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setPosition_code(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPosition_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Positon</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setReffrence_leter_date(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setReffrence_leter_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Refference Letter Date</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_OldNIC(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_OldNIC(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Old NIC</label>
                                     </div>
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setEmp_id(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_id(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Id</label>
                                     </div>
                                 </div>

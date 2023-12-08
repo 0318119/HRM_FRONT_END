@@ -22,6 +22,7 @@ const MasterPersonal_schema = yup.object().shape({
   Emp_marital_status: yup.string().required("marital status is required"),
   Emp_birth_date: yup.string().required('Birth date is required'),
   Emp_Confirm_date: yup.string().required('Confirm date is required'),
+  Emp_Joining_date: yup.string().required('Emp joining date  is required'),
   Emp_category: yup.number().required("Emp category is required"),
   Emp_Leave_category: yup.number().required("Leave category is required"),
   Emp_address_line1: yup.string().required("Emp Address line is required"),

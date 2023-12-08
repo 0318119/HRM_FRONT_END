@@ -99,7 +99,7 @@ const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
                     />
-                    <Button title="Create" onClick={() => setMode("create")} />
+                    {/* <Button title="Create" onClick={() => setMode("create")} /> */}
                   </div>
                 </div>
                 <hr />

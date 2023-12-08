@@ -18,9 +18,8 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     const [isLoading, setLoading] = useState(false);
 
     const ChangePassWordScheme = yup.object().shape({
-        Country_Name: yup.string().required("Country_Name is required"),
-        Country_Abbr: yup.string().required("Country_Abbr is required"),
-        SortKey: yup.string().required("Country_Abbr is required"),
+        oldPassw: yup.string().required("oldPassw is required"),
+        newPass: yup.string().required("newPass is required"),
     });
     
 
@@ -70,9 +69,6 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     }
 
 
-
-
-
     return (
         <>
             <Header />
@@ -85,10 +81,10 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                     </span>
                 <div className="form-group Change_PasswordBtnBox">
                     <FormInput
-                        label={'Dept code'}
-                        placeholder={'Dept code'}
-                        id="Dept_code"
-                        name="Dept_code"
+                        label={'Old Password'}
+                        placeholder={'Old Password'}
+                        id="oldPassw"
+                        name="oldPassw"
                         type="numebr"
                         readOnly
                         showLabel={true}
@@ -97,10 +93,10 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                     />
 
                     <FormInput
-                        label={'Dept name'}
-                        placeholder={'Dept name'}
-                        id="Dept_name"
-                        name="Dept_name"
+                        label={'New Password'}
+                        placeholder={'New Password'}
+                        id="newPass"
+                        name="newPass"
                         type="text"
                         showLabel={true}
                         errors={errors}

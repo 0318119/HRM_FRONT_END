@@ -51,7 +51,7 @@ import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-// import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
+import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -175,7 +175,7 @@ const routing = () => {
         <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
         <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
         <Route path="/LeaveSummary" element={<LeaveSummary />} />
-        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
+        <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
         <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
         <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
         <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />

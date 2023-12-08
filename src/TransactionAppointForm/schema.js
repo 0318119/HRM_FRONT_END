@@ -58,6 +58,7 @@ const TAPersonalSchema = yup.object().shape({
     Probationary_period_months: yup.number().required("Probationary period months is required"),
     Notice_period_months: yup.number().required("Notice period months is required"),
     Emp_confirm_date: yup.string().required("Emp confirm date is required"),
+    Emp_joining_date: yup.string().required("Emp joining is required"),
     Permanent_address: yup.string().required("Permanent address is required"),
     Nationality: yup.string().required("Nationality is required"),
 });

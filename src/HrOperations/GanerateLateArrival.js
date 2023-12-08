@@ -198,7 +198,7 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
             </div>
             <div className="d-flex align-items-center">
               <FormSelect
-                className="FormSelect"
+                className="FormSelectGF"
                 placeholder={"Locations"}
                 label='Locations'
                 name='Loc_code'
@@ -215,6 +215,7 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
                 control={control}
               />
               <FormSelect
+                className="FormSelectGF"
                 placeholder={"Departments"}
                 name='Dept_code'
                 label='Dept_code'
@@ -233,6 +234,7 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
             </div>
             <div className="d-flex align-items-center">
               <FormSelect
+                className="FormSelectGF"
                 placeholder={"Division"}
                 label='Division'
                 name='Div_code'
@@ -249,6 +251,7 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
                 control={control}
               />
               <FormSelect
+                className="FormSelectGF"
                 label={'Units'}
                 placeholder='Units'
                 name='Section_code'

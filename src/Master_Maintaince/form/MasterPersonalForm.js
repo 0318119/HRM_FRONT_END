@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CancelButton, PrimaryButton } from "../../components/basic/button";
+import { CancelButton, PrimaryButton, SimpleButton } from "../../components/basic/button";
 import * as MASTER_PERSONAL from "../../store/actions/MasterMaintaince/MasterPersonal/index";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -53,6 +53,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
             const isValid = await MasterPersonal_schema.validate(data);
             if (isValid) {
                 POST_MASTER_PERSONAL_FORM(data)
+                // console.log(data, 'data')
             }
         } catch (error) {
             console.error(error);
@@ -78,6 +79,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
             Emp_marital_status: data?.Emp_marital_status,
             Emp_birth_date: data?.Emp_birth_date,
             Emp_Confirm_date: data?.Emp_Confirm_date,
+            Emp_Joining_date: data?.Emp_Joining_date,
             Emp_category: data?.Emp_category,
             Emp_Leave_category: data?.Emp_Leave_category,
             Emp_address_line1: data?.Emp_address_line1,
@@ -135,6 +137,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                     Emp_marital_status: data?.Emp_marital_status,
                     Emp_birth_date: data?.Emp_birth_date,
                     Emp_Confirm_date: data?.Emp_Confirm_date,
+                    Emp_Joining_date: data?.Emp_Joining_date,
                     Emp_category: data?.Emp_category,
                     Emp_Leave_category: data?.Emp_Leave_category,
                     Emp_address_line1: data?.Emp_address_line1,
@@ -206,6 +209,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 "Emp_marital_status": body.Emp_marital_status,
                 "Emp_birth_date": body.Emp_birth_date,
                 "Emp_Confirm_date": body.Emp_Confirm_date,
+                "Emp_Joining_date": body.Emp_Joining_date,
                 "Emp_category": body.Emp_category,
                 "Emp_Leave_category": body.Emp_Leave_category,
                 "Emp_address_line1": body.Emp_address_line1,
@@ -658,11 +662,21 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                         control={control}
                     />
                     <FormInput
+                        label={'Joining Date'}
+                        placeholder={'Joining Date'}
+                        id="Emp_Joining_date"
+                        name="Emp_Joining_date"
+                        type="date"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
                         label={'Confirm Date'}
                         placeholder={'Confirm Date'}
                         id="Emp_Confirm_date"
                         name="Emp_Confirm_date"
-                        type="text"
+                        type="date"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -1210,7 +1224,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                 </div>
                 <div className='CountryBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
             </form>
         </>
