@@ -65,9 +65,10 @@ export const Login = () => {
               showAlert(response.message, "success")
               localStorage.setItem("refresh", response.referesh_token);
               localStorage.setItem("access_token", response.access_token);
-              localStorage.setItem("Emp_code", response.data[0].Emp_code);
-              localStorage.setItem("company_code", response.data[0].company_code);
-              localStorage.setItem("Payroll_Category", response.data[0].Payroll_Category);
+              localStorage.setItem("Emp_code", response?.data?.[0].Emp_code);
+              localStorage.setItem("company_code", response?.data?.[0].company_code);
+              localStorage.setItem("Payroll_Category", response?.data?.[0].Payroll_Category);
+              localStorage.setItem("Parent_Code",response?.data?.[0]?.Parent_Code);
               navigate("/TAShortsCut");
             } else {
                 showAlert(response.message, "warning")

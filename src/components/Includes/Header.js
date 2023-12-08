@@ -32,19 +32,12 @@ const Header = (props) => {
   const ref = useRef()
   const [loading, setLoading] = useState(true);
   const [dataLoader, setDataLoader] = useState(false);
-
   const [isShowIconOne, setisShowIconOne] = useState("")
   const [isShowIconTwo, setisShowIconTwo] = useState("")
   const [isShowIconThree, setisShowIconThree] = useState("")
   const [IsUserMenu, setUserMenu] = useState("")
-
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
-
-  // const dispatch = useDispatch();
-  // const getData = useSelector((state) => state.getData);
-  // const apiStatus = useSelector((state) => state.getData.status);
-  // const getDataError = useSelector((state) => state.getData.error);
 
   async function getMultiLevelDropDown() {
     await fetch(`${config['baseUrl']}/dirmenus/GetDirMenus`, {
@@ -60,10 +53,9 @@ const Header = (props) => {
         }).then(response => {
           return response.json()
         }).then(response => {
-          // console.log(response.data , 'response.data menu')
           if (response.messsage == "timeout error") { navigate('/') }
           else {
-            localStorage.setItem("refresh",  response.referesh_token);
+            localStorage.setItem("refresh", response.referesh_token);
             localStorage.setItem("access_token", response.access_token);
             setMultilevel(response.data)
             setDataLoader(true);
@@ -75,10 +67,10 @@ const Header = (props) => {
         });
       }
       else {
-        if (response.messsage == "timeout error") {navigate("/");}
-        else{
+        if (response.messsage == "timeout error") { navigate("/"); }
+        else {
           setMultilevel(response.data)
-          console.log(response.data, 'response.data')
+          console.log("response.data", response.data)
           setDataLoader(true);
         }
       }
@@ -103,7 +95,7 @@ const Header = (props) => {
     sessionStorage.clear()
     window.location.href = '/'
   }
-  
+
   // const API_URL = "/dirmenus/GetDirMenus"
   // console.log("GetDirMenus",getData)
   // useEffect(() => {
@@ -139,149 +131,148 @@ const Header = (props) => {
               <div className='Header_pro_pic'>
                 <img src={Propic} alt="" className="profile_img" />
               </div>
-              
+
             </div>
           </div>
         </div>
-          <div className='treeViewBox' id={isActive ? "openSideBar" : ""}>
-            <CancelIcon className='closeIco' onClick={() => { setActive(false) }} />
-            <img src={Logo} className="logoImg" alt="" />
-            <span className='borderLogo'></span>
-            {loading && (
-              <div
-                className="d-flex justify-content-center pt-2 w-100"
-                style={{ background: "#262837" }}
-              >
-                <div class="spinner-border text-primary" role="status">
-                  <span class="sr-only"></span>
-                </div>
+        <div className='treeViewBox' id={isActive ? "openSideBar" : ""}>
+          <CancelIcon className='closeIco' onClick={() => { setActive(false) }} />
+          <img src={Logo} className="logoImg" alt="" />
+          <span className='borderLogo'></span>
+          {loading && (
+            <div
+              className="d-flex justify-content-center pt-2 w-100"
+              style={{ background: "#262837" }}
+            >
+              <div class="spinner-border text-primary" role="status">
+                <span class="sr-only"></span>
               </div>
-            )}
+            </div>
+          )}
 
-            {dataLoader && (
-              <>
-                <ul className='menuBoxUl'>
-                  {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].map((items, index) => (
-                    <>
-                      {/* {console.log("object",items.ParentCode)} */}
-                      {items.ParentCode == 0?
-                        <li onClick={(e) => {
-                          e.stopPropagation();
-                          if (isShowIconOne == items.menulabel) {
-                            setisShowIconOne("")
-                          } else {
-                            setisShowIconOne(items.menulabel)
-                          }
-                        }}>
-                          
-                          <div className='flexLinks'>
-                            {isShowIconOne == items.menulabel ? <ExpandMoreIcon /> : items.menulabel == "Logout" ? "" : <ChevronRightIcon />}
-                            <Link to="#">{items.menulabel == "Logout" ? "" : items.menulabel}</Link>
-                          </div>
-                          {isShowIconOne == items.menulabel && (
-                            <div className='ulList'>
-                              {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == items.menucode && data.Level == 2).map((innerItemsOne) => (
-                                <li
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (isShowIconTwo == innerItemsOne.menulabel) {
-                                      setisShowIconTwo("")
-                                    } else {
-                                      setisShowIconTwo(innerItemsOne.menulabel)
+          {dataLoader && (
+            <>
+              <ul className='menuBoxUl'>
+                {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].map((items, index) => (
+                  <>
+                    {items.ParentCode == localStorage.getItem("Parent_Code") && items.Level == 1 ?
+                      <li onClick={(e) => {
+                        e.stopPropagation();
+                        if (isShowIconOne == items.menulabel) {
+                          setisShowIconOne("")
+                        } else {
+                          setisShowIconOne(items.menulabel)
+                        }
+                      }}>
+
+                        <div className='flexLinks'>
+                          {isShowIconOne == items.menulabel ? <ExpandMoreIcon /> : items.menulabel == "Logout" ? "" : <ChevronRightIcon />}
+                          <Link to="#">{items.menulabel == "Logout" ? "" : items.menulabel}</Link>
+                        </div>
+                        {isShowIconOne == items.menulabel && (
+                          <div className='ulList'>
+                            {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == items.menucode && data.Level == 2).map((innerItemsOne) => (
+                              <li
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (isShowIconTwo == innerItemsOne.menulabel) {
+                                    setisShowIconTwo("")
+                                  } else {
+                                    setisShowIconTwo(innerItemsOne.menulabel)
+                                  }
+                                }}
+                              >
+
+                                <div className="flexLinks">
+                                  {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <ExpandMoreIcon /> : <ChevronRightIcon /> : "" : ""}
+                                  {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <Link to="#">{innerItemsOne.menulabel}</Link> : <Link to="#">{innerItemsOne.menulabel}</Link> : <Link onClick={() => {
+                                    if (innerItemsOne.menulabel) {
+                                      const originalString = innerItemsOne.menulabel;
+                                      const stringWithoutSpaces = originalString.split(' ').join('_');
+                                      window.location.href = `/${stringWithoutSpaces}`
                                     }
-                                  }}
-                                >
+                                  }} className='singleItem'>{innerItemsOne.menulabel}</Link> : ""}
+                                </div>
+                                {isShowIconTwo == innerItemsOne.menulabel && (
+                                  <div className='ulList'>
+                                    {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).map((three) => (
+                                      <li
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (isShowIconThree == three.menulabel) {
+                                            setisShowIconThree("")
+                                          } else {
+                                            setisShowIconThree(three.menulabel)
+                                          }
+                                        }}
+                                      >
 
-                                  <div className="flexLinks">
-                                    {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <ExpandMoreIcon /> : <ChevronRightIcon /> : "" : ""}
-                                    {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <Link to="#">{innerItemsOne.menulabel}</Link> : <Link to="#">{innerItemsOne.menulabel}</Link> : <Link onClick={() => {
-                                      if (innerItemsOne.menulabel) {
-                                        const originalString = innerItemsOne.menulabel;
-                                        const stringWithoutSpaces = originalString.split(' ').join('_');
-                                        window.location.href = `/${stringWithoutSpaces}`
-                                      }
-                                    }} className='singleItem'>{innerItemsOne.menulabel}</Link> : ""}
-                                  </div>
-                                  {isShowIconTwo == innerItemsOne.menulabel && (
-                                    <div className='ulList'>
-                                      {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).map((three) => (
-                                        <li
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            if (isShowIconThree == three.menulabel) {
-                                              setisShowIconThree("")
-                                            } else {
-                                              setisShowIconThree(three.menulabel)
-                                            }
-                                          }}
-                                        >
+                                        <div className="flexLinks">
+                                          {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).length > 0 ? isShowIconThree == three.menulabel ? <ExpandMoreIcon /> : <ChevronRightIcon /> : "" : ""}
 
-                                          <div className="flexLinks">
-                                            {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).length > 0 ? isShowIconThree == three.menulabel ? <ExpandMoreIcon /> : <ChevronRightIcon /> : "" : ""}
+                                          {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).length > 0 ? <Link to="#">{three.menulabel}</Link> : <Link to="#"
+                                            onClick={() => {
+                                              if (three.menulabel) {
+                                                const originalString = three.menulabel;
+                                                const removeSubstrace = originalString.replace(" – ", "_")
+                                                const stringWithoutSpaces = removeSubstrace.split(' ').join('_');
+                                                window.location.href = `/${stringWithoutSpaces}`
+                                              }
+                                            }}
+                                            className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
+                                        </div>
 
-                                            {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).length > 0 ? <Link to="#">{three.menulabel}</Link> : <Link to="#"
-                                              onClick={() => {
-                                                if (three.menulabel) {
-                                                  const originalString = three.menulabel;
-                                                  const removeSubstrace = originalString.replace(" – ", "_")
-                                                  const stringWithoutSpaces = removeSubstrace.split(' ').join('_');
-                                                  window.location.href = `/${stringWithoutSpaces}`
-                                                }
-                                              }}
-                                              className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
-                                          </div>
-
-                                          {isShowIconThree == three.menulabel && (
-                                            <div className='ulList'>
-                                              {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).map((four) => (
-                                                <li
-                                                  onClick={(e) => {
-                                                    e.stopPropagation();
+                                        {isShowIconThree == three.menulabel && (
+                                          <div className='ulList'>
+                                            {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == three.menucode && data.Level == 4).map((four) => (
+                                              <li
+                                                onClick={(e) => {
+                                                  e.stopPropagation();
+                                                }}
+                                              >
+                                                <Link to="#" className='singleItem4'
+                                                  onClick={() => {
+                                                    if (four.menulabel) {
+                                                      const originalString = four.menulabel;
+                                                      const removeSubstrace = originalString.replace(" – ", "_")
+                                                      const stringWithoutSpaces = removeSubstrace.split(' ').join('_');
+                                                      window.location.href = `/${stringWithoutSpaces}`
+                                                    }
                                                   }}
-                                                >
-                                                  <Link to="#" className='singleItem4'
-                                                    onClick={() => {
-                                                      if (four.menulabel) {
-                                                        const originalString = four.menulabel;
-                                                        const removeSubstrace = originalString.replace(" – ", "_")
-                                                        const stringWithoutSpaces = removeSubstrace.split(' ').join('_');
-                                                        window.location.href = `/${stringWithoutSpaces}`
-                                                      }
-                                                    }}
-                                                    target='_blank'>{four.menulabel}</Link>
-                                                </li>
-                                              )) : ""}
-                                            </div>
-                                          )}
-                                        </li>
-                                      )) : ""}
-                                    </div>
-                                  )}
-                                </li>
-                              )) : ""}
-                            </div>
-                          )}
+                                                  target='_blank'>{four.menulabel}</Link>
+                                              </li>
+                                            )) : ""}
+                                          </div>
+                                        )}
+                                      </li>
+                                    )) : ""}
+                                  </div>
+                                )}
+                              </li>
+                            )) : ""}
+                          </div>
+                        )}
 
-                        </li>
-                        : ""}
-                    </>
-                  )) : ""}
-                
-                  <li>
-                    <div className='flexLinks'>
-                      <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
-                    </div>
-                  </li>
-                  
-                </ul>
-                </>
-            )}
+                      </li>
+                      : ""}
+                  </>
+                )) : ""}
 
-            <a href="#" className='mobileLogOutLink' onClick={logOutHandler}>
-              <MdLogout /> Log out</a>
-          </div>
+                <li>
+                  <div className='flexLinks'>
+                    <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
+                  </div>
+                </li>
 
-       
+              </ul>
+            </>
+          )}
+
+          <a href="#" className='mobileLogOutLink' onClick={logOutHandler}>
+            <MdLogout /> Log out</a>
+        </div>
+
+
       </section>
     </>
   );

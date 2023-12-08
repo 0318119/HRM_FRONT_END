@@ -8,9 +8,6 @@ import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
-import { MdDeleteOutline } from 'react-icons/md';
-import { FaEdit } from 'react-icons/fa';
-import { Popconfirm } from 'antd';
 import { message } from 'antd';
 import { BsFillPersonFill as Person_ico } from "react-icons/bs";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
@@ -40,15 +37,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [getAppointStatus, setgetAppointStatus] = useState([]);
     const [isFileData, setFileData] = useState([])
 
-
-
-
     const EditPage = (mode, code) => {
         setCode(code);
         setMode(mode);
     };
-
-
     const columns = [
         {
             title: "Sequence No",
@@ -143,9 +135,9 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
         {
             title: "Process",
-            render: (item,data) => (
+            render: (item, data) => (
                 <Space size="middle">
-                    <Link href="" onClick={(e) =>  AppointmentProcess(item?.Sequence_no)}>
+                    <Link href="" onClick={(e) => AppointmentProcess(item?.Sequence_no)}>
                         {console.log(item, "item")}
                         <SettingsSuggestRoundedIcon className="List_ico" />
                     </Link>
@@ -167,10 +159,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                 </Space>
             ),
         },
-        
-    ];
 
-    
+    ];
     useEffect(() => {
         if (isSearchVal == "") {
             GetAppointStatusCall({
@@ -186,8 +176,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             });
         }
     }, [page, isSearchVal]);
-
-    console.log("Red_Appointment table page", Red_Appointment);
 
     async function AppointLetter(id) {
         await fetch(
@@ -205,29 +193,12 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             return response.json();
         }).then(async (response) => {
             if (response.success) {
-                // messageApi.open({
-                //   type: 'success',
-                //   content: 'Successfully Download',
-                // });
                 setAppointData(response.data)
                 GetAppointLetter(id, response?.data)
             }
-            else {
-                // messageApi.open({
-                //   type: 'error',
-                //   content: response?.message,
-                // });
-            }
-        }).catch((error) => {
-            // messageApi.open({
-            //   type: 'error',
-            //   content: error?.message,
-            // });
-        });
+        }).catch((error) => { });
     }
-
-
-async function GetAppointLetter(itemid, DataR) {
+    async function GetAppointLetter(itemid, DataR) {
         await fetch(
             `${config["baseUrl"]}/tranAppointment/Get_EmployeeletterByEmpCode`, {
             method: "POST",
@@ -252,71 +223,71 @@ async function GetAppointLetter(itemid, DataR) {
 
                 let htmlContent = `<html><body>`;
                 htmlContent += `
-           <div style="margin-top:10px; font-size: 20px; display:block;">
-             <div style="font-size:18px">Date: ${DataR?.[0]?.Transaction_Date ? DataR?.[0]?.Transaction_Date : "Not Found"}</div> <br />
-             <div style="font-size:18px">Name: ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not Found"}</div> <br />
-             <div style="font-size:18px">Address line: ${DataR?.[0]?.emp_address_line1 ? DataR?.[0]?.emp_address_line1 : "Not Found"}</div> <br />
-             <div style="font-size:18px">Address line:  ${DataR?.[0]?.emp_address_line2 ? DataR?.[0]?.emp_address_line2 : "Not Found"}</div> <br />
-             <div style="font-size:18px">Contact No: ${DataR?.[0]?.emp_phone ? DataR?.[0]?.emp_phone : "Not Found"}</div><br />
-           </div> 
-          <div style="text-align: center; font-size: 1px;">
+            <div style="margin-top:10px; font-size: 20px; display:block;">
+                <div style="font-size:18px">Date: ${DataR?.[0]?.Transaction_Date ? DataR?.[0]?.Transaction_Date : "Not Found"}</div> <br />
+                <div style="font-size:18px">Name: ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not Found"}</div> <br />
+                <div style="font-size:18px">Address line: ${DataR?.[0]?.emp_address_line1 ? DataR?.[0]?.emp_address_line1 : "Not Found"}</div> <br />
+                <div style="font-size:18px">Address line:  ${DataR?.[0]?.emp_address_line2 ? DataR?.[0]?.emp_address_line2 : "Not Found"}</div> <br />
+                <div style="font-size:18px">Contact No: ${DataR?.[0]?.emp_phone ? DataR?.[0]?.emp_phone : "Not Found"}</div><br />
+            </div> 
+            <div style="text-align: center; font-size: 1px;">
             <h3>LETTER OF APPOINTMENT</h3>
-          </div>
-          <p>Dear ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not  Found"} </p>
-          <p>We are pleased to offer you the position of ${DataR?.[0].Desig_name ? DataR?.[0].Desig_name : "Not Found"} - ${DataR?.[0].Department ? DataR?.[0].Department : "Not Found"} <br />
-           in the cadre of ${DataR?.[0].grade_name ? DataR?.[0].grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${DataR?.[0].loc_name ? DataR?.[0].loc_name : "Not Found"}.</p>
-          `;
+            </div>
+            <p>Dear ${DataR?.[0]?.Emp_Name ? DataR?.[0]?.Emp_Name : "Not  Found"} </p>
+            <p>We are pleased to offer you the position of ${DataR?.[0].Desig_name ? DataR?.[0].Desig_name : "Not Found"} - ${DataR?.[0].Department ? DataR?.[0].Department : "Not Found"} <br />
+            in the cadre of ${DataR?.[0].grade_name ? DataR?.[0].grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${DataR?.[0].loc_name ? DataR?.[0].loc_name : "Not Found"}.</p>
+            `;
                 // })
                 htmlContent += `
-      <p>Your remuneration will be as follows:</p>
-      <table>
+        <p>Your remuneration will be as follows:</p>
+        <table>
         <thead>
-          <tr>
+            <tr>
             <th>S.No</th>
             <th>Salary And Other Cash Benefits</th>
             <th>Per Month-(In Rupees)</th>
-          </tr>
+            </tr>
         </thead>
         <tbody>
-`;
+    `;
 
                 DataR?.forEach((item, index) => {
                     htmlContent += `
-          <tr>
+            <tr>
             <td>${index + 1}</td>
             <td>${item.Allowance_name ? item.Allowance_name : "Not Found"}</td>
             <td>${item.Amount ? item.Amount : "Not Found"}</td>
-          </tr>
-  `;
+            </tr>
+    `;
                 });
 
                 htmlContent += `
         </tbody>
-      </table>
-      <p>Note: All applicable taxes will be deducted at source.</p>
-      <p>In addition to the above, you are entitled to the following:</p>
-      <ul style="padding-left: 15px;">
+        </table>
+        <p>Note: All applicable taxes will be deducted at source.</p>
+        <p>In addition to the above, you are entitled to the following:</p>
+        <ul style="padding-left: 15px;">
         <li>Cash reimbursement equivalent to 100 liters of petrol per month.</li>
         <li>Gratuity, PF, Hospitalization, Group Insurance, Loan entitlement, Leave entitlement based on Bank’s approved salary and benefit policy.</li>
         <li>And all other benefits as per Bank’s approved policy.</li>
-      </ul>
-      <p>Your service will be on probation for a period of three months and is liable to termination without assigning any reason and without any notice during the period of probation. Your service will be confirmed after successful completion of the probation period, subject to the following:</p>
-      <p style="text-indent: 2em;">(i) Satisfactory references from your present and previous employers.</p>
-      <p>After confirmation, termination of this contract will require either party, i.e., you or the Bank, to serve 60 calendar days advance notice or, in lieu of the notice period, two months Gross Salary will be paid.</p>
-      <p>You will perform any and all functions assigned to you from time to time, and you can be transferred to any location/city at Bank’s discretion.</p>
-      <p>You will be required to sign Bank’s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary, and will abide by all the terms and conditions of the Bank’s HR Policy and Rules & Regulations.</p>
-      <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
-      <p>In agreement with the terms and conditions herein, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
-      `;
+        </ul>
+        <p>Your service will be on probation for a period of three months and is liable to termination without assigning any reason and without any notice during the period of probation. Your service will be confirmed after successful completion of the probation period, subject to the following:</p>
+        <p style="text-indent: 2em;">(i) Satisfactory references from your present and previous employers.</p>
+        <p>After confirmation, termination of this contract will require either party, i.e., you or the Bank, to serve 60 calendar days advance notice or, in lieu of the notice period, two months Gross Salary will be paid.</p>
+        <p>You will perform any and all functions assigned to you from time to time, and you can be transferred to any location/city at Bank’s discretion.</p>
+        <p>You will be required to sign Bank’s Standard Declaration of Secrecy and Fidelity Form along with any other form/undertaking which the Bank may consider necessary, and will abide by all the terms and conditions of the Bank’s HR Policy and Rules & Regulations.</p>
+        <p>You shall stand retired on attaining the superannuation age of (60) years.</p>
+        <p>In agreement with the terms and conditions herein, you are requested to sign both the pages (1 & 2) of this appointment offer and return a copy to Human Resource Division, Summit Bank Limited.</p>
+        `;
                 // AppointData.forEach((item, index) => {
                 htmlContent += `
-          <p>The proposed date of your assuming the responsibility is ${DataR?.[0].ProposedDate ? DataR?.[0].ProposedDate : "Not Found"}  or earlier.</p>
-          `;
+            <p>The proposed date of your assuming the responsibility is ${DataR?.[0].ProposedDate ? DataR?.[0].ProposedDate : "Not Found"}  or earlier.</p>
+            `;
                 // });
 
                 htmlContent += `
-      <p>We are confident that you will play a positive role towards the growth and expansion of Summit Bank Limited-SMBL and look forward to a long and mutually rewarding professional relationship.</p>
-      <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
+        <p>We are confident that you will play a positive role towards the growth and expansion of Summit Bank Limited-SMBL and look forward to a long and mutually rewarding professional relationship.</p>
+        <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
         <div style="display: flex; justify-content: space-between; width: 1000px; margin-top:10px;">
             <span>
                 <span>Sincerely:</span>
@@ -329,18 +300,18 @@ async function GetAppointLetter(itemid, DataR) {
                     `;
                 htmlContent += `
                     <span style="float: right;">___________ <br />
-                      ${DataR?.[0].Emp_Name ? DataR?.[0].Emp_Name : "Not Found"}
+                        ${DataR?.[0].Emp_Name ? DataR?.[0].Emp_Name : "Not Found"}
                     </span>
                     `;
                 htmlContent += `
             </span>
         
         </div>
-      </div>
+        </div>
         
     </body>
-  </html>
-`;
+    </html>
+    `;
 
                 console.log("first", htmlContent)
                 const blob = new Blob([htmlContent], { type: 'application/msword' });
@@ -359,23 +330,21 @@ async function GetAppointLetter(itemid, DataR) {
             });
         });
     }
-
-
- async function AppointmentProcess(item) {
+    async function AppointmentProcess(item) {
         setLoading(true)
         await fetch(
             `${baseUrl.baseUrl}/master_all_employees/ProcessTranAppointment`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-                body: JSON.stringify({
-                    "Sequence_No": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].Sequence_no,
-                    "Emp_code": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].Sequence_no,
-                    "Payroll_Month": "6",
-                    "UserCode": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].UserCode,
-                    "Replacement_Flag": "N",
-                    "Replacement_Emp_Code": "1"
+            body: JSON.stringify({
+                "Sequence_No": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].Sequence_no,
+                "Emp_code": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].Sequence_no,
+                "Payroll_Month": "6",
+                "UserCode": Red_Appointment?.data?.[0]?.res?.data1.filter(data => data.Sequence_no == item)[0].UserCode,
+                "Replacement_Flag": "N",
+                "Replacement_Emp_Code": "1"
 
-                }),
+            }),
         }
         ).then((response) => {
             return response.json();
@@ -388,7 +357,7 @@ async function GetAppointLetter(itemid, DataR) {
                 setLoading(false)
                 setTimeout(() => {
                     // cancel('read')
-                    
+
                 }, 3000);
             }
             else {
@@ -444,17 +413,18 @@ async function GetAppointLetter(itemid, DataR) {
                                     dataSource={Red_Appointment?.data?.[0]?.res?.data1}
                                     scroll={{ x: 10 }}
                                     pagination={{
-                                    defaultCurrent: page,
-                                    total: Red_Appointment?.data?.[0]?.res?.data3,
-                                    onChange: (p) => {
-                                        setPage(p);
-                                    },
-                                    pageSize: pageSize,
-                                }}
+                                        defaultCurrent: page,
+                                        total: Red_Appointment?.data?.[0]?.res?.data3,
+                                        onChange: (p) => {
+                                            setPage(p);
+                                        },
+                                        pageSize: pageSize,
+                                    }}
                                 />
                             )}
-                            {mode == "create" && <AppointmentForm cancel={setMode} mode={mode} isCode={null} />}
-                            {/* {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />} */}
+                            {mode == "create" ?
+                                <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null
+                            }
                         </div>
                     </div>
                 </div>

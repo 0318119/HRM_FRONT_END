@@ -122,10 +122,10 @@ const routing = () => {
       <Routes>
         {/* 
         {
-            localStorage.getItem('access_token') !== undefined &&
-            localStorage.getItem('access_token') !== null &&
-            localStorage.getItem('access_token') !== "" ?
-            <> */}
+          localStorage.getItem('access_token') !== undefined &&
+          localStorage.getItem('access_token') !== null &&
+          localStorage.getItem('access_token') !== "" ?
+        <> */}
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Appointment" element={<Appointment />} />
         <Route path="/TAPersonalform" element={<TAPersonalform />} />

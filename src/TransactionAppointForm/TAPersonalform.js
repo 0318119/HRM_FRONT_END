@@ -49,11 +49,10 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
   const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
   const currentDate = new Date();
   const EditBack = () => {
-    cancel('read')
+    window.location.href = "/Appointment";
   }
 
   async function getEmpTypeCodeData() {
-
     await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -1209,7 +1208,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                   />
                 </div>
                 <div className='CountryBtnBox'>
-                  <CancelButton onClick={EditBack} title={'Cancel'} />
+                  <CancelButton onClick={EditBack} title={'Back'} />
                   <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
               </form>
