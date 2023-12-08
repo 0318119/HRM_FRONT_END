@@ -3,12 +3,14 @@ import {
     GET_Access_Control_DATA_START,
     GET_Access_Control_DATA_SINGLE,
     GET_Access_Control_DATA_END,
+    GET_ALL_MENUS
 } from '../../../../actions/types'
 
 
 const initState = {
     data: [],
     dataSingle: [],
+    AllMenus: [],
     loading: false,
 }
 
@@ -29,6 +31,12 @@ const Red_Access_Control = (state = initState, action) => {
             return {
                 ...state,
                 dataSingle: action.payload,
+                loading: action.loading,
+            };
+        case GET_ALL_MENUS:
+            return {
+                ...state,
+                AllMenus: action.payload,
                 loading: action.loading,
             };
         case GET_Access_Control_DATA_END:

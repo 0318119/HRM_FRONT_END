@@ -22,28 +22,21 @@ function Access_ControlForm({
   Red_Access_Control,
   GetAccessControlData,
   GetMenuDir,
+  GetAllMenus
 }) {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading, setLoading] = useState(false);
   const [pageSize, setPageSize] = useState(10);
+  const [expandedKeys, setExpandedKeys] = useState(["0-0-0", "0-0-1"]);
+  const [checkedKeys, setCheckedKeys] = useState(["0-0-0"]);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [autoExpandParent, setAutoExpandParent] = useState(true);
+
 
   const EditBack = () => {
     cancel("read");
   };
-
-  //   const submitForm = async (data) => {
-  //     try {
-  //       const isValid = await JvCodeScheme.validate(data);
-  //       if (isValid) {
-  //         POST_JV_Code_FORM(data);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-
-  //   console.log(Red_JV_Codes ,'Red_JV_Codes22')
 
   const {
     control,
@@ -63,174 +56,22 @@ function Access_ControlForm({
     // resolver: yupResolver(JvCodeScheme),
   });
 
-    useEffect(() => {
-      if (isCode !== null) {
-        GetMenuDir(isCode);
-      }
-    }, []);
+  useEffect(() => {
+    // if (isCode !== null) {
+      // GetMenuDir();
+    // }
+    GetAllMenus()
+  }, []);
 
-  //   useEffect(() => {
-  //     if (mode == "create") {
-  //       reset({
-  //         JV_Currency: "",
-  //         JV_Cost_Centre: "",
-  //         JV_MainAC: "",
-  //         JV_SubAC: "",
-  //         JV_Description: "",
-  //         Sort_key: "",
+  console.log("Red_Access_Control",Red_Access_Control?.AllMenus?.[0]?.res?.data)
 
-  //       });
-  //     } else {
-  //       reset({
-  //         JV_Currency: Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.JV_Currency,
-  //         JV_Cost_Centre:Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.JV_Cost_Centre,
-  //         JV_MainAC:Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.JV_MainAC,
-  //         JV_SubAC: Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.JV_SubAC,
-  //         JV_Description: Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.JV_Description,
-  //         Sort_key:Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
-  //       });
-  //     }
-  //   }, [Red_JV_Codes?.dataSingle?.[0]?.res?.data?.[0]]);
+  
 
-  //   console.log(Red_JV_Codes?.dataSingle, 'Red_JV_Codes?.dataSingle')
 
-  //   //  JV FORM DATA API CALL ===========================
-  //   async function POST_JV_Code_FORM(body) {
-  //     setLoading(true);
-  //     await fetch(
-  //       `${baseUrl.baseUrl}/JVCodes/AddJvCode`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "content-type": "application/json",
-  //           accessToken: `Bareer ${get_access_token}`,
-  //         },
-  //         body: JSON.stringify({
-  //             JV_Unit: mode == "create" ? 0 : isCode,
-  //             JV_Currency: body?.JV_Currency,
-  //             JV_Cost_Centre: body?.JV_Cost_Centre,
-  //             JV_MainAC: body?.JV_MainAC,
-  //             JV_SubAC: body?.JV_SubAC,
-  //             JV_Description: body?.JV_Description,
-  //             Sort_key: body?.Sort_key,
 
-  //         }),
-  //       }
-  //     )
-  //       .then((response) => {
-  //         return response.json();
-  //       })
-  //       .then(async (response) => {
-  //         if (response.success) {
-  //           messageApi.open({
-  //             type: "success",
-  //             content: response?.message || response?.messsage,
-  //           });
-  //           setLoading(false);
-  //           setTimeout(() => {
-  //             cancel("read");
-  //             GetJvCodeData({
-  //               pageSize: pageSize,
-  //               pageNo: page,
-  //               search: null,
-  //             });
-  //           }, 3000);
-  //         } else {
-  //           setLoading(false);
-  //           messageApi.open({
-  //             type: "error",
-  //             content: response?.message || response?.messsage,
-  //           });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         setLoading(false);
-  //         messageApi.open({
-  //           type: "error",
-  //           content: error?.message || error?.messsage,
-  //         });
-  //       });
-  //   }
-
-  const treeData = [
-    {
-      title: "MenuLabel",
-      key: "MenuCode",
-      children: [
-        {
-          title: "0-0-0",
-          key: "0-0-0",
-          children: [
-            {
-              title: "0-0-0-0",
-              key: "0-0-0-0",
-            },
-            {
-              title: "0-0-0-1",
-              key: "0-0-0-1",
-            },
-            {
-              title: "0-0-0-2",
-              key: "0-0-0-2",
-            },
-          ],
-        },
-        {
-          title: "0-0-1",
-          key: "0-0-1",
-          children: [
-            {
-              title: "0-0-1-0",
-              key: "0-0-1-0",
-            },
-            {
-              title: "0-0-1-1",
-              key: "0-0-1-1",
-            },
-            {
-              title: "0-0-1-2",
-              key: "0-0-1-2",
-            },
-          ],
-        },
-        {
-          title: "0-0-2",
-          key: "0-0-2",
-        },
-      ],
-    },
-    {
-      title: "0-1",
-      key: "0-1",
-      children: [
-        {
-          title: "0-1-0-0",
-          key: "0-1-0-0",
-        },
-        {
-          title: "0-1-0-1",
-          key: "0-1-0-1",
-        },
-        {
-          title: "0-1-0-2",
-          key: "0-1-0-2",
-        },
-      ],
-    },
-    {
-      title: "0-2",
-      key: "0-2",
-    },
-  ];
-
-  const [expandedKeys, setExpandedKeys] = useState(["0-0-0", "0-0-1"]);
-  const [checkedKeys, setCheckedKeys] = useState(["0-0-0"]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
+ 
   const onExpand = (expandedKeysValue) => {
     console.log("onExpand", expandedKeysValue);
-    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-    // or, you can remove all expanded children keys.
     setExpandedKeys(expandedKeysValue);
     setAutoExpandParent(false);
   };
@@ -243,7 +84,17 @@ function Access_ControlForm({
     setSelectedKeys(selectedKeysValue);
   };
 
-  console.log(Red_Access_Control.dataSingle[0],'Red_Access_Control')
+  const treeData = [
+    {
+      title: "All",
+      key: "menucode",
+      children: [
+
+      ], // Assuming tempData is already an array
+    },
+  ];
+
+  // console.log(Red_Access_Control.dataSingle[0]?.res?.data, 'Red_Access_Control')
 
   return (
     <>
@@ -274,11 +125,14 @@ function Access_ControlForm({
             control={control}
           />
 
+
+          <h5 className="text-dark">Menus</h5>
+
           <div className="d-flex flex-column">
             <Tree
               checkable
               onExpand={onExpand}
-              expandedKeys={expandedKeys}
+              // expandedKeys={expandedKeys}
               autoExpandParent={autoExpandParent}
               onCheck={onCheck}
               checkedKeys={checkedKeys}
@@ -286,7 +140,7 @@ function Access_ControlForm({
               selectedKeys={selectedKeys}
               treeData={treeData}
             />
-         
+
             {/* <SimpleButton title={"Update"} /> */}
           </div>
         </div>
