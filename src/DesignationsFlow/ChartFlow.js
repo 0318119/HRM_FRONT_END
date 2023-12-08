@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 import { Tooltip } from 'antd';
-import User from '../../src/Assets/Images/user.avi'
+import User from '../Assets/Images/profile.png';
+// import User from '../../src/Assets/Images/user.avi'
 import './flow.css'
 import baseUrl from '../config.json'
 import Header from '../components/Includes/Header';

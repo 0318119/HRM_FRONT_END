@@ -111,6 +111,7 @@ import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import NotFound from '../Error_Pages';
+import Access_Control from '../Addministration/pages/Access_Control'
 
 
 
@@ -170,7 +171,7 @@ const routing = () => {
         <Route path="/Holidays" element={<Holidays />} />
         <Route path="/Leave_Applications" element={<Leave_Applications />} />
         <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-        <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
+        {/* <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} /> */}
         <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
         <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
         <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
@@ -237,6 +238,8 @@ const routing = () => {
         <Route path="flow/DesignationsFlowChart" element={<FLow />} />
         {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
         <Route path="/Change_Password" element={<Change_Password />} />
+        {/* ADDMINISTRATION ---> Access Control =============================================================== */}
+        <Route path="/Access_Control" element={<Access_Control />} />
         {/* ERRORS PAGE ============================ */}
         <Route path="NotFound/404" element={<NotFound />} />
         <Route path="/" element={<Login />} />
@@ -248,6 +251,8 @@ const routing = () => {
             localStorage.getItem('access_token') !== "" || 
             !localStorage.getItem('access_token') ? 
             <Route path="/" element={<Login />} />  */}
+
+
 
 
       </Routes>

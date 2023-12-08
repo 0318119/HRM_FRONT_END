@@ -297,3 +297,10 @@ export const GET_confirmation_DATA = "GET_confirmation_DATA";
 export const GET_confirmation_START = "GET_confirmation_STARTT";
 export const GET_confirmation_SINGLE = "GET_confirmation_SINGLE";
 export const GET_confirmation_END = "GET_confirmation_END";
+
+// ADDMINSRATION ===> Access_Control === 
+export const GET_Access_Control_DATA = "GET_Access_Control_DATA";
+export const GET_Access_Control_DATA_START = "GET_Access_Control_DATA_START";
+export const GET_Access_Control_DATA_SINGLE = "GET_Access_Control_DATA_SINGLE";
+export const GET_Access_Control_DATA_END = "GET_Access_Control_DATA_END";
+
