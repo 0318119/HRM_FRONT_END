@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import LogoHeader from '../image/logo.webp'
 const config = require('../../config.json')
 
 
@@ -97,12 +98,14 @@ const Header = (props) => {
               <h4 className="Header_logo">
                 <TableRowsIcon onClick={checkSideBar} />
               </h4>
-              {/* <div className="form-group">
-                <div className="from-control Header_Search">
-                  <input type="text" placeholder="Search" />
-                  <Search_Ico className="Search_ico" />
+              <div className="form-group">
+                <div className="Header_Search">
+                  <Link to="/TAShortsCut"> 
+                      <img src={LogoHeader} alt="" className='ImgLogo' />
+                  </Link>
+                
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3 d-flex align-items-center justify-content-end ColMobileRes2">
               <div className="Header_Settings">

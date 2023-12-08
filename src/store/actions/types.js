@@ -291,6 +291,12 @@ export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STAR
 export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
 export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
 
+
+// LOGIN SCREEN ===> FORGET PASSWORD === 
+export const GET_FORGET_PASSWORD_DATA = "GET_FORGET_PASSWORD_DATA";
+export const GET_FORGET_PASSWORD_DATA_START = "GET_FORGET_PASSWORD_DATA_START";
+export const GET_FORGET_PASSWORD_DATA_SINGLE = "GET_FORGET_PASSWORD_DATA_SINGLE";
+export const GET_FORGET_PASSWORD_DATA_END = "GET_FORGET_PASSWORD_DATA_END";
 // MASTER MAINTAINCE  ===> Confirmation === 
 export const GET_confirmation_DATA = "GET_confirmation_DATA";
 export const GET_confirmation_START = "GET_confirmation_STARTT";

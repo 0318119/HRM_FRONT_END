@@ -3,6 +3,7 @@ import Input from "../../components/basic/input";
 import { CancelButton, PrimaryButton, SimpleButton } from "../../components/basic/button";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/Includes/Header.js";
 import '../assest/css/Change_password.css'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,24 +20,26 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     const [isLoading, setLoading] = useState(false);
 
     const ChangePassWordScheme = yup.object().shape({
-        oldPassw: yup.string().required("oldPassw is required"),
-        newPass: yup.string().required("newPass is required"),
+        Old_Password: yup.string().required("Old Password is required"),
+        New_Password: yup.string().required("New Password is required"),
+        confirmPass: yup.string().required("confirm Pass is required"),
+
     });
 
 
     const submitForm = async (data) => {
         try {
             const isValid = await ChangePassWordScheme.validate(data);
-    
+
             if (isValid) {
                 if (data.New_Password !== data.confirmPass) {
-                    console.log(data.New_Password !== data.confirmPass , 'data.newPass !== data.confirmPass')
+                    console.log(data.New_Password !== data.confirmPass, 'data.newPass !== data.confirmPass')
                     messageApi.open({
                         type: 'error',
                         content: "New password and confirm password do not match",
                     });
                 } else {
-                    ChangePassword(data); 
+                    ChangePassword(data);
                 }
             }
         } catch (error) {
@@ -61,9 +64,12 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                 Old_Password: data.Old_Password,
                 New_Password: data.New_Password,
             });
-    
+
             if (response && response.success) {
                 messageApi.success("You have successfully changed your password");
+                setTimeout(() => {
+                    window.location.href = "/TAShortsCut"
+                }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to change password';
                 messageApi.error(errorMessage);
@@ -72,19 +78,14 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
             console.error("Error occurred while changing password:", error);
             messageApi.error("An error occurred while changing password");
         }
-        // else {
-        //     messageApi.open({
-        //         type: 'error',
-        //         content: CreateNewPassword?.message || CreateNewPassword?.message,
-        //     });
-        // }
-    }
+    };
+
 
 
     return (
         <>
             <Header />
-            <Input   />
+            <Input />
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)} className='passBox'>
                 <h4 className="text-dark">Password</h4>
@@ -92,21 +93,30 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                     <FormInput
                         label={'Old Password'}
                         placeholder={'Old Password'}
-                        id="oldPassw"
-                        name="oldPassw"
-                        type="numebr"
-                        readOnly
+                        id="Old_Password"
+                        name="Old_Password"
+                        type="password"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'New Password'}
+                        placeholder={'New Password'}
+                        id="New_Password"
+                        name="New_Password"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'New Password'}
-                        placeholder={'New Password'}
-                        id="newPass"
-                        name="newPass"
-                        type="text"
+                        label={'Confirm Password'}
+                        placeholder={'Confirm Password'}
+                        id="confirmPass"
+                        name="confirmPass"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}

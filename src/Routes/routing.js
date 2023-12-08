@@ -50,7 +50,7 @@ import Leave_Applications from '../LeavesModule/Leave_Applications'
 import Transaction_Leave from '../LeavesModule/Transaction_Leave';
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form.js';
+import Transaction_confirmation_form from '../Master_Maintaince/form/Confirmationform';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -111,7 +111,9 @@ import Change_Password from '../Addministration/pages/Change_Password'
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import NotFound from '../Error_Pages';
 import Access_Control from '../Addministration/pages/Access_Control'
-
+import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
+import VerifyOTP from '../LoginScreens/ForgetPassword/verifyOtp';
+import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
 
 
 
@@ -119,12 +121,19 @@ const routing = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Login />} /> 
         {/* 
         {
-          localStorage.getItem('access_token') !== undefined &&
-          localStorage.getItem('access_token') !== null &&
-          localStorage.getItem('access_token') !== "" ?
-        <> */}
+            localStorage.getItem('access_token') !== undefined &&
+            localStorage.getItem('access_token') !== null &&
+            localStorage.getItem('access_token') !== "" ?
+            <> */}
+        {/*==================Forget Password============*/}
+        <Route path="/Forgetpassword" element={<Forgetpassword />} />
+        <Route path="/VerifyOTP" element={<VerifyOTP />} />
+        <Route path="/Updatepassword" element={<Updatepassword />} />
+        {/*==================Forget Password End============*/}
+
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Appointment" element={<Appointment />} />
         <Route path="/TAPersonalform" element={<TAPersonalform />} />
