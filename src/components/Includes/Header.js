@@ -1,25 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import './assets/css/header.css'
-import { BiSearchAlt as Search_Ico } from 'react-icons/bi'
-import { AiOutlineHome as Home_ico } from 'react-icons/ai';
-import { MdOutlineApps as App_ico } from 'react-icons/md';
-import { BsThreeDotsVertical as Three_ico } from 'react-icons/bs';
 import { MdLogout as MdLogout } from 'react-icons/md';
-
 import { MdNotifications as Notify_ico } from "react-icons/md";
 import Propic from '../../Assets/Images/profile.png'
 import Logo from '../../Assets/Images/logoMish.png'
 import secureLocalStorage from 'react-secure-storage';
 import { Link, useNavigate } from 'react-router-dom';
-import TreeView from '@mui/lab/TreeView';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import TreeItem from '@mui/lab/TreeItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import { isMac } from '@react-pdf-viewer/core';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { fetchApiData  } from '../../redux/slices/GetSlice';
 const config = require('../../config.json')
 
 
@@ -27,7 +17,6 @@ const config = require('../../config.json')
 const Header = (props) => {
   const [isMultilevel, setMultilevel] = useState([])
   const [isMultiLevelError, setMultiLevelError] = useState(false)
-  const [childCount, setchildCount] = useState(null)
   const navigate = useNavigate()
   const ref = useRef()
   const [loading, setLoading] = useState(true);
@@ -35,7 +24,6 @@ const Header = (props) => {
   const [isShowIconOne, setisShowIconOne] = useState("")
   const [isShowIconTwo, setisShowIconTwo] = useState("")
   const [isShowIconThree, setisShowIconThree] = useState("")
-  const [IsUserMenu, setUserMenu] = useState("")
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
 
@@ -81,9 +69,7 @@ const Header = (props) => {
         setLoading(false);
       });
   }
-
-
-
+  
   const [isActive, setActive] = useState(false)
   const checkSideBar = () => {
     setActive(!isActive)
@@ -95,12 +81,6 @@ const Header = (props) => {
     sessionStorage.clear()
     window.location.href = '/'
   }
-
-  // const API_URL = "/dirmenus/GetDirMenus"
-  // console.log("GetDirMenus",getData)
-  // useEffect(() => {
-  //   dispatch(fetchApiData(API_URL));
-  // }, [dispatch]);
 
   useEffect(() => {
     getMultiLevelDropDown()

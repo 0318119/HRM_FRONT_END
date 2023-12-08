@@ -1,4 +1,3 @@
-
 // HR OPERATIONS ===> FAMILY TYPES
 export const GET_TRANSITION_FAMILY_DATA = "GET_TRANSITION_FAMILY_DATA";
 export const GET_TRANSITION_FAMILY_START = "GET_TRANSITION_FAMILY_START";
@@ -303,4 +302,4 @@ export const GET_Access_Control_DATA = "GET_Access_Control_DATA";
 export const GET_Access_Control_DATA_START = "GET_Access_Control_DATA_START";
 export const GET_Access_Control_DATA_SINGLE = "GET_Access_Control_DATA_SINGLE";
 export const GET_Access_Control_DATA_END = "GET_Access_Control_DATA_END";
-
+export const GET_ALL_MENUS = "GET_ALL_MENUS";

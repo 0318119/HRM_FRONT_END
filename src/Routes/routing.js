@@ -48,7 +48,6 @@ import Promotion from '../Master_Maintaince/Promotion'
 import Holidays from '../HrOperations/Holidays'
 import Leave_Applications from '../LeavesModule/Leave_Applications'
 import Transaction_Leave from '../LeavesModule/Transaction_Leave';
-import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
 import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form.js';
