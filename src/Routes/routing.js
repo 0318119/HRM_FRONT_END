@@ -171,7 +171,6 @@ const routing = () => {
         <Route path="/Holidays" element={<Holidays />} />
         <Route path="/Leave_Applications" element={<Leave_Applications />} />
         <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-        {/* <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} /> */}
         <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
         <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
         <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
