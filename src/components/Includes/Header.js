@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import { isMac } from '@react-pdf-viewer/core';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { fetchApiData  } from '../../redux/slices/GetSlice';
 const config = require('../../config.json')
@@ -35,6 +36,7 @@ const Header = (props) => {
   const [isShowIconOne, setisShowIconOne] = useState("")
   const [isShowIconTwo, setisShowIconTwo] = useState("")
   const [isShowIconThree, setisShowIconThree] = useState("")
+  const [IsUserMenu, setUserMenu] = useState("")
 
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
@@ -76,6 +78,7 @@ const Header = (props) => {
         if (response.messsage == "timeout error") {navigate("/");}
         else{
           setMultilevel(response.data)
+          console.log(response.data, 'response.data')
           setDataLoader(true);
         }
       }
@@ -110,7 +113,6 @@ const Header = (props) => {
   useEffect(() => {
     getMultiLevelDropDown()
   }, [])
-
 
 
 
@@ -171,6 +173,7 @@ const Header = (props) => {
                             setisShowIconOne(items.menulabel)
                           }
                         }}>
+                          
                           <div className='flexLinks'>
                             {isShowIconOne == items.menulabel ? <ExpandMoreIcon /> : items.menulabel == "Logout" ? "" : <ChevronRightIcon />}
                             <Link to="#">{items.menulabel == "Logout" ? "" : items.menulabel}</Link>
@@ -188,6 +191,7 @@ const Header = (props) => {
                                     }
                                   }}
                                 >
+
                                   <div className="flexLinks">
                                     {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <ExpandMoreIcon /> : <ChevronRightIcon /> : "" : ""}
                                     {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].filter(data => data.ParentCode == innerItemsOne.menucode && data.Level == 3).length > 0 ? isShowIconTwo == innerItemsOne.menulabel ? <Link to="#">{innerItemsOne.menulabel}</Link> : <Link to="#">{innerItemsOne.menulabel}</Link> : <Link onClick={() => {
@@ -262,13 +266,15 @@ const Header = (props) => {
                         : ""}
                     </>
                   )) : ""}
+                
                   <li>
                     <div className='flexLinks'>
                       <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
                     </div>
                   </li>
+                  
                 </ul>
-              </>
+                </>
             )}
 
             <a href="#" className='mobileLogOutLink' onClick={logOutHandler}>
