@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Input from "../../components/basic/input";
-import { CancelButton, PrimaryButton } from "../../components/basic/button";
+import { CancelButton, PrimaryButton, SimpleButton } from "../../components/basic/button";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/Includes/Header.js";
 import '../assest/css/Change_password.css'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,27 +11,36 @@ import * as CHNGPWD from "../../store/actions/Addministration/UserProfile/index.
 import { FormInput } from "../../components/basic/input/formInput";
 import { message } from "antd";
 import * as yup from "yup";
-import baseUrl from "../../../src/config.json";
+import baseUrl from "../../config.json";
 
 function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     var get_access_token = localStorage.getItem("access_token");
+    var GetEmpCode = localStorage.getItem('Emp_code');
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false);
 
     const ChangePassWordScheme = yup.object().shape({
-        oldPassw: yup.string().required("oldPassw is required"),
-        newPass: yup.string().required("newPass is required"),
-    });
-    
+        Old_Password: yup.string().required("Old Password is required"),
+        New_Password: yup.string().required("New Password is required"),
+        confirmPass: yup.string().required("confirm Pass is required"),
 
+    });
 
 
     const submitForm = async (data) => {
         try {
             const isValid = await ChangePassWordScheme.validate(data);
+
             if (isValid) {
-                ChangePassword(data)
-                console.log(data, "data");
+                if (data.New_Password !== data.confirmPass) {
+                    console.log(data.New_Password !== data.confirmPass, 'data.newPass !== data.confirmPass')
+                    messageApi.open({
+                        type: 'error',
+                        content: "New password and confirm password do not match",
+                    });
+                } else {
+                    ChangePassword(data);
+                }
             }
         } catch (error) {
             console.error(error, "error message");
@@ -48,63 +58,72 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
         resolver: yupResolver(ChangePassWordScheme),
     });
 
-    const ChangePassword = async (data, e) => {
-        const CreateNewPassword = await GetChangePassword({
-            Emp_code: data?.Emp_code,
-            oldPassw: data?.oldPassw,
-            newPass: data?.newPass,
-        })
-        if (CreateNewPassword.success) {
-            messageApi.open({
-                type: 'success',
-                content: "You have successfully Change Password",
+    const ChangePassword = async (data) => {
+        try {
+            const response = await GetChangePassword({
+                Old_Password: data.Old_Password,
+                New_Password: data.New_Password,
             });
+
+            if (response && response.success) {
+                messageApi.success("You have successfully changed your password");
+                setTimeout(() => {
+                    window.location.href = "/TAShortsCut"
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to change password';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing password:", error);
+            messageApi.error("An error occurred while changing password");
         }
-        else {
-            messageApi.open({
-                type: 'error',
-                content: CreateNewPassword?.message || CreateNewPassword?.message,
-            });
-        }
-    }
+    };
+
 
 
     return (
         <>
             <Header />
+            <Input />
             {contextHolder}
-            <form onSubmit={handleSubmit(submitForm)} className="MasterClass">
-                <h4 className="text-dark">Change Password</h4>
-                <hr />
-                    <span>
-                        <h6>User Name:</h6>
-                    </span>
-                <div className="form-group Change_PasswordBtnBox">
+            <form onSubmit={handleSubmit(submitForm)} className='passBox'>
+                <h4 className="text-dark">Password</h4>
+                <div className=''>
                     <FormInput
                         label={'Old Password'}
                         placeholder={'Old Password'}
-                        id="oldPassw"
-                        name="oldPassw"
-                        type="numebr"
-                        readOnly
+                        id="Old_Password"
+                        name="Old_Password"
+                        type="password"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'New Password'}
+                        placeholder={'New Password'}
+                        id="New_Password"
+                        name="New_Password"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
 
                     <FormInput
-                        label={'New Password'}
-                        placeholder={'New Password'}
-                        id="newPass"
-                        name="newPass"
-                        type="text"
+                        label={'Confirm Password'}
+                        placeholder={'Confirm Password'}
+                        id="confirmPass"
+                        name="confirmPass"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
                 </div>
-                <div className="Change_PasswordBtnBox">
-                    <PrimaryButton type={"Update"} loading={isLoading} title="Update" />
+                <div className='passBoxBtnBox'>
+                    <SimpleButton type={"submit"} loading={isLoading} title="Update" />
                 </div>
             </form>
         </>

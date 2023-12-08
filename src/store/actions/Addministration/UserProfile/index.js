@@ -8,6 +8,7 @@ import baseUrl from "../../../../config.json";
 
 
 export const GetChangePassword = (body) => async (dispatch) => {
+    console.log(body, 'body')
     const response = await fetch(`${baseUrl.baseUrl}/allemployee/changePassword`, {
         method: "POST",
         headers: {
@@ -15,10 +16,8 @@ export const GetChangePassword = (body) => async (dispatch) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-           
-                "Emp_code": 58,
-                "oldPassw": "ssssss",
-                "newPass": "sssssss"
+                "Old_Password" : body?.Old_Password,
+                "New_Password" : body?.New_Password
             
         })
     });

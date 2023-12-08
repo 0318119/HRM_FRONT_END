@@ -1,6 +1,5 @@
 import { combineReducers, compose, createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
-
 import Transition_family from "./reducers/Transition/transition_family/index";
 import Red_Cost_centre from "./reducers/HrOperations/Cost_Centre/index";
 import Red_Country from "./reducers/HrOperations/Country/index";
@@ -58,6 +57,9 @@ import Red_PayrollCategoryAccess from "./reducers/payroll/PayrollCategoryAccess"
 import Red_LateArrival from "./reducers/HrOperations/Late_Arrival";
 import Red_ChangePassword from "./reducers/Addministration/UserProfile";
 import Red_New_Appointment_Report from "./reducers/HrOperations/New_Appointment_Report/index"
+import Red_Confirmation from "./reducers/HrOperations/Master_Maintaince/Confirmation"
+import Red_Access_Control from "./reducers/Addministration/UserProfile/Access_Control/index"
+import Red_Forget_Password from "./reducers/LoginScreen/ForgetPassword/index";
 
 const reducers = combineReducers({
   Transition_family,
@@ -121,7 +123,10 @@ const reducers = combineReducers({
   Red_ChangePassword,
   Red_PayrollCategoryAccess,
   Red_LateArrival,
-  Red_New_Appointment_Report
+  Red_New_Appointment_Report,
+  Red_Confirmation,
+  Red_Access_Control,
+  Red_Forget_Password
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

@@ -63,6 +63,10 @@ function TransactionConfirmation_list() {
                 else {
                     if (response.success) {
                         setGetConfirmationData(response?.data)
+<<<<<<< HEAD
+                        console.log(response.data)
+=======
+>>>>>>> 22c9b86f0a0681bf1069915bd1fe3c3a60b69505
                         setGetConfirmationDataFilter(response?.data)
                         setDataLoader(true);
                     } else {
@@ -71,6 +75,7 @@ function TransactionConfirmation_list() {
                     }
                 }
             }
+
         }).catch((error) => { setGetConfirmationDataErr(error.message) })
             .finally(() => {
                 setLoading(false);

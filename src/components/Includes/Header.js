@@ -17,6 +17,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
 import CancelIcon from '@mui/icons-material/Cancel';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import LogoHeader from '../image/logo.webp'
 import { isMac } from '@react-pdf-viewer/core';
 // import { useSelector, useDispatch } from 'react-redux';
 // import { fetchApiData  } from '../../redux/slices/GetSlice';
@@ -125,12 +126,14 @@ const Header = (props) => {
               <h4 className="Header_logo">
                 <TableRowsIcon onClick={checkSideBar} />
               </h4>
-              {/* <div className="form-group">
-                <div className="from-control Header_Search">
-                  <input type="text" placeholder="Search" />
-                  <Search_Ico className="Search_ico" />
+              <div className="form-group">
+                <div className="Header_Search">
+                  <Link to="/TAShortsCut"> 
+                      <img src={LogoHeader} alt="" className='ImgLogo' />
+                  </Link>
+                
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3 d-flex align-items-center justify-content-end ColMobileRes2">
               <div className="Header_Settings">
@@ -163,8 +166,8 @@ const Header = (props) => {
                 <ul className='menuBoxUl'>
                   {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].map((items, index) => (
                     <>
-                      {items.ParentCode == 0 ?
-                      
+                      {/* {console.log("object",items.ParentCode)} */}
+                      {items.ParentCode == 0?
                         <li onClick={(e) => {
                           e.stopPropagation();
                           if (isShowIconOne == items.menulabel) {
@@ -229,7 +232,6 @@ const Header = (props) => {
                                                 }
                                               }}
                                               className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
-
                                           </div>
 
                                           {isShowIconThree == three.menulabel && (

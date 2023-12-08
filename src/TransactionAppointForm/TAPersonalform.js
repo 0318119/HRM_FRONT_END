@@ -350,6 +350,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
       return response.json();
     }).then(async (response) => {
       if (response.success) {
+        console.log(response.data , 'sdff');
         setSupervisor(response.data)
       }
       else {

@@ -8,24 +8,85 @@ import {
 import baseUrl from '../../../../config.json'
 
 
-export const GET_FORGET_PASSWORD_OTP = (code) => async (dispatch) => {
+
+export const SEND_PASSWORD_OTP = (body) => async (dispatch) => {
+    console.log(body , "bo")
+    const response = await fetch(`${baseUrl.baseUrl}/allemployee/ForgetPassword_Send_OTP`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Emp_Code": body.Emp_Code,
+            "company_code": body.company_code
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+export const Verify_OTP = (body) => async (dispatch) => {
+    console.log(body,'bid')
+    const response = await fetch(`${baseUrl.baseUrl}/allemployee/Verify_OTP`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Emp_code": body.Emp_code,
+            "OTP": body.OTP,
+            "company_code": body.company_code
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+
+export const UpdatePassword = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/allemployee/Update_Password`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Emp_code": body.Emp_code,
+            "company_code": body.company_code,
+            "new_password": body.new_password
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+export const GET_Company_Code = () => async (dispatch) => {
     try {
         dispatch({
             type: GET_FORGET_PASSWORD_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/allemployee/ForgetPassword_Send_OTP`, {
-            method: "POST",
+        const response = await fetch(`${baseUrl.baseUrl}/companies/getCompanies`, {
+            method: "GET",
             headers: {
-                'Content-Type': 'application/json',
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                "Emp_Code": code,
-                "company_code": 1
-            })
-
         });
         if (response.status === 200) {
             const res = await response.json()

@@ -18,10 +18,8 @@ export const Login = () => {
   const [getCompanyId, setCompanyId] = useState("")
   const [loading, setLoading] = useState(false);
   const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState("")
-  const [isLogin, setLogin] = useState(true)
 
-    
-    
+
   const navigate = useNavigate()
   const showAlert = (message, type) => {
     setLoginError({
@@ -29,6 +27,11 @@ export const Login = () => {
       type: type,
     })
   }
+
+
+
+
+
   async function getCompanyCodes() {
     try {
       await fetch(`${config['baseUrl']}/companies/getCompanies`, {
@@ -93,10 +96,12 @@ export const Login = () => {
 
   return (
     <>
-      {isLogin ? <div className="LoginMainContainer">
+      
+       <div className="LoginMainContainer">
         <div className="container">
           <div className="row d-flex justify-content-center align-items-center">
             <div className="col-lg-6">
+        
               <form onSubmit={HandleLogin} className="LoginForm">
                 <div className="LoginHeader">
                   <span>Login Form</span>
@@ -163,7 +168,7 @@ export const Login = () => {
                   </div>
                 </div>
                 <div>
-                  <Link>Forget PassWord</Link>
+                  <Link to="/Forgetpassword">Forget PassWord</Link>
                 </div>
                 <div className="login_button">
                   <button className="LoginButton" type="submit" disabled={btnEnaledAndDisabled}>  {loading ? "Loading..." : "Login"} </button><br />
@@ -172,8 +177,10 @@ export const Login = () => {
             </div>
           </div>
         </div>
-      </div> :"" }
+      </div>
       
     </>
   );
 };
+
+
