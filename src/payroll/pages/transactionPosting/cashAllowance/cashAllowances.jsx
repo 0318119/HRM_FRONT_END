@@ -9,11 +9,11 @@ import { connect } from "react-redux";
 
 
 
-const CashAllowance = ({getCashAllowance,cashAllowance}) => {
-    const [mode,setMode] = useState('read')
-    const [current,setCurrent] = useState()
+const CashAllowance = ({ getCashAllowance, cashAllowance }) => {
+    const [mode, setMode] = useState('read')
+    const [current, setCurrent] = useState()
 
-    const converter=(w,e)=>{
+    const converter = (w, e) => {
         setMode(w)
         setCurrent(e)
     }
@@ -26,6 +26,11 @@ const CashAllowance = ({getCashAllowance,cashAllowance}) => {
     const uniSearch = (w) => {
         if (w == "") {
             setSearch(null)
+            getCashAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: null
+            })
         }
         else {
             setSearch(w)
@@ -69,7 +74,7 @@ const CashAllowance = ({getCashAllowance,cashAllowance}) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={()=>{converter('edit',_?.Emp_code)}} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => { converter('edit', _?.Emp_code) }} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </Space>
             ),
         },
@@ -80,20 +85,22 @@ const CashAllowance = ({getCashAllowance,cashAllowance}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Cash Allowance'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read' ? true : false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Cash Allowance'} total={''} />
             </div>
             <div className={Style.TableBody}>
-                {mode=='read'?
-                <Table pagination={{
-                    defaultCurrent: pageNo,
-                    onChange: (p) => {
-                        setPageNo(p);
-                    },
-                    pageSize: pageSize,
-                }} loading={cashAllowance?.loading} columns={columns} dataSource={cashAllowance?.data} />
-                :
-                <CashAllowanceForm cancel={setMode} currentUser={current}/>
-                }
+                <div className="container">
+                    {mode == 'read' ?
+                        <Table pagination={{
+                            defaultCurrent: pageNo,
+                            onChange: (p) => {
+                                setPageNo(p);
+                            },
+                            pageSize: pageSize,
+                        }} loading={cashAllowance?.loading} columns={columns} dataSource={cashAllowance?.data} />
+                        :
+                        <CashAllowanceForm cancel={setMode} currentUser={current} />
+                    }
+                </div>
             </div>
         </>
     )

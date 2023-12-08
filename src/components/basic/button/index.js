@@ -22,7 +22,7 @@ function SimpleButton({ title,loading,type }) {
     )
 }
 
-function PrimaryButton({ title, loading, type, id, className,onClick}) {
+function PrimaryButton({ title, loading, type, id, className}) {
     const [messageApi, contextHolder] = message.useMessage();
     useEffect(() => {
         if(loading){
@@ -41,7 +41,7 @@ function PrimaryButton({ title, loading, type, id, className,onClick}) {
         <>
             {contextHolder}
             <div className={style.PrimaryButton + " " + className}>
-                <button  onClick={(e) => !onClick(e)}   id={id} style={{ cursor: loading ? "not-allowed" : "pointer" }} type={type} disabled={loading}>{title}</button>
+                <button id={id} style={{ cursor: loading ? "not-allowed" : "pointer" }} type={type} disabled={loading}>{title}</button>
             </div>
         </>
     )

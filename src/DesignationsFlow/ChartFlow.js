@@ -37,7 +37,8 @@ export default function ChartFlow() {
             return [...prevArrays, ...currentArray];
           };
           setChartData(combineArrays(response?.data, isChartData));
-        } else if (response?.data?.length == 0 && response?.success) {
+        } 
+        else if (response?.data?.length == 0 && response?.success) {
             message.error("No data available")
         } else {
             message.error(response?.message || response?.messsage)
@@ -61,6 +62,7 @@ export default function ChartFlow() {
 
   return (
     <>
+{console.log("isChartData",isChartData)}
       <div>
         <Header />
       </div>
@@ -111,7 +113,6 @@ export default function ChartFlow() {
                     if (items?.Supervisor_Code == root?.Emp_code) {
                       return (<>
                         <div className='rootOrgBox childMiddleBorder' style={{ marginTop: "60px", paddingBottom: "45px" }}>
-                          {/* <img src={arrow} alt={arrow} className='arrow'/> */}
                           <div className='d-flex justify-content-center'>
                             <img src={User} />
                             <div className='ml-4'>

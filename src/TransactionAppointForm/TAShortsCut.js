@@ -81,9 +81,19 @@ function TAShortsCut() {
         <Header />
       </div>
       <div className="container maringClass tranAppointBgColor mb-5">
-        <div className="row"><h5 className="text-dark"><b>Dashboard</b></h5></div>
-        <hr />
         <div className="row">
+          <div className="col-md-6 p-0"><h5 className="text-dark"><b>Dashboard</b></h5></div>
+          <div className="col-md-6 d-flex justify-content-end align-item-center">
+            <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
+                  background: "rgb(229 221 221)",
+                  padding: "6px 6px",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+            }}><b>Attendance report</b></Link>
+          </div>
+        </div>
+        <hr />
+        <div className="row justify-content-center">
           <div className="col-lg-3 mt-5">
             <Link to={'/Dashboard'} className="dashBoxes">
                 <RxDashboard_ico />
@@ -96,18 +106,18 @@ function TAShortsCut() {
               <span>Leave</span>
             </Link>
           </div>
-          <div className="col-lg-3 mt-5">
+          {/* <div className="col-lg-3 mt-5">
             <Link to="/payroll/report/taxReport" className="dashBoxes">
               <FaListAlt />
               <span>Tax Slip</span>
             </Link>
-          </div>
-          <div className="col-lg-3 mt-5">
+          </div> */}
+          {/* <div className="col-lg-3 mt-5">
             <Link to="/Pay/PaySlip" className="dashBoxes">
               <RiFileListFill />
               <span>Pay Slip</span>
             </Link>
-          </div>
+          </div> */}
         </div>
         <hr />
         <div className="row mt-5"><h5 className="text-dark"><b>Leave Applications</b></h5></div>
