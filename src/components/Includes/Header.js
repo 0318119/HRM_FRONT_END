@@ -161,7 +161,8 @@ const Header = (props) => {
                 <ul className='menuBoxUl'>
                   {isMultilevel && isMultilevel.length > 0 ? isMultilevel[0].map((items, index) => (
                     <>
-                      {items.ParentCode == 0 ?
+                      {/* {console.log("object",items.ParentCode)} */}
+                      {items.ParentCode == 0?
                         <li onClick={(e) => {
                           e.stopPropagation();
                           if (isShowIconOne == items.menulabel) {
@@ -224,7 +225,6 @@ const Header = (props) => {
                                                 }
                                               }}
                                               className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
-
                                           </div>
 
                                           {isShowIconThree == three.menulabel && (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
 import Country from "./Country.json"
-import { PrimaryButton} from "../components/basic/button";
+import { PrimaryButton , SimpleButton} from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -350,6 +350,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
       return response.json();
     }).then(async (response) => {
       if (response.success) {
+        console.log(response.data , 'sdff');
         setSupervisor(response.data)
       }
       else {
@@ -1197,7 +1198,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                 </div>
                 <div className='CountryBtnBox'>
                   <CancelButton onClick={EditBack} title={'Cancel'} />
-                  <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                  <SimpleButton type={'submit'} loading={isLoading} title="Save"   />
                 </div>
               </form>
             </div>
