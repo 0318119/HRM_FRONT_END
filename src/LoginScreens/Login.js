@@ -170,8 +170,8 @@ export const Login = () => {
                     </select>
                   </div>
                 </div>
-                <div>
-                  <Link to="/Forgetpassword">Forget PassWord</Link>
+                <div className="forgetPassword">
+                  <Link to="/Forgetpassword">Forget Password</Link>
                 </div>
                 <div className="login_button">
                   <button className="LoginButton" type="submit" disabled={btnEnaledAndDisabled}>  {loading ? "Loading..." : "Login"} </button><br />

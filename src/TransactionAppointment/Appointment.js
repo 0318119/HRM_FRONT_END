@@ -5,6 +5,8 @@ import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
+import TAEducationFrom from "../TransactionAppointForm/TAEducationForm";
+import TASalary from '../TransactionAppointForm/TASalaryForm';
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -62,8 +64,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Personal",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TAPersonalform?userId=${data.Sequence_no}`}>
-                        <Person_ico className="List_ico" />{" "}
+                    {/* <Link to={`/TAPersonalform?userId=${data.Sequence_no}`}>
+                    </Link> */}
+                    <Link onClick={() => EditPage("Edit", data?.Sequence_no)} >
+                        <Person_ico className="List_ico" />
                     </Link>
                 </Space>
             ),
@@ -73,11 +77,12 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Education",
             render: (data) => (
                 <Space size="middle">
-                    <Link
-                        to={`/TAEducationForm?userId=${data.Sequence_no}`}
-                    >
-                        <LibraryBooksIcon className="List_ico" />{" "}
+                    <Link to={`/TAEducationForm?userId=${data.Sequence_no}`} >
+                    <LibraryBooksIcon className="List_ico" />
                     </Link>
+                    {/* <Link onClick={() => EditPage("EditEdu", data?.Sequence_no)} >
+                        <LibraryBooksIcon className="List_ico" />
+                    </Link> */}
                 </Space>
             ),
         },
@@ -88,6 +93,9 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                     <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
                         <LocalAtmIcon className="List_ico" />
                     </Link>
+                    {/* <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
+                        <LocalAtmIcon className="List_ico" />
+                    </Link> */}
                 </Space>
             ),
         },
@@ -422,9 +430,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                     }}
                                 />
                             )}
-                            {mode == "create" ?
-                                <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null
-                            }
+                            {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
+                            {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditEdu" && <TAEducationFrom cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />}
+
                         </div>
                     </div>
                 </div>
