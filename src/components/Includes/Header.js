@@ -59,7 +59,6 @@ const Header = (props) => {
         if (response.messsage == "timeout error") { navigate("/"); }
         else {
           setMultilevel(response.data)
-          console.log("response.data", response.data)
           setDataLoader(true);
         }
       }
