@@ -58,18 +58,18 @@ function Access_ControlForm({
 
   useEffect(() => {
     // if (isCode !== null) {
-      // GetMenuDir();
+    // GetMenuDir();
     // }
     GetAllMenus()
   }, []);
 
-  console.log("Red_Access_Control",Red_Access_Control?.AllMenus?.[0]?.res?.data)
-
-  
+  console.log("Red_Access_Control", Red_Access_Control?.AllMenus?.[0]?.res?.data)
 
 
 
- 
+
+
+
   const onExpand = (expandedKeysValue) => {
     console.log("onExpand", expandedKeysValue);
     setExpandedKeys(expandedKeysValue);
@@ -89,7 +89,10 @@ function Access_ControlForm({
       title: "All",
       key: "menucode",
       children: [
-
+        {
+          title: 'Administration',
+          key: "menucode",
+        },
       ], // Assuming tempData is already an array
     },
   ];
