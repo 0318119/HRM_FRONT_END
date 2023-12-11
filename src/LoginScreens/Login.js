@@ -52,7 +52,7 @@ export const Login = () => {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
-            "Emp_name": getUserName,
+            "Emp_code": getUserName,
             "Emp_password": getPwd,
             "company_code": getCompanyId
           })
