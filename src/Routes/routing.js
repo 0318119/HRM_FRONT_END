@@ -258,6 +258,12 @@ const routing = () => {
             localStorage.getItem('access_token') !== "" || 
             !localStorage.getItem('access_token') ? 
             <Route path="/" element={<Login />} />  */}
+
+
+
+        {/*new Appoint -----*/}
+        
+        {/*new Appoint -----*/}
       </Routes>
     </Router>
 

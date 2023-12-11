@@ -5,7 +5,7 @@ import { Button } from "../components/basic/button";
 import "./assets/css/TransactionConfirmation.css";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
 import ConfirmationForm from "./form/Confirmationform";
-import * as ConfirmarionAction from "../store/actions/HrOperations/Master_Maintaince/Confirmation/index";
+import * as Conform_Action from "../store/actions/HrOperations/Master_Maintaince/Confirmation/index";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../config.json'
@@ -14,7 +14,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const Confirmation = ({ Red_Confirmation, Getconfirmation }) => {
+const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -26,13 +26,13 @@ const Confirmation = ({ Red_Confirmation, Getconfirmation }) => {
 
   useEffect(() => {
     if (isSearchVal == '') {
-      Getconfirmation({
+      Get_Conformation_Data({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
     } else {
-      Getconfirmation({
+      Get_Conformation_Data({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
@@ -40,7 +40,8 @@ const Confirmation = ({ Red_Confirmation, Getconfirmation }) => {
     }
   }, [page, isSearchVal])
 
-  console.log(Red_Confirmation , "Red_Confirmation")
+
+
 
   const EditPage = (mode, code) => {
     setCode(code)
@@ -71,9 +72,9 @@ const Confirmation = ({ Red_Confirmation, Getconfirmation }) => {
             description="Are you sure to delete the Cost Centre?"
             okText="Yes"
             cancelText="No"
-            onConfirm={() => {
-              handleConfirmDelete(data?.Cost_Centre_code)
-            }}
+            // onConfirm={() => {
+            //   handleConfirmDelete(data?.Cost_Centre_code)
+            // }}
           >
           </Popconfirm>
         </Space>
@@ -81,53 +82,7 @@ const Confirmation = ({ Red_Confirmation, Getconfirmation }) => {
     },
   ];
 
-  // COST CENTRE FORM DATA DELETE API CALL =========================== 
-async function handleConfirmDelete(id) {
-    await fetch(
-      `${baseUrl.baseUrl}/employment_cost_center/DeleteCostCenter`, {
-      method: "POST",
-      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Cost_Centre_code": id,
-      }),
-    }
-    ).then((response) => {
-      return response.json();
-    }).then(async (response) => {
-      if (response.success) {
-        messageApi.open({
-          type: 'success',
-          content: "You have successfully deleted",
-        });
-        setTimeout(() => {
-          messageApi.destroy()
-          Getconfirmation({
-            pageSize: pageSize,
-            pageNo: page,
-            search: null
-          })
-        }, 5000);
-      }
-      else {
-        messageApi.open({
-          type: 'error',
-          content: response?.message || response?.messsage,
-        });
-        setTimeout(() => {
-          messageApi.destroy()
-        }, 5000);
-      }
-    }).catch((error) => {
-      messageApi.open({
-        type: 'error',
-        content: error?.message || error?.messsage,
-      });
-      setTimeout(() => {
-        messageApi.destroy()
-      }, 5000);
-    });
-  }
-
+ 
   return (
     <>
       <div>
@@ -146,7 +101,7 @@ async function handleConfirmDelete(id) {
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
                     />
-                    <Button title="Create" onClick={() => setMode("create")} />
+                    {/* <Button title="Create" onClick={() => setMode("create")} /> */}
                   </div>
                 </div>
                 <hr />
@@ -157,7 +112,8 @@ async function handleConfirmDelete(id) {
               {mode == "read" && (
                 <>
                   <Table 
-                    columns={columns} loading={Red_Confirmation?.loading}
+                    columns={columns}
+                     loading={Red_Confirmation?.loading}
                     dataSource={Red_Confirmation?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
                     pagination={{
@@ -175,7 +131,7 @@ async function handleConfirmDelete(id) {
                 <ConfirmationForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <ConfirmationForm cancel={setMode} isCode={isCode} page={page}/>
+                <ConfirmationForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
           </div>
@@ -188,4 +144,4 @@ async function handleConfirmDelete(id) {
 function mapStateToProps({ Red_Confirmation }) {
   return { Red_Confirmation };
 }
-export default connect(mapStateToProps, ConfirmarionAction)(Confirmation);
+export default connect(mapStateToProps, Conform_Action)(Confirmation);

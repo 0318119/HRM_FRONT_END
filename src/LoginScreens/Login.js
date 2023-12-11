@@ -60,7 +60,7 @@ export const Login = () => {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          "Emp_name": getUserName,
+          "Emp_code": getUserName,
           "Emp_password": getPwd,
           "company_code": getCompanyId
         })
@@ -119,7 +119,7 @@ export const Login = () => {
                 </ul>
                 <div className="form-group p-1">
                   <label htmlFor="" className="p-1 heading">
-                    User Name
+                    User Code
                   </label>
                   <div className="form-control LoginForm_input">
                     <span>
@@ -129,7 +129,7 @@ export const Login = () => {
                       onChange={(e) => { setUserName(e.target.value) }}
                       type="text"
                       className="Login_email"
-                      placeholder="Enter Your User Name" required
+                      placeholder="Enter Your User Code" required
                     />
                   </div>
                 </div>

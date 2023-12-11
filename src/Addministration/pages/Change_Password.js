@@ -33,7 +33,6 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
 
             if (isValid) {
                 if (data.New_Password !== data.confirmPass) {
-                    console.log(data.New_Password !== data.confirmPass, 'data.newPass !== data.confirmPass')
                     messageApi.open({
                         type: 'error',
                         content: "New password and confirm password do not match",
@@ -68,7 +67,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
             if (response && response.success) {
                 messageApi.success("You have successfully changed your password");
                 setTimeout(() => {
-                    window.location.href = "/TAShortsCut"
+                    window.location.href = "/"
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to change password';

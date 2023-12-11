@@ -391,7 +391,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       const isValid = await TAPersonalSchema.validate(data);
       if (isValid) {
         POST_MASTER_PERSONAL_FORM(data)
-        // console.log(data, "data")
       }
     } catch (error) {
       console.error(error);
@@ -537,7 +536,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
             content: response?.message || response?.messsage,
           });
           setLoading(false)
-        setTimeout(() => {
+          setTimeout(() => {
           cancel("read");
           GetAppointStatusCall({
             pageSize: pageSize,

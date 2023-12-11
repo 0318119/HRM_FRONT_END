@@ -146,7 +146,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             render: (item, data) => (
                 <Space size="middle">
                     <Link href="" onClick={(e) => AppointmentProcess(item?.Sequence_no)}>
-                        {console.log(item, "item")}
                         <SettingsSuggestRoundedIcon className="List_ico" />
                     </Link>
                 </Space>
@@ -201,6 +200,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             return response.json();
         }).then(async (response) => {
             if (response.success) {
+                console.log(response.data, 'response')
                 setAppointData(response.data)
                 GetAppointLetter(id, response?.data)
             }
