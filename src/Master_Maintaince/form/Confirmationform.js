@@ -169,7 +169,7 @@ function ConfirmationForm({ cancel, isCode, page, Getconfirmation, Get_confirmat
                     setGetInfoErr("");
                 }, 5000);
             } else {
-                handleNavigation(data);
+                // handleNavigation(data);
                 handleAPIError(data);
                 setButtonState('save', false, false);
             }
