@@ -3,6 +3,7 @@ import Input from "../../components/basic/input";
 import { CancelButton, PrimaryButton, SimpleButton } from "../../components/basic/button";
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import Header from "../../components/Includes/Header.js";
 import '../assest/css/Change_password.css'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,23 +23,23 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
         Old_Password: yup.string().required("Old Password is required"),
         New_Password: yup.string().required("New Password is required"),
         confirmPass: yup.string().required("confirm Pass is required"),
-        
+
     });
 
 
     const submitForm = async (data) => {
         try {
             const isValid = await ChangePassWordScheme.validate(data);
-    
+
             if (isValid) {
                 if (data.New_Password !== data.confirmPass) {
-                    console.log(data.New_Password !== data.confirmPass , 'data.newPass !== data.confirmPass')
+                    console.log(data.New_Password !== data.confirmPass, 'data.newPass !== data.confirmPass')
                     messageApi.open({
                         type: 'error',
                         content: "New password and confirm password do not match",
                     });
                 } else {
-                    ChangePassword(data); 
+                    ChangePassword(data);
                 }
             }
         } catch (error) {
@@ -63,9 +64,12 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                 Old_Password: data.Old_Password,
                 New_Password: data.New_Password,
             });
-    
+
             if (response && response.success) {
                 messageApi.success("You have successfully changed your password");
+                setTimeout(() => {
+                    window.location.href = "/TAShortsCut"
+                }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to change password';
                 messageApi.error(errorMessage);
@@ -75,13 +79,13 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
             messageApi.error("An error occurred while changing password");
         }
     };
-    
-    
+
+
 
     return (
         <>
             <Header />
-            <Input   />
+            <Input />
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)} className='passBox'>
                 <h4 className="text-dark">Password</h4>
@@ -91,7 +95,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         placeholder={'Old Password'}
                         id="Old_Password"
                         name="Old_Password"
-                        type="text"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -101,7 +105,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         placeholder={'New Password'}
                         id="New_Password"
                         name="New_Password"
-                        type="text"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -112,7 +116,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         placeholder={'Confirm Password'}
                         id="confirmPass"
                         name="confirmPass"
-                        type="text"
+                        type="password"
                         showLabel={true}
                         errors={errors}
                         control={control}

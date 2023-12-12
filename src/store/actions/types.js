@@ -1,4 +1,3 @@
-
 // HR OPERATIONS ===> FAMILY TYPES
 export const GET_TRANSITION_FAMILY_DATA = "GET_TRANSITION_FAMILY_DATA";
 export const GET_TRANSITION_FAMILY_START = "GET_TRANSITION_FAMILY_START";
@@ -292,8 +291,23 @@ export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STAR
 export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
 export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
 
+
+// LOGIN SCREEN ===> FORGET PASSWORD === 
+export const GET_FORGET_PASSWORD_DATA = "GET_FORGET_PASSWORD_DATA";
+export const GET_FORGET_PASSWORD_DATA_START = "GET_FORGET_PASSWORD_DATA_START";
+export const GET_FORGET_PASSWORD_DATA_SINGLE = "GET_FORGET_PASSWORD_DATA_SINGLE";
+export const GET_FORGET_PASSWORD_DATA_END = "GET_FORGET_PASSWORD_DATA_END";
 // MASTER MAINTAINCE  ===> Confirmation === 
 export const GET_confirmation_DATA = "GET_confirmation_DATA";
 export const GET_confirmation_START = "GET_confirmation_STARTT";
 export const GET_confirmation_SINGLE = "GET_confirmation_SINGLE";
 export const GET_confirmation_END = "GET_confirmation_END";
+
+// ADDMINSRATION ===> Access_Control === 
+export const GET_Access_Control_DATA = "GET_Access_Control_DATA";
+export const GET_Access_Control_DATA_START = "GET_Access_Control_DATA_START";
+export const GET_Access_Control_DATA_SINGLE = "GET_Access_Control_DATA_SINGLE";
+export const GET_Access_Control_DATA_END = "GET_Access_Control_DATA_END";
+export const GET_ALL_MENUS = "GET_ALL_MENUS";
+
+

@@ -145,16 +145,16 @@ function Get_Attendancelist({
     })),
   ];
 
-  useEffect(() => {
-    const btnprint = document.getElementById('Print');
-    const gotoPrint = () => {
-      window.print()
-    }
-    btnprint.addEventListener('click', gotoPrint, false)
-    return () => {
-      btnprint.removeEventListener('click', gotoPrint, false)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const btnprint = document.getElementById('Print');
+  //   const gotoPrint = () => {
+  //     window.print()
+  //   }
+  //   btnprint.addEventListener('click', gotoPrint, false)
+  //   return () => {
+  //     btnprint.removeEventListener('click', gotoPrint, false)
+  //   }
+  // }, [])
 
 
   return (
@@ -217,11 +217,11 @@ function Get_Attendancelist({
             </form>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-lg-12 d-flex justify-content-end">
             <PrimaryButton className={btnDownalod == true ? "d-block" : "d-none"} id="Print" title="Download" />
           </div>
-        </div>
+        </div> */}
         <div class="mt-5 row justify-content-center">
           {isAttendanceData?.length > 0 && (
             // <Table

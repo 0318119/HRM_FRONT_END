@@ -12,6 +12,8 @@
     "@mui/material": "^5.13.6",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf/renderer": "^3.1.14",
+    "@syncfusion/ej2-base": "^23.2.6",
+    "@syncfusion/ej2-react-navigations": "^23.2.7",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -27,6 +29,7 @@
     "luxon": "^3.4.4",
     "moment": "^2.29.4",
     "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^4.0.269",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primereact": "^10.1.1",
@@ -49,6 +52,7 @@
     "sheetjs-style": "^0.15.8",
     "web-vitals": "^2.1.4",
     "xlsx": "^0.18.5",
+    "yarn": "^1.22.21",
     "yup": "^1.3.2"
   },
   "scripts": {
