@@ -52,6 +52,7 @@ function DesignationForm({ cancel, mode, isCode, page, Red_Designation, Get_Desi
             SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
             EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
             JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
+            
         },
         mode: "onChange",
         resolver: yupResolver(DesignationScheme),

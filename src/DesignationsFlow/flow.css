@@ -1,0 +1,115 @@
+
+.chatMargin{
+    margin-top: 120px;
+    margin-bottom: 50px;
+}
+.mainOrg{
+    overflow: auto;
+    overflow-x: clip !important;
+}
+.orgLoader{
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: #343a401c;
+    z-index: 9999;
+}
+.mainOrg .childrensBox{
+    position: relative;
+}
+.rootBoxBottomBorderBefore::before{
+    content: "";
+    position: absolute;
+    margin: 0;
+    height: 63px;
+    width: 3px;
+    background: #d3c9c95c;
+    left: 50%;
+    border-radius: 15px;
+    bottom: -65px;
+}
+.rootBoxBottomBorder:after{
+    content: "";
+    position: absolute;
+    margin: 0;
+    height: 63px;
+    width: 3px;
+    background: #d3c9c95c;
+    left: 50%;
+    border-radius: 15px;
+    bottom: -65px;
+}
+.childrenUpperBorder::before{
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 85%;
+    background: #d3c9c95c;
+    border-radius: 15px;
+}
+.childMiddleBorder::after{
+    content: "\2191";
+    position: absolute;
+    margin: 0;
+    left: 47%;
+    border-radius: 15px;
+    top: -70px;
+    font-size: 50px;
+    color: #d3c9c95c;
+}
+.mainOrg .rootOrgBox{
+    background: #d3c9c95c;
+    border-radius: 10px;
+    padding: 20px 0;
+    margin: 0px 16px;
+    position: relative;
+    cursor: pointer;
+    width: 350px;
+}
+.mainOrg .rootOrgBox img.arrow{
+    border: none;
+}
+.mainOrg .rootOrgBox .showableIcon{
+    position: absolute;
+    left: 46.70%;
+    bottom: -8px;
+    background: white;
+    padding: 0px 4px;
+    border-radius: 10px;
+    z-index: 99;
+    cursor: pointer;
+    border: 1px solid #d3c9c95c;
+}
+.mainOrg .rootOrgBox .showableIcon svg{
+    color: blue;
+}
+.mainOrg .rootOrgBox img{
+    height: 50px;
+    margin-right: 19px;
+    border: 1px solid darkgrey;
+    border-radius: 24px;
+}
+.mainOrg .rootOrgBox span{
+    padding: 0;
+    margin: 0;
+}
+.mainOrg .rootOrgBox p{
+    padding: 0;
+    margin: 0;
+}
+.mainOrg .rootOrgBox button{
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 5px;
+    border: none;
+    padding: 0 14px;
+    background: white;
+    border: 1px solid #d3c9c95c;
+    color: black;
+    border-radius: 10px;
+}

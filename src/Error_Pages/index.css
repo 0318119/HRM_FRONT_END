@@ -1,0 +1,50 @@
+.notfound-404{
+    height: 100vh;
+    width: 100%;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notfound-404 .notfound-404-inner{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.notfound-404 .notfound-404-inner h1{
+    font-size: 224px;
+    font-weight: 900;
+    margin-left: -12px;
+    color: #030005;
+    text-transform: uppercase;
+    text-shadow: -1px -1px 0 #8400ff, 1px 1px 0 #ff005a;
+    letter-spacing: -20px;
+}
+
+.notfound-404 .notfound-404-inner h2{
+    font-size: 42px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 2px 0 #8400ff;
+    letter-spacing: 13px;
+    margin: 0;
+    position: absolute;
+    top: 59%;
+}
+@media screen and (max-width: 575px){
+    .notfound-404 .notfound-404-inner h2{
+        font-size: 30px;
+        text-align: center;
+        top: 59%;
+    }
+}
+@media screen and (max-width: 575px){
+    .notfound-404 .notfound-404-inner h1{
+        font-size: 150px;
+    }
+}

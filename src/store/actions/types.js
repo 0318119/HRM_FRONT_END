@@ -1,4 +1,3 @@
-
 // HR OPERATIONS ===> FAMILY TYPES
 export const GET_TRANSITION_FAMILY_DATA = "GET_TRANSITION_FAMILY_DATA";
 export const GET_TRANSITION_FAMILY_START = "GET_TRANSITION_FAMILY_START";
@@ -238,17 +237,14 @@ export const GET_Bank_Branches_DATA = "GET_Bank_Branches_DATA";
 export const GET_Bank_Branches_DATA_START = "GET_Bank_Branches_DATA_START";
 export const GET_Bank_Branches_DATA_SINGLE = "GET_Bank_Branches_DATA_SINGLE";
 export const GET_Bank_Branches_DATA_END = "GET_Bank_Branches_DATA_END";
+
 // Appointment ===>Appointment  === 
 export const GET_APPOINTMENT_DATA = "GET_APPOINTMENT_DATA";
 export const GET_APPOINTMENT_DATA_START = "GET_APPOINTMENT_DATA_START";
 export const GET_APPOINTMENT_DATA_SINGLE = "GET_APPOINTMENT_DATA_SINGLE";
 export const GET_APPOINTMENT_DATA_END = "GET_APPOINTMENT_DATA_END";
 
-// Payroll ===>Master Payroll  === 
-export const GET_MASTER_PAYROLL_DATA = "GET_MASTER_PAYROLL_DATA";
-export const GET_MASTER_PAYROLL_DATA_START = "GET_MASTER_PAYROLL_DATA_START";
-export const GET_MASTER_PAYROLL_DATA_SINGLE = "GET_MASTER_PAYROLL_DATA_SINGLE";
-export const GET_MASTER_PAYROLL_DATA_END = "GET_MASTER_PAYROLL_DATA_END";
+
 // PAYROLL ===> TAX_STRUCTURE === 
 export const GET_TAX_STRUCTURE_DATA = "GET_TAX_STRUCTURE_DATA";
 export const GET_TAX_STRUCTURE_DATA_START = "GET_TAX_STRUCTURE_DATA_START";
@@ -267,3 +263,51 @@ export const GET_Outstanding_Recoveries_DATA = "GET_Outstanding_Recoveries_DATA"
 export const GET_Outstanding_Recoveries_START = "GET_Outstanding_Recoveries_START";
 export const GET_Outstanding_Recoveries_SINGLE = "GET_Outstanding_RecoveriesSINGLE";
 export const GET_Outstanding_Recoveries_END = "GET_Outstanding_Recoveries_END";
+
+// PAYROLL ===> Payroll_Catery_Access === 
+export const GET_Payroll_Catery_Access_DATA = "GET_Payroll_Catery_Access_DATA";
+export const GET_Payroll_Catery_Access_START = "GET_Payroll_Catery_Access_START";
+export const GET_Payroll_Catery_Access_SINGLE = "GET_Payroll_Catery_Access_SINGLE";
+export const GET_Payroll_Catery_Access_END = "GET_Payroll_Catery_Access_END";
+
+// HRSETUPS ===> LATE ARRIVAL === 
+export const GET_LATE_ARRIVAL_DATA = "GET_LATE_ARRIVAL_DATA";
+export const GET_LATE_ARRIVAL_DATA_START = "GET_LATE_ARRIVAL_DATA_STAR";
+export const GET_LATE_ARRIVAL_DATA_SINGLE = "GET_LATE_ARRIVAL_DATA_SINGLE";
+export const GET_LOCATIONS_DATA = "GET_LOCATIONS_DATA";
+export const GET_SECTION_DATA = "GET_SECTION_DATA";
+export const GET_DIVISION_DATA = "GET_DIVISION_DATA";
+export const GET_LATE_ARRIVAL_DATA_END = "GET_LATE_ARRIVAL_DATA_END";
+
+// ADDMINSRATION ===> USER PROFILE === 
+export const GET_CHANGE_PROFILE_DATA = "GET_CHANGE_PROFILE_DATA";
+export const GET_CHANGE_PROFILE_DATA_START = "GET_CHANGE_PROFILE_DATA_START";
+export const GET_CHANGE_PROFILE_DATA_SINGLE = "GET_CHANGE_PROFILE_DATA_SINGLE";
+export const GET_CHANGE_PROFILE_DATA_END = "GET_CHANGE_PROFILE_DATA_END";
+
+// HRSETUPS ===> New_Appointment_Report === 
+export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA";
+export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
+export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
+export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
+
+
+// LOGIN SCREEN ===> FORGET PASSWORD === 
+export const GET_FORGET_PASSWORD_DATA = "GET_FORGET_PASSWORD_DATA";
+export const GET_FORGET_PASSWORD_DATA_START = "GET_FORGET_PASSWORD_DATA_START";
+export const GET_FORGET_PASSWORD_DATA_SINGLE = "GET_FORGET_PASSWORD_DATA_SINGLE";
+export const GET_FORGET_PASSWORD_DATA_END = "GET_FORGET_PASSWORD_DATA_END";
+// MASTER MAINTAINCE  ===> Confirmation === 
+export const GET_confirmation_DATA = "GET_confirmation_DATA";
+export const GET_confirmation_START = "GET_confirmation_STARTT";
+export const GET_confirmation_SINGLE = "GET_confirmation_SINGLE";
+export const GET_confirmation_END = "GET_confirmation_END";
+
+// ADDMINSRATION ===> Access_Control === 
+export const GET_Access_Control_DATA = "GET_Access_Control_DATA";
+export const GET_Access_Control_DATA_START = "GET_Access_Control_DATA_START";
+export const GET_Access_Control_DATA_SINGLE = "GET_Access_Control_DATA_SINGLE";
+export const GET_Access_Control_DATA_END = "GET_Access_Control_DATA_END";
+export const GET_ALL_MENUS = "GET_ALL_MENUS";
+
+

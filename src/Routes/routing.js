@@ -38,7 +38,7 @@ import Locations from '../HrOperations/Locations';
 import MasterData_Sec from '../Master_Maintaince/MasterData_Sec'
 import MasterData_Leaves from '../Master_Maintaince/MasterData_Leaves';
 import MasterPersonal from '../Master_Maintaince/MasterPersonal'
-import Confirmation from '../Master_Maintaince/Confirmation'
+import Confirmation from '../Master_Maintaince/Confirmation';
 import Confirmation_Extensio from '../Master_Maintaince/Confirmation_Extensio';
 import Increment from '../Master_Maintaince/Increment'
 import Get_Attendance from '../Attendance/Get_Attendance'
@@ -48,10 +48,9 @@ import Promotion from '../Master_Maintaince/Promotion'
 import Holidays from '../HrOperations/Holidays'
 import Leave_Applications from '../LeavesModule/Leave_Applications'
 import Transaction_Leave from '../LeavesModule/Transaction_Leave';
-import Transaction_Appointment_personal from '../Master_Maintaince/form/Transaction_Appointment_personal'
 import Leave_Year_End from '../LeavesModule/Leave_Year_End'
 import Leave_Report_Detail from '../LeavesModule/Leave_Report_Detail';
-// import Transaction_confirmation_form from '../Master_Maintaince/form/Transaction_confirmation_form';
+import Transaction_confirmation_form from '../Master_Maintaince/form/Confirmationform';
 import Leave_Report_Balance from '../LeavesModule/Leave_Report_Balance';
 import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
@@ -107,6 +106,14 @@ import TaxStructure from '../payroll/pages/Setup/TaxStructure'
 import Bank from '../payroll/pages/Setup/Bank'
 import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
+import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
+import Change_Password from '../Addministration/pages/Change_Password'
+import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
+import NotFound from '../Error_Pages';
+import Access_Control from '../Addministration/pages/Access_Control'
+import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
+import VerifyOTP from '../LoginScreens/ForgetPassword/verifyOtp';
+import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
 
 
 
@@ -114,12 +121,21 @@ const routing = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        {/* //////////////Apointment\\\\\\\\*/}
-        <Route path="/Appointment" element={<Appointment />} />
-        {/* //////////////ApointmentEnd \\\\\\\\*/}
+        <Route path="/" element={<Login />} /> 
+        {/* 
+        {
+            localStorage.getItem('access_token') !== undefined &&
+            localStorage.getItem('access_token') !== null &&
+            localStorage.getItem('access_token') !== "" ?
+            <> */}
+        {/*==================Forget Password============*/}
+        <Route path="/Forgetpassword" element={<Forgetpassword />} />
+        <Route path="/VerifyOTP" element={<VerifyOTP />} />
+        <Route path="/Updatepassword" element={<Updatepassword />} />
+        {/*==================Forget Password End============*/}
 
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/Appointment" element={<Appointment />} />
         <Route path="/TAPersonalform" element={<TAPersonalform />} />
         <Route path="/TAEducationForm" element={<TAEducationForm />} />
         <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
@@ -163,7 +179,6 @@ const routing = () => {
         <Route path="/Holidays" element={<Holidays />} />
         <Route path="/Leave_Applications" element={<Leave_Applications />} />
         <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-        <Route path="/Transaction_Appointment_personal" element={<Transaction_Appointment_personal />} />
         <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
         <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
         <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
@@ -171,7 +186,7 @@ const routing = () => {
         <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
         <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
         <Route path="/LeaveSummary" element={<LeaveSummary />} />
-        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
+        <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
         <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
         <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
         <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
@@ -212,21 +227,37 @@ const routing = () => {
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
         <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
         <Route path="/payroll/report/taxReport" element={<TaxReport />} />
-        <Route path="/Earnings" element={<Earnings/>} />
-        <Route path="/JV_Codes" element={<JV_Code/>} />
-        <Route path="IncomeTax_Columns" element={<Income_Tax/>} />
-        <Route path="Bank_Branches" element={<Bank_Branches/>} />      
+        <Route path="/Earnings" element={<Earnings />} />
+        <Route path="/JV_Codes" element={<JV_Code />} />
+        <Route path="IncomeTax_Columns" element={<Income_Tax />} />
+        <Route path="Bank_Branches" element={<Bank_Branches />} />
         <Route path="/Earnings" element={<Earnings />} />
         <Route path="/Payroll_Master" element={<Payroll_Master />} />
-        <Route path="/Tax_Structure" element={<TaxStructure/>} />
-        <Route path="/Bank" element={<Bank/>} />
-        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries/>} />
-        
+        <Route path="/Tax_Structure" element={<TaxStructure />} />
+        <Route path="/Bank" element={<Bank />} />
+        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
+        <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
+        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}
         <Route path="/Pay/PaySlip" element={<PaySlip />} />
         <Route path="flow/DesignationsFlowChart" element={<FLow />} />
+        {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
+        <Route path="/Change_Password" element={<Change_Password />} />
+        {/* ADDMINISTRATION ---> Access Control =============================================================== */}
+        <Route path="/Access_Control" element={<Access_Control />} />
+        {/* ERRORS PAGE ============================ */}
+        <Route path="NotFound/404" element={<NotFound />} />
+        <Route path="/" element={<Login />} />
+        {/* </> :  */}
+        {/* } */}
+        {/* <Route path="*" element={<NotFound />} /> */}
+        {/* localStorage.getItem('access_token') !== undefined ||
+            localStorage.getItem('access_token') !== null ||
+            localStorage.getItem('access_token') !== "" || 
+            !localStorage.getItem('access_token') ? 
+            <Route path="/" element={<Login />} />  */}
       </Routes>
     </Router>
 

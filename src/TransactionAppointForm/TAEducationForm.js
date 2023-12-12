@@ -413,11 +413,7 @@ function TAEducationForm() {
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
-      <div className="container mt-5 p-2">
-      </div>
+    
       <div className="container-fluid mt-5 TaEduformContainer ">
         <div className="col-lg-12 p-2 TAEDHeading">
           <span className="TaEduFormHeading">

@@ -1,12 +1,7 @@
 .SecondaryHeaderMain{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding-top: 80px;
-    padding-bottom: 40px;
-    padding-inline: 80px;
 }
-.SecondaryHeaderMain h2{
+.SecondaryHeaderMain h4{
     font-weight: 600;
     margin: 0px;
     color: black;

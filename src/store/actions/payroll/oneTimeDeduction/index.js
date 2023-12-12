@@ -71,80 +71,73 @@ export const getDeductionList = () => async (dispatch, getState) => {
 }
 
 export const getAllowanceDetail = (body) => async (dispatch, getState) => {
-    try {
-        const response = await fetch(`${baseURL.baseUrl}/deductions/Get_TranPayslips_ListByCodesDeductionsOneTime`, {
-            method: "POST",
-            headers: {
-                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                Emp_code: body?.Emp_code,
-                AllowanceCode: "0",
-                DeductionCode: body?.DeductionCode,
-                ADEFlag: "D",
-                p_FOEFlag: "O"
-            })
-        });
-        const res = await response.json()
-        return res?.data
-    }
-    catch (error) {
-        console.log(error)
-    }
+    const response = await fetch(`${baseURL.baseUrl}/deductions/Get_TranPayslips_ListByCodesDeductionsOneTime`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            Emp_code: body?.Emp_code,
+            AllowanceCode: "0",
+            DeductionCode: body?.DeductionCode,
+            ADEFlag: "D",
+            p_FOEFlag: "O"
+        })
+    });
+    const res = await response.json()
+    if(res?.success){
+        return res
+    }else{return res}
 }
 
 
 export const saveAllowanceDetail = (body) => async (dispatch, getState) => {
-    console.log(body, 'body')
-    try {
-        const response = await fetch(`${baseURL.baseUrl}/deductions/Save_TranPaySlipsDeductionsOneTime`, {
-            method: "POST",
-            headers: {
-                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                Emp_Code: body?.Emp_Code,
-                Allowance_code: body?.Allowance_code,
-                Deduction_code: body.Deduction_code,
-                ADE_flag: "D",
-                FOE_flag: "O",
-                Amount: body.Amount,
-                Reverse_flag: body.Reverse_flag,
-                Remarks: body.Remarks
-            })
-        });
-        const res = await response.json()
-        return res
-    }
-    catch (error) {
-        console.log(error)
+    const response = await fetch(`${baseURL.baseUrl}/deductions/Save_TranPaySlipsDeductionsOneTime`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Emp_Code": body?.Emp_Code,
+            "Allowance_code": body?.Allowance_code,
+            "Deduction_code": body.Deduction_code,
+            "ADE_flag": body?.ADE_flag,
+            "FOE_flag": body?.FOE_flag,
+            "Amount": body?.Amount,
+            "Reverse_flag": body?.Reverse_flag,
+            "Remarks": body?.Remarks
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    }else{
+        return res;
     }
 }
 
 export const DeleteAllowanceDetail = (body) => async (dispatch, getState) => {
-    console.log(body, 'body')
-    try {
-        const response = await fetch(`${baseURL.baseUrl}/deductions/Delete_TranPaySlipsDeductionsOneTime`, {
-            method: "POST",
-            headers: {
-                'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                Emp_Code: body?.Emp_Code,
-                Allowance_code: body?.Allowance_code,
-                Deduction_code: body.Deduction_code,
-                ADE_flag: "D",
-                FOE_flag: "O"
-            })
-        });
-        const res = await response.json()
+    const response = await fetch(`${baseURL.baseUrl}/deductions/Delete_TranPaySlipsDeductionsOneTime`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            Emp_Code: body?.Emp_Code,
+            Allowance_code: body?.Allowance_code,
+            Deduction_code: body.Deduction_code,
+            ADE_flag: "D",
+            FOE_flag: "O"
+        })
+    });
+    const res = await response.json()
+    if(res?.success){
         return res
-    }
-    catch (error) {
-        console.log(error)
+    }else{
+        return res
     }
 }
 export const getDeductionEmployeeSallaryData = (body) => async (dispatch, getState) => {

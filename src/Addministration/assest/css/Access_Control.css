@@ -1,0 +1,69 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.Access_ControlFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Access_ControlFlexBox .Access_ControlsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.Access_ControlFlexBox .Access_ControlsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxAccess_Control {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Access_ControlBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxAccess_Control div {
+    width: 50%;
+}
+
+/* TREE LEFT SIDE */
+.treeLeftOne li{
+    padding: 10px 0px;
+}
+.treeLeftOne li > label{
+    margin-right: 10px;
+}
+@media screen and (max-width: 768px) {
+    .Access_ControlFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .Access_ControlFlexBox .Access_ControlsearchBox {
+        width: 100%;
+    }
+
+    .Access_ControlFlexBox .Access_ControlsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .Access_ControlFlexBox .Access_ControlsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .Access_ControlFlexBox div {
+        width: 100%;
+    }
+
+    .Access_ControlFlexBox .Access_ControlsearchBox {
+        flex-wrap: wrap;
+    }
+}

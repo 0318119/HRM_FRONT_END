@@ -62,7 +62,7 @@ const Leaves = () => {
 
   // GET REQUESTER NAME API CALL =========================================
   const GetEmployeesName = async (e) => {
-    await fetch(`${config['baseUrl']}/leaves/GetEmployeeDetaillsUnderSupervision`, {
+    await fetch(`${config['baseUrl']}/allemployees/GetEmployeesNameWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
     }).then((response) => {
@@ -82,7 +82,8 @@ const Leaves = () => {
       }
       else if (response.messsage == "timeout error") { navigate('/') }
       else {
-        setGetAttendanceName(response?.data[0])
+        setGetAttendanceName(response?.data)
+        console.log("response?.data[0]",response?.data)
       }
     }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
   }

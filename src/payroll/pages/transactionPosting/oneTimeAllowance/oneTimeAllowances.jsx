@@ -32,6 +32,11 @@ const OneTimeAllowanceS = ({ getOneTimeAllowance, oneTimeAllowance }) => {
     const uniSearch = (w) => {
         if (w == "") {
             setSearch(null)
+            getOneTimeAllowance({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: null
+            })
         }
         else {
             setSearch(w)
@@ -77,20 +82,22 @@ const OneTimeAllowanceS = ({ getOneTimeAllowance, oneTimeAllowance }) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Allowance'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read' ? true : false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Onetime Allowance'} total={""} />
             </div>
             <div className={Style.TableBody}>
-                {mode == 'read' ?
-                    <Table pagination={{
-                        defaultCurrent: pageNo,
-                        onChange: (p) => {
-                            setPageNo(p);
-                        },
-                        pageSize: pageSize,
-                    }} loading={oneTimeAllowance?.loading} columns={columns} dataSource={oneTimeAllowance?.data} />
-                    :
-                    <OneTimeAllowanceForm cancel={setMode} currentUser={current} />
-                }
+                <div className="container">
+                    {mode == 'read' ?
+                        <Table pagination={{
+                            defaultCurrent: pageNo,
+                            onChange: (p) => {
+                                setPageNo(p);
+                            },
+                            pageSize: pageSize,
+                        }} loading={oneTimeAllowance?.loading} columns={columns} dataSource={oneTimeAllowance?.data} />
+                        :
+                        <OneTimeAllowanceForm cancel={setMode} currentUser={current} />
+                    }
+                </div>
             </div>
         </>
     )

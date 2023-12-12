@@ -1,66 +1,52 @@
-
-.confirmationSection{
-    background: #add8e636;
-    margin-top: 80px !important;
-    margin: 0 10px;
+.maringClass{
+    margin-top: 80px;
 }
-.confirmationSection .TransactionConfirmation_listHeader{
-    background-color: #014f86;
-    color: white;
-    padding: 10px 15px;
+.ConfirmationFlexBox{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.confirmationSection .TransactionConfirmation_listHeader button{
-    background: #262837 !important;
-    border-radius: 7px;
-    padding: 6px 16px;
-}
-.confirmationSection .confirmationSearch{
-    width: 100%;
-    padding: 0px 15px;
-    margin-top: 30px;
+.ConfirmationFlexBox .ConfirmationsearchBox{
     display: flex;
+    align-items: center;
+}
+.ConfirmationFlexBox .ConfirmationsearchBox input{
+    min-width: 300px;
+}
+.formBoxCostCenter{
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-}
-.confirmationSection .confirmationSearch button{
-    padding: 0px 30px;
-    margin-left: 20px;
-}
-.confirmationSection .confirmationTableBox{
-    padding: 0 17px;
-    margin-top: 20px;
-}
-.confirmationSection .confirmationTableBox  .confirmationTableBoxScroll{
     width: 100%;
-    overflow-x: auto;
 }
-@media screen and (max-width: 580px){
-    .confirmationSection .TransactionConfirmation_listHeader{
+.costCenterBtnBox{
+    display: flex;
+    justify-content: end;
+}
+.formBoxCostCenter div{
+    width: 50%;
+}
+
+
+@media screen and (max-width: 768px){
+    .ConfirmationFlexBox{
         flex-wrap: wrap;
-        justify-content: center;
     }
-    .confirmationSection .TransactionConfirmation_listHeader button{
-        margin-top: 8px;
-    }
-    .confirmationSection .confirmationSearch {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .confirmationSection .confirmationSearch button{
-        margin-left: 0;
-        margin-top: 10px;
-        padding: 5px 8px;
+    .ConfirmationFlexBox .ConfirmationsearchBox {
         width: 100%;
+    }
+    .ConfirmationFlexBox .ConfirmationsearchBox #inputBox{
+        width: 100%;
+    }
+    .ConfirmationFlexBox .ConfirmationsearchBox #inputBox input{
+        min-width: unset !important;
     }
 }
 @media screen and (max-width: 480px){
-    .confirmationSection .TransactionConfirmation_listHeader span{
-        font-size: 15px;
+    .formBoxCostCenter div{
+        width: 100%;
     }
-    .confirmationSection .TransactionConfirmation_listHeader button{
-        font-size: 14px;
-        padding: 6px 5px;
+    .ConfirmationFlexBox .ConfirmationsearchBox {
+        flex-wrap: wrap;
     }
 }

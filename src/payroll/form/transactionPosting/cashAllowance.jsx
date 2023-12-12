@@ -7,7 +7,6 @@ import { Button, CancelButton, DeleteButton } from '../../../components/basic/bu
 
 const CashAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, getEmployeeCashData, getAllowanceDetail, saveAllowanceDetail, cancel, DeleteAllowanceDetail }) => {
     const [employee, setEmployee] = useState()
-    const [loader, setLoader] = useState(false)
     const [loading, setLoading] = useState(false)
     const [delLoading, setDelLoading] = useState(false)
     const [allowanceDetail, setAllowanceDetail] = useState({
@@ -30,7 +29,6 @@ const CashAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, get
         DataLoader()
     }, [])
     const DataLoader = async () => {
-        setLoader(true)
         const employeeData = await getEmployeeData({ Emp_Code: currentUser })
         const allowanceCashList = await getEmployeeCashData({ Emp_Code: currentUser })
         setAllowanceDetail({
@@ -40,14 +38,13 @@ const CashAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, get
             remarks: allowanceCashList[0]?.remarks,
         })
         setEmployee(employeeData[0]);
-        setLoader(false)
     }
     const saveAllowance = async () => {
         setLoading(true)
         const AllowanceSave = await saveAllowanceDetail({
             Emp_Code: currentUser,
             DepositAmount: allowanceDetail?.Deposit_Amount,
-            CashAwardAmount:  allowanceDetail?.Cash_Award_Amount,
+            CashAwardAmount: allowanceDetail?.Cash_Award_Amount,
             Remarks: allowanceDetail?.remarks,
             LetterDate: allowanceDetail?.Letter_date,
         })
@@ -84,28 +81,33 @@ const CashAllowanceForm = ({ currentUser, getEmployeeData, getAllowanceList, get
 
     return (
         <>
-            {loader ? <Skeleton active /> :
-                <>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-6 p-0">
                         <Input value={employee?.Emp_name} readonly={true} label={'Employee Name'} name={'employeeName'} />
                         <Input value={employee?.Desig_name} readonly={true} label={'Designation'} name={'designation'} />
+                    </div>
+                    <div className="col-md-6 p-0">
                         <Input value={employee?.Dept_name} readonly={true} label={'Department'} name={'department'} />
                         <Input readonly={true} value={allowanceDetail?.Letter_date} label={'Letter Date'} name={'Letter_date'} />
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <hr className="mt-5"/>
+                    <div className="col-md-4 p-0">
                         <Input type={'number'} onChange={handleChange} value={allowanceDetail?.Deposit_Amount} label={'Deposit Amount'} name={'Deposit_Amount'} />
+                    </div>
+                    <div className="col-md-4 p-0">
                         <Input type={'number'} onChange={handleChange} value={allowanceDetail?.Cash_Award_Amount} label={'Cash Award Amount'} name={'Cash_Award_Amount'} />
+                    </div>
+                    <div className="col-md-4 p-0">
                         <Input onChange={handleChange} value={allowanceDetail?.remarks} label={'Remarks'} name={'remarks'} />
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', marginTop: "30px" }}>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <CancelButton onClick={reset} title={'Cancel'} />
-                            <DeleteButton loading={delLoading} onClick={DeleteAllowance} title={'Delete'} />
-                            <Button loading={loading} onClick={saveAllowance} title={'Save'} />
-                        </div>
+                    <div className="col-12 mt-5 d-flex justify-content-end align-items-center p-0">
+                        <CancelButton onClick={reset} title={'Cancel'} />
+                        <DeleteButton loading={delLoading} onClick={DeleteAllowance} title={'Delete'} />
+                        <Button loading={loading} onClick={saveAllowance} title={'Save'} />
                     </div>
-                </>
-            }
+                </div>
+            </div>
         </>
     )
 }
