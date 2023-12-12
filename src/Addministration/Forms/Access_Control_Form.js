@@ -90,7 +90,7 @@ function Access_ControlForm({
       key: "menucode",
       children: [
         {
-          title: 'Administration',
+          title: 'npAdministration',
           key: "menucode",
         },
       ], // Assuming tempData is already an array
