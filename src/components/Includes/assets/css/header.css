@@ -38,11 +38,10 @@
 }
 
 .Header_Search{
-    /* width: 100%; */
     margin-left: 10px;
     border: 1px solid #ffffff;
     background-color: #ffffff;
-    border-radius: 25px;
+    border-radius: 4px;
     padding: 4px 10px; 
     display: flex;
     flex-direction: row;
@@ -326,4 +325,10 @@ margin-left: 1px;
       justify-content: center;
       align-items: center;
     }
+}
+
+
+.ImgLogo{
+  width: 100px;
+  height: 10%;
 }

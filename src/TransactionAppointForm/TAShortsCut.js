@@ -83,14 +83,18 @@ function TAShortsCut() {
       <div className="container maringClass tranAppointBgColor mb-5">
         <div className="row">
           <div className="col-md-6 p-0"><h5 className="text-dark"><b>Dashboard</b></h5></div>
-          <div className="col-md-6 d-flex justify-content-end align-item-center">
-            <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
-                  background: "rgb(229 221 221)",
-                  padding: "6px 6px",
-                  borderRadius: "4px",
-                  fontSize: "14px",
-            }}><b>Attendance report</b></Link>
-          </div>
+          {
+            localStorage.getItem("User_Type") == 2 ?
+            <div className="col-md-6 d-flex justify-content-end align-item-center">
+              <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
+                    background: "rgb(229 221 221)",
+                    padding: "6px 6px",
+                    borderRadius: "4px",
+                    fontSize: "14px",
+              }}><b>Attendance excel report</b></Link>
+            </div> : null
+          }
+          
         </div>
         <hr />
         <div className="row justify-content-center">

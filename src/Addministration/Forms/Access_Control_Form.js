@@ -10,9 +10,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from "../../components/basic/input/formInput";
 // import { JvCodeScheme } from "../../../form/transactionPosting/Setup/schema";
-import { Tree } from "antd";
+import { DownOutlined } from '@ant-design/icons';
+// import { Tree } from "antd";
+import { Tree } from 'primereact/tree';
 import { message } from "antd";
 import baseUrl from "../../../src/config.json";
+import { Checkbox } from 'antd';
+
 
 function Access_ControlForm({
   cancel,
@@ -24,18 +28,15 @@ function Access_ControlForm({
   GetMenuDir,
   GetAllMenus
 }) {
-  var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
-  const [isLoading, setLoading] = useState(false);
-  const [pageSize, setPageSize] = useState(10);
-  const [expandedKeys, setExpandedKeys] = useState(["0-0-0", "0-0-1"]);
-  const [checkedKeys, setCheckedKeys] = useState(["0-0-0"]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [autoExpandParent, setAutoExpandParent] = useState(true);
-
-
+  const [isShowIconOne, setisShowIconOne] = useState("")
+  const [isShowIconTwo, setisShowIconTwo] = useState("")
+  const [isShowIconThree, setisShowIconThree] = useState("")
   const EditBack = () => {
     cancel("read");
+  };
+  const onSelect = (selectedKeys, info) => {
+    console.log('selected', selectedKeys, info);
   };
 
   const {
@@ -57,102 +58,181 @@ function Access_ControlForm({
   });
 
   useEffect(() => {
-    // if (isCode !== null) {
-    // GetMenuDir();
-    // }
+    if (isCode !== null) {
+      GetMenuDir(isCode);
+    }
+  }, []);
+
+  useEffect(() => {
     GetAllMenus()
   }, []);
 
-  console.log("Red_Access_Control", Red_Access_Control?.AllMenus?.[0]?.res?.data)
 
 
 
+  console.log("AllMenus", Red_Access_Control?.AllMenus?.[0])
 
-
-
-  const onExpand = (expandedKeysValue) => {
-    console.log("onExpand", expandedKeysValue);
-    setExpandedKeys(expandedKeysValue);
-    setAutoExpandParent(false);
-  };
-  const onCheck = (checkedKeysValue) => {
-    console.log("onCheck", checkedKeysValue);
-    setCheckedKeys(checkedKeysValue);
-  };
-  const onSelect = (selectedKeysValue, info) => {
-    console.log("onSelect", info);
-    setSelectedKeys(selectedKeysValue);
-  };
-
-  const treeData = [
-    {
-      title: "All",
-      key: "menucode",
+  const AllMenus = Red_Access_Control?.AllMenus?.[0];
+  const one = AllMenus?.data
+    .filter((levelOneFilter) => levelOneFilter.ParentCode === 0 && levelOneFilter.Level === 1)
+    .map((levelOneMap,index) => ({
+      key: index + 5, 
+      label: levelOneMap.menulabel,
+      data: levelOneMap.menulabel,
       children: [
-        {
-          title: 'npAdministration',
-          key: "menucode",
-        },
-      ], // Assuming tempData is already an array
-    },
-  ];
+      
+        AllMenus?.data.filter(LevelTwoFilter => LevelTwoFilter.ParentCode === levelOneMap.menucode && LevelTwoFilter.Level == 2)
+        .map((levelTwoMap,index) => ({
+          key: index + 6, 
+          label: levelTwoMap.menulabel,
+          data: levelTwoMap.menulabel,
+        }))
+      ],
+  }));
+  const [nodes, setNodes] = useState(one);
+  const [selectedKeys, setSelectedKeys] = useState(null);
+  
 
-  // console.log(Red_Access_Control.dataSingle[0]?.res?.data, 'Red_Access_Control')
 
   return (
     <>
       {contextHolder}
       {/* <form onSubmit={handleSubmit(submitForm)}> */}
-      <form>
-        <h4 className="text-dark">Access Control Form</h4>
-        <hr />
-        <div className="form-group formBoxAccess_Control">
-          <FormInput
-            label={"User Login"}
-            placeholder={"User Login"}
-            id="JV_Currency"
-            name="JV_Currency"
-            type="text"
-            showLabel={true}
-            errors={errors}
-            control={control}
-          />
-          <FormInput
-            label={"User Name"}
-            placeholder={"User Name"}
-            id="JV_Cost_Centre"
-            name="JV_Cost_Centre"
-            type="text"
-            showLabel={true}
-            errors={errors}
-            control={control}
-          />
+      <div className="conta1iner">
+        <div className="row">
+          <form action="">
+            <div className="col-lg-12">
+              <h4 className="text-dark">Access Control Form</h4>
+              <hr />
+              <div className="form-group formBoxAccess_Control">
+                <FormInput
+                  label={"User Login"}
+                  placeholder={"User Login"}
+                  id="JV_Currency"
+                  name="JV_Currency"
+                  type="text"
+                  showLabel={true}
+                  errors={errors}
+                  control={control}
+                />
+                <FormInput
+                  label={"User Name"}
+                  placeholder={"User Name"}
+                  id="JV_Cost_Centre"
+                  name="JV_Cost_Centre"
+                  type="text"
+                  showLabel={true}
+                  errors={errors}
+                  control={control}
+                />
+              </div>
+            </div>
+            <hr />
+            <div className="col-lg-6">
+              <div>
+                {/* <Tree
+                  showLine
+                  switcherIcon={<DownOutlined />}
+                  defaultExpandedKeys={['0-0-0']}
+                  onSelect={onSelect}
+                  treeData={treeData}
+                /> */}
+                <ul className="treeLeftOne">
+                  {
+                    // LEVEL ONE OF MENU ========
+                    AllMenus?.data.filter(Level_one => Level_one.ParentCode == 0 && Level_one.Level == 1)?.map((levelOne) => {
+                      return (
+                        <>
+                          <li
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isShowIconOne == levelOne.menulabel) {
+                                setisShowIconOne("")
+                              } else {
+                                setisShowIconOne(levelOne.menulabel)
+                              }
+                            }}><Checkbox data-id={levelOne?.menucode} /> {levelOne?.menulabel}
 
+                            {/* // LEVEL TWO OF MENU ======== */}
+                            {
+                              isShowIconOne == levelOne.menulabel && (
+                                <ul>{
+                                  AllMenus?.data.filter(Level_two => Level_two.ParentCode === levelOne.menucode && Level_two.Level == 2).map((levelTwo) => {
+                                    return (
+                                      <li
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (isShowIconTwo == levelTwo.menulabel) {
+                                            setisShowIconTwo("")
+                                          } else {
+                                            setisShowIconTwo(levelTwo.menulabel)
+                                          }
+                                        }}
+                                      ><Checkbox data-id={levelTwo?.menucode} /> {levelTwo?.menulabel}
+                                        {/* // LEVEL THREE OF MENU ======== */}
+                                        {isShowIconTwo == levelTwo.menulabel && (
+                                          <ul>
+                                            {
+                                              AllMenus?.data.filter(Level_three => Level_three.ParentCode === levelTwo.menucode && Level_three.Level == 3).map((Level_Three) => {
+                                                return (
+                                                  <li
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      if (isShowIconThree == Level_Three.menulabel) {
+                                                        setisShowIconThree("")
+                                                      } else {
+                                                        setisShowIconThree(Level_Three.menulabel)
+                                                      }
+                                                    }}
+                                                  ><Checkbox data-id={Level_Three?.menucode} /> {Level_Three?.menulabel}
 
-          <h5 className="text-dark">Menus</h5>
+                                                    {/* // LEVEL FOUR OF MENU ======== */}
+                                                    {
+                                                      isShowIconThree == Level_Three.menulabel && (
+                                                        <ul>
+                                                          {
+                                                            AllMenus?.data.filter(Level_four => Level_four.ParentCode === Level_Three.menucode && Level_Three.Level == 4).map((LevelFour) => {
+                                                              return (
+                                                                <li><Checkbox data-id={LevelFour?.menucode} /> {LevelFour?.menulabel}</li>
+                                                              )
+                                                            })
+                                                          }
+                                                        </ul>
 
-          <div className="d-flex flex-column">
-            <Tree
-              checkable
-              onExpand={onExpand}
-              // expandedKeys={expandedKeys}
-              autoExpandParent={autoExpandParent}
-              onCheck={onCheck}
-              checkedKeys={checkedKeys}
-              onSelect={onSelect}
-              selectedKeys={selectedKeys}
-              treeData={treeData}
-            />
+                                                      )}
 
-            {/* <SimpleButton title={"Update"} /> */}
-          </div>
+                                                  </li>
+                                                )
+                                              })
+                                            }
+                                          </ul>
+                                        )}
+
+                                      </li>
+                                    )
+                                  })
+                                }
+                                </ul>
+                              )
+                            }
+
+                          </li>
+                        </>
+                      )
+                    })
+                  }
+                </ul>
+                <Tree value={nodes} selectionMode="checkbox" selectionKeys={selectedKeys} onSelectionChange={(e) => setSelectedKeys(e.value)} className="w-full md:w-30rem" />
+              </div>
+            </div>
+            <div className="Access_ControlBtnBox">
+              <CancelButton onClick={EditBack} title={"Cancel"} />
+              <PrimaryButton type={'submit'} title="Save" />
+            </div>
+          </form>
         </div>
-        <hr />
-        <div className="Access_ControlBtnBox">
-          <CancelButton onClick={EditBack} title={"Cancel"} />
-          <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
-        </div>
-      </form>
+      </div>
+
     </>
   );
 }

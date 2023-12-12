@@ -26,6 +26,8 @@
 .formBoxCostCenter div{
     width: 50%;
 }
+
+
 @media screen and (max-width: 768px){
     .ConfirmationFlexBox{
         flex-wrap: wrap;

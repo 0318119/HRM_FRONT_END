@@ -50,4 +50,4 @@ const Red_Access_Control = (state = initState, action) => {
     }
 };
 
-export default Red_Access_Control 
+export default Red_Access_Control
