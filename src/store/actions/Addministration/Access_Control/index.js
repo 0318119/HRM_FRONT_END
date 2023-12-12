@@ -74,7 +74,7 @@ export const GetMenuDir = (body) => async (dispatch) => {
       }
     );
     if (response.status === 200) {
-        const res = await response.json();
+      const res = await response.json();
       dispatch({
         type: GET_Access_Control_DATA_SINGLE,
         payload: [{ res }],
@@ -116,10 +116,10 @@ export const GetAllMenus = () => async (dispatch) => {
       }
     );
     if (response.status === 200) {
-        const res = await response.json();
+      const res = await response.json();
       dispatch({
         type: GET_ALL_MENUS,
-        payload: [{ res }],
+        payload: [res],
         loading: false,
       });
     } else {

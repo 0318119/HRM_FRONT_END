@@ -14,6 +14,8 @@ import { DownOutlined } from '@ant-design/icons';
 import { Tree } from "antd";
 import { message } from "antd";
 import baseUrl from "../../../src/config.json";
+import { Checkbox } from 'antd';
+
 
 function Access_ControlForm({
   cancel,
@@ -26,6 +28,9 @@ function Access_ControlForm({
   GetAllMenus
 }) {
   const [messageApi, contextHolder] = message.useMessage();
+  const [isShowIconOne, setisShowIconOne] = useState("")
+  const [isShowIconTwo, setisShowIconTwo] = useState("")
+  const [isShowIconThree, setisShowIconThree] = useState("")
   const EditBack = () => {
     cancel("read");
   };
@@ -58,54 +63,59 @@ function Access_ControlForm({
   useEffect(() => {
     if (isCode !== null) {
       GetMenuDir(isCode);
-    }GetAllMenus()
+    }
+  }, []);
+
+  useEffect(() => {
+    GetAllMenus()
   }, []);
 
   const scdMenuLevel = []
-  Red_Access_Control?.dataSingle?.[0]?.res?.data.map((items) => {
-    if(items?.ParentCode == 0 && items?.Level ==1){
-       Red_Access_Control?.dataSingle?.[0]?.res?.data.map((secondLevel) => {
-        if(items?.menucode == secondLevel?.ParentCode && secondLevel?.Level == 2){
-          scdMenuLevel.push({
-            title: secondLevel?.menulabel,
-            key: secondLevel?.ParentCode
-          })
-          Red_Access_Control?.dataSingle?.[0]?.res?.data.map((thirdLevel) => {
-            if(secondLevel?.menucode == thirdLevel?.ParentCode && thirdLevel?.Level == 3){
-              scdMenuLevel.push({
-                children: [
-                  {
-                    title: thirdLevel?.menulabel,
-                    key: thirdLevel?.ParentCode
-                  }
-                ]
-              })
-            }
-          })
-        }
-      })
-    }
-  })
-  console.log("oneMenuLevel",scdMenuLevel)
+  // Red_Access_Control?.AllMenus?.[0]?.data.map((items) => {
+  //   if(items?.ParentCode == 0 && items?.Level ==1){
+  //     Red_Access_Control?.AllMenus?.[0]?.data.map((secondLevel) => {
+  //       if(items?.menucode == secondLevel?.ParentCode && secondLevel?.Level == 2){
+  //         scdMenuLevel.push({
+  //           title: secondLevel?.menulabel,
+  //           key: secondLevel?.ParentCode
+  //         })
+  //         Red_Access_Control?.AllMenus?.[0]?.data.map((thirdLevel) => {
+  //           if(secondLevel?.menucode == thirdLevel?.ParentCode && thirdLevel?.Level == 3){
+  //             scdMenuLevel.push({
+  //               children: [
+  //                 {
+  //                   title: thirdLevel?.menulabel,
+  //                   key: thirdLevel?.ParentCode
+  //                 }
+  //               ]
+  //             })
+  //           }
+  //         })
+  //       }
+  //     })
+  //   }
+  // })
+  // console.log("oneMenuLevel",scdMenuLevel)
 
   const treeData = [
     {
-      title:  Red_Access_Control?.dataSingle?.[0]?.res?.data.map((data) => {
-          if(data?.ParentCode === 0 && data?.Level === 1){
-            return data?.menulabel
-          }
-        }),
-      key:  Red_Access_Control?.dataSingle?.[0]?.res?.data.map((data) => {
-        if(data?.ParentCode === 0 && data?.Level === 1){
+      title: Red_Access_Control?.AllMenus?.[0]?.data.map((data) => {
+        if (data?.ParentCode === 0 && data?.Level) {
+          return data?.menulabel
+        }
+      }),
+      key: Red_Access_Control?.AllMenus?.[0]?.data.map((data) => {
+        if (data?.ParentCode === 0 && data?.Level) {
           return data?.ParentCode
         }
       }),
-      children: scdMenuLevel,
+      // children: scdMenuLevel,
     },
   ];
 
-  console.log("AllMenus", Red_Access_Control)
+  console.log("AllMenus", Red_Access_Control?.AllMenus?.[0])
 
+  const AllMenus = Red_Access_Control?.AllMenus?.[0];
 
 
   return (
@@ -144,13 +154,100 @@ function Access_ControlForm({
             <hr />
             <div className="col-lg-6">
               <div>
-                <Tree
+                {/* <Tree
                   showLine
                   switcherIcon={<DownOutlined />}
                   defaultExpandedKeys={['0-0-0']}
                   onSelect={onSelect}
                   treeData={treeData}
-                />
+                /> */}
+                <ul className="treeLeftOne">
+                  {
+                    // LEVEL ONE OF MENU ========
+                    AllMenus?.data.filter(Level_one => Level_one.ParentCode == 0 && Level_one.Level == 1)?.map((levelOne) => {
+                      return (
+                        <>
+                          <li
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isShowIconOne == levelOne.menulabel) {
+                                setisShowIconOne("")
+                              } else {
+                                setisShowIconOne(levelOne.menulabel)
+                              }
+                            }}><Checkbox data-id={levelOne?.menucode} /> {levelOne?.menulabel}
+
+                            {/* // LEVEL TWO OF MENU ======== */}
+                            {
+                              isShowIconOne == levelOne.menulabel && (
+                                <ul>{
+                                    AllMenus?.data.filter(Level_two => Level_two.ParentCode === levelOne.menucode && Level_two.Level == 2).map((levelTwo) => {
+                                      return (
+                                        <li
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (isShowIconTwo == levelTwo.menulabel) {
+                                              setisShowIconTwo("")
+                                            } else {
+                                              setisShowIconTwo(levelTwo.menulabel)
+                                            }
+                                          }}
+                                        ><Checkbox data-id={levelTwo?.menucode} /> {levelTwo?.menulabel}
+                                          {/* // LEVEL THREE OF MENU ======== */}
+                                          {isShowIconTwo == levelTwo.menulabel && (
+                                            <ul>
+                                              {
+                                                AllMenus?.data.filter(Level_three => Level_three.ParentCode === levelTwo.menucode && Level_three.Level == 3).map((Level_Three) => {
+                                                  return (
+                                                    <li
+                                                      onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        if (isShowIconThree == Level_Three.menulabel) {
+                                                          setisShowIconThree("")
+                                                        } else {
+                                                          setisShowIconThree(Level_Three.menulabel)
+                                                        }
+                                                      }}
+                                                    ><Checkbox data-id={Level_Three?.menucode} /> {Level_Three?.menulabel}
+
+                                                      {/* // LEVEL FOUR OF MENU ======== */}
+                                                      {
+                                                        isShowIconThree == Level_Three.menulabel && (
+                                                          <ul>
+                                                            {
+                                                              AllMenus?.data.filter(Level_four => Level_four.ParentCode === Level_Three.menucode && Level_Three.Level == 4).map((LevelFour) => {
+                                                                return (
+                                                                  <li><Checkbox data-id={LevelFour?.menucode} /> {LevelFour?.menulabel}</li>
+                                                                )
+                                                              })
+                                                            }
+                                                          </ul>
+
+                                                        )}
+
+                                                    </li>
+                                                  )
+                                                })
+                                              }
+                                            </ul>
+                                          )}
+
+                                        </li>
+                                      )
+                                    })
+                                  }
+                                </ul>
+                              )
+                            }
+
+                          </li>
+                        </>
+                      )
+                    })
+                  }
+                </ul>
+
+
               </div>
             </div>
             <div className="Access_ControlBtnBox">
