@@ -11,7 +11,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from "../../components/basic/input/formInput";
 // import { JvCodeScheme } from "../../../form/transactionPosting/Setup/schema";
 import { DownOutlined } from '@ant-design/icons';
-import { Tree } from "antd";
+// import { Tree } from "antd";
+import { Tree } from 'primereact/tree';
 import { message } from "antd";
 import baseUrl from "../../../src/config.json";
 import { Checkbox } from 'antd';
@@ -37,10 +38,6 @@ function Access_ControlForm({
   const onSelect = (selectedKeys, info) => {
     console.log('selected', selectedKeys, info);
   };
-
-
-
-
 
   const {
     control,
@@ -70,59 +67,38 @@ function Access_ControlForm({
     GetAllMenus()
   }, []);
 
-  const scdMenuLevel = []
-  // Red_Access_Control?.AllMenus?.[0]?.data.map((items) => {
-  //   if(items?.ParentCode == 0 && items?.Level ==1){
-  //     Red_Access_Control?.AllMenus?.[0]?.data.map((secondLevel) => {
-  //       if(items?.menucode == secondLevel?.ParentCode && secondLevel?.Level == 2){
-  //         scdMenuLevel.push({
-  //           title: secondLevel?.menulabel,
-  //           key: secondLevel?.ParentCode
-  //         })
-  //         Red_Access_Control?.AllMenus?.[0]?.data.map((thirdLevel) => {
-  //           if(secondLevel?.menucode == thirdLevel?.ParentCode && thirdLevel?.Level == 3){
-  //             scdMenuLevel.push({
-  //               children: [
-  //                 {
-  //                   title: thirdLevel?.menulabel,
-  //                   key: thirdLevel?.ParentCode
-  //                 }
-  //               ]
-  //             })
-  //           }
-  //         })
-  //       }
-  //     })
-  //   }
-  // })
-  // console.log("oneMenuLevel",scdMenuLevel)
 
-  const treeData = [
-    {
-      title: Red_Access_Control?.AllMenus?.[0]?.data.map((data) => {
-        if (data?.ParentCode === 0 && data?.Level) {
-          return data?.menulabel
-        }
-      }),
-      key: Red_Access_Control?.AllMenus?.[0]?.data.map((data) => {
-        if (data?.ParentCode === 0 && data?.Level) {
-          return data?.ParentCode
-        }
-      }),
-      // children: scdMenuLevel,
-    },
-  ];
+
 
   console.log("AllMenus", Red_Access_Control?.AllMenus?.[0])
 
   const AllMenus = Red_Access_Control?.AllMenus?.[0];
+  const one = AllMenus?.data
+    .filter((levelOneFilter) => levelOneFilter.ParentCode === 0 && levelOneFilter.Level === 1)
+    .map((levelOneMap,index) => ({
+      key: index + 5, 
+      label: levelOneMap.menulabel,
+      data: levelOneMap.menulabel,
+      children: [
+      
+        AllMenus?.data.filter(LevelTwoFilter => LevelTwoFilter.ParentCode === levelOneMap.menucode && LevelTwoFilter.Level == 2)
+        .map((levelTwoMap,index) => ({
+          key: index + 6, 
+          label: levelTwoMap.menulabel,
+          data: levelTwoMap.menulabel,
+        }))
+      ],
+  }));
+  const [nodes, setNodes] = useState(one);
+  const [selectedKeys, setSelectedKeys] = useState(null);
+  
 
 
   return (
     <>
       {contextHolder}
       {/* <form onSubmit={handleSubmit(submitForm)}> */}
-      <div className="container">
+      <div className="conta1iner">
         <div className="row">
           <form action="">
             <div className="col-lg-12">
@@ -181,61 +157,61 @@ function Access_ControlForm({
                             {
                               isShowIconOne == levelOne.menulabel && (
                                 <ul>{
-                                    AllMenus?.data.filter(Level_two => Level_two.ParentCode === levelOne.menucode && Level_two.Level == 2).map((levelTwo) => {
-                                      return (
-                                        <li
-                                          onClick={(e) => {
-                                            e.stopPropagation();
-                                            if (isShowIconTwo == levelTwo.menulabel) {
-                                              setisShowIconTwo("")
-                                            } else {
-                                              setisShowIconTwo(levelTwo.menulabel)
+                                  AllMenus?.data.filter(Level_two => Level_two.ParentCode === levelOne.menucode && Level_two.Level == 2).map((levelTwo) => {
+                                    return (
+                                      <li
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          if (isShowIconTwo == levelTwo.menulabel) {
+                                            setisShowIconTwo("")
+                                          } else {
+                                            setisShowIconTwo(levelTwo.menulabel)
+                                          }
+                                        }}
+                                      ><Checkbox data-id={levelTwo?.menucode} /> {levelTwo?.menulabel}
+                                        {/* // LEVEL THREE OF MENU ======== */}
+                                        {isShowIconTwo == levelTwo.menulabel && (
+                                          <ul>
+                                            {
+                                              AllMenus?.data.filter(Level_three => Level_three.ParentCode === levelTwo.menucode && Level_three.Level == 3).map((Level_Three) => {
+                                                return (
+                                                  <li
+                                                    onClick={(e) => {
+                                                      e.stopPropagation();
+                                                      if (isShowIconThree == Level_Three.menulabel) {
+                                                        setisShowIconThree("")
+                                                      } else {
+                                                        setisShowIconThree(Level_Three.menulabel)
+                                                      }
+                                                    }}
+                                                  ><Checkbox data-id={Level_Three?.menucode} /> {Level_Three?.menulabel}
+
+                                                    {/* // LEVEL FOUR OF MENU ======== */}
+                                                    {
+                                                      isShowIconThree == Level_Three.menulabel && (
+                                                        <ul>
+                                                          {
+                                                            AllMenus?.data.filter(Level_four => Level_four.ParentCode === Level_Three.menucode && Level_Three.Level == 4).map((LevelFour) => {
+                                                              return (
+                                                                <li><Checkbox data-id={LevelFour?.menucode} /> {LevelFour?.menulabel}</li>
+                                                              )
+                                                            })
+                                                          }
+                                                        </ul>
+
+                                                      )}
+
+                                                  </li>
+                                                )
+                                              })
                                             }
-                                          }}
-                                        ><Checkbox data-id={levelTwo?.menucode} /> {levelTwo?.menulabel}
-                                          {/* // LEVEL THREE OF MENU ======== */}
-                                          {isShowIconTwo == levelTwo.menulabel && (
-                                            <ul>
-                                              {
-                                                AllMenus?.data.filter(Level_three => Level_three.ParentCode === levelTwo.menucode && Level_three.Level == 3).map((Level_Three) => {
-                                                  return (
-                                                    <li
-                                                      onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        if (isShowIconThree == Level_Three.menulabel) {
-                                                          setisShowIconThree("")
-                                                        } else {
-                                                          setisShowIconThree(Level_Three.menulabel)
-                                                        }
-                                                      }}
-                                                    ><Checkbox data-id={Level_Three?.menucode} /> {Level_Three?.menulabel}
+                                          </ul>
+                                        )}
 
-                                                      {/* // LEVEL FOUR OF MENU ======== */}
-                                                      {
-                                                        isShowIconThree == Level_Three.menulabel && (
-                                                          <ul>
-                                                            {
-                                                              AllMenus?.data.filter(Level_four => Level_four.ParentCode === Level_Three.menucode && Level_Three.Level == 4).map((LevelFour) => {
-                                                                return (
-                                                                  <li><Checkbox data-id={LevelFour?.menucode} /> {LevelFour?.menulabel}</li>
-                                                                )
-                                                              })
-                                                            }
-                                                          </ul>
-
-                                                        )}
-
-                                                    </li>
-                                                  )
-                                                })
-                                              }
-                                            </ul>
-                                          )}
-
-                                        </li>
-                                      )
-                                    })
-                                  }
+                                      </li>
+                                    )
+                                  })
+                                }
                                 </ul>
                               )
                             }
@@ -246,8 +222,7 @@ function Access_ControlForm({
                     })
                   }
                 </ul>
-
-
+                <Tree value={nodes} selectionMode="checkbox" selectionKeys={selectedKeys} onSelectionChange={(e) => setSelectedKeys(e.value)} className="w-full md:w-30rem" />
               </div>
             </div>
             <div className="Access_ControlBtnBox">
