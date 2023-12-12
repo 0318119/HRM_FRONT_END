@@ -419,36 +419,36 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
 
 
                         <View style={styles.containerAppand}>
-                            <View style={styles.container_Second}>
+                            {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Claim/Tax Adjustment</Text>
-                                <Text style={styles.cellone_Third_second}>Claim Amount</Text>
-                                <Text style={styles.cellone_Third_third}>Cradit Amount</Text>
-                            </View>
+                                <Text style={styles.cellone_Third_second}>{DataFromApi[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>{DataFromApi[0]?.tax_donation}</Text>
+                            </View> */}
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Investment</Text>
-                                <Text style={styles.cellone_Third_second}>$234.3</Text>
-                                <Text style={styles.cellone_Third_third}>$54.2</Text>
+                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_investment}</Text>
+                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_investment}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Markup on Loan</Text>
-                                <Text style={styles.cellone_Third_second}>$54.21</Text>
-                                <Text style={styles.cellone_Third_third}>$11.43</Text>
+                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_markup_loan}</Text>
+                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_markup_loan}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Donation</Text>
-                                <Text style={styles.cellone_Third_second}>$123.13</Text>
-                                <Text style={styles.cellone_Third_third}>$3.45</Text>
+                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_donation}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Tax Annuity</Text>
-                                <Text style={styles.cellone_Third_second}>$433.53</Text>
-                                <Text style={styles.cellone_Third_third}>$43.6</Text>
+                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_annuity_scheme}</Text>
+                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_annuity_scheme}</Text>
                             </View>
-                            <View style={styles.container_Second}>
+                            {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Advance Tax</Text>
-                                <Text style={styles.cellone_Third_second}>$344.3</Text>
-                                <Text style={styles.cellone_Third_third}>$44.34</Text>
-                            </View>
+                                <Text style={styles.cellone_Third_second}>{DataFromApi[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>{DataFromApi[0]?.tax_donation}</Text>
+                            </View> */}
                         </View>
                     </View>
 
@@ -475,7 +475,7 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                         )}
                     </View>
                     
-                    <View style={styles.ThirdColumn}>
+                    {/* <View style={styles.ThirdColumn}>
                         <View style={styles.containerAppand}>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second1}>Gross Tax</Text>
@@ -536,7 +536,7 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                                 <Text style={styles.cellone_Third_third}>$44.34</Text>
                             </View>
                         </View>
-                    </View>
+                    </View> */}
                 </Page>
             </Document>
 
