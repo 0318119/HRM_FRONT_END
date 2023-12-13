@@ -156,7 +156,7 @@ function Access_ControlForm({
                   onSelect={onSelect}
                   treeData={treeData}
                 /> */}
-              <Tree value={nodes} selectionMode="checkbox" selectionKeys={selectedKeys} onSelectionChange={(e) => setSelectedKeys(e.value)} className="w-full md:w-30rem" />
+              <Tree value={nodes}  filter filterMode="strict" filterPlaceholder="Search Menu here..." selectionMode="checkbox" selectionKeys={selectedKeys} onSelectionChange={(e) => setSelectedKeys(e.value)} className="w-full md:w-30rem" />
             </div>
           </div>
           <div className="Access_ControlBtnBox">
