@@ -43,6 +43,23 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         setCode(code);
         setMode(mode);
     };
+
+    useEffect(() => {
+        if (isSearchVal == "") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        } else {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal,
+            });
+        }
+    }, [page, isSearchVal]);
+
     const columns = [
         {
             title: "Sequence No",
@@ -146,7 +163,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             render: (item, data) => (
                 <Space size="middle">
                     <Link href="" onClick={(e) => AppointmentProcess(item?.Sequence_no)}>
-                        {console.log(item, "item")}
                         <SettingsSuggestRoundedIcon className="List_ico" />
                     </Link>
                 </Space>
@@ -169,21 +185,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
-    useEffect(() => {
-        if (isSearchVal == "") {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null,
-            });
-        } else {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: 1,
-                search: isSearchVal,
-            });
-        }
-    }, [page, isSearchVal]);
+    
 
     async function AppointLetter(id) {
         await fetch(
@@ -201,8 +203,9 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             return response.json();
         }).then(async (response) => {
             if (response.success) {
-                setAppointData(response.data)
-                GetAppointLetter(id, response?.data)
+                console.log(response.data, 'response')
+                // setAppointData(response.data)
+                // GetAppointLetter(id, response?.data)
             }
         }).catch((error) => { });
     }

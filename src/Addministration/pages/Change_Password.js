@@ -9,6 +9,8 @@ import '../assest/css/Change_password.css'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as CHNGPWD from "../../store/actions/Addministration/UserProfile/index.js";
 import { FormInput } from "../../components/basic/input/formInput";
+import { IoEyeOutline } from "react-icons/io5";
+import { IoEyeOffOutline } from "react-icons/io5";
 import { message } from "antd";
 import * as yup from "yup";
 import baseUrl from "../../config.json";
@@ -33,7 +35,6 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
 
             if (isValid) {
                 if (data.New_Password !== data.confirmPass) {
-                    console.log(data.New_Password !== data.confirmPass, 'data.newPass !== data.confirmPass')
                     messageApi.open({
                         type: 'error',
                         content: "New password and confirm password do not match",
@@ -68,7 +69,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
             if (response && response.success) {
                 messageApi.success("You have successfully changed your password");
                 setTimeout(() => {
-                    window.location.href = "/TAShortsCut"
+                    window.location.href = "/"
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to change password';
@@ -81,11 +82,14 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     };
 
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
+    const [showPassword3, setShowPassword3] = useState(false);
+
 
     return (
         <>
             <Header />
-            <Input />
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)} className='passBox'>
                 <h4 className="text-dark">Password</h4>
@@ -95,32 +99,40 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         placeholder={'Old Password'}
                         id="Old_Password"
                         name="Old_Password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
+                    <button type="button" className="Showbtn" onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />} 
+                    </button>
                     <FormInput
                         label={'New Password'}
                         placeholder={'New Password'}
                         id="New_Password"
                         name="New_Password"
-                        type="password"
+                        type={showPassword2 ? "text" : "password"}
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
-
+                    <button type="button" className="Showbtn" onClick={() => setShowPassword2(!showPassword2)}>
+                        {showPassword2 ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                    </button>
                     <FormInput
                         label={'Confirm Password'}
                         placeholder={'Confirm Password'}
                         id="confirmPass"
                         name="confirmPass"
-                        type="password"
+                        type={showPassword3 ? "text" : "password"}
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
+                    <button type="button" className="Showbtn" onClick={() => setShowPassword3(!showPassword3)}>
+                        {showPassword3 ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                    </button>
                 </div>
                 <div className='passBoxBtnBox'>
                     <SimpleButton type={"submit"} loading={isLoading} title="Update" />

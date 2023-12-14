@@ -119,7 +119,7 @@ export const Login = () => {
                 </ul>
                 <div className="form-group p-1">
                   <label htmlFor="" className="p-1 heading">
-                    User Name
+                    User Code
                   </label>
                   <div className="form-control LoginForm_input">
                     <span>
@@ -129,7 +129,7 @@ export const Login = () => {
                       onChange={(e) => { setUserName(e.target.value) }}
                       type="text"
                       className="Login_email"
-                      placeholder="Enter Your User Name" required
+                      placeholder="Enter Your User Code" required
                     />
                   </div>
                 </div>
