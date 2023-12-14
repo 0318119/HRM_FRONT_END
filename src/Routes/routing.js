@@ -114,6 +114,7 @@ import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
 import VerifyOTP from '../LoginScreens/ForgetPassword/verifyOtp';
 import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
+import ConfirmatioWaiting from '../Master_Maintaince/Waiting/ConfirmatioWaiting'
 
 
 
@@ -187,7 +188,7 @@ const routing = () => {
         <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
         <Route path="/LeaveSummary" element={<LeaveSummary />} />
         <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
-        <Route path="/FormWaitingTranConfiramtion" element={<FormWaitingTranConfiramtion />} />
+        <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
         <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
         <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
         <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />

@@ -6,6 +6,7 @@ import "./assets/css/TransactionConfirmation.css";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
 import ConfirmationForm from "./form/Confirmationform";
 import * as Conform_Action from "../store/actions/HrOperations/Master_Maintaince/Confirmation/index";
+import ConfirmatioWaiting from "./Waiting/ConfirmatioWaiting";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../config.json'
@@ -98,10 +99,10 @@ const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
                 <div className="ConfirmationFlexBox">
                   <h4 className="text-dark">Confirmation</h4>
                   <div className="ConfirmationsearchBox">
+                    <Button title="Process" onClick={() => setMode("create")} />
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
                     />
-                    {/* <Button title="Create" onClick={() => setMode("create")} /> */}
                   </div>
                 </div>
                 <hr />
@@ -128,7 +129,7 @@ const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
                 </>
               )}
               {mode == "create" && (
-                <ConfirmationForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <ConfirmatioWaiting cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
                 <ConfirmationForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>

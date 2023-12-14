@@ -19,8 +19,6 @@ import baseUrl from '../../src/config.json'
 const MasterData_Sec = () => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
-   
-
     const [isEmp_Code, setEmp_Code] = useState('')
     const [Transaction_Date, setTransaction_Date] = useState('')
     const [Emp_name, setEmp_name] = useState('')
@@ -110,7 +108,7 @@ const MasterData_Sec = () => {
     const [car_date, setCar_date] = useState('')
     const [car_value, setCar_value] = useState('')
     const [Bonus_Factor, setBonus_Factor] = useState('')
-    const [Emp_hr_category, setEmp_hr_category] = useState('')
+    // const [Emp_hr_category, setEmp_hr_category] = useState('')
     const [Emp_OldNIC, setEmp_OldNIC] = useState('')
     const [Reffrence_leter_date, setReffrence_leter_date] = useState('')
     const [Emp_id, setEmp_id] = useState('')
@@ -130,18 +128,18 @@ const MasterData_Sec = () => {
     const [Old_Emp_code, setOld_Emp_code] = useState('')
     const [Old_Company_Code, setOld_Company_Code] = useState('')
     const [Id, setId] = useState('')
-    const [Payroll_Year, setPayroll_Year] = useState('')
-    const [Payroll_Month, setPayroll_Month] = useState('')
-    const [Leave_Category_name, setLeave_Category_name] = useState('')
-    const [Position_code, setPosition_code] = useState('')
+    // const [Payroll_Year, setPayroll_Year] = useState('')
+    // const [Payroll_Month, setPayroll_Month] = useState('')
+    // const [Leave_Category_name, setLeave_Category_name] = useState('')
+    // const [Position_code, setPosition_code] = useState('')
     const [Fuel_Card_Flag, setFuel_Card_Flag] = useState('')
     const [AllSelect, setAllSelect] = useState('')
+
  
 
 
     const [SelectedData, setSelectedData] = useState('')
     async function GetExcelActive() {
-
         await fetch(
             `${baseUrl.baseUrl}/allemployee/GetMasterEmployeeDataSelected`, {
             method: "POST",
@@ -149,124 +147,123 @@ const MasterData_Sec = () => {
             body: JSON.stringify(
                 {
                     "selectedFields": {
-                        "Emp_Code": isEmp_Code,
-                        "Transaction_Date": Transaction_Date,
-                        "Emp_name": Emp_name,
-                        "Emp_Father_name": Emp_Father_name,
-                        "Emp_sex_code": Emp_sex_code,
-                        "Emp_marital_status": Emp_marital_status,
-                        "Emp_birth_date": Emp_birth_date,
-                        "Emp_appointment_date": Emp_appointment_date,
-                        "Emp_Confirm_date": Emp_Confirm_date,
-                        "Emp_category": Emp_category,
-                        "Emp_Leave_category": Emp_Leave_category,
-                        "Emp_address_line1": Emp_address_line1,
-                        "Emp_address_line2": Emp_address_line2,
-                        "Emp_home_tel1": Emp_home_tel1,
-                        "Emp_home_tel2": Emp_home_tel2,
-                        "Emp_office_tel1": Emp_office_tel1,
-                        "Emp_office_tel2": Emp_office_tel2,
-                        "Emp_mobile_No": Emp_mobile_No,
-                        "Emp_nic_no": Emp_nic_no,
-                        "Emp_nic_issue_date": Emp_nic_issue_date,
-                        "Emp_nic_expiry_date": Emp_nic_expiry_date,
-                        "Emp_retirement_age": Emp_retirement_age,
-                        "Emp_ntn_no": Emp_ntn_no,
-                        "Emp_email": Emp_email,
-                        "Confirmation_Flag": Confirmation_Flag,
-                        "Employment_Type_code": Employment_Type_code,
-                        "Desig_code": Desig_code,
-                        "Grade_code": Grade_code,
-                        "Cost_Centre_code": Cost_Centre_code,
-                        "Dept_code": Dept_code,
-                        "Section_code": Section_code,
-                        "Shift_code": Shift_code,
-                        "Loc_code": Loc_code,
-                        "Edu_code": Edu_code,
-                        "Transport_code": Transport_code,
-                        "Supervisor_Code": Supervisor_Code,
-                        "Religion_Code": Religion_Code,
-                        "Deletion_Flag": Deletion_Flag,
-                        "Contact_Person_Name": Contact_Person_Name,
-                        "Relationship": Relationship,
-                        "Contact_address1": Contact_address1,
-                        "Contact_address2": Contact_address2,
-                        "Contact_home_tel1": Contact_home_tel1,
-                        "Contact_home_tel2": Contact_home_tel2,
-                        "Emp_Blood_Group": Emp_Blood_Group,
-                        "Vehicle_Registration_Number": Vehicle_Registration_Number,
-                        "Emp_Payroll_Category": Emp_Payroll_Category,
-                        "Mode_Of_Payment": Mode_Of_Payment,
-                        "Bank_Account_No1": Bank_Account_No1,
-                        "Branch_Code1": Branch_Code1,
-                        "Bank_Amount_1": Bank_Amount_1,
-                        "Bank_Percent_1": Bank_Percent_1,
-                        "Bank_Account_No2": Bank_Account_No2,
-                        "Branch_Code2": Branch_Code2,
-                        "Bank_Amount_2": Bank_Amount_2,
-                        "Bank_Percent_2": Bank_Percent_2,
-                        "Bank_Account_No3": Bank_Account_No3,
-                        "Branch_Code3": Branch_Code3,
-                        "Bank_Amount_3": Bank_Amount_3,
-                        "Bank_Percent_3": Bank_Percent_3,
-                        "Bank_Account_No4": Bank_Account_No4,
-                        "Branch_Code4": Branch_Code4,
-                        "Bank_Amount_4": Bank_Amount_4,
-                        "Bank_Percent_4": Bank_Percent_4,
-                        "SESSI_Flag": SESSI_Flag,
-                        "EOBI_Flag": EOBI_Flag,
-                        "Union_Flag": Union_Flag,
-                        "Recreation_Club_Flag": Recreation_Club_Flag,
-                        "Meal_Deduction_Flag": Meal_Deduction_Flag,
-                        "Overtime_Flag": Overtime_Flag,
-                        "Incentive_Flag": Incentive_Flag,
-                        "Bonus_Type": Bonus_Type,
-                        "Salary_Hold_Flag": Salary_Hold_Flag,
-                        "Salary_Hold_Date": Salary_Hold_Date,
-                        "Salary_Hold_Description": Salary_Hold_Description,
-                        "Tax_Exemption_Flag": Tax_Exemption_Flag,
-                        "EOBI_Number": EOBI_Number,
-                        "SESSI_Number": SESSI_Number,
-                        "ACCOUNT_TYPE1": ACCOUNT_TYPE1,
-                        "ACCOUNT_TYPE2": ACCOUNT_TYPE2,
-                        "ACCOUNT_TYPE3": ACCOUNT_TYPE3,
-                        "ACCOUNT_TYPE4": ACCOUNT_TYPE4,
-                        "Interest_Flag": Interest_Flag,
-                        "Zakat_Flag": Zakat_Flag,
-                        "PF_Nomination_Flag": PF_Nomination_Flag,
-                        "PF_Nomination_Date": PF_Nomination_Date,
-                        "car_date": car_date,
-                        "car_value": car_value,
-                        "Bonus_Factor": Bonus_Factor,
-                        "Fuel_Card_Flag": Fuel_Card_Flag,
+                        "Emp_Code": isEmp_Code ? isEmp_Code : AllSelect,
+                        "Transaction_Date": Transaction_Date ? Transaction_Date : AllSelect,
+                        "Emp_name": Emp_name ? Emp_name : AllSelect,
+                        "Emp_Father_name": Emp_Father_name ? Emp_Father_name : AllSelect,
+                        "Emp_sex_code": Emp_sex_code ? Emp_sex_code : AllSelect,
+                        "Emp_marital_status": Emp_marital_status ? Emp_marital_status : AllSelect,
+                        "Emp_birth_date": Emp_birth_date ? Emp_birth_date : AllSelect,
+                        "Emp_appointment_date": Emp_appointment_date ? Emp_appointment_date : AllSelect,
+                        "Emp_Confirm_date": Emp_Confirm_date ? Emp_Confirm_date : AllSelect,
+                        "Emp_category": Emp_category ? Emp_category : AllSelect,
+                        "Emp_Leave_category": Emp_Leave_category ? Emp_Leave_category : AllSelect,
+                        "Emp_address_line1": Emp_address_line1 ? Emp_address_line1 : AllSelect,
+                        "Emp_address_line2": Emp_address_line2 ? Emp_address_line2 : AllSelect,
+                        "Emp_home_tel1": Emp_home_tel1 ? Emp_home_tel1 : AllSelect,
+                        "Emp_home_tel2": Emp_home_tel2 ? Emp_home_tel2 : AllSelect,
+                        "Emp_office_tel1": Emp_office_tel1 ? Emp_office_tel1 : AllSelect,
+                        "Emp_office_tel2": Emp_office_tel2 ? Emp_office_tel2 : AllSelect,
+                        "Emp_mobile_No": Emp_mobile_No ? Emp_mobile_No : AllSelect,
+                        "Emp_nic_no": Emp_nic_no ? Emp_nic_no : AllSelect,
+                        "Emp_nic_issue_date": Emp_nic_issue_date ? Emp_nic_issue_date : AllSelect,
+                        "Emp_nic_expiry_date": Emp_nic_expiry_date ? Emp_nic_expiry_date : AllSelect,
+                        "Emp_retirement_age": Emp_retirement_age ? Emp_retirement_age : AllSelect,
+                        "Emp_ntn_no": Emp_ntn_no ? Emp_ntn_no : AllSelect,
+                        "Emp_email": Emp_email ? Emp_email : AllSelect,
+                        "Confirmation_Flag": Confirmation_Flag ? Confirmation_Flag : AllSelect,
+                        "Employment_Type_code": Employment_Type_code ? Employment_Type_code : AllSelect,
+                        "Desig_code": Desig_code ? Desig_code : AllSelect,
+                        "Grade_code": Grade_code ? Grade_code : AllSelect,
+                        "Cost_Centre_code": Cost_Centre_code ? Cost_Centre_code : AllSelect,
+                        "Dept_code": Dept_code ? Dept_code : AllSelect,
+                        "Section_code": Section_code ? Section_code : AllSelect,
+                        "Shift_code": Shift_code ? Shift_code : AllSelect,
+                        "Loc_code": Loc_code ? Loc_code : AllSelect,
+                        "Edu_code": Edu_code ? Edu_code : AllSelect,
+                        "Transport_code": Transport_code ? Transport_code : AllSelect,
+                        "Supervisor_Code": Supervisor_Code ? Supervisor_Code : AllSelect,
+                        "Religion_Code": Religion_Code ? Religion_Code : AllSelect,
+                        "Deletion_Flag": Deletion_Flag ? Deletion_Flag : AllSelect,
+                        "Contact_Person_Name": Contact_Person_Name ? Contact_Person_Name : AllSelect,
+                        "Relationship": Relationship ? Relationship : AllSelect,
+                        "Contact_address1": Contact_address1 ? Contact_address1 : AllSelect,
+                        "Contact_address2": Contact_address2 ? Contact_address2 : AllSelect,
+                        "Contact_home_tel1": Contact_home_tel1 ? Contact_home_tel1 : AllSelect,
+                        "Contact_home_tel2": Contact_home_tel2 ? Contact_home_tel2 : AllSelect,
+                        "Emp_Blood_Group": Emp_Blood_Group ? Emp_Blood_Group : AllSelect,
+                        "Vehicle_Registration_Number": Vehicle_Registration_Number ? Vehicle_Registration_Number : AllSelect,
+                        "Emp_Payroll_Category": Emp_Payroll_Category ? Emp_Payroll_Category : AllSelect,
+                        "Mode_Of_Payment": Mode_Of_Payment ? Mode_Of_Payment : AllSelect,
+                        "Bank_Account_No1": Bank_Account_No1 ? Bank_Account_No1 : AllSelect,
+                        "Branch_Code1": Branch_Code1 ? Branch_Code1 : AllSelect,
+                        "Bank_Amount_1": Bank_Amount_1 ? Bank_Amount_1 : AllSelect,
+                        "Bank_Percent_1": Bank_Percent_1 ? Bank_Percent_1 : AllSelect,
+                        "Bank_Account_No2": Bank_Account_No2 ? Bank_Account_No2 : AllSelect,
+                        "Branch_Code2": Branch_Code2 ? Branch_Code2 : AllSelect,
+                        "Bank_Amount_2": Bank_Amount_2 ? Bank_Amount_2 : AllSelect,
+                        "Bank_Percent_2": Bank_Percent_2 ? Bank_Percent_2 : AllSelect,
+                        "Bank_Account_No3": Bank_Account_No3 ? Bank_Account_No3 : AllSelect,
+                        "Branch_Code3": Branch_Code3 ? Branch_Code3 : AllSelect,
+                        "Bank_Amount_3": Bank_Amount_3 ? Bank_Amount_3 : AllSelect,
+                        "Bank_Percent_3": Bank_Percent_3 ? Bank_Percent_3 : AllSelect,
+                        "Bank_Account_No4": Bank_Account_No4 ? Bank_Account_No4 : AllSelect,
+                        "Branch_Code4": Branch_Code4 ? Branch_Code4 : AllSelect,
+                        "Bank_Amount_4": Bank_Amount_4 ? Bank_Amount_4 : AllSelect,
+                        "Bank_Percent_4": Bank_Percent_4 ? Bank_Percent_4 : AllSelect,
+                        "SESSI_Flag": SESSI_Flag ? SESSI_Flag : AllSelect,
+                        "EOBI_Flag": EOBI_Flag ? EOBI_Flag : AllSelect,
+                        "Union_Flag": Union_Flag ? Union_Flag : AllSelect,
+                        "Recreation_Club_Flag": Recreation_Club_Flag ? Recreation_Club_Flag : AllSelect,
+                        "Meal_Deduction_Flag": Meal_Deduction_Flag ? Meal_Deduction_Flag : AllSelect,
+                        "Overtime_Flag": Overtime_Flag ? Overtime_Flag : AllSelect,
+                        "Incentive_Flag": Incentive_Flag ? Incentive_Flag : AllSelect,
+                        "Bonus_Type": Bonus_Type ? Bonus_Type : AllSelect,
+                        "Salary_Hold_Flag": Salary_Hold_Flag ? Salary_Hold_Flag : AllSelect,
+                        "Salary_Hold_Date": Salary_Hold_Date ? Salary_Hold_Date : AllSelect,
+                        "Salary_Hold_Description": Salary_Hold_Description ? Salary_Hold_Description : AllSelect,
+                        "Tax_Exemption_Flag": Tax_Exemption_Flag ? Tax_Exemption_Flag : AllSelect,
+                        "EOBI_Number": EOBI_Number ? EOBI_Number : AllSelect,
+                        "SESSI_Number": SESSI_Number ? SESSI_Number : AllSelect,
+                        "ACCOUNT_TYPE1": ACCOUNT_TYPE1 ? ACCOUNT_TYPE1 : AllSelect,
+                        "ACCOUNT_TYPE2": ACCOUNT_TYPE2 ? ACCOUNT_TYPE2 : AllSelect,
+                        "ACCOUNT_TYPE3": ACCOUNT_TYPE3 ? ACCOUNT_TYPE3 : AllSelect,
+                        "ACCOUNT_TYPE4": ACCOUNT_TYPE4 ? ACCOUNT_TYPE4 : AllSelect,
+                        "Interest_Flag": Interest_Flag ? Interest_Flag : AllSelect,
+                        "Zakat_Flag": Zakat_Flag ? Zakat_Flag : AllSelect,
+                        "PF_Nomination_Flag": PF_Nomination_Flag ? PF_Nomination_Flag : AllSelect,
+                        "PF_Nomination_Date": PF_Nomination_Date ? PF_Nomination_Date : AllSelect,
+                        "car_date": car_date ? car_date : AllSelect,
+                        "car_value": car_value ? car_value : AllSelect,
+                        "Bonus_Factor": Bonus_Factor ? Bonus_Factor : AllSelect,
+                        "Fuel_Card_Flag": Fuel_Card_Flag ? Fuel_Card_Flag : AllSelect,
                         "Picture_image": "N",
-                        "emp_hr_category": Emp_hr_category,
-                        "Emp_OldNIC": Emp_OldNIC,
-                        "reffrence_leter_date": Reffrence_leter_date,
-                        "Emp_id": Emp_id,
-                        "Offer_Letter_date": Offer_Letter_date,
-                        "Tentative_Joining_date": Tentative_Joining_date,
-                        "RefferedBy": RefferedBy,
-                        "Probationary_period_months": Probationary_period_months,
-                        "Notice_period_months": Notice_period_months,
-                        "Extended_confirmation_days": Extended_confirmation_days,
-                        "Permanent_address": Permanent_address,
-                        "Nationality": Nationality,
-                        "sub_company_code": Sub_company_code,
-                        "roster_group_code": Roster_group_code,
-                        "card_no": Card_no,
-                        "Sharia_Flag": Sharia_Flag,
-                        "Company_Code": Company_Code,
-                        "Old_Emp_code": Old_Emp_code,
-                        "Old_Company_Code": Old_Company_Code,
-                        "id": Id,
-                        "Payroll_Year": Payroll_Year,
-                        "Payroll_Month": Payroll_Month,
-                        "Leave_Category_name": Leave_Category_name,
-                        "position_code": Position_code
+                        // "emp_hr_category": Emp_hr_category ? Emp_hr_category : AllSelect,
+                        "Emp_OldNIC": Emp_OldNIC ? Emp_OldNIC : AllSelect,
+                        "reffrence_leter_date": Reffrence_leter_date ? Reffrence_leter_date : AllSelect,
+                        "Emp_id": Emp_id ? Emp_id : AllSelect,
+                        "Offer_Letter_date": Offer_Letter_date ? Offer_Letter_date : AllSelect,
+                        "Tentative_Joining_date": Tentative_Joining_date ? Tentative_Joining_date : AllSelect,
+                        "RefferedBy": RefferedBy ? RefferedBy : AllSelect,
+                        "Probationary_period_months": Probationary_period_months ? Probationary_period_months : AllSelect,
+                        "Notice_period_months": Notice_period_months ? Notice_period_months : AllSelect,
+                        "Extended_confirmation_days": Extended_confirmation_days ? Extended_confirmation_days : AllSelect,
+                        "Permanent_address": Permanent_address ? Permanent_address : AllSelect,
+                        "Nationality": Nationality ? Nationality : AllSelect,
+                        "sub_company_code": Sub_company_code ? Sub_company_code : AllSelect,
+                        "roster_group_code": Roster_group_code ? Roster_group_code : AllSelect,
+                        "card_no": Card_no ? Card_no : AllSelect,
+                        "Sharia_Flag": Sharia_Flag ? Sharia_Flag : AllSelect,
+                        "Company_Code": Company_Code ? Company_Code : AllSelect,
+                        "Old_Emp_code": Old_Emp_code ? Old_Emp_code : AllSelect,
+                        "Old_Company_Code": Old_Company_Code ? Old_Company_Code : AllSelect,
+                        "id": Id ? Id : AllSelect,
+                        // "Payroll_Year": Payroll_Year ? Payroll_Year : AllSelect,
+                        // "Payroll_Month": Payroll_Month ? Payroll_Month : AllSelect,
+                        // "Leave_Category_name": Leave_Category_name ? Leave_Category_name : AllSelect,
+                        // "position_code": Position_code ? Position_code : AllSelect,
                     }
                 }
-
             ),
         }
         ).then((response) => {
@@ -306,8 +303,10 @@ const MasterData_Sec = () => {
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         const data = new Blob([excelBuffer], { type: fileType });
         FileSaver.saveAs(data, "data" + fileExtension);
-
     }
+
+
+
 
 
 
@@ -334,7 +333,7 @@ const MasterData_Sec = () => {
                             <div className="row">
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input"  name="" id="All" value="Y" onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N")} />
+                                        <input type="checkbox" className="form-check-input" name="" id=""  value="Y"  onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N" )}/>
                                         <label htmlFor="">Select All</label>
                                     </div>
                                 </div>
@@ -719,10 +718,10 @@ const MasterData_Sec = () => {
                                         <label htmlFor="">Fuel Card Flag</label>
                                     </div>
 
-                                    <div className="form-group MasterChecklist d-flex align-items-center">
+                                    {/* <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_hr_category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Hr Cat</label>
-                                    </div>
+                                    </div> */}
                                     <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setOffer_Letter_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Offer Letter Date</label>
@@ -791,27 +790,27 @@ const MasterData_Sec = () => {
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setId(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Id</label>
                                     </div>
-                                    <div className="form-group MasterChecklist d-flex align-items-center">
+                                    {/* <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPayroll_Year(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Payroll Year</label>
-                                    </div>
-                                    <div className="form-group MasterChecklist d-flex align-items-center">
+                                    </div> */}
+                                    {/* <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPayroll_Month(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Payroll Month</label>
-                                    </div>
-                                    <div className="form-group MasterChecklist d-flex align-items-center">
+                                    </div> */}
+                                    {/* <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setLeave_Category_name(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Leave Cat Name</label>
-                                    </div>
+                                    </div> */}
 
                                     <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setEmp_Leave_category(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Employee Leave Category</label>
                                     </div>
-                                    <div className="form-group MasterChecklist d-flex align-items-center">
+                                    {/* <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setPosition_code(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Positon</label>
-                                    </div>
+                                    </div> */}
                                     <div className="form-group MasterChecklist d-flex align-items-center">
                                         <input type="checkbox" className="form-check-input" name="" id="All" value="Y" onChange={(e) => setReffrence_leter_date(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Refference Letter Date</label>

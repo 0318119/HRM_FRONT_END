@@ -387,10 +387,21 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   }, [])
   // ==================================================
   const submitForm = async (data) => {
+   
     try {
       const isValid = await TAPersonalSchema.validate(data);
       if (isValid) {
-        POST_MASTER_PERSONAL_FORM(data)
+        const joiningDate = new Date(data?.Emp_joining_date);
+        const confirmDate = new Date(data?.Emp_confirm_date);
+        const differenceInDays = Math.floor((confirmDate - joiningDate) / (24 * 60 * 60 * 1000));
+        if (differenceInDays >= 90) {
+          POST_MASTER_PERSONAL_FORM(data)
+        } else {
+          messageApi.open({
+            type: 'error',
+            content: "Confirm Date Should be Greater Then Joining Date by 90 days" ,
+          });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -400,6 +411,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
     control,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       Sequence_no: "",
@@ -560,6 +572,11 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         setLoading(false)
     });
   }
+
+
+
+
+
 
   return (
     <>
@@ -784,7 +801,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
                     placeholder={'Birth Date'}
                     id="Emp_birth_date"
                     name="Emp_birth_date"
-                    type="Date"
+                    type="date"
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -794,7 +811,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
                     placeholder={'Offer Letter Date'}
                     id="Offer_Letter_date"
                     name="Offer_Letter_date"
-                    type="Date"
+                    type="date"
                     showLabel={true}
                     errors={errors}
                     control={control}

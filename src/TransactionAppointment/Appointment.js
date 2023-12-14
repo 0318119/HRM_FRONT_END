@@ -43,6 +43,23 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         setCode(code);
         setMode(mode);
     };
+
+    useEffect(() => {
+        if (isSearchVal == "") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        } else {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal,
+            });
+        }
+    }, [page, isSearchVal]);
+
     const columns = [
         {
             title: "Sequence No",
@@ -168,21 +185,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
-    useEffect(() => {
-        if (isSearchVal == "") {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null,
-            });
-        } else {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: 1,
-                search: isSearchVal,
-            });
-        }
-    }, [page, isSearchVal]);
+    
 
     async function AppointLetter(id) {
         await fetch(
@@ -201,8 +204,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         }).then(async (response) => {
             if (response.success) {
                 console.log(response.data, 'response')
-                setAppointData(response.data)
-                GetAppointLetter(id, response?.data)
+                // setAppointData(response.data)
+                // GetAppointLetter(id, response?.data)
             }
         }).catch((error) => { });
     }

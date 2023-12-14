@@ -1,6 +1,9 @@
 .maringClass{
     margin-top: 80px;
 }
+.maringClass2{
+    /* margin-top: 10px; */
+}
 .ConfirmationFlexBox{
     display: flex;
     justify-content: space-between;
