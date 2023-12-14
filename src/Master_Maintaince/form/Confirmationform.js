@@ -153,30 +153,119 @@ function ConfirmationForm({ cancel, isCode, page, Getconfirmation, Get_confirmat
     }
 
     // SAVE CONFIRMATION API CALL =================================
-    async function saveConfirmationInfo(e) {
+    async function SaveConfirmationInfo(e) {
         e.preventDefault();
-        setButtonState('save', true, true);
-    
-        try {
-            const response = await fetch(/* ... */);
-            const data = await response.json();
-    
-            if (data.success) {
-                setButtonState('save', false, false);
-                setwhichAction("DeleteAndProcess");
-                setGetInfoErr("Please click on Process button.");
-                setTimeout(() => {
-                    setGetInfoErr("");
-                }, 5000);
-            } else {
-                // handleNavigation(data);
-                handleAPIError(data);
-                setButtonState('save', false, false);
-            }
-        } catch (error) {
-            handleAPIError(error);
-            setButtonState('save', false, false);
+        setBtn({
+            saveBtnLoading: true,
+            saveBtnDisabled: true,
+        })
+        await fetch(
+            `${config["baseUrl"]}/tranConfirmation/TranConfirmations_save`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json",
+                accessToken: `Bareer ${get_access_token}`,
+            },
+            body: JSON.stringify({
+                "Emp_code": ConfirmId,
+                "TransactionDate": currentDate,
+                "ConfirmationDate": isConfirmationDate !== null ? isConfirmationDate : currentDate,
+                "Confirmation_DueDate": isGetInfo?.Emp_Confirm_date
+            }),
         }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.messsage == "unauthorized") {
+                await fetch(
+                    `${config["baseUrl"]}/tranConfirmation/TranConfirmations_save`, {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        refereshToken: `Bareer ${get_refresh_token}`,
+                    },
+                    body: JSON.stringify({
+                        "Emp_code": ConfirmId,
+                        "TransactionDate": currentDate,
+                        "ConfirmationDate": isConfirmationDate !== null ? isConfirmationDate : currentDate,
+                        "Confirmation_DueDate": isGetInfo?.Emp_Confirm_date
+                    }),
+                }
+                ).then((response) => {
+                    return response.json();
+                }).then((response) => {
+                    if (response.messsage == "timeout error") {
+                        navigate("/");
+                    } else {
+                        if (response.success) {
+                            localStorage.setItem("refresh", response.referesh_token);
+                            localStorage.setItem("access_token", response.access_token);
+                            setBtn({
+                                saveBtnLoading: false,
+                                saveBtnDisabled: false,
+                            })
+                            setwhichAction("DeleteAndProcess")
+                            setGetInfoErr("Please click on Process button.")
+                            setTimeout(() => {
+                                setGetInfoErr("")
+                            }, 5000);
+                        } else {
+                            setBtn({
+                                saveBtnLoading: false,
+                                saveBtnDisabled: false,
+                            })
+                            setGetInfoErr(response.message)
+                            setTimeout(() => {
+                                setGetInfoErr("")
+                            }, 5000);
+                        }
+                    }
+                }).catch((error) => {
+                    setBtn({
+                        saveBtnLoading: false,
+                        saveBtnDisabled: false,
+                    })
+                    setGetInfoErr(error.message)
+                    setTimeout(() => {
+                        setGetInfoErr("")
+                    }, 5000);
+                });
+            } else {
+                if (response.messsage == "timeout error") {
+                    navigate("/");
+                } else {
+                    if (response.success) {
+                        setBtn({
+                            saveBtnLoading: false,
+                            saveBtnDisabled: false,
+                        })
+                        setwhichAction("DeleteAndProcess")
+                        setGetInfoErr("Please click on Process button.")
+                        setTimeout(() => {
+                            setGetInfoErr("")
+                        }, 5000);
+                    } else {
+                        setBtn({
+                            saveBtnLoading: false,
+                            saveBtnDisabled: false,
+                        })
+                        setGetInfoErr(response.message)
+                        setTimeout(() => {
+                            setGetInfoErr("")
+                        }, 5000);
+                    }
+                }
+            }
+        }).catch((error) => {
+            setBtn({
+                saveBtnLoading: false,
+                saveBtnDisabled: false,
+            })
+            setGetInfoErr(error.message)
+            setTimeout(() => {
+                setGetInfoErr("")
+            }, 5000);
+        });
     }
 
     // PROCESS CONFIRMATION API CALL =================================
@@ -503,46 +592,32 @@ function ConfirmationForm({ cancel, isCode, page, Getconfirmation, Get_confirmat
         });
     }
 
-    const setButtonState = (buttonName, isLoading, isDisabled) => {
-        setBtn(prevState => ({
-            ...prevState,
-            [`${buttonName}BtnLoading`]: isLoading,
-            [`${buttonName}BtnDisabled`]: isDisabled,
-        }));
-    };
 
-    const handleAPIError = (error) => {
-        setGetInfoErr(error.message || error.messsage || 'An error occurred');
-        setTimeout(() => {
-            setGetInfoErr("");
-        }, 3000);
-    };
-
-    // useEffect(() => {
-    //     if (mode === "create") {
-    //         reset({
-    //             Emp_name: "",
-    //             Desig_Name: "",
-    //             Dept_name: "",
-    //             PF_Nomination_Flag: "",
-    //             Joining_Date: "",
-    //             currentDate: "",
-    //             Emp_Confirm_date: "",
-    //             Confirmation_Date: "",
-    //         });
-    //     } else {
-    //         reset({
-    //             Emp_name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Emp_name || '',
-    //             Desig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
-    //             Dept_name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_name || '',
-    //             DesPF_Nomination_Flagig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
-    //             Desig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
-    //             Desig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
-    //             Desig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
-                
-    //         });
-    //     }
-    // }, [mode, Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]]);
+    useEffect(() => {
+        if (mode === "create") {
+            reset({
+                Emp_name: "",
+                Desig_Name: "",
+                Dept_name: "",
+                PF_Nomination_Flag: "",
+                Joining_Date: "",
+                currentDate: "",
+                Emp_Confirm_date: "",
+                Confirmation_Date: "",
+            });
+        } else {
+            reset({
+                Emp_name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Emp_name || '',
+                Desig_Name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Desig_Name || '',
+                Dept_name: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Dept_name || '',
+                PF_Nomination_Flag: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?. PF_Nomination_Flag || '',
+                Joining_Date: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Joining_Date || '',
+                currentDate: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.currentDate || '',
+                Emp_Confirm_date: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Confirm_date || '',
+                Confirmation_Date: Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]?.Confirmation_Date || '',
+            });
+        }
+    }, [mode, Red_Confirmation?.dataSingle?.[0]?.res?.data?.[0]]);
 
     return (
         <>

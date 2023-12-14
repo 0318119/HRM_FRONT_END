@@ -108,8 +108,15 @@ import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
-import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation';
+import NewAppointmentReport from '../HrOperations/New_Appointment_Report.js'
+import TAEducationForm2 from '../TransactionAppointForm/TAEducationForm2.js'
+import TASalaryForm2 from '../TransactionAppointForm/TASalaryForm2.js'
+import TAExperienceForm2 from '../TransactionAppointForm/TAExperienceForm2.js'
+import TAappointmentMasterPayrollForm2 from '../TransactionAppointForm/TAappointmentMasterPayrollForm2.js'
+import TAFamilyForm2 from '../TransactionAppointForm/TAFamilyForm2.js'
+import TACheckListForm2 from '../TransactionAppointForm/TACheckListForm2.js'
+// import NewAppointmentReport from '../HrOperations/New_Appointment_Report.js'
 import NotFound from '../Error_Pages';
 import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
@@ -248,6 +255,18 @@ const routing = () => {
         <Route path="flow/DesignationsFlowChart" element={<FLow />} />
         {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
         <Route path="/Change_Password" element={<Change_Password />} />
+        {/* HR OPERATIONS ---> TA EDUCATION FORM 2 =============================================================== */}
+        <Route path="/TAEducationForm2" element={<TAEducationForm2 />} />
+        {/* HR OPERATIONS ---> TA Salary FORM 2 =============================================================== */}
+        <Route path="/TASalaryForm2" element={<TASalaryForm2 />} />
+        {/* HR OPERATIONS ---> TA Experience FORM 2 =============================================================== */}
+        <Route path="/TAExperienceForm2" element={<TAExperienceForm2 />} />
+        {/* HR OPERATIONS ---> TA Appointment Master Payroll FORM 2 =============================================================== */}
+        <Route path="/TAappointmentMasterPayrollForm2" element={<TAappointmentMasterPayrollForm2 />} />
+        {/* HR OPERATIONS ---> TA Appointment Family FORM 2 =============================================================== */}
+        <Route path="/TAFamilyForm2" element={< TAFamilyForm2 />} />
+        {/* HR OPERATIONS ---> TA Appointment Check List FORM 2 =============================================================== */}
+        <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
         {/* ADDMINISTRATION ---> Access Control =============================================================== */}
         <Route path="/Access_Control" element={<Access_Control />} />
         {/* ERRORS PAGE ============================ */}
