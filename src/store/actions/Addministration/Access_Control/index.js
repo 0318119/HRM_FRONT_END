@@ -140,23 +140,53 @@ export const GetAllMenus = () => async (dispatch) => {
   }
 };
 
-// Delete APi===================
 
-//   export const DeleteJvCode = (body) => async () => {
-//     const response = await fetch(`${baseUrl.baseUrl}/JVCodes/DeleteJvCode`, {
-//       method: "POST",
-//       headers: {
-//         accessToken: "Bareer " + localStorage.getItem("access_token"),
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         "JV_Unit": body,
-//       }),
-//     });
-//     const res = await response.json();
-//     if (res?.success) {
-//       return res;
-//     }else{
-//       return res;
-//     }
-//   };
+export const AddUserAccessMenus = (body) => async (dispatch) => {
+  console.log(body,'root')
+  try {
+    dispatch({
+      type: GET_Access_Control_DATA_START,
+      payload: true,
+      loading: true,
+    });
+    const response = await fetch(
+      `${baseUrl.baseUrl}/accessmenus/AddUserAccessMenus`,
+      {
+        method: "POST",
+        headers: {
+          accessToken: "Bareer " + localStorage.getItem("access_token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_code: localStorage.getItem('Emp_code'),
+          menu_code: body,
+        })
+      }
+    );
+    if (response.status === 200) {
+      const res = await response.json();
+      dispatch({
+        type: GET_Access_Control_DATA_SINGLE,
+        payload: [{ res }],
+        loading: false,
+      });
+    } else {
+      const res = await response.json();
+      dispatch({
+        type: GET_Access_Control_DATA_END,
+        payload: [{ res }],
+        loading: false,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_Access_Control_DATA_END,
+      payload: false,
+      loading: false,
+    });
+    console.log(error);
+  }
+};
+
+
+

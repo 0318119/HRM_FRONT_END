@@ -109,6 +109,7 @@ import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
+import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation';
 import NotFound from '../Error_Pages';
 import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
@@ -238,6 +239,8 @@ const routing = () => {
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
         <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
         <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
+        <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
+        
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}
