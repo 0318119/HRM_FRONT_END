@@ -117,6 +117,11 @@ select:focus {
     display: none;
 }
 
+
+.p-tree-toggler svg{
+    color: gray;
+}
+
 .ant-select-single{
     height: 40px !important;
     width: 100% !important;

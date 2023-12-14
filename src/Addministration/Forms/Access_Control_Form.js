@@ -70,27 +70,31 @@ function Access_ControlForm({
 
 
 
-  console.log("AllMenus", Red_Access_Control?.AllMenus?.[0])
 
   const AllMenus = Red_Access_Control?.AllMenus?.[0];
   const one = AllMenus?.data
     .filter((levelOneFilter) => levelOneFilter.ParentCode === 0 && levelOneFilter.Level === 1)
-    .map((levelOneMap,index) => ({
-      key: index + 5, 
+    .map((levelOneMap) => ({
+      key: levelOneMap.menucode, 
       label: levelOneMap.menulabel,
       data: levelOneMap.menulabel,
-      children: [
-      
-        AllMenus?.data.filter(LevelTwoFilter => LevelTwoFilter.ParentCode === levelOneMap.menucode && LevelTwoFilter.Level == 2)
-        .map((levelTwoMap,index) => ({
-          key: index + 6, 
-          label: levelTwoMap.menulabel,
-          data: levelTwoMap.menulabel,
-        }))
-      ],
+      children:  AllMenus?.data.filter(LevelTwoFilter => LevelTwoFilter.ParentCode === levelOneMap.menucode && LevelTwoFilter.Level == 2)
+      .map((levelTwoMap) => ({
+        key: levelTwoMap.menucode, 
+        label: levelTwoMap.menulabel,
+        data: levelTwoMap.menulabel,
+        children:  AllMenus?.data.filter(LevelThreeFilter => LevelThreeFilter.ParentCode === levelTwoMap.menucode && LevelThreeFilter.Level == 3)
+        .map((levelThreeMap) => ({
+          key: levelThreeMap.menucode, 
+          label: levelThreeMap.menulabel,
+          data: levelThreeMap.menulabel,
+        })),
+      })),
   }));
   const [nodes, setNodes] = useState(one);
   const [selectedKeys, setSelectedKeys] = useState(null);
+
+  console.log("selectedKeys",selectedKeys)
   
 
 
