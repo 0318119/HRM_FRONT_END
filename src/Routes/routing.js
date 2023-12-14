@@ -108,19 +108,19 @@ import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
-import NewAppointmentReport from '../HrOperations/New_Appointment_Report.js'
+import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import TAEducationForm2 from '../TransactionAppointForm/TAEducationForm2.js'
 import TASalaryForm2 from '../TransactionAppointForm/TASalaryForm2.js'
 import TAExperienceForm2 from '../TransactionAppointForm/TAExperienceForm2.js'
 import TAappointmentMasterPayrollForm2 from '../TransactionAppointForm/TAappointmentMasterPayrollForm2.js'
 import TAFamilyForm2 from '../TransactionAppointForm/TAFamilyForm2.js'
 import TACheckListForm2 from '../TransactionAppointForm/TACheckListForm2.js'
-// import NewAppointmentReport from '../HrOperations/New_Appointment_Report.js'
 import NotFound from '../Error_Pages';
 import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
 import VerifyOTP from '../LoginScreens/ForgetPassword/verifyOtp';
 import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
+import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 
 
 
@@ -213,6 +213,9 @@ const routing = () => {
         <Route path="/RefreshableData" element={<RefreshableData />} />
         <Route path="/Positions" element={<Positions />} />
         <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access />} />
+        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
+        <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
+
         {/* payroll */}
         <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
         <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
@@ -244,7 +247,9 @@ const routing = () => {
         <Route path="/Bank" element={<Bank />} />
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
         <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
+
+
+
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}

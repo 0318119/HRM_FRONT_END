@@ -287,10 +287,8 @@ export const GET_CHANGE_PROFILE_DATA_END = "GET_CHANGE_PROFILE_DATA_END";
 
 // HRSETUPS ===> New_Appointment_Report === 
 export const GET_New_Appointment_Report_DATA = "GET_New_Appointment_Report_DATA";
-export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_STARTT";
-export const GET_New_Appointment_Report_SINGLE = "GET_New_Appointment_Report_SINGLE";
+export const GET_New_Appointment_Report_START = "GET_New_Appointment_Report_START";
 export const GET_New_Appointment_Report_END = "GET_New_Appointment_Report_END";
-
 
 // LOGIN SCREEN ===> FORGET PASSWORD === 
 export const GET_FORGET_PASSWORD_DATA = "GET_FORGET_PASSWORD_DATA";
@@ -309,5 +307,12 @@ export const GET_Access_Control_DATA_START = "GET_Access_Control_DATA_START";
 export const GET_Access_Control_DATA_SINGLE = "GET_Access_Control_DATA_SINGLE";
 export const GET_Access_Control_DATA_END = "GET_Access_Control_DATA_END";
 export const GET_ALL_MENUS = "GET_ALL_MENUS";
+
+// HRSETUPS ===> New_Appointment_Report === 
+
+export const GET_Retirement_Due_Report_DATA = "GET_Retirement_Due_Report_DATA";
+export const GET_Retirement_Due_Report_START = "GET_Retirement_Due_Report_START";
+export const GET_Retirement_Due_Report_END = "GET_Retirement_Due_Report_END";
+
 
 
