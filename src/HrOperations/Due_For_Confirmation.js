@@ -6,16 +6,16 @@ import Header from "../components/Includes/Header";
 import { PrimaryButton, SimpleButton } from '../components/basic/button';
 import { message } from 'antd';
 import { useForm } from 'react-hook-form';
-import { Document, Page, Text, View, PDFViewer, Image, StyleSheet, pdf } from '@react-pdf/renderer';
+import { Document, Page, Text, View, pdf, Image } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import logoUrl from "../../src/Assets/Images/logo-mesh-final-logo-01-1-1024x303.webp"
+import LogoUrl from "../../src/Assets/Images/download.png"
 import Item from 'antd/es/list/Item';
 
 function Due_For_Confirmation({
-    Red_Due_For_Confirmation,
-//   GetAllAppoint,
+  Red_Due_For_Confirmation,
+  //   GetAllAppoint,
   PostConfirmationPayload,
 }) {
   const [isLoading, setLoading] = useState(false);
@@ -24,8 +24,8 @@ function Due_For_Confirmation({
   const [isAppointmentData, setAppointmentData] = useState([])
 
   const Due_For_ConfirmationSchema = yup.object().shape({
-    Servicefrom: yup.string().required('Please Select From Date'),
-    Serviceto: yup.string().required('Please Select To Date'),
+    FromDate: yup.string().required('Please Select From Date'),
+    ToDate: yup.string().required('Please Select To Date'),
   });
 
   const {
@@ -34,8 +34,8 @@ function Due_For_Confirmation({
     handleSubmit,
   } = useForm({
     defaultValues: {
-      Servicefrom: '',
-      Serviceto: '',
+      FromDate: '',
+      ToDate: '',
     },
     mode: 'onChange',
     resolver: yupResolver(Due_For_ConfirmationSchema),
@@ -48,12 +48,14 @@ function Due_For_Confirmation({
       if (isValid) {
         const result = await PostConfirmationPayload(data);
         if (result?.success) {
-          setAppointmentData(result?.data);
-          setFormSubmitted(true)
           message.success('PDF is created, Wait PDf is under downloading...');
+          setFormSubmitted(true)
+          setTimeout(() => {
+            setAppointmentData(result?.data);
+          }, 2000);
           setTimeout(() => {
             handleDownload()
-          }, 2000);
+          }, 3000);
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -64,45 +66,73 @@ function Due_For_Confirmation({
     setLoading(false);
   };
 
-  
-      
-
-  const PdfData = 
-      <Document >
-        <Page size="A4">
-          <View>
-            <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
-              Due For Confirmation Report
+  const PdfData =
+    (<Document>
+      <Page size="A4">
+        <View>
+          {/* <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <Image src={LogoUrl} style={{ textAlign:'right' , width: "80px", height: '30px', backgroundColor: 'yellow' }} />
+            <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
+            Due For Confirmation Report
             </Text>
-              <>
-                <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Code</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Name</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Appointment Date</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Due Date</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Service length</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Category</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Designation</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Department</Text>
-                </View>
-                {isAppointmentData?.map((item , index) =>{
-                    <View  key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Emp_Code ? item?.Emp_Code : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Emp_Name ? item?.Emp_Name : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.JoiningDate ? item?.JoiningDate : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{`${item?.fromyuer + item?.toyear}` ? `${item?.fromyuer+ item?.toyear}` : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Service_Length ? item?.Service_Length : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Department ? item?.Department : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Designation ? item?.Designation : null}</Text>
-                  </View>})}
-              </>
-          </View>
-        </Page>
-      </Document>
 
+            <Text style={{ textAlign: 'right' , fontSize: 12, fontWeight: 'bold' }}>
+              DATED
+            </Text> */}
+            <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
+            <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: "20px 0" }}>
+            Due For Confirmation Report
+            </Text>
+
+            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+              DATED
+            </Text>
+          </View>
+          </View>
+          
+          <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Emp Code</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Emp Name</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Appointment Date</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Due Date</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Service length</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Emp Category</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Designation</Text>
+            <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Department</Text>
+          </View>
+
+          {isAppointmentData?.flatMap((item, index) => {
+            return (
+              <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Emp_id ? item?.Emp_id : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Emp_name ? item?.Emp_name : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Emp_appointment_date ? item?.Emp_appointment_date : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.DueDate ? item?.DueDate : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Service_Length ? item?.Service_Length : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Emp_Category ? item?.Emp_Category : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Desig_name ? item?.Desig_name : null}</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Dept_name ? item?.Dept_name : null}</Text>
+
+                
+              </View>
+            );
+          })}
+        </View>
+      </Page>
+    </Document>)
 
   const handleDownload = async () => {
     try {
+      // Ensure isAppointmentData is not empty before generating the PDF
+      if (isAppointmentData.length === 0) {
+        message.error('No data available for PDF.');
+        console.log("isAppointmentData",isAppointmentData)
+        return;
+      }
+
       const pdfBlob = await pdf(PdfData).toBlob();
       saveAs(pdfBlob, 'generated.pdf');
     } catch (error) {
@@ -111,102 +141,58 @@ function Due_For_Confirmation({
   };
 
 
- 
 
-    useEffect(() => {
+
+  useEffect(() => {
     //   GetAllAppoint();
-    }, []);
+  }, []);
 
 
 
 
-    return (
-      <>
-        <Header />
-        <div className="container maringClass">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <form onSubmit={handleSubmit(onSubmit)} className="paySlipBox">
-                <h4 className="text-dark">DUE FOR CONFIRMATION REPORT</h4>
-                <div className="">
-                  <FormInput
-                    errors={errors}
-                    control={control}
-                    placeholder={'From Date'}
-                    name={'Servicefrom'}
-                    label={'Service From'}
-                    type="date"
-                  />
-                  <FormInput
-                    errors={errors}
-                    control={control}
-                    placeholder={'To Date'}
-                    name={'Serviceto'}
-                    label={'Service To'}
-                    type="date"
-                  />
-                </div>
-                <div className="paySlipBtnBox">
-                  <SimpleButton type={'submit'} loading={isLoading} title="Save" />
-                </div>
-              </form>
-            </div>
-          </div>
-{/* 
-          {isFormSubmitted && (
-            <div className="row">
-              <div className="col-lg-12 d-flex justify-content-end">
-                <PrimaryButton onClick={PDFDATA} title="Download" disabled={isLoading} />
+  return (
+    <>
+      <Header />
+      <div className="container maringClass">
+        <div className="row justify-content-center">
+          <div className="col-lg-8">
+            <form onSubmit={handleSubmit(onSubmit)} className="paySlipBox">
+              <h4 className="text-dark">DUE FOR CONFIRMATION REPORT</h4>
+              <div className="">
+                <FormInput
+                  errors={errors}
+                  control={control}
+                  placeholder={'From Date'}
+                  name={'FromDate'}
+                  label={'From Date'}
+                  type="date"
+                />
+                <FormInput
+                  errors={errors}
+                  control={control}
+                  placeholder={'To Date'}
+                  name={'ToDate'}
+                  label={'To Date'}
+                  type="date"
+                />
               </div>
-            </div>
-          )} */}
-
-          {/* {isFormSubmitted &&
-           (
-            <div className="mt-5 row justify-content-center">
-              <PDFViewer height="750">
-                 <Document >
-        <Page size="A4">
-          <View>
-            <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
-              Due For Confirmation Report
-            </Text>
-              <>
-                <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Code</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Name</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Appointment Date</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Due Date</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Service length</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Category</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Designation</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Department</Text>
-                </View>
-                {isAppointmentData?.map((item , index) =>{
-                    <View  key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Emp_Code ? item?.Emp_Code : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Emp_Name ? item?.Emp_Name : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.JoiningDate ? item?.JoiningDate : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{`${item?.fromyuer + item?.toyear}` ? `${item?.fromyuer+ item?.toyear}` : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Service_Length ? item?.Service_Length : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Department ? item?.Department : null}</Text>
-                    <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Designation ? item?.Designation : null}</Text>
-                  </View>})}
-              </>
-          </View>
-        </Page>
-      </Document>
-              </PDFViewer>
-            </div>
-          )} */}
+              <div className="paySlipBtnBox">
+                <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+              </div>
+            </form>
+          </div>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
+}
 
-  function mapStateToProps({ Red_Due_For_Confirmation }) {
-    return { Red_Due_For_Confirmation };
-  }
+function mapStateToProps({ Red_Due_For_Confirmation }) {
+  return { Red_Due_For_Confirmation };
+}
 
-  export default connect(mapStateToProps, Red_Due_For_Confirmation_Action)(Due_For_Confirmation);
+// export default connect(mapStateToProps, Red_Due_For_Confirmation_Action)(Due_For_Confirmation);
+export default connect(mapStateToProps, {
+  PostConfirmationPayload: Red_Due_For_Confirmation_Action.PostConfirmationPayload,
+})(Due_For_Confirmation);
 

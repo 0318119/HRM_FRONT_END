@@ -25,12 +25,7 @@ const Red_Due_For_Confirmation = (state = initState, action) => {
                 data: action.payload,
                 loading: action.loading,
             };
-        // case GET_TRANSITION_COST_CENTRE_DATA_SINGLE:
-        //     return {
-        //         ...state,
-        //         dataSingle: action.payload,
-        //         loading: action.loading,
-        //     };
+      
         case GET_DUE_FOR_CONFIRMATION_DATA_END:
             return {
                 ...state,
