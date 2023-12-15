@@ -2,436 +2,196 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from "../components/Includes/Header";
 import Country from "./Country.json"
+import { Space, Table, Tag, Tooltip  } from 'antd';
+import { Popconfirm } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
-import { TAPersonalSchema } from './schema';
+import * as AppointmentEducation_Actions from "../store/actions/Appointments/AppointEducationForm/index";
+import { connect } from "react-redux";
+import { FaEdit } from 'react-icons/fa';
+import * as yup from "yup";
 import { message } from 'antd';
-import baseUrl from '../config.json'
 import { Link } from "react-router-dom";
+import baseUrl from '../config.json'
 
 
 
-function TAEducationForm2({ cancel, mode, isCode, page }) {
 
+function TAEducationForm2({
+    cancel,
+    mode,
+    isCode,
+    page,
+    Red_AppointEducation,
+    GetEmployeeInfo,
+    GetEducationData,
+    GetInstituteData,
+    GetGradeData,
+    // GetEducationSavedData,
+    SaveFormEdu
+}) {
 
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
+    // const [pageSize, setPageSize] = useState(10);
     const [isLoading, setLoading] = useState(false)
-    const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
-    const [EmployeeCategory, setEmployeeCategory] = useState([])
-    const [LeaveCategory, setLeaveCategory] = useState([])
-    const [PayCategory, setPayCategory] = useState([])
-    const [Shifts, setShifts] = useState([])
-    const [Designation, setDesignation] = useState([])
-    const [CostCenter, setCostCenter] = useState([])
-    const [Section, setSection] = useState([])
-    const [Grade, setGrade] = useState([])
-    const [Education, setEducation] = useState([])
-    const [Location, setLocation] = useState([])
-    const [Religion, setReligion] = useState([])
-    const [Supervisor, setSupervisor] = useState([])
-    const [getEmpCodeErr, setEmpCodeErr] = message.useMessage();
-    const [EmpCategoryDataErr, setEmpCategoryDataErr] = message.useMessage();
-    const [leaveCatErr, setleaveCatErr] = message.useMessage();
-    const [PayCategoryErr, setPayCategoryErr] = message.useMessage();
-    const [ShiftsCodeErr, setShiftsCodeErr] = message.useMessage();
-    const [DesignationCodeErr, setDesignationCodeErr] = message.useMessage();
-    const [CostCenterCodeErr, setCostCenterCodeErr] = message.useMessage();
-    const [SectionCodeErr, setSectionCodeErr] = message.useMessage();
-    const [GradeCodeErr, setGradeCodeErr] = message.useMessage();
-    const [EducationCodeErr, setEducationCodeErr] = message.useMessage();
-    const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
-    const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
-    const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
-    const currentDate = new Date();
+    const [isSavedEdu , setSavedEdu] = useState(false)
+    
+
     const EditBack = () => {
         cancel('read')
     }
 
-    async function getEmpTypeCodeData() {
+    const AppointEducationSchema = yup.object().shape({        
+        EduCode: yup.string().required("EduCode is required"),
+        EduYear: yup.string().required("EduYear is required"),
+        EduGrade: yup.string().required("EduGrade is required"),
+        Topflag: yup.string().required("Topflag is required"),
+        institutecode: yup.string().required("institutecode is required"),
 
-        await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setgetEmpTypeCode(response.data)
-            }
-            else {
-                getEmpCodeErr.open({
-                    type: 'error',
-                    content: "in Emp type code :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            getEmpCodeErr.open({
-                type: 'error',
-                content: "in Emp type code :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function EmpCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response?.success) {
-                setEmployeeCategory(response?.data)
-            }
-            else {
-                EmpCategoryDataErr.open({
-                    type: 'error',
-                    content: "in Emp Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            EmpCategoryDataErr.open({
-                type: 'error',
-                content: "in Emp Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function LeaveCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setLeaveCategory(response.data)
-            }
-            else {
-                leaveCatErr.open({
-                    type: 'error',
-                    content: "in Leave Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            leaveCatErr.open({
-                type: 'error',
-                content: "in Leave Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function PayCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayrollWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setPayCategory(response.data)
-            }
-            else {
-                PayCategoryErr.open({
-                    type: 'error',
-                    content: "in Pay Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            PayCategoryErr.open({
-                type: 'error',
-                content: "in Pay Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function ShiftsData() {
-        await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShiftWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setShifts(response.data)
-            }
-            else {
-                ShiftsCodeErr.open({
-                    type: 'error',
-                    content: "in Shifts Error :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ShiftsCodeErr.open({
-                type: 'error',
-                content: "in Shifts Error :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function DesignationData() {
-        await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignationWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setDesignation(response.data)
-            }
-            else {
-                DesignationCodeErr.open({
-                    type: 'error',
-                    content: "in Designation :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            DesignationCodeErr.open({
-                type: 'error',
-                content: "in Designation :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function CostCenterData() {
-        await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setCostCenter(response.data)
-            }
-            else {
-                CostCenterCodeErr.open({
-                    type: 'error',
-                    content: "in Cost centre :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            CostCenterCodeErr.open({
-                type: 'error',
-                content: "in Cost centre :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SectionData() {
-        await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setSection(response.data)
-            }
-            else {
-                SectionCodeErr.open({
-                    type: 'error',
-                    content: "in Section :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SectionCodeErr.open({
-                type: 'error',
-                content: "in Section :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function GradeData() {
-        await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setGrade(response.data)
-            }
-            else {
-                GradeCodeErr.open({
-                    type: 'error',
-                    content: "in Grade Code :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            GradeCodeErr.open({
-                type: 'error',
-                content: "in Grade Code :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function EducationData() {
-        await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setEducation(response.data)
-            }
-            else {
-                EducationCodeErr.open({
-                    type: 'error',
-                    content: "in Education :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            EducationCodeErr.open({
-                type: 'error',
-                content: "in Education :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function LocationData() {
-        await fetch(`${baseUrl.baseUrl}/location_code/GetLocationsWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setLocation(response.data)
-            }
-            else {
-                LocationCodeErr.open({
-                    type: 'error',
-                    content: "in Location :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            LocationCodeErr.open({
-                type: 'error',
-                content: "in Location :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function ReligionData() {
-        await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setReligion(response.data)
-            }
-            else {
-                ReligionCodeErr.open({
-                    type: 'error',
-                    content: "in Religion :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ReligionCodeErr.open({
-                type: 'error',
-                content: "in Religion :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SupervisorData() {
-        await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                console.log(response.data, 'sdff');
-                setSupervisor(response.data)
-            }
-            else {
-                SupervisorCodeErr.open({
-                    type: 'error',
-                    content: "in Supervisor :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SupervisorCodeErr.open({
-                type: 'error',
-                content: "in Supervisor :" + error?.message || error?.messsage,
-            });
-        });
-    }
+    });
 
     useEffect(() => {
-        getEmpTypeCodeData()
-        EmpCategoryData()
-        LeaveCategoryData()
-        PayCategoryData()
-        ShiftsData()
-        DesignationData()
-        CostCenterData()
-        SectionData()
-        GradeData()
-        EducationData()
-        LocationData()
-        ReligionData()
-        SupervisorData()
+        GetEmployeeInfo(isCode)
+        GetEducationData()
+        GetInstituteData()
+        GetGradeData()
+        // GetEducationSavedData(isCode)
     }, [])
+
+
+
+    useEffect(() => {
+        reset(
+            {
+                Emp_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                Desig_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                Dept_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Dept_name,
+            },
+        )
+    }, [Red_AppointEducation?.data?.[0]?.res?.data?.[0]])
+
+    const EduData = Red_AppointEducation?.getEdu?.[0]?.res?.data
+    const InsData = Red_AppointEducation?.getInsti?.[0]?.res?.data
+    const GradeData = Red_AppointEducation?.getGrade?.[0]?.res?.data
+
+
     // ==================================================
     const submitForm = async (data) => {
         try {
-            const isValid = await TAPersonalSchema.validate(data);
+            const isValid = await AppointEducationSchema.validate(data);
             if (isValid) {
-                POST_MASTER_PERSONAL_FORM(data)
+                SaveForm(data)
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+    console.log(Red_AppointEducation, 'Red_AppointEducation')
+
     const {
         control,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm({
-        defaultValues: {
-            Emp_name: "",
-            Desig_name: "",
-            Dept_name: "",
-            Edu_code: "",
-            Inst_name: "",
-            topFlag: "",
-            eduYear: "",
-            Grade_code: "",
-        },
+        defaultValues: {},
         mode: "onChange",
-        resolver: yupResolver(TAPersonalSchema),
+        resolver: yupResolver(AppointEducationSchema),
     });
 
-    // MASTER PERSNOL FORM DATA API CALL =========================== 
-    async function POST_MASTER_PERSONAL_FORM(body) {
-        setLoading(true)
+
+    const SaveForm = async (data) => {
+        try {
+            const response = await SaveFormEdu({
+                Sequence_no:  isCode,
+                EduCode: data?.EduCode,
+                EduYear: data?.EduYear,
+                EduGrade: data?.EduGrade,
+                Topflag: data?.Topflag,
+                institutecode: data?.institutecode,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Save Education Information");
+                setTimeout(() => {
+                    setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Save Information';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing password:", error);
+            messageApi.error("An error occurred while Save Information");
+        }
+    };
+
+    const columns = [
+        {
+            title: 'Education',
+            dataIndex: 'Edu_Code',
+            key: 'Edu_Code',
+        },
+        {
+            title: 'Institute',
+            dataIndex: 'institute_code',
+            key: 'institute_code',
+        },
+        {
+            title: 'Top Flag',
+            dataIndex: 'Top_flag',
+            key: 'Top_flag',
+        },
+        {
+            title: 'Year',
+            dataIndex: 'Edu_Year',
+            key: 'Edu_Year',
+        },
+        {
+            title: 'Grade',
+            dataIndex: 'Edu_Grade',
+            key: 'Edu_Grade',
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (data) => (
+                <Space size="middle">
+                    <button  className="editBtn">
+                        <FaEdit />
+                    </button>
+                    <Popconfirm
+                        title="Delete the Education"
+                        description="Are you sure to delete the Education?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => {
+                            handleConfirmDelete(data?.Sr_No)
+                        }}
+                    >
+                        <button className="deleteBtn"><MdDeleteOutline /></button>
+                    </Popconfirm>
+                </Space>
+            ),
+        },
+    ];
+
+   
+async function handleConfirmDelete(id) {
         await fetch(
-            `${baseUrl.baseUrl}/appointments/AppointmentsSavePersonel`, {
+            `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
             method: "POST",
-            headers: {
-                "content-type": "application/json",
-                accessToken: `Bareer ${get_access_token}`,
-            },
+            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "Emp_name": body?.Emp_name,
-                "Desig_name": body?.Desig_name,
-                "Dept_name": body?.Dept_name,
-                "Edu_code": body?.Edu_code,
-                "Inst_name": body?.Inst_name,
-                "topFlag": body?.Emp_topFlag,
-                "eduYear": body?.eduYear,
-                "Grade_code": body?.Grade_code,
-            })
+                "Sr_No": id,
+            }),
         }
         ).then((response) => {
             return response.json();
@@ -439,36 +199,93 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
             if (response.success) {
                 messageApi.open({
                     type: 'success',
-                    content: response?.message || response?.messsage,
+                    content: "You have successfully deleted",
                 });
-                setLoading(false)
                 setTimeout(() => {
-                    window.location.href = "/TAShortsCut"
-                }, 1000);
+                    messageApi.destroy()
+                    // GetPositionData({
+                    //     pageSize: pageSize,
+                    //     pageNo: page,
+                    //     search: null
+                    // })
+                }, 5000);
             }
             else {
                 messageApi.open({
                     type: 'error',
                     content: response?.message || response?.messsage,
                 });
-                setLoading(false)
+                setTimeout(() => {
+                    messageApi.destroy()
+                }, 5000);
             }
         }).catch((error) => {
             messageApi.open({
                 type: 'error',
                 content: error?.message || error?.messsage,
             });
-            setLoading(false)
+            setTimeout(() => {
+                messageApi.destroy()
+            }, 5000);
         });
     }
 
+// async function UpdateEducation(id) {
+//         await fetch(
+//             `${baseUrl.baseUrl}/eduation_code/UpdateTranEducation`, {
+//             method: "POST",
+//             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+//             body: JSON.stringify({
+//                 "srNo": getUpdateId,
+//                 "EduCode": EduCodeDataVal,
+//                 "EduYear": eduYear,
+//                 "EduGrade": eduGrade,
+//                 "Topflag": topFlag,
+//                 "institutecode": getinstituteVal
+//             }),
+//         }
+//         ).then((response) => {
+//             return response.json();
+//         }).then(async (response) => {
+//             if (response.success) {
+//                 messageApi.open({
+//                     type: 'success',
+//                     content: "You have successfully deleted",
+//                 });
+//                 setTimeout(() => {
+//                     messageApi.destroy()
+//                     // GetPositionData({
+//                     //     pageSize: pageSize,
+//                     //     pageNo: page,
+//                     //     search: null
+//                     // })
+//                 }, 5000);
+//             }
+//             else {
+//                 messageApi.open({
+//                     type: 'error',
+//                     content: response?.message || response?.messsage,
+//                 });
+//                 setTimeout(() => {
+//                     messageApi.destroy()
+//                 }, 5000);
+//             }
+//         }).catch((error) => {
+//             messageApi.open({
+//                 type: 'error',
+//                 content: error?.message || error?.messsage,
+//             });
+//             setTimeout(() => {
+//                 messageApi.destroy()
+//             }, 5000);
+//         });
+//     }   
+    
+
     return (
         <>
-            <Header />
-            {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
-            {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
-            {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}
-            {setReligionCodeErr}{setSupervisorCodeErr}
+            {contextHolder}
+
             <div className="container">
                 <div className="row">
                     <div className="col-12 maringClass">
@@ -517,18 +334,13 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
                                     <FormSelect
                                         label={'Education'}
                                         placeholder='select Education'
-                                        id="Edu_code"
-                                        name="Edu_code"
-                                        options={[
-                                            {
-                                                value: 'M',
-                                                label: 'Married',
-                                            },
-                                            {
-                                                value: "N",
-                                                label: 'Unmarried',
-                                            },
-                                        ]}
+                                        id="EduCode"
+                                        name="EduCode"
+                                        options={EduData?.map((item,) => ({
+                                            value: item.Edu_code,
+                                            label: item.Edu_name,
+                                        })
+                                        )}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -536,8 +348,22 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
                                     <FormSelect
                                         label={'Institute'}
                                         placeholder='select institute'
-                                        id="Inst_name"
-                                        name="Inst_name"
+                                        id="institutecode"
+                                        name="institutecode"
+                                        options={InsData?.map((item,) => ({
+                                            value: item.Inst_code,
+                                            label: item.Inst_name,
+                                        })
+                                        )}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormSelect
+                                        label={'Top flag'}
+                                        placeholder='select top flag'
+                                        id="Topflag"
+                                        name="Topflag"
                                         options={[
                                             {
                                                 value: 'Y',
@@ -552,30 +378,11 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
                                         errors={errors}
                                         control={control}
                                     />
-                                    <FormSelect
-                                        label={'Top flag'}
-                                        placeholder='select top flag'
-                                        id="topFlag"
-                                        name="topFlag"
-                                        options={[
-                                            {
-                                                value: 'M',
-                                                label: 'Male',
-                                            },
-                                            {
-                                                value: "F",
-                                                label: 'Female',
-                                            },
-                                        ]}
-                                        showLabel={true}
-                                        errors={errors}
-                                        control={control}
-                                    />
                                     <FormInput
                                         label={'Year'}
                                         placeholder='select year'
-                                        id="eduYear"
-                                        name="eduYear"
+                                        id="EduYear"
+                                        name="EduYear"
                                         type="number"
                                         showLabel={true}
                                         errors={errors}
@@ -584,11 +391,11 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
                                     <FormSelect
                                         label={'Grade'}
                                         placeholder={'Select grade'}
-                                        id="Grade_code"
-                                        name="Grade_code"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
+                                        id="EduGrade"
+                                        name="EduGrade"
+                                        options={GradeData?.map((item,) => ({
+                                            value: item.Grade_code,
+                                            label: item.Grade_name,
                                         })
                                         )}
                                         showLabel={true}
@@ -601,6 +408,22 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
                                     <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                                 </div>
                             </form>
+                           {/* {isSavedEdu ? */}
+                              <Table 
+                                columns={columns}
+                                loading={Red_AppointEducation?.loading}
+                                dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]}
+                                scroll={{ x: 10 }}
+                                // pagination={{
+                                //     defaultCurrent: page,
+                                //     total: Red_AppointEducation?.data?.[0]?.res?.data3,
+                                //     onChange: (p) => {
+                                //         // setPage(p);
+                                //     },
+                                //     // pageSize: pageSize,
+                                // }}
+                            /> 
+                            {/* : "" } */}
                         </div>
                     </div>
                 </div>
@@ -608,5 +431,7 @@ function TAEducationForm2({ cancel, mode, isCode, page }) {
         </>
     );
 }
-
-export default TAEducationForm2;
+function mapStateToProps({ Red_AppointEducation }) {
+    return { Red_AppointEducation };
+}
+export default connect(mapStateToProps, AppointmentEducation_Actions)(TAEducationForm2);

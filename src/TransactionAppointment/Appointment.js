@@ -5,8 +5,8 @@ import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
-import TAEducationFrom from "../TransactionAppointForm/TAEducationForm";
-import TASalary from '../TransactionAppointForm/TASalaryForm';
+import AppointEduData from "../TransactionAppointForm/AppointEduData";
+// import TASalary from '../TransactionAppointForm/TASalaryForm';
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -29,8 +29,10 @@ const config = require("../config.json");
 const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [mode, setMode] = useState("read");
+    const [mode2, setMode2] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null);
+    const [isCode2, setCode2] = useState(null);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isSearchVal, setSearchVal] = useState("");
@@ -39,9 +41,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [getAppointStatus, setgetAppointStatus] = useState([]);
     const [isFileData, setFileData] = useState([])
 
-    const EditPage = (mode, code) => {
+    const EditPage = (mode, code ) => {
         setCode(code);
         setMode(mode);
+        // setCode2(code2);
+        // setMode2(mode2);
     };
 
     useEffect(() => {
@@ -94,12 +98,12 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Education",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TAEducationForm?userId=${data.Sequence_no}`} >
+                    {/* <Link to={`/TAEducationForm?userId=${data.Sequence_no}`} >
                     <LibraryBooksIcon className="List_ico" />
-                    </Link>
-                    {/* <Link onClick={() => EditPage("EditEdu", data?.Sequence_no)} >
-                        <LibraryBooksIcon className="List_ico" />
                     </Link> */}
+                    <Link onClick={() => EditPage("EditEdu", data?.Sequence_no)} >
+                        <LibraryBooksIcon className="List_ico" />
+                    </Link>
                 </Space>
             ),
         },
@@ -435,8 +439,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             )}
                             {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditEdu" && <TAEducationFrom cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
+                            {/* {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />} */}
 
                         </div>
                     </div>
