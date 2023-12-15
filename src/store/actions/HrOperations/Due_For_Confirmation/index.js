@@ -47,15 +47,16 @@ import baseUrl from '../../../../config.json'
 // }
 
 export const PostConfirmationPayload = (data) => async () => {
-    const response = await fetch(`${baseUrl.baseUrl}/reports/ServiceLengthReport`, {
+    const response = await fetch(`${baseUrl.baseUrl}/reports/RDLC_Due_Confirmations`, {
       method: "POST",
       headers: {
         accessToken: "Bareer " + localStorage.getItem("access_token"),
         "Content-Type": "application/json",
-      },
+    },
+      
       body: JSON.stringify({
-        "Servicefrom": data?.Servicefrom,
-        "Serviceto": data?.Serviceto,
+        "FromDate": data?.FromDate,
+        "ToDate": data?.ToDate,
       }),
     });
     const res = await response.json();
