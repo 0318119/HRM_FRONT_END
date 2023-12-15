@@ -55,11 +55,6 @@ export const GetAccessControlData = (params) => async (dispatch) => {
 
 export const GetMenuDir = (body) => async (dispatch) => {
   try {
-    dispatch({
-      type: GET_Access_Control_DATA_START,
-      payload: true,
-      loading: true,
-    });
     const response = await fetch(
       `${baseUrl.baseUrl}/accessmenus/getMenusUserAccessHave`,
       {
@@ -69,42 +64,21 @@ export const GetMenuDir = (body) => async (dispatch) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "Emp_code": body
+          Emp_code: body
         })
       }
     );
     if (response.status === 200) {
       const res = await response.json();
-      dispatch({
-        type: GET_Access_Control_DATA_SINGLE,
-        payload: [{ res }],
-        loading: false,
-      });
-    } else {
-      const res = await response.json();
-      dispatch({
-        type: GET_Access_Control_DATA_END,
-        payload: [{ res }],
-        loading: false,
-      });
+      return res
     }
   } catch (error) {
-    dispatch({
-      type: GET_Access_Control_DATA_END,
-      payload: false,
-      loading: false,
-    });
     console.log(error);
   }
 };
 
 export const GetAllMenus = () => async (dispatch) => {
   try {
-    dispatch({
-      type: GET_Access_Control_DATA_START,
-      payload: true,
-      loading: true,
-    });
     const response = await fetch(
       `${baseUrl.baseUrl}/accessmenus/getAllMenus`,
       {
@@ -117,38 +91,16 @@ export const GetAllMenus = () => async (dispatch) => {
     );
     if (response.status === 200) {
       const res = await response.json();
-      dispatch({
-        type: GET_ALL_MENUS,
-        payload: [res],
-        loading: false,
-      });
-    } else {
-      const res = await response.json();
-      dispatch({
-        type: GET_Access_Control_DATA_END,
-        payload: [{ res }],
-        loading: false,
-      });
-    }
+      return res       
+    } 
   } catch (error) {
-    dispatch({
-      type: GET_Access_Control_DATA_END,
-      payload: false,
-      loading: false,
-    });
     console.log(error);
   }
 };
 
 
 export const AddUserAccessMenus = (body) => async (dispatch) => {
-  console.log(body,'root')
   try {
-    dispatch({
-      type: GET_Access_Control_DATA_START,
-      payload: true,
-      loading: true,
-    });
     const response = await fetch(
       `${baseUrl.baseUrl}/accessmenus/AddUserAccessMenus`,
       {
@@ -158,35 +110,43 @@ export const AddUserAccessMenus = (body) => async (dispatch) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user_code: localStorage.getItem('Emp_code'),
-          menu_code: body,
+          user_code: body.Emp_code,
+          menu_code: body.menu_code,
         })
       }
     );
     if (response.status === 200) {
       const res = await response.json();
-      dispatch({
-        type: GET_Access_Control_DATA_SINGLE,
-        payload: [{ res }],
-        loading: false,
-      });
-    } else {
-      const res = await response.json();
-      dispatch({
-        type: GET_Access_Control_DATA_END,
-        payload: [{ res }],
-        loading: false,
-      });
-    }
+      return res;
+    } 
   } catch (error) {
-    dispatch({
-      type: GET_Access_Control_DATA_END,
-      payload: false,
-      loading: false,
-    });
     console.log(error);
   }
 };
 
+
+export const UserGetCurrnetData = (body) => async (dispatch) => {
+  try {
+    const response = await fetch(
+      `${baseUrl.baseUrl}/allemployee/GetEmpNameAndLoginId`,
+      {
+        method: "POST",
+        headers: {
+          accessToken: "Bareer " + localStorage.getItem("access_token"),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Emp_code: body,
+        })
+      }
+    );
+    if (response.status === 200) {
+      const res = await response.json();
+      return res
+    } 
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 

@@ -60,6 +60,7 @@ import Red_New_Appointment_Report from "./reducers/HrOperations/New_Appointment_
 import Red_Confirmation from "./reducers/HrOperations/Master_Maintaince/Confirmation"
 import Red_Access_Control from "./reducers/Addministration/UserProfile/Access_Control/index"
 import Red_Forget_Password from "./reducers/LoginScreen/ForgetPassword/index";
+import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold";
 
 const reducers = combineReducers({
   Transition_family,
@@ -126,7 +127,8 @@ const reducers = combineReducers({
   Red_New_Appointment_Report,
   Red_Confirmation,
   Red_Access_Control,
-  Red_Forget_Password
+  Red_Forget_Password,
+  SalaryOnHold
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

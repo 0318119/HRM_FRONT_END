@@ -114,6 +114,7 @@ import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
 import VerifyOTP from '../LoginScreens/ForgetPassword/verifyOtp';
 import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
+import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 
 
 
@@ -227,6 +228,7 @@ const routing = () => {
         <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
         <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
         <Route path="/payroll/report/taxReport" element={<TaxReport />} />
+        <Route path="/payroll/report/SalaryOnHold" element={<SalaryOnHold />} />
         <Route path="/Earnings" element={<Earnings />} />
         <Route path="/JV_Codes" element={<JV_Code />} />
         <Route path="IncomeTax_Columns" element={<Income_Tax />} />
