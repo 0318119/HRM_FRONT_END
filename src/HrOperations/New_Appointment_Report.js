@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import * as Red_New_Appointment_Report_Action from '../store/actions/HrOperations/New_Appointment_Report'
+import * as Red_New_Appointment_Report_Action from '../store/actions/HrOperations/New_Appointment_Report/index'
 import { FormInput } from '../components/basic/input/formInput';
 import Header from "../components/Includes/Header";
 import { PrimaryButton, SimpleButton } from '../components/basic/button';
@@ -10,7 +10,7 @@ import { Document, Page, Text, View, PDFViewer, Image, StyleSheet, pdf } from '@
 import { saveAs } from 'file-saver';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import logoUrl from "../../src/Assets/Images/logo-mesh-final-logo-01-1-1024x303.webp"
+import LogoUrl from "../../src/Assets/Images/download.png"
 import Item from 'antd/es/list/Item';
 
 function New_Appointment_Report({
@@ -46,7 +46,7 @@ function New_Appointment_Report({
       const isValid = await AppointmentSchema.validate(data);
       if (isValid) {
         const result = await PostAppointmentPayload(data);
-        console.log( result, 'result');
+        console.log(result, 'result');
         if (result?.success) {
           setAppointmentData(result?.data || []);
           setFormSubmitted(true);
@@ -68,38 +68,46 @@ function New_Appointment_Report({
   const checkPdf =
     <Document >
       <Page size="A4">
-        <View>
-          <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
-            NEW APPOINTEES REPORT
-          </Text>
+        <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
+            <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
+              NEW APPOINTEES REPORT
+            </Text>
+            
+            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+              DATED
+            </Text>
+          </View>
+    
           {isAppointmentData?.map((item, index) => (
             <>
-              <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
+              <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '10', fontWeight: 'bold', margin: "20px 0" }}>
                 Department :   {item.department}
               </Text>
 
               <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Code</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Name</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Designation</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>GG</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Date Of Appointment</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Supervisor</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>CC</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Location</Text>
-                <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Base City</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Code</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Name</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Designation</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>GG</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Date Of Appointment</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Supervisor</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>CC</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Location</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Base City</Text>
               </View>
-              {item?.employees?.map((item) =>
-                <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpName ? item?.EmpName : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Designation ? item?.Designation : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.GG ? item?.GG : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.CC ? item?.CC : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Location ? item?.Location : null}</Text>
-                  <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
+              {item?.employees?.map((item, index) =>
+                <View key={index} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#000000', alignItems: 'center', height: 24 }}>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpName ? item?.EmpName : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Designation ? item?.Designation : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.GG ? item?.GG : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.CC ? item?.CC : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Location ? item?.Location : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
                 </View>
               )}
             </>
@@ -110,7 +118,7 @@ function New_Appointment_Report({
 
   const handleDownload = async () => {
     try {
-      const pdfBlob = await pdf([checkPdf]).toBlob();
+      const pdfBlob = await pdf(checkPdf).toBlob();
       saveAs(pdfBlob, 'generated.pdf');
     } catch (error) {
       console.error('Error downloading PDF:', error);
@@ -151,14 +159,6 @@ function New_Appointment_Report({
           </div>
         </div>
 
-        {/* {isFormSubmitted && (
-          <div className="row">
-            <div className="col-lg-12 d-flex justify-content-end">
-            onClick={PDFDATA}
-              <PrimaryButton  title="Download" disabled={isLoading} />
-            </div>
-          </div>
-        )}*/}
 
 
         {/* DON'T REMOVE THIS PDF BELOW CODE FROM HERE..... */}
@@ -221,5 +221,7 @@ function mapStateToProps({ Red_New_Appointment_Report }) {
   return { Red_New_Appointment_Report };
 }
 
-export default connect(mapStateToProps, Red_New_Appointment_Report_Action)(New_Appointment_Report);
+export default connect(mapStateToProps, {
+  PostAppointmentPayload: Red_New_Appointment_Report_Action.PostAppointmentPayload,
+})(New_Appointment_Report);
 

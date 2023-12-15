@@ -1,17 +1,16 @@
 import baseUrl from '../../../../config.json'
 
 
-export const PostAppointmentPayload = (data) => async () => {
-    // console.log(data, 'data')
-    const response = await fetch(`${baseUrl.baseUrl}/reports/New_Appointment_Report`, {
+export const PostDueRetirementPayload = (data) => async () => {
+    console.log(data, 'data')
+    const response = await fetch(`${baseUrl.baseUrl}/reports/RetirementDueReport`, {
       method: "POST",
       headers: {
         accessToken: "Bareer " + localStorage.getItem("access_token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "FromDate": data?.FromDate,
-        "ToDate": data?.ToDate,
+        "from_date": data?.from_date,
       }),
     });
     const res = await response.json();
