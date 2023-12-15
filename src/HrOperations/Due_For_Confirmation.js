@@ -15,7 +15,6 @@ import Item from 'antd/es/list/Item';
 
 function Due_For_Confirmation({
   Red_Due_For_Confirmation,
-  //   GetAllAppoint,
   PostConfirmationPayload,
 }) {
   const [isLoading, setLoading] = useState(false);
@@ -41,6 +40,7 @@ function Due_For_Confirmation({
     resolver: yupResolver(Due_For_ConfirmationSchema),
   });
 
+
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -48,14 +48,9 @@ function Due_For_Confirmation({
       if (isValid) {
         const result = await PostConfirmationPayload(data);
         if (result?.success) {
-          message.success('PDF is created, Wait PDf is under downloading...');
-          setFormSubmitted(true)
-          setTimeout(() => {
-            setAppointmentData(result?.data);
-          }, 2000);
-          setTimeout(() => {
-            handleDownload()
-          }, 3000);
+          message.success('PDF is created, Wait PDF is under downloading...');
+          setFormSubmitted(true);
+          setAppointmentData(result?.data); // Set the appointment data immediately
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -66,33 +61,29 @@ function Due_For_Confirmation({
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (isFormSubmitted) {
+      handleDownload();
+    }
+  }, [isFormSubmitted]);
+
   const PdfData =
     (<Document>
       <Page size="A4">
         <View>
-          {/* <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-            <Image src={LogoUrl} style={{ textAlign:'right' , width: "80px", height: '30px', backgroundColor: 'yellow' }} />
-            <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
-            Due For Confirmation Report
-            </Text>
+          <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
+              <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: "20px 0" }}>
+                Due For Confirmation Report
+              </Text>
 
-            <Text style={{ textAlign: 'right' , fontSize: 12, fontWeight: 'bold' }}>
-              DATED
-            </Text> */}
-            <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-            <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
-            <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: "20px 0" }}>
-            Due For Confirmation Report
-            </Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+                DATED
+              </Text>
+            </View>
+          </View>
 
-            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-              DATED
-            </Text>
-          </View>
-          </View>
-          
           <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
             <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Emp Code</Text>
             <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Emp Name</Text>
@@ -116,7 +107,7 @@ function Due_For_Confirmation({
                 <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Desig_name ? item?.Desig_name : null}</Text>
                 <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Dept_name ? item?.Dept_name : null}</Text>
 
-                
+
               </View>
             );
           })}
@@ -129,7 +120,6 @@ function Due_For_Confirmation({
       // Ensure isAppointmentData is not empty before generating the PDF
       if (isAppointmentData.length === 0) {
         message.error('No data available for PDF.');
-        console.log("isAppointmentData",isAppointmentData)
         return;
       }
 
@@ -139,16 +129,6 @@ function Due_For_Confirmation({
       console.error('Error downloading PDF:', error);
     }
   };
-
-
-
-
-  useEffect(() => {
-    //   GetAllAppoint();
-  }, []);
-
-
-
 
   return (
     <>
@@ -191,7 +171,7 @@ function mapStateToProps({ Red_Due_For_Confirmation }) {
   return { Red_Due_For_Confirmation };
 }
 
-// export default connect(mapStateToProps, Red_Due_For_Confirmation_Action)(Due_For_Confirmation);
+
 export default connect(mapStateToProps, {
   PostConfirmationPayload: Red_Due_For_Confirmation_Action.PostConfirmationPayload,
 })(Due_For_Confirmation);
