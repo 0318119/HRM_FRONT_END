@@ -1,20 +1,26 @@
 {
   "files": {
-    "main.css": "/static/css/main.ffb99878.css",
-    "main.js": "/static/js/main.dde1d29c.js",
+    "main.css": "/static/css/main.b2e9f1ab.css",
+    "main.js": "/static/js/main.017d0386.js",
     "static/js/787.8b0d663b.chunk.js": "/static/js/787.8b0d663b.chunk.js",
+    "static/media/primeicons.svg": "/static/media/primeicons.e1441b135b3ca9ad643c.svg",
+    "static/media/Inter-italic.var.woff2?v=3.19": "/static/media/Inter-italic.var.30807be7abc48ba8c73c.woff2",
+    "static/media/Inter-roman.var.woff2?v=3.19": "/static/media/Inter-roman.var.ba4caefcdf5b36b438db.woff2",
+    "static/media/primeicons.eot": "/static/media/primeicons.d44157bdfa026dc877af.eot",
+    "static/media/primeicons.woff": "/static/media/primeicons.10d3152104f2208ac82a.woff",
+    "static/media/primeicons.ttf": "/static/media/primeicons.ea5358601d0a3fd6670b.ttf",
+    "static/media/primeicons.woff2": "/static/media/primeicons.78172950b335ccdb94e2.woff2",
     "static/media/logoMish.png": "/static/media/logoMish.c9ef6531ba2775ab2f5c.png",
     "static/media/logo.webp": "/static/media/logo.f654e30c926610c5936a.webp",
-    "static/media/logo-mesh-final-logo-01-1-1024x303.webp": "/static/media/logo-mesh-final-logo-01-1-1024x303.014b64146e0f017cff80.webp",
     "static/media/profile.png": "/static/media/profile.12e8b6b41b67f25baa4b.png",
     "static/media/bg_login.webp": "/static/media/bg_login.6add476baf8be3821d71.webp",
     "index.html": "/index.html",
-    "main.ffb99878.css.map": "/static/css/main.ffb99878.css.map",
-    "main.dde1d29c.js.map": "/static/js/main.dde1d29c.js.map",
+    "main.b2e9f1ab.css.map": "/static/css/main.b2e9f1ab.css.map",
+    "main.017d0386.js.map": "/static/js/main.017d0386.js.map",
     "787.8b0d663b.chunk.js.map": "/static/js/787.8b0d663b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ffb99878.css",
-    "static/js/main.dde1d29c.js"
+    "static/css/main.b2e9f1ab.css",
+    "static/js/main.017d0386.js"
   ]
 }

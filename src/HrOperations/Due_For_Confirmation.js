@@ -117,7 +117,6 @@ function Due_For_Confirmation({
 
   const handleDownload = async () => {
     try {
-      // Ensure isAppointmentData is not empty before generating the PDF
       if (isAppointmentData.length === 0) {
         message.error('No data available for PDF.');
         return;

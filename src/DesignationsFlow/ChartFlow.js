@@ -38,10 +38,12 @@ export default function ChartFlow() {
             return [...prevArrays, ...currentArray];
           };
           setChartData(combineArrays(response?.data, isChartData));
+          // setChartData();
         } 
-        else if (response?.data?.length == 0 && response?.success) {
-            message.error("No data available")
-        } else {
+        // else if (response?.data?.length == 0 && response?.success) {
+        //     message.error("No data available")
+        // } 
+        else {
             message.error(response?.message || response?.messsage)
         }
       }).catch((error) => {
