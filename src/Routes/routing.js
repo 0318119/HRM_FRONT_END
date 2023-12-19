@@ -124,6 +124,7 @@ import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
 import ConfirmatioWaiting from '../Master_Maintaince/Waiting/ConfirmatioWaiting'
 import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
+import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 
 
 
@@ -218,6 +219,13 @@ const routing = () => {
         <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access />} />
         <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
         <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
+        <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
+        <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
+
+
+
+
+
 
         {/* payroll */}
         <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
@@ -251,8 +259,8 @@ const routing = () => {
         <Route path="/Bank" element={<Bank />} />
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
         <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
-        <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
+       
+
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
         {/* PAY SLIP ============================================================== */}
