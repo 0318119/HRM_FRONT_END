@@ -216,7 +216,7 @@ export const GET_MANUAL_LEAVE_POSTING_DATA_END = "GET_MANUAL_LEAVE_POSTING_DATA_
 export const GET_EMP_DATA = "GET_EMP_DATA";
 export const GET_LEAVE_TYPE_DATA = "GET_LEAVE_TYPE_DATA";
 export const SET_EMP_BALANCE_DAYS = "SET_EMP_BALANCE_DAYS";
-export const APPLIED_EMP_DAYS_DATA  = "APPLIED_EMP_DAYS_DATA";
+export const APPLIED_EMP_DAYS_DATA = "APPLIED_EMP_DAYS_DATA";
 export const GET_MY_LEAVE_EMP_APPLICATION = "GET_MY_LEAVE_EMP_APPLICATION";
 
 
@@ -335,5 +335,12 @@ export const GET_Retirement_Due_Report_DATA = "GET_Retirement_Due_Report_DATA";
 export const GET_Retirement_Due_Report_START = "GET_Retirement_Due_Report_START";
 export const GET_Retirement_Due_Report_END = "GET_Retirement_Due_Report_END";
 
+
+// HR APPOINTMENT SALARY FORM //
+
+export const GET_SALARY_DATA = "GET_SALARY_DATA";
+export const GET_SALARY_START = "GET_SALARY_START";
+export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
+export const GET_SALARY_END = "GET_SALARY_END";
 
 

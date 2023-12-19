@@ -10,17 +10,18 @@ import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import { TAPersonalSchema } from './schema';
 import { message, Table } from 'antd';
 import baseUrl from '../config.json'
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 
 
 function TASalaryForm2({ cancel, mode, isCode, page }) {
 
-
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
+    const [getInfo, setInfo] = useState([])
     const [isLoading, setLoading] = useState(false)
+    const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
     const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
     const [EmployeeCategory, setEmployeeCategory] = useState([])
     const [LeaveCategory, setLeaveCategory] = useState([])
@@ -34,6 +35,8 @@ function TASalaryForm2({ cancel, mode, isCode, page }) {
     const [Location, setLocation] = useState([])
     const [Religion, setReligion] = useState([])
     const [Supervisor, setSupervisor] = useState([])
+    const [AllowanceData, setAllowanceData] = useState([])
+    const [getInfoErr, setInfoErr] = useState(false)
     const [getEmpCodeErr, setEmpCodeErr] = message.useMessage();
     const [EmpCategoryDataErr, setEmpCategoryDataErr] = message.useMessage();
     const [leaveCatErr, setleaveCatErr] = message.useMessage();
@@ -46,341 +49,250 @@ function TASalaryForm2({ cancel, mode, isCode, page }) {
     const [EducationCodeErr, setEducationCodeErr] = message.useMessage();
     const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
     const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
+    const [loader, setloader] = useState(false)
+    const [postAllownces, setpostAllownces] = useState([])
+    const [GetEmployeeSalary, setGetEmployeeSalary] = useState([])
+    const [GetEmployeeSalaryErr, setGetEmployeeSalaryErr] = useState(false)
+    var get_refresh_token = localStorage.getItem("refresh");
+    const [AllowanceErr, setAllowanceErr] = useState(false)
+    const search = useLocation().search
+    const navigate = useNavigate()
+    const [formErr, setformErr] = useState(false)
+    const [total, settotal] = useState(0)
+    var userId = new URLSearchParams(search).get('userId')
+
     const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
     const currentDate = new Date();
     const EditBack = () => {
         cancel('read')
     }
 
-    async function getEmpTypeCodeData() {
+    const showAlert = (message, type) => {
+        setformErr({
+          message: message,
+          type: type,
+        })
+      }
 
-        await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
+    async function getInfoCall() {
+        await fetch(`${baseUrl['baseUrl']}/appointments/GetAppointmentsBySeqNo/${userId}`, {
             method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
+        }).then((response) => {
+            return response.json()
         }).then(async (response) => {
-            if (response.success) {
-                setgetEmpTypeCode(response.data)
+            if (response.messsage == "unauthorized") {
+                await fetch(`${baseUrl['baseUrl']}/appointments/GetAppointmentsBySeqNo/${userId}`, {
+                    method: "GET",
+                    headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
+                }).then(response => {
+                    return response.json()
+                }).then(response => {
+                    if (response.messsage == "timeout error") { navigate('/') }
+                    else {
+                        localStorage.setItem("refresh", response.referesh_token);
+                        localStorage.setItem("access_token", response.access_token);
+                        setInfo(response.data[0][0])
+                    }
+                }).catch((error) => {
+                    setInfoErr(error.message)
+                })
             }
             else {
-                getEmpCodeErr.open({
-                    type: 'error',
-                    content: "in Emp type code :" + response?.message || response?.messsage,
-                });
+                setInfo(response.data[0][0])
             }
         }).catch((error) => {
-            getEmpCodeErr.open({
-                type: 'error',
-                content: "in Emp type code :" + error?.message || error?.messsage,
-            });
-        });
+            setInfoErr(error.message)
+        })
     }
-    async function EmpCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
+
+    async function AllowanceCall() {
+        await fetch(`${baseUrl['baseUrl']}/allownces/GetAllAllownces`, {
             method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
+        }).then((response) => {
+            return response.json()
         }).then(async (response) => {
-            if (response?.success) {
-                setEmployeeCategory(response?.data)
+            if (response.messsage == "unauthorized") {
+                await fetch(`${baseUrl['baseUrl']}/allownces/GetAllAllownces`, {
+                    method: "GET",
+                    headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
+                }).then(response => {
+                    return response.json()
+                }).then(response => {
+                    if (response.messsage == "timeout error") { navigate('/') }
+                    else {
+                        localStorage.setItem("refresh", response.referesh_token);
+                        localStorage.setItem("access_token", response.access_token);
+                        setAllowanceData(response.data[0])
+                        var temp = []
+                        if (response.data[0].length > 0) {
+                            for (var i of response.data[0]) {
+                                var obj = {
+                                    "code": i.allowance_code,
+                                    "amount": 0
+                                }
+                                temp.push(obj)
+                                setpostAllownces([...temp])
+                            }
+                        }
+                    }
+                }).catch((error) => {
+                    setAllowanceErr(error.message)
+                })
             }
             else {
-                EmpCategoryDataErr.open({
-                    type: 'error',
-                    content: "in Emp Category :" + response?.message || response?.messsage,
-                });
+                setAllowanceData(response.data[0])
+                var temp = []
+                if (response.data[0].length > 0) {
+                    for (var i of response.data[0]) {
+                        var obj = {
+                            "code": i.allowance_code,
+                            "amount": 0
+                        }
+                        temp.push(obj)
+                        setpostAllownces([...temp])
+                    }
+                }
             }
         }).catch((error) => {
-            EmpCategoryDataErr.open({
-                type: 'error',
-                content: "in Emp Category :" + error?.message || error?.messsage,
-            });
-        });
+            setAllowanceErr(error.message)
+        })
     }
-    async function LeaveCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
+
+    const CreateAllowance = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setBtnEnaledAndDisabled(true);
+        await fetch(`${baseUrl['baseUrl']}/employee_salary/InsertEmployeeSalary`, {
+            method: "POST",
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "Sequence_no": userId,
+                "FirstTimeFlag": GetEmployeeSalary.length > 0 ? "Y" : "N",
+                "allownces": postAllownces
+            })
+        }).then((response) => {
+            return response.json()
         }).then(async (response) => {
-            if (response.success) {
-                setLeaveCategory(response.data)
+            if (response.messsage == "unauthorized") {
+                await fetch(`${baseUrl['baseUrl']}/employee_salary/InsertEmployeeSalary`, {
+                    method: "POST",
+                    headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
+                    body: JSON.stringify({
+                        "Sequence_no": userId,
+                        "FirstTimeFlag": GetEmployeeSalary.length > 0 ? "Y" : "N",
+                        "allownces": postAllownces
+                    })
+                }).then(response => {
+                    return response.json()
+                }).then(response => {
+                    if (response.messsage == "timeout error") { navigate('/') }
+                    else {
+                        localStorage.setItem("refresh", response.referesh_token);
+                        localStorage.setItem("access_token", response.access_token);
+                        if (response.success == "success") {
+                            setLoading(false);
+                            setBtnEnaledAndDisabled(false);
+                            showAlert(response.success, "success")
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000)
+                        } else {
+                            setLoading(false);
+                            setBtnEnaledAndDisabled(false);
+                            showAlert(response?.messsage, "warning")
+                        }
+                    }
+                }).catch((errs) => {
+                    setLoading(false);
+                    setBtnEnaledAndDisabled(false);
+                    showAlert(errs.messsage, "warning")
+                })
             }
             else {
-                leaveCatErr.open({
-                    type: 'error',
-                    content: "in Leave Category :" + response?.message || response?.messsage,
-                });
+                if (response.success == "success") {
+                    setLoading(false);
+                    setBtnEnaledAndDisabled(false);
+                    showAlert(response.success, "success")
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000)
+                } else {
+                    setLoading(false);
+                    setBtnEnaledAndDisabled(false);
+                    showAlert(response?.messsage, "warning")
+                }
             }
-        }).catch((error) => {
-            leaveCatErr.open({
-                type: 'error',
-                content: "in Leave Category :" + error?.message || error?.messsage,
-            });
-        });
+        }).catch((errs) => {
+            setLoading(false);
+            setBtnEnaledAndDisabled(false);
+            showAlert(errs.messsage, "warning")
+        })
     }
-    async function PayCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayrollWOP`, {
+
+    async function GetEmployeeSalaryCall() {
+        setloader(true)
+        await fetch(`${baseUrl['baseUrl']}/employee_salary/GetEmployeeSalaryBySeqNo/${userId}`, {
             method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
+        }).then((response) => {
+            return response.json()
         }).then(async (response) => {
-            if (response.success) {
-                setPayCategory(response.data)
+            if (response.messsage == "unauthorized") {
+                await fetch(`${baseUrl['baseUrl']}/employee_salary/GetEmployeeSalaryBySeqNo/${userId}`, {
+                    method: "GET",
+                    headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
+                }).then(response => {
+                    return response.json()
+                }).then(response => {
+                    if (response.messsage == "timeout error") { navigate('/') }
+                    else {
+                        localStorage.setItem("refresh", response.referesh_token);
+                        localStorage.setItem("access_token", response.access_token);
+                        setGetEmployeeSalary(response.data[0])
+                        if (response && response.data && response.data.length > 0 && response.data[0] && response.data[0].length > 0) {
+                            var temp = 0
+                            var temparray = []
+                            for (var i of response.data[0]) {
+                                temp = temp + parseInt(i?.Amount)
+                                temparray.push({ "code": i?.Allowance_code, "amount": i?.Amount })
+                            }
+                            setpostAllownces(temparray)
+                            settotal(temp)
+                        }
+                        setloader(false)
+                    }
+                }).catch((error) => {
+                    setGetEmployeeSalaryErr(error.message)
+                })
             }
             else {
-                PayCategoryErr.open({
-                    type: 'error',
-                    content: "in Pay Category :" + response?.message || response?.messsage,
-                });
+                setGetEmployeeSalary(response.data[0])
+                if (response && response.data && response.data.length > 0 && response.data[0] && response.data[0].length > 0) {
+                    var temp = 0
+                    var temparray = []
+                    for (var i of response.data[0]) {
+                        temp = temp + parseInt(i?.Amount)
+                        temparray.push({ "code": i?.Allowance_code, "amount": i?.Amount })
+                    }
+                    setpostAllownces(temparray)
+                    settotal(temp)
+                }
+                setloader(false)
             }
         }).catch((error) => {
-            PayCategoryErr.open({
-                type: 'error',
-                content: "in Pay Category :" + error?.message || error?.messsage,
-            });
-        });
+            setGetEmployeeSalaryErr(error.message)
+            setloader(false)
+        })
     }
-    async function ShiftsData() {
-        await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShiftWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setShifts(response.data)
-            }
-            else {
-                ShiftsCodeErr.open({
-                    type: 'error',
-                    content: "in Shifts Error :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ShiftsCodeErr.open({
-                type: 'error',
-                content: "in Shifts Error :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function DesignationData() {
-        await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignationWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setDesignation(response.data)
-            }
-            else {
-                DesignationCodeErr.open({
-                    type: 'error',
-                    content: "in Designation :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            DesignationCodeErr.open({
-                type: 'error',
-                content: "in Designation :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function CostCenterData() {
-        await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setCostCenter(response.data)
-            }
-            else {
-                CostCenterCodeErr.open({
-                    type: 'error',
-                    content: "in Cost centre :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            CostCenterCodeErr.open({
-                type: 'error',
-                content: "in Cost centre :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SectionData() {
-        await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setSection(response.data)
-            }
-            else {
-                SectionCodeErr.open({
-                    type: 'error',
-                    content: "in Section :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SectionCodeErr.open({
-                type: 'error',
-                content: "in Section :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function GradeData() {
-        await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setGrade(response.data)
-            }
-            else {
-                GradeCodeErr.open({
-                    type: 'error',
-                    content: "in Grade Code :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            GradeCodeErr.open({
-                type: 'error',
-                content: "in Grade Code :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function EducationData() {
-        await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setEducation(response.data)
-            }
-            else {
-                EducationCodeErr.open({
-                    type: 'error',
-                    content: "in Education :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            EducationCodeErr.open({
-                type: 'error',
-                content: "in Education :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function LocationData() {
-        await fetch(`${baseUrl.baseUrl}/location_code/GetLocationsWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setLocation(response.data)
-            }
-            else {
-                LocationCodeErr.open({
-                    type: 'error',
-                    content: "in Location :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            LocationCodeErr.open({
-                type: 'error',
-                content: "in Location :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function ReligionData() {
-        await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setReligion(response.data)
-            }
-            else {
-                ReligionCodeErr.open({
-                    type: 'error',
-                    content: "in Religion :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ReligionCodeErr.open({
-                type: 'error',
-                content: "in Religion :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SupervisorData() {
-        await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                console.log(response.data, 'sdff');
-                setSupervisor(response.data)
-            }
-            else {
-                SupervisorCodeErr.open({
-                    type: 'error',
-                    content: "in Supervisor :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SupervisorCodeErr.open({
-                type: 'error',
-                content: "in Supervisor :" + error?.message || error?.messsage,
-            });
-        });
-    }
+
 
     useEffect(() => {
-        getEmpTypeCodeData()
-        EmpCategoryData()
-        LeaveCategoryData()
-        PayCategoryData()
-        ShiftsData()
-        DesignationData()
-        CostCenterData()
-        SectionData()
-        GradeData()
-        EducationData()
-        LocationData()
-        ReligionData()
-        SupervisorData()
+        getInfoCall()
+        AllowanceCall()
+        CreateAllowance()
+        GetEmployeeSalaryCall()
     }, [])
     // ==================================================
     const submitForm = async (data) => {
@@ -520,9 +432,9 @@ function TASalaryForm2({ cancel, mode, isCode, page }) {
                                 <h4 className="text-dark">Salary Break Up</h4>
                                 <hr />
                                 <div className="form-group formBoxCountry">
-                                <Table
-                                    columns={columns}
-                                />
+                                    <Table
+                                        columns={columns}
+                                    />
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />

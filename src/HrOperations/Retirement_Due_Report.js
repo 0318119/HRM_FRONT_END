@@ -70,7 +70,7 @@ function Retirement_Due_Report({
                             NEW APPOINTEES REPORT
                         </Text>
                         <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-                            DATED
+                            DATED 27 Nov 2023
                         </Text>
                     </View>
                     <>
