@@ -21,6 +21,13 @@ function New_Appointment_Report({
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_New_Appointment_Report?.data?.[0]?.res?.data
   const [isAppointmentData, setAppointmentData] = useState([])
+  const [currentDate, setCurrentDate] = useState('')
+
+  useEffect(() =>{
+    const currentDate = new Date().toISOString().split('T')[0];
+    setCurrentDate(currentDate);
+  },[])
+ 
 
   const AppointmentSchema = yup.object().shape({
     FromDate: yup.string().required('Please Select From Date'),
@@ -40,20 +47,39 @@ function New_Appointment_Report({
     resolver: yupResolver(AppointmentSchema),
   });
 
+  // const onSubmit = async (data) => {
+  //   setLoading(true);
+  //   try {
+  //     const isValid = await AppointmentSchema.validate(data);
+  //     if (isValid) {
+  //       const result = await PostAppointmentPayload(data);
+  //       console.log(result, 'result');
+  //       if (result?.success) {
+  //         setAppointmentData(result?.data || []);
+  //         setFormSubmitted(true);
+  //         message.success('PDF is created, Wait PDf is under downloading...');
+  //         setTimeout(() => {
+  //           handleDownload()
+  //         }, 2000);
+  //       } else {
+  //         message.error(result?.message || result?.messsage);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   setLoading(false);
+  // };
   const onSubmit = async (data) => {
     setLoading(true);
     try {
       const isValid = await AppointmentSchema.validate(data);
       if (isValid) {
         const result = await PostAppointmentPayload(data);
-        console.log(result, 'result');
         if (result?.success) {
-          setAppointmentData(result?.data || []);
+          message.success('PDF is created, Wait PDF is under downloading...');
           setFormSubmitted(true);
-          message.success('PDF is created, Wait PDf is under downloading...');
-          setTimeout(() => {
-            handleDownload()
-          }, 2000);
+          setAppointmentData(result?.data); // Set the appointment data immediately
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -64,6 +90,11 @@ function New_Appointment_Report({
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (isFormSubmitted) {
+      handleDownload();
+    }
+  }, [isFormSubmitted]);
 
   const checkPdf =
     <Document >
@@ -74,12 +105,12 @@ function New_Appointment_Report({
             <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
               NEW APPOINTEES REPORT
             </Text>
-            
+
             <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-              DATED
+              DATED: {currentDate}
             </Text>
           </View>
-    
+
           {isAppointmentData?.map((item, index) => (
             <>
               <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '10', fontWeight: 'bold', margin: "20px 0" }}>
