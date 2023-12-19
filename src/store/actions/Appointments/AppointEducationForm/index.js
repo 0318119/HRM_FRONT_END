@@ -11,6 +11,7 @@ import {
 import baseUrl from "../../../../config.json";
 
 export const GetEmployeeInfo = (params) => async (dispatch) => {
+    console.log(params, 'params')
     try {
         dispatch({
             type: GET_EDUCATIION_INFO_START,
@@ -176,7 +177,7 @@ export const GetGradeData = (params) => async (dispatch) => {
 
 
 export const SaveFormEdu = (body) => async (dispatch) => {
-    
+    console.log(body, 'body')
     const response = await fetch(`${baseUrl.baseUrl}/education_code/InsertTranEducation`, {
         method: "POST",
         headers: {
@@ -242,5 +243,32 @@ export const GetEducationSavedData = (params) => async (dispatch) => {
     }
 };
 
+
+
+// export const UpdateEducation = (body) => async (dispatch) => {
+
+// const response = await fetch(`${baseUrl.baseUrl}/education_code/InsertTranEducation`, {
+//         method: "POST",
+//         headers: {
+//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             "Sequence_no": body?.Sequence_no,
+//             "EduCode": body?.EduCode,
+//             "EduYear": body?.EduYear,
+//             "EduGrade": body?.EduGrade,
+//             "Topflag": body?.Topflag,
+//             "institutecode": body?.institutecode
+
+//         })
+//     });
+//     const res = await response.json();
+//     if (res?.success) {
+//         return res;
+//     } else {
+//         return res;
+//     }
+// }
 
 

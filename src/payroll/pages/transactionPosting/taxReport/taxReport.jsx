@@ -344,19 +344,19 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                         <View style={styles.containerAppand}>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Actual Salary</Text>
-                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_actual_income}</Text>
+                                <Text style={styles.cellone_second}>{isPdfData[0]?.total_actual_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Projected Salary</Text>
-                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_projected_income}</Text>
+                                <Text style={styles.cellone_second}>{isPdfData[0]?.total_projected_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Total Salary</Text>
-                                <Text style={styles.cellone_second}>{DataFromApi[0]?.total_total_income}</Text>
+                                <Text style={styles.cellone_second}>{isPdfData[0]?.total_total_income}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Exemptions</Text>
-                                <Text style={styles.cellone_second}>{DataFromApi[0]?.Exempt_Income}</Text>
+                                <Text style={styles.cellone_second}>{isPdfData[0]?.Exempt_Income}</Text>
                             </View>
                             {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_second}>Zakat Exemptions</Text>
@@ -372,33 +372,33 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                         <View style={styles.containerAppand}>
                             {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Claim/Tax Adjustment</Text>
-                                <Text style={styles.cellone_Third_second}>{DataFromApi[0]?.Original_tax_donation}</Text>
-                                <Text style={styles.cellone_Third_third}>{DataFromApi[0]?.tax_donation}</Text>
+                                <Text style={styles.cellone_Third_second}>{isPdfData[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>{isPdfData[0]?.tax_donation}</Text>
                             </View> */}
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Investment</Text>
-                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_investment}</Text>
-                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_investment}</Text>
+                                <Text style={styles.cellone_Third_second}>${isPdfData[0]?.Original_tax_investment}</Text>
+                                <Text style={styles.cellone_Third_third}>${isPdfData[0]?.tax_investment}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Markup on Loan</Text>
-                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_markup_loan}</Text>
-                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_markup_loan}</Text>
+                                <Text style={styles.cellone_Third_second}>${isPdfData[0]?.Original_tax_markup_loan}</Text>
+                                <Text style={styles.cellone_Third_third}>${isPdfData[0]?.tax_markup_loan}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Donation</Text>
-                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_donation}</Text>
-                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_donation}</Text>
+                                <Text style={styles.cellone_Third_second}>${isPdfData[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>${isPdfData[0]?.tax_donation}</Text>
                             </View>
                             <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Tax Annuity</Text>
-                                <Text style={styles.cellone_Third_second}>${DataFromApi[0]?.Original_tax_annuity_scheme}</Text>
-                                <Text style={styles.cellone_Third_third}>${DataFromApi[0]?.tax_annuity_scheme}</Text>
+                                <Text style={styles.cellone_Third_second}>${isPdfData[0]?.Original_tax_annuity_scheme}</Text>
+                                <Text style={styles.cellone_Third_third}>${isPdfData[0]?.tax_annuity_scheme}</Text>
                             </View>
                             {/* <View style={styles.container_Second}>
                                 <Text style={styles.cellone_Third_one}>Advance Tax</Text>
-                                <Text style={styles.cellone_Third_second}>{DataFromApi[0]?.Original_tax_donation}</Text>
-                                <Text style={styles.cellone_Third_third}>{DataFromApi[0]?.tax_donation}</Text>
+                                <Text style={styles.cellone_Third_second}>{isPdfData[0]?.Original_tax_donation}</Text>
+                                <Text style={styles.cellone_Third_third}>{isPdfData[0]?.tax_donation}</Text>
                             </View> */}
                         </View>
                     </View>
@@ -413,7 +413,7 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                             <Text style={styles.cellfive}>Regular Amount</Text>
                             <Text style={styles.cellsix}>Avg Tax Rate</Text>
                         </View>
-                        {DataFromApi.map(data =>
+                        {isPdfData.map(data =>
                             <View style={styles.row} key={1}>
                                 <Text style={styles.cellone}>{data?.Allowance_name}</Text>
                                 <Text style={styles.celltwo}>{data?.Actual_Income}</Text>

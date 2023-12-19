@@ -15,31 +15,29 @@ import baseUrl from '../config.json'
 
 
 
-const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, cancel }) => {
+const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, cancel, GetAppointStatusCall }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const [isCode2, setCode2] = useState(null)
+    const [isCode2, setCode2] = useState(isCode)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode2, setMode2] = useState('read')
     const EditPage = (mode2, code2) => {
         setCode2(code2)
         setMode2(mode2)
     }
-    // const EditBack = () => {
-    //     cancel('read')
-    // }
+    const EditBack = () => {
+        cancel('read')
+    }
 
-    console.log(Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]?.[0], 'Red_AppointEducation')
 
 useEffect(() => {
     GetEducationSavedData(isCode)
 }, [])
 
 
-    console.log(isCode, 'isCode2')
-
+    // console.log(Red_AppointEducation, 'Red_AppointEducation')
 
 const columns = [
         {
@@ -75,104 +73,103 @@ const columns = [
                     <button onClick={() => EditPage('Edit', data?.Edu_Code)} className="editBtn">
                         <FaEdit />
                     </button>
-                    {/* <Popconfirm
+                    <Popconfirm
                         title="Delete the Department"
-                        description="Are you sure to delete the Department?"
+                        description="Are you sure to delete the Education?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            // handleConfirmDelete(data?.Position_Code)
+                            handleConfirmDelete(data?.Sr_No)
                         }}
                     >
                         <button className="deleteBtn">
                             <MdDeleteOutline />
                         </button>
-                    </Popconfirm> */}
+                    </Popconfirm>
                 </Space>
             ),
         },
     ];
 
-    // useEffect(() => {
-    //     if (isSearchVal == '') {
-    //         GetEducationSavedData({
-    //             pageSize: pageSize,
-    //             pageNo: page,
-    //             search: null
-    //         })
-    //     } else {
-    //         GetEducationSavedData({
-    //             pageSize: pageSize,
-    //             pageNo: 1,
-    //             search: isSearchVal
-    //         })
-    //     }
-    // }, [page, isSearchVal])
+    useEffect(() => {
+        if (isSearchVal == '') {
+            GetEducationSavedData({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null
+            })
+        } else {
+            GetEducationSavedData({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal
+            })
+        }
+    }, [page, isSearchVal])
 
 
-    // async function handleConfirmDelete(id) {
-    //     await fetch(
-    //         `${baseUrl.baseUrl}/Positions/DeletePositions`, {
-    //         method: "POST",
-    //         headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-    //         body: JSON.stringify({
-    //             "Position_Code": id,
-    //         }),
-    //     }
-    //     ).then((response) => {
-    //         return response.json();
-    //     }).then(async (response) => {
-    //         if (response.success) {
-    //             messageApi.open({
-    //                 type: 'success',
-    //                 content: "You have successfully deleted",
-    //             });
-    //             setTimeout(() => {
-    //                 messageApi.destroy()
-    //                 GetPositionData({
-    //                     pageSize: pageSize,
-    //                     pageNo: page,
-    //                     search: null
-    //                 })
-    //             }, 5000);
-    //         }
-    //         else {
-    //             messageApi.open({
-    //                 type: 'error',
-    //                 content: response?.message || response?.messsage,
-    //             });
-    //             setTimeout(() => {
-    //                 messageApi.destroy()
-    //             }, 5000);
-    //         }
-    //     }).catch((error) => {
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: error?.message || error?.messsage,
-    //         });
-    //         setTimeout(() => {
-    //             messageApi.destroy()
-    //         }, 5000);
-    //     });
-    // }
-
+    async function handleConfirmDelete(id) {
+        await fetch(
+            `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
+            method: "POST",
+            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "Sr_No": id,
+            }),
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                messageApi.open({
+                    type: 'success',
+                    content: "You have successfully deleted",
+                });
+                setTimeout(() => {
+                    messageApi.destroy()
+                    GetEducationSavedData({
+                        pageSize: pageSize,
+                        pageNo: page,
+                        search: null
+                    })
+                }, 3000);
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+                setTimeout(() => {
+                    messageApi.destroy()
+                }, 5000);
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+            setTimeout(() => {
+                messageApi.destroy()
+            }, 5000);
+        });
+    }
     return (
         <>
             {contextHolder}
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-12 maringClass">
+                    <div className="col-lg-12 maringClass2">
 
                         {mode2 == "read" && (
                             <>
                                 <div className="PositionsFlexBox">
-                                    <h4 className="text-dark">Appointment Education List</h4>
+                                    <h4 className="text-dark">Education Information</h4>
                                     <div className="PositionssearchBox">
                                         <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
                                         />
                                         <Button title="Create" onClick={() => setMode2("create")} />
-                                        {/* <Button title="Create" onClick={() => setMode2("create")} /> */}
+                                        <Button title="Cancel" onClick={EditBack} />
                                     </div>
                                 </div>
                                 <hr />
@@ -184,24 +181,23 @@ const columns = [
                                 <Table
                                     columns={columns}
                                     loading={Red_AppointEducation?.loading}
-                                    // dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]?.[0]}
-                                    // scroll={{ x: 10 }}
-                                    // pagination={{
-                                    //     defaultCurrent: page,
-                                    //     total: Red_AppointEducation?.data?.[0]?.res?.data3,
-                                    //     onChange: (p) => {
-                                    //         setPage(p);
-                                    //     },
-                                    //     pageSize: pageSize,
-                                    // }}
-
+                                    dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]}
+                                    scroll={{ x: 10 }}
+                                    pagination={{
+                                        defaultCurrent: page,
+                                        total: Red_AppointEducation?.data?.[0]?.res?.data3,
+                                        onChange: (p) => {
+                                            setPage(p);
+                                        },
+                                        pageSize: pageSize,
+                                    }}
                                 />
                             )}
                             {mode2 == "create" && (
-                                <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={null} page={page} />
+                                <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAEducationForm2 cancel={setMode2} isCode2={isCode2} page={page} />
+                                <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                         </div>
 

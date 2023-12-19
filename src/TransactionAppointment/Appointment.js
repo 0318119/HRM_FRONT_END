@@ -6,7 +6,8 @@ import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
-// import TASalary from '../TransactionAppointForm/TASalaryForm';
+import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
+import AppointExpData from "../TransactionAppointForm/AppointExpData";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -111,12 +112,12 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Salary",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
-                        <LocalAtmIcon className="List_ico" />
-                    </Link>
-                    {/* <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
+                    {/* <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
                         <LocalAtmIcon className="List_ico" />
                     </Link> */}
+                    <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
+                        <LocalAtmIcon className="List_ico" />
+                    </Link>
                 </Space>
             ),
         },
@@ -124,10 +125,13 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Exprience",
             render: (data) => (
                 <Space size="middle">
-                    <Link
+                    {/* <Link
                         to={`/TAExprienceForm?userId=${data.Sequence_no}`}
                     >
-                        <BusinessCenterIcon className="List_ico" />{" "}
+                        <BusinessCenterIcon className="List_ico" />
+                    </Link> */}
+                    <Link onClick={() => EditPage("EditExprience", data?.Sequence_no)} >
+                        <BusinessCenterIcon className="List_ico" />
                     </Link>
                 </Space>
             ),
@@ -440,7 +444,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
-                            {/* {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />} */}
+                            {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
 
                         </div>
                     </div>
