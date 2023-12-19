@@ -61,8 +61,9 @@ import Red_Confirmation from "./reducers/HrOperations/Master_Maintaince/Confirma
 import Red_Access_Control from "./reducers/Addministration/UserProfile/Access_Control/index"
 import Red_Forget_Password from "./reducers/LoginScreen/ForgetPassword/index";
 import Red_Due_For_Confirmation from "./reducers/HrOperations/Due_For_Confirmation/index"
-import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold";
+import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold/index";
 import Red_AppointEducation from './reducers/Appointments/AppointEducation/index'
+import Red_AppointExprience from "./reducers/Appointments/AppointmentExprience/index";
 
 const reducers = combineReducers({
   Transition_family,

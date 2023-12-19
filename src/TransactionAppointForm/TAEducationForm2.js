@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from "../components/Includes/Header";
 import Country from "./Country.json"
-import { Space, Table, Tag, Tooltip  } from 'antd';
+import { Space, Table, Tag, Tooltip } from 'antd';
 import { Popconfirm } from 'antd';
 import { MdDeleteOutline } from 'react-icons/md';
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
@@ -23,31 +23,33 @@ import baseUrl from '../config.json'
 
 function TAEducationForm2({
     cancel,
-    mode,
-    isCode,
+    mode2,
+    isCode2,
     page,
     Red_AppointEducation,
     GetEmployeeInfo,
     GetEducationData,
     GetInstituteData,
     GetGradeData,
-    // GetEducationSavedData,
-    SaveFormEdu
+    GetEducationSavedData,
+    SaveFormEdu,
+    UpdateEducation
 }) {
 
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
+    const [isUpdateBtn, setUpdatebtn] = useState(false)
     // const [pageSize, setPageSize] = useState(10);
     const [isLoading, setLoading] = useState(false)
-    const [isSavedEdu , setSavedEdu] = useState(false)
-    
+    const [isSavedEdu, setSavedEdu] = useState(false)
+
 
     const EditBack = () => {
         cancel('read')
     }
 
-    const AppointEducationSchema = yup.object().shape({        
+    const AppointEducationSchema = yup.object().shape({
         EduCode: yup.string().required("EduCode is required"),
         EduYear: yup.string().required("EduYear is required"),
         EduGrade: yup.string().required("EduGrade is required"),
@@ -57,24 +59,59 @@ function TAEducationForm2({
     });
 
     useEffect(() => {
-        GetEmployeeInfo(isCode)
+        GetEmployeeInfo(isCode2)
         GetEducationData()
         GetInstituteData()
         GetGradeData()
-        // GetEducationSavedData(isCode)
+        GetEducationSavedData(isCode2)
     }, [])
-
-
+  
+    // console.log(Red_AppointEducation, 'check')
 
     useEffect(() => {
-        reset(
-            {
+        if (mode2 == "create") {
+            reset({
                 Emp_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Emp_name,
                 Desig_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Desig_name,
                 Dept_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Dept_name,
-            },
-        )
+            });
+        } else {
+            reset(
+                {
+                    Emp_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                    Desig_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                    Dept_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Dept_name,
+                },
+            )
+        }
+
     }, [Red_AppointEducation?.data?.[0]?.res?.data?.[0]])
+
+
+    // useEffect(() => {
+    //     if (mode2 == "create") {
+    //         reset({
+    //             srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
+    //             EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
+    //             EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
+    //             EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
+    //             Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
+    //             institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
+    //         });
+    //     } else {
+    //         reset(
+    //             {
+    //                 srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
+    //                 EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
+    //                 EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
+    //                 EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
+    //                 Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
+    //                 institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
+    //             },
+    //         )
+    //     }
+
+    // }, [Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]])
 
     const EduData = Red_AppointEducation?.getEdu?.[0]?.res?.data
     const InsData = Red_AppointEducation?.getInsti?.[0]?.res?.data
@@ -87,13 +124,14 @@ function TAEducationForm2({
             const isValid = await AppointEducationSchema.validate(data);
             if (isValid) {
                 SaveForm(data)
+                // console.log(data , 'data')
             }
         } catch (error) {
             console.error(error);
         }
     };
 
-    console.log(Red_AppointEducation, 'Red_AppointEducation')
+    // console.log(Red_AppointEducation, 'Red_AppointEducation')
 
     const {
         control,
@@ -110,7 +148,7 @@ function TAEducationForm2({
     const SaveForm = async (data) => {
         try {
             const response = await SaveFormEdu({
-                Sequence_no:  isCode,
+                Sequence_no: isCode2,
                 EduCode: data?.EduCode,
                 EduYear: data?.EduYear,
                 EduGrade: data?.EduGrade,
@@ -121,7 +159,8 @@ function TAEducationForm2({
             if (response && response.success) {
                 messageApi.success("Save Education Information");
                 setTimeout(() => {
-                    setSavedEdu(true)
+                    cancel('read')
+                    setSavedEdu(true)   
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to Save Information';
@@ -133,154 +172,10 @@ function TAEducationForm2({
         }
     };
 
-    const columns = [
-        {
-            title: 'Education',
-            dataIndex: 'Edu_Code',
-            key: 'Edu_Code',
-        },
-        {
-            title: 'Institute',
-            dataIndex: 'institute_code',
-            key: 'institute_code',
-        },
-        {
-            title: 'Top Flag',
-            dataIndex: 'Top_flag',
-            key: 'Top_flag',
-        },
-        {
-            title: 'Year',
-            dataIndex: 'Edu_Year',
-            key: 'Edu_Year',
-        },
-        {
-            title: 'Grade',
-            dataIndex: 'Edu_Grade',
-            key: 'Edu_Grade',
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (data) => (
-                <Space size="middle">
-                    <button  className="editBtn">
-                        <FaEdit />
-                    </button>
-                    <Popconfirm
-                        title="Delete the Education"
-                        description="Are you sure to delete the Education?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => {
-                            handleConfirmDelete(data?.Sr_No)
-                        }}
-                    >
-                        <button className="deleteBtn"><MdDeleteOutline /></button>
-                    </Popconfirm>
-                </Space>
-            ),
-        },
-    ];
 
-   
-async function handleConfirmDelete(id) {
-        await fetch(
-            `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
-            method: "POST",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-            body: JSON.stringify({
-                "Sr_No": id,
-            }),
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                messageApi.open({
-                    type: 'success',
-                    content: "You have successfully deleted",
-                });
-                setTimeout(() => {
-                    messageApi.destroy()
-                    // GetPositionData({
-                    //     pageSize: pageSize,
-                    //     pageNo: page,
-                    //     search: null
-                    // })
-                }, 5000);
-            }
-            else {
-                messageApi.open({
-                    type: 'error',
-                    content: response?.message || response?.messsage,
-                });
-                setTimeout(() => {
-                    messageApi.destroy()
-                }, 5000);
-            }
-        }).catch((error) => {
-            messageApi.open({
-                type: 'error',
-                content: error?.message || error?.messsage,
-            });
-            setTimeout(() => {
-                messageApi.destroy()
-            }, 5000);
-        });
-    }
 
-// async function UpdateEducation(id) {
-//         await fetch(
-//             `${baseUrl.baseUrl}/eduation_code/UpdateTranEducation`, {
-//             method: "POST",
-//             headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-//             body: JSON.stringify({
-//                 "srNo": getUpdateId,
-//                 "EduCode": EduCodeDataVal,
-//                 "EduYear": eduYear,
-//                 "EduGrade": eduGrade,
-//                 "Topflag": topFlag,
-//                 "institutecode": getinstituteVal
-//             }),
-//         }
-//         ).then((response) => {
-//             return response.json();
-//         }).then(async (response) => {
-//             if (response.success) {
-//                 messageApi.open({
-//                     type: 'success',
-//                     content: "You have successfully deleted",
-//                 });
-//                 setTimeout(() => {
-//                     messageApi.destroy()
-//                     // GetPositionData({
-//                     //     pageSize: pageSize,
-//                     //     pageNo: page,
-//                     //     search: null
-//                     // })
-//                 }, 5000);
-//             }
-//             else {
-//                 messageApi.open({
-//                     type: 'error',
-//                     content: response?.message || response?.messsage,
-//                 });
-//                 setTimeout(() => {
-//                     messageApi.destroy()
-//                 }, 5000);
-//             }
-//         }).catch((error) => {
-//             messageApi.open({
-//                 type: 'error',
-//                 content: error?.message || error?.messsage,
-//             });
-//             setTimeout(() => {
-//                 messageApi.destroy()
-//             }, 5000);
-//         });
-//     }   
-    
+
+
 
     return (
         <>
@@ -405,25 +300,14 @@ async function handleConfirmDelete(id) {
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    {isUpdateBtn ?
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Update" />
+                                        :
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    }
                                 </div>
                             </form>
-                           {/* {isSavedEdu ? */}
-                              <Table 
-                                columns={columns}
-                                loading={Red_AppointEducation?.loading}
-                                dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]}
-                                scroll={{ x: 10 }}
-                                // pagination={{
-                                //     defaultCurrent: page,
-                                //     total: Red_AppointEducation?.data?.[0]?.res?.data3,
-                                //     onChange: (p) => {
-                                //         // setPage(p);
-                                //     },
-                                //     // pageSize: pageSize,
-                                // }}
-                            /> 
-                            {/* : "" } */}
+
                         </div>
                     </div>
                 </div>
