@@ -20,7 +20,13 @@ function Due_For_Confirmation({
   const [isLoading, setLoading] = useState(false);
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_Due_For_Confirmation?.data?.[0]?.res?.data
-  const [isAppointmentData, setAppointmentData] = useState([])
+  const [isDueCOnfirmationData, setDueCOnfirmationData] = useState([])
+  const [currentDate, setCurrentDate] = useState('');
+
+  useEffect(() => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    setCurrentDate(currentDate);
+  }, []);
 
   const Due_For_ConfirmationSchema = yup.object().shape({
     FromDate: yup.string().required('Please Select From Date'),
@@ -50,7 +56,7 @@ function Due_For_Confirmation({
         if (result?.success) {
           message.success('PDF is created, Wait PDF is under downloading...');
           setFormSubmitted(true);
-          setAppointmentData(result?.data); // Set the appointment data immediately
+          setDueCOnfirmationData(result?.data); // Set the DueCOnfirmation data immediately
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -78,8 +84,8 @@ function Due_For_Confirmation({
                 Due For Confirmation Report
               </Text>
 
-              <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
-                DATED
+              <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
+                DATED: {currentDate}
               </Text>
             </View>
           </View>
@@ -95,7 +101,7 @@ function Due_For_Confirmation({
             <Text style={{ width: '50%', textAlign: 'center', fontSize: '11', fontWeight: 'bold' }}>Department</Text>
           </View>
 
-          {isAppointmentData?.flatMap((item, index) => {
+          {isDueCOnfirmationData?.flatMap((item, index) => {
             return (
               <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
                 <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Emp_id ? item?.Emp_id : null}</Text>
@@ -117,8 +123,8 @@ function Due_For_Confirmation({
 
   const handleDownload = async () => {
     try {
-      // Ensure isAppointmentData is not empty before generating the PDF
-      if (isAppointmentData.length === 0) {
+      // Ensure isDueCOnfirmationData is not empty before generating the PDF
+      if (isDueCOnfirmationData.length === 0) {
         message.error('No data available for PDF.');
         return;
       }

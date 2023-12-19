@@ -18,6 +18,7 @@ function Retirement_Due_Report({
     PostDueRetirementPayload,
 }) {
     const [isLoading, setLoading] = useState(false);
+    const [isFormSubmitted, setFormSubmitted] = useState(false);
     const empData = Red_Retirement_Due_Report?.data?.[0]?.res?.data
     const [isRetirementDueData, setRetirementDueData] = useState([])
 
@@ -36,28 +37,55 @@ function Retirement_Due_Report({
         mode: 'onChange',
         resolver: yupResolver(RetirementDueSchema),
     });
+    // const onSubmit = async (data) => {
+    //     setLoading(true);
+    //     try {
+    //         const isValid = await RetirementDueSchema.validate(data);
+    //         if (isValid) {
+    //             const result = await PostDueRetirementPayload(data);
+    //             console.log(result, 'result');
+    //             if (result?.success) {
+    //                 setRetirementDueData(result?.data || []);
+    //                 message.success('PDF is created, Wait PDf is under downloading...');
+    //                 setTimeout(() => {
+    //                     handleDownload()
+    //                 }, 2000);
+    //             } else {
+    //                 message.error(result?.message || result?.messsage);
+    //             }
+    //         }
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    //     setLoading(false);
+    // };
+
+
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const isValid = await RetirementDueSchema.validate(data);
-            if (isValid) {
-                const result = await PostDueRetirementPayload(data);
-                console.log(result, 'result');
-                if (result?.success) {
-                    setRetirementDueData(result?.data || []);
-                    message.success('PDF is created, Wait PDf is under downloading...');
-                    setTimeout(() => {
-                        handleDownload()
-                    }, 2000);
-                } else {
-                    message.error(result?.message || result?.messsage);
-                }
+          const isValid = await RetirementDueSchema.validate(data);
+          if (isValid) {
+            const result = await PostDueRetirementPayload(data);
+            if (result?.success) {
+              message.success('PDF is created, Wait PDF is under downloading...');
+              setFormSubmitted(true);
+              setRetirementDueData(result?.data); // Set the appointment data immediately
+            } else {
+              message.error(result?.message || result?.messsage);
             }
+          }
         } catch (error) {
-            console.error(error);
+          console.error(error);
         }
         setLoading(false);
-    };
+      };
+      
+      useEffect(() => {
+        if (isFormSubmitted) {
+          handleDownload();
+        }
+      }, [isFormSubmitted]);
 
 
     const checkPdf =
@@ -208,4 +236,6 @@ function mapStateToProps({ Red_Retirement_Due_Report }) {
 }
 
 export default connect(mapStateToProps, Red_Retirement_Due_Report_Action)(Retirement_Due_Report);
+
+
 

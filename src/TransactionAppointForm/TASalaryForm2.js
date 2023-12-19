@@ -458,10 +458,13 @@ function TASalaryForm2({ cancel, mode, isCode, page }) {
             value: "AllowanceCode"
 
         },
+ 
+        
         {
             title: "Allowance",
             value: "Allowance"
         },
+        
         {
             title: "Amount",
             value: "Amount"
@@ -506,6 +509,8 @@ function TASalaryForm2({ cancel, mode, isCode, page }) {
                                         errors={errors}
                                         control={control}
                                     />
+                                    
+                                        
                                     <FormInput
                                         label={'Department'}
                                         placeholder={'Department'}

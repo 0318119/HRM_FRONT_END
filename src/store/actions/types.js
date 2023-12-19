@@ -335,5 +335,12 @@ export const GET_Retirement_Due_Report_DATA = "GET_Retirement_Due_Report_DATA";
 export const GET_Retirement_Due_Report_START = "GET_Retirement_Due_Report_START";
 export const GET_Retirement_Due_Report_END = "GET_Retirement_Due_Report_END";
 
+// HR SETUP ===========> ServiceLengthReport =========
+
+export const GET_ServiceLengthReport_DATA = "GET_ServiceLengthReport_DATA";
+export const GET_ServiceLengthReport_DATA_START = "GET_ServiceLengthReport_DATA_START";
+export const GET_ServiceLengthReport_DATA_SINGLE = "GET_ServiceLengthReport_DATA_SINGLE";
+export const GET_ServiceLengthReport_DATA_END = "GET_ServiceLengthReport_DATA_END";
+
 
 
