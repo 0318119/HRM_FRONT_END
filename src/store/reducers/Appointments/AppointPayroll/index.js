@@ -1,55 +1,55 @@
 import {
-    GET_EXPRIENCE_INFO_DATA,
-    GET_EXPRIENCE_INFO_START,
-    GET_EXPRIENCE_EMP_DATA,
-    GET_EXPRIENCE_EMPlOYER_DATA,
-    GET_EXPRIENCE_INFO_SINGLE,
-    GET_EXPRIENCE_INFO_END
-    
+    GET_APPOIN_PAYROLL_DATA,
+    GET_APPOIN_PAYROLL_INFO_DATA,
+    GET_APPOIN_PAYROLL_DATA_START,
+    GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA,
+    GET_APPOIN_PAYROLL_DATA_SINGLE,
+    GET_APPOIN_PAYROLL_DATA_END
+
 } from '../../../actions/types'
 
 
 
 const initState = {
     data: [],
-    getEmp: [],
-    getEmployer: [],
+    GetInfo: [],
+    GetBB: [],
     dataSingle: [],
     loading: false,
 }
 
-const Red_AppointExprience = (state = initState, action) => {
+const Red_AppointPayroll = (state = initState, action) => {
     switch (action.type) {
-        case GET_EXPRIENCE_INFO_START:
+        case GET_APPOIN_PAYROLL_DATA_START:
             return {
                 ...state,
                 loading: action.loading,
             };
-        case GET_EXPRIENCE_INFO_DATA:
+        case GET_APPOIN_PAYROLL_DATA:
             return {
                 ...state,
                 data: action.payload,
                 loading: action.loading,
             };
-        case GET_EXPRIENCE_EMPlOYER_DATA:
+        case GET_APPOIN_PAYROLL_INFO_DATA:
             return {
                 ...state,
-                getEmployer: action.payload,
+                GetInfo: action.payload,
                 loading: action.loading,
             };
-        case GET_EXPRIENCE_EMP_DATA:
+        case GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA:
             return {
                 ...state,
-                getEmp: action.payload,
+                GetBB: action.payload,
                 loading: action.loading,
             };
-        case GET_EXPRIENCE_INFO_SINGLE:
+        case GET_APPOIN_PAYROLL_DATA_SINGLE:
             return {
                 ...state,
                 dataSingle: action.payload,
                 loading: action.loading,
             };
-        case GET_EXPRIENCE_INFO_END:
+        case GET_APPOIN_PAYROLL_DATA_END:
             return {
                 ...state,
                 data: action.payload,
@@ -60,4 +60,4 @@ const Red_AppointExprience = (state = initState, action) => {
     }
 };
 
-export default Red_AppointExprience
+export default Red_AppointPayroll

@@ -67,7 +67,6 @@ function TAEducationForm2({
         // GetEducationSavedData(isCode)
     }, [])
   
-    // console.log(Red_AppointEducation, 'check')
 
     useEffect(() => {
         if (mode2 == "create") {
@@ -125,14 +124,12 @@ function TAEducationForm2({
             const isValid = await AppointEducationSchema.validate(data);
             if (isValid) {
                 SaveForm(data)
-                // console.log(data , 'data')
             }
         } catch (error) {
             console.error(error);
         }
     };
 
-    // console.log(Red_AppointEducation, 'Red_AppointEducation')
 
     const {
         control,

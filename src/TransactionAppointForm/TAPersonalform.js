@@ -550,11 +550,11 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
           setLoading(false)
           setTimeout(() => {
           cancel("read");
-          GetAppointStatusCall({
-            pageSize: pageSize,
-            pageNo: page,
-            search: null,
-          });
+          // GetAppointStatusCall({
+          //   pageSize: pageSize,
+          //   pageNo: page,
+          //   search: null,
+          // });
         }, 3000);
       }
       else {

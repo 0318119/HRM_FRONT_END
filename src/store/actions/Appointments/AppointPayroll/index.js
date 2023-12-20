@@ -1,59 +1,20 @@
 import {
-    GET_EXPRIENCE_INFO_DATA,
-    GET_EXPRIENCE_INFO_START,
-    GET_EXPRIENCE_INFO_SINGLE,
-    GET_EXPRIENCE_EMPlOYER_DATA,
-    GET_EXPRIENCE_EMP_DATA,
-    GET_EXPRIENCE_INFO_END
+    GET_APPOIN_PAYROLL_DATA,
+    GET_APPOIN_PAYROLL_DATA_START,
+    GET_APPOIN_PAYROLL_INFO_DATA,
+    GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA,
+    GET_APPOIN_PAYROLL_DATA_SINGLE,
+    GET_APPOIN_PAYROLL_DATA_END,
+} from "../../types.js";
 
-} from "../../types";
 import baseUrl from "../../../../config.json";
 
 
-export const GetEmployer = (params) => async (dispatch) => {
-    try {
-        dispatch({
-            type: GET_EXPRIENCE_INFO_START,
-            payload: true,
-            loading: true,
-        });
-        const response = await fetch(`${baseUrl.baseUrl}/employement_experience/GetTranExperienceByEmpCode/${params}`, {
-            method: "GET",
-            headers: {
-                accessToken: "Bareer " + localStorage.getItem("access_token"),
-                "Content-Type": "application/json",
-            },
-        });
-        if (response.status === 200) {
-            const res = await response.json();
-            dispatch({
-                type: GET_EXPRIENCE_EMP_DATA,
-                payload: [{ res }],
-                loading: false,
-            });
-        } else {
-            const res = await response.json();
-            dispatch({
-                type: GET_EXPRIENCE_INFO_END,
-                payload: [{ res }],
-                loading: false,
-            });
-        }
-
-    } catch (error) {
-        dispatch({
-            type: GET_EXPRIENCE_INFO_END,
-            payload: false,
-            loading: false,
-        });
-        console.log(error);
-    }
-};
 
 export const GetEmployeeInfo = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_EXPRIENCE_INFO_START,
+            type: GET_APPOIN_PAYROLL_DATA_START,
             payload: true,
             loading: true,
         });
@@ -67,14 +28,14 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_EXPRIENCE_INFO_DATA,
+                type: GET_APPOIN_PAYROLL_INFO_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_EXPRIENCE_INFO_END,
+                type: GET_APPOIN_PAYROLL_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -82,7 +43,7 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_EXPRIENCE_INFO_END,
+            type: GET_APPOIN_PAYROLL_DATA_END,
             payload: false,
             loading: false,
         });
@@ -91,14 +52,15 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
 };
 
 
-export const GetEmployeeCode = (params) => async (dispatch) => {
+
+export const GetModeOfPay = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_EXPRIENCE_INFO_START,
+            type: GET_APPOIN_PAYROLL_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/allemployer/GetAllEmployerWOP`, {
+        const response = await fetch(`${baseUrl.baseUrl}/payment_mode/GetPaymentMode`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -108,14 +70,14 @@ export const GetEmployeeCode = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_EXPRIENCE_EMPlOYER_DATA,
+                type: GET_APPOIN_PAYROLL_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_EXPRIENCE_INFO_END,
+                type: GET_APPOIN_PAYROLL_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -123,7 +85,7 @@ export const GetEmployeeCode = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_EXPRIENCE_INFO_END,
+            type: GET_APPOIN_PAYROLL_DATA_END,
             payload: false,
             loading: false,
         });
@@ -131,9 +93,51 @@ export const GetEmployeeCode = (params) => async (dispatch) => {
     }
 };
 
-export const SaveExpForm = (body) => async (dispatch) => {
+
+export const GetBankBranches = (params) => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_APPOIN_PAYROLL_DATA_START,
+            payload: true,
+            loading: true,
+        });
+        const response = await fetch(`${baseUrl.baseUrl}/banks/GetBankBranches`, {
+            method: "GET",
+            headers: {
+                accessToken: "Bareer " + localStorage.getItem("access_token"),
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.status === 200) {
+            const res = await response.json();
+            dispatch({
+                type: GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA,
+                payload: [{ res }],
+                loading: false,
+            });
+        } else {
+            const res = await response.json();
+            dispatch({
+                type: GET_APPOIN_PAYROLL_DATA_END,
+                payload: [{ res }],
+                loading: false,
+            });
+        }
+
+    } catch (error) {
+        dispatch({
+            type: GET_APPOIN_PAYROLL_DATA_END,
+            payload: false,
+            loading: false,
+        });
+        console.log(error);
+    }
+};
+
+
+export const SavePayForm = (body) => async (dispatch) => {
     console.log(body, 'body')
-    const response = await fetch(`${baseUrl.baseUrl}/employement_experience/CreateTranExperience`, {
+    const response = await fetch(`${baseUrl.baseUrl}/payroll/InsertPayroll`, {
         method: "POST",
         headers: {
             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -141,38 +145,22 @@ export const SaveExpForm = (body) => async (dispatch) => {
         },
         body: JSON.stringify({
             "Sequence_no": body?.Sequence_no,
-            "EmployerCode": body?.EmployerCode,
-            "designation": body?.designation,
-            "department": body?.department,
-            "Start_Date": body?.Start_Date,
-            "End_Date": body?.End_Date,
-            "SubmitFlag": body?.SubmitFlag
-        })
-    });
-    const res = await response.json();
-    if (res?.success) {
-        return res;
-    } else {
-        return res;
-    }
-}
-
-
-export const UpdatedExpForm = (body) => async (dispatch) => {
-    const response = await fetch(`${baseUrl.baseUrl}/employement_experience/UpdateTranExperience`, {
-        method: "POST",
-        headers: {
-            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            "id": body?.Sequence_no,
-            "EmployerCode": body?.EmployerCode,
-            "designation": body?.designation,
-            "department": body?.department,
-            "Start_Date": body?.Start_Date,
-            "End_Date": body?.End_Date,
-            "SubmitFlag": body?.SubmitFlag
+            "Mode_Of_Payment": body?.EmployerCode,
+            "Recreation_Club_Flag": body?.designation,
+            "Meal_Deduction_Flag": body?.department,
+            "Union_Flag": body?.Start_Date,
+            "Overtime_Flag": body?.End_Date,
+            "Incentive_Flag": body?.SubmitFlag,
+            "Bonus_Type": body?.SubmitFlag,
+            "SESSI_Flag": body?.SubmitFlag,
+            "EOBI_Flag": body?.SubmitFlag,
+            "SESSI_Number": body?.SubmitFlag,
+            "EOBI_Number": body?.SubmitFlag,
+            "Account_Type1": body?.SubmitFlag,
+            "Bank_Account_No1": body?.SubmitFlag,
+            "Branch_Code1": body?.SubmitFlag,
+            "Bank_Amount_1": body?.SubmitFlag,
+            "Bank_Percent_1": body?.SubmitFlag,
         })
     });
     const res = await response.json();

@@ -35,9 +35,9 @@ import GenerateLateArrival from '../HrOperations/GanerateLateArrival'
 import Resignation from '../HrOperations/Resignation';
 import Religion from '../HrOperations/Religion';
 import Locations from '../HrOperations/Locations';
-import MasterData_Sec from '../Master_Maintaince/MasterData_Sec'
-import MasterData_Leaves from '../Master_Maintaince/MasterData_Leaves';
-import MasterPersonal from '../Master_Maintaince/MasterPersonal'
+import Employee_List_Active from '../Master_Maintaince/Employee_List_Active'
+import Employee_List_InActive from '../Master_Maintaince/Employee_List_InActive';
+import Employee_Master from '../Master_Maintaince/Employee_Master'
 import Confirmation from '../Master_Maintaince/Confirmation';
 import Confirmation_Extensio from '../Master_Maintaince/Confirmation_Extensio';
 import Increment from '../Master_Maintaince/Increment'
@@ -177,9 +177,9 @@ const routing = () => {
         <Route path="/Resignation" element={<Resignation />} />
         <Route path="/Religion" element={<Religion />} />
         <Route path="/Locations" element={<Locations />} />
-        <Route path="/MasterData_Sec" element={<MasterData_Sec />} />
-        <Route path="/MasterData_Leaves" element={<MasterData_Leaves />} />
-        <Route path="/MasterPersonal" element={<MasterPersonal />} />
+        <Route path="/Employee_List_Active" element={<Employee_List_Active />} />
+        <Route path="/Employee_List_InActive" element={<Employee_List_InActive />} />
+        <Route path="/Employee_Master" element={<Employee_Master />} />
         <Route path="/Confirmation" element={<Confirmation />} />
         <Route path="/Increment" element={<Increment />} />
         <Route path="/Get_Attendance" element={<Get_Attendance />} />

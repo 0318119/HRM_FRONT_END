@@ -37,7 +37,7 @@ useEffect(() => {
 }, [])
 
 
-    // console.log(Red_AppointEducation, 'Red_AppointEducation')
+    console.log(Red_AppointEducation, 'Red_AppointEducation')
 
 const columns = [
         {
@@ -57,8 +57,8 @@ const columns = [
         },
         {
             title: 'Year',
-            dataIndex: 'Year',
-            key: 'Year',
+            dataIndex: 'Edu_Year',
+            key: 'Edu_Year',
         },
         {
             title: 'Grade',
@@ -74,7 +74,7 @@ const columns = [
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Department"
+                        title="Delete the Education"
                         description="Are you sure to delete the Education?"
                         okText="Yes"
                         cancelText="No"

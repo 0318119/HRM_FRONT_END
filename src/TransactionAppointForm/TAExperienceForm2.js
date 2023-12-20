@@ -6,15 +6,17 @@ import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import * as AppointExp_Actions from "../store/actions/Appointments/AppointmentExprience/index"
+import { connect } from "react-redux";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
-import { TAPersonalSchema } from './schema';
+import * as yup from "yup";
 import { message, Table } from 'antd';
 import baseUrl from '../config.json'
 import { Link } from "react-router-dom";
 
 
 
-function TAExperienceForm2({ cancel, mode, isCode, page }) {
+function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience, GetEmployeeInfo, GetEmployeeCode, SaveExpForm, GetEmployer }) {
 
 
     var get_access_token = localStorage.getItem("access_token");
@@ -24,39 +26,144 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
     const EditBack = () => {
         cancel('read')
     }
+    
+    const AppointExpSchema = yup.object().shape({
+        EmployerCode: yup.string().required("EmployerCode required"),
+        designation: yup.string().required("designation is required"),
+        department: yup.string().required("department is required"),
+        Start_Date: yup.string().required("Start_Date is required"),
+        End_Date: yup.string().required("End_Date is required"),
+        SubmitFlag: yup.string().required("SubmitFlag is required"),
 
-
-   
+    });
 
     // ==================================================
     const submitForm = async (data) => {
         try {
-            const isValid = await TAPersonalSchema.validate(data);
+            const isValid = await AppointExpSchema.validate(data);
             if (isValid) {
-                // POST_MASTER_PERSONAL_FORM(data)
+                SaveForm(data)
+                // console.log(data ,'data')
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+
+    // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0], 'Red_AppointExprience')
+
+
     const {
         control,
         formState: { errors },
         handleSubmit,
+        reset
     } = useForm({
         defaultValues: {
-            Emp_name: "",
-            Desig_name: "",
-            Dept_name: "",
-            Employer_Name: "",
-            start_Date: "",
-            End_Date: "",
-            IndustryFlag: "",
+            Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
+            designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.designation,
+            department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
+            Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
+            End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
+            SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
         },
         mode: "onChange",
-        resolver: yupResolver(TAPersonalSchema),
+        resolver: yupResolver(AppointExpSchema),
     });
 
+
+
+
+  
+
+    useEffect(() => {
+        GetEmployer(isCode2)
+        GetEmployeeInfo(isCode2)
+        GetEmployeeCode()
+    },[])
+
+    const Employers = Red_AppointExprience?.getEmployer?.[0]?.res?.data
+
+    useEffect(() => {
+        if (mode2 == "create") {
+            reset({
+                Emp_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                Desig_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                Dept_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Dept_name,
+            });
+        } else {
+            reset(
+                {
+                    Emp_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                    Desig_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                    Dept_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Dept_name,
+                },
+            )
+        }
+
+    }, [Red_AppointExprience?.data?.[0]?.res?.data?.[0]])
+
+    const EMPLOYEER = Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]
+    
+
+
+
+    useEffect(() => {
+        if (mode2 == "create") {
+            reset({
+                Employer_Code: "",
+                designation: "",
+                department: "",
+                Start_Date: "",
+                End_Date: "",
+                SubmitFlag: "",
+            });
+        } else {
+            reset(
+                {
+                    Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
+                    designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.designation,
+                    department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
+                    Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
+                    End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
+                    SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
+                },
+            )
+        }
+
+    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]])
+
+
+
+
+    const SaveForm = async (data) => {
+        try {
+            const response = await SaveExpForm({
+                Sequence_no: isCode2,
+                EmployerCode: data?.EmployerCode,
+                designation: data?.designation,
+                department: data?.department,
+                Start_Date: data?.Start_Date,
+                End_Date: data?.End_Date,
+                SubmitFlag: data?.SubmitFlag,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Save Exprience");
+                setTimeout(() => {
+                    cancel('read')
+                    // setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Save Exprience';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing Exprience:", error);
+            messageApi.error("An error occurred while Save Exprience");
+        }
+    };
 
 
 
@@ -110,19 +217,14 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
                                 <div className="form-group formBoxCountry">
                                     <FormSelect
                                         label={'Employer Name'}
-                                        placeholder='select Employer Name'
-                                        id="Employer_Name"
-                                        name="Employer_Name"
-                                        options={[
-                                            {
-                                                value: 'Y',
-                                                label: 'Yes',
-                                            },
-                                            {
-                                                value: "N",
-                                                label: 'No',
-                                            },
-                                        ]}
+                                        placeholder={'select Employer Name'}
+                                        id="EmployerCode"
+                                        name="EmployerCode"
+                                        options={Employers?.map((item,) => ({
+                                            value: item.Employer_Code,
+                                            label: item.Employer_Name,
+                                        })
+                                        )}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -130,8 +232,8 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
                                     <FormInput
                                         label={'Designation'}
                                         placeholder={'Designation'}
-                                        id="Desig_name"
-                                        name="Desig_name"
+                                        id="designation"
+                                        name="designation"
                                         type="text"
                                         showLabel={true}
                                         errors={errors}
@@ -140,8 +242,8 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
                                     <FormInput
                                         label={'Department'}
                                         placeholder={'Department'}
-                                        id="Dept_name"
-                                        name="Dept_name"
+                                        id="department"
+                                        name="department"
                                         type="text"
                                         showLabel={true}
                                         errors={errors}
@@ -150,8 +252,8 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
                                     <FormInput
                                         label={'Start Date'}
                                         placeholder={'Start Date'}
-                                        id="start_Date"
-                                        name="start_Date"
+                                        id="Start_Date"
+                                        name="Start_Date"
                                         type="Date"
                                         showLabel={true}
                                         errors={errors}
@@ -170,16 +272,16 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
                                     <FormSelect
                                         label={'Industry Flag'}
                                         placeholder='select Industry Flag'
-                                        id="IndustryFlag"
-                                        name="IndustryFlag"
+                                        id="SubmitFlag"
+                                        name="SubmitFlag"
                                         options={[
                                             {
-                                                value: 'M',
-                                                label: 'Married',
+                                                value: 'Y',
+                                                label: 'Yes',
                                             },
                                             {
                                                 value: "N",
-                                                label: 'Unmarried',
+                                                label: 'No',
                                             },
                                         ]}
                                         showLabel={true}
@@ -201,4 +303,7 @@ function TAExperienceForm2({ cancel, mode, isCode, page }) {
     );
 }
 
-export default TAExperienceForm2;
+function mapStateToProps({ Red_AppointExprience }) {
+    return { Red_AppointExprience };
+}
+export default connect(mapStateToProps, AppointExp_Actions)(TAExperienceForm2)
