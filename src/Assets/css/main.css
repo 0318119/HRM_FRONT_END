@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 
-h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,th,td,button,div{ 
-    font-family: 'Poppins', sans-serif;
-    outline: none;
-    text-decoration: none;
-    /* margin: 0px; */
-    /* border: none; */
+h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,button,div{ 
+    /* font-family: 'Poppins', sans-serif; */
+    /* outline: none; */
+    /* text-decoration: none; */
 }
 button,h1,h2,h3,h4,h5,h6{
     color: white;
@@ -19,17 +17,13 @@ button,h1,h2,h3,h4,h5,h6{
 } */
 ul,li{
     list-style: none;
-    /* padding: 0; */
-    /* margin: 0; */
 }
 span,strong{
     display: block;
 }
-body{
-    /* margin: 0px; */
-    /* padding: 0px; */
+/* body{
     overflow-x: clip !important;
-}
+} */
 
 .editBtn{
     background-color: transparent;

@@ -8,21 +8,19 @@ import baseUrl from '../config.json'
 import Header from '../components/Includes/Header';
 import { Flex, Spin } from 'antd';
 import { message } from 'antd';
+import { OrganizationChart } from 'primereact/organizationchart';
+
 
 
 
 
 export default function ChartFlow() {
-
   const [isChartData, setChartData] = useState([])
   const [user, setuser] = useState(localStorage.getItem('Emp_code'))
-  const [dynamicStates, setDynamicStates] = useState([]);
-  const [hasCode, setHasCode] = useState(true);
-  const [loading, setLoading] = useState(false)
 
-  const OrgData = async () => {
-    setLoading(true)
-    fetch(`${baseUrl.baseUrl}/COPY`, {
+  
+  const testData = async () => {
+    fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -38,105 +36,123 @@ export default function ChartFlow() {
             return [...prevArrays, ...currentArray];
           };
           setChartData(combineArrays(response?.data, isChartData));
-          // setChartData();
-        } 
-        // else if (response?.data?.length == 0 && response?.success) {
-        //     message.error("No data available")
-        // } 
+          console.log("if",response)
+        }else if(response?.data?.length == 0 && response?.success){
+          console.log("else",response)
+          message.error(`don't exits Employee against this - Emp_code ${user}`)
+        }
         else {
-            message.error(response?.message || response?.messsage)
+          message.error(response?.message || response?.messsage)
         }
       }).catch((error) => {
-            message.error(error?.message || error?.messsage)
-      }).finally(() => { setLoading(false) })
+        message.error(error?.message || error?.messsage)
+      })
+    // .finally(() => { setLoading(false) })
   }
 
-
-
-  const removeItemByKey = (keyToRemove) => {
-    setDynamicStates(prevStates => prevStates.filter(state => state.code !== keyToRemove));
-  };
-
   useEffect(() => {
-    OrgData()
+    if(user !== null){
+      testData()
+    }
   }, [user])
 
 
+  const ParentSupervisor = isChartData.find(data => data.Supervisor_Code == null)
+  const generateNestedData = (supervisor, chartData) => {
+    const topLevelData = {
+      name: supervisor?.Label,
+      designation: supervisor?.Desig_name,
+      image: false,
+      parent: "parent",
+      expanded: true,
+      Emp_code: supervisor?.Emp_code,
+      children: [],
+    };
+    topLevelData.children = chartData
+      .filter((firstChild) => supervisor?.Emp_code === firstChild?.Supervisor_Code)
+      .map((firstChild) => {
+        const firstLevel = {
+          ...firstChild,
+          children: [],
+        };
+        firstLevel.children = chartData
+          .filter((secondChild) => firstChild?.Emp_code === secondChild?.Supervisor_Code)
+          .map((secondChild) => {
+            const secondLevel = {
+              ...secondChild,
+              children: [],
+            };
+            secondLevel.children = chartData
+              .filter((thirdChild) => secondChild?.Emp_code === thirdChild?.Supervisor_Code)
+              .map((thirdChild) => {
+                const thirdLevel = {
+                  ...thirdChild,
+                  children: [],
+                };
+                thirdLevel.children = chartData
+                  .filter((fourthChild) => thirdChild?.Emp_code === fourthChild?.Supervisor_Code)
+                  .map((fourthChild) => {
+                    const fourthLevel = {
+                      ...fourthChild,
+                      children: [],
+                    };
+                    fourthLevel.children = chartData
+                      .filter((fifthChild) => fourthChild?.Emp_code === fifthChild?.Supervisor_Code)
+                      .map((fifthChild) => {
+                        const fifthLevel = {
+                          ...fifthChild,
+                          children: [],
+                        };
+                        fifthLevel.children = chartData
+                          .filter((sixChild) => fifthChild?.Emp_code === sixChild?.Supervisor_Code)
+                          .map((sixChild) => {
+                            const sixLevel = {
+                              ...sixChild,
+                              children: [],
+                            };
+                            return sixLevel;
+                          })
+                        return fifthLevel;
+                      });
+                    return fourthLevel;
+                  });
+                return thirdLevel;
+              });
+            return secondLevel;
+          });
+        return firstLevel;
+      });
+    return [topLevelData];
+  };
+
+  const data = generateNestedData(ParentSupervisor, isChartData);
+
+  const nodeTemplate = (node) => {
+    return (
+      <div id={node.Emp_code} className='childBox'>
+          <img src={User} alt="" />
+          <div>
+            <span>{node.name ? `${node.name.slice(0, 10)}...` : "" || node.Label ? `${node.Label.slice(0, 10)}...` : ""}</span>
+            <span>{node.designation ? `${node.designation.slice(0, 10)}...` : "" || node.Desig_name ? `${node.Desig_name.slice(0, 10)}...` : ""}</span>
+          </div>
+          <button onClick={(e) => { setuser(e.target.getAttribute("data-id")) }} data-id={node.Emp_code}>more</button>
+      </div>
+    );
+
+  };
 
   return (
     <>
-{console.log("isChartData",isChartData)}
       <div>
         <Header />
       </div>
-      {loading &&
+      {/* {loading &&
           <div className='orgLoader'>
             <Spin size="large" style={{ marginTop: "180px" }} />
           </div>
-      }
-      <div className='mainOrg mt-5 pt-5'>
-        {isChartData?.map((root) => {
-          if (root?.Supervisor_Code == null) {
-            return (<>
-              <div className="row">
-                <div className={`rootOrgBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `` : `rootBoxBottomBorder`}`}
-                  style={{ margin: "39px auto 29px auto" }}>
-                  <div className='d-flex justify-content-center'>
-                    <img src={User} />
-                    <div className='ml-4'>
-                      <Tooltip placement="top" title={`Name : ${root?.Label}`}>
-                        <span>{root?.Label.slice(0, 15)}...</span>
-                      </Tooltip>
-                      <Tooltip placement="top" title={`Designation : ${root?.Desig_name}`}>
-                        <span>{root?.Desig_name.slice(0, 15)}...</span>
-                      </Tooltip>
-                    </div>
-                  </div>
-                  <div className='showableIcon'
-                    onClick={() => {
-                      if (root?.Emp_code) {
-                        if (hasCode) {
-                          const newState = {
-                            "code": root.Emp_code,
-                          };
-                          setDynamicStates(prev => [...prev, newState]);
-                        } else {
-                          removeItemByKey(root.Emp_code);
-                        }
-                        setHasCode(prevHasCode => !prevHasCode);
-                      }
-                    }}
-                  >{root?.subordinates?.length > 1 || root?.subordinates?.length == 1 ? <IoIosArrowDown /> : null}</div>
-                </div>
-              </div>
-              <div className={`row justify-content-center childrensBox ${dynamicStates.filter((items) => items?.code == root.Emp_code)[0] ? `d-none` : `d-flex`} ${root?.subordinates?.length > 1 ? `childrenUpperBorder` : null}`}
-                style={root?.subordinates?.length > 1 ? { margin: "35px 0" } : { margin: "10px 0" }}>
-                {
-                  root?.subordinates?.map((items) => {
-                    if (items?.Supervisor_Code == root?.Emp_code) {
-                      return (<>
-                        <div className='rootOrgBox childMiddleBorder' style={{ marginTop: "60px", paddingBottom: "45px" }}>
-                          <div className='d-flex justify-content-center'>
-                            <img src={User} />
-                            <div className='ml-4'>
-                              <Tooltip placement="top" title={`Name : ${items?.Label}`}>
-                                <span>{items?.Label.slice(0, 15)}...</span>
-                              </Tooltip>
-                              <Tooltip placement="top" title={`Designation : ${items?.Desig_name}`}>
-                                <p>{items?.Desig_name.slice(0, 15)}...</p>
-                              </Tooltip>
-                            </div>
-                            <button id={items?.Emp_code} onClick={(e) => { e.stopPropagation(); setuser(e.target.getAttribute('id')) }}>more</button>
-                          </div>
-                        </div>
-                      </>)
-                    }
-                  })
-                }
-              </div>
-            </>)
-          }
-        })}
+      } */}
+      <div className="mainBox">
+        <OrganizationChart value={data} nodeTemplate={nodeTemplate} />
       </div>
     </>
   )
