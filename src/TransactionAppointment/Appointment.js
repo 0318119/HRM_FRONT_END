@@ -8,6 +8,7 @@ import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
 import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
 import AppointExpData from "../TransactionAppointForm/AppointExpData";
+import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -140,7 +141,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Payroll",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TAppointmentMasterPayroll?userId=${data.Sequence_no}`}>
+                    {/* <Link to={`/TAppointmentMasterPayroll?userId=${data.Sequence_no}`}>
+                        <WbSunnyIcon className="List_ico" />
+                    </Link> */}
+                    <Link onClick={() => EditPage("EditPayroll", data?.Sequence_no)} >
                         <WbSunnyIcon className="List_ico" />
                     </Link>
                 </Space>
@@ -446,7 +450,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
-
+                            {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>

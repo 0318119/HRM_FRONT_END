@@ -36,18 +36,18 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
         GetEmployer(isCode)
     }, [])
 
-    console.log(isCode,'isCode')
+
     
 
     // useEffect(() => {
     //     if (isSearchVal == '') {
-    //         getExprience({
+    //         GetEmployer({
     //             pageSize: pageSize,
     //             pageNo: page,
     //             search: null
     //         })
     //     } else {
-    //         getExprience({
+    //         GetEmployer({
     //             pageSize: pageSize,
     //             pageNo: 1,
     //             search: isSearchVal
@@ -55,46 +55,51 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
     //     }
     // }, [page, isSearchVal])
 
-    console.log(Red_AppointExprience, 'Red_AppointExprience')
 
-
+    console.log(Red_AppointExprience, 'Red_AppointExpriencew')
 
     const columns = [
         {
-            title: 'Code',
-            dataIndex: 'Desig_code',
-            key: 'Desig_code',
+            title: 'Employee Code',
+            dataIndex: 'Emp_Code',
+            key: 'Emp_Code',
         },
         {
-            title: 'Desig Name',
-            dataIndex: 'Desig_name',
-            key: 'Desig_name',
+            title: 'Employer_Code',
+            dataIndex: 'Employer_Code',
+            key: 'Employer_Code',
         },
         {
-            title: 'Desig Abbreviation',
-            dataIndex: 'Desig_abbr',
-            key: 'Desig_abbr',
+            title: 'Designation',
+            dataIndex: 'Designation',
+            key: 'Designation',
         },
         {
-            title: 'Sort Key',
-            dataIndex: 'Sort_key',
-            key: 'Sort_key',
+            title: 'Department',
+            dataIndex: 'Department',
+            key: 'Department',
+        },
+     
+        {
+            title: 'Submit Flag',
+            dataIndex: 'Submit_Flag',
+            key: 'Submit_Flag',
         },
         {
             title: 'Action',
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Desig_code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Designation"
-                        description="Are you sure to delete the Designation?"
+                        title="Delete the Exprience"
+                        description="Are you sure to delete the Exprience?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            // handleConfirmDelete(data?.Desig_code)
+                            handleConfirmDelete(data?.ID)
                         }}
                     >
                         <button className="deleteBtn">
@@ -108,44 +113,44 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
 
 
     // DESIGNATION FORM DATA DELETE API CALL ===========================
-    // async function handleConfirmDelete(id) {
-    //     await fetch(
-    //         `${baseUrl.baseUrl}/employment_desig/DeleteEmploymentDesignation`, {
-    //         method: "POST",
-    //         headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-    //         body: JSON.stringify({
-    //             "Desig_code": id,
-    //         }),
-    //     }
-    //     ).then((response) => {
-    //         return response.json();
-    //     }).then(async (response) => {
-    //         if (response.success) {
-    //             messageApi.open({
-    //                 type: 'success',
-    //                 content: "You have successfully deleted",
-    //             });
-    //             setTimeout(() => {
-    //                 GetDataDesignation({
-    //                     pageSize: pageSize,
-    //                     pageNo: 1,
-    //                     search: null
-    //                 })
-    //             }, 5000);
-    //         }
-    //         else {
-    //             messageApi.open({
-    //                 type: 'error',
-    //                 content: response?.message || response?.messsage,
-    //             });
-    //         }
-    //     }).catch((error) => {
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: error?.message || error?.messsage,
-    //         });
-    //     });
-    // }
+    async function handleConfirmDelete(id) {
+        await fetch(
+            `${baseUrl.baseUrl}/employement_experience/deleteTranExperience`, {
+            method: "POST",
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "id": id,
+            }),
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                messageApi.open({
+                    type: 'success',
+                    content: "You have successfully deleted",
+                });
+                setTimeout(() => {
+                    GetEmployer({
+                        // pageSize: pageSize,
+                        // pageNo: 1,
+                        search: null
+                    })
+                }, 3000);
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+        });
+    }
 
     return (
         <>
@@ -173,14 +178,14 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                         )}
 
                         <div>
-                            {mode == "read" && (
+                            {mode2 == "read" && (
                                 <Table columns={columns}
                                     loading={Red_AppointExprience?.loading}
-                                    dataSource={Red_AppointExprience?.data?.[0]?.res?.data1}
+                                    dataSource={Red_AppointExprience?.getEmp?.[0]?.res.data?.[0]}
                                     scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,
-                                        total: Red_AppointExprience?.data?.[0]?.res?.data3,
+                                        total: Red_AppointExprience?.getEmp?.[0]?.res.data,
                                         onChange: (p) => {
                                             setPage2(p);
                                         },
@@ -188,11 +193,11 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                                     }}
                                 />
                             )}
-                            {mode == "create" && (
-                                <TAExperienceForm2 cancel={setMode2} mode={mode2} isCode={null} page2={page2} />
+                            {mode2 == "create" && (
+                                <TAExperienceForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
-                            {mode == "Edit" && (
-                                <TAExperienceForm2 cancel={setMode2} isCode={isCode2} page2={page2} />
+                            {mode2 == "Edit" && (
+                                <TAExperienceForm2 cancel={setMode2} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 

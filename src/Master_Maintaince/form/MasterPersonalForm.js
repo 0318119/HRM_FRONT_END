@@ -52,7 +52,17 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
         try {
             const isValid = await MasterPersonal_schema.validate(data);
             if (isValid) {
-                POST_MASTER_PERSONAL_FORM(data)
+                const joiningDate = new Date(data?.Emp_Joining_date);
+                const confirmDate = new Date(data?.Emp_Confirm_date);
+                const differenceInDays = Math.floor((confirmDate - joiningDate) / (24 * 60 * 60 * 1000));
+                if (differenceInDays >= 90) {
+                    POST_MASTER_PERSONAL_FORM(data)
+                } else {
+                    messageApi.open({
+                        type: 'error',
+                        content: "Confirm Date Should be Greater Then Joining Date by 90 days",
+                    });
+                }
                 // console.log(data, 'data')
             }
         } catch (error) {
@@ -65,6 +75,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
             Get_Master_Personal_By_Id(isCode)
         }
     }, [])
+
 
     const {
         control,
@@ -126,6 +137,10 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
         resolver: yupResolver(MasterPersonal_schema),
     });
 
+
+
+
+
     useEffect(() => {
         if (mode == "Edit") {
             reset(
@@ -137,7 +152,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                     Emp_marital_status: data?.Emp_marital_status,
                     Emp_birth_date: data?.Emp_birth_date,
                     Emp_Confirm_date: data?.Emp_Confirm_date,
-                    Emp_Joining_date: data?.Emp_Joining_date,
+                    Emp_Joining_date: data?.Emp_appointment_date,
                     Emp_category: data?.Emp_category,
                     Emp_Leave_category: data?.Emp_Leave_category,
                     Emp_address_line1: data?.Emp_address_line1,
@@ -187,6 +202,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
             )
         } 
     }, [data])
+
 
 
 

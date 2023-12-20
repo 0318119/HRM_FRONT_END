@@ -11,9 +11,9 @@ import { MdDeleteOutline } from 'react-icons/md';
 import MasterPersonalForm from './form/MasterPersonalForm'
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-import baseUrl from '../../src/config.json'
+import baseUrl from '../config.json'
 
-const MasterPersonal = ({ GetMasterPersonalData, Red_Master_Personal }) => {
+const Employee_Master = ({ GetMasterPersonalData, Red_Master_Personal }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -142,4 +142,4 @@ function mapStateToProps({ Red_Master_Personal }) {
 
 }
 
-export default connect(mapStateToProps, MASTER_PERSONAL)(MasterPersonal);
+export default connect(mapStateToProps, MASTER_PERSONAL)(Employee_Master);

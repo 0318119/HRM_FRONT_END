@@ -66,6 +66,7 @@ export const Get_Master_Personal_By_Id = (body) => async (dispatch) => {
         });
         if (response.status === 200) {
             const res = await response.json()
+            // console.log(res , 'res')
             dispatch({
                 type: GET_MASTER_PERSONALSINGLE,
                 payload: [{ res }],

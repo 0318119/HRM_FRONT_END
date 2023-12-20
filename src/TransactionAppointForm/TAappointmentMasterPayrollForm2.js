@@ -1,487 +1,156 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
-import Header from "../components/Includes/Header";
-import Country from "./Country.json"
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
-import { TAPersonalSchema } from './schema';
+import * as AppointPayroll_Action from "../store/actions/Appointments/AppointPayroll/index";
 import { message } from 'antd';
+import * as yup from "yup";
+import { connect } from "react-redux";
 import baseUrl from '../config.json'
 import { Link } from "react-router-dom";
 
 
 
-function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
-
+function TAappointmentMasterPayrollForm2({
+    cancel,
+    mode,
+    isCode,
+    page,
+    GetEmployeeInfo,
+    Red_AppointPayroll,
+    GetModeOfPay,
+    GetBankBranches,
+    SavePayForm
+}) {
 
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
-    const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
-    const [EmployeeCategory, setEmployeeCategory] = useState([])
-    const [LeaveCategory, setLeaveCategory] = useState([])
-    const [PayCategory, setPayCategory] = useState([])
-    const [Shifts, setShifts] = useState([])
-    const [Designation, setDesignation] = useState([])
-    const [CostCenter, setCostCenter] = useState([])
-    const [Section, setSection] = useState([])
-    const [Grade, setGrade] = useState([])
-    const [Education, setEducation] = useState([])
-    const [Location, setLocation] = useState([])
-    const [Religion, setReligion] = useState([])
-    const [Supervisor, setSupervisor] = useState([])
-    const [getEmpCodeErr, setEmpCodeErr] = message.useMessage();
-    const [EmpCategoryDataErr, setEmpCategoryDataErr] = message.useMessage();
-    const [leaveCatErr, setleaveCatErr] = message.useMessage();
-    const [PayCategoryErr, setPayCategoryErr] = message.useMessage();
-    const [ShiftsCodeErr, setShiftsCodeErr] = message.useMessage();
-    const [DesignationCodeErr, setDesignationCodeErr] = message.useMessage();
-    const [CostCenterCodeErr, setCostCenterCodeErr] = message.useMessage();
-    const [SectionCodeErr, setSectionCodeErr] = message.useMessage();
-    const [GradeCodeErr, setGradeCodeErr] = message.useMessage();
-    const [EducationCodeErr, setEducationCodeErr] = message.useMessage();
-    const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
-    const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
-    const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
-    const currentDate = new Date();
+
     const EditBack = () => {
         cancel('read')
     }
 
-    async function getEmpTypeCodeData() {
+    const AppointPayrollSchema = yup.object().shape({
+        Mode_Of_Payment: yup.string().required("Mode_Of_Payment is required"),
+        Recreation_Club_Flag: yup.string().required("Recreation_Club_Flag is required"),
+        Meal_Deduction_Flag: yup.string().required("Meal_Deduction_Flag is required"),
+        Union_Flag: yup.string().required("Union_Flag is required"),
+        Overtime_Flag: yup.string().required("Overtime_Flag is required"),
+        Incentive_Flag: yup.string().required("Incentive_Flag is required"),
+        SESSI_Flag: yup.string().required("SESSI_Flag is required"),
+        EOBI_Flag: yup.string().required("EOBI_Flag is required"),
+        SESSI_Number: yup.string().required("SESSI_Number is required"),
+        EOBI_Number: yup.string().required("EOBI_Number is required"),
+        Account_Type1: yup.string().required("Account_Type1 is required"),
+        Bank_Account_No1: yup.string().required("Bank_Account_No1 is required"),
+        Branch_Code1: yup.string().required("Branch_Code1 is required"),
+        Bank_Amount_1: yup.string().required("Bank_Amount_1 is required"),
+        Bank_Percent_1: yup.string().required("Bank_Percent_1 is required"),
 
-        await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setgetEmpTypeCode(response.data)
-            }
-            else {
-                getEmpCodeErr.open({
-                    type: 'error',
-                    content: "in Emp type code :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            getEmpCodeErr.open({
-                type: 'error',
-                content: "in Emp type code :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function EmpCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response?.success) {
-                setEmployeeCategory(response?.data)
-            }
-            else {
-                EmpCategoryDataErr.open({
-                    type: 'error',
-                    content: "in Emp Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            EmpCategoryDataErr.open({
-                type: 'error',
-                content: "in Emp Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function LeaveCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setLeaveCategory(response.data)
-            }
-            else {
-                leaveCatErr.open({
-                    type: 'error',
-                    content: "in Leave Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            leaveCatErr.open({
-                type: 'error',
-                content: "in Leave Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function PayCategoryData() {
-        await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayrollWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setPayCategory(response.data)
-            }
-            else {
-                PayCategoryErr.open({
-                    type: 'error',
-                    content: "in Pay Category :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            PayCategoryErr.open({
-                type: 'error',
-                content: "in Pay Category :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function ShiftsData() {
-        await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShiftWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setShifts(response.data)
-            }
-            else {
-                ShiftsCodeErr.open({
-                    type: 'error',
-                    content: "in Shifts Error :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ShiftsCodeErr.open({
-                type: 'error',
-                content: "in Shifts Error :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function DesignationData() {
-        await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignationWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setDesignation(response.data)
-            }
-            else {
-                DesignationCodeErr.open({
-                    type: 'error',
-                    content: "in Designation :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            DesignationCodeErr.open({
-                type: 'error',
-                content: "in Designation :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function CostCenterData() {
-        await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setCostCenter(response.data)
-            }
-            else {
-                CostCenterCodeErr.open({
-                    type: 'error',
-                    content: "in Cost centre :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            CostCenterCodeErr.open({
-                type: 'error',
-                content: "in Cost centre :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SectionData() {
-        await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setSection(response.data)
-            }
-            else {
-                SectionCodeErr.open({
-                    type: 'error',
-                    content: "in Section :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SectionCodeErr.open({
-                type: 'error',
-                content: "in Section :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function GradeData() {
-        await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setGrade(response.data)
-            }
-            else {
-                GradeCodeErr.open({
-                    type: 'error',
-                    content: "in Grade Code :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            GradeCodeErr.open({
-                type: 'error',
-                content: "in Grade Code :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function EducationData() {
-        await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setEducation(response.data)
-            }
-            else {
-                EducationCodeErr.open({
-                    type: 'error',
-                    content: "in Education :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            EducationCodeErr.open({
-                type: 'error',
-                content: "in Education :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function LocationData() {
-        await fetch(`${baseUrl.baseUrl}/location_code/GetLocationsWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setLocation(response.data)
-            }
-            else {
-                LocationCodeErr.open({
-                    type: 'error',
-                    content: "in Location :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            LocationCodeErr.open({
-                type: 'error',
-                content: "in Location :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function ReligionData() {
-        await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCodeWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                setReligion(response.data)
-            }
-            else {
-                ReligionCodeErr.open({
-                    type: 'error',
-                    content: "in Religion :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            ReligionCodeErr.open({
-                type: 'error',
-                content: "in Religion :" + error?.message || error?.messsage,
-            });
-        });
-    }
-    async function SupervisorData() {
-        await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
-            method: "GET",
-            headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                console.log(response.data, 'sdff');
-                setSupervisor(response.data)
-            }
-            else {
-                SupervisorCodeErr.open({
-                    type: 'error',
-                    content: "in Supervisor :" + response?.message || response?.messsage,
-                });
-            }
-        }).catch((error) => {
-            SupervisorCodeErr.open({
-                type: 'error',
-                content: "in Supervisor :" + error?.message || error?.messsage,
-            });
-        });
-    }
-
-    useEffect(() => {
-        getEmpTypeCodeData()
-        EmpCategoryData()
-        LeaveCategoryData()
-        PayCategoryData()
-        ShiftsData()
-        DesignationData()
-        CostCenterData()
-        SectionData()
-        GradeData()
-        EducationData()
-        LocationData()
-        ReligionData()
-        SupervisorData()
-    }, [])
-    // ==================================================
+    });
+   
     const submitForm = async (data) => {
         try {
-            const isValid = await TAPersonalSchema.validate(data);
+            const isValid = await AppointPayrollSchema.validate(data);
             if (isValid) {
-                POST_MASTER_PERSONAL_FORM(data)
+                // SaveForm(data)
+                console.log(data ,'data')
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+
     const {
         control,
         formState: { errors },
         handleSubmit,
+        reset,
     } = useForm({
-        defaultValues: {
-            Emp_name: "",
-            Desig_name: "",
-            Dept_name: "",
-            Mode_Of_Payment: "",
-            SESSI_Flag: "",
-            Overtime_Flag: "",
-            EOBI_Number: "",
-            Incentive_Flag: "",
-            Account_Type1: "",
-            Bank_Account_No1: "",
-            Bank_Amount_1: "",
-            Branch_Code1: "",
-            Bank_Percent_1: "",
-        },
+        defaultValues: {},
         mode: "onChange",
-        resolver: yupResolver(TAPersonalSchema),
+        resolver: yupResolver(AppointPayrollSchema),
     });
 
-    // MASTER PERSNOL FORM DATA API CALL =========================== 
-    async function POST_MASTER_PERSONAL_FORM(body) {
-        setLoading(true)
-        await fetch(
-            `${baseUrl.baseUrl}/appointments/AppointmentsSavePersonel`, {
-            method: "POST",
-            headers: {
-                "content-type": "application/json",
-                accessToken: `Bareer ${get_access_token}`,
+    useEffect(() => {
+        reset(
+            {
+                Dept_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Dept_name,
+                Desig_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Desig_name,
+                Emp_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Emp_name
+
             },
-            body: JSON.stringify({
-                "Emp_name": body?.Emp_name,
-                "Desig_name": body?.Desig_name,
-                "Dept_name": body?.Dept_name,
-                "Mode_Of_Payment": body?.Mode_Of_Payment,
-                "SESSI_Flag": body?.SESSI_Flag,
-                "Overtime_Flag": body?.Overtime_Flag,
-                "EOBI_Number": body?.EOBI_Number,
-                "Incentive_Flag": body?.Incentive_Flag,
-                "Account_Type1": body?.Account_Type1,
-                "Bank_Account_No1": body?.Bank_Account_No1,
-                "Bank_Amount_1": body?.Bank_Amount_1,
-                "Branch_Code1": body?.Branch_Code1,
-                "Bank_Percent_1": body?.Bank_Percent_1,
-            })
-        }
-        ).then((response) => {
-            return response.json();
-        }).then(async (response) => {
-            if (response.success) {
-                messageApi.open({
-                    type: 'success',
-                    content: response?.message || response?.messsage,
-                });
-                setLoading(false)
-                setTimeout(() => {
-                    window.location.href = "/TAShortsCut"
-                }, 1000);
-            }
-            else {
-                messageApi.open({
-                    type: 'error',
-                    content: response?.message || response?.messsage,
-                });
-                setLoading(false)
-            }
-        }).catch((error) => {
-            messageApi.open({
-                type: 'error',
-                content: error?.message || error?.messsage,
+        )
+
+    }, [Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0]])
+
+    console.log(Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0] , 'response')
+
+    const modeOFPay = Red_AppointPayroll?.data?.[0]?.res?.data?.[0]
+    const Bandbranch = Red_AppointPayroll?.GetBB?.[0]?.res?.data?.[0]
+
+    console.log(Red_AppointPayroll, 'Red_AppointPayroll')
+
+    useEffect(() => {
+        GetModeOfPay()
+        GetEmployeeInfo(isCode)
+        GetBankBranches()
+    }, [])
+
+
+    const SaveForm = async (data) => {
+        try {
+            const response = await SavePayForm({
+                Sequence_no: isCode,
+                Mode_Of_Payment: data?.EmployerCode,
+                Recreation_Club_Flag: data?.designation,
+                Meal_Deduction_Flag: data?.department,
+                Union_Flag: data?.Start_Date,
+                Overtime_Flag: data?.End_Date,
+                Incentive_Flag: data?.SubmitFlag,
+                Bonus_Type: data?.SubmitFlag,
+                SESSI_Flag: data?.SubmitFlag,
+                EOBI_Flag: data?.SubmitFlag,
+                SESSI_Number: data?.SubmitFlag,
+                EOBI_Number: data?.SubmitFlag,
+                Account_Type1: data?.SubmitFlag,
+                Bank_Account_No1: data?.SubmitFlag,
+                Branch_Code1: data?.SubmitFlag,
+                Bank_Amount_1: data?.SubmitFlag,
+                Bank_Percent_1: data?.SubmitFlag,
             });
-            setLoading(false)
-        });
-    }
+
+            if (response && response.success) {
+                messageApi.success("Save Exprience");
+                setTimeout(() => {
+                    cancel('read')
+                    // setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Save Exprience';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing Exprience:", error);
+            messageApi.error("An error occurred while Save Exprience");
+        }
+    };
+
+
+
 
     return (
         <>
-            <Header />
-            {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
-            {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
-            {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}
-            {setReligionCodeErr}{setSupervisorCodeErr}
+            {contextHolder}
             <div className="container">
                 <div className="row">
-                    <div className="col-12 maringClass">
+                    <div className="col-12 maringClass2">
                         <div>
                             <h2 className="text-dark"> Transaction - Master Payroll</h2>
                             <form onSubmit={handleSubmit(submitForm)}>
@@ -496,6 +165,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         id="Emp_name"
                                         name="Emp_name"
                                         type="text"
+                                        readOnly={true}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -506,6 +176,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         id="Desig_name"
                                         name="Desig_name"
                                         type="text"
+                                        readOnly={true}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -516,6 +187,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         id="Dept_name"
                                         name="Dept_name"
                                         type="text"
+                                        readOnly={true}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -529,16 +201,11 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         placeholder='select Mode Of Payment'
                                         id="Mode_Of_Payment"
                                         name="Mode_Of_Payment"
-                                        options={[
-                                            {
-                                                value: 'M',
-                                                label: 'Married',
-                                            },
-                                            {
-                                                value: "N",
-                                                label: 'Unmarried',
-                                            },
-                                        ]}
+                                        options={modeOFPay?.map((item,) => ({
+                                            value: item.Payment_code,
+                                            label: item.Payment_name,
+                                        })
+                                        )}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -558,6 +225,16 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                                 label: 'No',
                                             },
                                         ]}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormInput
+                                        label={'SE&SI'}
+                                        placeholder='SE&SI'
+                                        id="SESSI_Flag"
+                                        name="SESSI_Flag"
+                                        type="number"
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -586,53 +263,68 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         placeholder={'Select Registration Club'}
                                         id="Recreation_Club_Flag"
                                         name="Recreation_Club_Flag"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
+                                        options={[
+                                            {
+                                                value: 'M',
+                                                label: 'Male',
+                                            },
+                                            {
+                                                value: "F",
+                                                label: 'Female',
+                                            },
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
                                     />
+
                                     <FormSelect
+                                        label={'EOBI Flag'}
+                                        placeholder='EOBI Flag'
+                                        id="EOBI_Flag"
+                                        name="EOBI_Flag"
+                                        options={[
+                                            {
+                                                value: 'Y',
+                                                label: 'Yes',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'No',
+                                            },
+                                        ]}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+
+                                    <FormInput
                                         label={'EOBI Number'}
-                                        placeholder='select EOBI Number'
+                                        placeholder='EOBI Number'
                                         id="EOBI_Number"
                                         name="EOBI_Number"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
+                                        type="Number"
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
                                     />
-                                    <FormSelect
-                                        label={'EOBI Number'}
-                                        placeholder='select EOBI Number'
-                                        id="EOBI_Number"
-                                        name="EOBI_Number"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
-                                        showLabel={true}
-                                        errors={errors}
-                                        control={control}
-                                    />
+                                    
+                                    
                                     <FormSelect
                                         label={'Incentive'}
                                         placeholder='select Incentive'
                                         id="Incentive_Flag"
                                         name="Incentive_Flag"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
+                                        options={[
+                                            {
+                                                value: 'Y',
+                                                label: 'Yes',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'No',
+                                            },
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -642,11 +334,16 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         placeholder='select Meal Deduction'
                                         id="Meal_Deduction_Flag"
                                         name="Meal_Deduction_Flag"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
+                                        options={[
+                                            {
+                                                value: 'Y',
+                                                label: 'Yes',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'No',
+                                            },
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -656,11 +353,16 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         placeholder='select Union'
                                         id="Union_Flag"
                                         name="Union_Flag"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
-                                        })
-                                        )}
+                                        options={[
+                                            {
+                                                value: 'Y',
+                                                label: 'Yes',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'No',
+                                            },
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -689,21 +391,21 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         errors={errors}
                                         control={control}
                                     />
-                                     <FormSelect
+                                    <FormSelect
                                         label={'Branch'}
                                         placeholder='select Branch'
                                         id="Branch_Code1"
                                         name="Branch_Code1"
-                                        options={Country.Country?.map((item,) => ({
-                                            value: item.value,
-                                            label: item.label,
+                                        options={Bandbranch?.map((item) => ({
+                                            value: item.Branch_code,
+                                            label: item.Branch_name,
                                         })
                                         )}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
                                     />
-                                      <FormInput
+                                    <FormInput
                                         label={'Amount'}
                                         placeholder={'Select Amount'}
                                         id="Bank_Amount_1"
@@ -713,7 +415,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         errors={errors}
                                         control={control}
                                     />
-                                    
+
                                     <FormInput
                                         label={'Percent'}
                                         placeholder={'Select Percent'}
@@ -724,7 +426,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
                                         errors={errors}
                                         control={control}
                                     />
-                                   
+
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
@@ -739,4 +441,7 @@ function TAappointmentMasterPayrollForm2({ cancel, mode, isCode, page }) {
     );
 }
 
-export default TAappointmentMasterPayrollForm2;
+function mapStateToProps({ Red_AppointPayroll }) {
+    return { Red_AppointPayroll };
+}
+export default connect(mapStateToProps, AppointPayroll_Action)(TAappointmentMasterPayrollForm2)
