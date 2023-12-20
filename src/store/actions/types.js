@@ -340,6 +340,8 @@ export const GET_Retirement_Due_Report_END = "GET_Retirement_Due_Report_END";
 
 export const GET_SALARY_DATA = "GET_SALARY_DATA";
 export const GET_SALARY_START = "GET_SALARY_START";
+export const GET_SALARY_ALLOWANCE_DATA = "GET_SALARY_ALLOWANCE_DATA";
+export const GET_SALARY_AMOUNT_DATA = "GET_SALARY_AMOUNT_DATA";
 export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
 export const GET_SALARY_END = "GET_SALARY_END";
 

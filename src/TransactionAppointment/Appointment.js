@@ -6,7 +6,7 @@ import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
-// import TASalary from '../TransactionAppointForm/TASalaryForm';
+import TASalary from '../TransactionAppointForm/TASalaryForm2';
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -440,7 +440,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
-                            {/* {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />} */}
+                            {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />}
 
                         </div>
                     </div>

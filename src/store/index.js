@@ -45,7 +45,7 @@ import PdfRender from "./reducers/payroll/pdfRender/index"
 import Red_Pay_Slip from "./reducers/payroll/PaySlip/index"
 import Red_Attendance_sheet from './reducers/AttendanceSheet/index'
 import Red_Manual_Leave_Posting from './reducers/Leave/Manual_Leave_Posting/index'
-import Red_JV_Codes from "./reducers/payroll/JV_Codes/index"; 
+import Red_JV_Codes from "./reducers/payroll/JV_Codes/index";
 import Red_IncomeTax_Column from "./reducers/payroll/IncomeTax_Column";
 import Red_Bank_Branches from "./reducers/payroll/Bank_Branches";
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive";
@@ -63,6 +63,7 @@ import Red_Forget_Password from "./reducers/LoginScreen/ForgetPassword/index";
 import Red_Due_For_Confirmation from "./reducers/HrOperations/Due_For_Confirmation/index"
 import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold";
 import Red_AppointEducation from './reducers/Appointments/AppointEducation/index'
+import Red_AppointSalary from './reducers/Appointments/AppointSalary/index'
 
 const reducers = combineReducers({
   Transition_family,
@@ -109,15 +110,15 @@ const reducers = combineReducers({
   Red_previous_Employee,
   Red_Leave_Type,
   PdfRender,
-  Red_previous_Employee, 
+  Red_previous_Employee,
   Red_MasterActive,
   Red_Pay_Slip,
   Red_Attendance_sheet,
   Red_Manual_Leave_Posting,
-  Red_JV_Codes, 
-  Red_IncomeTax_Column, 
+  Red_JV_Codes,
+  Red_IncomeTax_Column,
   Red_Bank_Branches,
-  Red_MasterActive, 
+  Red_MasterActive,
   Red_Appointment,
   Red_TaxStructure,
   Red_Bank,
@@ -132,7 +133,8 @@ const reducers = combineReducers({
   Red_Forget_Password,
   Red_Due_For_Confirmation,
   SalaryOnHold,
-  Red_AppointEducation
+  Red_AppointEducation,
+  Red_AppointSalary
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

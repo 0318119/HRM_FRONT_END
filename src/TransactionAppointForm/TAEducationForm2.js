@@ -61,6 +61,7 @@ function TAEducationForm2({
         GetEducationData()
         GetInstituteData()
         GetGradeData()
+        
         // GetEducationSavedData(isCode)
     }, [])
 
