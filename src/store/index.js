@@ -65,6 +65,8 @@ import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold/index";
 import Red_AppointEducation from './reducers/Appointments/AppointEducation/index'
 import Red_ServiceLengthReport from './reducers/HrOperations/ServiceLengthReport'
 import Red_AppointExprience from "./reducers/Appointments/AppointmentExprience/index";
+import Red_TranEducationReport from "./reducers/HrOperations/TranEducationReport";
+
 
 const reducers = combineReducers({
   Transition_family,
@@ -135,7 +137,8 @@ const reducers = combineReducers({
   Red_Due_For_Confirmation,
   SalaryOnHold,
   Red_AppointEducation,
-  Red_ServiceLengthReport
+  Red_ServiceLengthReport,
+  Red_TranEducationReport
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

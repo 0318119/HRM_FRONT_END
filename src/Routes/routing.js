@@ -125,6 +125,7 @@ import ConfirmatioWaiting from '../Master_Maintaince/Waiting/ConfirmatioWaiting'
 import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
+import TranEducationReport from '../HrOperations/TranEducationReport.js'
 
 
 
@@ -221,6 +222,7 @@ const routing = () => {
         <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
         <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
         <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
+        <Route path='/TranEducationReport' element={<TranEducationReport />} />
 
 
 

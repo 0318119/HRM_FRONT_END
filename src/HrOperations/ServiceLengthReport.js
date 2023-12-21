@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import * as Red_ServiceLengthReport_Action from '../store/actions/HrOperations/ServiceLengthReport'
-import { FormInput } from '../components/basic/input/formInput';
+import * as Red_ServiceLengthReport_Action from '../store/actions/HrOperations/ServiceLengthReport';
+import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import Header from "../components/Includes/Header";
 import { PrimaryButton, SimpleButton } from '../components/basic/button';
 import { message } from 'antd';
@@ -10,24 +10,27 @@ import { Document, Page, Text, View, pdf, Image } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import LogoUrl from "../../src/Assets/Images/download.png"
+import LogoUrl from "../../src/Assets/Images/download.png";
 import Item from 'antd/es/list/Item';
 
 function ServiceLengthReport({
-    Red_ServiceLengthReport,
-    PostServiceLenghthPayload,
+  Red_ServiceLengthReport,
+  PostServiceLenghthPayload,
 }) {
   const [isLoading, setLoading] = useState(false);
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_ServiceLengthReport?.data?.[0]?.res?.data
-  const [isServiceLengthReportData, setServiceLengthReportData] = useState([])
+  const [isServiceLengthReportData, setServiceLengthReportData] = useState([]);
   const [currentDate, setCurrentDate] = useState('');
+  const [toDate, setToDate] = useState('');
 
   useEffect(() => {
     const currentDate = new Date().toISOString().split('T')[0];
     setCurrentDate(currentDate);
+    setToDate(currentDate); // Set the initial "To date" value
   }, []);
 
+  // ===== SCHEMA =================
   const ServiceLengthReportSchema = yup.object().shape({
     Servicefrom: yup.string().required('Please Select From Service'),
     Serviceto: yup.string().required('Please Select To Service'),
@@ -37,15 +40,16 @@ function ServiceLengthReport({
     control,
     formState: { errors },
     handleSubmit,
+    setValue,
+    getValues,
   } = useForm({
     defaultValues: {
-        Servicefrom: '',
-        Serviceto: '',
+      Servicefrom: currentDate,
+      Serviceto: toDate, // Set default value for "To date"
     },
     mode: 'onChange',
     resolver: yupResolver(ServiceLengthReportSchema),
   });
-
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -56,7 +60,10 @@ function ServiceLengthReport({
         if (result?.success) {
           message.success('PDF is created, Wait PDF is under downloading...');
           setFormSubmitted(true);
-          setServiceLengthReportData(result?.data); // Set the ServiceLengthReport data immediately
+          setServiceLengthReportData(result?.data);
+  
+          // Now, you can generate the PDF
+          await generatePdf();
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -66,15 +73,36 @@ function ServiceLengthReport({
     }
     setLoading(false);
   };
-
+  
+  const generatePdf = async () => {
+    try {
+      // Ensure isServiceLengthReportData is not empty before generating the PDF
+      if (isServiceLengthReportData.length === 0) {
+        message.error('No data available for PDF.');
+        return;
+      }
+  
+      const pdfBlob = await pdf(PdfData).toBlob();
+      saveAs(pdfBlob, 'generated.pdf');
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+    }
+  };
   useEffect(() => {
     if (isFormSubmitted) {
       handleDownload();
     }
   }, [isFormSubmitted]);
 
-  const PdfData =
-    (<Document>
+  useEffect(() => {
+    // Calculate and set the "To date" whenever "From date" changes
+    const fromDate = getValues('Servicefrom');
+    setToDate(fromDate);
+    setValue('Serviceto', fromDate);
+  }, [getValues, setValue]);
+
+  const PdfData = (
+    <Document>
       <Page size="A4">
         <View>
           <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
@@ -119,17 +147,18 @@ function ServiceLengthReport({
                 <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Designation ? item?.Designation : null}</Text>
                 <Text style={{ width: '50%', textAlign: 'center', fontSize: '7' }}>{item?.Department ? item?.Department : null}</Text>
 
-                
+
               </View>
             );
           })}
         </View>
+
       </Page>
-    </Document>)
+    </Document>
+  );
 
   const handleDownload = async () => {
     try {
-      // Ensure isServiceLengthReportData is not empty before generating the PDF
       if (isServiceLengthReportData.length === 0) {
         message.error('No data available for PDF.');
         return;
@@ -183,8 +212,7 @@ function mapStateToProps({ Red_ServiceLengthReport }) {
   return { Red_ServiceLengthReport };
 }
 
-
 export default connect(mapStateToProps, {
-    PostServiceLenghthPayload: Red_ServiceLengthReport_Action.PostServiceLenghthPayload,
+  PostServiceLenghthPayload: Red_ServiceLengthReport_Action.PostServiceLenghthPayload,
 })(ServiceLengthReport);
 

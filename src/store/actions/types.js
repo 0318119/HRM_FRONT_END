@@ -360,3 +360,9 @@ export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
 export const GET_SALARY_END = "GET_SALARY_END";
 
 
+// HR SETUP ===========> TranEducationReport =========
+
+export const GET_TranEducationReport_DATA = "GET_TranEducationReport_DATA";
+export const GET_TranEducationReport_DATA_START = "GET_TranEducationReport_DATA_START";
+export const GET_TranEducationReport_DATA_SINGLE = "GET_TranEducationReport_DATA_SINGLE";
+export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_END";
