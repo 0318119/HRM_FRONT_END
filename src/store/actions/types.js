@@ -346,3 +346,8 @@ export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
 export const GET_SALARY_END = "GET_SALARY_END";
 
 
+// HRSETUPS ===> Experience_Report === 
+
+export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
+export const GET_Experience_Report_START = "GET_Experience_Report_START";
+export const GET_Experience_Report_END = "GET_Experience_Report_END";

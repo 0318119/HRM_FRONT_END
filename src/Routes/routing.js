@@ -124,6 +124,7 @@ import Updatepassword from '../LoginScreens/ForgetPassword/Updatepassword';
 import ConfirmatioWaiting from '../Master_Maintaince/Waiting/ConfirmatioWaiting'
 import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
+import Experience_Report from '../HrOperations/Experience_Report.js'
 
 
 
@@ -218,6 +219,7 @@ const routing = () => {
         <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access />} />
         <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
         <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
+        <Route path='/Experience_Report' element={<Experience_Report />} />  
 
         {/* payroll */}
         <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />

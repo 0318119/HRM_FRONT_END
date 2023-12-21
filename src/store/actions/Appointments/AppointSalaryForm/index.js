@@ -23,6 +23,7 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
               "Content-Type": "application/json",
           },
       });
+      
       if (response.status === 200) {
           const res = await response.json();
           dispatch({
@@ -59,19 +60,20 @@ export const EmployeeSalaryAmount = (userId) => async (dispatch) => {
       loading: true,
     });
 
+    const accessToken = localStorage.getItem("access_token");
+
     const response = await fetch(
       `${baseUrl.baseUrl}/employee_salary/GetEmployeeSalaryBySeqNo/${userId}`,
       {
         method: "GET",
-          headers: {
-              accessToken: "Bareer " + localStorage.getItem("access_token"),
-              "Content-Type": "application/json",
-          },
+        headers: {
+            accessToken: "Bareer " + localStorage.getItem("access_token"),
+            "Content-Type": "application/json",
+        },
       }
     );
 
-    if (response.ok) 
-    {
+    if (response.ok) {
       const salaryData = await response.json();
       const salaryAmount = salaryData?.Amount;
       console.log('Fetched Salary Data:', salaryData);
@@ -100,8 +102,8 @@ export const EmployeeSalaryAmount = (userId) => async (dispatch) => {
       loading: false,
     });
   }
-
 };
+
 
 export const SalaryAlowanceCall = (userId) => async (dispatch) => {
   try {

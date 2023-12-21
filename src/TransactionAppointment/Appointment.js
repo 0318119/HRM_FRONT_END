@@ -111,12 +111,12 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Salary",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
-                        <LocalAtmIcon className="List_ico" />
-                    </Link>
-                    {/* <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
+                    {/* <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
                         <LocalAtmIcon className="List_ico" />
                     </Link> */}
+                    <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
+                        <LocalAtmIcon className="List_ico" />
+                    </Link>
                 </Space>
             ),
         },

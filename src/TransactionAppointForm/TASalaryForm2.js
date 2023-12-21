@@ -184,7 +184,7 @@ function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmplo
                                 </div>
                                 <h4 className="text-dark">Salary Break Up</h4>
                                 <hr />
-                                <div className="form-group formBoxCountry">
+                                <div className="">
                                     <Table
                                         columns={columns}
                                         loading={Red_AppointSalary?.loading}
