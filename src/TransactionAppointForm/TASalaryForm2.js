@@ -1,78 +1,102 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
-import Header from "../components/Includes/Header";
-import Country from "./Country.json"
-import { PrimaryButton, SimpleButton } from "../components/basic/button";
+import { SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormInput, FormSelect } from '../components/basic/input/formInput';
+import { FormInput } from '../components/basic/input/formInput';
 import * as AppointSalaryForm_Actions from "../store/actions/Appointments/AppointSalaryForm/index";
 import { message } from 'antd';
-import { Space, Pagination, Table, Tag, Tooltip } from "antd";
+import {Table } from "antd";
 import { connect } from "react-redux";
-import * as yup from "yup";
-import baseUrl from '../config.json'
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
-
-function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmployeeInfo, EmployeeSalaryAmount, GetSalaryByCode, SalaryAlowanceCall }) {
-
-    var get_access_token = localStorage.getItem("access_token");
-    var get_company_code = localStorage.getItem("company_code");
-    const [messageApi, contextHolder] = message.useMessage();
+function TASalaryForm2({ 
+    cancel, mode, 
+    isCode, page, 
+    Red_AppointSalary, GetEmployeeInfo, 
+    EmployeeSalaryAmount, GetSalaryByCode, 
+    SalaryAlowanceCall }) {
+    const [postAllownces, setpostAllownces] = useState([])
+    const allownceData = Red_AppointSalary?.getAllowance?.[0]?.res
+    const getAllowanceAmount = Red_AppointSalary?.getAmount?.[0]?.res
+    const empInfoCall = Red_AppointSalary?.data?.[0]?.res
+    const [isFirstTime,setFirstTime] = useState("N")
     const [isLoading, setLoading] = useState(false)
-    
+
     const EditBack = () => {
         cancel('read')
     }
 
-    const AppointSalarySchema = yup.object().shape({
-        // Emp_name: yup.string().required("Emp name is required"),
-        // Desig_name: yup.string().required("Desig name is required"),
-        // Dept_name: yup.string().required("Dept name is required")
-    });
+    // IN THIS BELOW CODE SHOW OF ALL ALLOWNCES NAMES AND CODES =================================================
+    useEffect(() => {
+        const temp = []
+        if(getAllowanceAmount?.data[0]?.length == 0){
+            if (allownceData?.data?.length > 0) {
+                for (var i of allownceData?.data) {
+                    var obj = {
+                        "code": i?.allowance_code,
+                        "amount": 0
+                    }
+                    setFirstTime("Y")
+                    temp.push(obj)
+                    setpostAllownces([...temp])
+                }
+            }
+        }
+    }, [allownceData,getAllowanceAmount])
 
+    // IN THIS BELOW CODE SHOW OF JUST AMOUNT =================================
+    useEffect(() => {
+        const temp = []
+        var tempTotal = 0
+        if (getAllowanceAmount?.data?.length > 0) {
+            for (var i of getAllowanceAmount?.data[0]) {
+                tempTotal = tempTotal + parseInt(i?.Amount)
+                temp.push({
+                    "code": i?.Allowance_code,
+                    "amount": i?.Amount
+                })
+                setFirstTime("N")
+                setpostAllownces(temp)
+            }
+        }
+    }, [getAllowanceAmount,allownceData])
 
-    // console.log(Red_AppointSalary?.getAllowance?.data  ,' Red_AppointSalary')
-
-    // ==================================================
+    // SET EMPLYEE INFO WHEN SHOW ABOVE ON PAGE =========
+    useEffect(() => {
+        reset({
+            Emp_name: empInfoCall?.data?.[0]?.Emp_name,
+            Desig_name: empInfoCall?.data?.[0]?.Desig_name,
+            Dept_name: empInfoCall?.data?.[0]?.Dept_name,
+        })
+    }, [empInfoCall?.data?.[0]])
 
     useEffect(() => {
         GetEmployeeInfo(isCode)
         EmployeeSalaryAmount(isCode)
-        // GetSalaryByCode(isCode)
         SalaryAlowanceCall()
     }, [])
 
-    useEffect(() => {
-        reset(
-            {
-                Emp_name: Red_AppointSalary?.data?.[0]?.res?.data?.[0]?.Emp_name,
-                Desig_name: Red_AppointSalary?.data?.[0]?.res?.data?.[0]?.Desig_name,
-                Dept_name: Red_AppointSalary?.data?.[0]?.res?.data?.[0]?.Dept_name,
-            },
-        )
-    }, [Red_AppointSalary?.data?.[0]?.res?.data?.[0]])
+    // CREATE EMPLOYEE SALARY API CALL ============================
+    const postData = async (e) => {
+        e.preventDefault()
+        const res = await GetSalaryByCode({
+            Sequence_no : isCode,
+            FirstTimeFlag : isFirstTime,
+            allownces : postAllownces
+       })
+       if(res?.success){
+        message.success(res?.messsage || res?.message)
+        setTimeout(() => {
+            cancel('read')
+        }, 2000);
+       }else{
+        message.success(res?.messsage || res?.message)
+       }
+    }
 
-    const Emp_name = Red_AppointSalary?.Emp_name?.[0]?.res?.data
-    const Desig_name = Red_AppointSalary?.Desig_name?.[0]?.res?.data
-    const Dept_name = Red_AppointSalary?.Dept_name?.[0]?.res?.data
-
-
-    const submitForm = async (data) => {
-        try {
-            const isValid = await AppointSalarySchema.validate(data);
-            if (isValid) {
-                // POST_MASTER_PERSONAL_FORM(data)
-                SaveForm(data)
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    
     const {
         control,
         formState: { errors },
@@ -81,123 +105,65 @@ function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmplo
     } = useForm({
         defaultValues: {},
         mode: "onChange",
-        resolver: yupResolver(AppointSalarySchema),
+        resolver: yupResolver(),
     });
 
-    // // MASTER PERSNOL FORM DATA API CALL =========================== 
-    // async function POST_MASTER_PERSONAL_FORM(body) {
-    //     setLoading(true)
-    //     await fetch(
-    //         `${baseUrl.baseUrl}/appointments/AppointmentsSavePersonel`, {
-    //         method: "POST",
-    //         headers: {
-    //             "content-type": "application/json",
-    //             accessToken: `Bareer ${get_access_token}`,
-    //         },
-    //         body: JSON.stringify({
-    //             "Emp_name": body?.Emp_name,
-    //             "Desig_name": body?.Desig_name,
-    //             "Dept_name": body?.Dept_name,
-    //         })
-    //     }
-    //     ).then((response) => {
-    //         return response.json();
-    //     }).then(async (response) => {
-    //         if (response.success) {
-    //             messageApi.open({
-    //                 type: 'success',
-    //                 content: response?.message || response?.messsage,
-    //             });
-    //             setLoading(false)
-    //             setTimeout(() => {
-    //                 window.location.href = "/TAShortsCut"
-    //             }, 1000);
-    //         }
-    //         else {
-    //             messageApi.open({
-    //                 type: 'error',
-    //                 content: response?.message || response?.messsage,
-    //             });
-    //             setLoading(false)
-    //         }
-    //     }).catch((error) => {
-    //         messageApi.open({
-    //             type: 'error',
-    //             content: error?.message || error?.messsage,
-    //         });
-    //         setLoading(false)
-    //     });
-    // }
-   
-
-    const SaveForm = async (data) => {
-        try {
-            const response = await GetSalaryByCode({
-                Emp_name:  data?.Emp_name,
-                Desig_name: data?.Desig_name,
-                Dept_name: data?.Dept_name,
-            });
-
-            if (response && response.success) {
-                messageApi.success("Save Education Information");
-                setTimeout(() => {
-                    GetSalaryByCode(true)
-                }, 3000);
-            } else {
-                const errorMessage = response?.message || 'Failed to Save Information';
-                messageApi.error(errorMessage);
-            }
-        } catch (error) {
-            console.error("Error occurred while changing password:", error);
-            messageApi.error("An error occurred while Save Information");
-        }
-    };
-    
-
+    // TABLE COLUMNS
     const columns = [
-      
         {
             title: "Allowance name",
             dataIndex: "Allowance_name",
             key: "Allowance_name",
-          },
-        
+        },
         {
             title: "Allowance Code",
             dataIndex: "allowance_code",
             key: "allowance_code"
 
         },
- 
-        
-        {
-            title: "Allowance",
-            value: "Allowance"
-        },
-        
         {
             title: "Amount",
-            value: "Amount",
-            render: (data) => (
-                <input type="text" />
-              ),
-        },
+            key: "Amount",
+            render: (data, Amount, index,) => {
+              return (
+                <>
+                <input
+                  className="form-control"
+                  defaultValue={data?.amount}
+                  type="number"
+                  placeholder="Amount"
+                  name={data?.Allowance_code}
+                  onChange={(e) => {
+                    postAllownces[index].amount = e.target.value
+                    setpostAllownces([...postAllownces])
+                  }}
+                />
+                </>
+              )
+            }
+          },
     ];
+
+    // API ERRORS HANDLING WHEN GIVE API RESPONSE FAILED ===========
+    if (allownceData?.messsage == "failed" || allownceData?.message == "failed") {
+        message.error(`Get All Allownces : ${allownceData?.messsage || allownceData?.message}`)
+    }else if (getAllowanceAmount?.messsage == "failed" || getAllowanceAmount?.message == "failed") {
+        message.error(`Get Allownce Amount : ${getAllowanceAmount?.messsage || getAllowanceAmount?.message}`)
+    }else if (empInfoCall?.messsage == "failed" || empInfoCall?.message == "failed") {
+        message.error(`Employee Info : ${empInfoCall?.messsage || empInfoCall?.message}`)
+    }
 
     return (
         <>
-            {contextHolder}
-
-            <div className="container">
-                <div className="row">
-                    <div className="col-12 maringClass2">
-                        <div>
-                            <h2 className="text-dark"> Transaction - Salary</h2>
-                            <form onSubmit={handleSubmit(submitForm)}>
+            <form onSubmit={postData}>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12 maringClass2">
+                            <div>
+                                <h2 className="text-dark">Salary</h2>
                                 <h4 className="text-dark">Employee Salary</h4>
                                 <Link to="/Appointment" className="backLink text-dark">Back</Link>
                                 <hr />
-
                                 <div className="form-group formBoxCountry">
                                     <FormInput
                                         label={'Employee Name'}
@@ -208,6 +174,7 @@ function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmplo
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
+                                        readOnly={true}
                                     />
                                     <FormInput
                                         label={'Designation'}
@@ -218,9 +185,8 @@ function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmplo
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
+                                        readOnly={true}
                                     />
-                                    
-                                        
                                     <FormInput
                                         label={'Department'}
                                         placeholder={'Department'}
@@ -230,27 +196,30 @@ function TASalaryForm2({ cancel, mode, isCode, page, Red_AppointSalary, GetEmplo
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
+                                        readOnly={true}
                                     />
                                 </div>
                                 <h4 className="text-dark">Salary Break Up</h4>
                                 <hr />
-                                <div className="form-group formBoxCountry">
+                                <div className="">
                                     <Table
                                         columns={columns}
                                         loading={Red_AppointSalary?.loading}
-                                        dataSource={Red_AppointSalary?.getAllowance?.data}
+                                        dataSource={allownceData?.data}
                                     />
+                                    <span>Total Amount</span>
+                                    <span>{1000}</span>
                                 </div>
                                 <div className='CountryBtnBox'>
                                     {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}
                                     <CancelButton onClick={EditBack} title={'cancel'} />
                                     <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </>
     );
 }

@@ -92,7 +92,8 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
         control,
         formState: { errors },
         handleSubmit,
-        reset
+        reset,
+        setValue
     } = useForm({
         defaultValues: {
             month: "",
@@ -102,6 +103,10 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
         resolver: yupResolver(AddLoans),
     });
 
+    useEffect(() => {
+        setValue("month",monthList)
+        setValue("year",monthSalary)
+    },[setValue,monthList,monthSalary])
 
 
     const Request = async (data) => {

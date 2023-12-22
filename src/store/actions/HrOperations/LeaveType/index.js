@@ -7,7 +7,6 @@ import {
 import baseUrl from "../../../../config.json";
 
 // Get Api======================
-
 export const GetLeaveTypeData = (params) => async (dispatch) => {
   try {
     dispatch({
@@ -51,7 +50,6 @@ export const GetLeaveTypeData = (params) => async (dispatch) => {
 };
 
 // Get By ID API====================
-
 export const GetLeaveTypeById = (body) => async (dispatch) => {
   try {
     dispatch({
@@ -98,7 +96,6 @@ export const GetLeaveTypeById = (body) => async (dispatch) => {
 };
 
 // Delete APi===================
-
 export const DeleteFunLeaveType = (body) => async () => {
   const response = await fetch(`${baseUrl.baseUrl}/employment_leave_type/DeleteLeaveType`, {
     method: "POST",

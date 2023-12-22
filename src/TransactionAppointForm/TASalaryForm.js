@@ -103,7 +103,7 @@ function TASalaryForm() {
         setAllowanceData(response.data[0])
         var temp = []
         if (response.data[0].length > 0) {
-          for (var i of response.data[0]) {
+          for (var i of response.data[0]){
             var obj = {
               "code": i.allowance_code,
               "amount": 0

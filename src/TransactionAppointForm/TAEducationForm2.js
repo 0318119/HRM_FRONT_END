@@ -183,7 +183,7 @@ function TAEducationForm2({
                 <div className="row">
                     <div className="col-12 maringClass">
                         <div>
-                            <h2 className="text-dark"> Transaction - Education</h2>
+                            <h2 className="text-dark">Education</h2>
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h4 className="text-dark">Employee Information</h4>
                                 <Link to="/Appointment" className="backLink text-dark">Back</Link>

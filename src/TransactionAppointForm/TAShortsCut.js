@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/TAShortsCut.css";
 import Header from "../components/Includes/Header";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BsPlus as Plus_ico } from 'react-icons/bs'
 import { RxDashboard as RxDashboard_ico } from 'react-icons/rx'
-import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
-import { FaListAlt } from "react-icons/fa";
-import { RiFileListFill } from "react-icons/ri";
+import { Space, Table,} from 'antd';
 import { message } from 'antd';
+import baseUrl from "../config.json";
+import {getToken} from "../Token/index";
+// import { validateToken } from '../Token/index';
+
 const config = require('../config.json')
 
 
@@ -38,6 +40,8 @@ function TAShortsCut() {
     })
   }
 
+
+
   const columns = [
     {
       title: 'Task Name',
@@ -64,16 +68,28 @@ function TAShortsCut() {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <Link to={`/LeaveSummary?userId=${data.Tran_Code}`} target="_blank" 
-            style={{ color: "white",background: "#014F86",borderRadius: "5px",padding: "8px 20px" }}>View
+          <Link to={`/LeaveSummary?userId=${data.Tran_Code}`} target="_blank"
+            style={{ color: "white", background: "#014F86", borderRadius: "5px", padding: "8px 20px" }}>View
           </Link>
         </Space>
       ),
     }
   ];
 
+  const checkTokenValidity = async () => {
+    try {
+      const tokenValidationResult = await getToken();
+      console.log("Token validation result:", tokenValidationResult);
+      if(tokenValidationResult){return tokenValidationResult}
+      else{return tokenValidationResult?.message}
+    } catch (error) {
+      console.error("Error checking token validity:", error.message);
+    }
+  };
+
   useEffect(() => {
     GetTask()
+    checkTokenValidity();
   }, [])
   return (
     <>
@@ -83,25 +99,33 @@ function TAShortsCut() {
       <div className="container maringClass tranAppointBgColor mb-5">
         <div className="row">
           <div className="col-md-6 p-0"><h5 className="text-dark"><b>Dashboard</b></h5></div>
-          {
-            localStorage.getItem("User_Type") == 2 ?
-            <div className="col-md-6 d-flex justify-content-end align-item-center">
-              <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
-                    background: "rgb(229 221 221)",
-                    padding: "6px 6px",
-                    borderRadius: "4px",
-                    fontSize: "14px",
-              }}><b>Attendance excel report</b></Link>
-            </div> : null
-          }
-          
+          <div className="col-md-6 d-flex justify-content-end align-item-center">
+            {
+              localStorage.getItem("User_Type") == 2 ?
+                <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
+                  background: "rgb(229 221 221)",
+                  padding: "6px 6px",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+                  textDecoration: "none",
+                  marginRight: "5px"
+                }}><b>Attendance excel report</b></Link> : null
+            }
+            <Link to="/Get_Attendance" className="text-dark" style={{
+              background: "rgb(229 221 221)",
+              padding: "6px 6px",
+              borderRadius: "4px",
+              fontSize: "14px",
+              textDecoration: "none",
+            }}><b>Attendance report</b></Link>
+          </div>
         </div>
         <hr />
         <div className="row justify-content-center">
           <div className="col-lg-3 mt-5">
             <Link to={'/Dashboard'} className="dashBoxes">
-                <RxDashboard_ico />
-                <span>Attendance</span>
+              <RxDashboard_ico />
+              <span>Attendance</span>
             </Link>
           </div>
           <div className="col-lg-3 mt-5">
@@ -128,13 +152,13 @@ function TAShortsCut() {
         <div className="row">
           <div className="col-lg-12">
             <div>
-                <Table 
-                  columns={columns} 
-                  loading={isLoading}
-                  dataSource={isTaskData}
-                  scroll={{ x: 10 }}
-                  pagination={false}
-                />
+              <Table
+                columns={columns}
+                loading={isLoading}
+                dataSource={isTaskData}
+                scroll={{ x: 10 }}
+                pagination={false}
+              />
             </div>
           </div>
         </div>

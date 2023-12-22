@@ -139,12 +139,9 @@ const routing = () => {
             localStorage.getItem('access_token') !== null &&
             localStorage.getItem('access_token') !== "" ?
             <> */}
-        {/*==================Forget Password============*/}
         <Route path="/Forgetpassword" element={<Forgetpassword />} />
         <Route path="/VerifyOTP" element={<VerifyOTP />} />
         <Route path="/Updatepassword" element={<Updatepassword />} />
-        {/*==================Forget Password End============*/}
-
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/Appointment" element={<Appointment />} />
         <Route path="/TAPersonalform" element={<TAPersonalform />} />

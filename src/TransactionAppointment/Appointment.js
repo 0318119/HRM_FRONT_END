@@ -6,10 +6,7 @@ import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
-import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
-import AppointExpData from "../TransactionAppointForm/AppointExpData";
 import TASalary from '../TransactionAppointForm/TASalaryForm2';
-import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -44,7 +41,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [getAppointStatus, setgetAppointStatus] = useState([]);
     const [isFileData, setFileData] = useState([])
 
-    const EditPage = (mode, code) => {
+    const EditPage = (mode, code ) => {
         setCode(code);
         setMode(mode);
         // setCode2(code2);
@@ -127,13 +124,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Exprience",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link
+                    <Link
                         to={`/TAExprienceForm?userId=${data.Sequence_no}`}
                     >
-                        <BusinessCenterIcon className="List_ico" />
-                    </Link> */}
-                    <Link onClick={() => EditPage("EditExprience", data?.Sequence_no)} >
-                        <BusinessCenterIcon className="List_ico" />
+                        <BusinessCenterIcon className="List_ico" />{" "}
                     </Link>
                 </Space>
             ),
@@ -145,9 +139,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                     <Link to={`/TAppointmentMasterPayroll?userId=${data.Sequence_no}`}>
                         <WbSunnyIcon className="List_ico" />
                     </Link>
-                    {/* <Link onClick={() => EditPage("EditPayroll", data?.Sequence_no)} >
-                        <WbSunnyIcon className="List_ico" />
-                    </Link> */}
                 </Space>
             ),
         },
@@ -198,7 +189,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
-
+    
 
     async function AppointLetter(id) {
         await fetch(
@@ -413,7 +404,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                         {mode == "read" && (
                             <>
                                 <div className="AppointmentFlexBox">
-                                    <h4 className="text-dark">Transaction - Appointment</h4>
+                                    <h4 className="text-dark">Appointment</h4>
                                     <div className="AppointmentsearchBox">
                                         <Input
                                             placeholder={"Search Here..."}
@@ -446,13 +437,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                     }}
                                 />
                             )}
-                            {mode == "create" ? <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
+                            {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditSalary" && <TASalary cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
+
                         </div>
                     </div>
                 </div>

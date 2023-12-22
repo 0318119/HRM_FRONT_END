@@ -71,7 +71,8 @@ export const Login = () => {
         setBtnEnaledAndDisabled(false);
         if (response.success) {
           showAlert(response.message, "success")
-          localStorage.setItem("refresh", response.referesh_token);
+          console.log("response.referesh_token",response?.refresh_token)
+          localStorage.setItem("refresh", response.refresh_token);
           localStorage.setItem("access_token", response.access_token);
           localStorage.setItem("Emp_code", response.data[0].Emp_code);
           localStorage.setItem("company_code", response.data[0].company_code);

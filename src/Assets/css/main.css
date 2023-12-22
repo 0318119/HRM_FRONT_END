@@ -2,28 +2,22 @@
 
 
 h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,button,div{ 
-    /* font-family: 'Poppins', sans-serif; */
-    /* outline: none; */
-    /* text-decoration: none; */
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    text-decoration: none;
 }
 button,h1,h2,h3,h4,h5,h6{
     color: white;
 }
-/* thead, tbody, tfoot, tr, td, th {
-    border-color: #e5e7eb;
-    border-style: solid ;
-    border-width: 1px;
-    border-top: 1px solid #e5e7eb !important;
-} */
 ul,li{
     list-style: none;
 }
 span,strong{
     display: block;
 }
-/* body{
+body{
     overflow-x: clip !important;
-} */
+}
 
 .editBtn{
     background-color: transparent;

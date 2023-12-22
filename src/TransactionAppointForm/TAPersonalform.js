@@ -590,7 +590,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
           <div className="col-12 maringClass">
             <div>
               <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Transaction Appointment (Personal)</h4>
+                <h4 className="text-dark">Appointment (Personal)</h4>
                 <Link to="/Appointment" className="backLink text-dark">Back</Link>
                 <hr />
 
