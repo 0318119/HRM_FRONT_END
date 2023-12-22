@@ -76,21 +76,22 @@ function TAShortsCut() {
     }
   ];
 
-  const checkTokenValidity = async () => {
-    try {
-      const tokenValidationResult = await getToken();
-      console.log("Token validation result:", tokenValidationResult);
-      if(tokenValidationResult){return tokenValidationResult}
-      else{return tokenValidationResult?.message}
-    } catch (error) {
-      console.error("Error checking token validity:", error.message);
-    }
-  };
-
   useEffect(() => {
     GetTask()
-    checkTokenValidity();
   }, [])
+
+  
+  useEffect(() => {
+    const checkTokenValidity = async () => {
+      try {
+        const tokenValidationResult = await getToken();
+        console.log("token here....",tokenValidationResult)
+      } catch (error) {
+        console.error("Error checking token validity:", error);
+      }
+    };
+    checkTokenValidity();
+  }, []);
   return (
     <>
       <div>

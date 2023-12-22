@@ -24,6 +24,7 @@ function TASalaryForm2({
     const empInfoCall = Red_AppointSalary?.data?.[0]?.res
     const [isFirstTime,setFirstTime] = useState("N")
     const [isLoading, setLoading] = useState(false)
+    const [isTotal,setTotal] = useState(0)
 
     const EditBack = () => {
         cancel('read')
@@ -35,6 +36,7 @@ function TASalaryForm2({
         if(getAllowanceAmount?.data[0]?.length == 0){
             if (allownceData?.data?.length > 0) {
                 for (var i of allownceData?.data) {
+                    i.amount = 0
                     var obj = {
                         "code": i?.allowance_code,
                         "amount": 0
@@ -50,19 +52,32 @@ function TASalaryForm2({
     // IN THIS BELOW CODE SHOW OF JUST AMOUNT =================================
     useEffect(() => {
         const temp = []
-        var tempTotal = 0
+        
         if (getAllowanceAmount?.data?.length > 0) {
             for (var i of getAllowanceAmount?.data[0]) {
-                tempTotal = tempTotal + parseInt(i?.Amount)
+                // tempTotal = tempTotal + parseInt(i?.Amount)
                 temp.push({
                     "code": i?.Allowance_code,
                     "amount": i?.Amount
                 })
                 setFirstTime("N")
                 setpostAllownces(temp)
+                // setTotal(tempTotal)
             }
         }
     }, [getAllowanceAmount,allownceData])
+
+
+    useEffect(() => {
+        var tempTotal = 0
+        for (var i of postAllownces) {
+            tempTotal = tempTotal + parseInt(i?.amount)
+            setTotal(tempTotal)
+            console.log("tempTotal",tempTotal)
+        }
+    },[postAllownces,isTotal])
+
+
 
     // SET EMPLYEE INFO WHEN SHOW ABOVE ON PAGE =========
     useEffect(() => {
@@ -127,12 +142,13 @@ function TASalaryForm2({
             render: (data, Amount, index,) => {
               return (
                 <>
+                {/* <span>{data?.allowance_code}</span> */}
                 <input
                   className="form-control"
-                  defaultValue={data?.amount}
+                //   defaultValue={data?.allowance_code}
                   type="number"
                   placeholder="Amount"
-                  name={data?.Allowance_code}
+                  name={data?.allowance_code}
                   onChange={(e) => {
                     postAllownces[index].amount = e.target.value
                     setpostAllownces([...postAllownces])
@@ -208,7 +224,7 @@ function TASalaryForm2({
                                         dataSource={allownceData?.data}
                                     />
                                     <span>Total Amount</span>
-                                    <span>{1000}</span>
+                                    <span>{isTotal}</span>
                                 </div>
                                 <div className='CountryBtnBox'>
                                     {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}

@@ -42,7 +42,7 @@ const Header = (props) => {
         }).then(response => {
           return response.json()
         }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
+          if (response.messsage == "timeout error") {  }
           else {
             localStorage.setItem("refresh", response.referesh_token);
             localStorage.setItem("access_token", response.access_token);
@@ -55,8 +55,9 @@ const Header = (props) => {
           setLoading(false);
         });
       }
+      // navigate("/");
       else {
-        if (response.messsage == "timeout error") { navigate("/"); }
+        if (response.messsage == "timeout error") {  }
         else {
           setMultilevel(response.data)
           setDataLoader(true);
