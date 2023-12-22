@@ -95,7 +95,7 @@ import AddDeduction from '../payroll/pages/transactionPosting/addDeduction/addDe
 import AddPayroll from '../payroll/pages/transactionPosting/addPayroll/addPayroll'
 import AddPayrollMethod from '../payroll/pages/transactionPosting/payrollMethod/addpayrollMethod'
 import AddPayrollMethodPdf from '../payroll/pages/transactionPosting/pdfRender/index'
-import Earnings from '../Master_Maintaince/Earnings';
+import Earning_Master from '../Master_Maintaince/Earning_Master';
 import PaySlip from '../payroll/pages/PaySlip';
 import TaxReport from '../payroll/pages/transactionPosting/taxReport/taxReport';
 import JV_Code from '../payroll/pages/Setup/JV_Code/index'
@@ -172,8 +172,7 @@ const routing = () => {
         <Route path="/Previous_Employers" element={<Previous_Employers />} />
         <Route path="/Transportation" element={<Transportation />} />
         <Route path="/Institution" element={<Institution />} />
-        <Route path="/LateArrival" element={<LateArrival />} />
-        <Route path="/GenerateLateArrival" element={<GenerateLateArrival />} />
+        <Route path="/Late_Arrival" element={<GenerateLateArrival />} />
         <Route path="/Resignation" element={<Resignation />} />
         <Route path="/Religion" element={<Religion />} />
         <Route path="/Locations" element={<Locations />} />
@@ -191,13 +190,13 @@ const routing = () => {
         <Route path="/Leave_Applications" element={<Leave_Applications />} />
         <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
         <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
-        <Route path="/Leave_Year_End" element={<Leave_Year_End />} />
+        <Route path="/Leave_Year_End" element={<Leave_Year_End />} /> {/*check*/}
         <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
         <Route path="/Leave_Report_Balance" element={<Leave_Report_Balance />} />
         <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
         <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
         <Route path="/LeaveSummary" element={<LeaveSummary />} />
-        <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
+        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
         <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
         <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
         <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
@@ -249,11 +248,11 @@ const routing = () => {
         <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
         <Route path="/payroll/report/taxReport" element={<TaxReport />} />
         <Route path="/payroll/report/SalaryOnHold" element={<SalaryOnHold />} />
-        <Route path="/Earnings" element={<Earnings />} />
+        <Route path="/Earning_Master" element={<Earning_Master />} />
         <Route path="/JV_Codes" element={<JV_Code />} />
         <Route path="IncomeTax_Columns" element={<Income_Tax />} />
         <Route path="Bank_Branches" element={<Bank_Branches />} />
-        <Route path="/Earnings" element={<Earnings />} />
+        {/* <Route path="/Earnings" element={<Earnings />} /> */}
         <Route path="/Payroll_Master" element={<Payroll_Master />} />
         <Route path="/Tax_Structure" element={<TaxStructure />} />
         <Route path="/Bank" element={<Bank />} />

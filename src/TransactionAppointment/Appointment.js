@@ -8,6 +8,7 @@ import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
 import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
 import AppointExpData from "../TransactionAppointForm/AppointExpData";
+import AppointFamiltyData from "../TransactionAppointForm/AppointFamiltyData";
 import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
@@ -164,7 +165,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Family",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TAFamilyForm?userId=${data.Sequence_no}`}>
+                    {/* <Link to={`/TAFamilyForm?userId=${data.Sequence_no}`}>
+                        <Diversity3Icon className="List_ico" />
+                    </Link> */}
+                    <Link onClick={() => EditPage("EditFamily", data?.Sequence_no)} >
                         <Diversity3Icon className="List_ico" />
                     </Link>
                 </Space>
@@ -451,6 +455,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditFamily" && <AppointFamiltyData cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>

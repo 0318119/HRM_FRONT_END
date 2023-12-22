@@ -1,20 +1,18 @@
 import {
-    GET_APPOIN_PAYROLL_DATA,
-    GET_APPOIN_PAYROLL_DATA_START,
-    GET_APPOIN_PAYROLL_INFO_DATA,
-    GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA,
-    GET_APPOIN_PAYROLL_DATA_SINGLE,
-    GET_APPOIN_PAYROLL_DATA_END,
-} from "../../types.js";
+    GET_FAMILY_DATA,
+    GET_FAMILY_DATA_START,
+    GET_FAMILY_CHILDREN_DATA,
+    GET_FAMILY_MARRIAGE_DATA,
+    GET_FAMILY_DATA_SINGLE,
+    GET_FAMILY_DATA_END
 
+} from "../../types";
 import baseUrl from "../../../../config.json";
 
-
-
-export const GetEmployeeInfo = (params) => async (dispatch) => {
+export const GetEmployer = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_START,
+            type: GET_FAMILY_DATA_START,
             payload: true,
             loading: true,
         });
@@ -28,14 +26,14 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_INFO_DATA,
+                type: GET_FAMILY_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_DATA_END,
+                type: GET_FAMILY_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -43,7 +41,7 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_END,
+            type: GET_FAMILY_DATA_END,
             payload: false,
             loading: false,
         });
@@ -52,15 +50,14 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
 };
 
 
-
-export const GetModeOfPay = (params) => async (dispatch) => {
+export const GetMarriage = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_START,
+            type: GET_FAMILY_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/payment_mode/GetPaymentMode`, {
+        const response = await fetch(`${baseUrl.baseUrl}/marriages/GetTranMarriagesBySeqNo/${params}`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -70,14 +67,14 @@ export const GetModeOfPay = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_DATA,
+                type: GET_FAMILY_MARRIAGE_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_DATA_END,
+                type: GET_FAMILY_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -85,7 +82,7 @@ export const GetModeOfPay = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_END,
+            type: GET_FAMILY_DATA_END,
             payload: false,
             loading: false,
         });
@@ -94,14 +91,14 @@ export const GetModeOfPay = (params) => async (dispatch) => {
 };
 
 
-export const GetBankBranches = (params) => async (dispatch) => {
+export const GetChildren = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_START,
+            type: GET_FAMILY_DATA_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/banks/GetBankBranches`, {
+        const response = await fetch(`${baseUrl.baseUrl}/families/GetTranFamiliesBySeqNo/${params}`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -111,14 +108,14 @@ export const GetBankBranches = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_BANK_BRANCHES_DATA,
+                type: GET_FAMILY_CHILDREN_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_APPOIN_PAYROLL_DATA_END,
+                type: GET_FAMILY_DATA_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -126,7 +123,7 @@ export const GetBankBranches = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_APPOIN_PAYROLL_DATA_END,
+            type: GET_FAMILY_DATA_END,
             payload: false,
             loading: false,
         });
@@ -135,31 +132,19 @@ export const GetBankBranches = (params) => async (dispatch) => {
 };
 
 
-export const SavePayForm = (body) => async (dispatch) => {
-    const response = await fetch(`${baseUrl.baseUrl}/payroll/InsertPayroll`, {
+export const SaveMarriageForm = (body) => async (dispatch) => {
+    console.log(body, 'body')
+    const response = await fetch(`${baseUrl.baseUrl}/marriages/InsertTranMarriages`, {
         method: "POST",
         headers: {
             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "Sequence_no": body?.Sequence_no,
-            "Mode_Of_Payment": body?.Mode_Of_Payment,
-            "Recreation_Club_Flag": body?.Recreation_Club_Flag,
-            "Meal_Deduction_Flag": body?.Meal_Deduction_Flag,
-            "Union_Flag": body?.Union_Flag,
-            "Overtime_Flag": body?.Overtime_Flag,
-            "Incentive_Flag": body?.Incentive_Flag,
-            "Bonus_Type": body?.Bonus_Type,
-            "SESSI_Flag": body?.SESSI_Flag,
-            "EOBI_Flag": body?.EOBI_Flag,
-            "SESSI_Number": body?.SESSI_Number,
-            "EOBI_Number": body?.EOBI_Number,
-            "Account_Type1": body?.Account_Type1,
-            "Bank_Account_No1": body?.Bank_Account_No1,
-            "Branch_Code1": body?.Branch_Code1,
-            "Bank_Amount_1": body?.Bank_Amount_1,
-            "Bank_Percent_1": body?.Bank_Percent_1,
+            "Sequenceno": body?.Sequenceno,
+            "MarriageDate": body?.MarriageDate,
+            "Spausename": body?.Spausename,
+            "SpauseDOB": body?.SpauseDOB,
         })
     });
     const res = await response.json();

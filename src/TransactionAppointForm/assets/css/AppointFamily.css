@@ -1,0 +1,66 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.AppointFamilyFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AppointFamilyFlexBox .AppointFamilySearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.AppointFamilyFlexBox .AppointFamilySearchBox input {
+    min-width: 300px;
+}
+
+.formBoxDesignations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.DesignationsBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxDesignations div {
+    width: 50%;
+}
+
+.AppointFamilyFlexBox .AppointFamilySearchBox #inputBox {
+    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+    .AppointFamilyFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .AppointFamilyFlexBox .AppointFamilySearchBox {
+        width: 100%;
+    }
+
+    .AppointFamilyFlexBox .AppointFamilySearchBox #inputBox {
+        width: 100%;
+    }
+
+    .AppointFamilyFlexBox .AppointFamilySearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxDesignations div {
+        width: 100%;
+    }
+
+    .AppointFamilyFlexBox .AppointFamilySearchBox {
+        flex-wrap: wrap;
+    }
+}
