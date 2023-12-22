@@ -57,6 +57,8 @@ export const EmployeeSalaryAmount = (userId) => async (dispatch) => {
       loading: true,
     });
 
+    const accessToken = localStorage.getItem("access_token");
+
     const response = await fetch(
       `${baseUrl.baseUrl}/employee_salary/GetEmployeeSalaryBySeqNo/${userId}`,
       {
@@ -92,8 +94,8 @@ export const EmployeeSalaryAmount = (userId) => async (dispatch) => {
     });
     console.error('Caught error:', error);
   }
-
 };
+
 
 export const SalaryAlowanceCall = (userId) => async (dispatch) => {
   try {

@@ -373,3 +373,8 @@ export const GET_FAMILY_MARRIAGE_DATA = "GET_FAMILY_MARRIAGE_DATA";
 export const GET_FAMILY_CHILDREN_DATA = "GET_FAMILY_CHILDREN_DATA";
 export const GET_FAMILY_DATA_SINGLE = "GET_FAMILY_DATA_SINGLE";
 export const GET_FAMILY_DATA_END = "GET_FAMILY_DATA_END";
+// HRSETUPS ===> Experience_Report === 
+
+export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
+export const GET_Experience_Report_START = "GET_Experience_Report_START";
+export const GET_Experience_Report_END = "GET_Experience_Report_END";

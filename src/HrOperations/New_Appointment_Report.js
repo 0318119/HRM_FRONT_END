@@ -184,7 +184,7 @@ function New_Appointment_Report({
                 />
               </div>
               <div className="paySlipBtnBox">
-                <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                <SimpleButton type={'submit'} loading={isLoading} title="Download PDF" />
               </div>
             </form>
           </div>
