@@ -384,3 +384,12 @@ export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_EN
 export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
 export const GET_Experience_Report_START = "GET_Experience_Report_START";
 export const GET_Experience_Report_END = "GET_Experience_Report_END";
+
+// HR SETUP ===========> RetirementSeparationReport =========
+
+export const GET_RetirementSeparationReport_DATA = "GET_RetirementSeparationReport_DATA";
+export const GET_RetirementSeparationReport_DATA_START = "GET_RetirementSeparationReport_DATA_START";
+export const GET_RetirementSeparationReport_DATA_SINGLE = "GET_RetirementSeparationReport_DATA_SINGLE";
+export const GET_RetirementSeparationReport_DATA_END = "GET_RetirementSeparationReport_DATA_END";
+
+

@@ -127,6 +127,7 @@ import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Experience_Report from '../HrOperations/Experience_Report.js'
+import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 
 
 
@@ -220,7 +221,9 @@ const routing = () => {
         <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
         <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
         <Route path='/TranEducationReport' element={<TranEducationReport />} />
-        <Route path='/Experience_Report' element={<Experience_Report />} />  
+        <Route path='/Experience_Report' element={<Experience_Report />} />
+        <Route path='/RetirementSeparationReport' element={<RetirementSeparationReport />} />  
+        
         {/* payroll */}
         <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
         <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
