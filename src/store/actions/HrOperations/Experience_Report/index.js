@@ -1,4 +1,57 @@
+import {
+  GET_Experience_Report_DATA,
+  GET_Experience_Report_START,
+  GET_Experience_Report_END
+} from '../../../actions/types.js'
+
 import baseUrl from '../../../../config.json'
+
+
+
+export const GetExperienceAllEmp = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: GET_Experience_Report_START,
+      payload: true,
+      loading: true,
+    });
+
+    const response = await fetch(`${baseUrl.baseUrl}/employement_experience/GetEmployeeNamesTranExperience`, {
+      method: "GET",
+      headers: {
+        'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      const res = await response.json();
+      dispatch({
+        type: GET_Experience_Report_DATA,
+        payload: res,
+        loading: false,
+      });
+
+      console.log("Received payload:", res); 
+    } else {
+      const errorRes = await response.json();
+      dispatch({
+        type: GET_Experience_Report_END,
+        payload: errorRes,
+        loading: false,
+      });
+      console.error("Error response:", errorRes); 
+    }
+  } catch (error) {
+    dispatch({
+      type: GET_Experience_Report_END,
+      payload: false,
+      loading: false,
+    });
+    console.error("Fetch error:", error); 
+  }
+};
+
 
 
 export const PostExperiencePayload = (data) => async () => {
@@ -20,3 +73,5 @@ export const PostExperiencePayload = (data) => async () => {
       return res;
     }
   };
+
+  

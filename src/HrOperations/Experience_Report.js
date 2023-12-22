@@ -14,65 +14,70 @@ import LogoUrl from "../../src/Assets/Images/download.png"
 
 
 function Experience_Report({
+    GetExperienceAllEmp,
     Red_Experience_Report,
     PostExperiencePayload,
 }) {
     const [isLoading, setLoading] = useState(false);
     const [isFormSubmitted, setFormSubmitted] = useState(false);
-    const empData = Red_Experience_Report?.data?.[0]?.res?.data
-    const [isAppointmentData, setAppointmentData] = useState([])
+    const empData = Red_Experience_Report?.data?.data;
+    const [isExperienceReportData, setExperienceReportData] = useState([]);
+    const [currentDate, setCurrentDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [selectedEmployee, setSelectedEmployee] = useState('');
 
 
+    useEffect(() => {
+        const currentDate = new Date().toISOString().split('T')[0];
+        setCurrentDate(currentDate);
+        setToDate(currentDate); // Set the initial "To date" value
+    }, []);
 
+    // ===== SCHEMA =================
     const ExperienceSchema = yup.object().shape({
-        Emp_code: yup.string().required('Please Select To Emp Code'),
+        Emp_Code: yup.string().required('Please Select the employee'),
     });
-
     const {
         control,
         formState: { errors },
         handleSubmit,
+        setValue,
     } = useForm({
         defaultValues: {
-            Emp_code: '',
+            Emp_Code: 'defaultEmployeeCode', // Set the default employee code here
         },
         mode: 'onChange',
         resolver: yupResolver(ExperienceSchema),
     });
 
-    // const onSubmit = async (data) => {
-    //   setLoading(true);
-    //   try {
-    //     const isValid = await ExperienceSchema.validate(data);
-    //     if (isValid) {
-    //       const result = await PostExperiencePayload(data);
-    //       console.log(result, 'result');
-    //       if (result?.success) {
-    //         setAppointmentData(result?.data || []);
-    //         setFormSubmitted(true);
-    //         message.success('PDF is created, Wait PDf is under downloading...');
-    //         setTimeout(() => {
-    //           handleDownload()
-    //         }, 2000);
-    //       } else {
-    //         message.error(result?.message || result?.messsage);
-    //       }
-    //     }
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    //   setLoading(false);
-    // };
+    // GET ALL EMPLOYEE DATA =====================
+    useEffect(() => {
+        GetExperienceAllEmp();
+    }, [GetExperienceAllEmp]);
+    
+
+    // Set the default value for the Emp_code field
+    useEffect(() => {
+        if (empData && empData.length > 0) {
+            setValue('Emp_Code', empData[0].Emp_Code);
+        }
+    }, [empData, setValue]);
+
+
+    console.log(Red_Experience_Report, "Response")
+
     const onSubmit = async (data) => {
         setLoading(true);
         try {
             const isValid = await ExperienceSchema.validate(data);
             if (isValid) {
-                const result = await PostExperiencePayload(data);
+                const result = await PostExperiencePayload(data.Emp_Code);
                 if (result?.success) {
                     message.success('PDF is created, Wait PDF is under downloading...');
                     setFormSubmitted(true);
-                    setAppointmentData(result?.data); // Set the appointment data immediately
+                    isExperienceReportData(result?.data);
+                    setSelectedEmployee(data.Emp_Code);
+                    console.log("data.Emp_Code", data.Emp_Code)
                 } else {
                     message.error(result?.message || result?.messsage);
                 }
@@ -83,70 +88,80 @@ function Experience_Report({
         setLoading(false);
     };
 
-    useEffect(() => {
-        if (isFormSubmitted) {
-            handleDownload();
-        }
-    }, [isFormSubmitted]);
-
-    const checkPdf =
-        <Document >
+    const PdfData = (
+        <Document>
             <Page size="A4">
-                <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                        <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
-                        <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
-                            Experience REPORT
+                <View style={{ padding: 20, fontFamily: 'Helvetica' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Image src={LogoUrl} style={{ width: '80px', height: '30px', backgroundColor: 'yellow' }} />
+                        <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: '20px 0' }}>
+                            EXPERIENCE REPORT
                         </Text>
-
+                        <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
+                            DATED: {currentDate}
+                        </Text>
                     </View>
 
-                    {isAppointmentData?.map((item, index) => (
-                        <>
-                            <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '10', fontWeight: 'bold', margin: "20px 0" }}>
-                                Department :   {item.department}
-                            </Text>
-
-                            <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Code</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Name</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Designation</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>GG</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Date Of Appointment</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Supervisor</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>CC</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Location</Text>
-                                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Base City</Text>
+                    <View style={{ marginVertical: 20 }}>
+                        {isExperienceReportData?.map((item, index) => (
+                            <View key={index} style={{ marginBottom: 20 }}>
+                                <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 5 }}>{item?.Emp_name}</Text>
+                                <Text style={{ fontSize: 10, marginBottom: 10 }}>{item?.employeeDesig}</Text>
+                                <Text style={{ fontSize: 10, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Department:</Text> {item?.Dept_name}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Education:</Text> {item?.Edu_name}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Institution:</Text> {item?.Institution_Name}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Year:</Text> {item?.Edu_year}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Grade:</Text> {item?.Edu_Grade}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Top flag:</Text> {item?.Top_flag}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Grade Name:</Text> {item?.GradeName}
+                                </Text>
+                                <Text style={{ fontSize: 12, marginBottom: 5 }}>
+                                    <Text style={{ fontWeight: 'bold' }}>Location:</Text> {item?.Location}
+                                </Text>
                             </View>
-                            {item?.employees?.map((item, index) =>
-                                <View key={index} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#000000', alignItems: 'center', height: 24 }}>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpName ? item?.EmpName : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Designation ? item?.Designation : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.GG ? item?.GG : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.CC ? item?.CC : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Location ? item?.Location : null}</Text>
-                                    <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
-                                </View>
-                            )}
-                        </>
-                    ))}
+                        ))}
+                    </View>
                 </View>
             </Page>
         </Document>
 
+    );
+
+    useEffect(() => {
+        if (isExperienceReportData.length > 0) {
+            handleDownload();
+        }
+    }, [isExperienceReportData]);
+
     const handleDownload = async () => {
         try {
-            const pdfBlob = await pdf(checkPdf).toBlob();
-            saveAs(pdfBlob, 'generated.pdf');
+            if (!selectedEmployee) {
+                message.error('Please select an employee.');
+                return;
+            }
+            
+            // Generate PDF for the selected employee
+            const pdfBlob = await pdf(PdfData).toBlob();
+
+            // Save the PDF
+            saveAs(pdfBlob, `Employee_Report_${selectedEmployee}.pdf`);
         } catch (error) {
             console.error('Error downloading PDF:', error);
         }
     };
-
-
     return (
         <>
             <Header />
@@ -154,77 +169,29 @@ function Experience_Report({
                 <div className="row justify-content-center">
                     <div className="col-lg-8">
                         <form onSubmit={handleSubmit(onSubmit)} className="paySlipBox">
-                            <h4 className="text-dark">Experience</h4>
+                            <h4 className="text-dark"> EXPERIENCE REPORT</h4>
                             <div className="">
                                 <FormSelect
                                     errors={errors}
                                     control={control}
-                                    placeholder={'Emp Code'}
-                                    name={'Emp_code'}
-                                    label={'Emp Code'}
-                                    type="number"
+                                    id='Emp_Code'
+                                    placeholder={'Select Employee'}
+                                    label={'Select Employee'}
+                                    name='Emp_Code'
+                                    options={empData?.map(
+                                        (item) => ({
+                                            value: item.Emp_Code,
+                                            label: item.emp_name,
+                                        })
+                                    )}
                                 />
                             </div>
                             <div className="paySlipBtnBox">
-                                <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                <SimpleButton type={'submit'} onClick={handleDownload} loading={isLoading} title="Download PDF" />
                             </div>
                         </form>
                     </div>
                 </div>
-
-
-
-                {/* DON'T REMOVE THIS PDF BELOW CODE FROM HERE..... */}
-                {/* {isFormSubmitted && (
-          <div className="mt-5 row justify-content-center">
-            <PDFViewer height="750">
-              <Document >
-                <Page size="A4">
-                  <View>
-                    <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
-                      Employee Attendance PDF
-                    </Text>
-                    <View style={{ position: 'absolute', left: '10', top: '10' }}>
-                      <Image src={logoUrl} style={{ width: 50, height: 50 }} />
-                    </View>
-                    {isAppointmentData?.map((item, index) => (
-                      <>
-                        <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '12', fontWeight: 'bold', margin: "20px 0" }}>
-                          Department :   {item.department}
-                        </Text>
-
-                        <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Code</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Name</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Designation</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>GG</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Date Of Appointment</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Supervisor</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>CC</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Location</Text>
-                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Base City</Text>
-                        </View>
-                        {item.employees.map((item) =>
-                          <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpName ? item?.EmpName : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Designation ? item?.Designation : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.GG ? item?.GG : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.CC ? item?.CC : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Location ? item?.Location : null}</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
-                          </View>
-                        )}
-                      </>
-                    ))}
-                  </View>
-                </Page>
-              </Document>
-            </PDFViewer>
-          </div>
-        )} */}
             </div>
         </>
     );
@@ -236,4 +203,5 @@ function mapStateToProps({ Red_Experience_Report }) {
 
 export default connect(mapStateToProps, {
     PostExperiencePayload: Red_Experience_Report_Action.PostExperiencePayload,
+    GetExperienceAllEmp: Red_Experience_Report_Action.GetExperienceAllEmp,
 })(Experience_Report);
