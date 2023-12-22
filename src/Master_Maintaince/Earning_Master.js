@@ -10,7 +10,7 @@ import * as MASTEREARNING_ACTIONS from "../store/actions/MasterMaintaince/Master
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 
-const Earnings = ({ GetMasterEarningData, Red_MasterEarning }) => {
+const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     const [mode, setMode] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null);
@@ -142,4 +142,4 @@ function mapStateToProps({ Red_MasterEarning }) {
     return { Red_MasterEarning };
 }
 
-export default connect(mapStateToProps, MASTEREARNING_ACTIONS)(Earnings);
+export default connect(mapStateToProps, MASTEREARNING_ACTIONS)(Earning_Master);

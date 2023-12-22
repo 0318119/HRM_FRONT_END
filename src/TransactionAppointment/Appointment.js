@@ -156,7 +156,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Family",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TAFamilyForm?userId=${data.Sequence_no}`}>
+                    {/* <Link to={`/TAFamilyForm?userId=${data.Sequence_no}`}>
+                        <Diversity3Icon className="List_ico" />
+                    </Link> */}
+                    <Link onClick={() => EditPage("EditFamily", data?.Sequence_no)} >
                         <Diversity3Icon className="List_ico" />
                     </Link>
                 </Space>

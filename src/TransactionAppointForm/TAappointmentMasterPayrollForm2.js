@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import * as AppointPayroll_Action from "../store/actions/Appointments/AppointPayroll/index";
@@ -44,8 +44,8 @@ function TAappointmentMasterPayrollForm2({
         Incentive_Flag: yup.string().required("Incentive_Flag is required"),
         SESSI_Flag: yup.string().required("SESSI_Flag is required"),
         EOBI_Flag: yup.string().required("EOBI_Flag is required"),
-        SESSI_Number: yup.string().required("SESSI_Number is required"),
-        EOBI_Number: yup.string().required("EOBI_Number is required"),
+        SESSI_Number: yup.string().notRequired("SESSI_Number is required"),
+        EOBI_Number: yup.string().notRequired("EOBI_Number is required"),
         Account_Type1: yup.string().required("Account_Type1 is required"),
         Bank_Account_No1: yup.string().required("Bank_Account_No1 is required"),
         Branch_Code1: yup.string().required("Branch_Code1 is required"),
@@ -53,13 +53,12 @@ function TAappointmentMasterPayrollForm2({
         Bank_Percent_1: yup.string().required("Bank_Percent_1 is required"),
 
     });
-   
+
     const submitForm = async (data) => {
         try {
             const isValid = await AppointPayrollSchema.validate(data);
             if (isValid) {
-                // SaveForm(data)
-                console.log(data ,'data')
+                SaveForm(data)
             }
         } catch (error) {
             console.error(error);
@@ -78,24 +77,38 @@ function TAappointmentMasterPayrollForm2({
         resolver: yupResolver(AppointPayrollSchema),
     });
 
+
+
+    const watchSESSIFlag = useWatch({
+        control,
+        name: 'SESSI_Flag',
+        defaultValue: '', 
+    });
+    const watchEOBIFlag = useWatch({
+        control,
+        name: 'EOBI_Flag',
+        defaultValue: '', 
+    });
+
+
+
     useEffect(() => {
+
         reset(
             {
-                Dept_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Dept_name,
-                Desig_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Desig_name,
-                Emp_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.Emp_name
-
+                Dept_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0]?.Dept_name,
+                Desig_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0]?.Desig_name,
+                Emp_name: Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0]?.Emp_name
             },
         )
 
-    }, [Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0]])
+    }, [Red_AppointPayroll?.GetInfo?.[0]?.res?.data[0]])
 
-    console.log(Red_AppointPayroll?.GetInfo?.[0]?.res?.data?.[0] , 'response')
+
+
 
     const modeOFPay = Red_AppointPayroll?.data?.[0]?.res?.data?.[0]
     const Bandbranch = Red_AppointPayroll?.GetBB?.[0]?.res?.data?.[0]
-
-    console.log(Red_AppointPayroll, 'Red_AppointPayroll')
 
     useEffect(() => {
         GetModeOfPay()
@@ -108,37 +121,36 @@ function TAappointmentMasterPayrollForm2({
         try {
             const response = await SavePayForm({
                 Sequence_no: isCode,
-                Mode_Of_Payment: data?.EmployerCode,
-                Recreation_Club_Flag: data?.designation,
-                Meal_Deduction_Flag: data?.department,
-                Union_Flag: data?.Start_Date,
-                Overtime_Flag: data?.End_Date,
-                Incentive_Flag: data?.SubmitFlag,
-                Bonus_Type: data?.SubmitFlag,
-                SESSI_Flag: data?.SubmitFlag,
-                EOBI_Flag: data?.SubmitFlag,
-                SESSI_Number: data?.SubmitFlag,
-                EOBI_Number: data?.SubmitFlag,
-                Account_Type1: data?.SubmitFlag,
-                Bank_Account_No1: data?.SubmitFlag,
-                Branch_Code1: data?.SubmitFlag,
-                Bank_Amount_1: data?.SubmitFlag,
-                Bank_Percent_1: data?.SubmitFlag,
+                Mode_Of_Payment: data?.Mode_Of_Payment,
+                Recreation_Club_Flag: data?.Recreation_Club_Flag,
+                Meal_Deduction_Flag: data?.Meal_Deduction_Flag,
+                Union_Flag: data?.Union_Flag,
+                Overtime_Flag: data?.Overtime_Flag,
+                Incentive_Flag: data?.Incentive_Flag,
+                Bonus_Type: "0",
+                SESSI_Flag: data?.SESSI_Flag,
+                EOBI_Flag: data?.EOBI_Flag,
+                SESSI_Number: data?.SESSI_Flag === "Y" ?  data?.SESSI_Number:'',
+                EOBI_Number: data?.EOBI_Flag === "Y" ?  data?.EOBI_Number : '',
+                Account_Type1: data?.Account_Type1,
+                Bank_Account_No1: data?.Bank_Account_No1,
+                Branch_Code1: data?.Branch_Code1,
+                Bank_Amount_1: data?.Bank_Amount_1,
+                Bank_Percent_1: data?.Bank_Percent_1,
             });
 
             if (response && response.success) {
                 messageApi.success("Save Exprience");
                 setTimeout(() => {
                     cancel('read')
-                    // setSavedEdu(true)
                 }, 3000);
             } else {
-                const errorMessage = response?.message || 'Failed to Save Exprience';
+                const errorMessage = response?.message || 'Failed to Save Payroll';
                 messageApi.error(errorMessage);
             }
         } catch (error) {
-            console.error("Error occurred while changing Exprience:", error);
-            messageApi.error("An error occurred while Save Exprience");
+            console.error("Error occurred while Saving Payroll:", error);
+            messageApi.error("An error occurred while Save Payroll");
         }
     };
 
@@ -165,7 +177,7 @@ function TAappointmentMasterPayrollForm2({
                                         id="Emp_name"
                                         name="Emp_name"
                                         type="text"
-                                        readOnly={true}
+                                        readOnly
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -176,7 +188,7 @@ function TAappointmentMasterPayrollForm2({
                                         id="Desig_name"
                                         name="Desig_name"
                                         type="text"
-                                        readOnly={true}
+                                        readOnly
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -187,7 +199,7 @@ function TAappointmentMasterPayrollForm2({
                                         id="Dept_name"
                                         name="Dept_name"
                                         type="text"
-                                        readOnly={true}
+                                        readOnly
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -229,16 +241,18 @@ function TAappointmentMasterPayrollForm2({
                                         errors={errors}
                                         control={control}
                                     />
-                                    <FormInput
-                                        label={'SE&SI'}
-                                        placeholder='SE&SI'
-                                        id="SESSI_Flag"
-                                        name="SESSI_Flag"
-                                        type="number"
-                                        showLabel={true}
-                                        errors={errors}
-                                        control={control}
-                                    />
+                                    {watchSESSIFlag === 'Y' && (
+                                        <FormInput
+                                            label={'SE&SI'}
+                                            placeholder='SE&SI'
+                                            id="SESSI_Number"
+                                            name="SESSI_Number"
+                                            type="number"
+                                            showLabel={true}
+                                            errors={errors}
+                                            control={control}
+                                        />
+                                    )}
                                     <FormSelect
                                         label={'Over Time'}
                                         placeholder='select Over Time'
@@ -246,12 +260,12 @@ function TAappointmentMasterPayrollForm2({
                                         name="Overtime_Flag"
                                         options={[
                                             {
-                                                value: 'M',
-                                                label: 'Male',
+                                                value: 'Y',
+                                                label: 'Yes',
                                             },
                                             {
-                                                value: "F",
-                                                label: 'Female',
+                                                value: "N",
+                                                label: 'No',
                                             },
                                         ]}
                                         showLabel={true}
@@ -265,12 +279,12 @@ function TAappointmentMasterPayrollForm2({
                                         name="Recreation_Club_Flag"
                                         options={[
                                             {
-                                                value: 'M',
-                                                label: 'Male',
+                                                value: 'Y',
+                                                label: 'Yes',
                                             },
                                             {
-                                                value: "F",
-                                                label: 'Female',
+                                                value: "N",
+                                                label: 'No',
                                             },
                                         ]}
                                         showLabel={true}
@@ -297,19 +311,20 @@ function TAappointmentMasterPayrollForm2({
                                         errors={errors}
                                         control={control}
                                     />
+                                    {watchEOBIFlag === 'Y'  &&  (
+                                        <FormInput
+                                            label={'EOBI Number'}
+                                            placeholder='EOBI Number'
+                                            id="EOBI_Number"
+                                            name="EOBI_Number"
+                                            type="Number"
+                                            showLabel={true}
+                                            errors={errors}
+                                            control={control}
+                                        />
+                                    )}
 
-                                    <FormInput
-                                        label={'EOBI Number'}
-                                        placeholder='EOBI Number'
-                                        id="EOBI_Number"
-                                        name="EOBI_Number"
-                                        type="Number"
-                                        showLabel={true}
-                                        errors={errors}
-                                        control={control}
-                                    />
-                                    
-                                    
+
                                     <FormSelect
                                         label={'Incentive'}
                                         placeholder='select Incentive'

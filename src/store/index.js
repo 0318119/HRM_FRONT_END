@@ -67,6 +67,7 @@ import Red_ServiceLengthReport from './reducers/HrOperations/ServiceLengthReport
 import Red_AppointExprience from "./reducers/Appointments/AppointmentExprience/index";
 import Red_AppointSalary from './reducers/Appointments/AppointSalary/index'
 import Red_AppointPayroll from "./reducers/Appointments/AppointPayroll/index";
+import Red_AppointFamily from "./reducers/Appointments/AppointFamily/index";
 
 const reducers = combineReducers({
   Transition_family,
@@ -140,7 +141,8 @@ const reducers = combineReducers({
   Red_ServiceLengthReport,
   Red_AppointSalary,
   Red_AppointExprience,
-  Red_AppointPayroll
+  Red_AppointPayroll,
+  Red_AppointFamily
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
