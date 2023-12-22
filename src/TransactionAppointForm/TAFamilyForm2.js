@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 
 
 function TAFamilyForm2({
+    SaveChildrenForm,
     SaveMarriageForm,
     Red_AppointFamily,
     GetEmployer,
@@ -45,12 +46,30 @@ function TAFamilyForm2({
 
     });
 
+    const AppoinTChildrenSchema = yup.object().shape({
+        FamMemberName: yup.string().required("FamMemberName required"),
+        FamMemberType: yup.string().required("FamMemberType is required"),
+        FamMemberDOB: yup.string().required("FamMemberDOB is required"),
+
+    });
+
     const submitForm = async (data) => {
         try {
             const isValid = await AppointFamilySchema.validate(data);
             if (isValid) {
                 SaveForm(data)
-                console.log(data , 'data')
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const submitFormChild = async (data) => {
+        try {
+            const isValid = await AppoinTChildrenSchema.validate(data);
+            if (isValid) {
+                SaveChildren(data)
+                console.log(data, 'data')
             }
         } catch (error) {
             console.error(error);
@@ -82,6 +101,9 @@ function TAFamilyForm2({
     }, [Red_AppointFamily?.data?.[0]?.res?.data?.[0]])
 
 
+    // const combinedSchema = yup.object().oneOf([AppointFamilySchema, AppoinTChildrenSchema]);
+
+
     const {
         control,
         formState: { errors },
@@ -90,7 +112,7 @@ function TAFamilyForm2({
     } = useForm({
         defaultValues: {},
         mode: "onChange",
-        resolver: yupResolver(AppointFamilySchema),
+        resolver: yupResolver(AppoinTChildrenSchema),
     });
 
 
@@ -100,13 +122,39 @@ function TAFamilyForm2({
         try {
             const response = await SaveMarriageForm({
                 Sequenceno: isCode2,
-                MarriageDate: data?.EmployerCode,
-                Spausename: data?.designation,
-                SpauseDOB: data?.department,
+                MarriageDate: data?.MarriageDate,
+                Spausename: data?.Spausename,
+                SpauseDOB: data?.SpauseDOB,
             });
 
             if (response && response.success) {
                 messageApi.success("Save Marriage");
+                setTimeout(() => {
+                    cancel('read')
+                    // setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Save Marriage';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing Marriage:", error);
+            messageApi.error("An error occurred while Save Marriage");
+        }
+    };
+
+   
+const SaveChildren = async (data) => {
+        try {
+            const response = await SaveChildrenForm({
+                Sequenceno: isCode2,
+                FamMemberType: data?.FamMemberType,
+                FamMemberName: data?.FamMemberName,
+                FamMemberDOB: data?.FamMemberDOB,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Save Child");
                 setTimeout(() => {
                     cancel('read')
                     // setSavedEdu(true)
@@ -207,7 +255,7 @@ function TAFamilyForm2({
                                     <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                                 </div>
                             </form>
-                            <form onSubmit={handleSubmit(submitForm)}>
+                            <form onSubmit={handleSubmit(submitFormChild)}>
 
                                 <h4 className="text-dark">Children History</h4>
                                 <hr />
@@ -231,11 +279,11 @@ function TAFamilyForm2({
                                         options={[
                                             {
                                                 value: 'M',
-                                                label: 'Married',
+                                                label: 'Male',
                                             },
                                             {
                                                 value: "N",
-                                                label: 'Unmarried',
+                                                label: 'Female',
                                             },
                                         ]}
                                         showLabel={true}

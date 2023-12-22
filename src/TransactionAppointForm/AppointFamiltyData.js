@@ -40,7 +40,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
 
-    // console.log(Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0], 'Red_AppointFamily')
+    console.log(Red_AppointFamily, 'Red_AppointFamily')
 
     const columns = [
         {
@@ -68,12 +68,12 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
+                        title="Delete the Marriage"
+                        description="Are you sure to delete the Marriage?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
+                            handleMarriageDelete(data?.Sequence_no)
                         }}
                     >
                         <button className="deleteBtn">
@@ -111,12 +111,12 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
+                        title="Delete the Child"
+                        description="Are you sure to delete the Child?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
+                            handleChlidDelete(data?.S_no, data?.Sequence_no)
                         }}
                     >
                         <button className="deleteBtn">
@@ -129,14 +129,57 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     ];
 
 
-    // DESIGNATION FORM DATA DELETE API CALL ===========================
-    async function handleConfirmDelete(id) {
+
+
+    async function handleMarriageDelete(Sequence_no) {
+        console.log(Sequence_no, 'Sequence_no')
         await fetch(
-            `${baseUrl.baseUrl}/employement_experience/deleteTranExperience`, {
+            `${baseUrl.baseUrl}/marriages/DeleteTranMarriages`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "id": id,
+                "Sequenceno": Sequence_no,
+            }),
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                messageApi.open({
+                    type: 'success',
+                    content: "You have successfully deleted",
+                });
+                setTimeout(() => {
+                    // GetEmployer({
+                    //     // pageSize: pageSize,
+                    //     // pageNo: 1,
+                    //     search: null
+                    // })
+                }, 3000);
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+        });
+    }
+
+    async function handleChlidDelete(S_no, Sequence_no) {
+        console.log(S_no, Sequence_no , 'asdfasdfef')
+        await fetch(
+            `${baseUrl.baseUrl}/families/DeleteTranFamilies`, {
+            method: "POST",
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "Sequenceno": Sequence_no,
+                "Sno": S_no
             }),
         }
         ).then((response) => {
