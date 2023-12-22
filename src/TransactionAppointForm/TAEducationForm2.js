@@ -64,6 +64,8 @@ function TAEducationForm2({
         GetInstituteData()
         GetGradeData()
         GetEducationSavedData(isCode2)
+        
+        // GetEducationSavedData(isCode)
     }, [])
   
     // console.log(Red_AppointEducation, 'check')

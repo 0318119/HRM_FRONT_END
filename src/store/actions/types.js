@@ -356,6 +356,8 @@ export const GET_EXPRIENCE_INFO_END = "GET_EXPRIENCE_INFO_END";
 
 export const GET_SALARY_DATA = "GET_SALARY_DATA";
 export const GET_SALARY_START = "GET_SALARY_START";
+export const GET_SALARY_ALLOWANCE_DATA = "GET_SALARY_ALLOWANCE_DATA";
+export const GET_SALARY_AMOUNT_DATA = "GET_SALARY_AMOUNT_DATA";
 export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
 export const GET_SALARY_END = "GET_SALARY_END";
 
@@ -366,3 +368,8 @@ export const GET_TranEducationReport_DATA = "GET_TranEducationReport_DATA";
 export const GET_TranEducationReport_DATA_START = "GET_TranEducationReport_DATA_START";
 export const GET_TranEducationReport_DATA_SINGLE = "GET_TranEducationReport_DATA_SINGLE";
 export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_END";
+// HRSETUPS ===> Experience_Report === 
+
+export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
+export const GET_Experience_Report_START = "GET_Experience_Report_START";
+export const GET_Experience_Report_END = "GET_Experience_Report_END";
