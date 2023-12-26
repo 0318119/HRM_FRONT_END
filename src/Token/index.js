@@ -26,14 +26,16 @@ export const getToken = async () => {
                 );
                 if(response.status === 200) {
                     const res = await response.json();
-                    localStorage.setItem("refresh",res?.refresh_token)
-                    localStorage.setItem("access_token",res?.access_token)
+                    localStorage.setItem("refresh", res?.refresh_token)
+                    localStorage.setItem("access_token", res?.access_token)
                     return res
                 }
-                else{window.location.href = '/'}
+                else{
+                    window.location.href = '/'
+                    localStorage.clear()
+                }
             }
         }
-
     } catch (error) {
         console.log(error);
     }

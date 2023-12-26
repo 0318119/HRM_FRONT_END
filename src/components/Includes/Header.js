@@ -127,8 +127,8 @@ const Header = (props) => {
               className="d-flex justify-content-center pt-2 w-100"
               style={{ background: "#262837" }}
             >
-              <div class="spinner-border text-primary" role="status">
-                <span class="sr-only"></span>
+              <div className="spinner-border text-primary" role="status">
+                <span className="sr-only"></span>
               </div>
             </div>
           )}

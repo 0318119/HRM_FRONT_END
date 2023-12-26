@@ -17,9 +17,11 @@ import { OrganizationChart } from 'primereact/organizationchart';
 export default function ChartFlow() {
   const [isChartData, setChartData] = useState([])
   const [user, setuser] = useState(localStorage.getItem('Emp_code'))
+  const [loading,setLoading] = useState(false)
 
   
-  const testData = async () => {
+  const ChartData = async () => {
+    setLoading(true)
     fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
       method: "POST",
       headers: {
@@ -33,28 +35,36 @@ export default function ChartFlow() {
       .then((response) => {
         if (response?.data?.length > 0 && response?.success) {
           const combineArrays = (currentArray, prevArrays) => {
+            console.log("first,",response?.data)
             return [...prevArrays, ...currentArray];
           };
           setChartData(combineArrays(response?.data, isChartData));
-          console.log("if",response)
-        }else if(response?.data?.length == 0 && response?.success){
-          console.log("else",response)
-          message.error(`don't exits Employee against this - Emp_code ${user}`)
         }
+        // else if(response?.data?.length == 0 && response?.success){
+        //   console.log("else",response)
+        //   message.error(`don't exits Employee against this - Emp_code ${user}`)
+        // }
         else {
           message.error(response?.message || response?.messsage)
         }
       }).catch((error) => {
         message.error(error?.message || error?.messsage)
       })
-    // .finally(() => { setLoading(false) })
+    .finally(() => { setLoading(false) })
   }
 
   useEffect(() => {
     if(user !== null){
-      testData()
+      ChartData()
     }
   }, [user])
+
+  useEffect(() => {
+    if(loading == true){
+      message.loading("Please wait...")
+    }
+  },[loading])
+
 
 
   const ParentSupervisor = isChartData.find(data => data.Supervisor_Code == null)
@@ -65,6 +75,7 @@ export default function ChartFlow() {
       image: false,
       parent: "parent",
       expanded: true,
+      show: supervisor?.show,
       Emp_code: supervisor?.Emp_code,
       children: [],
     };
@@ -135,7 +146,11 @@ export default function ChartFlow() {
             <span>{node.name ? `${node.name.slice(0, 10)}...` : "" || node.Label ? `${node.Label.slice(0, 10)}...` : ""}</span>
             <span>{node.designation ? `${node.designation.slice(0, 10)}...` : "" || node.Desig_name ? `${node.Desig_name.slice(0, 10)}...` : ""}</span>
           </div>
-          <button onClick={(e) => { setuser(e.target.getAttribute("data-id")) }} data-id={node.Emp_code}>more</button>
+          {
+            node.show ?
+            <button onClick={(e) => { setuser(e.target.getAttribute("data-id")) }} data-id={node.Emp_code}>more</button>
+            : null
+          }
       </div>
     );
 
@@ -146,11 +161,6 @@ export default function ChartFlow() {
       <div>
         <Header />
       </div>
-      {/* {loading &&
-          <div className='orgLoader'>
-            <Spin size="large" style={{ marginTop: "180px" }} />
-          </div>
-      } */}
       <div className="mainBox">
         <OrganizationChart value={data} nodeTemplate={nodeTemplate} />
       </div>
