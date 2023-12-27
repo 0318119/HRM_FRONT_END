@@ -1,0 +1,66 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.AppointExpFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AppointExpFlexBox .AppointExpSearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.AppointExpFlexBox .AppointExpSearchBox input {
+    min-width: 300px;
+}
+
+.formBoxDesignations {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.DesignationsBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxDesignations div {
+    width: 50%;
+}
+
+.AppointExpFlexBox .AppointExpSearchBox #inputBox {
+    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+    .AppointExpFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .AppointExpFlexBox .AppointExpSearchBox {
+        width: 100%;
+    }
+
+    .AppointExpFlexBox .AppointExpSearchBox #inputBox {
+        width: 100%;
+    }
+
+    .AppointExpFlexBox .AppointExpSearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxDesignations div {
+        width: 100%;
+    }
+
+    .AppointExpFlexBox .AppointExpSearchBox {
+        flex-wrap: wrap;
+    }
+}

@@ -10,7 +10,7 @@ import { FormCheckBox, FormInput } from '../../components/basic/input/formInput'
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, Get_Education_By_ID }) {
+function EducationForm({ cancel, mode, isCode, page,Red_Education, GetEducationData, Get_Education_By_ID }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -18,7 +18,6 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
     const EditBack = () => {
         cancel('read')
     }
-
 
     const submitForm = async (data) => {
         try {
@@ -38,12 +37,12 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
         reset
     } = useForm({
         defaultValues: {
-            Edu_code: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code ?
-                Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code : 0,
-            Edu_name: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_name,
-            Edu_abbr: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_abbr,
-            Edu_level_code: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_level_code,
-            Sort_key: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
+            Edu_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code ?
+                Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code : 0,
+            Edu_name: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_name,
+            Edu_abbr: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_abbr,
+            Edu_level_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_level_code,
+            Sort_key: Red_Education?.dataSingle?.[0]?.res?.data?.Sort_key,
         },
         mode: "onChange",
         resolver: yupResolver(EducationScheme),
@@ -69,18 +68,19 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
         } else {
             reset(
                 {
-                    Edu_code: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code ?
-                    Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_code : 0,
-                    Edu_name: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_name,
-                    Edu_abbr: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_abbr,
-                    Edu_level_code: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Edu_level_code,
+                    Edu_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code ?
+                    Red_Education?.dataSingle?.[0]?.res?.data?.Edu_code : 0,
+                    Edu_name: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_name,
+                    Edu_abbr: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_abbr,
+                    Edu_level_code: Red_Education?.dataSingle?.[0]?.res?.data?.Edu_level_code,
                     Sort_key: Red_Education?.dataSingle?.[0]?.res?.data?.[0]?.Sort_key,
                 },
             )
         }
-    }, [Red_Education?.dataSingle?.[0]?.res?.data?.[0]])
+    }, [Red_Education?.dataSingle?.[0]?.res?.data])
 
-    // EDUCATION LEVEL FORM DATA API CALL =========================== 
+
+    // EDUCATION FORM DATA API CALL =========================== 
     async function POST_Education_FORM(body) {
         setLoading(true)
         await fetch(
@@ -107,11 +107,11 @@ function EducationForm({ cancel, mode, isCode, Red_Education, GetEducationData, 
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
-                    // GetEducationData({
-                    //     pageSize: pageSize,
-                    //     pageNo: 1,
-                    //     search: null
-                    // })
+                    GetEducationData({
+                        pageSize: pageSize,
+                        pageNo: page,
+                        search: null
+                      })
                 }, 3000);
             }
             else {

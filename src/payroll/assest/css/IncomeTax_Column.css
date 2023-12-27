@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.IncomeTax_ColumnFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxIncomeTax_Column {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.IncomeTax_ColumnBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxIncomeTax_Column div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .IncomeTax_ColumnFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox {
+        width: 100%;
+    }
+
+    .IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .IncomeTax_ColumnFlexBox div {
+        width: 100%;
+    }
+
+    .IncomeTax_ColumnFlexBox .IncomeTax_ColumnsearchBox {
+        flex-wrap: wrap;
+    }
+}

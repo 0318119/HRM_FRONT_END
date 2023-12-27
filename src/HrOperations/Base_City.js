@@ -7,8 +7,15 @@ import Base_CityForm from "./form/Base_CityForm";
 import "./assets/css/Base_City.css";
 import { connect } from "react-redux";
 import * as BASE_CITY_ACTIONS from "../store/actions/HrOperations/Base_CIty/index";
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
+import { Popconfirm } from 'antd';
+import { message } from 'antd';
+import baseUrl from '../../src/config.json'
+
 
 const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [mode, setMode] = useState("read");
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
@@ -60,21 +67,69 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
         <Space size="middle">
           <button
             onClick={() => EditPage("Edit", data?.City_code)}
-            className="editBtn"
+            className="editBtn" 
           >
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+             <FaEdit />
           </button>
-          <button className="deleteBtn">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-          </button>
+
+          <Popconfirm
+            title="Delete the Cost Centre"
+            description="Are you sure to delete the Base City?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              handleConfirmDelete(data?.City_code)
+            }}
+          >
+            <button className="deleteBtn"><MdDeleteOutline /></button>
+          </Popconfirm>
+        
         </Space>
       ),
     },
   ];
+  
+    // BASE CITY Delete API CALL ===================================================
+    async function handleConfirmDelete(id) {
+      await fetch(
+        `${baseUrl.baseUrl}/cities/DeleteCity`, {
+        method: "POST",
+        headers: { "content-type": "application/json", accessToken : `Bareer ${get_access_token}` },
+        body: JSON.stringify({
+          "City_code": id,
+        }),
+      }
+      ).then((response) => {
+        return response.json();
+      }).then(async (response) => {
+        if (response.success) {
+            messageApi.open({
+              type: 'success',
+              content: "You have successfully deleted",
+            });
+            setTimeout(() => {
+              messageApi.destroy()
+              GetBaseCityData({ 
+                pageSize: pageSize,
+                pageNo: page,
+                search: null
+              })
+            }, 5000);
+        }
+        else {
+          messageApi.open({
+            type: 'error',
+            content: response?.message || response?.messsage,
+          });
+        }
+      }).catch((error) => {
+          messageApi.open({
+            type: 'error',
+            content: error?.message || error?.messsage,
+          });
+      });
+    }
 
-  //   useEffect(() => {
-  //     GetBaseCityData()
-  //   }, [])
 
   useEffect(() => {
     if (isSearchVal == "") {
@@ -99,6 +154,7 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
       <div>
         <Header />
       </div>
+      {contextHolder}
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
@@ -138,8 +194,8 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
                 }}
                 />
               )}
-              {mode == "create" && <Base_CityForm cancel={setMode} />}
-              {mode == "Edit" && <Base_CityForm cancel={setMode} />}
+              {mode == "create" && <Base_CityForm cancel={setMode} mode={mode} isCode={null}/>}
+              {mode == "Edit" && <Base_CityForm cancel={setMode} mode={mode} isCode={isCode}/>}
             </div>
           </div>
         </div>

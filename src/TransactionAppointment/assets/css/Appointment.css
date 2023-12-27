@@ -1,0 +1,63 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.AppointmentFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.AppointmentFlexBox .AppointmentsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+
+.AppointmentFlexBox .AppointmentsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxBase_City {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.BaseCItyBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxBase_City div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .AppointmentFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .AppointmentFlexBox .AppointmentsearchBox {
+        width: 100%;
+    }
+
+    .AppointmentFlexBox .AppointmentsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .AppointmentFlexBox .AppointmentsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxBase_City div {
+        width: 100%;
+    }
+
+    .AppointmentFlexBox .AppointmentsearchBox {
+        flex-wrap: wrap;
+    }
+}

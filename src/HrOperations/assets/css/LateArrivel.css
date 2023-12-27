@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.LateArrivalFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LateArrivalFlexBox .LateArrivalsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.LateArrivalFlexBox .LateArrivalsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxInstitution {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.InstitutionBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxInstitution div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .LateArrivalFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .LateArrivalFlexBox .LateArrivalsearchBox {
+        width: 100%;
+    }
+
+    .LateArrivalFlexBox .LateArrivalsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .LateArrivalFlexBox .LateArrivalsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxInstitution div {
+        width: 100%;
+    }
+
+    .LateArrivalFlexBox .LateArrivalsearchBox {
+        flex-wrap: wrap;
+    }
+}

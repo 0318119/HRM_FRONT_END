@@ -1,0 +1,61 @@
+.mainBox{
+    margin-top: 150px;
+    overflow: scroll;
+}
+.childBox{
+    height: 120px;
+    width: 300px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+}
+.childBox:after{
+    content: "";
+    position: absolute;
+    bottom: 40px;
+    height: 2px;
+    width: 100%;
+    background: #00000059;
+}
+.childBox img{
+    background: gray;
+    padding: 5px;
+    border-radius: 56%;
+    margin-right: 41px;
+    height: 70px;
+}
+.childBox span{
+    text-align: left;
+    font-size: large;
+    font-weight: 500;
+}
+.childBox button{
+    position: absolute;
+    bottom: -10px;
+    margin: 63px 0 0 0;
+    border: 0;
+    color: black;
+    padding: 5px 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    box-shadow: 12px 5px 10px -2px lightgray;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+}
+
+.p-organizationchart-node-content{
+    border-radius: 10px;
+    border: 2px solid #00000059;
+}
+.p-organizationchart .p-organizationchart-line-top{
+    border-top: 2px solid #00000059;
+}
+.p-organizationchart .p-organizationchart-line-left{
+    border-right: 2px solid #00000059;
+}
+.p-organizationchart .p-organizationchart-line-down {
+    background: #00000059 !important;
+    width: 4px;
+}

@@ -149,7 +149,7 @@ const Leave_Report_Detail = () => {
 
   async function GetLeaveCat() {
     await fetch(
-      `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategory`,
+      `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategoryWOP`,
       {
         method: "GET",
         headers: {
@@ -164,7 +164,7 @@ const Leave_Report_Detail = () => {
       .then(async (response) => {
         if (response.messsage == "unauthorized") {
           await fetch(
-            `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategory`,
+            `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategoryWOP`,
             {
               method: "GET",
               headers: {
@@ -190,8 +190,7 @@ const Leave_Report_Detail = () => {
               setInfoErr(error.message);
             });
         } else {
-          setGetLeaveCat(response.data[0]);
-          console.log(response.data[0], "leavecat")
+          setGetLeaveCat(response.data);
         }
       })
       .catch((error) => {
@@ -204,7 +203,7 @@ const Leave_Report_Detail = () => {
 
   async function GetLeaveType() {
     await fetch(
-      `${config["baseUrl"]}/employment_leave_type/GetLeaveType`,
+      `${config["baseUrl"]}/employment_leave_type/GetLeaveTypeWOP`,
       {
         method: "GET",
         headers: {
@@ -219,7 +218,7 @@ const Leave_Report_Detail = () => {
       .then(async (response) => {
         if (response.messsage == "unauthorized") {
           await fetch(
-            `${config["baseUrl"]}/employment_leave_type/GetLeaveType`,
+            `${config["baseUrl"]}/employment_leave_type/GetLeaveTypeWOP`,
             {
               method: "GET",
               headers: {
@@ -245,8 +244,8 @@ const Leave_Report_Detail = () => {
               setInfoErr(error.message);
             });
         } else {
-          setGetLeaveType(response.data[0]);
-          console.log(response.data[0], "Response")
+          setGetLeaveType(response.data);
+
         }
       })
       .catch((error) => {

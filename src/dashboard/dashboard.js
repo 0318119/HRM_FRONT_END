@@ -2,7 +2,11 @@ import React, {  useState } from "react";
 import Header from "../components/Includes/Header";
 import  Tabs from '../dashboard/tabs/tabs'
 import '../dashboard/assets/css/dashboard.css'
-import Attendancechart from '../dashboard/chart/chart';
+import Attendancechart from './chart/Attendancechart';
+import AttendanceWeekly from "./Tables/AttendanceWeekly";
+import SummaryTable from "./Tables/SummaryTable";
+import AttendanceSmmy from "./Tables/AttendanceSmmy";
+import RequestTable from "./Tables/RequestTable";
 
 
 
@@ -23,7 +27,23 @@ const Dashboard = (props) => {
     </div>
     <div className="mt-5 py-1">
         <Attendancechart />
-        {/* <Tabs tabs={tabs} /> */}
+    </div>
+    <div className="container mt-3">
+    <hr />
+      <div className="row">
+        <div className="col-12">
+          <AttendanceWeekly />
+        </div>
+        <div className="col-12 mt-4">
+          <SummaryTable />
+        </div>
+        <div className="col-12 mt-4">
+          <AttendanceSmmy />
+        </div>
+        <div className="col-12 mt-4">
+          <RequestTable />
+        </div>
+      </div>
     </div>
     </>
   );

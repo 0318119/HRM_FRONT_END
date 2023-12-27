@@ -9,6 +9,8 @@ import * as EDUCATION_ACTIONS from "../store/actions/HrOperations/Education/inde
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
 import baseUrl from '../../src/config.json'
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
@@ -53,7 +55,9 @@ const Education = ({ Red_Education, GetEducationData }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit', data?.Edu_code)} className="editBtn">
+             <FaEdit />
+          </button>
           <Popconfirm
             title="Delete the Education"
             description="Are you sure to delete the Education?"
@@ -63,19 +67,30 @@ const Education = ({ Red_Education, GetEducationData }) => {
               handleConfirmDelete(data?.Edu_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),
     },
   ];
 
-
   useEffect(() => {
-    GetEducationData()
-  }, [])
+    if (isSearchVal == '') {
+      GetEducationData({
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    } else {
+      GetEducationData({
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page, isSearchVal])
 
-  // EDUCATION LEVEL DATA DELETE API CALL ===========================
+  // EDUCATION DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/eduation_code/DeleteEducation`, {
@@ -94,11 +109,11 @@ const Education = ({ Red_Education, GetEducationData }) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-          // GetEducationData({
-          //   pageSize: pageSize,
-          //   pageNo: 1,
-          //   search: null
-          // })
+          GetEducationData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+          })
         }, 3000);
       }
       else {
@@ -144,16 +159,24 @@ const Education = ({ Red_Education, GetEducationData }) => {
             <div>
               {mode == "read" && (
                 <Table columns={columns}
-                  dataSource={Red_Education?.data?.[0]?.res?.data?.[0]}
                   loading={Red_Education?.loading}
+                  dataSource={Red_Education?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
+                  pagination={{
+                    defaultCurrent: page,
+                    total: Red_Education?.data?.[0]?.res?.data3,
+                    onChange: (p) => {
+                      setPage(p);
+                    },
+                    pageSize: pageSize,
+                  }}
                 />
               )}
               {mode == "create" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={null} />
+                <EducationForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <EducationForm cancel={setMode} mode={mode} isCode={isCode} />
+                <EducationForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 

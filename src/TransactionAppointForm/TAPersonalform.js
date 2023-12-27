@@ -1,1298 +1,1246 @@
 import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
-import { BsFillCheckSquareFill as FormCheck_ico } from 'react-icons/bs'
-import secureLocalStorage from "react-secure-storage";
-import { Link, useNavigate } from "react-router-dom";
-import { Check } from "@mui/icons-material";
-import axios from "axios";
 import Country from "./Country.json"
-const config = require('../config.json')
+import { PrimaryButton , SimpleButton} from "../components/basic/button";
+import { CancelButton } from '../components/basic/button/index'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInput, FormSelect } from '../components/basic/input/formInput';
+import { TAPersonalSchema } from './schema';
+import { message } from 'antd';
+import baseUrl from '../config.json'
+import { Link, useLocation } from "react-router-dom";
 
 
 
-function TAPersonalform() {
-  var get_refresh_token = localStorage.getItem("refresh");
+function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_Appointment }) {
+
+
   var get_access_token = localStorage.getItem("access_token");
   var get_company_code = localStorage.getItem("company_code");
-  var get_Emp_code = localStorage.getItem("Emp_code");
-  const navigate = useNavigate()
-  const [Err, setErr] = useState(false)
-  const showAlert = (message, type) => {
-    setErr({
-      message: message,
-      type: type,
-    })
-  }
-
-
-
-
-
-  // =================== 1
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isLoading, setLoading] = useState(false)
   const [getEmpTypeCode, setgetEmpTypeCode] = useState([])
-  const [getEmptypeErr, setgetEmptypeErr] = useState(false)
+  const [EmployeeCategory, setEmployeeCategory] = useState([])
+  const [LeaveCategory, setLeaveCategory] = useState([])
+  const [PayCategory, setPayCategory] = useState([])
+  const [Shifts, setShifts] = useState([])
+  const [Designation, setDesignation] = useState([])
+  const [CostCenter, setCostCenter] = useState([])
+  const [Section, setSection] = useState([])
+  const [Grade, setGrade] = useState([])
+  const [Education, setEducation] = useState([])
+  const [Location, setLocation] = useState([])
+  const [Religion, setReligion] = useState([])
+  const [Supervisor, setSupervisor] = useState([])
+  const [getEmpCodeErr, setEmpCodeErr] = message.useMessage();
+  const [EmpCategoryDataErr, setEmpCategoryDataErr] = message.useMessage();
+  const [leaveCatErr, setleaveCatErr] = message.useMessage();
+  const [PayCategoryErr, setPayCategoryErr] = message.useMessage();
+  const [ShiftsCodeErr, setShiftsCodeErr] = message.useMessage();
+  const [DesignationCodeErr, setDesignationCodeErr] = message.useMessage();
+  const [CostCenterCodeErr, setCostCenterCodeErr] = message.useMessage();
+  const [SectionCodeErr, setSectionCodeErr] = message.useMessage();
+  const [GradeCodeErr, setGradeCodeErr] = message.useMessage();
+  const [EducationCodeErr, setEducationCodeErr] = message.useMessage();
+  const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
+  const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
+  const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
+  const [pageSize, setPageSize] = useState(10);
+  const currentDate = new Date();
+  const EditBack = () => {
+    cancel("read");
+  };
+  const search = useLocation().search
+  var userId = new URLSearchParams(search).get('userId')
+  console.log(isCode , 'usder')
+
+ 
   async function getEmpTypeCodeData() {
-    await fetch(`${config['baseUrl']}/employment_type_code/GetEmploymentTypeCode`, {
+    await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_type_code/GetEmploymentTypeCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setgetEmpTypeCode(response.data[0][0])
-          }
-        }).catch((error) => {
-          setgetEmptypeErr(error.message)
-        })
+      if (response.success) {
+        setgetEmpTypeCode(response.data)
       }
       else {
-        setgetEmpTypeCode(response.data[0][0])
+        getEmpCodeErr.open({
+          type: 'error',
+          content: "in Emp type code :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setgetEmptypeErr(error.message)
-    })
+      getEmpCodeErr.open({
+        type: 'error',
+        content: "in Emp type code :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 2
-  const [getEmploymentCategory, setgetEmploymentCategory] = useState([])
-  const [getEmploymentCategoryErr, setgetEmploymentCategoryErr] = useState(false)
-  async function EmploymentCategoryData() {
-    await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategory`, {
+  async function EmpCategoryData() {
+    await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_category/GetEmploymentCategory`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setgetEmploymentCategory(response.data[0])
-          }
-        }).catch((error) => {
-          setgetEmploymentCategoryErr(error.message)
-        })
+      if (response?.success) {
+        setEmployeeCategory(response?.data)
       }
       else {
-        setgetEmploymentCategory(response.data[0])
+        EmpCategoryDataErr.open({
+          type: 'error',
+          content: "in Emp Category :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setgetEmploymentCategoryErr(error.message)
-    })
+      EmpCategoryDataErr.open({
+        type: 'error',
+        content: "in Emp Category :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 3
-  const [employmentLeaveCategory, setemploymentLeaveCategory] = useState([])
-  const [employmentLeaveCategoryErr, setemploymentLeaveCategoryErr] = useState(false)
-  async function GetemploymentLeaveCategory() {
-    await fetch(`${config['baseUrl']}/employment_leave_category/GetEmploymentLeaveCategory`, {
+  async function LeaveCategoryData() {
+    await fetch(`${baseUrl.baseUrl}/employment_leave_category/GetEmploymentLeaveCategoryWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_leave_category/GetEmploymentLeaveCategory`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setemploymentLeaveCategory(response.data[0])
-          }
-        }).catch((error) => {
-          setemploymentLeaveCategoryErr(error.message)
-        })
+      if (response.success) {
+        setLeaveCategory(response.data)
       }
       else {
-        setemploymentLeaveCategory(response.data[0])
+        leaveCatErr.open({
+          type: 'error',
+          content: "in Leave Category :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setemploymentLeaveCategoryErr(error.message)
-    })
+      leaveCatErr.open({
+        type: 'error',
+        content: "in Leave Category :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 4
-  const [GetEmploymentPayrollData, setGetEmploymentPayrollData] = useState([])
-  const [GetEmploymentPayrollErr, setGetEmploymentPayrollErr] = useState(false)
-  async function GetEmploymentPayrollFunction() {
-    await fetch(`${config['baseUrl']}/employment_payroll/GetEmploymentPayroll`, {
+  async function PayCategoryData() {
+    await fetch(`${baseUrl.baseUrl}/employment_payroll/GetEmploymentPayrollWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_payroll/GetEmploymentPayroll`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetEmploymentPayrollData(response.data[0][0])
-          }
-        }).catch((error) => {
-          setGetEmploymentPayrollErr(error.message)
-        })
+      if (response.success) {
+        setPayCategory(response.data)
       }
       else {
-        setGetEmploymentPayrollData(response.data[0][0])
+        PayCategoryErr.open({
+          type: 'error',
+          content: "in Pay Category :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setGetEmploymentPayrollErr(error.message)
-    })
+      PayCategoryErr.open({
+        type: 'error',
+        content: "in Pay Category :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-
-  // ========================= 5
-  const [GetEmploymentShiftData, setGetEmploymentShiftData] = useState([])
-  const [GetEmploymentShiftErr, setGetEmploymentShiftErr] = useState(false)
-  async function GetEmploymentShiftDataCall() {
-    await fetch(`${config['baseUrl']}/employment_shift/GetEmploymentShift`, {
+  async function ShiftsData() {
+    await fetch(`${baseUrl.baseUrl}/employment_shift/GetEmploymentShiftWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_shift/GetEmploymentShift`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetEmploymentShiftData(response.data[0])
-          }
-        }).catch((error) => {
-          setGetEmploymentShiftErr(error.message)
-        })
+      if (response.success) {
+        setShifts(response.data)
       }
       else {
-        setGetEmploymentShiftData(response.data[0])
+        ShiftsCodeErr.open({
+          type: 'error',
+          content: "in Shifts Error :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setGetEmploymentShiftErr(error.message)
-    })
+      ShiftsCodeErr.open({
+        type: 'error',
+        content: "in Shifts Error :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 6
-  const [GetEmploymentDesigData, setGetEmploymentDesigData] = useState([])
-  const [GetEmploymentDesigErr, setGetEmploymentDesigErr] = useState(false)
-  async function GetEmploymentDesigDataCall() {
-    await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignation`, {
+  async function DesignationData() {
+    await fetch(`${baseUrl.baseUrl}/employment_desig/GetEmploymentDesignationWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_desig/GetEmploymentDesignation`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetEmploymentDesigData(response.data[0])
-          }
-        }).catch((error) => {
-          setGetEmploymentDesigErr(error.message)
-        })
+      if (response.success) {
+        setDesignation(response.data)
       }
       else {
-        setGetEmploymentDesigData(response.data[0])
-
+        DesignationCodeErr.open({
+          type: 'error',
+          content: "in Designation :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setGetEmploymentDesigErr(error.message)
-    })
+      DesignationCodeErr.open({
+        type: 'error',
+        content: "in Designation :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-
-  // ========================= 7
-  const [GetEmploymentCostCenterData, setGetEmploymentCostCenterData] = useState([])
-  const [GetEmploymentCostCenterErr, setGetEmploymentCostCenterErr] = useState(false)
-  async function GetEmploymentCostCenterDataCall() {
-    await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
+  async function CostCenterData() {
+    await fetch(`${baseUrl.baseUrl}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_cost_center/GetEmploymentCostCenterWithoutPagination`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetEmploymentCostCenterData(response.data)
-          }
-        }).catch((error) => {
-          setGetEmploymentCostCenterErr(error.message)
-        })
+      if (response.success) {
+        setCostCenter(response.data)
       }
       else {
-        setGetEmploymentCostCenterData(response.data)
-        console.log(response.data, 'responselllll')
-
+        CostCenterCodeErr.open({
+          type: 'error',
+          content: "in Cost centre :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setGetEmploymentCostCenterErr(error.message)
-    })
+      CostCenterCodeErr.open({
+        type: 'error',
+        content: "in Cost centre :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 8
-  const [GetEmploymentSectionCodeData, setGetEmploymentSectionCodeData] = useState([])
-  const [GetEmploymentSectionCodeErr, setGetEmploymentSectionCodeErr] = useState(false)
-  async function GetEmploymentSectionCodeDataCall() {
-    await fetch(`${config['baseUrl']}/employment_section_code/GetEmploymentSectionCode`, {
+  async function SectionData() {
+    await fetch(`${baseUrl.baseUrl}/employment_section_code/GetEmploymentSectionCodeWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/employment_section_code/GetEmploymentSectionCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetEmploymentSectionCodeData(response.data[0])
-          }
-        }).catch((error) => {
-          setGetEmploymentSectionCodeErr(error.message)
-        })
+      if (response.success) {
+        setSection(response.data)
       }
       else {
-        setGetEmploymentSectionCodeData(response.data[0])
+        SectionCodeErr.open({
+          type: 'error',
+          content: "in Section :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setGetEmploymentSectionCodeErr(error.message)
-    })
+      SectionCodeErr.open({
+        type: 'error',
+        content: "in Section :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 9
-  const [grade_codeData, setgrade_codeData] = useState([])
-  const [grade_codeErr, setgrade_codeErr] = useState(false)
-  async function gradecodeDataCall() {
-    await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
+  async function GradeData() {
+    await fetch(`${baseUrl.baseUrl}/grade_code/GetGradeCodeWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/grade_code/GetGradeCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setgrade_codeData(response.data[0])
-          }
-        }).catch((error) => {
-          setgrade_codeErr(error.message)
-        })
+      if (response.success) {
+        setGrade(response.data)
       }
       else {
-        setgrade_codeData(response.data[0])
+        GradeCodeErr.open({
+          type: 'error',
+          content: "in Grade Code :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setgrade_codeErr(error.message)
-    })
+      GradeCodeErr.open({
+        type: 'error',
+        content: "in Grade Code :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // ========================= 10
-  const [EduCodeData, setEduCodeData] = useState([])
-  const [EduCodeDataErr, setEduCodeDataErr] = useState(false)
-  async function EduCodeDataCall() {
-    await fetch(`${config['baseUrl']}/education_code/GetEducationCode`, {
+  async function EducationData() {
+    await fetch(`${baseUrl.baseUrl}/education_code/GetEducationCodeWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/education_code/GetEducationCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setEduCodeData(response.data[0])
-          }
-        }).catch((error) => {
-          setEduCodeDataErr(error.message)
-        })
+      if (response.success) {
+        setEducation(response.data)
       }
       else {
-        setEduCodeData(response.data[0])
+        EducationCodeErr.open({
+          type: 'error',
+          content: "in Education :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setEduCodeDataErr(error.message)
-    })
+      EducationCodeErr.open({
+        type: 'error',
+        content: "in Education :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // =========================  11
-  const [location_codeData, setlocation_codeData] = useState([])
-  const [location_codeErr, setlocation_codeErr] = useState(false)
-  async function locationCodeDataCall() {
-    await fetch(`${config['baseUrl']}/location_code/GetEmploymentLocationCode`, {
+  async function LocationData() {
+    await fetch(`${baseUrl.baseUrl}/location_code/GetLocationsWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/location_code/GetEmploymentLocationCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setlocation_codeData(response.data[0])
-          }
-        }).catch((error) => {
-          setlocation_codeErr(error.message)
-        })
+      if (response.success) {
+        setLocation(response.data)
       }
       else {
-        setlocation_codeData(response.data[0])
+        LocationCodeErr.open({
+          type: 'error',
+          content: "in Location :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setlocation_codeErr(error.message)
-    })
+      LocationCodeErr.open({
+        type: 'error',
+        content: "in Location :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // =========================  12
-  const [religion_codeData, setreligion_codeData] = useState([])
-  const [religion_codeErr, setreligion_codeErr] = useState(false)
-  async function religionCodeDataCall() {
-    await fetch(`${config['baseUrl']}/religion_code/GetEmploymentReligionCode`, {
+  async function ReligionData() {
+    await fetch(`${baseUrl.baseUrl}/religion_code/GetEmploymentReligionCodeWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/religion_code/GetEmploymentReligionCode`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setreligion_codeData(response.data[0])
-          }
-        }).catch((error) => {
-          setreligion_codeErr(error.message)
-        })
+      if (response.success) {
+        setReligion(response.data)
       }
       else {
-        setreligion_codeData(response.data[0])
+        ReligionCodeErr.open({
+          type: 'error',
+          content: "in Religion :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setreligion_codeErr(error.message)
-    })
+      ReligionCodeErr.open({
+        type: 'error',
+        content: "in Religion :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-  // =========================  13
-  const [master_all_employeesData, setmaster_all_employeesData] = useState([])
-  const [master_all_employeesErr, setmaster_all_employeesErr] = useState(false)
-  async function master_all_employeesDataCall() {
-    await fetch(`${config['baseUrl']}/master_all_employees/GetMasterAllEmployees`, {
+  async function SupervisorData() {
+    await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
       method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/master_all_employees/GetMasterAllEmployees`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setmaster_all_employeesData(response.data[0])
-          }
-        }).catch((error) => {
-          setmaster_all_employeesErr(error.message)
-        })
+      if (response.success) {
+        setSupervisor(response.data)
       }
       else {
-        setmaster_all_employeesData(response.data[0])
+        SupervisorCodeErr.open({
+          type: 'error',
+          content: "in Supervisor :" + response?.message || response?.messsage,
+        });
       }
     }).catch((error) => {
-      setmaster_all_employeesErr(error.message)
-    })
+      SupervisorCodeErr.open({
+        type: 'error',
+        content: "in Supervisor :" + error?.message || error?.messsage,
+      });
+    });
   }
-
-
-
-
-
 
   useEffect(() => {
-    // 1
     getEmpTypeCodeData()
-    // 2
-    EmploymentCategoryData()
-    // 3
-    GetemploymentLeaveCategory()
-    // 4
-    GetEmploymentPayrollFunction()
-    // 5
-    GetEmploymentShiftDataCall()
-    // 6
-    GetEmploymentDesigDataCall()
-    // 7 
-    GetEmploymentCostCenterDataCall()
-    // 8
-    GetEmploymentSectionCodeDataCall()
-    // 9
-    gradecodeDataCall()
-    // 10
-    EduCodeDataCall()
-    // 11
-    locationCodeDataCall()
-    // 12
-    religionCodeDataCall()
-    // 13
-    master_all_employeesDataCall()
+    EmpCategoryData()
+    LeaveCategoryData()
+    PayCategoryData()
+    ShiftsData()
+    DesignationData()
+    CostCenterData()
+    SectionData()
+    GradeData()
+    EducationData()
+    LocationData()
+    ReligionData()
+    SupervisorData()
   }, [])
-  const [EmployeeId, setEmployeeId] = useState(0)
-  const [MaritalStatus, setMaritalStatus] = useState(0)
-  const [EmployeeYesAndNo, setEmployeeYesAndNo] = useState(0)
-  const [EmployeePicture, setEmployeePicture] = useState("")
-  const [EmployeeGender, setEmployeeGender] = useState(0)
-  const [confirmDate, setConfirmDate] = useState('0')
-  const [ConfirmFlag, setConfirmFlag] = useState(0)
-  const [EmployeeName, setEmployeeName] = useState('')
-  const [EmployeeCode, setEmployeeCode] = useState('')
-  const [FatherName, setFatherName] = useState('')
-  const [BloodGroup, setBloodGroup] = useState('')
-  const [JoiningDate, setJoiningDate] = useState('')
-  const [AddressLine1, setAddressLine1] = useState('')
-  const [AddressLine2, setAddressLine2] = useState('')
-  const [MobileNo, setMobileNo] = useState(0)
-  const [MobileNoRes1, setMobileNoRes1] = useState(0)
-  const [MobileNoRes2, setMobileNoRes2] = useState(0)
-  const [MobileNoOffice1, setMobileNoOffice1] = useState(0)
-  const [MobileNoOffice2, setMobileNoOffice2] = useState(0)
-  const [emailAddress, setemailAddress] = useState('')
-  const [CNICNo, setCNICNo] = useState(0)
-  const [NTNNo, setNTNNo] = useState(0)
-  const [BirthDate, setBirthDate] = useState("")
-  const [VehicleRegistrationNumber, setVehicleRegistrationNumber] = useState(0)
-  const [PermanentAddress, setPermanentAddress] = useState('')
-  const [Nationality, setNationality] = useState('')
-  const [OfferLetterate, setOfferLetterate] = useState(0)
-  const [TentativeJoiningDate, setTentativeJoiningDate] = useState(0)
-  const [GetEmploymentSectionCodeVal, setGetEmploymentSectionCodeVal] = useState()
-  const [grade_codeVal, setgrade_codeVal] = useState()
-  const [religion_codeVal, setreligion_codeVal] = useState()
-  const [ReferredBy, setReferredBy] = useState("")
-  const [Contract, setContract] = useState("")
-  const [master_all_employeesVal, setmaster_all_employeesVal] = useState()
-  const [location_codeVal, setlocation_codeVal] = useState()
-  const [EduCodeDataVal, setEduCodeDataVal] = useState()
-  const [getEmpTypeVal, setgetEmpTypeVal] = useState()
-  const [GetEmploymentCostCenterVal, setGetEmploymentCostCenterVal] = useState()
-  const [getEmploymentCategoryVal, setgetEmploymentCategoryVal] = useState()
-  const [employmentLeaveCategoryVal, setemploymentLeaveCategoryVal] = useState()
-  const [GetEmploymentPayrollVal, setGetEmploymentPayrollVal] = useState()
-  const [GetEmploymentShiftVal, setGetEmploymentShiftVal] = useState()
-  const [GetEmploymentDesigVal, setGetEmploymentDesigVal] = useState()
-  const [ProbabilityPeriodMonths, setProbabilityPeriodMonths] = useState(0)
-  const [NoticePeriodMonths, setNoticePeriodMonths] = useState(0)
-  const [EmergencypersonName, setEmergencypersonName] = useState("")
-  const [EmergencyRelationship, setEmergencyRelationship] = useState("")
-  const [EmergencyAddress1, setEmergencyAddress1] = useState("")
-  const [EmergencyAddress2, setEmergencyAddress2] = useState("")
-  const [EmergencyPhone1, setEmergencyPhone1] = useState(0)
-  const [EmergencyPhone2, setEmergencyPhone2] = useState(0)
-  const [loading, setLoading] = useState(false);
-  const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState("")
-  const [CNICExpiryDate, setCNICExpiryDate] = useState(0)
-  const [CNICIssueDate, setCNICIssueDate] = useState(0)
-  const [Emp_Confirm_date, setEmp_Confirm_date] = useState('')
-  // const SaveForm = async (e) => {
-  //     e.preventDefault();
-  //     setLoading(true);
-  //     setBtnEnaledAndDisabled(true);
-  //     let formData = new FormData();
-  //     if (EmployeePicture !== '') {
-  //       formData.append("file", EmployeePicture);
-  //     }
-  // formData.append("Emp_name", EmployeeName);
-  // formData.append("Emp_Father_name", FatherName);
-  // formData.append("Emp_sex_code", EmployeeGender);
-  // formData.append("Emp_marital_status", MaritalStatus);
-  // formData.append("Confirmation_Flag", ConfirmFlag? ConfirmFlag : "N");
-  // formData.append("Emp_address_line1", AddressLine1);
-  // formData.append("Emp_address_line2", AddressLine2);
-  // formData.append("Emp_home_tel1", MobileNoRes1);
-  // formData.append("Emp_home_tel2", MobileNoRes2);
-  // formData.append("Emp_office_tel1", MobileNoOffice1);
-  // formData.append("Emp_office_tel2", MobileNoOffice2);
-  // formData.append("Emp_mobile_No", MobileNo);
-  // formData.append("Emp_email", emailAddress);
-  // formData.append("Emp_nic_no", CNICNo);
-  // formData.append("Emp_NIC_Issue_date", CNICIssueDate);
-  // formData.append("Emp_NIC_Expiry_date", CNICExpiryDate);
-  // formData.append("Emp_Retirement_age", 40);
-  // formData.append("Emp_ntn_no", NTNNo);
-  // formData.append("Emp_birth_date", BirthDate);
-  // formData.append("Vehicle_Registration_Number", VehicleRegistrationNumber);
-  // formData.append("Contact_Person_Name", EmergencypersonName);
-  // formData.append("Relationship", EmergencyRelationship);
-  // formData.append("Contact_address1",EmergencyAddress1);
-  // formData.append("Contact_address2", EmergencyAddress2);
-  // formData.append("Contact_home_tel1", EmergencyPhone1);
-  // formData.append("Contact_home_tel2", EmergencyPhone2);
-  // formData.append("Emp_Blood_Group", BloodGroup);
-  // formData.append("Employment_Type_code", getEmpTypeVal);
-  // formData.append("Emp_category", getEmploymentCategoryVal);
-  // formData.append("Emp_Leave_category", employmentLeaveCategoryVal);
-  // formData.append("Emp_Payroll_category", GetEmploymentPayrollVal);
-  // formData.append("Shift_code", GetEmploymentShiftVal);
-  // formData.append("Desig_code", GetEmploymentDesigVal);
-  // formData.append("Cost_Centre_code", GetEmploymentCostCenterVal);
-  // formData.append("Section_code", GetEmploymentSectionCodeVal);
-  // formData.append("Grade_code", grade_codeVal);
-  // formData.append("Edu_code", EduCodeDataVal);
-  // formData.append("Loc_code", location_codeVal);
-  // formData.append("Religion_Code", religion_codeVal);
-  // formData.append("Supervisor_Code", 0);
-  // formData.append("ContractExpiryDate", "2023/12/09")
-  // formData.append("Emp_ID", get_Emp_code==null?0:get_Emp_code);
-  // formData.append("Offer_Letter_date", OfferLetterate);
-  // formData.append("Tentative_Joining_date", TentativeJoiningDate);
-  // formData.append("RefferedBy", ReferredBy);
-  // formData.append("Probationary_period_months", ProbabilityPeriodMonths);
-  // formData.append("Notice_period_months", NoticePeriodMonths);
-  // formData.append("Extended_confirmation_days", confirmDate);
-  // formData.append("Permanent_address", PermanentAddress);
-  // formData.append("Nationality", Nationality);
-  // formData.append("roster_group_code", 0);
-  // formData.append("card_no", 0);
-  // formData.append("Position_Code", 0);
-  // formData.append("Company_Code", get_company_code);
-  // formData.append("UserCode", get_Emp_code==null?0:get_Emp_code);
-  //     // console.log("hello bhandari",get_Emp_code==null?0:get_Emp_code)
-  //     // console.log(formData.values().length)
-  //     // for (const value of formData.values()) {
-  //       // console.log(value);
-  //     // }
-  //     // return
-  //   await axios.post(`https://hrm-api.logomish.com/appointments/AppointmentsSavePersonel`, formData, {
-  //       cache: "no-cache",
-  //       credentials: "same-origin",
-  //       mode:"no-cors",
-  //       headers: {
-  //         Accept: "form-data",
-  //       },
-  //     }).then((response) => {
-  //       if (response.status == 200) {
-  //         setLoading(false);
-  //         setBtnEnaledAndDisabled(false);
-  //         alert("Your Form has been uploaded successfully")
-  //         // showAlert("Your Form has been uploaded successfully", "success")
-  //         setBtnEnaledAndDisabled(false);
-  //       }
-  //     }).catch((errors) => {
-  //       if(errors?.response){
-  //         alert(`${errors?.response?.data?.message + ":"   +" "+ "Please Rename Your file name"}`)
-  //       }else{
-  //         alert(`${errors?.message}`)
-  //       }
-  //       console.log("errors?.response",errors)
-  //       // showAlert(errors.response.data.message, "warning")
-  //       setLoading(false);
-  //       setBtnEnaledAndDisabled(false);
-  //     });
-  // }
+  // ==================================================
+  const submitForm = async (data) => {
+   
+    try {
+      const isValid = await TAPersonalSchema.validate(data);
+      if (isValid) {
+        const joiningDate = new Date(data?.Emp_joining_date);
+        const confirmDate = new Date(data?.Emp_confirm_date);
+        const differenceInDays = Math.floor((confirmDate - joiningDate) / (24 * 60 * 60 * 1000));
+        if (differenceInDays >= 90) {
+          POST_MASTER_PERSONAL_FORM(data)
+        } else {
+          messageApi.open({
+            type: 'error',
+            content: "Confirm Date Should be Greater Then Joining Date by 90 days" ,
+          });
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    watch,
+  } = useForm({
+    defaultValues: {
+      Sequence_no: "",
+      Emp_name: "",
+      Emp_Father_name: "",
+      Emp_sex_code: "",
+      Emp_marital_status: "",
+      Confirmation_Flag: "",
+      Emp_address_line1: "",
+      Emp_address_line2: "",
+      Emp_home_tel1: "",
+      Emp_home_tel2: "",
+      Emp_office_tel1: "",
+      Emp_office_tel2: "",
+      Emp_mobile_No: "",
+      Emp_email: "",
+      Emp_nic_no: "",
+      Emp_NIC_Issue_date: "",
+      Emp_NIC_Expiry_date: "",
+      Emp_Retirement_age: "",
+      Emp_ntn_no: "",
+      Emp_birth_date: "",
+      Vehicle_Registration_Number: "",
+      Contact_Person_Name: "",
+      Relationship: "",
+      Contact_address1: "",
+      Contact_address2: "",
+      Contact_home_tel1: "",
+      Contact_home_tel2: "",
+      Emp_Blood_Group: "",
+      Employment_Type_code: "",
+      Emp_category: "",
+      Emp_Leave_category: "",
+      Emp_Payroll_category: "",
+      Shift_code: "",
+      Desig_code: "",
+      Cost_Centre_code: "",
+      Section_code: "",
+      Grade_code: "",
+      Edu_code: "",
+      Loc_code: "",
+      Religion_Code: "",
+      Supervisor_Code: "",
+      ContractExpiryDate: "",
+      Offer_Letter_date: "",
+      Tentative_Joining_date: "",
+      RefferedBy: "",
+      Probationary_period_months: "",
+      Notice_period_months: "",
+      Emp_confirm_date: "",
+      Emp_joining_date:"",
+      Permanent_address: "",
+      Nationality: "",
+    },
+    mode: "onChange",
+    resolver: yupResolver(TAPersonalSchema),
+  });
 
-  const SaveForm = async (e) => {
-    e.preventDefault();
-    // var formdata = {
-    //   "Sequence_no": EmployeeCode,
-    //   "Emp_name": EmployeeName,
-    //   "Emp_Father_name": FatherName,
-    //   "Emp_sex_code": EmployeeGender,
-    //   "Emp_marital_status": MaritalStatus,
-    //   "Confirmation_Flag": ConfirmFlag ? ConfirmFlag : "N",
-    //   "Emp_address_line1": AddressLine1,
-    //   "Emp_address_line2": AddressLine2,
-    //   "Emp_home_tel1": MobileNoRes1,
-    //   "Emp_home_tel2": MobileNoRes2,
-    //   "Emp_office_tel1": MobileNoOffice1,
-    //   "Emp_office_tel2": MobileNoOffice2,
-    //   "Emp_mobile_No": MobileNo,
-    //   "Emp_email": emailAddress,
-    //   "Emp_nic_no": CNICNo,
-    //   "Emp_NIC_Issue_date": CNICIssueDate,
-    //   "Emp_NIC_Expiry_date": CNICExpiryDate,
-    //   "Emp_Retirement_age": 40,
-    //   "Emp_ntn_no": NTNNo,
-    //   "Emp_birth_date": BirthDate,
-    //   "Vehicle_Registration_Number": VehicleRegistrationNumber,
-    //   "Contact_Person_Name": EmergencypersonName,
-    //   "Relationship": EmergencyRelationship,
-    //   "Contact_address1": EmergencyAddress1,
-    //   "Contact_address2": EmergencyAddress2,
-    //   "Contact_home_tel1": EmergencyPhone1,
-    //   "Contact_home_tel2": EmergencyPhone2,
-    //   "Emp_Blood_Group": BloodGroup,
-    //   "Employment_Type_code": getEmpTypeVal,
-    //   "Emp_category": getEmploymentCategoryVal,
-    //   "Emp_Leave_category": employmentLeaveCategoryVal,
-    //   "Emp_Payroll_category": GetEmploymentPayrollVal,
-    //   "Shift_code": GetEmploymentShiftVal,
-    //   "Desig_code": GetEmploymentDesigVal,
-    //   "Cost_Centre_code": GetEmploymentCostCenterVal,
-    //   "Section_code": GetEmploymentSectionCodeVal,
-    //   "Grade_code": grade_codeVal,
-    //   "Edu_code": EduCodeDataVal,
-    //   "Loc_code": location_codeVal,
-    //   "Religion_Code": religion_codeVal,
-    //   "Supervisor_Code": 0,
-    //   "ContractExpiryDate": "2023/12/09",
-    //   "Emp_ID": get_Emp_code == null ? 0 : get_Emp_code,
-    //   "Offer_Letter_date": OfferLetterate,
-    //   "Tentative_Joining_date": TentativeJoiningDate,
-    //   "RefferedBy": ReferredBy,
-    //   "Probationary_period_months": ProbabilityPeriodMonths,
-    //   "Notice_period_months": NoticePeriodMonths,
-    //   "Extended_confirmation_days": confirmDate,
-    //   "Emp_confirm_date": Emp_Confirm_date,
-    //   "Permanent_address": PermanentAddress,
-    //   "Nationality": Nationality,
-    //   "roster_group_code": 0,
-    //   "card_no": 0,
-    //   "Position_Code": 0,
-    //   "Company_Code": get_company_code,
-    //   "UserCode": get_Emp_code == null ? 0 : get_Emp_code
-    // }
-    // console.log("checking obj",formdata)
-    // return
-    setLoading(true);
-    setBtnEnaledAndDisabled(true);
-    await fetch(`https://hrm-api.logomish.com/appointments/AppointmentsSavePersonel`, {
+  // MASTER PERSNOL FORM DATA API CALL =========================== 
+  async function POST_MASTER_PERSONAL_FORM(body) {
+    setLoading(true)
+    await fetch(
+      `${baseUrl.baseUrl}/appointments/AppointmentsSavePersonel`, {
       method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+      headers: {
+        "content-type": "application/json",
+        accessToken: `Bareer ${get_access_token}`,
+      },
       body: JSON.stringify({
-        "Sequence_no": EmployeeCode,
-        "Emp_name": EmployeeName,
-        "Emp_Father_name": FatherName,
-        "Emp_sex_code": EmployeeGender,
-        "Emp_marital_status": MaritalStatus,
-        "Confirmation_Flag": ConfirmFlag ? ConfirmFlag : "N",
-        "Emp_address_line1": AddressLine1,
-        "Emp_address_line2": AddressLine2,
-        "Emp_home_tel1": MobileNoRes1,
-        "Emp_home_tel2": MobileNoRes2,
-        "Emp_office_tel1": MobileNoOffice1,
-        "Emp_office_tel2": MobileNoOffice2,
-        "Emp_mobile_No": MobileNo,
-        "Emp_email": emailAddress,
-        "Emp_nic_no": CNICNo,
-        "Emp_NIC_Issue_date": CNICIssueDate,
-        "Emp_NIC_Expiry_date": CNICExpiryDate,
-        "Emp_Retirement_age": 40,
-        "Emp_ntn_no": NTNNo,
-        "Emp_birth_date": BirthDate,
-        "Vehicle_Registration_Number": VehicleRegistrationNumber,
-        "Contact_Person_Name": EmergencypersonName,
-        "Relationship": EmergencyRelationship,
-        "Contact_address1": EmergencyAddress1,
-        "Contact_address2": EmergencyAddress2,
-        "Contact_home_tel1": EmergencyPhone1,
-        "Contact_home_tel2": EmergencyPhone2,
-        "Emp_Blood_Group": BloodGroup,
-        "Employment_Type_code": getEmpTypeVal,
-        "Emp_category": getEmploymentCategoryVal,
-        "Emp_Leave_category": employmentLeaveCategoryVal,
-        "Emp_Payroll_category": GetEmploymentPayrollVal,
-        "Shift_code": GetEmploymentShiftVal,
-        "Desig_code": GetEmploymentDesigVal,
-        "Cost_Centre_code": GetEmploymentCostCenterVal,
-        "Section_code": GetEmploymentSectionCodeVal,
-        "Grade_code": grade_codeVal,
-        "Edu_code": EduCodeDataVal,
-        "Loc_code": location_codeVal,
-        "Religion_Code": religion_codeVal,
-        "Supervisor_Code": 0,
-        "ContractExpiryDate": "2023/12/09",
-        "Emp_ID": get_Emp_code == null ? 0 : get_Emp_code,
-        "Offer_Letter_date": OfferLetterate,
-        "Tentative_Joining_date": TentativeJoiningDate,
-        "RefferedBy": ReferredBy,
-        "Probationary_period_months": ProbabilityPeriodMonths,
-        "Notice_period_months": NoticePeriodMonths,
-        "Extended_confirmation_days": confirmDate,
-        "Emp_confirm_date": confirmDate,
-        "Permanent_address": PermanentAddress,
-        "Nationality": Nationality,
+        "Sequence_no": body?.Sequence_no,
+        "Emp_name": body?.Emp_name,
+        "Emp_Father_name": body?.Emp_Father_name,
+        "Emp_sex_code": body?.Emp_sex_code,
+        "Emp_marital_status": body?.Emp_marital_status,
+        "Confirmation_Flag": body?.Confirmation_Flag,
+        "Emp_address_line1": body?.Emp_address_line1,
+        "Emp_address_line2": body?.Emp_address_line2,
+        "Emp_home_tel1": body?.Emp_home_tel1,
+        "Emp_home_tel2": body?.Emp_home_tel2,
+        "Emp_office_tel1": body?.Emp_office_tel1,
+        "Emp_office_tel2": body?.Emp_office_tel2,
+        "Emp_mobile_No": body?.Emp_mobile_No,
+        "Emp_email": body?.Emp_email,
+        "Emp_nic_no": body?.Emp_nic_no,
+        "Emp_NIC_Issue_date": body?.Emp_NIC_Issue_date,
+        "Emp_NIC_Expiry_date": body?.Emp_NIC_Expiry_date,
+        "Emp_Retirement_age": body?.Emp_Retirement_age,
+        "Emp_ntn_no": body?.Emp_ntn_no,
+        "Emp_birth_date": body?.Emp_birth_date,
+        "Vehicle_Registration_Number": body?.Vehicle_Registration_Number,
+        "Contact_Person_Name": body?.Contact_Person_Name,
+        "Relationship": body?.Relationship,
+        "Contact_address1": body?.Contact_address1,
+        "Contact_address2": body?.Contact_address2,
+        "Contact_home_tel1": body?.Contact_home_tel1,
+        "Contact_home_tel2": body?.Contact_home_tel2,
+        "Emp_Blood_Group": body?.Emp_Blood_Group,
+        "Employment_Type_code": body?.Employment_Type_code,
+        "Emp_category": body?.Emp_category,
+        "Emp_Leave_category": body?.Emp_Leave_category,
+        "Emp_Payroll_category": body?.Emp_Payroll_category,
+        "Shift_code": body?.Shift_code,
+        "Desig_code": body?.Desig_code,
+        "Cost_Centre_code": body?.Cost_Centre_code,
+        "Section_code": body?.Section_code,
+        "Grade_code": body?.Grade_code,
+        "Edu_code": body?.Edu_code,
+        "Loc_code": body?.Loc_code,
+        "Religion_Code": body?.Religion_Code,
+        "Supervisor_Code": body?.Supervisor_Code,
+        "ContractExpiryDate": body?.ContractExpiryDate,
+        "Offer_Letter_date": body?.Offer_Letter_date,
+        "Tentative_Joining_date": body?.Tentative_Joining_date,
+        "RefferedBy": body?.RefferedBy,
+        "Probationary_period_months": body?.Probationary_period_months,
+        "Notice_period_months": body?.Notice_period_months,
+        "Extended_confirmation_days": currentDate ? currentDate : 0,
+        "Emp_confirm_date": body?.Emp_confirm_date,
+        "Emp_joining_date" :body?.Emp_joining_date,
+        "Permanent_address": body?.Permanent_address,
+        "Nationality": body?.Nationality,
         "roster_group_code": 0,
         "card_no": 0,
         "Position_Code": 0,
         "Company_Code": get_company_code,
-        "UserCode": get_Emp_code == null ? 0 : get_Emp_code
       })
-    }).then((response) => {
-      return response.json()
+    }
+    ).then((response) => {
+      return response.json();
     }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`https://hrm-api.logomish.com/appointments/AppointmentsSavePersonel`, {
-          method: "POST",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
-          body: JSON.stringify({
-            "Sequence_no": 12,
-            "Emp_name": EmployeeName,
-            "Emp_Father_name": FatherName,
-            "Emp_sex_code": EmployeeGender,
-            "Emp_marital_status": MaritalStatus,
-            "Confirmation_Flag": ConfirmFlag ? ConfirmFlag : "N",
-            "Emp_address_line1": AddressLine1,
-            "Emp_address_line2": AddressLine2,
-            "Emp_home_tel1": MobileNoRes1,
-            "Emp_home_tel2": MobileNoRes2,
-            "Emp_office_tel1": MobileNoOffice1,
-            "Emp_office_tel2": MobileNoOffice2,
-            "Emp_mobile_No": MobileNo,
-            "Emp_email": emailAddress,
-            "Emp_nic_no": CNICNo,
-            "Emp_NIC_Issue_date": CNICIssueDate,
-            "Emp_NIC_Expiry_date": CNICExpiryDate,
-            "Emp_Retirement_age": 40,
-            "Emp_ntn_no": NTNNo,
-            "Emp_birth_date": BirthDate,
-            "Vehicle_Registration_Number": VehicleRegistrationNumber,
-            "Contact_Person_Name": EmergencypersonName,
-            "Relationship": EmergencyRelationship,
-            "Contact_address1": EmergencyAddress1,
-            "Contact_address2": EmergencyAddress2,
-            "Contact_home_tel1": EmergencyPhone1,
-            "Contact_home_tel2": EmergencyPhone2,
-            "Emp_Blood_Group": BloodGroup,
-            "Employment_Type_code": getEmpTypeVal,
-            "Emp_category": getEmploymentCategoryVal,
-            "Emp_Leave_category": employmentLeaveCategoryVal,
-            "Emp_Payroll_category": GetEmploymentPayrollVal,
-            "Shift_code": GetEmploymentShiftVal,
-            "Desig_code": GetEmploymentDesigVal,
-            "Cost_Centre_code": GetEmploymentCostCenterVal,
-            "Section_code": GetEmploymentSectionCodeVal,
-            "Grade_code": grade_codeVal,
-            "Edu_code": EduCodeDataVal,
-            "Loc_code": location_codeVal,
-            "Religion_Code": religion_codeVal,
-            "Supervisor_Code": 0,
-            "ContractExpiryDate": "2023/12/09",
-            "Emp_ID": get_Emp_code == null ? 0 : get_Emp_code,
-            "Offer_Letter_date": OfferLetterate,
-            "Tentative_Joining_date": TentativeJoiningDate,
-            "RefferedBy": ReferredBy,
-            "Probationary_period_months": ProbabilityPeriodMonths,
-            "Notice_period_months": NoticePeriodMonths,
-            "Extended_confirmation_days": confirmDate,
-            "Emp_confirm_date": confirmDate,
-            "Permanent_address": PermanentAddress,
-            "Nationality": Nationality,
-            "roster_group_code": 0,
-            "card_no": 0,
-            "Position_Code": 0,
-            "Company_Code": get_company_code,
-            "UserCode": get_Emp_code == null ? 0 : get_Emp_code
-          })
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setLoading(false);
-            setBtnEnaledAndDisabled(false);
-            if (response?.message) {
-              alert(`${response?.message}`)
-            } else if (response?.messsage) {
-              alert(`${response?.messsage}`)
-            }
-          }
-        }).catch((errs) => {
-          setLoading(false);
-          setBtnEnaledAndDisabled(false);
-          alert(`${errs?.messsage}`)
-
-        })
+      if (response.success) {
+          messageApi.open({
+            type: 'success',
+            content: response?.message || response?.messsage,
+          });
+          setLoading(false)
+          setTimeout(() => {
+          cancel("read");
+          // GetAppointStatusCall({
+          //   pageSize: pageSize,
+          //   pageNo: page,
+          //   search: null,
+          // });
+        }, 3000);
       }
       else {
-        setLoading(false);
-        setBtnEnaledAndDisabled(false);
-
-        if (response?.message) {
-          alert(`${response?.message}`)
-        } else if (response?.messsage) {
-          alert(`${response?.messsage}`)
-        }
+        messageApi.open({
+          type: 'error',
+          content: response?.message || response?.messsage,
+        });
+        setLoading(false)
       }
-    }).catch((errs) => {
-      setLoading(false);
-      setBtnEnaledAndDisabled(false);
-      alert(`${errs?.messsage}`)
-
-    })
+    }).catch((error) => {
+        messageApi.open({
+          type: 'error',
+          content: error?.message || error?.messsage,
+        });
+        setLoading(false)
+    });
   }
 
-  const [checkCnicDateErr, setcheckCnicDateErr] = useState(false)
-  useEffect(() => {
-    if (CNICExpiryDate > CNICIssueDate) {
-      setCNICExpiryDate(CNICExpiryDate)
-      setCNICIssueDate(CNICIssueDate)
-      setcheckCnicDateErr(false)
-    }
-    else if (CNICIssueDate >= CNICExpiryDate) {
-      setcheckCnicDateErr("Expiry date must be greater then issue date.")
-    } else { setcheckCnicDateErr(false) }
 
-  }, [CNICExpiryDate, CNICIssueDate])
+
 
 
 
   return (
     <>
-      <div>
-        <Header />
-      </div>
-      <div className="TaFormSection px-1 mt-5 p-3">
-        <div className="container-fluid TAFormCont ">
-          <div className="col-lg-12 HeadingBYpersonForm p-2">
-            <span className="FormHeadText">
-              Transaction - Appointment (Personal)
-              <Link to="/Appointment" className="backLink">Back to  Appointment List</Link>
-            </span>
+     
+      {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
+      {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
+      {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}
+      {setReligionCodeErr}{setSupervisorCodeErr}
+      <div className="container">
+        <div className="row">
+          <div className="col-12 maringClass">
+            <div>
+              <form onSubmit={handleSubmit(submitForm)}>
+                <h4 className="text-dark">Appointment (Personal)</h4>
+                <Link to="/Appointment" className="backLink text-dark">Back</Link>
+                <hr />
+
+                <div className="form-group formBoxCountry">
+                  <FormInput
+                    label={'Employee Code'}
+                    placeholder={'Employee Code'}
+                    id="Sequence_no"
+                    name="Sequence_no"
+                    type="number"
+
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Employee Name'}
+                    placeholder={'Employee Name'}
+                    id="Emp_name"
+                    name="Emp_name"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Father Name'}
+                    placeholder={'Father Name'}
+                    id="Emp_Father_name"
+                    name="Emp_Father_name"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Joining Date'}
+                    placeholder={'Joining Date'}
+                    id="Emp_joining_date"
+                    name="Emp_joining_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Emp Confirmation Date'}
+                    placeholder={'Emp Confirmation Date'}
+                    id="Emp_confirm_date"
+                    name="Emp_confirm_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Email Address'}
+                    placeholder={'Email Address'}
+                    id="Emp_email"
+                    name="Emp_email"
+                    type="email"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Vehicle Registration Number'}
+                    placeholder={'Vehicle Registration Number'}
+                    id="Vehicle_Registration_Number"
+                    name="Vehicle_Registration_Number"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'CNIC No'}
+                    placeholder={'CNIC No'}
+                    id="Emp_nic_no"
+                    name="Emp_nic_no"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'NTN No'}
+                    placeholder={'NTN No'}
+                    id="Emp_ntn_no"
+                    name="Emp_ntn_no"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'CNIC Issue Date'}
+                    placeholder={'CNIC Issue Date'}
+                    id="Emp_NIC_Issue_date"
+                    name="Emp_NIC_Issue_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'CNIC Expiry Date'}
+                    placeholder={'CNIC Expiry Date'}
+                    id="Emp_NIC_Expiry_date"
+                    name="Emp_NIC_Expiry_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Employee Retirement Age'}
+                    placeholder={'Employee Retirement Age'}
+                    id="Emp_Retirement_age"
+                    name="Emp_Retirement_age"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Address Line 1'}
+                    placeholder={'Address Line 1'}
+                    id="Emp_address_line1"
+                    name="Emp_address_line1"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Address Line 2'}
+                    placeholder={'Address Line 2'}
+                    id="Emp_address_line2"
+                    name="Emp_address_line2"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Permanent Address'}
+                    placeholder={'Permanent Address'}
+                    id="Permanent_address"
+                    name="Permanent_address"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Phone Home 1'}
+                    placeholder={'Phone Home 1'}
+                    id="Emp_home_tel1"
+                    name="Emp_home_tel1"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Phone Home 2'}
+                    placeholder={'Phone Home 2'}
+                    id="Emp_home_tel2"
+                    name="Emp_home_tel2"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Emp office tel 1'}
+                    placeholder={'Emp office tel 1'}
+                    id="Emp_office_tel1"
+                    name="Emp_office_tel1"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Emp office tel 2'}
+                    placeholder={'Emp office tel 2'}
+                    id="Emp_office_tel2"
+                    name="Emp_office_tel2"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Mobile No'}
+                    placeholder={'Mobile No'}
+                    id="Emp_mobile_No"
+                    name="Emp_mobile_No"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Birth Date'}
+                    placeholder={'Birth Date'}
+                    id="Emp_birth_date"
+                    name="Emp_birth_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Offer Letter Date'}
+                    placeholder={'Offer Letter Date'}
+                    id="Offer_Letter_date"
+                    name="Offer_Letter_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Tentative Joining Date'}
+                    placeholder={'Tentative Joining Date'}
+                    id="Tentative_Joining_date"
+                    name="Tentative_Joining_date"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Contract Expiry Date'}
+                    placeholder={'Contract Expiry Date'}
+                    id="ContractExpiryDate"
+                    name="ContractExpiryDate"
+                    type="date"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Probationary Period Months'}
+                    placeholder={'Probationary Period Months'}
+                    id="Probationary_period_months"
+                    name="Probationary_period_months"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Notice Period (months)'}
+                    placeholder={'Notice Period (months)'}
+                    id="Notice_period_months"
+                    name="Notice_period_months"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Referred By'}
+                    placeholder={'Referred By'}
+                    id="RefferedBy"
+                    name="RefferedBy"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                </div>
+                <hr />
+                <div className="form-group formBoxCountry">
+                  <FormSelect
+                    label={'Marital Status'}
+                    placeholder='Marital Status'
+                    id="Emp_marital_status"
+                    name="Emp_marital_status"
+                    options={[
+                      {
+                        value: 'M',
+                        label: 'Married',
+                      },
+                      {
+                        value: "N",
+                        label: 'Unmarried',
+                      },
+                    ]}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Confirmation Flag'}
+                    placeholder='Confirmation Flag'
+                    id="Confirmation_Flag"
+                    name="Confirmation_Flag"
+                    options={[
+                      {
+                        value: 'Y',
+                        label: 'Yes',
+                      },
+                      {
+                        value: "N",
+                        label: 'No',
+                      },
+                    ]}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Gender'}
+                    placeholder='Gender'
+                    id="Emp_sex_code"
+                    name="Emp_sex_code"
+                    options={[
+                      {
+                        value: 'M',
+                        label: 'Male',
+                      },
+                      {
+                        value: "F",
+                        label: 'Female',
+                      },
+                    ]}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Blood Group'}
+                    placeholder='Blood Group'
+                    id="Emp_Blood_Group"
+                    name="Emp_Blood_Group"
+                    options={[
+                      {
+                        value: 'A+',
+                        label: 'A+',
+                      },
+                      {
+                        value: "-A",
+                        label: '-A',
+                      },
+                      {
+                        value: "B+",
+                        label: 'B+',
+                      },
+                      {
+                        value: "B-",
+                        label: 'B-',
+                      },
+                      {
+                        value: "O+",
+                        label: 'O+',
+                      },
+                      {
+                        value: "O-",
+                        label: 'O-',
+                      },
+                      {
+                        value: "AB+",
+                        label: 'AB+',
+                      },
+                      {
+                        value: "AB-",
+                        label: 'AB-',
+                      },
+                    ]}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Nationality'}
+                    placeholder={'Nationality'}
+                    id="Nationality"
+                    name="Nationality"
+                    options={Country.Country?.map((item,) => ({
+                      value: item.value,
+                      label: item.label,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Form Select Type'}
+                    placeholder='Form Select Employee Type'
+                    id="Employment_Type_code"
+                    name="Employment_Type_code"
+                    options={getEmpTypeCode?.map(
+                      (item) => ({
+                        value: item.Empt_Type_code,
+                        label: item.Empt_Type_name,
+                      })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Emp Category'}
+                    placeholder='Emp Category'
+                    id="Emp_category"
+                    name="Emp_category"
+                    options={EmployeeCategory.map(
+                      (item) => ({
+                        value: item.Emp_Category_code,
+                        label: item.Emp_Category_name,
+                      })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Leave Cat'}
+                    placeholder={'Leave Cat'}
+                    id="Emp_Leave_category"
+                    name="Emp_Leave_category"
+                    options={LeaveCategory.map(
+                      (item) => ({
+                        value: item.Leave_Category_code,
+                        label: item.Leave_Category_name,
+                      })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Pay Category'}
+                    placeholder={'Pay Category'}
+                    id="Emp_Payroll_category"
+                    name="Emp_Payroll_category"
+                    options={PayCategory?.map(
+                      (item) => ({
+                        value: item.Payroll_Category_code,
+                        label: item.Payroll_Category_name,
+                      })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Shifts'}
+                    placeholder={'Shifts'}
+                    id="Shift_code"
+                    name="Shift_code"
+                    type="text"
+                    options={Shifts?.map(
+                      (item) => ({
+                        value: item.Shift_code,
+                        label: item.Shift_Name,
+                      })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Designation'}
+                    placeholder={'Designation'}
+                    id="Desig_code"
+                    name="Desig_code"
+                    options={Designation.map((item) => ({
+                      value: item.Desig_code,
+                      label: item.Desig_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Cost Center'}
+                    placeholder={'Cost Center'}
+                    id="Cost_Centre_code"
+                    name="Cost_Centre_code"
+                    options={CostCenter.map((item) => ({
+                      value: item.Cost_Centre_code,
+                      label: item.Cost_Centre_name,
+                    }))}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Section'}
+                    placeholder={'Section'}
+                    id="Section_code"
+                    name="Section_code"
+                    options={Section?.map((item) => ({
+                      value: item.Section_code,
+                      label: item.Section_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Grade'}
+                    placeholder={'Grade'}
+                    id="Grade_code"
+                    name="Grade_code"
+                    options={Grade.map((item) => ({
+                      value: item.Grade_code,
+                      label: item.Grade_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Education'}
+                    placeholder={'Education'}
+                    id="Edu_code"
+                    name="Edu_code"
+                    options={Education.map((item) => ({
+                      value: item.Edu_code,
+                      label: item.Edu_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Location'}
+                    placeholder={'Location'}
+                    id="Loc_code"
+                    name="Loc_code"
+                    options={Location?.map((item) => ({
+                      value: item.Loc_code,
+                      label: item.Loc_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Religion'}
+                    placeholder={'Religion'}
+                    id="Religion_Code"
+                    name="Religion_Code"
+                    options={Religion?.map((item) => ({
+                      value: item.Religion_code,
+                      label: item.Religion_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormSelect
+                    label={'Supervisor'}
+                    placeholder={'Supervisor'}
+                    id="Supervisor_Code"
+                    name="Supervisor_Code"
+                    options={Supervisor.map((item) => ({
+                      value: item.Emp_code,
+                      label: item.Emp_name,
+                    })
+                    )}
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                </div>
+                <hr />
+                <div className="form-group formBoxCountry">
+                  <FormInput
+                    label={'Person Name'}
+                    placeholder={'Person Name'}
+                    id="Contact_Person_Name"
+                    name="Contact_Person_Name"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Relationship'}
+                    placeholder={'Relationship'}
+                    id="Relationship"
+                    name="Relationship"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Contact Address 1'}
+                    placeholder={'Contact Address 1'}
+                    id="Contact_address1"
+                    name="Contact_address1"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Contact Address 2'}
+                    placeholder={'Contact Address 2'}
+                    id="Contact_address2"
+                    name="Contact_address2"
+                    type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Contact home tel 1'}
+                    placeholder={'Contact home tel 1'}
+                    id="Contact_home_tel1"
+                    name="Contact_home_tel1"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Contact home tel 2'}
+                    placeholder={'Contact home tel 2'}
+                    id="Contact_home_tel2"
+                    name="Contact_home_tel2"
+                    type="number"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                </div>
+                <div className='CountryBtnBox'>
+                  <CancelButton onClick={EditBack} title={'Back'} />
+                  <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                </div>
+              </form>
+            </div>
           </div>
-          <form onSubmit={SaveForm} className=" p-2">
-
-            <div className="row p-1">
-              <div className="">
-                <ul className='p-0'>
-                  {Err && (
-                    <li className={`alert alert-${Err.type}` + " " + "mt-3"}>{`${Err.message}`}</li>
-                  )}
-                </ul>
-              </div>
-              <div className="col-lg-3 col-md-3">
-                <div className="form-group  d-flex  flex-column infoForm">
-                  <label htmlFor="">Marital Status</label>
-                  <div className="d-flex flex-row">
-                    <input type="Radio" className="mx-1 form-check-input" name="Marital_Status" id="married" value="M" onChange={(e) => { setMaritalStatus(e.target.checked == true ? e.target.value : "") }} />
-                    <label className="m-0" htmlFor="married">Married</label>
-                    <input type="Radio" className="mx-1 form-check-input" name="Marital_Status" id="single" value="M" onChange={(e) => { setMaritalStatus(e.target.checked == true ? e.target.value : "") }} />
-                    <label className="m-0" htmlFor="single">Single</label>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-3">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Gender</label>
-                  <div className="d-flex ">
-                    <input type="Radio" name="Genders" id="Male" value="M" className="mx-1 form-check-input" onChange={(e) => { setEmployeeGender(e.target.checked == true ? e.target.value : "null") }} />
-                    <label htmlFor="Male" className="m-0">Male</label>
-                    <input type="Radio" name="Genders" id="Female" value="F" className="mx-1 form-check-input" onChange={(e) => { setEmployeeGender(e.target.checked == true ? e.target.value : "null") }} />
-                    <label htmlFor="Female" className="m-0">Female</label>
-                  </div>
-                </div>
-                <div className="form-group p-0 ctrlFlag d-flex  mx-1 mt-2">
-                  <input type="Radio" name="Confirm Flag" id="" value="Y" className="form-check-input" onChange={(e) => { setConfirmFlag(e.target.checked == true ? e.target.value : "null") }} />
-                  <label htmlFor="" >Confirm Flag</label>
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-3">
-
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Confirmation Date</label>
-                  <input type="date" name="" id="" required className="form-control" onChange={(e) => { setEmp_Confirm_date(e.target.value) }} />
-                </div>
-
-              </div>
-              <div className="col-lg-3 col-md-3">
-                <div className="form-group d-flex flex-column  infoForm">
-                  <label htmlFor="">Employee Picture</label>
-                  {/* required */}
-                  <input type="file" className="TAfile form-control" onChange={(e) => { setEmployeePicture(e.target.files[0]) }} />
-                </div>
-              </div>
-
-            </div>
-            <div className="row mt-3">
-              <span className="TaRowFormHeading">Personal Information</span>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Employee Code</label>
-                  <input type="number" className="form-control" name="" id="" required onChange={(e) => { setEmployeeCode(e.target.value) }} />
-
-                  <label htmlFor="">Employee Name</label>
-                  <input type="text" className="form-control" name="" id="" required onChange={(e) => { setEmployeeName(e.target.value) }} />
-
-                  <label htmlFor="">*Address Line 1</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setAddressLine1(e.target.value) }} />
-
-                  <label htmlFor="">Phone (Res) 1</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setMobileNoRes1(e.target.value) }} />
-
-                  <label htmlFor="">Email Address</label>
-                  <input type="email" name="" id="" className="form-control" required onChange={(e) => { setemailAddress(e.target.value) }} />
-
-                  <label htmlFor="">Car / M.Cycle No </label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setVehicleRegistrationNumber(e.target.value) }} /> 
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Father Name</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setFatherName(e.target.value) }} />
-
-                  {/* <label htmlFor="">*Transaction Date</label> */}
-                  {/* <input type="text" name="" id="" required /> */}
-
-                  <label htmlFor="">Phone (Res) 2</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setMobileNoRes2(e.target.value) }} />
-
-                  <label htmlFor="">CNIC No.</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setCNICNo(e.target.value) }} />
-
-                  <label htmlFor="">CNIC Issue Date.</label>
-                  <input type="date" name="" id="" className="form-control" required onChange={(e) => { setCNICIssueDate(e.target.value) }} />
-
-                  <label htmlFor="">CNIC Expiry Date.</label>
-                  <input type="date" name="" id="" className="form-control" required onChange={(e) => {
-                    setCNICExpiryDate(e.target.value)
-                    // else{
-                    //    setcheckCnicDateErr(false)
-                    // }
-                  }} />
-                  <span className="p-0 m-0" style={{ color: "red", fontSize: "15px" }}>{checkCnicDateErr ? checkCnicDateErr : false}</span>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Blood Group</label>
-                  <select name="" id="" className="form-control" required onChange={(e) => { setBloodGroup(e.target.value) }}>
-                    <option value="A+">A+</option>
-                    <option value="A-">A-</option>
-                    <option value="B-">B-</option>
-                    <option value="B+">B+</option>
-                    <option value="O+">O+</option>
-                    <option value="O-">O-</option>
-                    <option value="AB+">AB+</option>
-                    <option value="AB-">AB-</option>
-                  </select>
-                  {/* <input type="text" name="" id="" className="form-control" required onChange={(e) => { setBloodGroup(e.target.value) }} /> */}
-
-                  <label htmlFor="">*Address Line 2</label>
-                  <input type="text" name="" id="" className="form-control" required onChange={(e) => { setAddressLine2(e.target.value) }} />
-
-                  <label htmlFor="">Phone (Office) 1</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setMobileNoOffice1(e.target.value) }} />
-
-                  <label htmlFor="">NTN No.</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setNTNNo(e.target.value) }} />
-
-                  <label htmlFor="">Nationality</label>
-                  <select name="" id="" className="form-select" required onChange={(e) => { setNationality(e.target.value) }}>
-                    {Country.Country?.map((index,key) => {
-                      return(
-                        <option value={key} >{index.label}</option>
-                      )
-                    })}
-                  </select>
-                  {/* <input type="text" name="" id="" className="form-control" required onChange={(e) => { setNationality(e.target.value) }} /> */}
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Joining Date</label>
-                  <input type="date" name="" id="" className="form-control" required onChange={(e) => { setJoiningDate(e.target.value) }} />
-
-                  <label htmlFor="">Mobile No</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setMobileNo(e.target.value) }} />
-
-                  <label htmlFor="">Phone (Office) 2</label>
-                  <input type="number" name="" id="" className="form-control" required onChange={(e) => { setMobileNoOffice2(e.target.value) }} />
-
-                  <label htmlFor="">Birth Date</label>
-                  <input type="date" name="" id="" className="form-control" required onChange={(e) => { setBirthDate(e.target.value) }} />
-
-                  <label htmlFor="">Permanent Address </label>
-                  <textarea name="" id="" className="form-control" required onChange={(e) => { setPermanentAddress(e.target.value) }}></textarea>
-                </div>
-              </div>
-
-            </div>
-            <div className="row mt-3">
-              <span className="TaRowFormHeading">Relationship</span>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Type</label>
-                  <h6 style={{ fontSize: "12px", color: "red" }}>{getEmptypeErr ? getEmptypeErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setgetEmpTypeVal(e.target.value) }}>
-                    <option selected disabled value="">Select Type</option>
-                    <option value={getEmpTypeCode?.Empt_Type_code}>{getEmpTypeCode?.Empt_Type_name}</option>
-                  </select>
-
-                  <label htmlFor="">*Shifts</label>
-                  <h6 style={{ fontSize: "12px", color: "red" }} className="m-0 p-0">{GetEmploymentShiftErr ? GetEmploymentShiftErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentShiftVal(e.target.value) }}>
-                    <option selected disabled value="">Select Shifts</option>
-                    {GetEmploymentShiftData.map((items => {
-                      return (<option key={items.Shift_code} value={items.Shift_code}>{items.Shift_Name}</option>)
-                    }))}
-                  </select>
-
-                  <label htmlFor="">*Grade</label>
-                  <h6 style={{ fontSize: "12px", color: "red" }} className="m-0 p-0">{grade_codeErr ? grade_codeErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setgrade_codeVal(e.target.value) }}>
-                    <option selected disabled value="">Select Grade</option>
-                    {grade_codeData.map((items => {
-                      return (<option key={items.Grade_code} value={items.Grade_code}>{items.Grade_name}</option>)
-                    }))}
-                  </select>
-
-                  <label htmlFor="">*Religion</label>
-                  <h6 style={{ fontSize: "12px", color: "red" }} className="m-0 p-0">{religion_codeErr ? religion_codeErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setreligion_codeVal(e.target.value) }}>
-                    <option selected disabled value="">Select Religion</option>
-                    {religion_codeData.map((items => {
-                      return (<option key={items.Religion_code} value={items.Religion_code}>{items.Religion_name}</option>)
-                    }))}
-                  </select>
-
-                  <label htmlFor="">*Offer Letter Date:</label>
-                  <input type="date" name="" id="" className="form-control" onChange={(e) => { setOfferLetterate(e.target.value) }} />
-
-                  {/* <label htmlFor="">Employee HR Category</label>
-                  <h6 style={{fontSize: "12px",color: "red"}} className="m-0 p-0">{master_all_employeesErr? master_all_employeesErr : false}</h6>
-                  <select name="" id=""  onChange={(e) => {setmaster_all_employeesVal(e.target.value)}}>
-                      <option selected disabled value="">Select Employee HR Category</option>
-                      {master_all_employeesData.map((items => {
-                        return(<option key={items.Emp_code} value={items.Emp_code}>{items.Emp_name}</option>)
-                      }))}
-                  </select> */}
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Category</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{getEmploymentCategoryErr ? getEmploymentCategoryErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setgetEmploymentCategoryVal(e.target.value) }}>
-                    <option selected disabled value="">Select Category</option>
-                    {getEmploymentCategory.map((items => {
-                      return (<option key={items.Emp_Category_code} value={items.Emp_Category_code}>{items.Emp_Category_name}</option>)
-                    }))}
-                  </select>
-                  <label htmlFor="">*Designation</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{GetEmploymentDesigErr ? GetEmploymentDesigErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentDesigVal(e.target.value) }}>
-                    <option selected disabled value="">Select Designation</option>
-                    {GetEmploymentDesigData.map((items => {
-                      return (<option key={items.Desig_code} value={items.Desig_code}>{items.Desig_name}</option>)
-                    }))}
-                  </select>
-                  <label htmlFor="">*Education</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{EduCodeDataErr ? EduCodeDataErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setEduCodeDataVal(e.target.value) }}>
-                    <option selected disabled value="">Select Education</option>
-                    {EduCodeData.map((items => {
-                      return (<option key={items.Edu_code} value={items.Edu_code}>{items.Edu_name}</option>)
-                    }))}
-                  </select>
-                  <label htmlFor="">*Supervisor</label>
-                  <select name="" className="form-select" id="" >
-                    <option value="">a</option>
-                    <option value="">b</option>
-                    <option value="">c</option>
-                  </select>
-                  <label htmlFor="">*Tentative Joining Date:</label>
-                  <input type="date" name="" id="" className="form-control" onChange={(e) => { setTentativeJoiningDate(e.target.value) }} />
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">*Leave Cat</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{employmentLeaveCategoryErr ? employmentLeaveCategoryErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setemploymentLeaveCategoryVal(e.target.value) }}>
-                    <option selected disabled value="">Select Leave Cat</option>
-                    {employmentLeaveCategory.map((items) => {
-                      return (
-                        <option value={items.Leave_Category_code}>{items.Leave_Category_name}</option>
-                      )
-                    })}
-                  </select>
-                  <label htmlFor="">*Cost Center</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{GetEmploymentCostCenterErr ? GetEmploymentCostCenterErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentCostCenterVal(e.target.value) }}>
-                    <option selected disabled value="">Select Cost Center</option>
-                    {GetEmploymentCostCenterData?.map((items => {
-                      return (<option key={items.Cost_Centre_code} value={items.Cost_Centre_code}>{items.Cost_Centre_name}</option>)
-                    }))}
-                  </select>
-                  <label htmlFor="">*Location</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{location_codeErr ? location_codeErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setlocation_codeVal(e.target.value) }}>
-                    <option selected disabled value="">Select Location</option>
-                    {location_codeData.map((items => {
-                      return (<option key={items.Loc_code} value={items.Loc_code}>{items.Loc_name}</option>)
-                    }))}
-                  </select>
-
-
-                  <label htmlFor="">*Referred By:</label>
-                  <input type="text" name="" id="" className="form-control" onChange={(e) => { setReferredBy(e.target.value) }} />
-
-                  {/* <label htmlFor="">*Contract</label>
-                  <input type="text" name="" id="" required onChange={(e)=> {setContract(e.target.value)}}/> */}
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">*Pay Cat</label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{GetEmploymentPayrollErr ? GetEmploymentPayrollErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentPayrollVal(e.target.value) }}>
-                    <option selected disabled value="">Select Pay Cat</option>
-                    <option value={GetEmploymentPayrollData.Payroll_Category_code}>{GetEmploymentPayrollData.Payroll_Category_name}</option>
-                  </select>
-                  <label htmlFor="">*Section </label>
-                  <h6 className="m-0 p-0" style={{ fontSize: "12px", color: "red" }}>{GetEmploymentSectionCodeErr ? GetEmploymentSectionCodeErr : false}</h6>
-                  <select name="" id="" className="form-select" onChange={(e) => { setGetEmploymentSectionCodeVal(e.target.value) }}>
-                    <option selected disabled value="">Select Section</option>
-                    {GetEmploymentSectionCodeData.map((items => {
-                      return (<option key={items.Section_code} value={items.Section_code}>{items.Section_name}</option>)
-                    }))}
-                  </select>
-                  {/* <label htmlFor="">*Network ID:</label>
-                  <input type="text" name="" id="" required /> */}
-
-
-                  <label htmlFor="">*Probability Period (months)</label>
-                  <input type="number" name="" id="" className="form-control" onChange={(e) => { setProbabilityPeriodMonths(e.target.value) }} />
-
-                  <label htmlFor="">*Notice Period (months):</label>
-                  <input type="number" name="" id="" className="form-control" onChange={(e) => { setNoticePeriodMonths(e.target.value) }} />
-                </div>
-              </div>
-            </div>
-            <div className="row mt-3">
-              <span className="TaRowFormHeading">
-                Emergency Contact Information
-              </span>
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Person Name</label>
-                  <input type="text" name="" id="" className="form-control" onChange={(e) => { setEmergencypersonName(e.target.value) }} />
-
-                  <label htmlFor="">Address 2</label>
-                  <input type="text" name="" id="" className="form-control" onChange={(e) => { setEmergencyAddress1(e.target.value) }} />
-                </div>
-              </div>
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Relationship</label>
-                  <input type="text" name="" id="" className="form-control" onChange={(e) => { setEmergencyRelationship(e.target.value) }} />
-
-                  <label htmlFor="">Phone 1 </label>
-                  <input type="number" name="" id="" className="form-control" onChange={(e) => { setEmergencyPhone1(e.target.value) }} />
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-4">
-                <div className="form-group d-flex flex-column infoForm">
-                  <label htmlFor="">Address 1</label>
-                  <input type="text" name="" id="" className="form-control" onChange={(e) => { setEmergencyAddress2(e.target.value) }} />
-
-                  <label htmlFor="">Phone 2</label>
-                  <input type="number" name="" id="" className="form-control" onChange={(e) => { setEmergencyPhone2(e.target.value) }} />
-                </div>
-              </div>
-            </div>
-            <div className="row TAFormBtn mt-3">
-              <div className="col-md-12 col-sm-12">
-                <button type="submit" className="btn btn-dark" disabled={btnEnaledAndDisabled}>  {loading ? "A moment please..." : "save"} </button>
-                <button type="button" className="ml-2 btn btn-dark">reset</button>
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </>

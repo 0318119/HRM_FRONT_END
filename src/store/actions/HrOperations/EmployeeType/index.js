@@ -7,17 +7,14 @@ import {
 import baseUrl from '../../../../config.json'
 
 
-
-
 export const GetEmployeeTypeData = (params) => async (dispatch) => {
-    // ${params.pageNo}/${params.pageSize}/${params.search}
     try {
         dispatch({
             type: GET_TRANSITION_EMPOYLEE_TYPE_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCode`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCode/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -53,18 +50,18 @@ export const GetEmployeeTypeData = (params) => async (dispatch) => {
 export const Get_Employee_Type_By_ID = (body) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_TRANSITION_EMPOYLEE_TYPE_DATA,
+            type: GET_TRANSITION_EMPOYLEE_TYPE_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/educationlevel/GetEducationLevelById`, {
+        const response = await fetch(`${baseUrl.baseUrl}/employment_type/GetEmploymentTypeById`, {
             method: "POST",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
                 'Content-Type': 'application/json',
             },
             body:JSON.stringify({
-                'Edu_level_code':body,
+                'Empt_Type_code':body,
             })
         });
         if(response.status === 200) {

@@ -1,154 +1,84 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../assets/css/tables.css";
-import { BsCalendarCheck as Calender_ico } from 'react-icons/bs'
+import { Space, Table, Tag, Tooltip } from 'antd';
+import { message } from 'antd';
+import baseUrl from '../../../src/config.json'
 
 
-const AttendanceSmmy = (Data) => {
-
+const AttendanceSmmy = () => {
+    const [messageApi, contextHolder] = message.useMessage();
+    var get_access_token = localStorage.getItem("access_token");
+    const [isSummry, setSummry] = useState([])
+    const [isLoading, setLoading] = useState(false)
+  
+  
+    async function getSummry() {
+      setLoading(true)
+      await fetch(
+        `${baseUrl.baseUrl}/dashboard/LeaveBalancesDashboard`, {
+        method: "GET",
+        headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+      }
+      ).then((response) => {
+        return response.json();
+      }).then(async (response) => {
+        if (response.success) {
+            setLoading(false)
+            setSummry(response?.data)
+        }
+        else {
+          setLoading(false)
+          messageApi.open({
+            type: 'error',
+            content: response?.message || response?.messsage,
+          });
+        }
+      }).catch((error) => {
+        setLoading(false)
+        messageApi.open({
+          type: 'error',
+          content: error?.message || error?.messsage,
+        });
+      });
+    }
+  
+    useEffect(() => {
+        getSummry()
+    }, [])
+  
+  
+    const columns = [
+      {
+        title: 'Name',
+        dataIndex: 'Emp_name',
+        key: 'Emp_name',
+      },
+      {
+        title: 'Code',
+        dataIndex: 'Emp_code',
+        key: 'Emp_code',
+      },
+      {
+        title: 'Leave',
+        dataIndex: 'Leave_Balance_days',
+        key: 'Leave_Balance_days',
+      },
+    ];
 
     return (
         <>
-            <div className="TableContainer">
-                <div className="d-flex justify-content-between TableHeaderContainer">
-                    <span className="d-flex align-items-center">
-                        <Calender_ico /> <p className="m-1">ATTENDANCE SUMMARY</p>
-                    </span>
+              {contextHolder}
+                <div className="border p-3 rounded bgTables">
+                    <div>
+                      <h5 className="text-dark mb-2 text-uppercase">Leave Balance</h5>
+                      <Table
+                          columns={columns}
+                          loading={isLoading}
+                          pagination={false}
+                          dataSource={isSummry}
+                      />
+                    </div>
                 </div>
-                <div className="OverFlowtble">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>Title</td>
-                                <td></td>
-                                <td></td>
-                                <td>Balance</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                            <tr>
-                                <th>private leave</th>
-                                <th></th>
-                                <th></th>
-                                <th>20.1</th>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </>
     );
 };

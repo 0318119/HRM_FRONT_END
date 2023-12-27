@@ -12,7 +12,7 @@ const Transaction_Increment_form = (props) => {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
     const search = useLocation().search
-    var incId = new URLSearchParams(search).get('incId')
+    var incId = new URLSearchParams(search).get('Emp_code')
     var AlreadyProcess = new URLSearchParams(search).get('Process')
     // AlreadyProcess !== null ? "DeleteAndProcess" :
     const [WhichAction, setWhichAction] = useState("Save")
@@ -91,7 +91,7 @@ const Transaction_Increment_form = (props) => {
                                 if (response.data2[0].length > 0) {
                                     for (var i of response.data2[0]) {
                                         var obj = {
-                                        "code": i.Allowance_code,
+                                        "'code'": i.Allowance_code,
                                         "amount": 0
                                         }
                                         temp.push(obj)

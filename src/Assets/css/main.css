@@ -1,27 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 
-h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,th,td,button,div{ 
+h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,button,div{ 
     font-family: 'Poppins', sans-serif;
     outline: none;
     text-decoration: none;
-    margin: 0px;
-    border: none;
 }
 button,h1,h2,h3,h4,h5,h6{
     color: white;
 }
 ul,li{
     list-style: none;
-    padding: 0;
-    margin: 0;
 }
 span,strong{
     display: block;
 }
 body{
-    margin: 0px;
-    padding: 0px;
     overflow-x: clip !important;
 }
 
@@ -34,10 +28,9 @@ body{
 .deleteBtn{
     background-color: transparent;
     border: none;
-    font-size: 20px;
+    font-size: 25px;
     color: red;
 }
-
 /* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
 .tabletdRow {
     display: flex;
@@ -65,7 +58,6 @@ body{
 table {
     background-color: transparent !important;
 }
-
 .ant-pagination-options{
     display: none !important;
 }
@@ -80,6 +72,12 @@ table {
     font-weight: 700;
     text-transform: capitalize;
 }
+
+/* DASHBOARD TABLE BG COLOR */
+.bgTables{
+    background: #d7cfcf33;
+}
+
 
 /* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 select:focus {
@@ -107,20 +105,44 @@ select:focus {
     display: none;
 }
 
-@media screen and (max-width:786px) {
-    /* td{
-        font-size: 9px;
-    } */
+.p-tree-toggler svg{
+    color: gray;
 }
+
 .ant-select-single{
     height: 40px !important;
+    width: 100% !important;
 }
 .ant-select-focused .ant-select-selector{
     box-shadow: none !important;
 }
 .ant-select-selector{
     border: 1px solid rgb(225 225 225) !important;
+    width: 100% !important;
+}
+.ant-select-show-arrow .ant-select-selector{
+    width: 100% !important;
 }
 .ant-select-selector:hover{
     border: 1px solid rgb(225 225 225) !important;
+}
+.ant-message-loading{
+    display: flex;
+    align-content: center;
+}
+.ant-message-loading span{
+    color: black;
+}
+.ant-message-error{
+    display: flex;
+    align-items: center;
+}
+.ant-message-success{
+    display: flex;
+    align-items: center;
+}
+
+
+.month{
+    width: 200px !important;
 }

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Input from '../../components/basic/input'
 import { CancelButton, PrimaryButton } from "../../components/basic/button";
-import Select from '../../components/basic/select'
 import * as EMPLOYEE_TYPE_ACTIONS from "../../store/actions/HrOperations/EmployeeType/index"
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -11,7 +10,7 @@ import { FormCheckBox, FormInput, FormSelect } from '../../components/basic/inpu
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployeeTypeData, Get_Employee_Type_By_ID }) {
+function EmployeeTypeForm({ cancel, mode, isCode, page, Red_Employee_type,GetEmployeeTypeData, Get_Employee_Type_By_ID }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
@@ -20,13 +19,11 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
         cancel('read')
     }
 
-
     const submitForm = async (data) => {
         try {
             const isValid = await EmployeeTypeScheme.validate(data);
             if (isValid) {
-                // POST_Education_FORM(data)
-                console.log("data", data)
+                POST_Emp_Type_FORM(data)
             }
         } catch (error) {
             console.error(error);
@@ -45,8 +42,8 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
 
             Empt_Type_name: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Empt_Type_name,
             Empt_Type_abbr: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Empt_Type_abbr,
-            Company_Employee_Flag: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Company_Employee_Flag,
             Emp_Code_Prefix: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Emp_Code_Prefix,
+            Company_Employee_Flag: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Company_Employee_Flag,
             PermanantFlag: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.PermanantFlag,
             Retirement_Age: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Retirement_Age,
             ProbationMonths: Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.ProbationMonths,
@@ -56,6 +53,7 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
         mode: "onChange",
         resolver: yupResolver(EmployeeTypeScheme),
     });
+
 
     useEffect(() => {
         if (isCode !== null) {
@@ -99,25 +97,31 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
         }
     }, [Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]])
 
-    // EDUCATION LEVEL FORM DATA API CALL =========================== 
-    async function POST_Education_FORM(body) {
+    console.log("object",Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0])
+
+    // EMPLOYEE TYPE FORM DATA API CALL =========================== 
+    async function POST_Emp_Type_FORM(body) {
         setLoading(true)
         await fetch(
-            `${baseUrl.baseUrl}/eduation_code/AddEducation`, {
+            `${baseUrl.baseUrl}/employment_type_code/AddEmploymentType`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "Edu_abbr": body?.Edu_abbr,
-                "Edu_code": body?.Edu_code,
-                "Edu_name": body?.Edu_name,
-                "Sort_key": body?.Sort_key,
-                "Edu_level_code": body?.Edu_level_code
+                "Empt_Type_code": body.Empt_Type_code,
+                "AllowChangeProbationMonths": body?.AllowChangeProbationMonths,
+                "Company_Employee_Flag": body?.Company_Employee_Flag,
+                "Emp_Code_Prefix": body?.Emp_Code_Prefix,
+                "Empt_Type_abbr": body?.Empt_Type_abbr,
+                "Empt_Type_name": body?.Empt_Type_name,
+                "PermanantFlag": body?.PermanantFlag,
+                "ProbationMonths": body?.ProbationMonths,
+                "Retirement_Age": body?.Retirement_Age,
+                "Sort_key": body?.Sort_key
             }),
         }
         ).then((response) => {
             return response.json();
         }).then(async (response) => {
-            console.log("response.success", response)
             if (response.success) {
                 messageApi.open({
                     type: 'success',
@@ -126,11 +130,12 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                 setLoading(false)
                 setTimeout(() => {
                     cancel('read')
-                    // GetEducationData({
-                    //     pageSize: pageSize,
-                    //     pageNo: 1,
-                    //     search: null
-                    // })
+                    GetEmployeeTypeData({ 
+                        pageSize: pageSize,
+                        pageNo: page,
+                        search: null
+                    })
+                    console.log("page",page)
                 }, 3000);
             }
             else {
@@ -149,6 +154,7 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
         });
     }
 
+
     return (
         <>
             {contextHolder}
@@ -156,7 +162,6 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                 <h4 className="text-dark">Employee Type</h4>
                 <hr />
                 <div className="form-group formBoxEmployeeType">
-
                     <FormInput
                         label={'Emp Type Code'}
                         placeholder={'Emp Type Code'}
@@ -178,7 +183,6 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                         errors={errors}
                         control={control}
                     />
-
                     <FormInput
                         label={'Empt Type abbr'}
                         placeholder={'Empt_Type_abbr'}
@@ -190,8 +194,8 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                         control={control}
                     />
                     <FormInput
-                        label={'Company Code'}
-                        placeholder={'Company Code'}
+                        label={'Emp Code Prefix'}
+                        placeholder={'Emp Code Prefix'}
                         id="Emp_Code_Prefix"
                         name="Emp_Code_Prefix"
                         type="number"
@@ -208,6 +212,26 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                         showLabel={true}
                         errors={errors}
                         control={control}
+                    />
+                    <FormSelect
+                        label={'Change Probation Month'}
+                        placeholder={'Change Probation Month'}
+                        id="AllowChangeProbationMonths"
+                        name="AllowChangeProbationMonths"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                        options={[
+                            {
+                                value: 'Y',
+                                label: 'Yes',
+                            },
+                            {
+                                value: 'N',
+                                label: 'No',
+                            },
+
+                        ]}
                     />
                 </div>
                 <hr />
@@ -228,7 +252,7 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                         placeholder={'Probation Month'}
                         id="ProbationMonths"
                         name="ProbationMonths"
-                        type="date"
+                        type="number"
                         showLabel={true}
                         errors={errors}
                         control={control}
@@ -244,9 +268,9 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                             labelText={'Company Employee Flag'}
                             label={"Yes"}
                             value={'Y'}
-                            // defaultChecked={
-                            //     Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
-                            // }
+                            defaultChecked={
+                                Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Company_Employee_Flag == "Y" ? true : false
+                            }
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -257,9 +281,9 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                             name="Company_Employee_Flag"
                             label={'No'}
                             value={'N'}
-                            // defaultChecked={
-                            //     Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
-                            // }
+                            defaultChecked={
+                                Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.Company_Employee_Flag == "N" ? true : false
+                            }
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -273,9 +297,9 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                             labelText={'Permanant Flag'}
                             label={"Yes"}
                             value={'Y'}
-                            // defaultChecked={
-                            //     Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "Y" ? true : false
-                            // }
+                            defaultChecked={
+                                Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.PermanantFlag == "Y" ? true : false
+                            }
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -286,38 +310,15 @@ function EmployeeTypeForm({ cancel, mode, isCode, Red_Employee_type, GetEmployee
                             name="PermanantFlag"
                             label={'No'}
                             value={'N'}
-                            // defaultChecked={
-                            //     Red_Cost_centre?.dataSingle?.[0]?.res?.data?.[0]?.Azad_Kashmir_Tax_Flag == "N" ? true : false
-                            // }
+                            defaultChecked={
+                                Red_Employee_type?.dataSingle?.[0]?.res?.data?.[0]?.PermanantFlag == "N" ? true : false
+                            }
                             showLabel={true}
                             errors={errors}
                             control={control}
                         />
                     </div>
-                    <FormSelect
-                        label={'Change Probation Month'}
-                        placeholder={'Change Probation Month'}
-                        id="AllowChangeProbationMonths"
-                        name="AllowChangeProbationMonths"
-                        showLabel={true}
-                        errors={errors}
-                        control={control}
-                        options={[
-                            {
-                                value: '1',
-                                label: '1',
-                            },
-                            {
-                                value: '2',
-                                label: '2',
-                            },
-                            {
-                                value: '3',
-                                label: '3',
-                            },
-
-                        ]}
-                    />
+                    
                 </div>
                 <div className='EmployeeTypeBtnBox'>
                     <CancelButton onClick={EditBack} title={'Cancel'} />

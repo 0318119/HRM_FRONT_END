@@ -82,7 +82,6 @@ const Approvals = () => {
                 setApprovalDataErr(error.message);
             });
     }
-
     const approveRejectStep = async (e, code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,
@@ -150,7 +149,6 @@ const Approvals = () => {
         });
 
     }
-
     const StepBack = async (code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,
@@ -219,7 +217,6 @@ const Approvals = () => {
         });
 
     }
-
     const RejectLeave = async (code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/RejectLeave`,
@@ -288,9 +285,6 @@ const Approvals = () => {
         });
 
     }
-
-
-    
 
     useEffect(() => {
         GetApprovalInfo()

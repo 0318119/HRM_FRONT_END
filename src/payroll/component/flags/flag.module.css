@@ -1,0 +1,19 @@
+.FlagDanger{
+    border: 1px solid red;
+    background-color: rgb(254, 183, 183);
+    color:red;
+    padding-block: 15px;
+    padding-inline: 30px;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.FlagNormal{
+    border: 1px solid green;
+    background-color: rgb(182, 252, 182);
+    color:green;
+    padding-block: 15px;
+    padding-inline: 30px;
+    border-radius: 10px;
+    width: fit-content;
+}

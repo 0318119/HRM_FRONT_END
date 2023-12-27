@@ -9,11 +9,10 @@ import { FormCheckBox, FormInput } from '../../components/basic/input/formInput'
 import { message } from 'antd';
 import baseUrl from '../../../src/config.json'
 
-function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designation_Data_By_Id,GetDataDesignation }) {
+function DesignationForm({ cancel, mode, isCode, page, Red_Designation, Get_Designation_Data_By_Id,GetDataDesignation }) {
     var get_access_token = localStorage.getItem("access_token");
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false)
-    const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
 
@@ -53,6 +52,7 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
             SatAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.SatAllowance,
             EveAllowance: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.EveAllowance,
             JD_Desig_Code: Red_Designation?.dataSingle?.[0]?.res?.data?.[0]?.JD_Desig_Code,
+            
         },
         mode: "onChange",
         resolver: yupResolver(DesignationScheme),
@@ -130,7 +130,7 @@ function DesignationForm({ cancel, mode, isCode, Red_Designation, Get_Designatio
                     cancel('read')
                     GetDataDesignation({ 
                         pageSize: pageSize,
-                        pageNo: 1,
+                        pageNo: page,
                         search: null
                     })
                 }, 3000);

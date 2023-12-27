@@ -79,7 +79,7 @@ function TAExprienceForm() {
   const [AllEmployerErr, setAllEmployerErr] = useState(false)
 
   async function getEmployerData() {
-    await fetch(`${config["baseUrl"]}/allemployer/GetAllEmployer`, {
+    await fetch(`${config["baseUrl"]}/allemployer/GetAllEmployerWOP`, {
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -91,7 +91,7 @@ function TAExprienceForm() {
       })
       .then(async (response) => {
         if (response.messsage == "unauthorized") {
-          await fetch(`${config["baseUrl"]}allemployer/GetAllEmployer`, {
+          await fetch(`${config["baseUrl"]}/allemployer/GetAllEmployerWOP`, {
             method: "GET",
             headers: {
               "content-type": "application/json",
@@ -117,7 +117,7 @@ function TAExprienceForm() {
               setAllEmployerErr(error.message);
             });
         } else {
-          setAllEmployer(response.data[0]);
+          setAllEmployer(response.data);
         }
       })
       .catch((error) => {
@@ -408,10 +408,10 @@ function TAExprienceForm() {
                   <h6 style={{ fontSize: "12px", color: "red" }}>{AllEmployerErr ? AllEmployerErr : false}</h6>
                   <select name="" id="" className="form-select" required={EmployerNameCode == null ? true : false} onChange={(e) => { setEmployerNameCode(e.target.value) }}>
                     <option selected  value="">{EmployerNameCode==""||EmployerNameCode==null||EmployerNameCode==undefined?"Select Employer Name":AllEmployer.length>0?AllEmployer.filter(data=>data.Employer_Code==EmployerNameCode)[0].Employer_Name:"Select Employer Name"}</option>
-                    {AllEmployer.map((items) => {
+                    {AllEmployer?.map((items) => {
                       return (
                         items.Employer_Code==EmployerNameCode?""
-                        : <option value={items.Employer_Code}>{items.Employer_Name}</option>
+                          : <option value={items.Employer_Code}>{items.Employer_Name}</option>
                       )
                     })}
                   </select>
