@@ -379,8 +379,16 @@ export const GET_TranEducationReport_DATA = "GET_TranEducationReport_DATA";
 export const GET_TranEducationReport_DATA_START = "GET_TranEducationReport_DATA_START";
 export const GET_TranEducationReport_DATA_SINGLE = "GET_TranEducationReport_DATA_SINGLE";
 export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_END";
+
 // HRSETUPS ===> Experience_Report === 
 
 export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
 export const GET_Experience_Report_START = "GET_Experience_Report_START";
 export const GET_Experience_Report_END = "GET_Experience_Report_END";
+
+// HRSETUPS ===> Date_Of_Birth_Inquiry_Report === 
+
+export const GET_Date_Of_Birth_Inquiry_Report_DATA = "Date_Of_Birth_Inquiry_Report_DATA,";
+export const GET_Date_Of_Birth_Inquiry_Report_START = "GET_Date_Of_Birth_Inquiry_Report_START";
+export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_Report_END";
+

@@ -127,6 +127,7 @@ import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Experience_Report from '../HrOperations/Experience_Report.js'
+import Date_Of_Birth_Inquiry_Report from '../HrOperations/Date_Of_Birth_Inquiry_Report.js'
 
 
 
@@ -134,7 +135,7 @@ const routing = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} /> 
+        <Route path="/" element={<Login />} />
         {/* 
         {
             localStorage.getItem('access_token') !== undefined &&
@@ -220,7 +221,9 @@ const routing = () => {
         <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
         <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
         <Route path='/TranEducationReport' element={<TranEducationReport />} />
-        <Route path='/Experience_Report' element={<Experience_Report />} />  
+        <Route path='/Experience_Report' element={<Experience_Report />} />
+        <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
+        {/* payroll */}
         {/* payroll */}
         <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
         <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
@@ -253,7 +256,7 @@ const routing = () => {
         <Route path="/Bank" element={<Bank />} />
         <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
         <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-       
+
 
         {/* REPORT =============================================================== */}
         <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
@@ -292,7 +295,7 @@ const routing = () => {
 
 
         {/*new Appoint -----*/}
-        
+
         {/*new Appoint -----*/}
       </Routes>
     </Router>

@@ -69,7 +69,10 @@ import Red_TranEducationReport from "./reducers/HrOperations/TranEducationReport
 import Red_AppointSalary from './reducers/Appointments/AppointSalary/index'
 import Red_AppointPayroll from "./reducers/Appointments/AppointPayroll/index";
 import Red_AppointFamily from "./reducers/Appointments/AppointFamily/index";
-import Red_Experience_Report from './reducers/HrOperations/Experience_Report'
+import Red_Experience_Report from './reducers/HrOperations/Experience_Report';
+import Red_Date_Of_Birth_Inquiry_Report from './reducers/HrOperations/Date_Of_Birth_Inquiry_Report';
+
+
 
 const reducers = combineReducers({
   Transition_family,
@@ -147,7 +150,8 @@ const reducers = combineReducers({
   Red_AppointFamily,
   Red_TranEducationReport,
   Red_AppointSalary,
-  Red_Experience_Report
+  Red_Experience_Report,
+  Red_Date_Of_Birth_Inquiry_Report
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
