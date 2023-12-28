@@ -23,6 +23,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     const [isCode2, setCode2] = useState(isCode)
     const [mode2, setMode2] = useState('read')
     const [isSearchVal, setSearchVal] = useState('')
+    const [update, setUpdate] = useState('')
+    const [updateChlid, setUpdateChlid] = useState('')
 
     const EditPage = (mode2, code2) => {
         setCode2(code2)
@@ -39,8 +41,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
 
-
-    console.log(Red_AppointFamily, 'Red_AppointFamily')
+    // console.log(isCode2, 'isCode2')
+    // console.log(Red_AppointFamily, 'Red_AppointFamily')
 
     const columns = [
         {
@@ -64,7 +66,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit', data?.Sequence_no, setUpdate(data?.Sequence_no))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
@@ -107,7 +109,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit2', data?.Sequence_no, setUpdateChlid({Sequence_no: data?.Sequence_no,S_no: data?.S_no}))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
@@ -150,11 +152,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
-                    // GetEmployer({
-                    //     // pageSize: pageSize,
-                    //     // pageNo: 1,
-                    //     search: null
-                    // })
                 }, 3000);
             }
             else {
@@ -190,13 +187,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     type: 'success',
                     content: "You have successfully deleted",
                 });
-                setTimeout(() => {
-                    // GetEmployer({
-                    //     // pageSize: pageSize,
-                    //     // pageNo: 1,
-                    //     search: null
-                    // })
-                }, 3000);
+                // setTimeout(() => {
+                    
+                // }, 3000);
             }
             else {
                 messageApi.open({
@@ -225,9 +218,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <div className="AppointFamilyFlexBox">
                                     <h4 className="text-dark">Family List</h4>
                                     <div className="AppointFamilySearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
+                                        {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
 
@@ -260,7 +253,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <TAFamilyForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAFamilyForm2 cancel={setMode2} isCode2={isCode2} page2={page2} />
+                                <TAFamilyForm2 cancel={setMode2} update={update}  isCode2={isCode2} page2={page2} />
+                            )}
+                            {mode2 == "Edit2" && (
+                                <TAFamilyForm2 cancel={setMode2} updateChlid={updateChlid} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 

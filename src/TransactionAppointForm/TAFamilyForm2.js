@@ -9,11 +9,12 @@ import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
-import { TAPersonalSchema } from './schema';
+// import { AppointFamilySchema, AppoinTChildrenSchema } from './schema';
 import * as yup from "yup";
 import { message, Table } from 'antd';
 import baseUrl from '../config.json'
 import { Link } from "react-router-dom";
+import { Update } from "@mui/icons-material";
 
 
 
@@ -25,13 +26,21 @@ function TAFamilyForm2({
     cancel,
     mode2,
     isCode2,
-    page
+    page,
+    update,
+    updateChlid,
+    UpdateChildrenForm,
+    UpdateMarriageForm
 }) {
+
+    // console.log(update, 'update')
+   
 
 
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
+
     const [isLoading, setLoading] = useState(false)
     const currentDate = new Date();
     const EditBack = () => {
@@ -53,11 +62,23 @@ function TAFamilyForm2({
 
     });
 
+
+
+
+
+    
+
+
     const submitForm = async (data) => {
         try {
             const isValid = await AppointFamilySchema.validate(data);
             if (isValid) {
-                SaveForm(data)
+                if (update){
+                    UpdateMarriage(data)
+                }else{
+                    SaveForm(data)
+                    console.log(data , 'dadad')
+                }
             }
         } catch (error) {
             console.error(error);
@@ -68,8 +89,11 @@ function TAFamilyForm2({
         try {
             const isValid = await AppoinTChildrenSchema.validate(data);
             if (isValid) {
-                SaveChildren(data)
-                console.log(data, 'data')
+                if (updateChlid){
+                    UpdateChildren(data)
+                }else{
+                    SaveChildren(data)
+                }
             }
         } catch (error) {
             console.error(error);
@@ -101,8 +125,37 @@ function TAFamilyForm2({
     }, [Red_AppointFamily?.data?.[0]?.res?.data?.[0]])
 
 
-    // const combinedSchema = yup.object().oneOf([AppointFamilySchema, AppoinTChildrenSchema]);
+    useEffect(() => {
+        if (update) {
+            reset({
+                SpauseDOB: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_DOB,
+                MarriageDate: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Marriage_Date,
+                Spausename: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_name,
+            });
+        } 
+    
 
+    }, [Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]])
+
+
+    useEffect(() => {
+        if (updateChlid) {
+            reset({
+                FamMemberName: Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0]?.Fam_Member_Name,
+                FamMemberType: Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0]?.Fam_Member_Type,
+                FamMemberDOB: Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0]?.Fam_Member_DOB,
+            });
+        }
+
+
+    }, [Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0]])
+    
+    // console.log(Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0], 'Red_AppointFamily') vvvvvvvv
+
+    
+
+   
+ 
 
     const {
         control,
@@ -110,15 +163,20 @@ function TAFamilyForm2({
         handleSubmit,
         reset
     } = useForm({
-        defaultValues: {},
-        mode: "onChange",
-        resolver: yupResolver(AppoinTChildrenSchema),
+        defaultValues: {
+            SpauseDOB: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_DOB,
+            MarriageDate: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Marriage_Date,
+            Spausename: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_name
+        },
+        mode2: "onChange",
+        resolver: yupResolver(AppointFamilySchema),
     });
+    
 
 
 
 
-    const SaveForm = async (data) => {
+const SaveForm = async (data) => {
         try {
             const response = await SaveMarriageForm({
                 Sequenceno: isCode2,
@@ -160,14 +218,67 @@ const SaveChildren = async (data) => {
                     // setSavedEdu(true)
                 }, 3000);
             } else {
-                const errorMessage = response?.message || 'Failed to Save Marriage';
+                const errorMessage = response?.message || 'Failed to Save Child';
                 messageApi.error(errorMessage);
             }
         } catch (error) {
-            console.error("Error occurred while changing Marriage:", error);
-            messageApi.error("An error occurred while Save Marriage");
+            console.error("Error occurred while Save Child:", error);
+            messageApi.error("An error occurred while Save Child");
         }
     };
+
+
+const UpdateChildren = async (data) => {
+
+        try {
+            const response = await UpdateChildrenForm({
+                Sno: updateChlid?.S_no,
+                Sequenceno: updateChlid?.Sequence_no,
+                FamMemberType: data?.FamMemberType,
+                FamMemberName: data?.FamMemberName,
+                FamMemberDOB: data?.FamMemberDOB,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Update Child");
+                setTimeout(() => {
+                    cancel('read')
+                    // setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Update Child';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Update Child:", error);
+            messageApi.error("An error occurred while Update Child");
+        }
+    };   
+
+const UpdateMarriage = async (data) => {
+
+        try {
+            const response = await UpdateMarriageForm({
+                Sequenceno: update,
+                MarriageDate: data?.MarriageDate,
+                SpauseDOB: data?.SpauseDOB,
+                Spausename: data?.Spausename,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Update Marriage");
+                setTimeout(() => {
+                    cancel('read')
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Update Marriage';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Update Marriage:", error);
+            messageApi.error("An error occurred while Update Marriage");
+        }
+    };    
   
 
 
@@ -180,6 +291,8 @@ const SaveChildren = async (data) => {
                     <div className="col-12 maringClass2">
                         <div>
                             <h2 className="text-dark"> Transaction - Family</h2>
+
+                        {/* Family Form */}
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h4 className="text-dark">Employee Information</h4>
                                 <Link to="/Appointment" className="backLink text-dark">Back</Link>
@@ -252,9 +365,16 @@ const SaveChildren = async (data) => {
                                     />
                                 </div>
                                 <div className='CountryBtnBox'>
-                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    
+                                    {update ? 
+                                    <SimpleButton type={'submit'} loading={isLoading} title="Update" />
+                                        : <SimpleButton type={'submit'} loading={isLoading} title="Save" />}
                                 </div>
                             </form>
+                        {/* Family Form */}
+
+
+
                             <form onSubmit={handleSubmit(submitFormChild)}>
 
                                 <h4 className="text-dark">Children History</h4>
@@ -282,7 +402,7 @@ const SaveChildren = async (data) => {
                                                 label: 'Male',
                                             },
                                             {
-                                                value: "N",
+                                                value: "F",
                                                 label: 'Female',
                                             },
                                         ]}
@@ -303,7 +423,10 @@ const SaveChildren = async (data) => {
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    {updateChlid ? 
+                                    <SimpleButton type={'submit'} loading={isLoading} title="Update" />  :
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Save" /> 
+                                     }
                                 </div>
                             </form>
                         </div>

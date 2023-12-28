@@ -64,3 +64,10 @@ const TAPersonalSchema = yup.object().shape({
 });
   
 export {TAPersonalSchema};
+
+
+
+
+
+
+

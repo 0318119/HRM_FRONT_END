@@ -384,3 +384,11 @@ export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_EN
 export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
 export const GET_Experience_Report_START = "GET_Experience_Report_START";
 export const GET_Experience_Report_END = "GET_Experience_Report_END";
+
+
+// Appointment===> check list === >
+
+export const GET_CHECKLIST_DATA = "GET_CHECKLIST_DATA";
+export const GET_CHECKLIST_DATA_START = "GET_CHECKLIST_DATA_START";
+export const GET_CHECKLIST_DATA_CHECK = "GET_CHECKLIST_DATA_SINGLE";
+export const GET_CHECKLIST_DATA_END = "GET_CHECKLIST_DATA_END";

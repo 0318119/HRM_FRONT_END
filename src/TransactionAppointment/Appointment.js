@@ -9,6 +9,7 @@ import AppointEduData from "../TransactionAppointForm/AppointEduData";
 import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
 import AppointExpData from "../TransactionAppointForm/AppointExpData";
 import AppointFamiltyData from "../TransactionAppointForm/AppointFamiltyData";
+import CheckList from '../TransactionAppointForm/TACheckListForm2';
 import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
@@ -155,7 +156,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "CheckList",
             render: (data) => (
                 <Space size="middle">
-                    <Link to={`/TACheckList?userId=${data.Sequence_no}`} >
+                    {/* <Link to={`/TACheckList?userId=${data.Sequence_no}`} >
+                        <CheckBoxRoundedIcon className="List_ico" />
+                    </Link> */}
+                    <Link onClick={() => EditPage("EditCheckList", data?.Sequence_no)} >
                         <CheckBoxRoundedIcon className="List_ico" />
                     </Link>
                 </Space>
@@ -220,8 +224,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         }).then(async (response) => {
             if (response.success) {
                 console.log(response.data, 'response')
-                // setAppointData(response.data)
-                // GetAppointLetter(id, response?.data)
+                setAppointData(response.data)
+                GetAppointLetter(id, response?.data)
             }
         }).catch((error) => { });
     }
@@ -404,6 +408,9 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     }
 
 
+
+    
+
     return (
         <>
             <div>
@@ -456,6 +463,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditFamily" && <AppointFamiltyData cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditCheckList" && <CheckList cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>
