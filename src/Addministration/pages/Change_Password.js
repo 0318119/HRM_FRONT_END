@@ -104,11 +104,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         control={control}
                     />
                     <button type="button" className="Showbtn" onClick={() => setShowPassword(!showPassword)}>
-<<<<<<< HEAD
                         {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
-=======
-                        {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />} 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     </button>
                     <FormInput
                         label={'New Password'}

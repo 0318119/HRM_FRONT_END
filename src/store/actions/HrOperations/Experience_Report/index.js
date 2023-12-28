@@ -55,7 +55,6 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
 
 
 export const PostExperiencePayload = (data) => async () => {
-<<<<<<< HEAD
     console.log(data, 'data')
     const response = await fetch(`${baseUrl.baseUrl}'/reports/ExperienceReport`, {
       method: "POST",
@@ -74,28 +73,5 @@ export const PostExperiencePayload = (data) => async () => {
       return res;
     }
   };
-=======
-  const response = await fetch(`${baseUrl.baseUrl}/reports/ExperienceReport`, {
-      method: "POST",
-      headers: {
-          accessToken: "Bareer " + localStorage.getItem("access_token"),
-          "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-          "Emp_code": data,
-
-      }),
-  });
-  const res = await response.json();
-  console.log(res, 'res')
-  if (res?.success) {
-      return res;
-  } else {
-      return res;
-  }
-};
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   

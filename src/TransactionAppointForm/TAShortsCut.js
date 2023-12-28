@@ -85,11 +85,7 @@ function TAShortsCut() {
     const checkTokenValidity = async () => {
       try {
         const tokenValidationResult = await getToken();
-<<<<<<< HEAD
         console.log("token here....", tokenValidationResult)
-=======
-        console.log("token here....",tokenValidationResult)
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       } catch (error) {
         console.error("Error checking token validity:", error);
       }

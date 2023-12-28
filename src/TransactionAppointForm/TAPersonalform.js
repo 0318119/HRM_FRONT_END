@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
 import Country from "./Country.json"
-<<<<<<< HEAD
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
-=======
-import { PrimaryButton , SimpleButton} from "../components/basic/button";
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -58,15 +54,9 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   };
   const search = useLocation().search
   var userId = new URLSearchParams(search).get('userId')
-<<<<<<< HEAD
   console.log(isCode, 'usder')
 
 
-=======
-  console.log(isCode , 'usder')
-
- 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   async function getEmpTypeCodeData() {
     await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
@@ -397,11 +387,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   }, [])
   // ==================================================
   const submitForm = async (data) => {
-<<<<<<< HEAD
 
-=======
-   
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     try {
       const isValid = await TAPersonalSchema.validate(data);
       if (isValid) {
@@ -413,11 +399,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         } else {
           messageApi.open({
             type: 'error',
-<<<<<<< HEAD
             content: "Confirm Date Should be Greater Then Joining Date by 90 days",
-=======
-            content: "Confirm Date Should be Greater Then Joining Date by 90 days" ,
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           });
         }
       }
@@ -480,11 +462,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       Probationary_period_months: "",
       Notice_period_months: "",
       Emp_confirm_date: "",
-<<<<<<< HEAD
       Emp_joining_date: "",
-=======
-      Emp_joining_date:"",
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       Permanent_address: "",
       Nationality: "",
     },
@@ -552,11 +530,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         "Notice_period_months": body?.Notice_period_months,
         "Extended_confirmation_days": currentDate ? currentDate : 0,
         "Emp_confirm_date": body?.Emp_confirm_date,
-<<<<<<< HEAD
         "Emp_joining_date": body?.Emp_joining_date,
-=======
-        "Emp_joining_date" :body?.Emp_joining_date,
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         "Permanent_address": body?.Permanent_address,
         "Nationality": body?.Nationality,
         "roster_group_code": 0,
@@ -569,21 +543,12 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       return response.json();
     }).then(async (response) => {
       if (response.success) {
-<<<<<<< HEAD
         messageApi.open({
           type: 'success',
           content: response?.message || response?.messsage,
         });
         setLoading(false)
         setTimeout(() => {
-=======
-          messageApi.open({
-            type: 'success',
-            content: response?.message || response?.messsage,
-          });
-          setLoading(false)
-          setTimeout(() => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           cancel("read");
           // GetAppointStatusCall({
           //   pageSize: pageSize,
@@ -600,7 +565,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         setLoading(false)
       }
     }).catch((error) => {
-<<<<<<< HEAD
       messageApi.open({
         type: 'error',
         content: error?.message || error?.messsage,
@@ -612,24 +576,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   return (
     <>
 
-=======
-        messageApi.open({
-          type: 'error',
-          content: error?.message || error?.messsage,
-        });
-        setLoading(false)
-    });
-  }
-
-
-
-
-
-
-  return (
-    <>
-     
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
       {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
       {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}

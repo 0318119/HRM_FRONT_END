@@ -13,11 +13,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-<<<<<<< HEAD
 const TaxStructure = ({ Red_TaxStructure, getTaxStructure }) => {
-=======
-const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -29,21 +25,13 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
 
   useEffect(() => {
     if (isSearchVal == '') {
-<<<<<<< HEAD
       getTaxStructure({
-=======
-        getTaxStructure({
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
     } else {
-<<<<<<< HEAD
       getTaxStructure({
-=======
-        getTaxStructure({
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
@@ -76,11 +64,7 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
       dataIndex: 'Taxable_Income_From',
       key: 'Taxable_Income_From',
     },
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     {
       title: 'Taxable Income',
       dataIndex: 'Taxable_Income_To',
@@ -96,7 +80,6 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
       key: 'action',
       render: (data) => (
         <>
-<<<<<<< HEAD
           <Space size="middle">
             <button onClick={() => EditPage('Edit', data?.Structure_Code)} className="editBtn"><FaEdit /></button>
             <Popconfirm
@@ -111,33 +94,13 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
               <button className="deleteBtn"><MdDeleteOutline /></button>
             </Popconfirm>
           </Space>
-=======
-        <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Structure_Code)} className="editBtn"><FaEdit /></button>
-          <Popconfirm
-            title="Delete the Tax Structure"
-            description="Are you sure to delete the Tax Structure?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              handleConfirmDelete(data?.Structure_Code) 
-            }}
-          >
-            <button className="deleteBtn"><MdDeleteOutline /></button>
-          </Popconfirm>
-        </Space>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         </>
       ),
     },
   ];
 
   // Payroll setup tax structure FORM DATA DELETE API CALL =========================== 
-<<<<<<< HEAD
   async function handleConfirmDelete(id) {
-=======
-async function handleConfirmDelete(id) {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     await fetch(
       `${baseUrl.baseUrl}/taxStructure/DeleteTaxStructure`, {
       method: "POST",
@@ -211,11 +174,7 @@ async function handleConfirmDelete(id) {
             <div>
               {mode == "read" && (
                 <>
-<<<<<<< HEAD
                   <Table
-=======
-                  <Table 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     columns={columns} loading={Red_TaxStructure?.loading}
                     dataSource={Red_TaxStructure?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
@@ -231,17 +190,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-<<<<<<< HEAD
                 <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
                 <TaxStructureForm cancel={setMode} isCode={isCode} page={page} />
-=======
-                <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page}/>
-              )}
-              {mode == "Edit" && (
-                <TaxStructureForm cancel={setMode} isCode={isCode} page={page}/>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               )}
             </div>
           </div>
@@ -251,12 +203,7 @@ async function handleConfirmDelete(id) {
   );
 };
 
-<<<<<<< HEAD
 function mapStateToProps({ Red_TaxStructure }) {
   return { Red_TaxStructure };
-=======
-function mapStateToProps({Red_TaxStructure }) {
-  return { Red_TaxStructure};
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 }
 export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructure) 

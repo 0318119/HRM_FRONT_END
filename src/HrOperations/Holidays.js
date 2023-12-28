@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
-=======
-import React, { useState , useEffect } from 'react'
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
@@ -36,11 +32,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
         {
             title: 'Holiday Date',
             dataIndex: 'Calendar_Date',
-<<<<<<< HEAD
             key: `Calendar_Date`.slice(0, 10),
-=======
-            key: `Calendar_Date`.slice(0,10),
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         },
         {
             title: 'Holiday Type',
@@ -58,11 +50,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
             dataIndex: 'ramdan_flag',
             key: 'ramdan_flag',
         },
-<<<<<<< HEAD
 
-=======
-       
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         {
             title: 'Action',
             key: 'action',
@@ -126,11 +114,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
         });
     }
 
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -148,10 +132,6 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
         }
     }, [page, isSearchVal])
 
-<<<<<<< HEAD
-=======
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>
@@ -212,8 +192,4 @@ function mapStateToProps({ Red_Holidays }) {
     return { Red_Holidays };
 }
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, HOLIDAYS_ACTIONS)(Holidays)
-=======
-export default connect(mapStateToProps, HOLIDAYS_ACTIONS) (Holidays)
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23

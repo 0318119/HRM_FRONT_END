@@ -16,7 +16,6 @@ import baseUrl from "../../src/config.json";
 
 
 const Previous_Employers = ({ Red_previous_Employee, GetPreviousEmpData }) => {
-<<<<<<< HEAD
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null);
@@ -149,140 +148,6 @@ const Previous_Employers = ({ Red_previous_Employee, GetPreviousEmpData }) => {
     <>
       <div>
         {contextHolder}
-=======
-    const [messageApi, contextHolder] = message.useMessage();
-    var get_access_token = localStorage.getItem("access_token");
-    const [isCode, setCode] = useState(null);
-    const [mode, setMode] = useState("read");
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [isSearchVal, setSearchVal] = useState("");
-  
-    useEffect(() => {
-      if (isSearchVal == "") {
-        GetPreviousEmpData({
-          pageSize: pageSize,
-          pageNo: page,
-          search: null,
-        });
-      } else {
-        GetPreviousEmpData({
-          pageSize: pageSize,
-          pageNo: 1,
-          search: isSearchVal,
-        });
-      }
-    }, [page, isSearchVal]);
-  
-    const EditPage = (mode, code) => {
-      setCode(code);
-      setMode(mode);
-    };
-  
-    const columns = [
-      {
-        title: "Code",
-        dataIndex: "Employer_Code",
-        key: "Employer_Code",
-        render: (text) => <a>{text}</a>,
-      },
-      {
-        title: "Employer Name",
-        dataIndex: "Employer_Name",
-        key: "Employer_Name",
-      },
-      {
-        title: "Contact Name",
-        dataIndex: "Contact_Name",
-        key: "Contact_Name",
-      },
-      {
-        title: "Contact Title",
-        dataIndex: "Contact_Title",
-        key: "Contact_Title",
-      },
-      {
-        title: "Telephone Number",
-        dataIndex: "Telephone_number",
-        key: "Telephone_number",
-      },
-      {
-        title: "Action",
-        key: "action",
-        render: (data) => (
-          <Space size="middle">
-            <button
-              onClick={() => EditPage("Edit", data?.Employer_Code)}
-              className="editBtn"
-            >
-              <FaEdit />
-            </button>
-            <Popconfirm
-              title="Delete the Employer"
-              description="Are you sure to delete the Previous Employer?"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={() => {
-                handleConfirmDelete(data?.Employer_Code);
-              }}
-            >
-              <button className="deleteBtn">
-                <MdDeleteOutline />
-              </button>
-            </Popconfirm>
-          </Space>
-        ),
-      },
-    ];
-    // Pre-Emp Delete API CALL ===================================================
-    async function handleConfirmDelete(id) {
-      await fetch(`${baseUrl.baseUrl}/allemployer/DeleteEmployer`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          accessToken: `Bareer ${get_access_token}`,
-        },
-        body: JSON.stringify({
-            Employer_Code: id,
-        }),
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then(async (response) => {
-          if (response.success) {
-            messageApi.open({
-              type: "success",
-              content: "You have successfully deleted",
-            });
-            setTimeout(() => {
-              messageApi.destroy();
-              GetPreviousEmpData({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null,
-              });
-            }, 3000);
-          } else {
-            messageApi.open({
-              type: "error",
-              content: response?.message || response?.messsage,
-            });
-          }
-        })
-        .catch((error) => {
-          messageApi.open({
-            type: "error",
-            content: error?.message || error?.messsage,
-          });
-        });
-    }
-  
-  return (
-    <>
-      <div>
-      {contextHolder}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         <Header />
       </div>
       <div className="container">
@@ -294,13 +159,8 @@ const Previous_Employers = ({ Red_previous_Employee, GetPreviousEmpData }) => {
                   <h4 className="text-dark">Previous Employer</h4>
                   <div className="PreEmployersearchBox">
                     <Input placeholder={"Search Here..."} type="search" onChange={(e) => {
-<<<<<<< HEAD
                       setSearchVal(e.target.value);
                     }} />
-=======
-                        setSearchVal(e.target.value);
-                      }} />
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -340,12 +200,6 @@ const Previous_Employers = ({ Red_previous_Employee, GetPreviousEmpData }) => {
 };
 
 function mapStateToProps({ Red_previous_Employee }) {
-<<<<<<< HEAD
   return { Red_previous_Employee };
 }
 export default connect(mapStateToProps, Previous_Employers_ACTIONS)(Previous_Employers);
-=======
-    return { Red_previous_Employee };
-  }
-  export default connect(mapStateToProps, Previous_Employers_ACTIONS)(Previous_Employers);
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23

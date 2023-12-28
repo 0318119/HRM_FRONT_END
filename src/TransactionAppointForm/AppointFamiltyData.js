@@ -23,11 +23,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     const [isCode2, setCode2] = useState(isCode)
     const [mode2, setMode2] = useState('read')
     const [isSearchVal, setSearchVal] = useState('')
-<<<<<<< HEAD
     const [update, setUpdate] = useState('')
     const [updateChlid, setUpdateChlid] = useState('')
-=======
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     const EditPage = (mode2, code2) => {
         setCode2(code2)
@@ -44,13 +41,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
 
-<<<<<<< HEAD
     // console.log(isCode2, 'isCode2')
     // console.log(Red_AppointFamily, 'Red_AppointFamily')
-=======
-
-    // console.log(Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0], 'Red_AppointFamily')
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     const columns = [
         {
@@ -68,17 +60,12 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             dataIndex: 'Marriage_Date',
             key: 'Marriage_Date',
         },
-<<<<<<< HEAD
 
-=======
-       
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         {
             title: 'Action',
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-<<<<<<< HEAD
                     <button onClick={() => EditPage('Edit', data?.Sequence_no, setUpdate(data?.Sequence_no))} className="editBtn">
                         <FaEdit />
                     </button>
@@ -89,18 +76,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         cancelText="No"
                         onConfirm={() => {
                             handleMarriageDelete(data?.Sequence_no)
-=======
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
-                        <FaEdit />
-                    </button>
-                    <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                         }}
                     >
                         <button className="deleteBtn">
@@ -134,7 +109,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-<<<<<<< HEAD
                     <button onClick={() => EditPage('Edit2', data?.Sequence_no, setUpdateChlid({Sequence_no: data?.Sequence_no,S_no: data?.S_no}))} className="editBtn">
                         <FaEdit />
                     </button>
@@ -145,18 +119,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         cancelText="No"
                         onConfirm={() => {
                             handleChlidDelete(data?.S_no, data?.Sequence_no)
-=======
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
-                        <FaEdit />
-                    </button>
-                    <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
-                        okText="Yes"
-                        cancelText="No"
-                        onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                         }}
                     >
                         <button className="deleteBtn">
@@ -169,7 +131,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     ];
 
 
-<<<<<<< HEAD
 
 
     async function handleMarriageDelete(Sequence_no) {
@@ -180,16 +141,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
                 "Sequenceno": Sequence_no,
-=======
-    // DESIGNATION FORM DATA DELETE API CALL ===========================
-    async function handleConfirmDelete(id) {
-        await fetch(
-            `${baseUrl.baseUrl}/employement_experience/deleteTranExperience`, {
-            method: "POST",
-            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-            body: JSON.stringify({
-                "id": id,
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             }),
         }
         ).then((response) => {
@@ -201,14 +152,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
-<<<<<<< HEAD
-=======
-                    // GetEmployer({
-                    //     // pageSize: pageSize,
-                    //     // pageNo: 1,
-                    //     search: null
-                    // })
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 }, 3000);
             }
             else {
@@ -225,7 +168,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
         });
     }
 
-<<<<<<< HEAD
     async function handleChlidDelete(S_no, Sequence_no) {
         console.log(S_no, Sequence_no , 'asdfasdfef')
         await fetch(
@@ -263,8 +205,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
         });
     }
 
-=======
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
 
@@ -278,15 +218,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <div className="AppointFamilyFlexBox">
                                     <h4 className="text-dark">Family List</h4>
                                     <div className="AppointFamilySearchBox">
-<<<<<<< HEAD
                                         {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
                                         /> */}
-=======
-                                        <Input placeholder={'Search Here...'} type="search"
-                                            onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
 
@@ -299,7 +233,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         <div>
                             {mode2 == "read" && (
                                 <>
-<<<<<<< HEAD
                                     <span>Marriage Details</span>
                                     <Table columns={columns}
                                         loading={Red_AppointFamily?.loading}
@@ -314,36 +247,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                         dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
                                         pagination={false}
                                     />
-=======
-                                <span>Marriage Details</span>
-                                <Table columns={columns}
-                                    loading={Red_AppointFamily?.loading}
-                                    dataSource={Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]}
-                                    pagination={false}
-                                />
-                                <hr className="py-2" />
-                                <span>Children Details</span>
-                                <Table 
-                                    columns={columns2}
-                                    loading={Red_AppointFamily?.loading}
-                                        dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
-                                    pagination={false}
-                            />
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                 </>
                             )}
                             {mode2 == "create" && (
                                 <TAFamilyForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-<<<<<<< HEAD
                                 <TAFamilyForm2 cancel={setMode2} update={update}  isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit2" && (
                                 <TAFamilyForm2 cancel={setMode2} updateChlid={updateChlid} isCode2={isCode2} page2={page2} />
-=======
-                                <TAFamilyForm2 cancel={setMode2} isCode2={isCode2} page2={page2} />
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             )}
                         </div>
 

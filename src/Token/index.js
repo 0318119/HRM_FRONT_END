@@ -26,7 +26,6 @@ export const getToken = async () => {
                 );
                 if(response.status === 200) {
                     const res = await response.json();
-<<<<<<< HEAD
                     localStorage.setItem("refresh", res?.refresh_token)
                     localStorage.setItem("access_token", res?.access_token)
                     return res
@@ -37,16 +36,6 @@ export const getToken = async () => {
                 }
             }
         }
-=======
-                    localStorage.setItem("refresh",res?.refresh_token)
-                    localStorage.setItem("access_token",res?.access_token)
-                    return res
-                }
-                else{window.location.href = '/'}
-            }
-        }
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     } catch (error) {
         console.log(error);
     }

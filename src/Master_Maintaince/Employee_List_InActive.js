@@ -10,10 +10,7 @@ import { message } from 'antd';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import * as FileSaver from 'file-saver'
 import XLSX from 'sheetjs-style'
-<<<<<<< HEAD
 import { getToken } from "../Token/index";
-=======
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import baseUrl from '../config.json'
 
 
@@ -312,7 +309,6 @@ const Employee_List_InActive = () => {
 
     }
 
-<<<<<<< HEAD
     useEffect(() => {
         const checkTokenValidity = async () => {
             try {
@@ -324,9 +320,6 @@ const Employee_List_InActive = () => {
         };
         checkTokenValidity();
     }, []);
-=======
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     return (
         <>

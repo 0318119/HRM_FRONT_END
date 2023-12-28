@@ -12,7 +12,6 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 
-<<<<<<< HEAD
 
 import baseUrl from "../../src/config.json";
 
@@ -47,41 +46,6 @@ const Religion = ({ Red_Religion, GetReligionData }) => {
     setCode(code);
     setMode(mode);
   };
-=======
-import baseUrl from "../../src/config.json";
-
-
-  const Religion = ({ Red_Religion, GetReligionData }) => {
-    const [messageApi, contextHolder] = message.useMessage();
-    var get_access_token = localStorage.getItem("access_token");
-    const [isCode, setCode] = useState(null);
-    const [mode, setMode] = useState("read");
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [isSearchVal, setSearchVal] = useState("");
-  
-  
-    useEffect(() => {
-      if (isSearchVal == "") {
-        GetReligionData({
-          pageSize: pageSize,
-          pageNo: page,
-          search: null,
-        });
-      } else {
-        GetReligionData({
-          pageSize: pageSize,
-          pageNo: 1,
-          search: isSearchVal,
-        });
-      }
-    }, [page, isSearchVal]);
-  
-    const EditPage = (mode, code) => {
-      setCode(code);
-      setMode(mode);
-    };
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
@@ -108,7 +72,6 @@ import baseUrl from "../../src/config.json";
       key: "Sort_key",
     },
     {
-<<<<<<< HEAD
       title: "Action",
       key: "action",
       render: (data) => (
@@ -135,34 +98,6 @@ import baseUrl from "../../src/config.json";
         </Space>
       ),
     },
-=======
-        title: "Action",
-        key: "action",
-        render: (data) => (
-          <Space size="middle">
-            <button
-              onClick={() => EditPage("Edit", data?.Religion_code)}
-              className="editBtn"
-            >
-              <FaEdit />
-            </button>
-            <Popconfirm
-              title="Delete the Religion"
-              description="Are you sure to delete the Religion?"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={() => {
-                handleConfirmDelete(data?.Religion_code);
-              }}
-            >
-              <button className="deleteBtn">
-                <MdDeleteOutline />
-              </button>
-            </Popconfirm>
-          </Space>
-        ),
-      },
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   ];
 
   // Religion Delete API CALL ===================================================
@@ -176,11 +111,7 @@ import baseUrl from "../../src/config.json";
           accessToken: `Bareer ${get_access_token}`,
         },
         body: JSON.stringify({
-<<<<<<< HEAD
           Religion_code: id,
-=======
-            Religion_code: id,
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         }),
       }
     )
@@ -215,18 +146,10 @@ import baseUrl from "../../src/config.json";
         });
       });
   }
-<<<<<<< HEAD
   return (
     <>
       <div>
         {contextHolder}
-=======
-
-  return (
-    <>
-      <div>
-      {contextHolder}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         <Header />
       </div>
       <div className="container">
@@ -268,11 +191,7 @@ import baseUrl from "../../src/config.json";
                   }}
                 />
               )}
-<<<<<<< HEAD
               {mode == "create" && <ReligionForm cancel={setMode} mode={mode} isCode={null} page={page} />}
-=======
-              {mode == "create" && <ReligionForm cancel={setMode}  mode={mode} isCode={null} page={page} />}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               {mode == "Edit" && <ReligionForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
             </div>
           </div>

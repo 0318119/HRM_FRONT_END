@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import Header from '../components/Includes/Header';
 import Transaction_Pro from './components/Transaction_Pro'
@@ -17,13 +16,6 @@ const Promotion = () => {
         };
         checkTokenValidity();
       }, []);
-=======
-import React from 'react'
-import Header from '../components/Includes/Header';
-import Transaction_Pro from './components/Transaction_Pro'
-
-const Promotion = () => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>

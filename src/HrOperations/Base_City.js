@@ -148,6 +148,7 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
 
   console.log("Red_Base_City table page", Red_Base_City?.data?.[0]?.res?.data1);
 
+
   return (
     <>
       <div>

@@ -37,11 +37,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
     }, [])
 
 
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     // useEffect(() => {
     //     if (isSearchVal == '') {
@@ -83,11 +79,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
             dataIndex: 'Department',
             key: 'Department',
         },
-<<<<<<< HEAD
 
-=======
-     
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         {
             title: 'Submit Flag',
             dataIndex: 'Submit_Flag',
@@ -159,16 +151,9 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
             });
         });
     }
-<<<<<<< HEAD
     return (
         <>
 
-=======
-
-    return (
-        <>
-            
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             {contextHolder}
             <div className="container">
                 <div className="row">

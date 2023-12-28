@@ -9,10 +9,7 @@ import { connect } from "react-redux";
 import * as MASTEREARNING_ACTIONS from "../store/actions/MasterMaintaince/MasterEarning/index";
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
-<<<<<<< HEAD
 import { getToken } from "../Token/index";
-=======
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     const [mode, setMode] = useState("read");
@@ -62,11 +59,7 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                 pageNo: page,
                 search: null,
             });
-<<<<<<< HEAD
         } else {
-=======
-        }else {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: 1,
@@ -92,7 +85,6 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     //     }
     // }, [mode]);
 
-<<<<<<< HEAD
     useEffect(() => {
         const checkTokenValidity = async () => {
             try {
@@ -104,9 +96,6 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
         };
         checkTokenValidity();
     }, []);
-=======
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>
@@ -120,11 +109,7 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                                 <div className="EarningsFlexBox">
                                     <h4 className="text-dark">Master - Earnings</h4>
                                     <div className="EarningssearchBox">
-<<<<<<< HEAD
                                         <label>Search </label>
-=======
-                                    <label>Search </label>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                         {/* <select class="form-select" aria-label="Default select example">
                                             <option selected>By Code</option>
                                         </select>
@@ -140,7 +125,6 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                                 <hr />
                             </>
                         )}
-<<<<<<< HEAD
                         {mode == "read" && (
                             <Table
                                 columns={columns}
@@ -159,26 +143,6 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                         )}
                         {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
                         {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
-=======
-                            {mode == "read" && (
-                                <Table
-                                    columns={columns}
-                                    loading={Red_MasterEarning?.loading}
-                                    dataSource={Red_MasterEarning?.data?.[0]?.res?.data1}
-                                    scroll={{ x: 10 }}
-                                    pagination={{
-                                        defaultCurrent: page,
-                                        total: Red_MasterEarning?.data?.[0]?.res?.data3,
-                                        onChange: (p) => {
-                                            setPage(p);
-                                        },
-                                        pageSize: pageSize,
-                                    }}
-                                />
-                            )}
-                            {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
-                            {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page}  />}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     </div>
                 </div>
             </div>

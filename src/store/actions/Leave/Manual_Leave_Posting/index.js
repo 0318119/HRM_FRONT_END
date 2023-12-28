@@ -13,11 +13,6 @@ import {
 import baseUrl from '../../../../config.json'
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 export const GET_ALL_EMP_DATA = () => async (dispatch) => {
     try {
         dispatch({

@@ -1,11 +1,11 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
 import "./assets/css/Parameters_Access.css";
 import Select from "../components/basic/select";
-import  { connect } from "react-redux";
+import { connect } from "react-redux";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import * as DOWNLOAD_ACCESS from '../store/actions/HrOperations/downloadAccess/index'
 import { Avatar, Divider, List, Skeleton } from 'antd';
@@ -113,11 +113,7 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
     });
   }
   async function AccessParameterUser() {
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     await fetch(
       `${baseUrl.baseUrl}/refreshable/parametersaccessUser`, {
       method: "POST",
@@ -197,7 +193,6 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
 
 
 
-<<<<<<< HEAD
 
 
 
@@ -206,38 +201,20 @@ const Parameters_Access = ({ Red_Download_Access, GET_DOWNLOAD_ACCESS_DATA }) =>
       setCheckedData((prevCheckedData) => [
         ...prevCheckedData,
         e.target.value,
-=======
- 
-
- 
-const chkData = (e) =>  {
-    if (e.target.checked) {
-      setCheckedData((prevCheckedData) => [
-        ...prevCheckedData,
-          e.target.value,
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       ]);
     } else {
       setCheckedData((prevCheckedData) =>
         prevCheckedData.filter((item) => item !== e.target.value)
       );
     }
-<<<<<<< HEAD
   }
-=======
-}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   useEffect(() => {
     AllEmployees()
     GET_DOWNLOAD_ACCESS_DATA()
   }, []);
   useEffect(() => {
-<<<<<<< HEAD
     if (isParameter !== null) {
-=======
-    if (isParameter !== null){
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       AccessParameterUser()
     }
   }, [isParameter]);
@@ -263,11 +240,7 @@ const chkData = (e) =>  {
               <Select
                 label={"Select Expanse"}
                 placeholder="Select Access Expanse"
-<<<<<<< HEAD
                 onChange={(e) => { setParameter(e) }}
-=======
-                onChange={(e) => { setParameter(e)}}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 options={Red_Download_Access?.data?.[0]?.res?.data.map(
                   (item) => ({
                     value: item.Parameter_code,
@@ -295,11 +268,7 @@ const chkData = (e) =>  {
                     />
                   </div>               */}
                 <div className="col-5">
-<<<<<<< HEAD
                   <h6 style={{ color: "black", }}>All System User</h6>
-=======
-                   <h6 style={{color:"black",}}>All System User</h6>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                   <div d="scrollableDiv" style={{ height: 400, overflow: 'auto', padding: '0 16px', border: '1px solid rgba(140, 140, 140, 0.35)', }}>
                     <InfiniteScroll dataLength={''} next={''} hasMore={'data.length < 50'}
                       // loader={
@@ -315,30 +284,17 @@ const chkData = (e) =>  {
                     >
                       <List
                         dataSource={isAllEmployees}
-<<<<<<< HEAD
                         renderItem={(item, index) => (
-=======
-                        renderItem={(item,index) => (
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                           <List.Item key={index.Emp_code}>
                             <List.Item.Meta
                               title={<li key={index.Emp_code}>
                                 <input type="checkbox" className="mx-2" value={item.Emp_code} name={item.Emp_name}
-<<<<<<< HEAD
                                   onChange={(e) => { chkData(e) }}
                                 />
                                 {
                                 }
                                 {item.Emp_name}</li>
                               }
-=======
-                                  onChange={(e) => {chkData(e)}}
-                                  />
-                                  {
-                                  }
-                                {item.Emp_name}</li>
-                                }
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             />
                           </List.Item>
                         )}
@@ -347,20 +303,12 @@ const chkData = (e) =>  {
                   </div>
                   <Button title={'Submit'} onClick={AccessParameter} />
                 </div>
-<<<<<<< HEAD
                 <div className="col-2" style={{ height: 400, padding: '0 16px', display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-=======
-                <div className="col-2" style={{ height: 400,  padding: '0 16px',display:"flex", justifyContent:"center", alignItems:"center",flexDirection:"column"}}>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                   <Button title={'Include'} onClick={chkData()} />
                   <Button title={'Exclude'} onClick={DeleteAccessParameter} />
                 </div>
                 <div className="col-5">
-<<<<<<< HEAD
                   <h6 style={{ color: "black" }}>All Selected User</h6>
-=======
-                  <h6 style={{color:"black"}}>All Selected User</h6>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                   <div d="scrollableDiv" style={{ height: 400, overflow: 'auto', padding: '0 16px', border: '1px solid rgba(140, 140, 140, 0.35)', }}>
                     <InfiniteScroll dataLength={''} next={''} hasMore={'data.length < 50'}
                       // loader={
@@ -380,11 +328,7 @@ const chkData = (e) =>  {
                           <List.Item >
                             <List.Item.Meta
                               title={<li>
-<<<<<<< HEAD
                                 <input type="checkbox" className="mx-2" value={item.Emp_code} onChange={(e) => { chkData(e) }} />
-=======
-                                <input type="checkbox" className="mx-2" value={item.Emp_code} onChange={(e) => { chkData(e) }}/>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                 {item.Emp_name}</li>}
                             />
                           </List.Item>

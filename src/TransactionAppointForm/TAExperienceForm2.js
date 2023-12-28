@@ -26,11 +26,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
     const EditBack = () => {
         cancel('read')
     }
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     const AppointExpSchema = yup.object().shape({
         EmployerCode: yup.string().required("EmployerCode required"),
         designation: yup.string().required("designation is required"),
@@ -79,21 +75,13 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
 
 
 
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     useEffect(() => {
         GetEmployer(isCode2)
         GetEmployeeInfo(isCode2)
         GetEmployeeCode()
-<<<<<<< HEAD
     }, [])
-=======
-    },[])
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     const Employers = Red_AppointExprience?.getEmployer?.[0]?.res?.data
 
@@ -117,11 +105,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
     }, [Red_AppointExprience?.data?.[0]?.res?.data?.[0]])
 
     const EMPLOYEER = Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
@@ -181,12 +165,6 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
         }
     };
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             {contextHolder}
@@ -231,13 +209,8 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
                                         errors={errors}
                                         control={control}
                                     />
-<<<<<<< HEAD
                                 </div>
                                 <hr />
-=======
-                                  </div>  
-                                  <hr />
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                 <div className="form-group formBoxCountry">
                                     <FormSelect
                                         label={'Employer Name'}

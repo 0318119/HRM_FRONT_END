@@ -56,7 +56,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><FaEdit/></button>
+          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><FaEdit /></button>
           <Popconfirm
             title="Delete the Country"
             description="Are you sure to delete the Country?"
@@ -93,11 +93,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-<<<<<<< HEAD
           GetDataCountry({
-=======
-          GetDataCountry({ 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             pageSize: pageSize,
             pageNo: page,
             search: null
@@ -117,38 +113,22 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       });
     });
   }
-<<<<<<< HEAD
 
   useEffect(() => {
     if (isSearchVal == '') {
       GetDataCountry({
-=======
-  
-  useEffect(() => {
-    if(isSearchVal == ''){
-      GetDataCountry({ 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-<<<<<<< HEAD
     } else {
       GetDataCountry({
-=======
-    }else{
-      GetDataCountry({ 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-<<<<<<< HEAD
   }, [page, isSearchVal])
-=======
-  }, [page,isSearchVal])
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   return (
     <>
@@ -165,13 +145,8 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 <div className="CountryFlexBox">
                   <h4 className="text-dark">Country List</h4>
                   <div className="CountrysearchBox">
-<<<<<<< HEAD
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
-=======
-                    <Input placeholder={'Search Here...'} type="search" 
-                      onChange={(e) => {setSearchVal(e.target.value)}}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
@@ -182,19 +157,11 @@ const Country = ({ Red_Country, GetDataCountry }) => {
 
             <div>
               {mode == "read" && (
-<<<<<<< HEAD
                 <Table
                   columns={columns}
                   loading={Red_Country?.loading}
                   dataSource={Red_Country?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
-=======
-                <Table 
-                  columns={columns}
-                  loading={Red_Country?.loading}
-                  dataSource={Red_Country?.data?.[0]?.res?.data1} 
-                  scroll={{ x: 10 }} 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                   pagination={{
                     defaultCurrent: page,
                     total: Red_Country?.data?.[0]?.res?.data3,
@@ -206,17 +173,10 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 />
               )}
               {mode == "create" && (
-<<<<<<< HEAD
                 <CountryForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
                 <CountryForm cancel={setMode} isCode={isCode} page={page} />
-=======
-                <CountryForm cancel={setMode} mode={mode} isCode={null} page={page}/>
-              )}
-              {mode == "Edit" && (
-                <CountryForm cancel={setMode} isCode={isCode} page={page}/>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               )}
             </div>
 

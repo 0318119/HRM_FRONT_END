@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import Header from '../components/Includes/Header';
 import TransactionResignationCom from './components/TransactionResignationCom'
@@ -17,14 +16,6 @@ const Transaction_Resignation = () => {
         };
         checkTokenValidity();
     }, []);
-=======
-import React from 'react'
-import Header from '../components/Includes/Header';
-import TransactionResignationCom from './components/TransactionResignationCom'
-
-
-const Transaction_Resignation = () => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>

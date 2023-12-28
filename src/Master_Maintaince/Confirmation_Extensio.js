@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Includes/Header';
 import Transaction_Confirm_Extension from './components/Transaction_Confirm_Extension';
@@ -16,13 +15,6 @@ const Confirmation_Extensio = () => {
         };
         checkTokenValidity();
       }, []);
-=======
-import React from 'react'
-import Header from '../components/Includes/Header';
-import Transaction_Confirm_Extension from './components/Transaction_Confirm_Extension';
-
-const Confirmation_Extensio = () => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
       <> <div>
           <Header />

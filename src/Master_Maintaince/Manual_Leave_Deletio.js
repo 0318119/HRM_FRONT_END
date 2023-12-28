@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import Header from '../components/Includes/Header';
 import TransactionLeaveDel from './components/TransactionLeaverDel'
@@ -16,13 +15,6 @@ const Manual_Leave_Deletio = () => {
     };
     checkTokenValidity();
   }, []);
-=======
-import React from 'react'
-import Header from '../components/Includes/Header';
-import TransactionLeaveDel from './components/TransactionLeaverDel'
-
-const Manual_Leave_Deletio = () => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
           <div>

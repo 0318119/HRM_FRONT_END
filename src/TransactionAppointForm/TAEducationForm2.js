@@ -66,11 +66,7 @@ function TAEducationForm2({
         GetEducationSavedData(isCode2)
         // GetEducationSavedData(isCode)
     }, [])
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     useEffect(() => {
         if (mode2 == "create") {
@@ -162,11 +158,7 @@ function TAEducationForm2({
                 messageApi.success("Save Education Information");
                 setTimeout(() => {
                     cancel('read')
-<<<<<<< HEAD
                     setSavedEdu(true)
-=======
-                    setSavedEdu(true)   
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to Save Information';
@@ -178,14 +170,6 @@ function TAEducationForm2({
         }
     };
 
-<<<<<<< HEAD
-=======
-
-
-
-
-
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             {contextHolder}

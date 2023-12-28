@@ -153,7 +153,6 @@ export const SaveMarriageForm = (body) => async (dispatch) => {
     } else {
         return res;
     }
-<<<<<<< HEAD
 }
 
 
@@ -237,6 +236,3 @@ export const UpdateMarriageForm = (body) => async (dispatch) => {
 
 
 
-=======
-}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23

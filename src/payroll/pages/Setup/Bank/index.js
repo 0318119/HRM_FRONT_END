@@ -13,11 +13,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-<<<<<<< HEAD
 const Bank = ({ Red_Bank, GetBank }) => {
-=======
-const Bank = ({  Red_Bank, GetBank  }) => {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -52,11 +48,7 @@ const Bank = ({  Red_Bank, GetBank  }) => {
       dataIndex: 'Bank_abbr',
       key: 'Bank_abbr',
     },
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     {
       title: 'Sort Key',
       dataIndex: 'Sort_key',
@@ -97,7 +89,6 @@ const Bank = ({  Red_Bank, GetBank  }) => {
       key: 'action',
       render: (data) => (
         <>
-<<<<<<< HEAD
           <Space size="middle">
             <button onClick={() => EditPage('Edit', data?.Bank_code)} className="editBtn"><FaEdit /></button>
             <Popconfirm
@@ -112,33 +103,13 @@ const Bank = ({  Red_Bank, GetBank  }) => {
               <button className="deleteBtn"><MdDeleteOutline /></button>
             </Popconfirm>
           </Space>
-=======
-        <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Bank_code)} className="editBtn"><FaEdit /></button>
-          <Popconfirm
-            title="Delete the Bank"
-            description="Are you sure to delete the Bank?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              handleConfirmDelete(data?.Bank_code) 
-            }}
-          >
-            <button className="deleteBtn"><MdDeleteOutline /></button>
-          </Popconfirm>
-        </Space>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         </>
       ),
     },
   ];
 
   // Payroll Bank FORM DATA DELETE API CALL =========================== 
-<<<<<<< HEAD
   async function handleConfirmDelete(id) {
-=======
-async function handleConfirmDelete(id) {
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     await fetch(
       `${baseUrl.baseUrl}/deletebank/DeleteBank`, {
       method: "POST",
@@ -184,11 +155,7 @@ async function handleConfirmDelete(id) {
     });
   }
 
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   useEffect(() => {
     if (isSearchVal == '') {
       GetBank({
@@ -233,11 +200,7 @@ async function handleConfirmDelete(id) {
             <div>
               {mode == "read" && (
                 <>
-<<<<<<< HEAD
                   <Table
-=======
-                  <Table 
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     columns={columns} loading={Red_Bank?.loading}
                     dataSource={Red_Bank?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
@@ -253,17 +216,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-<<<<<<< HEAD
                 <Bankform cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
                 <Bankform cancel={setMode} mode={mode} isCode={isCode} page={page} />
-=======
-                <Bankform cancel={setMode} mode={mode} isCode={null} page={page}/>
-              )}
-              {mode == "Edit" && (
-                <Bankform cancel={setMode} mode={mode}  isCode={isCode} page={page}/>
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               )}
             </div>
           </div>

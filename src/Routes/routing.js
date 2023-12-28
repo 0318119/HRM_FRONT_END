@@ -126,13 +126,8 @@ import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
-<<<<<<< HEAD
 import Employee_Experience_Report from '../HrOperations/Experience_Report.js'
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
-=======
-import Experience_Report from '../HrOperations/Experience_Report.js'
-import Date_Of_Birth_Inquiry_Report from '../HrOperations/Date_Of_Birth_Inquiry_Report.js'
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
@@ -140,7 +135,6 @@ const routing = () => {
   return (
     <Router>
       <Routes>
-<<<<<<< HEAD
         {
           "access_token" in localStorage &&
           localStorage.getItem('access_token') !== undefined &&
@@ -223,6 +217,7 @@ const routing = () => {
             <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
             <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
             <Route path='/TranEducationReport' element={<TranEducationReport />} />
+            <Route path='/Experience_Report' element={<Experience_Report />} />
             <Route path='/Service_Length_Report' element={<ServiceLengthReport />} />
             <Route path='/Employee_Education_Report' element={<TranEducationReport />} />
             <Route path='/Employee_Experience_Report' element={<Employee_Experience_Report />} />
@@ -300,170 +295,6 @@ const routing = () => {
           }
           </>
         }
-=======
-        <Route path="/" element={<Login />} />
-        {/* 
-        {
-            localStorage.getItem('access_token') !== undefined &&
-            localStorage.getItem('access_token') !== null &&
-            localStorage.getItem('access_token') !== "" ?
-            <> */}
-        <Route path="/Forgetpassword" element={<Forgetpassword />} />
-        <Route path="/VerifyOTP" element={<VerifyOTP />} />
-        <Route path="/Updatepassword" element={<Updatepassword />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/Appointment" element={<Appointment />} />
-        <Route path="/TAPersonalform" element={<TAPersonalform />} />
-        <Route path="/TAEducationForm" element={<TAEducationForm />} />
-        <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
-        <Route path="/TASalaryForm" element={<TASalaryForm />} />
-        <Route path="/TAppointmentMasterPayroll" element={<TAppointmentMasterPayroll />} />
-        <Route path="/TACheckList" element={<TACheckList />} />
-        <Route path="/TAFamilyForm" element={<TAFamilyForm />} />
-        <Route path="/TAShortsCut" element={<TAShortsCut />} />
-        <Route path="/Employment_Type" element={<Employment_Type />} />
-        <Route path="/Divisions" element={<Divisions />} />
-        <Route path="/Departments" element={<Departments />} />
-        <Route path="/EmpListForm" element={<EmpListForm />} />
-        <Route path="/Sections" element={<Sections />} />
-        <Route path="/Cost_Centre" element={<Cost_Centre />} />
-        <Route path="/Education_Levels" element={<Education_Levels />} />
-        <Route path="/Employee_Category" element={<Employee_Category />} />
-        <Route path="/Country" element={<Country />} />
-        <Route path="/Grade" element={<Grade />} />
-        <Route path="/Education" element={<Education />} />
-        <Route path="/Designation" element={<Designation />} />
-        <Route path="/Leave_Category" element={<Leave_Category />} />
-        <Route path="/Leave_Types" element={<Leave_Types />} />
-        <Route path="/Previous_Employers" element={<Previous_Employers />} />
-        <Route path="/Transportation" element={<Transportation />} />
-        <Route path="/Institution" element={<Institution />} />
-        <Route path="/Late_Arrival" element={<GenerateLateArrival />} />
-        <Route path="/Resignation" element={<Resignation />} />
-        <Route path="/Religion" element={<Religion />} />
-        <Route path="/Locations" element={<Locations />} />
-        <Route path="/Employee_List_Active" element={<Employee_List_Active />} />
-        <Route path="/Employee_List_InActive" element={<Employee_List_InActive />} />
-        <Route path="/Employee_Master" element={<Employee_Master />} />
-        <Route path="/Confirmation" element={<Confirmation />} />
-        <Route path="/Increment" element={<Increment />} />
-        <Route path="/Get_Attendance" element={<Get_Attendance />} />
-        <Route path="/Attendance_Check" element={<Attendance_Check />} />
-        <Route path="/Confirmation_Extensio" element={<Confirmation_Extensio />} />
-        <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
-        <Route path="/Promotion" element={<Promotion />} />
-        <Route path="/Holidays" element={<Holidays />} />
-        <Route path="/Leave_Applications" element={<Leave_Applications />} />
-        <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
-        <Route path="/Transaction_Education_form" element={<Transaction_Education_form />} />
-        <Route path="/Leave_Year_End" element={<Leave_Year_End />} /> {/*check*/}
-        <Route path="/Leave_Report_Detail" element={<Leave_Report_Detail />} />
-        <Route path="/Leave_Report_Balance" element={<Leave_Report_Balance />} />
-        <Route path="/Leave_Balance_Upload" element={<Leave_Balance_Upload />} />
-        <Route path="/Manual_leave_posting" element={<Manual_leave_posting />} />
-        <Route path="/LeaveSummary" element={<LeaveSummary />} />
-        {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
-        <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
-        <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
-        <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
-        <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />
-        <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
-        <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
-        <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
-        <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
-        <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
-        <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
-        <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
-        <Route path="/Transaction_Experience" element={<Transaction_Experience />} />
-        <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
-        <Route path="/Family" element={<Family />} />
-        <Route path="/TransactionFamilyForm" element={<TransactionFamilyForm />} />
-        <Route path="/Base_City" element={<Base_City />} />
-        <Route path="/RefreshableData" element={<RefreshableData />} />
-        <Route path="/Positions" element={<Positions />} />
-        <Route path="/Download_Parameter_Access" element={<Download_Parameter_Access />} />
-        <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
-        <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
-        <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
-        <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
-        <Route path='/TranEducationReport' element={<TranEducationReport />} />
-        <Route path='/Experience_Report' element={<Experience_Report />} />
-        <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
-        {/* payroll */}
-        {/* payroll */}
-        <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
-        <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
-        <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
-        <Route path="/payroll/oneTimeDeduction" element={<OneTimeDeduction />} />
-        <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
-        <Route path="/payroll/advancesalary" element={<AdvanceSalary />} />
-        <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
-        <Route path="/payroll/salaryHold" element={<SalaryHold />} />
-        <Route path="/payroll/payrollUpload" element={<PayrollUpload />} />
-        <Route path="/payroll/hrStop" element={<HrStop />} />
-        <Route path="/payroll/hrRelease" element={<HrRelease />} />
-        <Route path="/payroll/undoPayrollCalculation" element={<UndoPayrollCalculation />} />
-        <Route path="/payroll/closingPayrollMonth" element={<ClosingPayrollMonth />} />
-        <Route path="/payroll/addLoans" element={<AddLoans />} />
-        <Route path="/payroll/addallowance" element={<AddAllowance />} />
-        <Route path="/payroll/addDeduction" element={<AddDeduction />} />
-        <Route path="/payroll/addPayroll" element={<AddPayroll />} />
-        <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
-        <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
-        <Route path="/payroll/report/taxReport" element={<TaxReport />} />
-        <Route path="/payroll/report/SalaryOnHold" element={<SalaryOnHold />} />
-        <Route path="/Earning_Master" element={<Earning_Master />} />
-        <Route path="/JV_Codes" element={<JV_Code />} />
-        <Route path="IncomeTax_Columns" element={<Income_Tax />} />
-        <Route path="Bank_Branches" element={<Bank_Branches />} />
-        {/* <Route path="/Earnings" element={<Earnings />} /> */}
-        <Route path="/Payroll_Master" element={<Payroll_Master />} />
-        <Route path="/Tax_Structure" element={<TaxStructure />} />
-        <Route path="/Bank" element={<Bank />} />
-        <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
-        <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-
-
-        {/* REPORT =============================================================== */}
-        <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
-        {/* PAY SLIP ============================================================== */}
-        <Route path="/Pay/PaySlip" element={<PaySlip />} />
-        {/* ORG CHART ========================================= */}
-        <Route path="flow/DesignationsFlowChart" element={<FLow />} />
-        {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
-        <Route path="/Change_Password" element={<Change_Password />} />
-        {/* HR OPERATIONS ---> TA EDUCATION FORM 2 =============================================================== */}
-        <Route path="/TAEducationForm2" element={<TAEducationForm2 />} />
-        {/* HR OPERATIONS ---> TA Salary FORM 2 =============================================================== */}
-        <Route path="/TASalaryForm2" element={<TASalaryForm2 />} />
-        {/* HR OPERATIONS ---> TA Experience FORM 2 =============================================================== */}
-        <Route path="/TAExperienceForm2" element={<TAExperienceForm2 />} />
-        {/* HR OPERATIONS ---> TA Appointment Master Payroll FORM 2 =============================================================== */}
-        <Route path="/TAappointmentMasterPayrollForm2" element={<TAappointmentMasterPayrollForm2 />} />
-        {/* HR OPERATIONS ---> TA Appointment Family FORM 2 =============================================================== */}
-        <Route path="/TAFamilyForm2" element={< TAFamilyForm2 />} />
-        {/* HR OPERATIONS ---> TA Appointment Check List FORM 2 =============================================================== */}
-        <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
-        {/* ADDMINISTRATION ---> Access Control =============================================================== */}
-        <Route path="/Access_Control" element={<Access_Control />} />
-        {/* ERRORS PAGE ============================ */}
-        <Route path="NotFound/404" element={<NotFound />} />
-        <Route path="/" element={<Login />} />
-        {/* </> :  */}
-        {/* } */}
-        {/* <Route path="*" element={<NotFound />} /> */}
-        {/* localStorage.getItem('access_token') !== undefined ||
-            localStorage.getItem('access_token') !== null ||
-            localStorage.getItem('access_token') !== "" || 
-            !localStorage.getItem('access_token') ? 
-            <Route path="/" element={<Login />} />  */}
-
-
-
-        {/*new Appoint -----*/}
-
-        {/*new Appoint -----*/}
->>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       </Routes>
     </Router>
 
