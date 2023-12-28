@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import * as MASTEREARNING_ACTIONS from "../store/actions/MasterMaintaince/MasterEarning/index";
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
+import { getToken } from "../Token/index";
 
 const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     const [mode, setMode] = useState("read");
@@ -58,7 +59,7 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                 pageNo: page,
                 search: null,
             });
-        }else {
+        } else {
             GetMasterEarningData({
                 pageSize: pageSize,
                 pageNo: 1,
@@ -84,7 +85,17 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     //     }
     // }, [mode]);
 
-
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            try {
+                const tokenValidationResult = await getToken();
+                console.log("token here....", tokenValidationResult)
+            } catch (error) {
+                console.error("Error checking token validity:", error);
+            }
+        };
+        checkTokenValidity();
+    }, []);
     return (
         <>
             <div>
@@ -98,7 +109,7 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                                 <div className="EarningsFlexBox">
                                     <h4 className="text-dark">Master - Earnings</h4>
                                     <div className="EarningssearchBox">
-                                    <label>Search </label>
+                                        <label>Search </label>
                                         {/* <select class="form-select" aria-label="Default select example">
                                             <option selected>By Code</option>
                                         </select>
@@ -114,24 +125,24 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
                                 <hr />
                             </>
                         )}
-                            {mode == "read" && (
-                                <Table
-                                    columns={columns}
-                                    loading={Red_MasterEarning?.loading}
-                                    dataSource={Red_MasterEarning?.data?.[0]?.res?.data1}
-                                    scroll={{ x: 10 }}
-                                    pagination={{
-                                        defaultCurrent: page,
-                                        total: Red_MasterEarning?.data?.[0]?.res?.data3,
-                                        onChange: (p) => {
-                                            setPage(p);
-                                        },
-                                        pageSize: pageSize,
-                                    }}
-                                />
-                            )}
-                            {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
-                            {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page}  />}
+                        {mode == "read" && (
+                            <Table
+                                columns={columns}
+                                loading={Red_MasterEarning?.loading}
+                                dataSource={Red_MasterEarning?.data?.[0]?.res?.data1}
+                                scroll={{ x: 10 }}
+                                pagination={{
+                                    defaultCurrent: page,
+                                    total: Red_MasterEarning?.data?.[0]?.res?.data3,
+                                    onChange: (p) => {
+                                        setPage(p);
+                                    },
+                                    pageSize: pageSize,
+                                }}
+                            />
+                        )}
+                        {/* {mode == "create" && <EarningsForm cancel={setMode} />} */}
+                        {mode == "Edit" && <EarningsForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
                     </div>
                 </div>
             </div>

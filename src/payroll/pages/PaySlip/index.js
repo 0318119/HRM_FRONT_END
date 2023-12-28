@@ -550,7 +550,6 @@ function PaySlip({
         }
     }, [isPDfData, isGrossSalary])
 
-
     return (
         <>
             <div>

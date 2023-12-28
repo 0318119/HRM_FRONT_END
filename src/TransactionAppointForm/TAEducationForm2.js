@@ -66,7 +66,7 @@ function TAEducationForm2({
         GetEducationSavedData(isCode2)
         // GetEducationSavedData(isCode)
     }, [])
-  
+
 
     useEffect(() => {
         if (mode2 == "create") {
@@ -158,7 +158,7 @@ function TAEducationForm2({
                 messageApi.success("Save Education Information");
                 setTimeout(() => {
                     cancel('read')
-                    setSavedEdu(true)   
+                    setSavedEdu(true)
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to Save Information';
@@ -169,11 +169,6 @@ function TAEducationForm2({
             messageApi.error("An error occurred while Save Information");
         }
     };
-
-
-
-
-
 
     return (
         <>

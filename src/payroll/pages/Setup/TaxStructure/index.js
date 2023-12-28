@@ -13,7 +13,7 @@ import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
+const TaxStructure = ({ Red_TaxStructure, getTaxStructure }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
   const [isCode, setCode] = useState(null)
@@ -25,13 +25,13 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
 
   useEffect(() => {
     if (isSearchVal == '') {
-        getTaxStructure({
+      getTaxStructure({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
     } else {
-        getTaxStructure({
+      getTaxStructure({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
@@ -64,7 +64,7 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
       dataIndex: 'Taxable_Income_From',
       key: 'Taxable_Income_From',
     },
- 
+
     {
       title: 'Taxable Income',
       dataIndex: 'Taxable_Income_To',
@@ -80,27 +80,27 @@ const TaxStructure = ({ Red_TaxStructure, getTaxStructure  }) => {
       key: 'action',
       render: (data) => (
         <>
-        <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Structure_Code)} className="editBtn"><FaEdit /></button>
-          <Popconfirm
-            title="Delete the Tax Structure"
-            description="Are you sure to delete the Tax Structure?"
-            okText="Yes"
-            cancelText="No"
-            onConfirm={() => {
-              handleConfirmDelete(data?.Structure_Code) 
-            }}
-          >
-            <button className="deleteBtn"><MdDeleteOutline /></button>
-          </Popconfirm>
-        </Space>
+          <Space size="middle">
+            <button onClick={() => EditPage('Edit', data?.Structure_Code)} className="editBtn"><FaEdit /></button>
+            <Popconfirm
+              title="Delete the Tax Structure"
+              description="Are you sure to delete the Tax Structure?"
+              okText="Yes"
+              cancelText="No"
+              onConfirm={() => {
+                handleConfirmDelete(data?.Structure_Code)
+              }}
+            >
+              <button className="deleteBtn"><MdDeleteOutline /></button>
+            </Popconfirm>
+          </Space>
         </>
       ),
     },
   ];
 
   // Payroll setup tax structure FORM DATA DELETE API CALL =========================== 
-async function handleConfirmDelete(id) {
+  async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/taxStructure/DeleteTaxStructure`, {
       method: "POST",
@@ -174,7 +174,7 @@ async function handleConfirmDelete(id) {
             <div>
               {mode == "read" && (
                 <>
-                  <Table 
+                  <Table
                     columns={columns} loading={Red_TaxStructure?.loading}
                     dataSource={Red_TaxStructure?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
@@ -190,10 +190,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-                <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <TaxStructureForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                <TaxStructureForm cancel={setMode} isCode={isCode} page={page}/>
+                <TaxStructureForm cancel={setMode} isCode={isCode} page={page} />
               )}
             </div>
           </div>
@@ -203,7 +203,7 @@ async function handleConfirmDelete(id) {
   );
 };
 
-function mapStateToProps({Red_TaxStructure }) {
-  return { Red_TaxStructure};
+function mapStateToProps({ Red_TaxStructure }) {
+  return { Red_TaxStructure };
 }
 export default connect(mapStateToProps, TAX_STRUCTURE)(TaxStructure) 

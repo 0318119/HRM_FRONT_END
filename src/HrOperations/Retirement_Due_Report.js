@@ -126,7 +126,6 @@ function Retirement_Due_Report({
         }
     };
 
-
     return (
         <>
             <Header />

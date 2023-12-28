@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
 import style from "./assets/css/Transaction_Marriage.module.css"
 import Input from "../components/basic/input/index"
 import { Button } from "../components/basic/button/index"
 import { Space, Table, Tag, Tooltip } from 'antd';
 import Marriage_Form from './form/marriage_Form'
+import {getToken} from "../Token/index";
 
 const Transaction_Education = () => {
     const [mode, setMode] = useState('read')
@@ -79,6 +80,17 @@ const Transaction_Education = () => {
             tags: ['cool', 'teacher'],
         },
     ];
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+          try {
+            const tokenValidationResult = await getToken();
+            console.log("token here....",tokenValidationResult)
+          } catch (error) {
+            console.error("Error checking token validity:", error);
+          }
+        };
+        checkTokenValidity();
+      }, []);
     return (
         <>
             <div>

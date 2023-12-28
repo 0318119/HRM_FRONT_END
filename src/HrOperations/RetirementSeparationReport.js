@@ -61,7 +61,7 @@ function RetirementSeparationReport({
           message.success('PDF is created, Wait PDF is under downloading...');
           setFormSubmitted(true);
           setRetirementSeparationReportData(result?.data);
-  
+
           // Now, you can generate the PDF
           await generatePdf();
         } else {
@@ -73,7 +73,7 @@ function RetirementSeparationReport({
     }
     setLoading(false);
   };
-  
+
   const generatePdf = async () => {
     try {
       // Ensure isRetirementSeparationReportData is not empty before generating the PDF
@@ -81,7 +81,7 @@ function RetirementSeparationReport({
         message.error('No data available for PDF.');
         return;
       }
-  
+
       const pdfBlob = await pdf(PdfData).toBlob();
       saveAs(pdfBlob, 'generated.pdf');
     } catch (error) {
@@ -109,7 +109,7 @@ function RetirementSeparationReport({
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
               <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: "20px 0" }}>
-              RETIREMENT SEPARATION REPORT
+                RETIREMENT SEPARATION REPORT
               </Text>
 
               <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
@@ -171,6 +171,7 @@ function RetirementSeparationReport({
     }
   };
 
+
   return (
     <>
       <Header />
@@ -213,6 +214,6 @@ function mapStateToProps({ Red_RetirementSeparationReport }) {
 }
 
 export default connect(mapStateToProps, {
-    PostRetirementSeparationReportPayload: Red_RetirementSeparationReport_Action.PostRetirementSeparationReportPayload,
+  PostRetirementSeparationReportPayload: Red_RetirementSeparationReport_Action.PostRetirementSeparationReportPayload,
 })(RetirementSeparationReport);
 

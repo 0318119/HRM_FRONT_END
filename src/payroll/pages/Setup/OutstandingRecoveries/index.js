@@ -12,7 +12,6 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
-
 const OutstandingRecoveries = ({ Red_outstandingRecoveries, GetOutstandingRecoveries }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");

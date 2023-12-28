@@ -13,7 +13,6 @@ import { Popconfirm } from 'antd';
 import { message } from 'antd';
 import baseUrl from '../../src/config.json'
 
-
 const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [mode, setMode] = useState("read");
@@ -148,6 +147,7 @@ const Base_City = ({ GetBaseCityData, Red_Base_City }) => {
   }, [page, isSearchVal]);
 
   console.log("Red_Base_City table page", Red_Base_City?.data?.[0]?.res?.data1);
+
 
   return (
     <>

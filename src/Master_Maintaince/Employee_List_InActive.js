@@ -10,6 +10,7 @@ import { message } from 'antd';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import * as FileSaver from 'file-saver'
 import XLSX from 'sheetjs-style'
+import { getToken } from "../Token/index";
 import baseUrl from '../config.json'
 
 
@@ -308,7 +309,17 @@ const Employee_List_InActive = () => {
 
     }
 
-
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            try {
+                const tokenValidationResult = await getToken();
+                console.log("token here....", tokenValidationResult)
+            } catch (error) {
+                console.error("Error checking token validity:", error);
+            }
+        };
+        checkTokenValidity();
+    }, []);
 
     return (
         <>

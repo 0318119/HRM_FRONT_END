@@ -133,7 +133,6 @@ const SalaryOnHold = ({ GetSalaryOnHold }) => {
         }
     }, [isPdfData, pdfPassowrd])
 
-
     return (
         <>
             <div>
