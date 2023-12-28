@@ -63,8 +63,6 @@ const Manual_leave_posting = ({
         GET_LEAVES_APPLICATIONS()
     }, [])
 
-    console.log("getLeaveApp",getLeaveApp)
-
     useEffect(() => {
         if (isLeaveReq !== null) {
             GET_EMP_LEAVE_TYPE_DATA(isLeaveReq)
@@ -109,7 +107,6 @@ const Manual_leave_posting = ({
         }
         else if (halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate) {
             message.error("To date is should be equal to From Date")
-            console.log("dbjdghk")
         }
         else { setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves) }
     }, [emp_balanced_days, emp_leaves_applied, halfDayCheck])
@@ -229,7 +226,7 @@ const Manual_leave_posting = ({
             </Space>
           ),
         },
-      ];
+    ];
 
       const onConfirmDeleteFun = async (payLoad) => {
         const isWaitFun = await DELETE_LEAVE_APPLICATION(payLoad)

@@ -112,3 +112,15 @@
         flex-wrap: wrap;
     }
 }
+
+
+/* ============================ */
+.empLeavesHalfDayFlag{
+    position: relative;
+}
+.empLeavesHalfDayFlag .half_day{
+    flex-direction: row;
+    position: absolute;
+    top: 0;
+    left: 22%;
+}

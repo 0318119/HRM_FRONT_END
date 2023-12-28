@@ -130,7 +130,6 @@ const Education = ({ Red_Education, GetEducationData }) => {
     });
   }
 
-
   return (
     <>
       <div>

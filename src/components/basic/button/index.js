@@ -41,7 +41,7 @@ function PrimaryButton({ title, loading, type, id, className}) {
         <>
             {contextHolder}
             <div className={style.PrimaryButton + " " + className}>
-                <button  id={id} style={{ cursor: loading ? "not-allowed" : "pointer" }} type={type} disabled={loading}>{title}</button>
+                <button id={id} style={{ cursor: loading ? "not-allowed" : "pointer" }} type={type} disabled={loading}>{title}</button>
             </div>
         </>
     )

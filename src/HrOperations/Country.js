@@ -23,7 +23,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
   const [mode, setMode] = useState('read')
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [isSearchVal,setSearchVal] = useState('')
+  const [isSearchVal, setSearchVal] = useState('')
   const EditPage = (mode, code) => {
     setCode(code)
     setMode(mode)
@@ -56,7 +56,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><FaEdit/></button>
+          <button onClick={() => EditPage('Edit', data?.Country_Code)} className="editBtn"><FaEdit /></button>
           <Popconfirm
             title="Delete the Country"
             description="Are you sure to delete the Country?"
@@ -93,7 +93,7 @@ const Country = ({ Red_Country, GetDataCountry }) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-          GetDataCountry({ 
+          GetDataCountry({
             pageSize: pageSize,
             pageNo: page,
             search: null
@@ -113,22 +113,22 @@ const Country = ({ Red_Country, GetDataCountry }) => {
       });
     });
   }
-  
+
   useEffect(() => {
-    if(isSearchVal == ''){
-      GetDataCountry({ 
+    if (isSearchVal == '') {
+      GetDataCountry({
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-    }else{
-      GetDataCountry({ 
+    } else {
+      GetDataCountry({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-  }, [page,isSearchVal])
+  }, [page, isSearchVal])
 
   return (
     <>
@@ -145,8 +145,8 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 <div className="CountryFlexBox">
                   <h4 className="text-dark">Country List</h4>
                   <div className="CountrysearchBox">
-                    <Input placeholder={'Search Here...'} type="search" 
-                      onChange={(e) => {setSearchVal(e.target.value)}}
+                    <Input placeholder={'Search Here...'} type="search"
+                      onChange={(e) => { setSearchVal(e.target.value) }}
                     />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
@@ -157,11 +157,11 @@ const Country = ({ Red_Country, GetDataCountry }) => {
 
             <div>
               {mode == "read" && (
-                <Table 
+                <Table
                   columns={columns}
                   loading={Red_Country?.loading}
-                  dataSource={Red_Country?.data?.[0]?.res?.data1} 
-                  scroll={{ x: 10 }} 
+                  dataSource={Red_Country?.data?.[0]?.res?.data1}
+                  scroll={{ x: 10 }}
                   pagination={{
                     defaultCurrent: page,
                     total: Red_Country?.data?.[0]?.res?.data3,
@@ -173,10 +173,10 @@ const Country = ({ Red_Country, GetDataCountry }) => {
                 />
               )}
               {mode == "create" && (
-                <CountryForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <CountryForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                <CountryForm cancel={setMode} isCode={isCode} page={page}/>
+                <CountryForm cancel={setMode} isCode={isCode} page={page} />
               )}
             </div>
 

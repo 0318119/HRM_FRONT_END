@@ -5,6 +5,7 @@ import Input from "../components/basic/input/index"
 import { Table, Tooltip, Space, Popconfirm } from 'antd';
 import TransactionFamilyForm from './form/TransactionFamilyForm'
 import * as Transaction_Family_Actions from "../store/actions/Transition/transition_family/index";
+import { getToken } from "../Token/index";
 import { connect } from "react-redux";
 
 
@@ -77,6 +78,17 @@ const Transaction_Family = ({ Transition_Family_Get_Byid, Transition_Family, Tra
             ),
         },
     ];
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+          try {
+            const tokenValidationResult = await getToken();
+            console.log("token here....",tokenValidationResult)
+          } catch (error) {
+            console.error("Error checking token validity:", error);
+          }
+        };
+        checkTokenValidity();
+      }, []);
     return (
         <>
             <div>

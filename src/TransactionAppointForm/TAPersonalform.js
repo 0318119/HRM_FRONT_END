@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
 import Country from "./Country.json"
-import { PrimaryButton} from "../components/basic/button";
+import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,11 +10,11 @@ import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import { TAPersonalSchema } from './schema';
 import { message } from 'antd';
 import baseUrl from '../config.json'
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 
 
-function TAPersonalform({ cancel, mode, isCode, page }) {
+function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_Appointment }) {
 
 
   var get_access_token = localStorage.getItem("access_token");
@@ -47,13 +47,17 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
   const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
   const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
   const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
+  const [pageSize, setPageSize] = useState(10);
   const currentDate = new Date();
   const EditBack = () => {
-    cancel('read')
-  }
+    cancel("read");
+  };
+  const search = useLocation().search
+  var userId = new URLSearchParams(search).get('userId')
+  console.log(isCode, 'usder')
+
 
   async function getEmpTypeCodeData() {
-
     await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
       headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
@@ -383,10 +387,21 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
   }, [])
   // ==================================================
   const submitForm = async (data) => {
+
     try {
       const isValid = await TAPersonalSchema.validate(data);
       if (isValid) {
-        POST_MASTER_PERSONAL_FORM(data)
+        const joiningDate = new Date(data?.Emp_joining_date);
+        const confirmDate = new Date(data?.Emp_confirm_date);
+        const differenceInDays = Math.floor((confirmDate - joiningDate) / (24 * 60 * 60 * 1000));
+        if (differenceInDays >= 90) {
+          POST_MASTER_PERSONAL_FORM(data)
+        } else {
+          messageApi.open({
+            type: 'error',
+            content: "Confirm Date Should be Greater Then Joining Date by 90 days",
+          });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -396,6 +411,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
     control,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({
     defaultValues: {
       Sequence_no: "",
@@ -446,6 +462,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
       Probationary_period_months: "",
       Notice_period_months: "",
       Emp_confirm_date: "",
+      Emp_joining_date: "",
       Permanent_address: "",
       Nationality: "",
     },
@@ -513,6 +530,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
         "Notice_period_months": body?.Notice_period_months,
         "Extended_confirmation_days": currentDate ? currentDate : 0,
         "Emp_confirm_date": body?.Emp_confirm_date,
+        "Emp_joining_date": body?.Emp_joining_date,
         "Permanent_address": body?.Permanent_address,
         "Nationality": body?.Nationality,
         "roster_group_code": 0,
@@ -525,14 +543,19 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
       return response.json();
     }).then(async (response) => {
       if (response.success) {
-          messageApi.open({
-            type: 'success',
-            content: response?.message || response?.messsage,
-          });
-          setLoading(false)
-          setTimeout(() => {
-            window.location.href = "/TAShortsCut"
-          }, 1000);
+        messageApi.open({
+          type: 'success',
+          content: response?.message || response?.messsage,
+        });
+        setLoading(false)
+        setTimeout(() => {
+          cancel("read");
+          // GetAppointStatusCall({
+          //   pageSize: pageSize,
+          //   pageNo: page,
+          //   search: null,
+          // });
+        }, 3000);
       }
       else {
         messageApi.open({
@@ -542,17 +565,17 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
         setLoading(false)
       }
     }).catch((error) => {
-        messageApi.open({
-          type: 'error',
-          content: error?.message || error?.messsage,
-        });
-        setLoading(false)
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setLoading(false)
     });
   }
 
   return (
     <>
-     
+
       {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
       {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
       {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}
@@ -562,7 +585,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
           <div className="col-12 maringClass">
             <div>
               <form onSubmit={handleSubmit(submitForm)}>
-                <h4 className="text-dark">Transaction Appointment (Personal)</h4>
+                <h4 className="text-dark">Appointment (Personal)</h4>
                 <Link to="/Appointment" className="backLink text-dark">Back</Link>
                 <hr />
 
@@ -573,6 +596,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     id="Sequence_no"
                     name="Sequence_no"
                     type="number"
+
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -593,6 +617,16 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     id="Emp_Father_name"
                     name="Emp_Father_name"
                     type="text"
+                    showLabel={true}
+                    errors={errors}
+                    control={control}
+                  />
+                  <FormInput
+                    label={'Joining Date'}
+                    placeholder={'Joining Date'}
+                    id="Emp_joining_date"
+                    name="Emp_joining_date"
+                    type="date"
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -762,7 +796,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     placeholder={'Birth Date'}
                     id="Emp_birth_date"
                     name="Emp_birth_date"
-                    type="text"
+                    type="date"
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -772,7 +806,7 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                     placeholder={'Offer Letter Date'}
                     id="Offer_Letter_date"
                     name="Offer_Letter_date"
-                    type="text"
+                    type="date"
                     showLabel={true}
                     errors={errors}
                     control={control}
@@ -1196,8 +1230,8 @@ function TAPersonalform({ cancel, mode, isCode, page }) {
                   />
                 </div>
                 <div className='CountryBtnBox'>
-                  <CancelButton onClick={EditBack} title={'Cancel'} />
-                  <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                  <CancelButton onClick={EditBack} title={'Back'} />
+                  <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                 </div>
               </form>
             </div>

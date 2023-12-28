@@ -30,12 +30,15 @@ function PaySlip({
     const empData = Red_Pay_Slip?.data?.[0]?.res?.data
     const [isPDfData, setPDfData] = useState([])
     const [blobStore, setBobStore] = useState()
-    const [isDownload, setDownload] = useState(false)
     const [PdfLoader, setPdfLoader] = useState(false)
     const [isPasswords, setPasswords] = useState(null)
-    const [isGrossSalary,setGrossSalary] = useState(0)
+    const [isGrossSalary, setGrossSalary] = useState(0)
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear();
     let date = new Date().toDateString()
-    const [isRevisedTotal,setRevisedTotal] = useState({
+
+    const [isRevisedTotal, setRevisedTotal] = useState({
         // Allowances Total ===================
         Allowance_Standard_Amount_Total: 0,
         Allowance_Current_Amount_Total: 0,
@@ -96,6 +99,8 @@ function PaySlip({
         control,
         formState: { errors },
         handleSubmit,
+        reset,
+        setValue,
     } = useForm({
         defaultValues: {
             payslip_year: "",
@@ -139,15 +144,21 @@ function PaySlip({
                 setLoading(false)
             } else {
                 setLoading(false)
-                console.log("isWaitFun?.data", isWaitFun?.data)
                 message.success("Now, You can Download Pdf")
                 setPDfData(isWaitFun?.data)
-                console.log("isWaitFun?.data", isWaitFun?.data)
             }
         } else {
             message.error(isWaitFun?.message || isWaitFun?.messsage)
         }
     }
+
+    // SET BY DEFAULT VALUES =================
+    useEffect(() => {
+        const selectedEmployee = empData?.find(item => item?.Emp_code == localStorage.getItem("Emp_code"));
+        setValue('Emp_code', selectedEmployee?.Emp_code);
+        setValue('payslip_month', currentMonth);
+        setValue('payslip_year', currentYear);
+    }, [setValue, empData, currentMonth, currentYear]);
 
     // PDF STYLES =================================================
     const styles = StyleSheet.create({
@@ -284,7 +295,7 @@ function PaySlip({
             borderBottom: '1px dashed gray',
             padding: "5 0",
         },
-        borderBot:{
+        borderBot: {
             borderTop: '1px dashed gray',
             marginTop: "20px",
         },
@@ -303,147 +314,144 @@ function PaySlip({
     });
 
     // GENERATE PDF FUNCTION ===========
-    const blobProvider = async () => {
-        const MyDoc = (
-            <Document>
-                <Page size="A4">
-                    <View>
-                        <View style={styles.imageBox}>
-                            <Image style={styles.imageClass} src={logo} />
-                            <Text style={styles.textConfi}>Confidential</Text>
-                        </View>
-                        <Text style={styles.CompanyName}>{isPDfData?.[0]?.Company_name ? isPDfData?.[0]?.Company_name : "Empty"}</Text>
-                        <Text style={styles.Head}>PaySlip</Text>
-                        Payslip for the month of December 2023
-                        <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text>
-                        {/* EMPLOYEE INFORMATIONS ================== */}
-                        <View style={styles.upperBox}>
-                            <View style={styles.row}>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Name :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_name ? isPDfData?.[0]?.Emp_name : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Designation :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Desig_name ? isPDfData?.[0]?.Desig_name : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Department :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Dept_name ? isPDfData?.[0]?.Dept_name : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>CNIC #:</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_nic_no ? isPDfData?.[0]?.Emp_nic_no : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Bank :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.bank_name ? isPDfData?.[0]?.bank_name : "Empty"}</Text>
-                                </View>
+    const MyDoc = (
+        <Document>
+            <Page size="A4">
+                <View>
+                    <View style={styles.imageBox}>
+                        <Image style={styles.imageClass} src={logo} />
+                        <Text style={styles.textConfi}>Confidential</Text>
+                    </View>
+                    <Text style={styles.CompanyName}>{isPDfData?.[0]?.Company_name ? isPDfData?.[0]?.Company_name : "Empty"}</Text>
+                    <Text style={styles.Head}>PaySlip</Text>
+                    {/* Payslip for the month of December 2023 */}
+                    <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text>
+                    {/* EMPLOYEE INFORMATIONS ================== */}
+                    <View style={styles.upperBox}>
+                        <View style={styles.row}>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Name :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_name ? isPDfData?.[0]?.Emp_name : "Empty"}</Text>
                             </View>
-                            <View style={styles.row}>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>ID :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_Code ? isPDfData?.[0]?.Emp_Code : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Location :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Loc_name ? isPDfData?.[0]?.Loc_name : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Date of joining :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_appointment_date ? isPDfData?.[0]?.Emp_appointment_date.slice(0, 10) : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Account #:</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Bank_Account_No1 ? isPDfData?.[0]?.Bank_Account_No1 : "Empty"}</Text>
-                                </View>
-                                <View style={styles.column}>
-                                    <Text style={styles.textBox}>Days Paid :</Text>
-                                    <Text style={styles.textBox}>{isPDfData?.[0]?.Days_Worked ? isPDfData?.[0]?.Days_Worked : "Empty"}</Text>
-                                </View>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Designation :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Desig_name ? isPDfData?.[0]?.Desig_name : "Empty"}</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Department :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Dept_name ? isPDfData?.[0]?.Dept_name : "Empty"}</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>CNIC #:</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_nic_no ? isPDfData?.[0]?.Emp_nic_no : "Empty"}</Text>
+                            </View>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Bank :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.bank_name ? isPDfData?.[0]?.bank_name : "Empty"}</Text>
                             </View>
                         </View>
-                        {/* ============================================= */}
-                        <View style={styles.upperBox} className="mt-5">
-                            {/* Allownces ================= */}
-                            <View style={styles.row2}>
-                                <Text style={styles.tableHead}>Allowances</Text>
-                                <View style={styles.rowInner}>
-                                    <Text style={styles.textInner}>Allownce</Text>
-                                    <Text style={styles.textInner}>Standard</Text>
-                                    <Text style={styles.textInner}>Current Month</Text>
-                                    <Text style={styles.textInner}>YTD Amount</Text>
-                                </View>
-                                {isPDfData.map((item, index) => (
-                                    <View key={index} style={styles.rowInner}>
-                                        <Text style={styles.textInner}>{item?.allowance_name ? item?.allowance_name : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Allowance_Standard_Amount ? item?.Allowance_Standard_Amount : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Allowance_Current_Amount ? item?.Allowance_Current_Amount : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Allowance_YTD_Amount ? item?.Allowance_YTD_Amount : "Empty"}</Text>
-                                    </View>
-                                ))}
-                                <View style={styles.rowInner}>
-                                    <Text style={styles.textInner}>{"Total"}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Allowance_Standard_Amount_Total}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Allowance_Current_Amount_Total}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Allowance_YTD_Amount_Total}</Text>
-                                </View>
+                        <View style={styles.row}>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>ID :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_Code ? isPDfData?.[0]?.Emp_Code : "Empty"}</Text>
                             </View>
-                            {/* DEDUCTIONS ================= */}
-                            <View style={styles.row2}>
-                                <Text style={styles.tableHead}>Deductions</Text>
-                                <View style={styles.rowInner}>
-                                    <Text style={styles.textInner}>Deductions</Text>
-                                    <Text style={styles.textInner}>Standard</Text>
-                                    <Text style={styles.textInner}>Current Month</Text>
-                                    <Text style={styles.textInner}>YTD Amount</Text>
-                                </View>
-                                {isPDfData.map((item, index) => (
-                                    <View key={index} style={styles.rowInner}>
-                                        <Text style={styles.textInner}>{item?.Deduction_name ? item?.Deduction_name : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Deduction_Standard_amount ? item?.Deduction_Standard_amount : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Deduction_Total_Current_amount ? item?.Deduction_Total_Current_amount : "Empty"}</Text>
-                                        <Text style={styles.textInner}>{item?.Deduction_Total_YTD_amount ? item?.Deduction_Total_YTD_amount : "Empty"}</Text>
-                                    </View>
-                                ))}
-                                <View style={styles.rowInner}>
-                                    <Text style={styles.textInner}>{"Total"}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Standard_amount_total}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_Current_amount_total}</Text>
-                                    <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_YTD_amount_total}</Text>
-                                </View>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Location :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Loc_name ? isPDfData?.[0]?.Loc_name : "Empty"}</Text>
                             </View>
-                        </View>
-                        <View style={styles.netPayBox}>
-                            <View style={styles.innerNetPayBox}>
-                                <Text style={styles.Gross_Salary}>Net Pay :</Text>
-                                <Text style={styles.Gross_Salary}>{isGrossSalary}</Text>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Date of joining :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Emp_appointment_date ? isPDfData?.[0]?.Emp_appointment_date.slice(0, 10) : "Empty"}</Text>
                             </View>
-                        </View>
-                        <View style={styles.signatureBox}>
-                            <Text style={styles.HRText}>This is a system generated document therefore, no signature is required. HR departmant can be contacted for any verification.</Text>
-                        </View>
-                        <View style={styles.borderBot}></View>
-                        <View style={styles.userIdAndPrintBox}>
-                            <View style={styles.botFlexBox}>
-                                <Text style={styles.Gross_Salary}>User ID :</Text>
-                                <Text style={styles.Gross_Salary}>{isPDfData?.[0]?.Emp_Code ? isPDfData?.[0]?.Emp_Code : "Empty"}</Text>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Account #:</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Bank_Account_No1 ? isPDfData?.[0]?.Bank_Account_No1 : "Empty"}</Text>
                             </View>
-                            <View style={styles.botFlexBox}>
-                                <Text style={styles.Gross_Salary}>Print Date :</Text>
-                                <Text style={styles.Gross_Salary}>{date}</Text>
+                            <View style={styles.column}>
+                                <Text style={styles.textBox}>Days Paid :</Text>
+                                <Text style={styles.textBox}>{isPDfData?.[0]?.Days_Worked ? isPDfData?.[0]?.Days_Worked : "Empty"}</Text>
                             </View>
                         </View>
                     </View>
-                </Page>
-            </Document>
-        );
-        const blobData = await pdf(MyDoc).toBlob();
-        setBobStore(blobData)
-    }
+                    {/* ============================================= */}
+                    <View style={styles.upperBox} className="mt-5">
+                        {/* Allownces ================= */}
+                        <View style={styles.row2}>
+                            <Text style={styles.tableHead}>Allowances</Text>
+                            <View style={styles.rowInner}>
+                                <Text style={styles.textInner}>Allownce</Text>
+                                <Text style={styles.textInner}>Standard</Text>
+                                <Text style={styles.textInner}>Current Month</Text>
+                                <Text style={styles.textInner}>YTD Amount</Text>
+                            </View>
+                            {isPDfData.map((item, index) => (
+                                <View key={index} style={styles.rowInner}>
+                                    <Text style={styles.textInner}>{item?.allowance_name ? item?.allowance_name : "Empty"}</Text>
+                                    <Text style={styles.textInner}>{item?.Allowance_Standard_Amount ? item?.Allowance_Standard_Amount : "Empty"}</Text>
+                                    <Text style={styles.textInner}>{item?.Allowance_Current_Amount ? item?.Allowance_Current_Amount : "Empty"}</Text>
+                                    <Text style={styles.textInner}>{item?.Allowance_YTD_Amount ? item?.Allowance_YTD_Amount : "Empty"}</Text>
+                                </View>
+                            ))}
+                            <View style={styles.rowInner}>
+                                <Text style={styles.textInner}>{"Total"}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Allowance_Standard_Amount_Total}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Allowance_Current_Amount_Total}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Allowance_YTD_Amount_Total}</Text>
+                            </View>
+                        </View>
+                        {/* DEDUCTIONS ================= */}
+                        <View style={styles.row2}>
+                            <Text style={styles.tableHead}>Deductions</Text>
+                            <View style={styles.rowInner}>
+                                <Text style={styles.textInner}>Deductions</Text>
+                                <Text style={styles.textInner}>Standard</Text>
+                                <Text style={styles.textInner}>Current Month</Text>
+                                <Text style={styles.textInner}>YTD Amount</Text>
+                            </View>
+                            {isPDfData.map((item, index) => (
+                                <View key={index} style={styles.rowInner}>
+                                    <Text style={styles.textInner}>{item?.Deduction_name ? item?.Deduction_name : "---"}</Text>
+                                    <Text style={styles.textInner}>{item?.Deduction_Standard_amount ? item?.Deduction_Standard_amount : 0}</Text>
+                                    <Text style={styles.textInner}>{item?.Deduction_Total_Current_amount ? item?.Deduction_Total_Current_amount : 0}</Text>
+                                    <Text style={styles.textInner}>{item?.Deduction_Total_YTD_amount ? item?.Deduction_Total_YTD_amount : 0}</Text>
+                                </View>
+                            ))}
+                            <View style={styles.rowInner}>
+                                <Text style={styles.textInner}>{"Total"}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Standard_amount_total}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_Current_amount_total}</Text>
+                                <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_YTD_amount_total}</Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.netPayBox}>
+                        <View style={styles.innerNetPayBox}>
+                            <Text style={styles.Gross_Salary}>Net Pay :</Text>
+                            <Text style={styles.Gross_Salary}>{isGrossSalary}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.signatureBox}>
+                        <Text style={styles.HRText}>This is a system generated document therefore, no signature is required. HR departmant can be contacted for any verification.</Text>
+                    </View>
+                    <View style={styles.borderBot}></View>
+                    <View style={styles.userIdAndPrintBox}>
+                        <View style={styles.botFlexBox}>
+                            <Text style={styles.Gross_Salary}>User ID :</Text>
+                            <Text style={styles.Gross_Salary}>{isPDfData?.[0]?.Emp_Code ? isPDfData?.[0]?.Emp_Code : "Empty"}</Text>
+                        </View>
+                        <View style={styles.botFlexBox}>
+                            <Text style={styles.Gross_Salary}>Print Date :</Text>
+                            <Text style={styles.Gross_Salary}>{date}</Text>
+                        </View>
+                    </View>
+                </View>
+            </Page>
+        </Document>
+    );
+
 
     // PDF Encryption data Funtion ========
-    const PDFRenderData = () => {
+    const PDFRenderData = async () => {
         setPdfLoader(true)
         const reader = new FileReader();
         reader.onloadend = () => {
@@ -479,6 +487,11 @@ function PaySlip({
                             URL.revokeObjectURL(objectUrl);
                             document.body.removeChild(a);
                             setPdfLoader(false)
+                            // reset({
+                            //     payslip_year: "",
+                            //     payslip_month: "",
+                            //     Emp_code: "",
+                            // })
                         }
                     });
                 })
@@ -487,7 +500,8 @@ function PaySlip({
                     setPdfLoader(false)
                 });
         };
-        reader.readAsDataURL(blobStore);
+        const pdfBlob = await pdf(MyDoc).toBlob();
+        reader.readAsDataURL(pdfBlob);
         return () => {
             PSPDFKit.unload('#pdf-container');
         };
@@ -499,33 +513,32 @@ function PaySlip({
     }, [])
 
 
+
     useEffect(() => {
         if (isPDfData.length > 0 && isPasswords) {
-            blobProvider()
-            setTimeout(() => {
-                setDownload(true)
-            }, 2000);
+            PDFRenderData()
         }
-    }, [isPDfData, isPasswords])
+    }, [isPDfData, isPasswords, isGrossSalary])
+
 
     // SUM FUNCTION OF ALLOWNCES AND DEDUCTIONS, GROSS SALARY =================
     useEffect(() => {
-      var temp1 = 0
-      var temp2 = 0
-      var temp3 = 0
-      var temp4 = 0
-      var temp5 = 0
-      var temp6 = 0
+        var temp1 = 0
+        var temp2 = 0
+        var temp3 = 0
+        var temp4 = 0
+        var temp5 = 0
+        var temp6 = 0
         for (var i of isPDfData) {
-            temp1 = temp1 + parseInt(i?.Allowance_Standard_Amount) 
-            temp2 = temp2 + parseInt(i?.Allowance_Current_Amount)
-            temp3 = temp3 + parseInt(i?.Allowance_YTD_Amount) 
-            temp4 = temp4 + parseInt(i?.Deduction_Standard_amount) 
-            temp5 = temp5 + parseInt(i?.Deduction_Total_Current_amount)
-            temp6 = temp6 + parseInt(i?.Deduction_Total_YTD_amount) 
+            temp1 = temp1 + parseInt(i?.Allowance_Standard_Amount == null ? 0 : i?.Allowance_Standard_Amount)
+            temp2 = temp2 + parseInt(i?.Allowance_Current_Amount == null ? 0 : i?.Allowance_Current_Amount)
+            temp3 = temp3 + parseInt(i?.Allowance_YTD_Amount == null ? 0 : i?.Allowance_YTD_Amount)
+            temp4 = temp4 + parseInt(i?.Deduction_Standard_amount == null ? 0 : i?.Deduction_Standard_amount)
+            temp5 = temp5 + parseInt(i?.Deduction_Total_Current_amount == null ? 0 : i?.Deduction_Total_Current_amount)
+            temp6 = temp6 + parseInt(i?.Deduction_Total_YTD_amount == null ? 0 : i?.Deduction_Total_YTD_amount)
             setRevisedTotal({
                 // Allowances Total ===================
-                Allowance_Standard_Amount_Total : temp1,
+                Allowance_Standard_Amount_Total: temp1,
                 Allowance_Current_Amount_Total: temp2,
                 Allowance_YTD_Amount_Total: temp3,
                 // Deductions Total ===================
@@ -533,9 +546,9 @@ function PaySlip({
                 Deduction_Total_Current_amount_total: temp5,
                 Deduction_Total_YTD_amount_total: temp6,
             })
+            setGrossSalary(temp2 - temp5)
         }
-    setGrossSalary(temp2 - temp5)
-    }, [isPDfData,isGrossSalary])
+    }, [isPDfData, isGrossSalary])
 
     return (
         <>
@@ -592,9 +605,9 @@ function PaySlip({
                             </div>
                             <div className='paySlipBtnBox'>
                                 <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
-                                {isDownload &&
+                                {/* {isDownload &&
                                     <Button loading={PdfLoader} onClick={PDFRenderData} type={'submit'} title="Download PaySlip" />
-                                }
+                                } */}
                             </div>
                         </form>
                     </div>
@@ -609,20 +622,20 @@ function PaySlip({
                             pagination={false}
                         />
                     )}
-                    <PDFViewer width="100%" height="750px">
-                        <Document>
-                            <Page size="A4">
-                                <View>
-                                    <View style={styles.imageBox}>
+                    {/* <PDFViewer width="100%" height="750px"> */}
+                    {/* <Document> */}
+                    {/* <Page size="A4"> */}
+                    {/* <View> */}
+                    {/* <View style={styles.imageBox}>
                                         <Image style={styles.imageClass} src={logo} />
                                         <Text style={styles.textConfi}>Confidential</Text>
                                     </View>
                                     <Text style={styles.CompanyName}>{isPDfData?.[0]?.Company_name ? isPDfData?.[0]?.Company_name : "Empty"}</Text>
-                                    <Text style={styles.Head}>PaySlip</Text>
-                                    Payslip for the month of December 2023
-                                    <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text>
-                                    {/* EMPLOYEE INFORMATIONS ================== */}
-                                    <View style={styles.upperBox}>
+                                    <Text style={styles.Head}>PaySlip</Text> */}
+                    {/* Payslip for the month of December 2023 */}
+                    {/* <Text style={styles.yearAndName}>Payslip for the month of {isPDfData?.[0]?.Payslip_Month_Name ? isPDfData?.[0]?.Payslip_Month_Name : "Empty"} {isPDfData?.[0]?.Payslip_Year ? isPDfData?.[0]?.Payslip_Year : "Empty"}</Text> */}
+                    {/* EMPLOYEE INFORMATIONS ================== */}
+                    {/* <View style={styles.upperBox}>
                                         <View style={styles.row}>
                                             <View style={styles.column}>
                                                 <Text style={styles.textBox}>Name :</Text>
@@ -667,11 +680,11 @@ function PaySlip({
                                                 <Text style={styles.textBox}>{isPDfData?.[0]?.Days_Worked ? isPDfData?.[0]?.Days_Worked : "Empty"}</Text>
                                             </View>
                                         </View>
-                                    </View>
-                                    {/* ============================================= */}
-                                    <View style={styles.upperBox} className="mt-5">
-                                        {/* Allownces ================= */}
-                                        <View style={styles.row2}>
+                                    </View> */}
+                    {/* ============================================= */}
+                    {/* <View style={styles.upperBox} className="mt-5"> */}
+                    {/* Allownces ================= */}
+                    {/* <View style={styles.row2}>
                                             <Text style={styles.tableHead}>Allowances</Text>
                                             <View style={styles.rowInner}>
                                                 <Text style={styles.textInner}>Allownce</Text>
@@ -693,9 +706,9 @@ function PaySlip({
                                                 <Text style={styles.textInner}>{isRevisedTotal?.Allowance_Current_Amount_Total}</Text>
                                                 <Text style={styles.textInner}>{isRevisedTotal?.Allowance_YTD_Amount_Total}</Text>
                                             </View>
-                                        </View>
-                                        {/* DEDUCTIONS ================= */}
-                                        <View style={styles.row2}>
+                                        </View> */}
+                    {/* DEDUCTIONS ================= */}
+                    {/* <View style={styles.row2}>
                                             <Text style={styles.tableHead}>Deductions</Text>
                                             <View style={styles.rowInner}>
                                                 <Text style={styles.textInner}>Deductions</Text>
@@ -705,10 +718,10 @@ function PaySlip({
                                             </View>
                                             {isPDfData.map((item, index) => (
                                                 <View key={index} style={styles.rowInner}>
-                                                    <Text style={styles.textInner}>{item?.Deduction_name ? item?.Deduction_name : "Empty"}</Text>
-                                                    <Text style={styles.textInner}>{item?.Deduction_Standard_amount ? item?.Deduction_Standard_amount : "Empty"}</Text>
-                                                    <Text style={styles.textInner}>{item?.Deduction_Total_Current_amount ? item?.Deduction_Total_Current_amount : "Empty"}</Text>
-                                                    <Text style={styles.textInner}>{item?.Deduction_Total_YTD_amount ? item?.Deduction_Total_YTD_amount : "Empty"}</Text>
+                                                    <Text style={styles.textInner}>{item?.Deduction_name ? item?.Deduction_name : "---"}</Text>
+                                                    <Text style={styles.textInner}>{item?.Deduction_Standard_amount ? item?.Deduction_Standard_amount : 0}</Text>
+                                                    <Text style={styles.textInner}>{item?.Deduction_Total_Current_amount ? item?.Deduction_Total_Current_amount : 0}</Text>
+                                                    <Text style={styles.textInner}>{item?.Deduction_Total_YTD_amount ? item?.Deduction_Total_YTD_amount : 0}</Text>
                                                 </View>
                                             ))}
                                             <View style={styles.rowInner}>
@@ -717,9 +730,9 @@ function PaySlip({
                                                 <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_Current_amount_total}</Text>
                                                 <Text style={styles.textInner}>{isRevisedTotal?.Deduction_Total_YTD_amount_total}</Text>
                                             </View>
-                                        </View>
-                                    </View>
-                                    <View style={styles.netPayBox}>
+                                        </View> */}
+                    {/* </View> */}
+                    {/* <View style={styles.netPayBox}>
                                         <View style={styles.innerNetPayBox}>
                                             <Text style={styles.Gross_Salary}>Net Pay :</Text>
                                             <Text style={styles.Gross_Salary}>{isGrossSalary}</Text>
@@ -738,11 +751,11 @@ function PaySlip({
                                             <Text style={styles.Gross_Salary}>Print Date :</Text>
                                             <Text style={styles.Gross_Salary}>{date}</Text>
                                         </View>
-                                    </View>
-                                </View>
-                            </Page>
-                        </Document>
-                    </PDFViewer>
+                                    </View> */}
+                    {/* </View> */}
+                    {/* </Page> */}
+                    {/* </Document> */}
+                    {/* </PDFViewer> */}
                 </div>
             </div>
         </>

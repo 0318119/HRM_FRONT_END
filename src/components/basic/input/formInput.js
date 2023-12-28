@@ -103,7 +103,6 @@ const FormCheckBox = ({
         </div>
     );
 };
-
 const FormSelect = ({
     control,
     name,
@@ -174,7 +173,6 @@ const FormSelect = ({
         </div>
     );
 };
-
 const Input = ({ type, placeholder, label, readonly, value, onChange, max, onEnterPress, name }) => {
     return (
         <>

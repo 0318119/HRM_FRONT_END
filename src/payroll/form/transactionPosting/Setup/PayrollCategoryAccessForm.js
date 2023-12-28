@@ -172,7 +172,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_PayrollCate
                 <h4 className="text-dark">Payroll Category Access</h4>
                 <hr />
                 <div className="form-group formBoxEducation">
-
                     <FormInput
                         label={'Payroll Category Name'}
                         placeholder={'Payroll Category Name'}
@@ -238,7 +237,6 @@ function PayrollCategoryAccessForm({ cancel, mode, page, isCode, Red_PayrollCate
                         errors={errors}
                         control={control}
                     />
-
                     <FormSelect
                         label={'Payroll Undo Flag'}
                         placeholder='Payroll Undo Flag'

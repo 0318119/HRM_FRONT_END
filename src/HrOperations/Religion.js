@@ -12,39 +12,40 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 
+
 import baseUrl from "../../src/config.json";
 
 
-  const Religion = ({ Red_Religion, GetReligionData }) => {
-    const [messageApi, contextHolder] = message.useMessage();
-    var get_access_token = localStorage.getItem("access_token");
-    const [isCode, setCode] = useState(null);
-    const [mode, setMode] = useState("read");
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-    const [isSearchVal, setSearchVal] = useState("");
-  
-  
-    useEffect(() => {
-      if (isSearchVal == "") {
-        GetReligionData({
-          pageSize: pageSize,
-          pageNo: page,
-          search: null,
-        });
-      } else {
-        GetReligionData({
-          pageSize: pageSize,
-          pageNo: 1,
-          search: isSearchVal,
-        });
-      }
-    }, [page, isSearchVal]);
-  
-    const EditPage = (mode, code) => {
-      setCode(code);
-      setMode(mode);
-    };
+const Religion = ({ Red_Religion, GetReligionData }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  var get_access_token = localStorage.getItem("access_token");
+  const [isCode, setCode] = useState(null);
+  const [mode, setMode] = useState("read");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [isSearchVal, setSearchVal] = useState("");
+
+
+  useEffect(() => {
+    if (isSearchVal == "") {
+      GetReligionData({
+        pageSize: pageSize,
+        pageNo: page,
+        search: null,
+      });
+    } else {
+      GetReligionData({
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal,
+      });
+    }
+  }, [page, isSearchVal]);
+
+  const EditPage = (mode, code) => {
+    setCode(code);
+    setMode(mode);
+  };
 
 
 
@@ -71,32 +72,32 @@ import baseUrl from "../../src/config.json";
       key: "Sort_key",
     },
     {
-        title: "Action",
-        key: "action",
-        render: (data) => (
-          <Space size="middle">
-            <button
-              onClick={() => EditPage("Edit", data?.Religion_code)}
-              className="editBtn"
-            >
-              <FaEdit />
+      title: "Action",
+      key: "action",
+      render: (data) => (
+        <Space size="middle">
+          <button
+            onClick={() => EditPage("Edit", data?.Religion_code)}
+            className="editBtn"
+          >
+            <FaEdit />
+          </button>
+          <Popconfirm
+            title="Delete the Religion"
+            description="Are you sure to delete the Religion?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={() => {
+              handleConfirmDelete(data?.Religion_code);
+            }}
+          >
+            <button className="deleteBtn">
+              <MdDeleteOutline />
             </button>
-            <Popconfirm
-              title="Delete the Religion"
-              description="Are you sure to delete the Religion?"
-              okText="Yes"
-              cancelText="No"
-              onConfirm={() => {
-                handleConfirmDelete(data?.Religion_code);
-              }}
-            >
-              <button className="deleteBtn">
-                <MdDeleteOutline />
-              </button>
-            </Popconfirm>
-          </Space>
-        ),
-      },
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   // Religion Delete API CALL ===================================================
@@ -110,7 +111,7 @@ import baseUrl from "../../src/config.json";
           accessToken: `Bareer ${get_access_token}`,
         },
         body: JSON.stringify({
-            Religion_code: id,
+          Religion_code: id,
         }),
       }
     )
@@ -145,11 +146,10 @@ import baseUrl from "../../src/config.json";
         });
       });
   }
-
   return (
     <>
       <div>
-      {contextHolder}
+        {contextHolder}
         <Header />
       </div>
       <div className="container">
@@ -191,7 +191,7 @@ import baseUrl from "../../src/config.json";
                   }}
                 />
               )}
-              {mode == "create" && <ReligionForm cancel={setMode}  mode={mode} isCode={null} page={page} />}
+              {mode == "create" && <ReligionForm cancel={setMode} mode={mode} isCode={null} page={page} />}
               {mode == "Edit" && <ReligionForm cancel={setMode} mode={mode} isCode={isCode} page={page} />}
             </div>
           </div>

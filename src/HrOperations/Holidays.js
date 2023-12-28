@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
@@ -32,7 +32,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
         {
             title: 'Holiday Date',
             dataIndex: 'Calendar_Date',
-            key: `Calendar_Date`.slice(0,10),
+            key: `Calendar_Date`.slice(0, 10),
         },
         {
             title: 'Holiday Type',
@@ -50,7 +50,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
             dataIndex: 'ramdan_flag',
             key: 'ramdan_flag',
         },
-       
+
         {
             title: 'Action',
             key: 'action',
@@ -114,7 +114,7 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
         });
     }
 
-    
+
 
     useEffect(() => {
         if (isSearchVal == '') {
@@ -131,7 +131,6 @@ const Holidays = ({ Red_Holidays, getHolidaysData }) => {
             })
         }
     }, [page, isSearchVal])
-
 
     return (
         <>
@@ -193,4 +192,4 @@ function mapStateToProps({ Red_Holidays }) {
     return { Red_Holidays };
 }
 
-export default connect(mapStateToProps, HOLIDAYS_ACTIONS) (Holidays)
+export default connect(mapStateToProps, HOLIDAYS_ACTIONS)(Holidays)

@@ -1,6 +1,5 @@
 import { combineReducers, compose, createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
-
 import Transition_family from "./reducers/Transition/transition_family/index";
 import Red_Cost_centre from "./reducers/HrOperations/Cost_Centre/index";
 import Red_Country from "./reducers/HrOperations/Country/index";
@@ -46,7 +45,7 @@ import PdfRender from "./reducers/payroll/pdfRender/index"
 import Red_Pay_Slip from "./reducers/payroll/PaySlip/index"
 import Red_Attendance_sheet from './reducers/AttendanceSheet/index'
 import Red_Manual_Leave_Posting from './reducers/Leave/Manual_Leave_Posting/index'
-import Red_JV_Codes from "./reducers/payroll/JV_Codes/index"; 
+import Red_JV_Codes from "./reducers/payroll/JV_Codes/index";
 import Red_IncomeTax_Column from "./reducers/payroll/IncomeTax_Column";
 import Red_Bank_Branches from "./reducers/payroll/Bank_Branches";
 import Red_MasterActive from "./reducers/MasterMaintaince/MasterActive";
@@ -56,7 +55,24 @@ import Red_Bank from "./reducers/payroll/bank";
 import Red_outstandingRecoveries from "./reducers/payroll/outstandingRecoveries";
 import Red_PayrollCategoryAccess from "./reducers/payroll/PayrollCategoryAccess";
 import Red_LateArrival from "./reducers/HrOperations/Late_Arrival";
+import Red_ChangePassword from "./reducers/Addministration/UserProfile";
 import Red_New_Appointment_Report from "./reducers/HrOperations/New_Appointment_Report/index"
+import Red_Confirmation from "./reducers/HrOperations/Master_Maintaince/Confirmation/index"
+import Red_Access_Control from "./reducers/Addministration/UserProfile/Access_Control/index"
+import Red_Forget_Password from "./reducers/LoginScreen/ForgetPassword/index";
+import Red_Due_For_Confirmation from "./reducers/HrOperations/Due_For_Confirmation/index"
+import SalaryOnHold from "../payroll/pages/Reports/SalaryOnHold/index";
+import Red_AppointEducation from './reducers/Appointments/AppointEducation/index'
+import Red_ServiceLengthReport from './reducers/HrOperations/ServiceLengthReport'
+import Red_AppointExprience from "./reducers/Appointments/AppointmentExprience/index";
+import Red_TranEducationReport from "./reducers/HrOperations/TranEducationReport";
+import Red_AppointSalary from './reducers/Appointments/AppointSalary/index'
+import Red_AppointPayroll from "./reducers/Appointments/AppointPayroll/index";
+import Red_AppointFamily from "./reducers/Appointments/AppointFamily/index";
+import Red_Experience_Report from './reducers/HrOperations/Experience_Report'
+import Red_Emp_Leaves from './reducers/Leave/Employee_Leaves/index'
+import Red_RetirementSeparationReport from './reducers/HrOperations/RetirementSeparationReport'
+import Red_AppointChecklist from "./reducers/Appointments/AppointChecklist/index"
 
 const reducers = combineReducers({
   Transition_family,
@@ -103,22 +119,41 @@ const reducers = combineReducers({
   Red_previous_Employee,
   Red_Leave_Type,
   PdfRender,
-  Red_previous_Employee, 
+  Red_previous_Employee,
   Red_MasterActive,
   Red_Pay_Slip,
   Red_Attendance_sheet,
   Red_Manual_Leave_Posting,
-  Red_JV_Codes, 
-  Red_IncomeTax_Column, 
+  Red_JV_Codes,
+  Red_IncomeTax_Column,
   Red_Bank_Branches,
-  Red_MasterActive, 
+  Red_MasterActive,
   Red_Appointment,
   Red_TaxStructure,
   Red_Bank,
   Red_outstandingRecoveries,
+  Red_LateArrival,
+  Red_ChangePassword,
   Red_PayrollCategoryAccess,
   Red_LateArrival,
-  Red_New_Appointment_Report
+  Red_New_Appointment_Report,
+  Red_Confirmation,
+  Red_Access_Control,
+  Red_Forget_Password,
+  Red_Due_For_Confirmation,
+  SalaryOnHold,
+  Red_AppointEducation,
+  Red_ServiceLengthReport,
+  Red_AppointSalary,
+  Red_AppointExprience,
+  Red_AppointPayroll,
+  Red_AppointFamily,
+  Red_TranEducationReport,
+  Red_AppointSalary,
+  Red_Experience_Report,
+  Red_Emp_Leaves,
+  Red_RetirementSeparationReport,
+  Red_AppointChecklist
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

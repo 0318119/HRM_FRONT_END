@@ -13,8 +13,6 @@ import {
 import baseUrl from '../../../../config.json'
 
 
-
-
 export const GET_ALL_EMP_DATA = () => async (dispatch) => {
     try {
         dispatch({

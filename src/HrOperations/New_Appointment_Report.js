@@ -1,231 +1,181 @@
-import React, { useEffect, useState } from 'react'
-import { connect } from "react-redux";
-import * as Red_New_Appointment_Report_Action from '../store/actions/HrOperations/New_Appointment_Report'
-import { FormInput, FormSelect } from "../components/basic/input/formInput";
-import { PrimaryButton, CancelButton } from "../components/basic/button";
-import { message } from 'antd'
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Table } from "antd";
-import { Document, Page, Text, View, PDFViewer } from '@react-pdf/renderer';
-import * as yup from "yup";
-
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import * as Red_New_Appointment_Report_Action from '../store/actions/HrOperations/New_Appointment_Report/index'
+import { FormInput } from '../components/basic/input/formInput';
+import Header from "../components/Includes/Header";
+import { PrimaryButton, SimpleButton } from '../components/basic/button';
+import { message } from 'antd';
+import { useForm } from 'react-hook-form';
+import { Document, Page, Text, View, PDFViewer, Image, StyleSheet, pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import LogoUrl from "../../src/Assets/Images/download.png"
+import Item from 'antd/es/list/Item';
 
 function New_Appointment_Report({
-  Red_Attendance_sheet,
-  GetAllAppoint,
-  PostAttendancePayload
+  Red_New_Appointment_Report,
+  PostAppointmentPayload,
 }) {
-  const [isLoading, setLoading] = useState(false)
-  const empData = Red_Attendance_sheet?.data?.[0]?.res?.data
-  const [isAttendanceData, setAttendanceData] = useState([])
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to convert to 1-based index
-  const currentYear = currentDate.getFullYear();
-  console.log("Current Month:", currentMonth);
-  console.log("Current Year:", currentYear);
+  const [isLoading, setLoading] = useState(false);
+  const [isFormSubmitted, setFormSubmitted] = useState(false);
+  const empData = Red_New_Appointment_Report?.data?.[0]?.res?.data
+  const [isAppointmentData, setAppointmentData] = useState([])
+  const [currentDate, setCurrentDate] = useState('')
+
+  useEffect(() => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    setCurrentDate(currentDate);
+  }, [])
 
 
-  // ATTENDANCE FOMR SHCEME =====================
-  const AttendanceSheme = yup.object().shape({
-    Employee_Id: yup.string().required("Please Select the employee"),
-    Year: yup.string().required("Please Select the Year"),
-    Month: yup.string().required("Please Select the Month"),
+  const AppointmentSchema = yup.object().shape({
+    FromDate: yup.string().required('Please Select From Date'),
+    ToDate: yup.string().required('Please Select To Date'),
   });
+
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
     defaultValues: {
-      Employee_Id: "",
-      Month: "",
-      Year: "",
+      FromDate: '',
+      ToDate: '',
     },
-    mode: "onChange",
-    resolver: yupResolver(AttendanceSheme),
+    mode: 'onChange',
+    resolver: yupResolver(AppointmentSchema),
   });
 
-
-  // ATTENDANCE FORM VALIDE FUNCTION ===================
-  const submitForm = async (data) => {
-      setLoading(true)
-      try {
-          const isValid = await AttendanceSheme.validate(data);
-          if (isValid) {
-              confirm(data)
-          }
-      } catch (error) {
-          console.error(error);
-      }
-  }
-
-  // GET ALL EMPLOYEE DATA =====================
-  useEffect(() => {
-    GetAllAppoint()
-  }, [])
-
-  // ATTENDANCE FORM POST FUNCTION
-  const [btnDownalod,setBtnDownalod] = useState(false)
-  const confirm = async (data) => {
-      const isWaitFun = await PostAttendancePayload(data)
-      if(isWaitFun?.success){
-        if(isWaitFun?.data[0].length == 0){
-          message.error("No Data Available")
-          setLoading(false)
-          setBtnDownalod(false)
-        }else{
-          setLoading(false)
-          setBtnDownalod(true)
-          message.success("Now, You can Download Pdf")
-          setAttendanceData(isWaitFun?.data[0])
+  const onSubmit = async (data) => {
+    setLoading(true);
+    try {
+      const isValid = await AppointmentSchema.validate(data);
+      if (isValid) {
+        const result = await PostAppointmentPayload(data);
+        if (result?.success) {
+          message.success('PDF is created, Wait PDF is under downloading...');
+          setFormSubmitted(true);
+          setAppointmentData(result?.data); // Set the appointment data immediately
+        } else {
+          message.error(result?.message || result?.messsage);
         }
-      }else{
-        message.error(isWaitFun?.message || isWaitFun?.messsage)
-        setLoading(false)
-        setBtnDownalod(false)
       }
-  }
-
-  const defaultOption = { value: "-1", label: "All Employees" }; 
-  const options = [
-    defaultOption,
-    ...(empData || []).map((item) => ({
-      value: item.Emp_code,
-      label: item.Emp_name,
-    })),
-  ];
+    } catch (error) {
+      console.error(error);
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    const btnprint = document.getElementById('Print');
-    const gotoPrint = () => {
-      window.print()
+    if (isFormSubmitted) {
+      handleDownload();
     }
-    btnprint.addEventListener('click', gotoPrint, false)
-    return () => {
-      btnprint.removeEventListener('click', gotoPrint, false)
+  }, [isFormSubmitted]);
+
+  const checkPdf =
+    <Document >
+      <Page size="A4">
+        <View style={{ fontFamily: 'Helvetica', fontSize: 12, flexDirection: 'column', backgroundColor: '#FFFFFF', padding: 20 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <Image src={LogoUrl} style={{ width: "80px", height: '30px', backgroundColor: 'yellow' }} />
+            <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', margin: "20px 0" }}>
+              NEW APPOINTEES REPORT
+            </Text>
+
+            <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
+              DATED: {currentDate}
+            </Text>
+          </View>
+
+          {isAppointmentData?.map((item, index) => (
+            <>
+              <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '10', fontWeight: 'bold', margin: "20px 0" }}>
+                Department :   {item.department}
+              </Text>
+
+              <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Code</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Emp Name</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Designation</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>GG</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Date Of Appointment</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Supervisor</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>CC</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Location</Text>
+                <Text style={{ width: '50%', textAlign: 'center', fontSize: 10, fontWeight: 'bold', backgroundColor: '#EFEFEF' }}>Base City</Text>
+              </View>
+              {item?.employees?.map((item, index) =>
+                <View key={index} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#000000', alignItems: 'center', height: 24 }}>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.EmpName ? item?.EmpName : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Designation ? item?.Designation : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.GG ? item?.GG : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.CC ? item?.CC : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.Location ? item?.Location : null}</Text>
+                  <Text style={{ width: '50%', textAlign: 'center', fontSize: 8, backgroundColor: index % 2 === 0 ? '#FFFFFF' : '#F9F9F9' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
+                </View>
+              )}
+            </>
+          ))}
+        </View>
+      </Page>
+    </Document>
+
+  const handleDownload = async () => {
+    try {
+      const pdfBlob = await pdf(checkPdf).toBlob();
+      saveAs(pdfBlob, 'generated.pdf');
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
     }
-  }, [])
+  };
 
 
   return (
     <>
-      {/* <div>
-        <Header />
-      </div> */}
+      <Header />
       <div className="container maringClass">
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            <form onSubmit={handleSubmit(submitForm)} className='paySlipBox'>
-              <h4 className="text-dark">Attendance</h4>
-              <div className=''>
-                <FormSelect
+            <form onSubmit={handleSubmit(onSubmit)} className="paySlipBox">
+              <h4 className="text-dark">Appointment</h4>
+              <div className="">
+                <FormInput
                   errors={errors}
                   control={control}
-                  placeholder={"Select Employee"}
-                  name={'Employee_Id'}
-                  label={'Select Employee'}
-                  options={options}
+                  placeholder={'From Date'}
+                  name={'FromDate'}
+                  label={'From Date'}
+                  type="date"
                 />
-                <FormSelect
+                <FormInput
                   errors={errors}
                   control={control}
-                  placeholder={"Please select a month"}
-                  name={'Month'}
-                  label={'Month'}
-                  defaultValue={currentMonth}
-                  options={[
-                    { value: 1, label: 'January' },
-                    { value: 2, label: 'February' },
-                    { value: 3, label: 'March' },
-                    { value: 4, label: 'April' },
-                    { value: 5, label: 'May' },
-                    { value: 6, label: 'June' },
-                    { value: 7, label: 'July' },
-                    { value: 8, label: 'August' },
-                    { value: 9, label: 'September' },
-                    { value: 10, label: 'October' },
-                    { value: 11, label: 'November' },
-                    { value: 12, label: 'December' },
-                  ]}
-                />
-                <FormSelect
-                  errors={errors}
-                  control={control}
-                  name={'Year'}
-                  placeholder={'Please select a year'}
-                  label={'Please select a year'}
-                  defaultValue={currentYear}
-                  options={[
-                    { value: 2022, label: '2022' },
-                    { value: 2023, label: '2023' },
-                  ]}
+                  placeholder={'To Date'}
+                  name={'ToDate'}
+                  label={'To Date'}
+                  type="date"
                 />
               </div>
-              <div className='paySlipBtnBox'>
-                <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+              <div className="paySlipBtnBox">
+                <SimpleButton type={'submit'} loading={isLoading} title="Download PDF" />
               </div>
             </form>
           </div>
         </div>
-        <div className="row">
-          <div className="col-lg-12 d-flex justify-content-end">
-            <PrimaryButton className={btnDownalod == true ? "d-block" : "d-none"} id="Print" title="Download" />
-          </div>
-        </div>
-        <div class="mt-5 row justify-content-center">
-          {isAttendanceData?.length > 0 && (
-            // <Table
-            //     columns={columns}
-            //     loading={isLoading}
-            //     dataSource={isAttendanceData}
-            //     scroll={{ x: 10 }}
-            //     pagination={false}
-            // />
-            <PDFViewer height="750">
-              <Document >
-                <Page size="A4">
-                    <View>
-                        <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold',margin: "20px 0" }}>
-                            Employee Attendance PDF
-                        </Text>
-                        <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Employee Code</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Employee Name</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Day</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Date</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time In Hours</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time In Minutes</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time out Hours</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Time out Minutes</Text>
-                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '12', fontWeight: 'bold' }}>Shift Durration</Text>
-                        </View>
-                        {isAttendanceData.map((item, index) => (
-                          <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_code ? item?.Emp_code : null}</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_name ? item?.Emp_name : null}</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Day_Name ? item?.Day_Name : null}</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Attendance_Date ? item?.Attendance_Date : null}</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_In_HH}</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_In_MM}</Text>
-
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_Out_HH }</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Emp_Time_Out_MM }</Text>
-                              <Text style={{ width: '50%', textAlign: 'center', fontSize: '12' }}>{item?.Shift_Duration ? item?.Shift_Duration : null}</Text>
-                          </View>
-                        ))}
-                    </View>
-                </Page>
-              </Document>
-            </PDFViewer>
-          )}
-        </div>
       </div>
     </>
-  )
+  );
 }
 
 function mapStateToProps({ Red_New_Appointment_Report }) {
   return { Red_New_Appointment_Report };
 }
-export default connect(mapStateToProps, Red_New_Appointment_Report_Action)(New_Appointment_Report)
+
+export default connect(mapStateToProps, {
+  PostAppointmentPayload: Red_New_Appointment_Report_Action.PostAppointmentPayload,
+})(New_Appointment_Report);
+

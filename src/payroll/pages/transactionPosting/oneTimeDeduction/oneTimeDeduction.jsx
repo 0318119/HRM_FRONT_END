@@ -9,9 +9,9 @@ import { connect } from "react-redux";
 
 
 
-const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
-    const [mode,setMode] = useState('read')
-    const [current,setCurrent] = useState()
+const OneTimeDeduction = ({ getOneTimeDeduction, oneTimeDeduction }) => {
+    const [mode, setMode] = useState('read')
+    const [current, setCurrent] = useState()
     const [search, setSearch] = useState(null)
     const [pageNo, setPageNo] = useState(1)
     const [pageSize, setPageSize] = useState(10)
@@ -20,6 +20,11 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
     const uniSearch = (w) => {
         if (w == "") {
             setSearch(null)
+            getOneTimeDeduction({
+                pageSize: pageSize,
+                pageNo: pageNo,
+                search: null
+            })
         }
         else {
             setSearch(w)
@@ -47,7 +52,7 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
             search: search
         })
     }, [])
-    const converter=(w,e)=>{
+    const converter = (w, e) => {
         setMode(w)
         setCurrent(e)
     }
@@ -67,7 +72,7 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={()=>{converter('edit',_?.Emp_code)}} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button onClick={() => { converter('edit', _?.Emp_code) }} className={Style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 </Space>
             ),
         },
@@ -78,20 +83,22 @@ const OneTimeDeduction = ({getOneTimeDeduction,oneTimeDeduction}) => {
                 <Header />
             </div>
             <div>
-                <SecondaryHeader isSearch={mode == 'read'?true:false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Transaction - Onetime Deduction'} total={'1,000'} />
+                <SecondaryHeader isSearch={mode == 'read' ? true : false} onSearchClick={onSearchClick} searchParam={uniSearch} title={'Onetime Deduction'} total={''} />
             </div>
             <div className={Style.TableBody}>
-                {mode=='read'?
-                <Table pagination={{
-                    defaultCurrent: pageNo,
-                    onChange: (p) => {
-                        setPageNo(p);
-                    },
-                    pageSize: pageSize,
-                }} loading={oneTimeDeduction?.loading} columns={columns} dataSource={oneTimeDeduction?.data} />
-                :
-                <OneTimeDeductionForm cancel={setMode} currentUser={current}/>
-                }
+                <div className="container">
+                    {mode == 'read' ?
+                        <Table pagination={{
+                            defaultCurrent: pageNo,
+                            onChange: (p) => {
+                                setPageNo(p);
+                            },
+                            pageSize: pageSize,
+                        }} loading={oneTimeDeduction?.loading} columns={columns} dataSource={oneTimeDeduction?.data} />
+                        :
+                        <OneTimeDeductionForm cancel={setMode} currentUser={current} />
+                    }
+                </div>
             </div>
         </>
     )

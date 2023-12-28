@@ -182,6 +182,7 @@ const PayrollCategoryAccess = ({ Red_PayrollCategoryAccess, GetPayrollCateryAcce
             })
         }
     }, [page, isSearchVal])
+    
 
     return (
         <>

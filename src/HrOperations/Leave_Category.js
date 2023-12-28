@@ -143,7 +143,7 @@ const Leave_Category = ({ Red_Leave_Category, GetLeaveCategoryData }) => {
         });
       });
   }
-
+  
   return (
     <>
       <div>

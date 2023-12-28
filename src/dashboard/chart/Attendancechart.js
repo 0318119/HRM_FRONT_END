@@ -168,9 +168,9 @@ export default function Attendancechart() {
     <>
       <div className="container">
         <div className="row">
-          <div className="col-12 d-flex justify-content-end">
+          {/* <div className="col-12 d-flex justify-content-end">
             <Link to="/Get_Attendance" className="text-dark mt-3 d-block" style={{ background: "#F7F5F5", padding: "10px", borderRadius: "10px" }}><b>Attendance Report</b></Link>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-12 mt-5">
               <h5 className="mb-3 text-dark text-center"><b>Employee Attendance</b></h5>
