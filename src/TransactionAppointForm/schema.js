@@ -63,6 +63,7 @@ const TAPersonalSchema = yup.object().shape({
     Nationality: yup.string().required("Nationality is required"),
 });
   
+<<<<<<< HEAD
 export {TAPersonalSchema};
 
 
@@ -71,3 +72,6 @@ export {TAPersonalSchema};
 
 
 
+=======
+export {TAPersonalSchema};
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23

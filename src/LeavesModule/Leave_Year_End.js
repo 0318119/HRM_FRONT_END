@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
+=======
+import React from 'react'
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import '../LeavesModule/assets/css/LeaveYearEnd.css'
 import Header from '../components/Includes/Header'
 
 const Leave_Year_End = () => {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
     <div>

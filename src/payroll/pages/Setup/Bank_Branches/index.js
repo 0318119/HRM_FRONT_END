@@ -13,7 +13,11 @@ import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 import "../../../assest/css/IncomeTax_Column.css"
 
+<<<<<<< HEAD
 const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranch }) => {
+=======
+const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData,DeleteBankBranch }) => {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isCode, setCode] = useState(null);
@@ -23,17 +27,29 @@ const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranc
   const [isSearchVal, setSearchVal] = useState("");
 
 
+<<<<<<< HEAD
 
 
   useEffect(() => {
     if (isSearchVal == "") {
       GetBankBranchesData({
+=======
+ 
+
+  useEffect(() => {
+    if (isSearchVal == "") {
+        GetBankBranchesData({
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: page,
         search: null,
       });
     } else {
+<<<<<<< HEAD
       GetBankBranchesData({
+=======
+        GetBankBranchesData({
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal,
@@ -66,6 +82,7 @@ const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranc
       key: "Branch_abbr",
     },
     {
+<<<<<<< HEAD
       title: "Branch Address Line1",
       dataIndex: "Branch_address_line1",
       key: "Branch_address_line1",
@@ -85,6 +102,27 @@ const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranc
       dataIndex: "Sort_key",
       key: "Sort_key",
     },
+=======
+        title: "Branch Address Line1",
+        dataIndex: "Branch_address_line1",
+        key: "Branch_address_line1",
+      },
+      {
+        title: "Contact No.",
+        dataIndex: "Contact",
+        key: "Contact",
+      },
+      {
+        title: "Bank Code",
+        dataIndex: "Bank_Code",
+        key: "Bank_Code",
+      },
+      {
+        title: "Sort Key",
+        dataIndex: "Sort_key",
+        key: "Sort_key",
+      },
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     {
       title: "Action",
       key: "action",
@@ -116,6 +154,7 @@ const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranc
 
   const onConfirmDeleteFun = async (e) => {
     const isWaitFun = await DeleteBankBranch(e)
+<<<<<<< HEAD
     if (isWaitFun?.success) {
       message.success("You have been deleted")
       setTimeout(() => {
@@ -131,6 +170,22 @@ const Bank_Branches = ({ Red_Bank_Branches, GetBankBranchesData, DeleteBankBranc
     }
   }
 
+=======
+    if(isWaitFun?.success){
+        message.success("You have been deleted")
+        setTimeout(() => {
+          message.destroy();
+          GetBankBranchesData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null,
+          });
+        }, 2000);
+    }else{
+      message.error(isWaitFun?.message || isWaitFun?.messsage)
+    }
+  }
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
       <div>

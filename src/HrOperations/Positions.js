@@ -14,6 +14,11 @@ import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 const Positions = ({ GetPositionData, Red_Position }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
@@ -142,7 +147,11 @@ const Positions = ({ GetPositionData, Red_Position }) => {
             }, 5000);
         });
     }
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             {contextHolder}

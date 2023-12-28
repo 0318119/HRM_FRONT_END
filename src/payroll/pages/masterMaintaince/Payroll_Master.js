@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import { PrimaryButton } from "../../../components/basic/button";
+=======
+import React, {  useState } from 'react'
+import {  PrimaryButton } from "../../../components/basic/button";
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import './Payroll_Master.css'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +44,11 @@ function Payroll_Master() {
 
 
     // MASTER PERSNOL FORM DATA API CALL =========================== 
+<<<<<<< HEAD
 
+=======
+   
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     async function POST_MASTER_PERSONAL_FORM(body) {
         setLoading(true)
         await fetch(
@@ -77,7 +86,11 @@ function Payroll_Master() {
                     "Branch_Code3": body?.Branch_Code3,
                     "Bank_Amount_3": body?.Bank_Amount_3,
                     "Bank_Percent_3": body?.Bank_Percent_3,
+<<<<<<< HEAD
                     "Account_Type4": body?.Account_Type4,
+=======
+                    "Account_Type4":body?.Account_Type4,
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     "Bank_Account_No4": body?.Bank_Account_No4,
                     "Branch_Code4": body?.Branch_Code4,
                     "Bank_Amount_4": body?.Bank_Amount_4,
@@ -117,12 +130,19 @@ function Payroll_Master() {
             setLoading(false)
         });
     }
+<<<<<<< HEAD
+=======
+   
+
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     return (
         <>
             {contextHolder}
             {/* <Header /> */}
             <div className="container mt-5">
+<<<<<<< HEAD
                 <form onSubmit={handleSubmit(submitForm)}>
                     <h4 className="text-dark">Master Payroll</h4>
                     <hr />
@@ -153,10 +173,102 @@ function Payroll_Master() {
                     <hr />
                     <div className="form-group MasterPayrollformBox">
                         <FormSelect
+=======
+            <form onSubmit={handleSubmit(submitForm)}>
+                <h4 className="text-dark">Master Payroll</h4>
+                <hr />
+                <div className="form-group MasterPayrollformBox">
+                    <FormInput
+                        label={'Emp Code'}
+                        placeholder={'Emp Code'}
+                        id="Sequence_no"
+                        name="Sequence_no"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Mode Of Payment'}
+                        placeholder={'Mode Of Payment'}
+                        id="Mode_Of_Payment"
+                        name="Mode_Of_Payment"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    
+                   
+                </div>
+                <hr />
+                <div className="form-group MasterPayrollformBox">
+                    <FormSelect
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             label={'Recreation Club Flag'}
                             placeholder='Recreation Club Flag'
                             id="Recreation_Club_Flag"
                             name="Recreation_Club_Flag"
+<<<<<<< HEAD
+=======
+                        options={[
+                            {
+                                value: 'Y',
+                                label: 'Yes',
+                            },
+                            {
+                                value: "N",
+                                label: 'No',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Meal Deduction Flag'}
+                        placeholder='Meal Deduction Flag'
+                        id="Meal_Deduction_Flag"
+                        name="Meal_Deduction_Flag"
+                        options={[
+                            {
+                                value: 'Y',
+                                label: 'Yes',
+                            },
+                            {
+                                value: "N",
+                                label: 'No',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Union Flag'}
+                        placeholder='Union Flag'
+                        id="Union_Flag"
+                        name="Union_Flag"
+                        options={[
+                            {
+                                value: 'Y',
+                                label: 'Yes',
+                            },
+                            {
+                                value: "N",
+                                label: 'No',
+                            },
+                        ]}
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Overtime_Flag'}
+                        placeholder='Overtime_Flag'
+                        id="Overtime_Flag"
+                        name="Overtime_Flag"
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             options={[
                                 {
                                     value: 'Y',
@@ -167,6 +279,7 @@ function Payroll_Master() {
                                     label: 'No',
                                 },
                             ]}
+<<<<<<< HEAD
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -176,6 +289,17 @@ function Payroll_Master() {
                             placeholder='Meal Deduction Flag'
                             id="Meal_Deduction_Flag"
                             name="Meal_Deduction_Flag"
+=======
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'Incentive_Flag'}
+                        placeholder='Incentive_Flag'
+                        id="Incentive_Flag"
+                        name="Incentive_Flag"
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             options={[
                                 {
                                     value: 'Y',
@@ -186,6 +310,7 @@ function Payroll_Master() {
                                     label: 'No',
                                 },
                             ]}
+<<<<<<< HEAD
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -195,6 +320,17 @@ function Payroll_Master() {
                             placeholder='Union Flag'
                             id="Union_Flag"
                             name="Union_Flag"
+=======
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'SESSI_Flag'}
+                        placeholder={'SESSI_Flag'}
+                        id="SESSI_Flag"
+                        name="SESSI_Flag"
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             options={[
                                 {
                                     value: 'Y',
@@ -205,6 +341,7 @@ function Payroll_Master() {
                                     label: 'No',
                                 },
                             ]}
+<<<<<<< HEAD
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -214,6 +351,17 @@ function Payroll_Master() {
                             placeholder='Overtime_Flag'
                             id="Overtime_Flag"
                             name="Overtime_Flag"
+=======
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormSelect
+                        label={'EOBI lag'}
+                        placeholder={'EOBI Flag'}
+                        id="EOBI_Flag"
+                        name="EOBI_Flag"
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             options={[
                                 {
                                     value: 'Y',
@@ -224,6 +372,7 @@ function Payroll_Master() {
                                     label: 'No',
                                 },
                             ]}
+<<<<<<< HEAD
                             showLabel={true}
                             errors={errors}
                             control={control}
@@ -285,6 +434,12 @@ function Payroll_Master() {
                             errors={errors}
                             control={control}
                         />
+=======
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                         <FormSelect
                             label={'Fuel'}
                             placeholder={'Fuel'}
@@ -323,6 +478,7 @@ function Payroll_Master() {
                             errors={errors}
                             control={control}
                         />
+<<<<<<< HEAD
 
 
 
@@ -391,6 +547,76 @@ function Payroll_Master() {
                             errors={errors}
                             control={control}
                         />
+=======
+                
+               
+                    
+                    
+                   
+                </div>
+                <hr />
+                <div className="form-group MasterPayrollformBox">
+                    <FormInput
+                        label={'SESSI Number'}
+                        placeholder={'SESSI Number'}
+                        id="SESSI_Number"
+                        name="SESSI_Number"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'EOBI Number'}
+                        placeholder={'EOBI Number'}
+                        id="EOBI_Number"
+                        name="EOBI_Number"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Account Type1'}
+                        placeholder={'Account Type1'}
+                        id="Account_Type1"
+                        name="Account_Type1"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Bank Account No1'}
+                        placeholder={'Bank Account No1'}
+                        id="Bank_Account_No1"
+                        name="Bank_Account_No1"
+                        type="text"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Branch  Code 1'}
+                        placeholder={'Branch Code 1'}
+                        id="Branch_Code1"
+                        name="Branch_Code1"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+                    <FormInput
+                        label={'Bank Amount 1'}
+                        placeholder={'Bank Amount 1'}
+                        id="Bank_Amount_1"
+                        name="Bank_Amount_1"
+                        type="number"
+                        showLabel={true}
+                        errors={errors}
+                        control={control}
+                    />
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                         <FormInput
                             label={'Bank Percent 1'}
                             placeholder={'Bank Percent 1'}
@@ -571,12 +797,21 @@ function Payroll_Master() {
                             errors={errors}
                             control={control}
                         />
+<<<<<<< HEAD
                     </div>
                     <div className='CountryBtnBox'>
                         {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}
                         <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
                     </div>
                 </form>
+=======
+                </div>
+                <div className='CountryBtnBox'>
+                    {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}
+                    <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                </div>
+            </form>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             </div>
         </>
     )

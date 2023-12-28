@@ -71,6 +71,10 @@ export const Login = () => {
         setBtnEnaledAndDisabled(false);
         if (response.success) {
           showAlert(response.message, "success")
+<<<<<<< HEAD
+=======
+          console.log("response.referesh_token",response?.refresh_token)
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           localStorage.setItem("refresh", response.refresh_token);
           localStorage.setItem("access_token", response.access_token);
           localStorage.setItem("Emp_code", response.data[0].Emp_code);
@@ -79,7 +83,11 @@ export const Login = () => {
           localStorage.setItem("Parent_Code",response?.data?.[0]?.Parent_Code);
           // FOR USER BLOW =======================
           localStorage.setItem("User_Type",response?.data?.[0]?.Role_Code);
+<<<<<<< HEAD
           window.location.href = "/TAShortsCut"
+=======
+          navigate("/TAShortsCut");
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         } else {
           showAlert(response.message, "warning")
           setLoading(false);

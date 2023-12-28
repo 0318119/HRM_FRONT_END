@@ -16,7 +16,6 @@ import { useEffect } from 'react';
 
 
 
-
 const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
@@ -52,7 +51,7 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit', data?.Edu_level_code)} className="editBtn">
+          <button onClick={() => EditPage('Edit',data?.Edu_level_code)} className="editBtn">
             <FaEdit />
           </button>
           <Popconfirm
@@ -72,20 +71,25 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
   ];
 
   useEffect(() => {
+<<<<<<< HEAD
     if (isSearchVal == '') {
       GetEducationLevelData({
+=======
+    if(isSearchVal == ''){
+      GetEducationLevelData({ 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         pageSize: pageSize,
         pageNo: page,
         search: null
       })
-    } else {
-      GetEducationLevelData({
+    }else{
+      GetEducationLevelData({ 
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal
       })
     }
-  }, [page, isSearchVal])
+  }, [page,isSearchVal])
 
   // EDUCATION LEVEL DATA DELETE API CALL ====================
   async function handleConfirmDelete(id) {
@@ -127,6 +131,10 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
     });
   }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
       <div>
@@ -142,8 +150,13 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
                 <div className="EducationLevelListFlexBox">
                   <h4 className="text-dark">Education Level List</h4>
                   <div className="EducationLevelListsearchBox" EducationLevelListsearchBox>
+<<<<<<< HEAD
                     <Input placeholder={'Search Here...'} type="search"
                       onChange={(e) => { setSearchVal(e.target.value) }}
+=======
+                    <Input placeholder={'Search Here...'} type="search" 
+                        onChange={(e) => {setSearchVal(e.target.value)}}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
@@ -154,10 +167,17 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
 
             <div>
               {mode == "read" && (
+<<<<<<< HEAD
                 <Table columns={columns}
                   loading={Red_Education_level?.loading}
                   dataSource={Red_Education_level?.data?.[0]?.res?.data1}
                   scroll={{ x: 10 }}
+=======
+                <Table columns={columns} 
+                  loading={Red_Education_level?.loading}
+                  dataSource={Red_Education_level?.data?.[0]?.res?.data1} 
+                  scroll={{ x: 10 }} 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                   pagination={{
                     defaultCurrent: page,
                     total: Red_Education_level?.data?.[0]?.res?.data3,
@@ -169,10 +189,17 @@ const Education_Levels = ({ Red_Education_level, GetEducationLevelData }) => {
                 />
               )}
               {mode == "create" && (
+<<<<<<< HEAD
                 <EducationLevelForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
                 <EducationLevelForm cancel={setMode} mode={mode} isCode={isCode} page={page} />
+=======
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+              )}
+              {mode == "Edit" && (
+                <EducationLevelForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               )}
             </div>
 

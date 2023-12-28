@@ -15,7 +15,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerateLateArrivalsData, GetDataDepartment, GetDataLocation, GetSectionData, GetDivisionData }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
@@ -165,7 +168,10 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
     GetDataDepartment()
   }, [])
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
       <div>

@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import Header from "../components/Includes/Header";
 import style from "./assets/css/Transaction_Experience.module.css"
 import Input from "../components/basic/input/index"
 import { Button } from "../components/basic/button/index"
 import { Space, Table, Tag, Tooltip } from 'antd';
 import Experience_Form from './form/Experience_Form'
+<<<<<<< HEAD
 import {getToken} from "../Token/index";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 const Transaction_Experience = () => {
     const [mode, setMode] = useState('read')
@@ -80,6 +87,7 @@ const Transaction_Experience = () => {
             tags: ['cool', 'teacher'],
         },
     ];
+<<<<<<< HEAD
     useEffect(() => {
         const checkTokenValidity = async () => {
           try {
@@ -91,6 +99,8 @@ const Transaction_Experience = () => {
         };
         checkTokenValidity();
       }, []);
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>

@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import Header from "../components/Includes/Header";
 import style from "./assets/css/Transaction_Education.module.css"
 import Input from "../components/basic/input/index"
 import { Button } from "../components/basic/button/index"
 import { Space, Table, Tag, Tooltip } from 'antd';
 import Transaction_Form from './form/Transaction_Education_Form'
+<<<<<<< HEAD
 import {getToken} from "../Token/index";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 const Transaction_Education = () => {
     const [mode, setMode] = useState('read')
@@ -79,6 +86,7 @@ const Transaction_Education = () => {
             address: 'Sydney No. 1 Lake Park',
             tags: ['cool', 'teacher'],
         },
+<<<<<<< HEAD
         
     ];
     useEffect(() => {
@@ -92,6 +100,9 @@ const Transaction_Education = () => {
         };
         checkTokenValidity();
       }, []);
+=======
+    ];
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>

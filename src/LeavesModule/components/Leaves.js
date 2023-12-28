@@ -3,6 +3,7 @@ import '../assets/css/Leaves.css'
 import { Link, json, useLocation, useNavigate } from 'react-router-dom';
 import secureLocalStorage from 'react-secure-storage';
 import axios from 'axios';
+<<<<<<< HEAD
 import { saveAs } from "file-saver";
 import { connect } from "react-redux";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
@@ -27,6 +28,12 @@ const Leaves = ({
   SAVE_LEAVE_APPLICATION,
   GET_EMP_LEAVES_APP
 }) => {
+=======
+import {saveAs} from "file-saver";
+const config = require('../../config.json')
+
+const Leaves = () => {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const now = new Date();
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -71,7 +78,11 @@ const Leaves = ({
   const [loading2, setLoading2] = useState(true);
   const [dataLoader2, setDataLoader2] = useState(false);
   const [isLeaveTypeLoading, setLeaveTypeLoading] = useState("")
+<<<<<<< HEAD
   const [isEditableFileBox, setEditableFileBox] = useState("dontEditFile")
+=======
+  const [isEditableFileBox,setEditableFileBox] = useState("dontEditFile")
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   const showAlert = (message, type) => {
     setSaveleaveAlert({
@@ -103,13 +114,18 @@ const Leaves = ({
       else if (response.messsage == "timeout error") { navigate('/') }
       else {
         setGetAttendanceName(response?.data)
+<<<<<<< HEAD
         console.log("response?.data[0]", response?.data)
+=======
+        console.log("response?.data[0]",response?.data)
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       }
     }).catch((errs) => { setGetAttendanceNameErr(errs.messsage) })
   }
   // GET LEAVE TYPE API CALL =============================================
   async function GetLeaveType() {
     setLeaveTypeLoading(true)
+<<<<<<< HEAD
     await fetch(
       `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,
       {
@@ -164,6 +180,62 @@ const Leaves = ({
       setLeaveTypeLoading("Something went wrong...")
       console.log("setGetLeaveTypeErr", error)
     });
+=======
+      await fetch(
+        `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            accessToken: `Bareer ${get_access_token}`,
+          },
+          body: JSON.stringify({
+            "Emp_code": isRequesterCode !== null ? isRequesterCode : Emp_code
+          })
+        }
+      ).then((response) => {
+        return response.json();
+      }).then(async (response) => {
+        if (response.messsage == "unauthorized") {
+          await fetch(
+            `${config["baseUrl"]}/leaves/GetLeaveTypeByEmployeeCode`,
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                refereshToken: `Bareer ${get_refresh_token}`,
+              },
+              body: JSON.stringify({
+                "Emp_code": isRequesterCode ? isRequesterCode : Emp_code
+              })
+            }
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((response) => {
+              if (response.messsage == "timeout error") {
+                navigate("/");
+              } else {
+                localStorage.setItem("refresh", response.referesh_token);
+                localStorage.setItem("access_token", response.access_token);
+                setLeaveTypeLoading(false)
+                setGetLeaveType(response.data[0]);
+              }
+            }).catch((error) => {
+              setLeaveTypeLoading("Something went wrong...")
+              setGetLeaveTypeErr(error.message);
+            });
+        } else {
+          setLeaveTypeLoading(false)
+          setGetLeaveType(response.data[0]);
+        }
+      }).catch((error) => {
+        setGetLeaveTypeErr(error.messsage);
+        setLeaveTypeLoading("Something went wrong...")
+        console.log("setGetLeaveTypeErr",error)
+      });
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   }
   // GET BALANCED DAYS API CALL ==========================================
   async function setBalanceDays(leaveTypeId, start, end) {
@@ -176,8 +248,13 @@ const Leaves = ({
           accessToken: `Bareer ${get_access_token}`,
         },
         body: JSON.stringify({
+<<<<<<< HEAD
           "Emp_code": isRequesterCode !== null ? isRequesterCode : Emp_code,
           "LeaveTypeCode": leaveTypeId !== null && leaveTypeId !== undefined && leaveTypeId !== "" ? leaveTypeId : isLeaveType,
+=======
+          "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
+          "LeaveTypeCode": leaveTypeId !== null && leaveTypeId !== undefined && leaveTypeId !== "" ? leaveTypeId : isLeaveType ,
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
           "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
         })
@@ -197,8 +274,13 @@ const Leaves = ({
                 refereshToken: `Bareer ${get_refresh_token}`,
               },
               body: JSON.stringify({
+<<<<<<< HEAD
                 "Emp_code": isRequesterCode !== null ? isRequesterCode : Emp_code,
                 "LeaveTypeCode": leaveTypeId !== null && leaveTypeId !== undefined && leaveTypeId !== "" ? leaveTypeId : isLeaveType,
+=======
+                "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code,
+                "LeaveTypeCode": leaveTypeId !== null && leaveTypeId !== undefined && leaveTypeId !== "" ? leaveTypeId : isLeaveType ,
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 "FromDate": start !== null && start !== undefined && start !== "" ? start : isFromDate,
                 "ToDate": end !== null && end !== undefined && end !== "" ? end : isToDate
               })
@@ -229,6 +311,7 @@ const Leaves = ({
   }
   // GET APPLIED DAYS API CALL ===========================================
   async function AppliedDaysFun(StartDate, EndDate) {
+<<<<<<< HEAD
     await fetch(
       `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,
       {
@@ -285,6 +368,64 @@ const Leaves = ({
       .catch((error) => {
         console.log(error.message)
       });
+=======
+      await fetch(
+        `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            accessToken: `Bareer ${get_access_token}`,
+          },
+          body: JSON.stringify({
+            "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code ,
+            "FromDate": isFromDateScd !== null && isFromDateScd !== undefined && isFromDateScd !== "" ? isFromDateScd : StartDate,
+            "ToDate": isToDateScd !== null && isToDateScd !== undefined && isToDateScd !== "" ? isToDateScd : EndDate
+          })
+        }
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then(async (response) => {
+          if (response.messsage == "unauthorized") {
+            await fetch(
+              `${config["baseUrl"]}/leaves/GetLeaveAppliedDays`,
+              {
+                method: "POST",
+                headers: {
+                  "content-type": "application/json",
+                  refereshToken: `Bareer ${get_refresh_token}`,
+                },
+                body: JSON.stringify({
+                  "Emp_code": isRequesterCode !==null ? isRequesterCode : Emp_code ,
+                  "FromDate": isFromDateScd !== null && isFromDateScd !== undefined && isFromDateScd !== "" ? isFromDateScd : StartDate,
+                  "ToDate": isToDateScd !== null && isToDateScd !== undefined && isToDateScd !== "" ? isToDateScd : EndDate
+                })
+              }
+            )
+              .then((response) => {
+                return response.json();
+              })
+              .then((response) => {
+                if (response.messsage == "timeout error") { navigate("/") }
+                else {
+                  localStorage.setItem("refresh", response.referesh_token);
+                  localStorage.setItem("access_token", response.access_token);
+                  setAppliedLeave(response?.data[0]?.[0]?.Leaves)
+                }
+              })
+              .catch((error) => {
+                console.log(error.message)
+              });
+          } else {
+            setAppliedLeave(response?.data[0]?.[0]?.Leaves)
+          }
+        })
+        .catch((error) => {
+          console.log(error.message)
+        });
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   }
   // SAVE LEAVE APPLICATION API CALL =====================================
   const saveLeaveApplication = async (e) => {
@@ -645,7 +786,11 @@ const Leaves = ({
         "content-type": "application/json",
         accessToken: `Bareer ${get_access_token}`,
       },
+<<<<<<< HEAD
       body: JSON.stringify({
+=======
+      body : JSON.stringify({
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         "Tran_Code": isTracCodeForEdit
       })
     }
@@ -661,7 +806,11 @@ const Leaves = ({
               "content-type": "application/json",
               refereshToken: `Bareer ${get_refresh_token}`,
             },
+<<<<<<< HEAD
             body: JSON.stringify({
+=======
+            body : JSON.stringify({
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               "Tran_Code": isTracCodeForEdit
             })
           }
@@ -685,7 +834,11 @@ const Leaves = ({
       } else {
         if (response.success) {
           setAttachmentsData(response?.data?.[0])
+<<<<<<< HEAD
           console.log("response?.data?.[0]", response?.data?.[0])
+=======
+          console.log("response?.data?.[0]",response?.data?.[0])
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           setLoading2(false)
           setDataLoader2(true)
         } else { setAttachmentsErr(response.message) }
@@ -769,20 +922,32 @@ const Leaves = ({
     GetEmployeesName()
     GetMyLeaveApplications()
   }, [])
+<<<<<<< HEAD
 
   useEffect(() => {
     if (isTracCodeForEdit !== null) {
       GetAttachemnts()
     } else {
+=======
+  useEffect(() => {
+    if(isTracCodeForEdit !== null){
+      GetAttachemnts()
+    }else{
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       console.log("Can't run GetAttachemnts Funtion")
     }
   }, [isTracCodeForEdit])
   useEffect(() => {
+<<<<<<< HEAD
     if (isRequesterCode !== null || Emp_code !== null) {
+=======
+    if(isRequesterCode !== null || Emp_code !== null) {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       GetLeaveType()
     }
   }, [isRequesterCode])
   useEffect(() => {
+<<<<<<< HEAD
     if (isFromDate !== null && isToDate !== null && isLeaveType !== null && isRequesterCode !== null || Emp_code !== null) {
       setBalanceDays()
     } else {
@@ -793,11 +958,24 @@ const Leaves = ({
     if (isFromDateScd !== null && isToDateScd !== null && isRequesterCode !== null || Emp_code !== null) {
       AppliedDaysFun()
     } else {
+=======
+    if(isFromDate !== null && isToDate !== null && isLeaveType !== null && isRequesterCode !== null || Emp_code !== null) {
+      setBalanceDays()
+    }else{
+      console.log("can't run  setBalanceDays APi callback")
+    }
+  }, [isFromDate, isToDate, isLeaveType,isRequesterCode])
+  useEffect(() => {
+    if(isFromDateScd !== null &&  isToDateScd !== null && isRequesterCode !== null || Emp_code !== null){
+      AppliedDaysFun()
+    }else{
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       console.log("can't run AppliedDaysFun APi callback")
     }
   }, [isFromDateScd, isToDateScd, isRequesterCode])
 
   const [isBtnDisabled, setBtnDisabled] = useState(true)
+<<<<<<< HEAD
 
   useEffect(() => {
     if (isStoreBalancedDays !== null && isAppliedLeave !== null) {
@@ -806,14 +984,31 @@ const Leaves = ({
           setRemainingdays("---")
           console.log("ddd")
         } else {
+=======
+  
+  useEffect(() => {
+    if (isStoreBalancedDays !== null && isAppliedLeave !== null) {
+      if (isFromDateScd == isToDateScd || isFromDateScd !== isToDateScd && isHalfDayFlag == false) {
+        if(isStoreBalancedDays == undefined){
+          setRemainingdays("---")
+          console.log("ddd")
+        }else{
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           setRemainingdays(isStoreBalancedDays - isAppliedLeave)
           setDatesErr("")
           setBtnDisabled(false)
         }
+<<<<<<< HEAD
       } else if (isFromDateScd !== isToDateScd && isHalfDayFlag == true) {
         setDatesErr("To date is should be equal to From Date")
         setBtnDisabled(true)
       } else {
+=======
+      }else if (isFromDateScd !== isToDateScd && isHalfDayFlag == true) {
+        setDatesErr("To date is should be equal to From Date")
+        setBtnDisabled(true)
+      }else{
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         setDatesErr("")
         setBtnDisabled(false)
       }
@@ -822,6 +1017,7 @@ const Leaves = ({
 
 
 
+<<<<<<< HEAD
   // NEW CODE OF LEAVES STARTS FROM HERE ...... ==============================================
   var Emp_code = localStorage.getItem("Emp_code");
   const allEmpData = Red_Emp_Leaves?.AllEmployees?.[0]?.res
@@ -1002,6 +1198,8 @@ const Leaves = ({
   console.log("Red_Emp_Leaves",Red_Emp_Leaves)
 
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   return (
     <>
@@ -1018,7 +1216,11 @@ const Leaves = ({
                 <div className="form-group w-100">
                   <label htmlFor="">Requester Name</label>
                   {EmployeesNameErr ? EmployeesNameErr : false}
+<<<<<<< HEAD
                   <select name="" id="" className='form-select' onChange={(e) => { setRequesterCode(e.target.value) }}>
+=======
+                  <select name="" id="" className='form-select' onChange={(e) => {setRequesterCode(e.target.value)}}>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     {EmployeesName?.map((item) => {
                       return (
                         <option selected={EmployeesName.filter((items) => items?.Emp_code == Emp_code)[0]?.Emp_code ? true : false} value={item?.Emp_code}>{item.Emp_name}</option>
@@ -1028,10 +1230,17 @@ const Leaves = ({
                 </div>
                 <div className="form-group w-100">
                   <label htmlFor="">Select Leave Type</label> <br />
+<<<<<<< HEAD
                   {getLeaveTypeErr ? <span style={{ color: "red" }}>{getLeaveTypeErr}</span> : false}
                   <select className='form-select' onChange={(e) => { setLeaveType(e.target.value) }}>
                     <option selected disabled>  {isLeaveTypeLoading == true ? "Please wait leave type is fetching..." : "Please Select The leave type..."} </option>
                     {isLeaveTypeLoading == false ?
+=======
+                  {getLeaveTypeErr ? <span style={{color: "red"}}>{getLeaveTypeErr}</span> : false}
+                  <select className='form-select' onChange={(e) => { setLeaveType(e.target.value) }}>
+                    <option selected disabled>  {isLeaveTypeLoading == true ? "Please wait leave type is fetching..." : "Please Select The leave type..."} </option>
+                    {isLeaveTypeLoading == false ? 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                       <>
                         {getLeaveType?.map((item) => {
                           return (
@@ -1066,8 +1275,13 @@ const Leaves = ({
                 <div className="form-group w-100">
                   <label htmlFor="">Remaining Days</label>
                   <input type="text" readOnly value={
+<<<<<<< HEAD
                     isHalfDayFlag == true ? isStoreBalancedDays - 0.5 : isStoreBalancedDays == 0 ? "----" : isRemainingdays
                   } className='form-control' />
+=======
+                    isHalfDayFlag == true ? isStoreBalancedDays - 0.5  : isStoreBalancedDays == 0 ? "----" : isRemainingdays
+                    } className='form-control' />
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 </div>
                 <div className="form-group w-100">
                   <label htmlFor="">From Date</label>
@@ -1085,7 +1299,11 @@ const Leaves = ({
                 </div>
                 <div className="form-group w-100">
                   <label htmlFor="">Reason</label>
+<<<<<<< HEAD
                   <textarea type="text" defaultValue={isLeaveReason ? isLeaveReason : ""} className='form-control' onChange={(e) => { setLeaveReason(e.target.value) }} />
+=======
+                  <textarea type="text" defaultValue={isLeaveReason? isLeaveReason : ""} className='form-control' onChange={(e) => { setLeaveReason(e.target.value) }} />
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 </div>
                 <span style={{ color: "red", fontSize: "12px" }}>{isDatesErr}</span>
               </div>
@@ -1115,7 +1333,11 @@ const Leaves = ({
       </div>
 
       {
+<<<<<<< HEAD
         isEditableFileBox == "editableFile" ?
+=======
+         isEditableFileBox == "editableFile" ? 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           <div className="container px-2">
             <div className="container Leaves_listContainer">
               <div className="row w-100 mx-0">
@@ -1124,6 +1346,7 @@ const Leaves = ({
                 </span>
               </div>
               <div className="row  p-3 mt-2">
+<<<<<<< HEAD
                 {loading2 && (
                   <div
                     className="d-flex justify-content-center align-items-center w-100"
@@ -1177,6 +1400,61 @@ const Leaves = ({
                         */}
                   </div>
                 )}
+=======
+                    {loading2 && (
+                      <div
+                        className="d-flex justify-content-center align-items-center w-100"
+                        style={{ height: "100px", background: "#d3d3d345" }}
+                      >
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="sr-only"></span>
+                        </div>
+                      </div>
+                    )}
+                    {dataLoader2 && (
+                      <div className='col-12 attachmenttable'>
+                        {isAttachmentsData?.length > 0 ?
+                          <table className='table table-striped'>
+                            <thead>
+                              <tr>
+                                <th scope="col">File Name</th>
+                                <th scope="col">View</th>
+                                <th scope="col">Posting Date</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Delete</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {
+                                isAttachmentsData?.map((items) => {
+                                  return (
+                                    <tr>
+                                      <td>{items?.FileName ? items?.FileName.slice(0, 8) : "Not Found"}</td>
+                                      <td>{items?.FileName ? <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
+                                       onClick={(e) => {
+                                        const imageSource = `${config["baseUrl"]}/${items?.File_Path}`;
+                                        saveAs(imageSource, "employeesAttachments");
+                                      }}
+                                      >Download</a> : "Not Found"}</td>
+                                      <td>{items?.Posting_date ? items?.Posting_date.slice(0, 10) : "Not Found"}</td>
+                                      <td>{items?.Reason ? items?.Reason : "Not Found"}</td>
+                                      <td><button className="editBtnTable" onClick={(e) => {
+                                        DeleteAttactmentsFile(items?.Tran_Code)
+                                      }}>Delete</button></td>
+                                    </tr>
+                                  )
+                                })
+                              }
+                            </tbody>
+                          </table>
+                          : <span className='text-center d-block'>No Attachments Data</span>
+                        }
+                        {isAttachmentsErr ? isAttachmentsErr : false}
+                        {/* <></>
+                        */}
+                      </div>
+                    )}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
               </div>
             </div>
           </div> : false
@@ -1239,6 +1517,7 @@ const Leaves = ({
                                   <td>{items?.PendingWith ? items?.PendingWith : "Not Found"}</td>
                                   {
                                     items?.Emp_name == items?.PendingWith ?
+<<<<<<< HEAD
                                       <td><button className="editBtnTable" onClick={(e) => {
                                         setTracCodeForEdit(items?.Tran_Code)
                                         setLeaveType(items?.Leave_type_code)
@@ -1252,6 +1531,21 @@ const Leaves = ({
                                         fonSize: "12px",
                                         color: "white"
                                       }}>Submitted</span></td>
+=======
+                                    <td><button className="editBtnTable"  onClick={(e) => {
+                                      setTracCodeForEdit(items?.Tran_Code)
+                                      setLeaveType(items?.Leave_type_code)
+                                      setEditableFileBox("editableFile")
+                                      EditLeaveApplication(items?.Tran_Code, "edit", items.Leave_type_code)
+                                    }}>Edit</button></td> : 
+                                    <td><span style={{
+                                      background: "grey",
+                                      padding: "5px 13px",
+                                      borderRadius: "20px",
+                                      fonSize: "12px",
+                                      color: "white"
+                                    }}>Submitted</span></td>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                   }
                                 </tr>
                                 //  "Tran_Code": isTracCodeForEdit,
@@ -1290,6 +1584,7 @@ const Leaves = ({
           </ul>
         )
       }
+<<<<<<< HEAD
 
 
 
@@ -1444,11 +1739,17 @@ const Leaves = ({
           </div>
         </div>
       </div>
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     </>
   )
 }
 
+<<<<<<< HEAD
 function mapStateToProps({ Red_Emp_Leaves }) {
   return { Red_Emp_Leaves };
 }
 export default connect(mapStateToProps, EMP_LEAVES_ACTIONS)(Leaves) 
+=======
+export default Leaves
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
+=======
+import React, { useState } from 'react'
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import Header from '../components/Includes/Header';
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
@@ -8,7 +12,10 @@ import './assets/css/TransportationList.css'
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 const Transportation = () => {
     const [mode, setMode] = useState('read')
 

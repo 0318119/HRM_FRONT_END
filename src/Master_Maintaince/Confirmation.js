@@ -13,7 +13,10 @@ import baseUrl from '../config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
+<<<<<<< HEAD
 import {getToken} from "../Token/index";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
@@ -83,6 +86,7 @@ const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
       ),
     },
   ];
+<<<<<<< HEAD
  useEffect(() => {
     const checkTokenValidity = async () => {
       try {
@@ -94,6 +98,10 @@ const Confirmation = ({ Red_Confirmation, Get_Conformation_Data }) => {
     };
     checkTokenValidity();
   }, []);
+=======
+
+ 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
       <div>

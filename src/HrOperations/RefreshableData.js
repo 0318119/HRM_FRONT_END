@@ -80,10 +80,21 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
 
 
   useEffect(() => {
+<<<<<<< HEAD
 
     GetRefreshableData();
   }, []);
 
+=======
+    // Red_Refreshable_Data
+    GetRefreshableData();
+  }, []);
+
+  // console.log(
+  //   "Refreshable data",
+  //   Red_Refreshable_Data?.data?.[0]?.res?.data
+  // );
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   return (
     <>
@@ -94,7 +105,11 @@ const RefreshableData = ({ GetRefreshableData, Red_Refreshable_Data }) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-12 maringClass">
+<<<<<<< HEAD
 
+=======
+            {/* {mode == "read" && (` */}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             <>
               <div className="RefreshableDataFlexBox">
                 <h4 className="text-dark">Refreshable Data</h4>

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react'
+=======
+import React,{useState, useEffect} from 'react'
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import './assets/css/LeaveReportBalance.css'
 import Header from '../components/Includes/Header'
 import { RiFileExcel2Fill } from 'react-icons/ri'
@@ -10,7 +14,11 @@ const config = require('../config.json')
 
 const Leave_Report_Balance = () => {
 
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false);
+=======
+const [loading, setLoading] = useState(false);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
   const [formErr, setformErr] = useState(false)
 
@@ -26,12 +34,17 @@ const Leave_Report_Balance = () => {
   }
 
 
+<<<<<<< HEAD
   const [leaveYear, SetLeaveYear] = useState('')
+=======
+const [leaveYear, SetLeaveYear] = useState('')
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const [leaveCat, setLeaveCat] = useState('')
   const [leaveType, setLeaveType] = useState('')
   const [Emp_Code, setEmp_Code] = useState('')
   const [Emp_name, setEmp_Name] = useState('')
   const [dataLoader, setDataLoader] = useState(false);
+<<<<<<< HEAD
   const [Leave_Report, setLeave_Report] = useState([])
 
 
@@ -40,6 +53,16 @@ const Leave_Report_Balance = () => {
     e.preventDefault();
 
     await fetch(`${config['baseUrl']}/reportBalance/GetLeaveReportBalance`, {
+=======
+  const [Leave_Report,  setLeave_Report] = useState([])
+
+  
+  
+  const LeaveBalanceReport = async (e) => {
+    e.preventDefault();
+   
+      await fetch(`${config['baseUrl']}/reportBalance/GetLeaveReportBalance`, {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       method: "POST",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
       body: JSON.stringify({
@@ -52,6 +75,7 @@ const Leave_Report_Balance = () => {
       return response.json()
     }).then(async (response) => {
       if (response.messsage == "unauthorized") {
+<<<<<<< HEAD
         await fetch(`${config['baseUrl']}/reportBalance/GetLeaveReportBalance`, {
           method: "POST",
           headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
@@ -70,6 +94,26 @@ const Leave_Report_Balance = () => {
           setLeave_Report(response.data[0])
           showAlert(response.success[0], "success")
           DownloadExcel(response.data[0])
+=======
+          await fetch(`${config['baseUrl']}/reportBalance/GetLeaveReportBalance`, {
+          method: "POST",
+          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
+            body: JSON.stringify({
+                "YearNo": leaveYear,
+                "Leave_category_code": leaveCat,
+                "Leave_type_code": leaveType,
+                "Emp_Code": isVal
+            })
+        }).then(response => {
+          return response.json()
+        }).then(response => {
+          localStorage.setItem("refresh",  response.referesh_token);
+          localStorage.setItem("access_token", response.access_token);
+          
+          setLeave_Report(response.data[0])
+          showAlert(response.success[0], "success")
+            DownloadExcel(response.data[0])
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         }).catch((errs) => {
           setLoading(false);
           setBtnEnaledAndDisabled(false);
@@ -78,12 +122,20 @@ const Leave_Report_Balance = () => {
       }
       else if (response.messsage == "timeout error") { navigate('/') }
       else {
+<<<<<<< HEAD
         if (response.success) {
+=======
+        if (response.success){
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           setLeave_Report(response.data[0])
           console.log(response.data[0], 'hhhhhh')
           showAlert("File Downloaded Successfully", "success")
           DownloadExcel(response.data[0])
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         }
       }
     }).catch((errs) => {
@@ -91,7 +143,11 @@ const Leave_Report_Balance = () => {
       setBtnEnaledAndDisabled(false);
       showAlert(errs.messsage, "warning")
     })
+<<<<<<< HEAD
   }
+=======
+  } 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   const [EmployeesName, setEmployeesName] = useState([])
   const [SearchEmployeesName, setSearchEmployeesName] = useState([])
@@ -177,8 +233,13 @@ const Leave_Report_Balance = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
+<<<<<<< HEAD
                 localStorage.setItem("refresh", response.referesh_token);
                 localStorage.setItem("access_token", response.access_token);
+=======
+                localStorage.setItem("refresh",  response.referesh_token);
+                localStorage.setItem("access_token",response.access_token);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 setGetLeaveCat(response.data[0]);
 
               }
@@ -232,7 +293,11 @@ const Leave_Report_Balance = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
+<<<<<<< HEAD
                 localStorage.setItem("refresh", response.referesh_token);
+=======
+                localStorage.setItem("refresh",  response.referesh_token);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 localStorage.setItem("access_token", response.access_token);
                 setGetLeaveType(response.data);
 
@@ -298,6 +363,7 @@ const Leave_Report_Balance = () => {
   }
 
 
+<<<<<<< HEAD
   return (
     <>
       <div>
@@ -390,6 +456,102 @@ const Leave_Report_Balance = () => {
         </ul>
       }
     </>
+=======
+  
+
+  return (
+      <>
+          <div>
+              <Header />
+          </div>
+          <div className="container-fluid mt-5 p-2">
+              <div className="container-fluid mt-1 LeaveReportBalance_listContainer">
+                  <div className="row w-100 mx-0">
+                      <span className="LeaveReportBalance_listHeader">
+                          Leave Report Balance
+                      </span>
+                  </div>
+                  <div className="row px-3 mt-2 p-2">
+                      <div className="col-lg-4">
+                          <div className="form-group">
+                              <label htmlFor="">Year</label>
+                              <select name="" id="" className='form-select' onChange={(e) => SetLeaveYear(e.target.value)} >
+                                  <option value="2022">2022</option>
+                                  <option value="2023">2023</option>
+                              </select>
+                          </div>
+                      </div>
+                      <div className="col-lg-4">
+                          <div className="form-group">
+                              <label htmlFor="">Leave Catergory</label>
+                              <select name="" id="" className='form-select' onChange={(e) => setLeaveCat(e.target.value)} >
+                                  {getLeaveCat?.map((item) => {
+                                      return (
+                                          <option value={item.Leave_Category_code}>{item.Leave_Category_name}</option>
+                                      )
+                                  })}
+                              </select>
+                          </div>
+                      </div>
+                      <div className="col-lg-4">
+                          <div className="form-group">
+                              <label htmlFor="">Leave Type</label>
+                              <select name="" id="" className='form-select' onChange={(e) => setLeaveType(e.target.value)} >
+                                  {getLeaveType?.map((item) => {
+                                      return (
+                                          <option value={item.Leave_type_code}>{item.Leave_name}</option>
+                                      )
+                                  })}
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                  <div className="row px-3 mt-2 p-2">
+                      <div className="col-lg-4">
+                          <div className="form-group">
+                              <label htmlFor="">Employee Code</label>
+                              <input type="text" name="" id="" className='form-control' value={isVal} onChange={SearchFunctionality} />
+                              {/* <select name="" id="" className='form-select'>
+                                  <option value="">1</option>
+                                  <option value="">2</option>
+                              </select> */}
+                          </div>
+                      </div>
+                      <div className="col-lg-4">
+                          <div className="form-group ">
+                            <label htmlFor="">Employee Name</label>
+                              {dataLoader &&
+                                  (<select name="" id="" className='form-control' onChange={(e) => setVal(e.target.value)}>
+                                      {SearchEmployeesName?.map((item) => {
+                                          return (
+
+                                              <option value={item.Emp_code} >{item.Emp_name}</option>
+
+
+                                          )
+                                      })}
+
+                                  </select>)}  
+                          </div>
+                      </div>
+
+                  </div>
+                  <div className="row px-3 mt-2 p-2">
+                      <div className="col-1">
+                          <button className='excelbtn' onClick={LeaveBalanceReport} ><RiFileExcel2Fill /> Excel</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {
+              <ul className="px-3" style={{ position: "fixed", bottom: "0", right: "0", widows: "50%" }}>
+                  {formErr && (
+                      <li className={`alert alert-${formErr.type}` + " " + "mt-4"}>{`${formErr.message}`}</li>
+                  )}
+              </ul>
+          }
+      </>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   )
 }
 

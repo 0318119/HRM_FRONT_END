@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
+=======
+import React, { useState } from 'react'
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import './assets/css/LeaveUpload.css'
 import Header from '../components/Includes/Header'
 import axios from 'axios';

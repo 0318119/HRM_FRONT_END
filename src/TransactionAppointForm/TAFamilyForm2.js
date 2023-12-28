@@ -9,23 +9,34 @@ import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
+<<<<<<< HEAD
 // import { AppointFamilySchema, AppoinTChildrenSchema } from './schema';
+=======
+import { TAPersonalSchema } from './schema';
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import * as yup from "yup";
 import { message, Table } from 'antd';
 import baseUrl from '../config.json'
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { Update } from "@mui/icons-material";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
 function TAFamilyForm2({
+<<<<<<< HEAD
     SaveChildrenForm,
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     SaveMarriageForm,
     Red_AppointFamily,
     GetEmployer,
     cancel,
     mode2,
     isCode2,
+<<<<<<< HEAD
     page,
     update,
     updateChlid,
@@ -36,11 +47,19 @@ function TAFamilyForm2({
     // console.log(update, 'update')
    
 
+=======
+    page
+}) {
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     var get_access_token = localStorage.getItem("access_token");
     var get_company_code = localStorage.getItem("company_code");
     const [messageApi, contextHolder] = message.useMessage();
+<<<<<<< HEAD
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     const [isLoading, setLoading] = useState(false)
     const currentDate = new Date();
     const EditBack = () => {
@@ -55,6 +74,7 @@ function TAFamilyForm2({
 
     });
 
+<<<<<<< HEAD
     const AppoinTChildrenSchema = yup.object().shape({
         FamMemberName: yup.string().required("FamMemberName required"),
         FamMemberType: yup.string().required("FamMemberType is required"),
@@ -69,10 +89,13 @@ function TAFamilyForm2({
     
 
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     const submitForm = async (data) => {
         try {
             const isValid = await AppointFamilySchema.validate(data);
             if (isValid) {
+<<<<<<< HEAD
                 if (update){
                     UpdateMarriage(data)
                 }else{
@@ -94,6 +117,10 @@ function TAFamilyForm2({
                 }else{
                     SaveChildren(data)
                 }
+=======
+                SaveForm(data)
+                console.log(data , 'data')
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             }
         } catch (error) {
             console.error(error);
@@ -125,6 +152,7 @@ function TAFamilyForm2({
     }, [Red_AppointFamily?.data?.[0]?.res?.data?.[0]])
 
 
+<<<<<<< HEAD
     useEffect(() => {
         if (update) {
             reset({
@@ -157,12 +185,15 @@ function TAFamilyForm2({
    
  
 
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     const {
         control,
         formState: { errors },
         handleSubmit,
         reset
     } = useForm({
+<<<<<<< HEAD
         defaultValues: {
             SpauseDOB: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_DOB,
             MarriageDate: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Marriage_Date,
@@ -172,10 +203,17 @@ function TAFamilyForm2({
         resolver: yupResolver(AppointFamilySchema),
     });
     
+=======
+        defaultValues: {},
+        mode: "onChange",
+        resolver: yupResolver(AppointFamilySchema),
+    });
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
 
+<<<<<<< HEAD
 const SaveForm = async (data) => {
         try {
             const response = await SaveMarriageForm({
@@ -183,6 +221,15 @@ const SaveForm = async (data) => {
                 MarriageDate: data?.MarriageDate,
                 Spausename: data?.Spausename,
                 SpauseDOB: data?.SpauseDOB,
+=======
+    const SaveForm = async (data) => {
+        try {
+            const response = await SaveMarriageForm({
+                Sequenceno: isCode2,
+                MarriageDate: data?.EmployerCode,
+                Spausename: data?.designation,
+                SpauseDOB: data?.department,
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             });
 
             if (response && response.success) {
@@ -200,6 +247,7 @@ const SaveForm = async (data) => {
             messageApi.error("An error occurred while Save Marriage");
         }
     };
+<<<<<<< HEAD
 
    
 const SaveChildren = async (data) => {
@@ -280,6 +328,12 @@ const UpdateMarriage = async (data) => {
         }
     };    
   
+=======
+  
+
+
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             {contextHolder}
@@ -288,8 +342,11 @@ const UpdateMarriage = async (data) => {
                     <div className="col-12 maringClass2">
                         <div>
                             <h2 className="text-dark"> Transaction - Family</h2>
+<<<<<<< HEAD
 
                         {/* Family Form */}
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h4 className="text-dark">Employee Information</h4>
                                 <Link to="/Appointment" className="backLink text-dark">Back</Link>
@@ -362,6 +419,7 @@ const UpdateMarriage = async (data) => {
                                     />
                                 </div>
                                 <div className='CountryBtnBox'>
+<<<<<<< HEAD
                                     
                                     {update ? 
                                     <SimpleButton type={'submit'} loading={isLoading} title="Update" />
@@ -373,6 +431,12 @@ const UpdateMarriage = async (data) => {
 
 
                             <form onSubmit={handleSubmit(submitFormChild)}>
+=======
+                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                </div>
+                            </form>
+                            <form onSubmit={handleSubmit(submitForm)}>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
                                 <h4 className="text-dark">Children History</h4>
                                 <hr />
@@ -396,11 +460,19 @@ const UpdateMarriage = async (data) => {
                                         options={[
                                             {
                                                 value: 'M',
+<<<<<<< HEAD
                                                 label: 'Male',
                                             },
                                             {
                                                 value: "F",
                                                 label: 'Female',
+=======
+                                                label: 'Married',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'Unmarried',
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                             },
                                         ]}
                                         showLabel={true}
@@ -420,10 +492,14 @@ const UpdateMarriage = async (data) => {
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
+<<<<<<< HEAD
                                     {updateChlid ? 
                                     <SimpleButton type={'submit'} loading={isLoading} title="Update" />  :
                                         <SimpleButton type={'submit'} loading={isLoading} title="Save" /> 
                                      }
+=======
+                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                 </div>
                             </form>
                         </div>

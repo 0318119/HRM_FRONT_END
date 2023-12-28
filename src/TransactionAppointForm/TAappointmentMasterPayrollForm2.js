@@ -82,12 +82,20 @@ function TAappointmentMasterPayrollForm2({
     const watchSESSIFlag = useWatch({
         control,
         name: 'SESSI_Flag',
+<<<<<<< HEAD
         defaultValue: '',
+=======
+        defaultValue: '', 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     });
     const watchEOBIFlag = useWatch({
         control,
         name: 'EOBI_Flag',
+<<<<<<< HEAD
         defaultValue: '',
+=======
+        defaultValue: '', 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     });
 
 
@@ -130,8 +138,13 @@ function TAappointmentMasterPayrollForm2({
                 Bonus_Type: "0",
                 SESSI_Flag: data?.SESSI_Flag,
                 EOBI_Flag: data?.EOBI_Flag,
+<<<<<<< HEAD
                 SESSI_Number: data?.SESSI_Flag === "Y" ? data?.SESSI_Number : '',
                 EOBI_Number: data?.EOBI_Flag === "Y" ? data?.EOBI_Number : '',
+=======
+                SESSI_Number: data?.SESSI_Flag === "Y" ?  data?.SESSI_Number:'',
+                EOBI_Number: data?.EOBI_Flag === "Y" ?  data?.EOBI_Number : '',
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 Account_Type1: data?.Account_Type1,
                 Bank_Account_No1: data?.Bank_Account_No1,
                 Branch_Code1: data?.Branch_Code1,
@@ -154,6 +167,12 @@ function TAappointmentMasterPayrollForm2({
         }
     };
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             {contextHolder}
@@ -308,7 +327,11 @@ function TAappointmentMasterPayrollForm2({
                                         errors={errors}
                                         control={control}
                                     />
+<<<<<<< HEAD
                                     {watchEOBIFlag === 'Y' && (
+=======
+                                    {watchEOBIFlag === 'Y'  &&  (
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                         <FormInput
                                             label={'EOBI Number'}
                                             placeholder='EOBI Number'

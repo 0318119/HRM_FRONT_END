@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react'
 import './assets/css/LeaveReport.css'
 import Header from '../components/Includes/Header'
 import { RiFileExcel2Fill } from 'react-icons/ri'
+=======
+import React,{useEffect, useState} from 'react'
+import './assets/css/LeaveReport.css'
+import Header from '../components/Includes/Header'
+import {RiFileExcel2Fill} from 'react-icons/ri'
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import secureLocalStorage from 'react-secure-storage';
 import { Link, json, useLocation, useNavigate } from 'react-router-dom';
 import * as FileSaver from 'file-saver'
@@ -26,12 +33,17 @@ const Leave_Report_Detail = () => {
 
 
   const [fromDate, SetFromDate] = useState('')
+<<<<<<< HEAD
   const [toDate, SetToDate] = useState('')
+=======
+  const [toDate, SetToDate] = useState('')  
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const [leaveCat, setLeaveCat] = useState('')
   const [leaveType, setLeaveType] = useState('')
   const [Emp_Code, setEmp_Code] = useState('')
   const [Emp_name, setEmp_Name] = useState('')
   const [dataLoader, setDataLoader] = useState(false);
+<<<<<<< HEAD
   const [Leave_Report, setLeave_Report] = useState([])
 
 
@@ -39,6 +51,15 @@ const Leave_Report_Detail = () => {
   const LeaveReport = async (e) => {
     e.preventDefault();
 
+=======
+  const [Leave_Report,  setLeave_Report] = useState([])
+
+  
+  
+  const LeaveReport = async (e) => {
+    e.preventDefault();
+   
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     await fetch(`${config['baseUrl']}/GetLeaveReportdata/GetLeaveReport`, {
       method: "POST",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
@@ -66,13 +87,21 @@ const Leave_Report_Detail = () => {
         }).then(response => {
           return response.json()
         }).then(response => {
+<<<<<<< HEAD
           localStorage.setItem("refresh", response.referesh_token);
+=======
+          localStorage.setItem("refresh",  response.referesh_token);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           localStorage.setItem("access_token", response.access_token);
           setLeave_Report(response.data[0])
           showAlert(response.messsage[0], "success")
           DownloadExcel(response.data[0])
 
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         }).catch((errs) => {
           setLoading(false);
           setBtnEnaledAndDisabled(false);
@@ -81,12 +110,20 @@ const Leave_Report_Detail = () => {
       }
       else if (response.messsage == "timeout error") { navigate('/') }
       else {
+<<<<<<< HEAD
         if (response.success) {
+=======
+        if (response.success){
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
           setLeave_Report(response.data[0])
           console.log(response.data[0], 'hhhhhh')
           showAlert("File Downloaded Successfully", "success")
           DownloadExcel(response.data[0])
+<<<<<<< HEAD
 
+=======
+          
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         }
       }
     }).catch((errs) => {
@@ -94,7 +131,11 @@ const Leave_Report_Detail = () => {
       setBtnEnaledAndDisabled(false);
       showAlert(errs.messsage, "warning")
     })
+<<<<<<< HEAD
   }
+=======
+  } 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   const [EmployeesName, setEmployeesName] = useState([])
   const [SearchEmployeesName, setSearchEmployeesName] = useState([])
@@ -180,8 +221,13 @@ const Leave_Report_Detail = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
+<<<<<<< HEAD
                 localStorage.setItem("refresh", response.referesh_token);
                 localStorage.setItem("access_token", response.access_token);
+=======
+                localStorage.setItem("refresh",  response.referesh_token);
+                localStorage.setItem("access_token",response.access_token);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 setGetLeaveCat(response.data[0]);
 
               }
@@ -234,7 +280,11 @@ const Leave_Report_Detail = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
+<<<<<<< HEAD
                 localStorage.setItem("refresh", response.referesh_token);
+=======
+                localStorage.setItem("refresh",  response.referesh_token);
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 localStorage.setItem("access_token", response.access_token);
                 setGetLeaveType(response.data);
 
@@ -305,6 +355,10 @@ const Leave_Report_Detail = () => {
   const [FromDate, setFromDate] = useState(currentDate)
   const [ToDate, setToDate] = useState(currentDate)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   return (
     <>
       <div>
@@ -318,6 +372,7 @@ const Leave_Report_Detail = () => {
             </span>
           </div>
           <form action="" >
+<<<<<<< HEAD
             <div className="row px-3 mt-2 p-2">
               <div className="col-lg-3">
                 <div className="form-group">
@@ -348,12 +403,45 @@ const Leave_Report_Detail = () => {
                 <div className="form-group">
                   <label htmlFor="">Leave Type</label>
                   <select name="" id="" className='form-select' onChange={(e) => setLeaveType(e.target.value)}>
+=======
+          <div className="row px-3 mt-2 p-2">
+            <div className="col-lg-3">
+              <div className="form-group">
+                <label htmlFor="">From Date</label>
+                  <input type="date" name="" id="" className='form-control' defaultValue={FromDate}  onChange={(e) => SetFromDate(e.target.value)} />
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <div className="form-group">
+                <label htmlFor="">To Date</label>
+                <input type="Date" name="" id="" className='form-control' defaultValue={ToDate} onChange={(e) => SetToDate(e.target.value)} />
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <div className="form-group">
+                <label htmlFor="">Leave Catergory</label>
+                  <select name="" id="" className='form-select'  onChange={(e) => setLeaveCat(e.target.value) } >
+                <option value="" selected disabled>select</option>
+                    {getLeaveCat?.map((item) => {
+                      return(                    
+                        <option value={item.Leave_Category_code}>{item.Leave_Category_name}</option>
+                      )
+                    })}
+                </select>
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <div className="form-group">
+                <label htmlFor="">Leave Type</label>
+                  <select name="" id="" className='form-select'  onChange={(e) => setLeaveType(e.target.value)}>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                     <option value="" selected disabled>Select</option>
                     {getLeaveType?.map((item) => {
                       return (
                         <option value={item.Leave_type_code}>{item.Leave_name}</option>
                       )
                     })}
+<<<<<<< HEAD
                   </select>
                 </div>
               </div>
@@ -365,10 +453,24 @@ const Leave_Report_Detail = () => {
                   <input type="text" name="" id="" className='form-control' value={isVal} onChange={SearchFunctionality} />
                   {/* <select name="" id="" className='form-select' onChange={(e) => setEmp_Code(e.target.value)} > */}
                   {/* {EmployeesName?.map((item) => {
+=======
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="row px-3 mt-2 p-2 ">
+            <div className="col-lg-3">
+              <div className="form-group">
+                <label htmlFor="">Employee Code</label>
+                  <input type="text" name="" id="" className='form-control' value={isVal}  onChange={SearchFunctionality} />
+                {/* <select name="" id="" className='form-select' onChange={(e) => setEmp_Code(e.target.value)} > */}
+                    {/* {EmployeesName?.map((item) => {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                       return (
                         <option value={item.Emp_code}>{item.Emp_code}</option>
                       )
                     })} */}
+<<<<<<< HEAD
                   {/* </select> */}
                 </div>
               </div>
@@ -401,6 +503,40 @@ const Leave_Report_Detail = () => {
               </div>
             </div>
           </form>
+=======
+                {/* </select> */}
+              </div>
+            </div>
+            <div className="col-lg-4">
+              <div className="form-group">
+                <label htmlFor="">Employee Name</label>
+                  {/* <input type="text" name="" id="" className='form-control'   /> */}
+                  {/* <button className='searchemployeebtn'>Search</button> */}
+                  {dataLoader &&
+                    (<select name="" id="" className='form-control'  onChange={(e) => setVal(e.target.value)}>
+                    {SearchEmployeesName?.map((item) => {
+                      return (
+                       
+                        <option value={item.Emp_code} >{item.Emp_name}</option>
+                        
+                         
+                      )
+                    })}
+
+                  </select> ) }   
+                
+
+              </div>
+            </div>
+          
+          </div>
+          <div className="row px-3 mt-2 p-2">
+             <div className="col-1">
+                <button className='excelbtn' onClick={LeaveReport} ><RiFileExcel2Fill /> Excel</button>
+             </div>
+          </div>
+          </form> 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         </div>
       </section>
       {
@@ -410,7 +546,11 @@ const Leave_Report_Detail = () => {
           )}
         </ul>
       }
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     </>
   )
 }

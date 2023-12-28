@@ -9,7 +9,6 @@ import AppointEduData from "../TransactionAppointForm/AppointEduData";
 import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
 import AppointExpData from "../TransactionAppointForm/AppointExpData";
 import AppointFamiltyData from "../TransactionAppointForm/AppointFamiltyData";
-import CheckList from '../TransactionAppointForm/TACheckListForm2';
 import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
@@ -45,7 +44,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [getAppointStatus, setgetAppointStatus] = useState([]);
     const [isFileData, setFileData] = useState([])
 
-    const EditPage = (mode, code) => {
+    const EditPage = (mode, code ) => {
         setCode(code);
         setMode(mode);
         // setCode2(code2);
@@ -156,10 +155,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "CheckList",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TACheckList?userId=${data.Sequence_no}`} >
-                        <CheckBoxRoundedIcon className="List_ico" />
-                    </Link> */}
-                    <Link onClick={() => EditPage("EditCheckList", data?.Sequence_no)} >
+                    <Link to={`/TACheckList?userId=${data.Sequence_no}`} >
                         <CheckBoxRoundedIcon className="List_ico" />
                     </Link>
                 </Space>
@@ -205,7 +201,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     async function AppointLetter(id) {
         await fetch(
@@ -224,8 +224,13 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         }).then(async (response) => {
             if (response.success) {
                 console.log(response.data, 'response')
+<<<<<<< HEAD
                 setAppointData(response.data)
                 GetAppointLetter(id, response?.data)
+=======
+                // setAppointData(response.data)
+                // GetAppointLetter(id, response?.data)
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             }
         }).catch((error) => { });
     }
@@ -406,6 +411,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             });
         });
     }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>
@@ -451,14 +461,21 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                     }}
                                 />
                             )}
+<<<<<<< HEAD
                             {mode == "create" ? <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
+=======
+                            {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditFamily" && <AppointFamiltyData cancel={setMode} mode={mode} isCode={isCode} />}
+<<<<<<< HEAD
                             {mode == "EditCheckList" && <CheckList cancel={setMode} mode={mode} isCode={isCode} />}
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                         </div>
                     </div>
                 </div>

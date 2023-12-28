@@ -5,7 +5,10 @@ import Input from "../components/basic/input/index"
 import { Table, Tooltip, Space, Popconfirm } from 'antd';
 import TransactionFamilyForm from './form/TransactionFamilyForm'
 import * as Transaction_Family_Actions from "../store/actions/Transition/transition_family/index";
+<<<<<<< HEAD
 import { getToken } from "../Token/index";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import { connect } from "react-redux";
 
 
@@ -78,6 +81,7 @@ const Transaction_Family = ({ Transition_Family_Get_Byid, Transition_Family, Tra
             ),
         },
     ];
+<<<<<<< HEAD
     useEffect(() => {
         const checkTokenValidity = async () => {
           try {
@@ -89,6 +93,8 @@ const Transaction_Family = ({ Transition_Family_Get_Byid, Transition_Family, Tra
         };
         checkTokenValidity();
       }, []);
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     return (
         <>
             <div>

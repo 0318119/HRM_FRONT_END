@@ -23,11 +23,19 @@ function New_Appointment_Report({
   const [isAppointmentData, setAppointmentData] = useState([])
   const [currentDate, setCurrentDate] = useState('')
 
+<<<<<<< HEAD
   useEffect(() => {
     const currentDate = new Date().toISOString().split('T')[0];
     setCurrentDate(currentDate);
   }, [])
 
+=======
+  useEffect(() =>{
+    const currentDate = new Date().toISOString().split('T')[0];
+    setCurrentDate(currentDate);
+  },[])
+ 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
   const AppointmentSchema = yup.object().shape({
     FromDate: yup.string().required('Please Select From Date'),
@@ -47,6 +55,32 @@ function New_Appointment_Report({
     resolver: yupResolver(AppointmentSchema),
   });
 
+<<<<<<< HEAD
+=======
+  // const onSubmit = async (data) => {
+  //   setLoading(true);
+  //   try {
+  //     const isValid = await AppointmentSchema.validate(data);
+  //     if (isValid) {
+  //       const result = await PostAppointmentPayload(data);
+  //       console.log(result, 'result');
+  //       if (result?.success) {
+  //         setAppointmentData(result?.data || []);
+  //         setFormSubmitted(true);
+  //         message.success('PDF is created, Wait PDf is under downloading...');
+  //         setTimeout(() => {
+  //           handleDownload()
+  //         }, 2000);
+  //       } else {
+  //         message.error(result?.message || result?.messsage);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   setLoading(false);
+  // };
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
   const onSubmit = async (data) => {
     setLoading(true);
     try {
@@ -166,6 +200,63 @@ function New_Appointment_Report({
             </form>
           </div>
         </div>
+<<<<<<< HEAD
+=======
+
+
+
+        {/* DON'T REMOVE THIS PDF BELOW CODE FROM HERE..... */}
+        {/* {isFormSubmitted && (
+          <div className="mt-5 row justify-content-center">
+            <PDFViewer height="750">
+              <Document >
+                <Page size="A4">
+                  <View>
+                    <Text style={{ textAlign: 'center', marginBottom: '10', fontSize: '16', fontWeight: 'bold', margin: "20px 0" }}>
+                      Employee Attendance PDF
+                    </Text>
+                    <View style={{ position: 'absolute', left: '10', top: '10' }}>
+                      <Image src={logoUrl} style={{ width: 50, height: 50 }} />
+                    </View>
+                    {isAppointmentData?.map((item, index) => (
+                      <>
+                        <Text key={index} style={{ textAlign: 'left', marginBottom: '10', fontSize: '12', fontWeight: 'bold', margin: "20px 0" }}>
+                          Department :   {item.department}
+                        </Text>
+
+                        <View style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Code</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Emp Name</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Designation</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>GG</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Date Of Appointment</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Supervisor</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>CC</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Location</Text>
+                          <Text style={{ width: '50%', textAlign: 'center', fontSize: '10', fontWeight: 'bold' }}>Base City</Text>
+                        </View>
+                        {item.employees.map((item) =>
+                          <View key={index} style={{ flexDirection: 'row', borderBottom: '1 solid #000', paddingBottom: '5', marginBottom: '5' }}>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpCode ? item?.EmpCode : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.EmpName ? item?.EmpName : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Designation ? item?.Designation : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.GG ? item?.GG : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.DateOfAppointment ? item?.DateOfAppointment : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Supervisor ? item?.Supervisor : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.CC ? item?.CC : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.Location ? item?.Location : null}</Text>
+                            <Text style={{ width: '50%', textAlign: 'center', fontSize: '8' }}>{item?.BaseCity ? item?.BaseCity : null}</Text>
+                          </View>
+                        )}
+                      </>
+                    ))}
+                  </View>
+                </Page>
+              </Document>
+            </PDFViewer>
+          </div>
+        )} */}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
       </div>
     </>
   );

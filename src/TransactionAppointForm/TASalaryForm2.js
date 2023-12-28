@@ -7,25 +7,43 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput } from '../components/basic/input/formInput';
 import * as AppointSalaryForm_Actions from "../store/actions/Appointments/AppointSalaryForm/index";
 import { message } from 'antd';
+<<<<<<< HEAD
 import { Table } from "antd";
+=======
+import {Table } from "antd";
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 
+<<<<<<< HEAD
 function TASalaryForm2({
     cancel, mode,
     isCode, page,
     Red_AppointSalary, GetEmployeeInfo,
     EmployeeSalaryAmount, GetSalaryByCode,
+=======
+function TASalaryForm2({ 
+    cancel, mode, 
+    isCode, page, 
+    Red_AppointSalary, GetEmployeeInfo, 
+    EmployeeSalaryAmount, GetSalaryByCode, 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     SalaryAlowanceCall }) {
     const [postAllownces, setpostAllownces] = useState([])
     const allownceData = Red_AppointSalary?.getAllowance?.[0]?.res
     const getAllowanceAmount = Red_AppointSalary?.getAmount?.[0]?.res
     const empInfoCall = Red_AppointSalary?.data?.[0]?.res
+<<<<<<< HEAD
     const [isFirstTime, setFirstTime] = useState("N")
     const [isLoading, setLoading] = useState(false)
     const [isTotal, setTotal] = useState(0)
     const [isShow,setShow] = useState(true)
+=======
+    const [isFirstTime,setFirstTime] = useState("N")
+    const [isLoading, setLoading] = useState(false)
+    const [isTotal,setTotal] = useState(0)
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     const EditBack = () => {
         cancel('read')
@@ -34,7 +52,11 @@ function TASalaryForm2({
     // IN THIS BELOW CODE SHOW OF ALL ALLOWNCES NAMES AND CODES =================================================
     useEffect(() => {
         const temp = []
+<<<<<<< HEAD
         if (getAllowanceAmount?.data[0]?.length == 0) {
+=======
+        if(getAllowanceAmount?.data[0]?.length == 0){
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
             if (allownceData?.data?.length > 0) {
                 for (var i of allownceData?.data) {
                     i.amount = 0
@@ -48,19 +70,31 @@ function TASalaryForm2({
                 }
             }
         }
+<<<<<<< HEAD
     }, [allownceData, getAllowanceAmount])
+=======
+    }, [allownceData,getAllowanceAmount])
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
     // IN THIS BELOW CODE SHOW OF JUST AMOUNT =================================
     useEffect(() => {
         const temp = []
+<<<<<<< HEAD
         if (getAllowanceAmount?.data?.length > 0) {
             for (var i of getAllowanceAmount?.data[0]) {
+=======
+        
+        if (getAllowanceAmount?.data?.length > 0) {
+            for (var i of getAllowanceAmount?.data[0]) {
+                // tempTotal = tempTotal + parseInt(i?.Amount)
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                 temp.push({
                     "code": i?.Allowance_code,
                     "amount": i?.Amount
                 })
                 setFirstTime("N")
                 setpostAllownces(temp)
+<<<<<<< HEAD
             }
         }
     }, [getAllowanceAmount, allownceData])
@@ -76,6 +110,22 @@ function TASalaryForm2({
         }
         setTotal(tempTotal);
     }, [postAllownces, isTotal]);
+=======
+                // setTotal(tempTotal)
+            }
+        }
+    }, [getAllowanceAmount,allownceData])
+
+
+    useEffect(() => {
+        var tempTotal = 0
+        for (var i of postAllownces) {
+            tempTotal = tempTotal + parseInt(i?.amount)
+            setTotal(tempTotal)
+            console.log("tempTotal",tempTotal)
+        }
+    },[postAllownces,isTotal])
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
@@ -96,6 +146,7 @@ function TASalaryForm2({
 
     // CREATE EMPLOYEE SALARY API CALL ============================
     const postData = async (e) => {
+<<<<<<< HEAD
         setLoading(true)
         e.preventDefault()
         const res = await GetSalaryByCode({
@@ -114,6 +165,22 @@ function TASalaryForm2({
             setLoading(false)
         }
         setLoading(false)
+=======
+        e.preventDefault()
+        const res = await GetSalaryByCode({
+            Sequence_no : isCode,
+            FirstTimeFlag : isFirstTime,
+            allownces : postAllownces
+       })
+       if(res?.success){
+        message.success(res?.messsage || res?.message)
+        setTimeout(() => {
+            cancel('read')
+        }, 2000);
+       }else{
+        message.success(res?.messsage || res?.message)
+       }
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     }
 
     const {
@@ -138,11 +205,16 @@ function TASalaryForm2({
             title: "Allowance Code",
             dataIndex: "allowance_code",
             key: "allowance_code"
+<<<<<<< HEAD
+=======
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         },
         {
             title: "Amount",
             key: "Amount",
             render: (data, Amount, index,) => {
+<<<<<<< HEAD
                 return (
                     <>
                     {
@@ -169,14 +241,40 @@ function TASalaryForm2({
                 )
             }
         },
+=======
+              return (
+                <>
+                {/* <span>{data?.allowance_code}</span> */}
+                <input
+                  className="form-control"
+                //   defaultValue={data?.allowance_code}
+                  type="number"
+                  placeholder="Amount"
+                  name={data?.allowance_code}
+                  onChange={(e) => {
+                    postAllownces[index].amount = e.target.value
+                    setpostAllownces([...postAllownces])
+                  }}
+                />
+                </>
+              )
+            }
+          },
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
     ];
 
     // API ERRORS HANDLING WHEN GIVE API RESPONSE FAILED ===========
     if (allownceData?.messsage == "failed" || allownceData?.message == "failed") {
         message.error(`Get All Allownces : ${allownceData?.messsage || allownceData?.message}`)
+<<<<<<< HEAD
     } else if (getAllowanceAmount?.messsage == "failed" || getAllowanceAmount?.message == "failed") {
         message.error(`Get Allownce Amount : ${getAllowanceAmount?.messsage || getAllowanceAmount?.message}`)
     } else if (empInfoCall?.messsage == "failed" || empInfoCall?.message == "failed") {
+=======
+    }else if (getAllowanceAmount?.messsage == "failed" || getAllowanceAmount?.message == "failed") {
+        message.error(`Get Allownce Amount : ${getAllowanceAmount?.messsage || getAllowanceAmount?.message}`)
+    }else if (empInfoCall?.messsage == "failed" || empInfoCall?.message == "failed") {
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
         message.error(`Employee Info : ${empInfoCall?.messsage || empInfoCall?.message}`)
     }
 
@@ -238,6 +336,10 @@ function TASalaryForm2({
                                     <span>{isTotal}</span>
                                 </div>
                                 <div className='CountryBtnBox'>
+<<<<<<< HEAD
+=======
+                                    {/* <CancelButton onClick={EditBack} title={'Cancel'} /> */}
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                     <CancelButton onClick={EditBack} title={'cancel'} />
                                     <SimpleButton type={'submit'} loading={isLoading} title="Save" />
                                 </div>

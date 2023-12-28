@@ -10,7 +10,10 @@ import { message } from 'antd';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import * as FileSaver from 'file-saver'
 import XLSX from 'sheetjs-style'
+<<<<<<< HEAD
 import { getToken } from "../Token/index";
+=======
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 import baseUrl from '../config.json'
 
 
@@ -136,7 +139,11 @@ const Employee_List_Active = () => {
     const [Fuel_Card_Flag, setFuel_Card_Flag] = useState('')
     const [AllSelect, setAllSelect] = useState('')
 
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
     const [SelectedData, setSelectedData] = useState('')
@@ -307,6 +314,7 @@ const Employee_List_Active = () => {
     }
 
 
+<<<<<<< HEAD
     useEffect(() => {
         const checkTokenValidity = async () => {
             try {
@@ -318,6 +326,9 @@ const Employee_List_Active = () => {
         };
         checkTokenValidity();
     }, []);
+=======
+
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
 
 
 
@@ -344,7 +355,11 @@ const Employee_List_Active = () => {
                             <div className="row">
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
+<<<<<<< HEAD
                                         <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N")} />
+=======
+                                        <input type="checkbox" className="form-check-input" name="" id=""  value="Y"  onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N" )}/>
+>>>>>>> b892415902efac44d0608bbc5812b9e1830a1e23
                                         <label htmlFor="">Select All</label>
                                     </div>
                                 </div>
