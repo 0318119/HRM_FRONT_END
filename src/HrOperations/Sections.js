@@ -151,8 +151,6 @@ const Sections = ({ Red_Section, GetSectionData }) => {
   }
 
 
-
-  
   return (
     <>
       <div>

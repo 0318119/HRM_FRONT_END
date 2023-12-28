@@ -402,8 +402,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             });
         });
     }
-
-
     return (
         <>
             <div>

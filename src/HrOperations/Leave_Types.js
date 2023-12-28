@@ -118,7 +118,6 @@ const Leave_Types = ({ Red_Leave_Type, GetLeaveTypeData,DeleteFunLeaveType }) =>
     }
   }
 
-  
   return (
     <>
       <div>

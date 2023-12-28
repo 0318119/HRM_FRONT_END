@@ -410,7 +410,6 @@ function TAEducationForm() {
     GetTranEducationCall()
   }, [])
 
-
   return (
     <>
     

@@ -126,7 +126,7 @@ import SalaryOnHold from '../payroll/pages/Reports/SalaryOnHold';
 import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
-import Experience_Report from '../HrOperations/Experience_Report.js'
+import Employee_Experience_Report from '../HrOperations/Experience_Report.js'
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 
 
@@ -218,7 +218,10 @@ const routing = () => {
             <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
             <Route path='/TranEducationReport' element={<TranEducationReport />} />
             <Route path='/Experience_Report' element={<Experience_Report />} />
-            {/* payroll */}
+            <Route path='/Service_Length_Report' element={<ServiceLengthReport />} />
+            <Route path='/Employee_Education_Report' element={<TranEducationReport />} />
+            <Route path='/Employee_Experience_Report' element={<Employee_Experience_Report />} />
+            <Route path='/RetirementSeparationReport' element={<RetirementSeparationReport />} />  
             <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
             <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
             <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
@@ -244,32 +247,20 @@ const routing = () => {
             <Route path="/JV_Codes" element={<JV_Code />} />
             <Route path="IncomeTax_Columns" element={<Income_Tax />} />
             <Route path="Bank_Branches" element={<Bank_Branches />} />
-            {/* <Route path="/Earnings" element={<Earnings />} /> */}
             <Route path="/Payroll_Master" element={<Payroll_Master />} />
             <Route path="/Tax_Structure" element={<TaxStructure />} />
             <Route path="/Bank" element={<Bank />} />
             <Route path="/Outstanding_Recoveries" element={<OutstandingRecoveries />} />
             <Route path='/Payroll_Catery_Access' element={<PayrollCategoryAccess />} />
-            {/* REPORT =============================================================== */}
             <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
-            {/* PAY SLIP ============================================================== */}
             <Route path="/Pay/PaySlip" element={<PaySlip />} />
-            {/* ORG CHART ========================================= */}
             <Route path="/flow/DesignationsFlowChart" element={<FLow />} />
-            {/* ADDMINISTRATION ---> USER PROFILE =============================================================== */}
-            {/* HR OPERATIONS ---> TA EDUCATION FORM 2 =============================================================== */}
             <Route path="/TAEducationForm2" element={<TAEducationForm2 />} />
-            {/* HR OPERATIONS ---> TA Salary FORM 2 =============================================================== */}
             <Route path="/TASalaryForm2" element={<TASalaryForm2 />} />
-            {/* HR OPERATIONS ---> TA Experience FORM 2 =============================================================== */}
             <Route path="/TAExperienceForm2" element={<TAExperienceForm2 />} />
-            {/* HR OPERATIONS ---> TA Appointment Master Payroll FORM 2 =============================================================== */}
             <Route path="/TAappointmentMasterPayrollForm2" element={<TAappointmentMasterPayrollForm2 />} />
-            {/* HR OPERATIONS ---> TA Appointment Family FORM 2 =============================================================== */}
             <Route path="/TAFamilyForm2" element={< TAFamilyForm2 />} />
-            {/* HR OPERATIONS ---> TA Appointment Check List FORM 2 =============================================================== */}
             <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
-            {/* ADDMINISTRATION ---> Access Control =============================================================== */}
             <Route path="/Access_Control" element={<Access_Control />} />
           </> :
           <>

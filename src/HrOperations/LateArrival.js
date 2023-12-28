@@ -206,10 +206,6 @@ const LateArrival = ({ cancel, isGeneratedData, Red_LateArrival  }) => {
     },
   ];
 
-
- 
-
-
   return (
     <>
       {contextHolder}

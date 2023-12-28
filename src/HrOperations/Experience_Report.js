@@ -54,7 +54,7 @@ function Experience_Report({
     useEffect(() => {
         GetExperienceAllEmp();
     }, [GetExperienceAllEmp]);
-    
+
 
     // Set the default value for the Emp_code field
     useEffect(() => {
@@ -152,7 +152,7 @@ function Experience_Report({
                 message.error('Please select an employee.');
                 return;
             }
-            
+
             // Generate PDF for the selected employee
             const pdfBlob = await pdf(PdfData).toBlob();
 

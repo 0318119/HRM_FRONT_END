@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
-import { Space, Table, Pagination, Tag, Tooltip,  Radio  } from 'antd';
+import { Space, Table, Pagination, Tag, Tooltip, Radio } from 'antd';
 import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
@@ -9,6 +9,7 @@ import baseUrl from '../../src/config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
+
 
 
 const TACheckListForm2 = ({ Red_Cost_centre }) => {

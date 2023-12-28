@@ -320,9 +320,6 @@ function TAppointmentMasterPayroll() {
     getBankBrancesData();
   }, []);
 
-
-
-
   return (
     <>
       <div>

@@ -10,6 +10,7 @@ import { message } from 'antd';
 import { Space, Table, Tag, Tooltip } from 'antd';
 import * as FileSaver from 'file-saver'
 import XLSX from 'sheetjs-style'
+import { getToken } from "../Token/index";
 import baseUrl from '../config.json'
 
 
@@ -135,7 +136,7 @@ const Employee_List_Active = () => {
     const [Fuel_Card_Flag, setFuel_Card_Flag] = useState('')
     const [AllSelect, setAllSelect] = useState('')
 
- 
+
 
 
     const [SelectedData, setSelectedData] = useState('')
@@ -306,7 +307,17 @@ const Employee_List_Active = () => {
     }
 
 
-
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            try {
+                const tokenValidationResult = await getToken();
+                console.log("token here....", tokenValidationResult)
+            } catch (error) {
+                console.error("Error checking token validity:", error);
+            }
+        };
+        checkTokenValidity();
+    }, []);
 
 
 
@@ -333,7 +344,7 @@ const Employee_List_Active = () => {
                             <div className="row">
                                 <div className="col-md-2">
                                     <div className="form-group MasterChecklist d-flex align-items-center">
-                                        <input type="checkbox" className="form-check-input" name="" id=""  value="Y"  onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N" )}/>
+                                        <input type="checkbox" className="form-check-input" name="" id="" value="Y" onChange={(e) => setAllSelect(e.target.checked ? "Y" : "N")} />
                                         <label htmlFor="">Select All</label>
                                     </div>
                                 </div>

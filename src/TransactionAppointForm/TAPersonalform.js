@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./assets/css/TAPersonalform.css";
 import Header from '../components/Includes/Header'
 import Country from "./Country.json"
-import { PrimaryButton , SimpleButton} from "../components/basic/button";
+import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import { CancelButton } from '../components/basic/button/index'
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -54,9 +54,9 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   };
   const search = useLocation().search
   var userId = new URLSearchParams(search).get('userId')
-  console.log(isCode , 'usder')
+  console.log(isCode, 'usder')
 
- 
+
   async function getEmpTypeCodeData() {
     await fetch(`${baseUrl.baseUrl}/employment_type_code/GetEmploymentTypeCodeWOP`, {
       method: "GET",
@@ -387,7 +387,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   }, [])
   // ==================================================
   const submitForm = async (data) => {
-   
+
     try {
       const isValid = await TAPersonalSchema.validate(data);
       if (isValid) {
@@ -399,7 +399,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         } else {
           messageApi.open({
             type: 'error',
-            content: "Confirm Date Should be Greater Then Joining Date by 90 days" ,
+            content: "Confirm Date Should be Greater Then Joining Date by 90 days",
           });
         }
       }
@@ -462,7 +462,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       Probationary_period_months: "",
       Notice_period_months: "",
       Emp_confirm_date: "",
-      Emp_joining_date:"",
+      Emp_joining_date: "",
       Permanent_address: "",
       Nationality: "",
     },
@@ -530,7 +530,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         "Notice_period_months": body?.Notice_period_months,
         "Extended_confirmation_days": currentDate ? currentDate : 0,
         "Emp_confirm_date": body?.Emp_confirm_date,
-        "Emp_joining_date" :body?.Emp_joining_date,
+        "Emp_joining_date": body?.Emp_joining_date,
         "Permanent_address": body?.Permanent_address,
         "Nationality": body?.Nationality,
         "roster_group_code": 0,
@@ -543,12 +543,12 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       return response.json();
     }).then(async (response) => {
       if (response.success) {
-          messageApi.open({
-            type: 'success',
-            content: response?.message || response?.messsage,
-          });
-          setLoading(false)
-          setTimeout(() => {
+        messageApi.open({
+          type: 'success',
+          content: response?.message || response?.messsage,
+        });
+        setLoading(false)
+        setTimeout(() => {
           cancel("read");
           // GetAppointStatusCall({
           //   pageSize: pageSize,
@@ -565,22 +565,17 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         setLoading(false)
       }
     }).catch((error) => {
-        messageApi.open({
-          type: 'error',
-          content: error?.message || error?.messsage,
-        });
-        setLoading(false)
+      messageApi.open({
+        type: 'error',
+        content: error?.message || error?.messsage,
+      });
+      setLoading(false)
     });
   }
 
-
-
-
-
-
   return (
     <>
-     
+
       {contextHolder}{setEmpCodeErr}{setEmpCategoryDataErr}{setleaveCatErr}
       {setPayCategoryErr}{setShiftsCodeErr}{setDesignationCodeErr}{setCostCenterCodeErr}
       {setSectionCodeErr}{setGradeCodeErr}{setEducationCodeErr}{setLocationCodeErr}

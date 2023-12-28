@@ -58,7 +58,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             dataIndex: 'Marriage_Date',
             key: 'Marriage_Date',
         },
-       
+
         {
             title: 'Action',
             key: 'action',
@@ -168,7 +168,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             });
         });
     }
-
     return (
         <>
 
@@ -197,20 +196,20 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         <div>
                             {mode2 == "read" && (
                                 <>
-                                <span>Marriage Details</span>
-                                <Table columns={columns}
-                                    loading={Red_AppointFamily?.loading}
-                                    dataSource={Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]}
-                                    pagination={false}
-                                />
-                                <hr className="py-2" />
-                                <span>Children Details</span>
-                                <Table 
-                                    columns={columns2}
-                                    loading={Red_AppointFamily?.loading}
+                                    <span>Marriage Details</span>
+                                    <Table columns={columns}
+                                        loading={Red_AppointFamily?.loading}
+                                        dataSource={Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]}
+                                        pagination={false}
+                                    />
+                                    <hr className="py-2" />
+                                    <span>Children Details</span>
+                                    <Table
+                                        columns={columns2}
+                                        loading={Red_AppointFamily?.loading}
                                         dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
-                                    pagination={false}
-                            />
+                                        pagination={false}
+                                    />
                                 </>
                             )}
                             {mode2 == "create" && (

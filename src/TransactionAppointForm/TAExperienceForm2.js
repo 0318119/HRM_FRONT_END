@@ -26,7 +26,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
     const EditBack = () => {
         cancel('read')
     }
-    
+
     const AppointExpSchema = yup.object().shape({
         EmployerCode: yup.string().required("EmployerCode required"),
         designation: yup.string().required("designation is required"),
@@ -75,13 +75,13 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
 
 
 
-  
+
 
     useEffect(() => {
         GetEmployer(isCode2)
         GetEmployeeInfo(isCode2)
         GetEmployeeCode()
-    },[])
+    }, [])
 
     const Employers = Red_AppointExprience?.getEmployer?.[0]?.res?.data
 
@@ -105,7 +105,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
     }, [Red_AppointExprience?.data?.[0]?.res?.data?.[0]])
 
     const EMPLOYEER = Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]
-    
+
 
 
 
@@ -165,9 +165,6 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
         }
     };
 
-
-
-
     return (
         <>
             {contextHolder}
@@ -212,8 +209,8 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
                                         errors={errors}
                                         control={control}
                                     />
-                                  </div>  
-                                  <hr />
+                                </div>
+                                <hr />
                                 <div className="form-group formBoxCountry">
                                     <FormSelect
                                         label={'Employer Name'}

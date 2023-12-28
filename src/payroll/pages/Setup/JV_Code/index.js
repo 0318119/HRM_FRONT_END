@@ -12,7 +12,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { message } from "antd";
 
-const JV_Codes = ({ Red_JV_Codes, GetJvCodeData,DeleteJvCode }) => {
+const JV_Codes = ({ Red_JV_Codes, GetJvCodeData, DeleteJvCode }) => {
   var get_access_token = localStorage.getItem("access_token");
   const [messageApi, contextHolder] = message.useMessage();
   const [isCode, setCode] = useState(null);
@@ -23,13 +23,13 @@ const JV_Codes = ({ Red_JV_Codes, GetJvCodeData,DeleteJvCode }) => {
 
   useEffect(() => {
     if (isSearchVal == "") {
-        GetJvCodeData({
+      GetJvCodeData({
         pageSize: pageSize,
         pageNo: page,
         search: null,
       });
     } else {
-        GetJvCodeData({
+      GetJvCodeData({
         pageSize: pageSize,
         pageNo: 1,
         search: isSearchVal,
@@ -72,15 +72,15 @@ const JV_Codes = ({ Red_JV_Codes, GetJvCodeData,DeleteJvCode }) => {
       key: "JV_SubAC",
     },
     {
-        title: "JV Description",
-        dataIndex: "JV_Description",
-        key: "JV_Description",
-      },
-      {
-        title: "Sort Key",
-        dataIndex: "Sort_key",
-        key: "Sort_key",
-      },
+      title: "JV Description",
+      dataIndex: "JV_Description",
+      key: "JV_Description",
+    },
+    {
+      title: "Sort Key",
+      dataIndex: "Sort_key",
+      key: "Sort_key",
+    },
     {
       title: "Action",
       key: "action",
@@ -112,17 +112,17 @@ const JV_Codes = ({ Red_JV_Codes, GetJvCodeData,DeleteJvCode }) => {
 
   const onConfirmDeleteFun = async (e) => {
     const isWaitFun = await DeleteJvCode(e)
-    if(isWaitFun?.success){
-        message.success("You have been deleted")
-        setTimeout(() => {
-          message.destroy();
-          GetJvCodeData({
-            pageSize: pageSize,
-            pageNo: page,
-            search: null,
-          });
-        }, 2000);
-    }else{
+    if (isWaitFun?.success) {
+      message.success("You have been deleted")
+      setTimeout(() => {
+        message.destroy();
+        GetJvCodeData({
+          pageSize: pageSize,
+          pageNo: page,
+          search: null,
+        });
+      }, 2000);
+    } else {
       message.error(isWaitFun?.message || isWaitFun?.messsage)
     }
   }

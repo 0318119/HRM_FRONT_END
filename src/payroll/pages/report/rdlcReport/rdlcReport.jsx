@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import Header from '../../../../components/Includes/Header';
 import SecondaryHeader from '../../../component/secondaryHeader';
 import Input from '../../../../components/basic/input';
 import Style from './rdlc.module.css'
 
-
 const RdlcReport = () => {
+
     return (
         <>
             <div>

@@ -265,7 +265,6 @@ function TASalaryForm() {
   }, [loads])
 
   const EditData = (e) => { }
-
   return (
     <>
       <div>
