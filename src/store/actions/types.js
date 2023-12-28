@@ -396,3 +396,11 @@ export const GET_EMP_LEAVES_TYPE_DATA = "GET_EMP_LEAVES_TYPE_DATA"
 export const GET_EMP_LEAVES_APPLIED = "GET_EMP_LEAVES_APPLIED"
 export const GET_EMP_LEAVES_BALANCED_DAYS = "GET_EMP_LEAVES_BALANCED_DAYS"
 export const GET_EMP_LEAVES_APPLICATIONS = "GET_EMP_LEAVES_APPLICATIONS"
+// HR SETUP ===========> RetirementSeparationReport =========
+
+export const GET_RetirementSeparationReport_DATA = "GET_RetirementSeparationReport_DATA";
+export const GET_RetirementSeparationReport_DATA_START = "GET_RetirementSeparationReport_DATA_START";
+export const GET_RetirementSeparationReport_DATA_SINGLE = "GET_RetirementSeparationReport_DATA_SINGLE";
+export const GET_RetirementSeparationReport_DATA_END = "GET_RetirementSeparationReport_DATA_END";
+
+

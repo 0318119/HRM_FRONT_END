@@ -127,6 +127,7 @@ import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Experience_Report from '../HrOperations/Experience_Report.js'
+import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 
 
 
