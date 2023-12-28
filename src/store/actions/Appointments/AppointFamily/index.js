@@ -154,3 +154,85 @@ export const SaveMarriageForm = (body) => async (dispatch) => {
         return res;
     }
 }
+
+
+export const SaveChildrenForm = (body) => async (dispatch) => {
+    // console.log(body, 'body')
+    const response = await fetch(`${baseUrl.baseUrl}/families/CreateFamilies`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Sequenceno": body?.Sequenceno,
+            "FamMemberType": body?.FamMemberType,
+            "FamMemberName": body?.FamMemberName,
+            "FamMemberDOB": body?.FamMemberDOB,
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+
+export const UpdateChildrenForm = (body) => async (dispatch) => {
+    // console.log(body, 'body')
+    const response = await fetch(`${baseUrl.baseUrl}/families/UpdateTranFamilies`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Sno": body?.Sno,
+            "Sequenceno": body?.Sequenceno,
+            "FamMemberType": body?.FamMemberType,
+            "FamMemberName": body?.FamMemberType,
+            "FamMemberDOB": body?.FamMemberDOB,
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+export const UpdateMarriageForm = (body) => async (dispatch) => {
+    // console.log(body, 'body')
+    const response = await fetch(`${baseUrl.baseUrl}/marriages/UpdateTranMarriages`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Sequenceno": body?.Sequenceno,
+            "MarriageDate": body?.MarriageDate,
+            "Spausename": body?.Spausename,
+            "SpauseDOB": body?.SpauseDOB,
+        })
+        
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+
+
+
+
+
+
+
+
+

@@ -401,3 +401,10 @@ export const GET_RetirementSeparationReport_DATA_SINGLE = "GET_RetirementSeparat
 export const GET_RetirementSeparationReport_DATA_END = "GET_RetirementSeparationReport_DATA_END";
 
 
+
+// Appointment===> check list === >
+
+export const GET_CHECKLIST_DATA = "GET_CHECKLIST_DATA";
+export const GET_CHECKLIST_DATA_START = "GET_CHECKLIST_DATA_START";
+export const GET_CHECKLIST_DATA_CHECK = "GET_CHECKLIST_DATA_SINGLE";
+export const GET_CHECKLIST_DATA_END = "GET_CHECKLIST_DATA_END";

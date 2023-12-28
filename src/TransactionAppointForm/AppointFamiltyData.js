@@ -23,6 +23,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     const [isCode2, setCode2] = useState(isCode)
     const [mode2, setMode2] = useState('read')
     const [isSearchVal, setSearchVal] = useState('')
+    const [update, setUpdate] = useState('')
+    const [updateChlid, setUpdateChlid] = useState('')
 
     const EditPage = (mode2, code2) => {
         setCode2(code2)
@@ -39,8 +41,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
 
-
-    // console.log(Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0], 'Red_AppointFamily')
+    // console.log(isCode2, 'isCode2')
+    // console.log(Red_AppointFamily, 'Red_AppointFamily')
 
     const columns = [
         {
@@ -64,16 +66,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit', data?.Sequence_no, setUpdate(data?.Sequence_no))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
+                        title="Delete the Marriage"
+                        description="Are you sure to delete the Marriage?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
+                            handleMarriageDelete(data?.Sequence_no)
                         }}
                     >
                         <button className="deleteBtn">
@@ -107,16 +109,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit2', data?.Sequence_no, setUpdateChlid({Sequence_no: data?.Sequence_no,S_no: data?.S_no}))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
-                        title="Delete the Exprience"
-                        description="Are you sure to delete the Exprience?"
+                        title="Delete the Child"
+                        description="Are you sure to delete the Child?"
                         okText="Yes"
                         cancelText="No"
                         onConfirm={() => {
-                            handleConfirmDelete(data?.ID)
+                            handleChlidDelete(data?.S_no, data?.Sequence_no)
                         }}
                     >
                         <button className="deleteBtn">
@@ -129,14 +131,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     ];
 
 
-    // DESIGNATION FORM DATA DELETE API CALL ===========================
-    async function handleConfirmDelete(id) {
+
+
+    async function handleMarriageDelete(Sequence_no) {
+        console.log(Sequence_no, 'Sequence_no')
         await fetch(
-            `${baseUrl.baseUrl}/employement_experience/deleteTranExperience`, {
+            `${baseUrl.baseUrl}/marriages/DeleteTranMarriages`, {
             method: "POST",
             headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
             body: JSON.stringify({
-                "id": id,
+                "Sequenceno": Sequence_no,
             }),
         }
         ).then((response) => {
@@ -148,11 +152,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
-                    // GetEmployer({
-                    //     // pageSize: pageSize,
-                    //     // pageNo: 1,
-                    //     search: null
-                    // })
                 }, 3000);
             }
             else {
@@ -168,6 +167,44 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             });
         });
     }
+
+    async function handleChlidDelete(S_no, Sequence_no) {
+        console.log(S_no, Sequence_no , 'asdfasdfef')
+        await fetch(
+            `${baseUrl.baseUrl}/families/DeleteTranFamilies`, {
+            method: "POST",
+            headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
+            body: JSON.stringify({
+                "Sequenceno": Sequence_no,
+                "Sno": S_no
+            }),
+        }
+        ).then((response) => {
+            return response.json();
+        }).then(async (response) => {
+            if (response.success) {
+                messageApi.open({
+                    type: 'success',
+                    content: "You have successfully deleted",
+                });
+                // setTimeout(() => {
+                    
+                // }, 3000);
+            }
+            else {
+                messageApi.open({
+                    type: 'error',
+                    content: response?.message || response?.messsage,
+                });
+            }
+        }).catch((error) => {
+            messageApi.open({
+                type: 'error',
+                content: error?.message || error?.messsage,
+            });
+        });
+    }
+
     return (
         <>
 
@@ -181,9 +218,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <div className="AppointFamilyFlexBox">
                                     <h4 className="text-dark">Family List</h4>
                                     <div className="AppointFamilySearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
+                                        {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
 
@@ -216,7 +253,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <TAFamilyForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAFamilyForm2 cancel={setMode2} isCode2={isCode2} page2={page2} />
+                                <TAFamilyForm2 cancel={setMode2} update={update}  isCode2={isCode2} page2={page2} />
+                            )}
+                            {mode2 == "Edit2" && (
+                                <TAFamilyForm2 cancel={setMode2} updateChlid={updateChlid} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 
