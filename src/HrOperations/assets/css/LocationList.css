@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.LocationlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LocationlexBox .LocationsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.LocationlexBox .LocationsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxLocation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.LocationBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxLocation div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .LocationlexBox {
+        flex-wrap: wrap;
+    }
+
+    .LocationlexBox .LocationsearchBox {
+        width: 100%;
+    }
+
+    .LocationlexBox .LocationsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .LocationlexBox .LocationsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxLocation div {
+        width: 100%;
+    }
+
+    .LocationlexBox .LocationsearchBox {
+        flex-wrap: wrap;
+    }
+}

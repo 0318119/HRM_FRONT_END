@@ -1,0 +1,50 @@
+.maringClass{
+    margin-top: 80px;
+}
+.CountryFlexBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.CountryFlexBox .CountrysearchBox{
+    display: flex;
+    align-items: center;
+}
+.CountryFlexBox .CountrysearchBox input{
+    min-width: 300px;
+}
+.formBoxCountry{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+.CountryBtnBox{
+    display: flex;
+    justify-content: end;
+}
+.formBoxCountry div{
+    width: 50%;
+}
+@media screen and (max-width: 768px){
+    .CountryFlexBox{
+        flex-wrap: wrap;
+    }
+    .CountryFlexBox .CountrysearchBox {
+        width: 100%;
+    }
+    .CountryFlexBox .CountrysearchBox #inputBox{
+        width: 100%;
+    }
+    .CountryFlexBox .CountrysearchBox #inputBox input{
+        min-width: unset !important;
+    }
+}
+@media screen and (max-width: 480px){
+    .formBoxCountry div{
+        width: 100%;
+    }
+    .CountryFlexBox .CountrysearchBox {
+        flex-wrap: wrap;
+    }
+}

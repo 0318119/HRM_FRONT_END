@@ -1,0 +1,16 @@
+
+.paySlipBox{
+    background: #F7F5F5;
+    padding: 30px 20px;
+    border-radius: 10px;
+}
+
+.paySlipBox h4{
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+.paySlipBox .paySlipBtnBox{
+    display: flex;
+}
+.paySlipBox .paySlipBtnBox button{}

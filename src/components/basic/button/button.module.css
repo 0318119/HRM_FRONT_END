@@ -1,0 +1,46 @@
+.PrimaryButton{
+    padding: 10px;
+}
+.PrimaryButton button{
+    background-color: #014f86;
+    color: white;
+    border: 1px solid #014f86;
+    outline: none;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align:center;
+}
+
+
+.cancelButton{
+    padding: 5px;
+}
+.cancelButton button{
+    background-color: white;
+    color: #014f86;
+    border: 1px solid #014f86;
+    outline: none;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align:center;
+}
+
+
+.deleteBtn button{
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    outline: none;
+    text-decoration: none;
+    padding: 5px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    text-align:center;
+}

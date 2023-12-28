@@ -1,0 +1,19 @@
+.Input{
+    border:1px solid rgb(225 225 225);
+    outline: none;
+    /* width: 250px; */
+    border-radius: 5px;
+    padding: 7px;
+    background-color: white;
+}
+.Input::placeholder{
+    font-size: 14px;
+}
+.Label{
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+}
+.Label label{
+    font-weight: 600;
+}

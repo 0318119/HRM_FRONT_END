@@ -1,0 +1,68 @@
+.CheckListRow{
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 2px;
+ border-radius: 5px;
+
+}
+.TaCheckListContainer{
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    /* border-radius: 5px; */
+}
+.CheckListText{
+    /* color: #ffffff; */
+        font-weight: 600;
+        letter-spacing: 1px;
+}
+
+.ChecKListHeader{
+    padding: 5px 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 18px;
+    color: white;
+    background-color: #014f86;
+}
+
+.TaCheckbtn{
+    padding: 5px 20px;
+    background: black;
+    color: white;
+    letter-spacing: 1px;
+    border-radius: 5px;
+}
+
+
+.checklistHeadtr{
+    border: 1px solid white;
+    /* display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 2px 35px; */
+}
+
+.Checklisttablehead{
+    background-color: white;
+}
+.Checklisttablehead  tr th{
+    letter-spacing: 1px !important;
+    font-weight: 600 !important;
+}
+
+.Checklisttablebody{
+    background: white;
+}
+.Checklisttablebody tr td{
+    letter-spacing: 1px;
+}
+.ChecklistBtnCo{
+    padding: 5px 45px;
+}
+@media screen and (max-width:578px) {
+    .CheckListRow{
+        display: flex !important;
+        flex-direction: row !important;
+    }
+}

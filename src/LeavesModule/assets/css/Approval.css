@@ -1,0 +1,137 @@
+.Approvals_listHeader {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    /* border-radius: 4px 4px 0px 0px; */
+    color: white;
+    letter-spacing: 1px;
+}
+
+.Approvals_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    background-color: #a9d6e538;
+    /* border-radius: 5px; */
+    margin-top: 10px;
+}
+
+
+.approvaltable {
+    overflow-x: scroll;
+}
+
+.approvaltable::-webkit-scrollbar {
+    height: 10px;
+}
+
+/* Track */
+.approvaltable::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+.approvaltable::-webkit-scrollbar-thumb {
+    background: #014f86;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.approvaltable::-webkit-scrollbar-thumb:hover {
+    background: #014f86;
+}
+
+.modals {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
+
+/* -------modal css------ */
+.stepBoxMain {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    background: #00000094;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Remarkmodal{
+      position: fixed;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    background: #00000094;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stepBoxMain .stepBoxInner {
+    width: 40%;
+    background: white;
+    padding: 25px 20px;
+    border-radius: 10px;
+}
+
+.Remarkmodal .RemarkmodalInner{
+    width: 40%;
+        background: white;
+        padding: 25px 20px;
+        border-radius: 10px;
+}
+
+.Remarkmodal .RemarkmodalInner .btnBox{
+    width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+}
+
+.stepBoxMain .stepBoxInner .btnBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.stepBoxMain .stepBoxInner h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.stepBoxMain .stepBoxInner .btnBox button {
+    padding: 5px 30px;
+    margin-top: 11px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+}
+
+@media screen and (max-width:768px) {
+    .stepBoxMain .stepBoxInner {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:480px) {
+    .stepBoxMain .stepBoxInner {
+        width: 95%;
+    }
+}
+
+.DataANotFound{
+    text-align: center;
+}

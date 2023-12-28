@@ -1,0 +1,123 @@
+.TaMasterPayrollFormHead {
+    color: white !important;
+    font-weight: 700;
+    padding: 5px;
+    /* border-radius: 4px 4px 0px 0px; */
+    color: black;
+    letter-spacing: 1px;
+    background-color: #014f86;
+}
+
+.TaMasterPayrollContainer {
+    background-color: #a9d6e538;
+   box-shadow: 2px 1px 6px -2px black;
+   padding: 0px 0px;
+   /* border-radius: 5px; */
+}
+
+.TaMasterPayrollFromHeading {
+    /* color: #ffffff; */
+    font-weight: 700;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+    padding: 5px 0px;
+    letter-spacing: 1px;
+}
+
+.TaMasterPayrollFormgroup label {
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+
+}
+.TaMasterPayrollFormgroup .yes{
+  color: #262837 !important;
+}
+
+.TaMasterPayrollFormgroup input {
+    border-radius: 4px;
+    font-size: 12px;
+    border: 1px solid darkgray;
+    color: gray;
+}
+.TaMasterPayrollFormgroup select{
+    border-radius: 4px;
+        font-size: 12px;
+        border: 1px solid darkgray;
+        color: gray;
+}
+.TaMasterPayrollFormControl label{
+    margin: 0px;
+}
+.TaMasterPayrollFormgroup .TaMasterPayrollFormControl{
+        border-radius: 4px;
+        font-size: 12px;
+        border: 1px solid darkgray;
+        color: gray;
+}
+.TaMasterPayrollFormgroup .TaMasterPayrollFormControl:focus{
+    outline: none;
+}
+
+.TaMasterPayrollFormgroup input:focus {
+    outline: none;
+
+}
+
+.TaMasterPayrollFormgroupSb label {
+    background-color: white;
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 500;
+    padding: 2px;
+
+}
+
+.TaMasterPayrollFormgroupSb span {
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 500;
+    padding: 2px;
+}
+
+.TaMasterPayrollHeaderText span {
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px;
+}
+
+.MasterPayrollbtncontainer {
+    border-top: 1px solid darkgray;
+    padding: 5px;
+}
+
+
+
+.TaSalaryFifthLine {
+    border-top: 1px solid darkgray;
+    margin-top: 4px;
+}
+
+.TaSalaryFirstLine {
+    margin-top: 4px;
+    background-color: white;
+}
+
+@media screen and (max-width:576px) {
+    .responsive{
+        display: none !important;
+    }
+}
+
+
+.yes{
+    color: #262837 !important;
+}
+
+/* @media screen and (max-width:768px) {
+.MasterPayrollbtncontainer button{
+    width: 13%;
+}
+} */

@@ -1,0 +1,77 @@
+.maringgClass {
+    margin-top: 80px;
+}
+
+.EarningsFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EarningsFlexBox .EarningssearchBox {
+    display: flex;
+    align-items: center;
+}
+
+
+.EarningsFlexBox .EarningssearchBox input {
+    min-width: 300px;
+}
+
+label {
+    margin-right: 8px;
+}
+
+.Searchtext {
+    margin-left: 10px;
+}
+
+.form-select {
+    width: 300px;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.formBoxBase_City {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.Base_CityBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxBase_City div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .EarningsFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .EarningsFlexBox .EarningssearchBox {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox #inputBox {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxBase_City div {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox {
+        flex-wrap: wrap;
+    }
+}

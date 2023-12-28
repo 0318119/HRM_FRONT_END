@@ -1,0 +1,29 @@
+.AttendanceCheckHeader {
+    background-color: white;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 4px 4px 0px 0px;
+    color: white;
+    letter-spacing: 1px;
+    background-color: #014f86;
+}
+
+.AttendanceCheckContainer {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 2px;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.AttendanceCheckInput {
+    color: gray !important;
+    border: 1px solid darkgray;
+    font-size: 14px;
+    width: 41vw;
+}
+.AttendanceCheckbtn{
+    margin-top: 23px;
+    width: 41vw;
+}

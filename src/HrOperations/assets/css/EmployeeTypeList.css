@@ -1,0 +1,116 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.EmployeeTypeFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EmployeeTypeFlexBox .EmployeeTypesearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.EmployeeTypeFlexBox .EmployeeTypesearchBox input {
+    min-width: 300px;
+}
+
+.formBoxEmployeeType {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.EmployeeTypeBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxEmployeeType div {
+    width: 50%;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+    .EmployeeTypeFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .EmployeeTypeFlexBox .EmployeeTypesearchBox {
+        width: 100%;
+    }
+
+    .EmployeeTypeFlexBox .EmployeeTypesearchBox #inputBox {
+        width: 100%;
+    }
+
+    .EmployeeTypeFlexBox .EmployeeTypesearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxEmployeeType div {
+        width: 100%;
+    }
+
+    .EmployeeTypeFlexBox .EmployeeTypesearchBox {
+        flex-wrap: wrap;
+    }
+}
+
+
+
+
+/* .EmployeeListHeader{
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 4px 4px 0px 0px;
+    color: white;
+    letter-spacing: 1px;
+    background-color: #014f86;
+}
+
+.EmployeeListContainer {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    border-radius: 5px;
+    margin-top: 50px;
+}
+
+.EmployeeListbtncontainer {
+    border-top: 1px solid darkgray;
+    padding: 5px;
+}
+
+.EmpListbtn{
+    color: white;
+    background-color: #014f86 !important;
+}
+
+@media screen and (max-width:786px) {
+    .Tableresponsive{
+        overflow-x: scroll !important;
+    }
+    .Tableresponsive::-webkit-scrollbar {
+    height: 4px;
+}
+.Tableresponsive::-webkit-scrollbar-thumb {
+    background-color: #014f86;
+    border-radius: 4px;
+}
+
+.Tableresponsive::-webkit-scrollbar-thumb:hover {
+    background-color: #014f86;
+}
+
+.Tableresponsive::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+} */

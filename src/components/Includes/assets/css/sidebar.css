@@ -1,0 +1,148 @@
+/* .SideBar{
+    width: 100%;
+    height: 100vh;
+    background-color: #2a3e4c;
+    padding: 15px;
+    
+}
+.SideBarhide {
+    width: 50%;
+    height: 89vh;
+    background-color: #2a3e4c;
+    padding: 10px;
+
+}
+.LogoPIc{
+    width: 50%;
+}
+.sidebar-menu-hide{
+    line-height: 3;
+    padding: 5px;
+}
+.sidebar-menu-hide li{
+    list-style: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.SideBar  h6{
+    color: white;
+}
+.sidebar-menu{
+    padding: 5px;
+    line-height: 2.5;
+}
+
+.sidebar-menu li{
+   list-style: none;
+   color: white;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+}
+
+.Dashboard_ico{
+    font-size: 22px;
+}
+
+.sidebar-menu li:hover{
+    background-color: rgba(245, 245, 245, 0.349);
+}
+
+@media screen and (max-width:992px) {
+    .SideBar{
+        width: 22%;
+    }
+}
+
+@media screen and (max-width:786px) {
+    .SideBar {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width:576px) {
+    .SideBar {
+        width: 37%;
+    }
+    .SideBarhide{
+     display: none;
+    }
+}
+@media screen and (max-width:500px) {
+    .SideBar {
+        width: 40%;
+    }
+}
+@media screen and (max-width:480px) {
+    .SideBar {
+        width: 50%;
+    }
+} */
+
+.sideBarMainBox{
+    position: relative;
+    width: 53px;
+}
+.sideBarMainBox .sideBarInnerBox{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 53px;
+    height: 100vh;
+    background-color: #2a3e4c;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+#showbar{
+    width: 204px;
+}
+.sideBarMainBox > span{
+    margin: 20px 0;
+    text-align: center;
+}
+.sideBarMainBox .sideBarInnerBox .logo{
+    height: 40px;
+    object-fit: contain;
+    margin-top: 20px;
+}
+.menuUlBox{
+    padding: 0;
+    margin: 0;
+}
+.menuUlBox li{
+    list-style: none;
+    margin-top: 23px;
+}
+.menuUlBox li a{
+    color: white;
+    line-height: 30px;
+}
+.menuUlBox li a{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.menuUlBox li a svg{
+    font-size: 20px;
+    margin-right: 5px;
+}
+.menuUlBox li a span{
+    display: flex;
+    align-items: center;
+}
+
+ .SidebarIco{
+    color: white !important;
+}
+
+
+/* SIDE BAR HDIE SHOW CLASSES =========================== */
+#showSideBar{
+    width: 240px;
+    padding: 5px; 
+}
+

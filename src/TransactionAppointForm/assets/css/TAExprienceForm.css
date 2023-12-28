@@ -1,0 +1,95 @@
+.Ta_Exprince_FormHeader {
+    font-size: 16px;
+    color: white;
+    font-weight: 700;
+    padding: 10px ; 
+    /* border-bottom: 1px solid darkgrey; */
+}
+
+.TaExprienceformContainer {
+    background-color: #a9d6e538;
+    box-shadow: 2px 1px 6px -2px black;
+        padding: 0px 0px;
+        /* border-radius: 5px; */
+}
+
+.Ta_Exprience_FormHeading {
+    background-color: #014f86;
+    padding: 5px;
+    color: white;
+    /* border-radius: 4px 4px 0px 0px; */
+}
+
+.Ta_Exprience_Form {
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 10px;
+    border-bottom: 1px solid darkgrey;
+}
+
+.Ta_Exprience_Formgroup {
+    margin-top: 5px;
+}
+
+.Ta_Exprience_Formgroup label {
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.Ta_Exprience_FormgroupControl label{
+    margin: 0px;
+}
+
+.Ta_Exprience_Formgroup input {
+    border-radius: 4px;
+    border: 1px solid darkgray;
+    font-size: 12px;
+    color: gray;
+}
+
+.Ta_Exprience_Formgroup select {
+    border-radius: 4px;
+    border: 1px solid gray;
+    font-size: 12px;
+    color: gray;
+}
+
+
+
+.Ta_Exprience_FormHIstoy {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: 1px solid darkgrey;
+}
+
+.Ta_Exprience_Formgroup input:focus {
+    outline: none !important;
+
+}
+
+.Ta_Exprience_FormBtn {
+    background-color: black;
+    color: white;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 16px;
+    width: auto;
+    margin-left: 2px;
+    letter-spacing: 1px;
+}
+
+.backLink{
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: white !important;
+}
+
+.yes{
+    color: #262837 !important;
+}

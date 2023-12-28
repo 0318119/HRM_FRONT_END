@@ -1,0 +1,108 @@
+.TransactionFamilyFormContainer{
+    /* margin-top: 10px; */
+}
+.TransactionFamilyFormContainer .row h4{
+    border-bottom: 1px solid black;
+    padding: 10px;
+}
+.EmployeeHeading{
+    color: black;
+}
+.EmployeeInfoFamily {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.TransactionFamilyFormgroup{
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    margin-left: 15px;
+}
+
+.TransactionFamilyFormgroup Input{
+    margin-top: 2px;
+}
+.TransactionFamilyFormgroup .DatePicker{
+    margin-top: 2px;    
+}
+
+.MarriageInfo{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+
+.tableDataHead { 
+       border-bottom: 1px solid white;
+}
+
+.TransactionFamilyFromHeading {
+    font-weight: 700;
+    font-size: 18px;
+    padding: 10px;
+    letter-spacing: 1px;
+    color: black;
+}
+
+
+
+
+
+.TaFamliyHeaderText span {
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px;
+}
+
+.Familybtncontainer {
+    padding: 5px;
+}
+
+
+.TaFamilyFifthLine {
+    border-top: 1px solid darkgray;
+    margin-top: 4px;
+}
+
+.TaFamilyFirstLine {
+    margin-top: 4px;
+    background-color: white;
+}
+
+
+.TaFamilyFormChildHeader span {
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    background: white;
+    padding: 2px;
+}
+
+.TaFamilyFormChildHeaderData span {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.63);
+    padding: 2px;
+
+
+}
+@media screen and (max-width: 500px) {
+    .TransactionFamilyFormgroup Input{
+        min-width: 100% ;
+    }
+    
+}
+
+
+@media screen and (max-width: 992px) {
+    .TransactionFamilyFormContainer {
+            margin-top: 10px;
+        }
+}

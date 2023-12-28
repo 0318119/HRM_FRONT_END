@@ -1,0 +1,137 @@
+
+.manual_Leaves_bg{
+    background: #F7F5F5;
+    border-radius: 10px;
+    padding: 10px;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox{
+    display: flex;
+    position: relative;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox .half_day{
+    position: absolute;
+    left: 20%;
+    display: inline-table;
+}
+.manual_Leaves_bg .manualLeavePostionHalfDayBox .appliedInput{
+    width: 100%;
+}
+.manual_Leaves_listHeader {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.Manual_Leaves_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    background-color: #a9d6e538;
+    /* border-radius: 5px; */
+    margin-top: 55px !important;
+}
+
+
+
+.Leaves_listSearch {
+    color: gray !important;
+    font-size: 14px;
+    border: 1px solid darkgray;
+}
+
+
+@media screen and (max-width:992px) {
+
+    .attachmenttable {
+        overflow-x: scroll;
+    }
+
+    .attachmenttable::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    /* Track */
+    .attachmenttable::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px transparent;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    .attachmenttable::-webkit-scrollbar-thumb {
+        background: #014f86;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    .attachmenttable::-webkit-scrollbar-thumb:hover {
+        background: #014f86;
+    }
+
+}
+
+
+.pendingTable {
+    overflow-x: scroll;
+}
+
+.pendingTable::-webkit-scrollbar {
+    height: 10px;
+}
+
+/* Track */
+.pendingTable::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+.pendingTable::-webkit-scrollbar-thumb {
+    background: #014f86;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+.pendingTable::-webkit-scrollbar-thumb:hover {
+    background: #014f86;
+}
+
+
+.btnContainer {
+    display: flex;
+}
+
+.btnContainer button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width:786px) {
+    .AttactBtn {
+        width: 52%;
+    }
+
+
+}
+
+@media screen and (max-width:476px) {
+    .AttactBtn {
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width:600px) {
+    .btnContainer {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+}
+
+.Required{
+    color: red !important;
+    font-size: 12px !important;
+    letter-spacing: 1px !important;
+}

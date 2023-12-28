@@ -1,0 +1,53 @@
+.maringClass{
+    margin-top: 80px;
+}
+.DesignationsFlexBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.DesignationsFlexBox .DesignationssearchBox{
+    display: flex;
+    align-items: center;
+}
+.DesignationsFlexBox .DesignationssearchBox input{
+    min-width: 300px;
+}
+.formBoxDesignations{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+.DesignationsBtnBox{
+    display: flex;
+    justify-content: end;
+}
+.formBoxDesignations div{
+    width: 50%;
+}
+.DesignationsFlexBox .DesignationssearchBox #inputBox{
+    display: flex;
+}
+@media screen and (max-width: 768px){
+    .DesignationsFlexBox{
+        flex-wrap: wrap;
+    }
+    .DesignationsFlexBox .DesignationssearchBox {
+        width: 100%;
+    }
+    .DesignationsFlexBox .DesignationssearchBox #inputBox{
+        width: 100%;
+    }
+    .DesignationsFlexBox .DesignationssearchBox #inputBox input{
+        min-width: unset !important;
+    }
+}
+@media screen and (max-width: 480px){
+    .formBoxDesignations div{
+        width: 100%;
+    }
+    .DesignationsFlexBox .DesignationssearchBox {
+        flex-wrap: wrap;
+    }
+}

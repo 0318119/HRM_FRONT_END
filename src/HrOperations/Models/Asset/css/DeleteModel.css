@@ -1,0 +1,76 @@
+.HrdeleteSection {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    z-index: 9999;
+    background: #3029298a;
+    top: 0;
+}
+
+.HrdeleteSection .container {
+    width: 50%;
+}
+
+.HrdelteModalBox {
+    position: relative;
+}
+
+.HrdelteModalBox span {
+    color: #fff;
+    background: #014f86;
+    font-size: 25px;
+    font-weight: 400;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.HRinnerDelteModalBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #3a4943;
+    background: #a9d6e5;
+    text-align: center;
+    border: 5px solid #f1fefa;
+    padding: 30px 8px;
+    border-radius: 25px 25px;
+    box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+.HRinnerDelteModalBox svg {
+    font-size: 70px;
+    margin-bottom: 20px;
+}
+
+.HRinnerDelteModalBox h3 {
+    font-size: 50px;
+    font-weight: 900;
+    margin-bottom: 20px;
+}
+
+.HRinnerDelteModalBox p {
+    font-size: 18px;
+    font-weight: 900;
+    margin: 0 0 30px;
+}
+
+.HRinnerDelteModalBox button {
+    color: #373737;
+    background: #eaf8f3;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 14px 32px 13px;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+}

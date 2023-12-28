@@ -1,0 +1,70 @@
+
+.maringClass {
+    margin-top: 80px;
+}
+
+.EmployeeCategoryFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.EmployeeCategoryFlexBox .EmployeeCategorysearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.EmployeeCategoryFlexBox .EmployeeCategorysearchBox input {
+    min-width: 300px;
+}
+
+.formBoxDivisions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.EmployeCategoryBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxDivisions div {
+    width: 50%;
+}
+
+.CheckboxEmptype Input{
+  display: flex;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .EmployeeCategoryFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .EmployeeCategoryFlexBox .EmployeeCategorysearchBox {
+        width: 100%;
+    }
+
+    .EmployeeCategoryFlexBox .EmployeeCategorysearchBox #inputBox {
+        width: 100%;
+    }
+
+    .EmployeeCategoryFlexBox .EmployeeCategorysearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxDivisions div {
+        width: 100%;
+    }
+
+    .EmployeeCategoryFlexBox .EmployeeCategorysearchBox {
+        flex-wrap: wrap;
+    }
+}
+

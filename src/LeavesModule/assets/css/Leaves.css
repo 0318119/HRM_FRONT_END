@@ -1,0 +1,114 @@
+.Leaves_listHeader {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.Leaves_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    background-color: #a9d6e538;
+    margin-top: 10px;
+}
+
+.Leaves_listSearch {
+    color: gray !important;
+    font-size: 14px;
+    border: 1px solid darkgray;
+}
+.pendingTable {
+    overflow-x: scroll;
+}
+.pendingTable::-webkit-scrollbar {
+    height: 10px;
+}
+.pendingTable::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px transparent;
+    border-radius: 10px;
+}
+.pendingTable::-webkit-scrollbar-thumb {
+    background: #014f86;
+    border-radius: 10px;
+}
+.pendingTable::-webkit-scrollbar-thumb:hover {
+    background: #014f86;
+}
+
+.btnContainer {
+    display: flex;
+}
+.btnContainer button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LEAVE SUMMARY DETAILS BOX =========================================== */
+.leaveSummaryContainer{
+    margin-top: 100px;
+}
+.leaveSummaryDetailsBox {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 10px;
+}
+
+.leaveSummaryDetailsBox .form-group {
+    margin: 20px 0;
+    width: 100%;
+    padding: 0 5px;
+}
+
+@media screen and (max-width:992px) {
+    .attachmenttable {
+        overflow-x: scroll;
+    }
+    .attachmenttable::-webkit-scrollbar {
+        height: 10px;
+    }
+    .attachmenttable::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px transparent;
+        border-radius: 10px;
+    }
+    .attachmenttable::-webkit-scrollbar-thumb {
+        background: #014f86;
+        border-radius: 10px;
+    }
+    .attachmenttable::-webkit-scrollbar-thumb:hover {
+        background: #014f86;
+    }
+    .leaveSummaryContainer{
+        margin-top: 50px;
+    }
+}
+
+
+@media screen and (max-width:786px) {
+    .AttactBtn {
+        width: 52%;
+    }
+    .leaveSummaryDetailsBox{
+        flex-wrap: wrap;
+    }
+    .leaveSummaryDetailsBox .form-group {
+        margin: 5px 0;
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:476px) {
+    .AttactBtn {
+        width: 70%;
+    }
+}
+
+
+@media screen and (max-width:600px) {
+    .btnContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

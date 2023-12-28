@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.ResiginationFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ResiginationFlexBox .ResignationsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.ResiginationFlexBox .ResignationsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxResignation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ResignationBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxResignation div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .ResiginationFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .ResiginationFlexBox .ResignationsearchBox {
+        width: 100%;
+    }
+
+    .ResiginationFlexBox .ResignationsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .ResiginationFlexBox .ResignationsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxResignation div {
+        width: 100%;
+    }
+
+    .ResiginationFlexBox .ResignationsearchBox {
+        flex-wrap: wrap;
+    }
+}

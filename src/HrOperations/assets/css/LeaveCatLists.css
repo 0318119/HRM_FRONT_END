@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.LeaveCategoryFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.LeaveCategoryFlexBox .LeaveCategorysearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.LeaveCategoryFlexBox .LeaveCategorysearchBox input {
+    min-width: 300px;
+}
+
+.formBoxLeaveCategory {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.leaveCategoryBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxLeaveCategory div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .LeaveCategoryFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .LeaveCategoryFlexBox .LeaveCategorysearchBox {
+        width: 100%;
+    }
+
+    .LeaveCategoryFlexBox .LeaveCategorysearchBox #inputBox {
+        width: 100%;
+    }
+
+    .LeaveCategoryFlexBox .LeaveCategorysearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxLeaveCategory div {
+        width: 100%;
+    }
+
+    .LeaveCategoryFlexBox .LeaveCategorysearchBox {
+        flex-wrap: wrap;
+    }
+}

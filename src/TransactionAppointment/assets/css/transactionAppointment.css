@@ -1,0 +1,204 @@
+.TAHeading{
+    color: black;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.TransAppointFormGroup{
+     display: flex;
+     align-items: center;
+     padding: 5px;
+}
+.TransAppointFormGroup label{
+   color: black !important;
+   letter-spacing: 1px;
+   font-size: 16px;
+}
+.TransAppointFormGroup input{
+    height: 32px;
+    background-color: white;
+    margin-left: 1px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #262837;
+}
+.MainCont{
+    margin-top: 50px;
+}
+
+.TransAppointFormGroup button{
+       border-radius: 4px;
+        font-size: 12px;
+        height: 32px;
+        margin-left: 1px;
+        color: white;
+        background-color: black;
+}
+
+.TAFile{
+    width: 18vw !important;
+}
+
+.TAHeadingRow{
+    background-color: #a9d6e538;
+    border: 1px solid darkgray;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.TAPlist_Header{
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 15px 0;
+}
+.TAPList_Container{
+    background-color: #014f86;
+}
+.TPTable{
+    width: 100%;
+}
+.TPTbody tr td{
+  color: black !important;
+}
+.TPTableHead tr {
+    background-color: white;
+    color: black;
+    height: 49px;
+    padding: 0px;
+}
+.TPTableHead tr th{
+    font-size: 14px !important ;
+    font-weight: 400;
+    color: black;
+    letter-spacing: 1px;
+}
+.TPTableHead tr th:hover{
+    background-color: whitesmoke;
+}
+
+.TPTable tbody tr td{
+    color: white;
+}
+
+
+
+.TaLiLIstHeader{
+    background: white;
+
+}
+.TaLiLIstHeader th{
+    font-size: 14px;
+    padding: 15px 3px;
+    font-weight: 500;
+}
+
+.List_ico{
+    font-size: 20px !important;
+}
+.TaListBody td{
+    margin-top: 2px !important;
+    padding: 10px 5px;
+    border: 1px solid #a9a9a938;
+}
+.TaListBody td a{
+    border: 1px solid #54525257;
+    padding: 5px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+}
+
+.TaAddBtn{
+    letter-spacing: 1px;
+    border-radius: 5px;
+    padding: 8px;
+    background-color: #014f86;
+    color: white;
+}
+
+
+    .Tatble{
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+        .Tatble::-webkit-scrollbar {
+            height: 4px;
+        }
+    
+        .Tatble::-webkit-scrollbar-thumb {
+            background-color: #014f86;
+            border-radius: 4px;
+        }
+    
+        .Tatble::-webkit-scrollbar-thumb:hover {
+            background-color: #014f86;
+        }
+    
+        .Table::-webkit-scrollbar-track {
+            background-color: #f2f2f2;
+        }
+
+@media screen and (max-width:1200px) {
+    .TaAddBtn {
+            width: 10%;
+        }
+}
+@media screen and (max-width:992px) {
+        .MainCont{
+            margin-top: 5px;
+        }
+    .TaAddBtn {
+        width: 12%;
+    }
+    .TaRes{
+        display: flex;
+        flex-direction: column;
+    }
+           .TransAppointFormGroup input {
+               width: auto !important;
+           }
+}
+@media screen and (max-width:787px) {
+    .TaAddBtn {
+        width: 14%;
+    }
+    .TaRes {
+     display: flex;
+     flex-direction: column;
+          }
+     .TransAppointFormGroup input{
+        width: auto !important;
+ }
+}
+@media screen and (max-width:660px) {
+    .TaAddBtn {
+        width: 16%;
+    }
+}
+@media screen and (max-width:578px) {
+    .TaAddBtn {
+        width: 19%;
+    }
+}
+@media screen and (max-width:490px) {
+    .TaAddBtn {
+        width: 25%;
+    }
+    .TransAppointFormGroup {
+            display: flex;
+            flex-direction: column;
+            align-items: normal;
+            padding: 5px;
+        }
+}
+
+
+@media screen and (max-width:400px){
+      .TaAddBtn {
+        width: 27%;
+    }
+}
+
+
+
+.Appoint{
+    padding: 100px;
+    background-color: red;
+}

@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,th,td,button,div{ 
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    text-decoration: none;
+    /* margin: 0px; */
+    /* border: none; */
+}
+button,h1,h2,h3,h4,h5,h6{
+    color: white;
+}
+/* thead, tbody, tfoot, tr, td, th {
+    border-color: #e5e7eb;
+    border-style: solid ;
+    border-width: 1px;
+    border-top: 1px solid #e5e7eb !important;
+} */
+ul,li{
+    list-style: none;
+    /* padding: 0; */
+    /* margin: 0; */
+}
+span,strong{
+    display: block;
+}
+body{
+    /* margin: 0px; */
+    /* padding: 0px; */
+    overflow-x: clip !important;
+}
+
+.editBtn{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.deleteBtn{
+    background-color: transparent;
+    border: none;
+    font-size: 25px;
+    color: red;
+}
+/* TABLES BUTTONS =-=-=-=-=-=-=-=-=-=-- */
+.tabletdRow {
+    display: flex;
+}
+
+.editBtnTable {
+    background-color: #014f86 !important;
+    color: white !important;
+    padding: 4px 12px;
+    font-weight: 500;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.deleteBtnTable {
+    background: red !important;
+    color: white !important;
+    padding: 1px 12px;
+    border-radius: 3px;
+    font-weight: 500;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+table {
+    background-color: transparent !important;
+}
+.ant-pagination-options{
+    display: none !important;
+}
+
+/* ====================================== */
+
+/* TABLE DATA HEAD =-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+.tableDataHead {
+    margin: 0;
+    padding: 14px 12px;
+    margin-top: 20px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+/* DASHBOARD TABLE BG COLOR */
+.bgTables{
+    background: #d7cfcf33;
+}
+
+
+/* SELECT TAG DEFAULT STYLING =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+select:focus {
+    outline: none;
+}
+
+/* ================== */
+.backLink {
+    float: right;
+}
+
+@media screen and (max-width: 768px) {
+    .backLink {
+        float: unset !important;
+        display: flex;
+        /* margin-top: 11px; */
+    }
+}
+
+.one {
+    display: block;
+}
+
+.two {
+    display: none;
+}
+
+.ant-select-single{
+    height: 40px !important;
+    width: 100% !important;
+}
+.ant-select-focused .ant-select-selector{
+    box-shadow: none !important;
+}
+.ant-select-selector{
+    border: 1px solid rgb(225 225 225) !important;
+    width: 100% !important;
+}
+.ant-select-show-arrow .ant-select-selector{
+    width: 100% !important;
+}
+.ant-select-selector:hover{
+    border: 1px solid rgb(225 225 225) !important;
+}
+.ant-message-loading{
+    display: flex;
+    align-content: center;
+}
+.ant-message-loading span{
+    color: black;
+}
+.ant-message-error{
+    display: flex;
+    align-items: center;
+}
+.ant-message-success{
+    display: flex;
+    align-items: center;
+}
+
+
+.month{
+    width: 200px !important;
+}

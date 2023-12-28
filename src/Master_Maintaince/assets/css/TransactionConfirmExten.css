@@ -1,0 +1,64 @@
+.confirExHeadBox{
+    background-color: #014f86;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.confirExHeadBox span{
+    color: white;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.confirExHeadBox button{
+    background: #262837 !important;
+    border-radius: 7px;
+    padding: 6px 16px;
+}
+
+.TransactionConfirmationEx_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    background-color: #a9d6e538;
+    padding: 0px 0px;
+    margin-top: 10px;
+}
+.confirExtenSearchBox{
+    display: flex;
+    justify-content: space-between;
+}
+.confirExtenSearchBox input{
+    color: gray !important;
+    font-size: 14px;
+    border: 1px solid darkgray;
+}
+.confirmationExtenScrollBox{
+    width: 100%;
+    overflow-x: auto;
+}
+
+@media screen and (max-width: 580px){
+    .confirExHeadBox{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .confirExHeadBox span{
+        text-align: center;
+        font-size: 15px;
+    }
+    .confirExHeadBox button{
+        margin-top: 8px;
+        font-size: 14px;
+        padding: 6px 5px;
+    }
+    .confirExtenSearchBox{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .confirExtenSearchBox button{
+        margin-left: 0;
+        margin-top: 10px;
+        padding: 5px 8px;
+        width: 100%;
+    }
+}

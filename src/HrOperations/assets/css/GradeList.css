@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.GradeFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.GradeFlexBox .GradesearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.GradeFlexBox .GradesearchBox input {
+    min-width: 300px;
+}
+
+.formBoxGrade {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.GradeBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxGrade div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .GradeFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .GradeFlexBox .GradesearchBox {
+        width: 100%;
+    }
+
+    .GradeFlexBox .GradesearchBox #inputBox {
+        width: 100%;
+    }
+
+    .GradeFlexBox .GradesearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxGrade div {
+        width: 100%;
+    }
+
+    .GradeFlexBox .GradesearchBox {
+        flex-wrap: wrap;
+    }
+}

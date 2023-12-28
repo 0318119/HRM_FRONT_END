@@ -1,0 +1,50 @@
+.maringClass{
+    margin-top: 80px;
+}
+.coslistFlexBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.coslistFlexBox .costCentersearchBox{
+    display: flex;
+    align-items: center;
+}
+.coslistFlexBox .costCentersearchBox input{
+    min-width: 300px;
+}
+.formBoxCostCenter{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+.costCenterBtnBox{
+    display: flex;
+    justify-content: end;
+}
+.formBoxCostCenter div{
+    width: 50%;
+}
+@media screen and (max-width: 768px){
+    .coslistFlexBox{
+        flex-wrap: wrap;
+    }
+    .coslistFlexBox .costCentersearchBox {
+        width: 100%;
+    }
+    .coslistFlexBox .costCentersearchBox #inputBox{
+        width: 100%;
+    }
+    .coslistFlexBox .costCentersearchBox #inputBox input{
+        min-width: unset !important;
+    }
+}
+@media screen and (max-width: 480px){
+    .formBoxCostCenter div{
+        width: 100%;
+    }
+    .coslistFlexBox .costCentersearchBox {
+        flex-wrap: wrap;
+    }
+}

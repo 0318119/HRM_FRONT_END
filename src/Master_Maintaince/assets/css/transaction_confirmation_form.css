@@ -1,0 +1,67 @@
+.transaction_confirmation_Section {
+    margin-top: 80px;
+}
+.transaction_confirmation_container {
+    background-color: white;
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    color: white;
+}
+.TC_Heading {
+    background-color: #014f86;
+}
+.transaction_confirmation_container .confirmationFormScrollBox {
+     padding: 0 30px;
+}
+.EmployeeInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.EmployeeInfo .form-group {
+    width: 48%;
+}
+.EmployeeInfo .radioBoxConfirmation {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+.EmployeeInfo .radioBoxConfirmation div {
+    display: flex;
+    flex-direction: row;
+    width: 48%;
+}
+.HeadingEI {
+    padding: 15px;
+    font-size: 20px;
+    color: black;
+}
+.TCFormHead {
+    width: 100%;
+    font-weight: 600 !important;
+    background-color: #014f86;
+    letter-spacing: 1px;
+    padding: 0px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.transaction_confirmation_container .TAFormBtn{
+    margin: 17px 27px;
+    border-top: 1px solid #807f7f45;
+    padding: 15px 0;
+}
+.transaction_confirmation_container .TAFormBtn button{
+    margin: 0 6px;
+}
+@media screen and (max-width:580px) {
+    .transaction_confirmation_container .confirmationFormScrollBox {
+        height: 250px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding: 0 30px;
+    }
+    .EmployeeInfo .form-group {
+        width: 100%;
+    }
+}

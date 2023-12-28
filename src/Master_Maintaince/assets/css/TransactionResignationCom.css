@@ -1,0 +1,50 @@
+.TransactionResignation_listHeader {
+    background-color: #014f86;
+    font-weight: 700;
+    padding: 5px;
+    /* border-radius: 4px 4px 0px 0px; */
+    color: white;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.TransactionResignation_listHeader button {
+    background-color: black !important;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.TransactionResignationPage {
+    overflow: clip;
+}
+
+.TransactionResignation_listContainer {
+    box-shadow: 2px 1px 6px -2px black;
+    padding: 0px 0px;
+    background-color: #a9d6e538;
+    overflow: clip;
+    margin-top: 50px;
+}
+
+.Increament_Header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+
+
+.TransationResignation_listSearch {
+    color: gray !important;
+    font-size: 14px;
+    border: 1px solid darkgray;
+}
+
+.Resignation_table {
+    width: 100%;
+    overflow-x: auto;
+
+}

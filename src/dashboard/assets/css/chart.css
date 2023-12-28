@@ -1,0 +1,145 @@
+.Chart22 {
+    background-color: #303030;
+}
+
+.BarChart {
+    color: white !important;
+}
+
+.ChartHeader {
+    display: flex;
+    /* border-bottom: 1px solid white; */
+    width: 100%;
+    color: white !important;
+    justify-content: space-between;
+    background: #014f86;
+    align-items: center;
+    padding: 13px 15px;
+}
+
+.ChartHeader .chartSelectTag {
+    background: #014f86;
+    border: none;
+    color: white;
+}
+
+.ChartHeader .chartSelectTag:focus {
+    outline: none;
+}
+
+.TableCont {
+    margin: 0 !important;
+    padding: 5px;
+    
+}
+
+.ChartRow {
+    /* background-color: #a9d6e538; */
+    padding: 5px;
+
+}
+
+.ChartCont {
+    overflow-x: scroll;
+    overflow-y: clip;
+}
+
+
+.ChartHeadDetailHeading p {
+    color: white !important;
+    font-size: 16px;
+}
+
+.ChartAttendance {
+    border-bottom: 1px solid white;
+    color: white !important;
+    font-size: 16px;
+}
+
+.ChartAttendance:hover {
+    border-bottom: 1px solid white;
+    /* background-color: #f0f3f044; */
+}
+
+
+/* Track styles */
+.ChartCont::-webkit-scrollbar {
+    height: 8px;
+}
+
+/* Thumb styles */
+.ChartCont::-webkit-scrollbar-thumb {
+    background-color: #014f86;
+    border-radius: 4px;
+}
+
+/* Track styles when the thumb is being hovered */
+.ChartCont::-webkit-scrollbar-thumb:hover {
+    background-color: #014f86;
+}
+
+/* Track styles when the scrollbar is in its inactive state */
+.ChartCont::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.toollip {
+    background-color: #014f86 !important;
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width:1199px) {
+    .BarChart {
+        width: 80% !important;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .ChartHeader {
+        padding: 13px 10px;
+    }
+
+    .ChartAttendance {
+        color: white !important;
+        font-size: 10px;
+    }
+
+    .ChartHeader .chartSelectTag {
+        font-size: 10px;
+    }
+
+    .ChartHeadDetailHeading p {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width:400px){
+    .ChartHeader{
+        display: flex;
+        flex-direction: column;
+    }
+        .ChartAttendance {
+            font-size: 10px;
+            margin-top: 10px;
+        }
+    
+        .ChartHeader .chartSelectTag {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+    
+        .ChartHeadDetailHeading p {
+            font-size: 10px;
+            margin-top: 5px;
+        }
+}

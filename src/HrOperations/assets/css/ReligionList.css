@@ -1,0 +1,62 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.ReligionFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ReligionFlexBox .ReligionsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.ReligionFlexBox .ReligionsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxReligion {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ReligionBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxReligion div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .ReligionFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .ReligionFlexBox .ReligionsearchBox {
+        width: 100%;
+    }
+
+    .ReligionFlexBox .ReligionsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .ReligionFlexBox .ReligionsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxReligion div {
+        width: 100%;
+    }
+
+    .ReligionFlexBox .ReligionsearchBox {
+        flex-wrap: wrap;
+    }
+}

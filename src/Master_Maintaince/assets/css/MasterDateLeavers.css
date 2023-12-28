@@ -1,0 +1,63 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.MasterActiveFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MasterActiveFlexBox .MasterActivesearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.MasterActiveFlexBox .MasterActivesearchBox input {
+    min-width: 300px;
+}
+
+.formBoxHolidays {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.HolidayBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxHolidays div {
+    width: 50%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .MasterActiveFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .MasterActiveFlexBox .MasterActivesearchBox {
+        width: 100%;
+    }
+
+    .MasterActiveFlexBox .MasterActivesearchBox #inputBox {
+        width: 100%;
+    }
+
+    .MasterActiveFlexBox .MasterActivesearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxHolidays div {
+        width: 100%;
+    }
+
+    .MasterActiveFlexBox .MasterActivesearchBox {
+        flex-wrap: wrap;
+    }
+}
