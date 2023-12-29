@@ -129,6 +129,10 @@ import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Employee_Experience_Report from '../HrOperations/Employee_Experience_Report.js'
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 import Date_Of_Birth_Inquiry_Report from '../HrOperations/Date_Of_Birth_Inquiry_Report.js'
+// import Experience_Report from '../HrOperations/Experience_Report.js'
+import OfferLeter from '../TransactionAppointment/AppointmentLetter/index.js'
+import ManualAttendance from '../ManualAttendance/ManualAttendance.js';
+import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 
 
 
@@ -263,6 +267,9 @@ const routing = () => {
               <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
               <Route path="/Access_Control" element={<Access_Control />} />
               <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
+              <Route path="/OfferLeter" element={<OfferLeter />} />
+              <Route path="/ManualAttendance" element={<ManualAttendance />} />
+              <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
             </> :
             <>
               <Route path="*" element={<NotFound />} />
