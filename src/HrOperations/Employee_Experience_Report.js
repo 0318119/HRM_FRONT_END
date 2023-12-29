@@ -201,6 +201,7 @@ function Experience_Report({
                                     <View>
                                         <Text style={styles.employeeName}>Employee Name: <Text style={styles.employeeDesignation}>{item?.Emp_name}</Text></Text>
                                         <Text style={styles.employeeName}>Designation: <Text style={styles.employeeDesignation}>{item?.Designation}</Text></Text>
+                                        <Text style={styles.employeeName}>Company Name: <Text style={styles.employeeDesignation}>{item?.Company_Name}</Text></Text>
                                     </View>
                                 </View>
                                 <View style={{ marginTop: '50px' }}>
