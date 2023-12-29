@@ -127,6 +127,9 @@ import RetirementDueReport from '../HrOperations/Retirement_Due_Report.js'
 import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Experience_Report from '../HrOperations/Experience_Report.js'
+import OfferLeter from '../TransactionAppointment/AppointmentLetter/index.js'
+import ManualAttendance from '../ManualAttendance/ManualAttendance.js';
+import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 
 
 
@@ -279,6 +282,13 @@ const routing = () => {
         <Route path="/Access_Control" element={<Access_Control />} />
         {/* ERRORS PAGE ============================ */}
         <Route path="NotFound/404" element={<NotFound />} />
+        <Route path="/OfferLeter" element={<OfferLeter />} />
+
+        {/*Manual Attendance*/}
+        <Route path="/ManualAttendance" element={<ManualAttendance />} />
+        <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
+        {/*Manual Attendance*/}
+        
         <Route path="/" element={<Login />} />
         {/* </> :  */}
         {/* } */}

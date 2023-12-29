@@ -25,6 +25,7 @@ import Diversity3Icon from "@mui/icons-material/Diversity3";
 import SettingsSuggestRoundedIcon from "@mui/icons-material/SettingsSuggestRounded";
 import DownloadingSharpIcon from '@mui/icons-material/DownloadingSharp';
 import { saveAs } from 'file-saver';
+import OfferLeter from '../TransactionAppointment/AppointmentLetter/index';
 import baseUrl from '../config.json'
 const config = require("../config.json");
 
@@ -43,7 +44,9 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [isLoading, setLoading] = useState(false)
     const [AppointData, setAppointData] = useState([])
     const [getAppointStatus, setgetAppointStatus] = useState([]);
+    const [isTryData , setTryData] = useState('')
     const [isFileData, setFileData] = useState([])
+    // console.log(isTryData , "kkkokokokok")
 
     const EditPage = (mode, code ) => {
         setCode(code);
@@ -250,7 +253,8 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                     content: "Successfully Download",
                 });
                 setFileData(response.data[0].FileName, DataR);
-                console.log(DataR, 'DataR')
+
+
 
                 let htmlContent = `<html><body>`;
                 htmlContent += `
@@ -344,7 +348,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     </html>
     `;
 
-                console.log("first", htmlContent)
+                // console.log("first", htmlContent)
                 const blob = new Blob([htmlContent], { type: 'application/msword' });
                 saveAs(blob, response?.data?.[0]?.FileName);
             }
@@ -409,7 +413,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
 
 
 
-    
+    console.log(Red_Appointment?.data?.[0]?.res?.data1)
 
     return (
         <>

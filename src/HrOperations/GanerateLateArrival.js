@@ -22,7 +22,9 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
   const [mode, setMode] = useState("read");
   const [isGeneratedData, setGeneratedData] = useState([]);
   const [GenerateTable, setGenerateTable] = useState(false)
-  const [useSubmitForm, setUseSubmitForm] = useState(false);
+  const [useSubmitForm, setUseSubmitForm] = useState();
+
+  console.log(useSubmitForm, 'check')
 
   const EditPage = (mode) => {
     setGenerateTable(mode)
@@ -34,13 +36,15 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
     try {
       const isValid = await GeneratedDataSchema.validate(data);
       if (isValid) {
-        if (useSubmitForm == "one"){
-            GenerateData(data);
-          console.log("useSubmitForm", useSubmitForm)
-        }else{
-            GenerateExcelData(data);
-          console.log("two", useSubmitForm)
-        }
+        useSubmitForm === 'one' ? console.log("one") : console.log("two")
+
+        // if (useSubmitForm === 'one'){
+        //     // GenerateData(data);
+        //   // console.log("one", useSubmitForm)
+        // } else if (useSubmitForm === 'two'){
+        //     // GenerateExcelData(data);
+        //   // console.log("two", useSubmitForm)
+        // }
       }
     } catch (error) {
       console.error(error);
@@ -172,7 +176,10 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
       {contextHolder}
       <div className="container">
         <div className="row">
-          <form className="col-lg-12 maringClass" onSubmit={handleSubmit(submitForm)}>
+          <form className="col-lg-12 maringClass"
+           onSubmit={handleSubmit(submitForm)}
+          //  onSubmit={(e) => handleSubmit(() => submitForm(useSubmitForm ,e))}
+           >
             <h4 className="text-dark">Generate Late Arrivals</h4>
             <div className="d-flex align-items-center">
               <FormInput
@@ -270,15 +277,12 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
             </div>
 
             <div className="d-flex" >
-              <PrimaryButton title="Generate Data" id="one" type="submit" 
-                onClick={(e) => {
-                  setUseSubmitForm(e.target.getAttribute('id'));
-                }} 
+              <PrimaryButton title="Generate Data" id='one'  type="submit" 
+                onClick={() => setUseSubmitForm()} 
+              
               />
-              <PrimaryButton title={'ExportToExcel'} id="two" type="submit"
-                onClick={(e) => {
-                  setUseSubmitForm(e.target.getAttribute('id'));
-                }} 
+              <PrimaryButton title={'ExportToExcel'} id='two' type="submit"
+                onClick={() => setUseSubmitForm()} 
                />
             </div>
           </form>

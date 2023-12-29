@@ -1,0 +1,63 @@
+.maringClass {
+    margin-top: 80px;
+}
+
+.Base_CityFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.Base_CityFlexBox .Base_CitysearchBox {
+    display: flex;
+    align-items: center;
+}
+
+
+.Base_CityFlexBox .Base_CitysearchBox input {
+    min-width: 300px;
+}
+
+.formBoxBase_City {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.BaseCItyBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxBase_City div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .Base_CityFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox #inputBox {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxBase_City div {
+        width: 100%;
+    }
+
+    .Base_CityFlexBox .Base_CitysearchBox {
+        flex-wrap: wrap;
+    }
+}

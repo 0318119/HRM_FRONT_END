@@ -129,7 +129,7 @@ const Leaves = () => {
                 localStorage.setItem("refresh", response.referesh_token);
                 localStorage.setItem("access_token", response.access_token);
                 setLeaveTypeLoading(false)
-                setGetLeaveType(response.data[0]);
+                setGetLeaveType(response.data);
               }
             }).catch((error) => {
               setLeaveTypeLoading("Something went wrong...")
@@ -138,6 +138,7 @@ const Leaves = () => {
         } else {
           setLeaveTypeLoading(false)
           setGetLeaveType(response.data[0]);
+          console.log(response.data, 'response.data[0]')
         }
       }).catch((error) => {
         setGetLeaveTypeErr(error.messsage);
