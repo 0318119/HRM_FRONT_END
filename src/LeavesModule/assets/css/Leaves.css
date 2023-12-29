@@ -115,6 +115,17 @@
 
 
 /* ============================ */
+.empLeavesBgColor{
+    background: #F7F5F5;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 40px;
+}
+.empLeavesBgColor .empLeavesTableHead{
+    display: flex;
+    justify-content: space-between;
+}
+
 .empLeavesHalfDayFlag{
     position: relative;
 }

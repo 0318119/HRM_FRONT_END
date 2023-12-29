@@ -217,7 +217,6 @@ const routing = () => {
             <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
             <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
             <Route path='/TranEducationReport' element={<TranEducationReport />} />
-            <Route path='/Experience_Report' element={<Experience_Report />} />
             <Route path='/Service_Length_Report' element={<ServiceLengthReport />} />
             <Route path='/Employee_Education_Report' element={<TranEducationReport />} />
             <Route path='/Employee_Experience_Report' element={<Employee_Experience_Report />} />
@@ -240,7 +239,7 @@ const routing = () => {
             <Route path="/payroll/addDeduction" element={<AddDeduction />} />
             <Route path="/payroll/addPayroll" element={<AddPayroll />} />
             <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
-            <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
+            <Route path="/Attendance_Excel_Report" element={<AddPayrollMethodPdf />} />
             <Route path="/payroll/report/taxReport" element={<TaxReport />} />
             <Route path="/payroll/report/SalaryOnHold" element={<SalaryOnHold />} />
             <Route path="/Earning_Master" element={<Earning_Master />} />

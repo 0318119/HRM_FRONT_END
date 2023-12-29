@@ -243,6 +243,10 @@ const Header = (props) => {
 
                 <li>
                   <div className='flexLinks'>
+                    <MdLogout className='d-lg-block d-none' style={{
+                      margin:"0 5px",
+                      fontSize: "18px"
+                    }}/>
                     <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
                   </div>
                 </li>

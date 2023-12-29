@@ -18,14 +18,12 @@ function Get_Attendancelist({
   PostAttendancePayload
 }) {
   const [isLoading, setLoading] = useState(false)
-  const empData = Red_Attendance_sheet?.data?.[0]?.res?.data
+  const empData = Red_Attendance_sheet?.data?.[0]?.res?.data?.[0]
   const [isAttendanceData, setAttendanceData] = useState([])
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentYear = currentDate.getFullYear();
   const [isbtnDownalod, setBtnDownalod] = useState(false)
-
-  
 
 
   // ATTENDANCE FOMR SHCEME =====================
@@ -93,7 +91,7 @@ function Get_Attendancelist({
 
   const defaultOption = { value: "-1", label: "All Employees" };
   const options = [
-    defaultOption,
+    // defaultOption,
     ...(empData || []).map((item) => ({
       value: item.Emp_code,
       label: item.Emp_name
