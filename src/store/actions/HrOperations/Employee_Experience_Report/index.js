@@ -32,7 +32,7 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
         loading: false,
       });
 
-      console.log("Received payload:", res); 
+      // console.log("Received payload:", res); 
     } else {
       const errorRes = await response.json();
       dispatch({
@@ -55,18 +55,19 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
 
 
 export const PostExperiencePayload = (data) => async () => {
-    console.log(data, 'data')
-    const response = await fetch(`${baseUrl.baseUrl}'/reports/ExperienceReport`, {
+    // console.log(data, 'data')
+    const response = await fetch(`${baseUrl.baseUrl}/reports/ExperienceReport`, {
       method: "POST",
       headers: {
         accessToken: "Bareer " + localStorage.getItem("access_token"),
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "Emp_code": data?.Emp_code,
+        "Emp_code": data
       }),
     });
     const res = await response.json();
+    console.log(res , 'rtes')
     if (res?.success) {
       return res;
     }else{
