@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { FormSelect } from '../components/basic/input/formInput';
+import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import Header from '../components/Includes/Header';
 import { SimpleButton } from '../components/basic/button';
 import { message } from 'antd';
@@ -13,6 +13,8 @@ import * as yup from 'yup';
 import LogoUrl from '../../src/Assets/Images/download.png';
 import { GET_TranEducationReport_DATA } from '../store/actions/types';
 import * as Red_TranEducationReport_Action from '../store/actions/HrOperations/TranEducationReport';
+import Input from '../components/basic/input';
+import { CheckBox } from '@mui/icons-material';
 
 function TranEducationReport({
   GetTransAllEmp,
@@ -26,13 +28,33 @@ function TranEducationReport({
   const [currentDate, setCurrentDate] = useState('');
   const [toDate, setToDate] = useState('');
   const [selectedEmployee, setSelectedEmployee] = useState('');
-
+  const [currentTime, setCurrentTime] = useState('');
 
   useEffect(() => {
     const currentDate = new Date().toISOString().split('T')[0];
     setCurrentDate(currentDate);
     setToDate(currentDate); // Set the initial "To date" value
   }, []);
+
+  useEffect(() => {
+    // Set the current date and time when the component mounts
+    updateDateTime();
+
+    // Update the current date and time every second
+    const intervalId = setInterval(() => {
+      updateDateTime();
+    }, 1000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const updateDateTime = () => {
+    const currentDateTime = new Date();
+    const formattedTime = currentDateTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+    setCurrentTime(formattedTime);
+  };
 
   // ===== SCHEMA =================
   const TranEducationReportSchema = yup.object().shape({
@@ -45,7 +67,7 @@ function TranEducationReport({
     setValue,
   } = useForm({
     defaultValues: {
-      Emp_code: 'defaultEmployeeCode', // Set the default employee code here
+      Emp_code: "", // Set the default employee code here
     },
     mode: 'onChange',
     resolver: yupResolver(TranEducationReportSchema),
@@ -56,7 +78,7 @@ function TranEducationReport({
     GetTransAllEmp();
   }, [GetTransAllEmp]);
 
-  // Set the default value for the Emp_code field
+  // // Set the default value for the Emp_code field
   useEffect(() => {
     if (empData && empData.length > 0) {
       setValue('Emp_code', empData[0].Emp_Code);
@@ -89,58 +111,6 @@ function TranEducationReport({
   };
 
 
-  // const PdfData = (
-  //   <Document>
-  //     <Page size="A4">
-  //       <View style={{ padding: 20, fontFamily: 'Helvetica' }}>
-  //         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-  //           <Image src={LogoUrl} style={{ width: '80px', height: '30px', backgroundColor: 'yellow' }} />
-  //           <Text style={{ textAlign: 'center', fontSize: 15, fontWeight: 'bold', margin: '20px 0' }}>
-  //             TRANSACTION EDUCATION REPORT
-  //           </Text>
-  //           <Text style={{ fontSize: 10, fontWeight: 'bold' }}>
-  //             DATED: {currentDate}
-  //           </Text>
-  //         </View>
-
-  //         <View style={{ marginVertical: 20 }}>
-  //           {isTranEducationReportData?.map((item, index) => (
-  //             <View key={index} style={{ marginBottom: 20 }}>
-  //               <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 5 }}>{item?.Emp_name}</Text>
-  //               <Text style={{ fontSize: 10, marginBottom: 10 }}>{item?.employeeDesig}</Text>
-  //               <Text style={{ fontSize: 10, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Department:</Text> {item?.Dept_name}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Education:</Text> {item?.Edu_name}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Institution:</Text> {item?.Institution_Name}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Year:</Text> {item?.Edu_year}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Grade:</Text> {item?.Edu_Grade}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Top flag:</Text> {item?.Top_flag}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Grade Name:</Text> {item?.GradeName}
-  //               </Text>
-  //               <Text style={{ fontSize: 12, marginBottom: 5 }}>
-  //                 <Text style={{ fontWeight: 'bold' }}>Location:</Text> {item?.Location}
-  //               </Text>
-  //             </View>
-  //           ))}
-  //         </View>
-  //       </View>
-  //     </Page>
-  //   </Document>
-
-  // );
-
   const styles = {
     document: {
       padding: 20,
@@ -164,10 +134,21 @@ function TranEducationReport({
       fontWeight: 'bold',
       marginBottom: 10,
     },
+    dateTimeContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center', // Adjusted to 'baseline' for vertical alignment
+      marginBottom: 10,
+      display: 'flex',
+      flexDirection: 'column',
+    },
     date: {
       fontSize: 12,
       fontWeight: 'bold',
-      marginBottom: 10,
+    },
+    time: {
+      fontSize: 12,
+      fontWeight: 'bold',
     },
     employeeSection: {
       marginBottom: 20,
@@ -179,82 +160,81 @@ function TranEducationReport({
       borderRadius: 5,
       boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     },
+    companyName: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
     employeeName: {
       fontSize: 12,
       fontWeight: 'bold',
+      marginBottom: 5,
     },
     employeeDesignation: {
       fontSize: 12,
       marginBottom: 10,
       color: '#555',
     },
-    detailItem: {
-      fontSize: 12,
+    tableRow: {
+      flexDirection: 'row',
+      borderBottomWidth: 1,
+      borderBottomColor: '#000',
+      paddingBottom: 5,
       marginBottom: 5,
-      color: '#333',
     },
-    detailLabel: {
+    tableCell: {
+      flex: 1,
+      fontSize: 12,
       fontWeight: 'bold',
-      marginRight: 5,
+      textAlign: 'center',
     },
   };
-
   const PdfData = (
     <Document>
       <Page size="A4" style={styles.document}>
         <View>
           <View style={styles.header}>
             <Image src={LogoUrl} style={styles.logo} />
-            <Text style={styles.title}>TRANSACTION EDUCATION REPORT</Text>
-            <Text style={styles.date}>DATED: {currentDate}</Text>
+            <View style={styles.companyName}>
+              <Text style={styles.title}>TRANSACTION EDUCATION REPORT</Text>
+              <Text style={styles.title}>LOGOMISH</Text>
+            </View>
+            <View style={styles.dateTimeContainer}>
+              <Text style={styles.date}>DATED: {currentDate}</Text>
+              <Text style={styles.time}>{currentTime}</Text>
+            </View>
           </View>
-
           <View style={styles.employeeSection}>
             {isTranEducationReportData?.map((item, index) => (
               <View key={index} style={styles.employeeItem}>
-                <View style={{ padding: 5 , flexDirection:"row", alignItems:"center", justifyContent:'space-between'}}>
+                <View style={{ padding: 5, flexDirection: "row", alignItems: "center", justifyContent: 'space-between' }}>
                   <View>
-                    <Text style={styles.employeeName}>Employee Name: <Text style={styles.employeeDesignation}> {item?.Emp_name}</Text> </Text>
-                    <Text style={styles.employeeDesignation}>Designation : {item?.employeeDesig}</Text>
-                    <Text style={styles.employeeName}>Education</Text>
-                    <Text style={styles.employeeDesignation}>{item?.Edu_name}</Text>
-                    <Text style={styles.employeeName}>Year</Text>
-                    <Text style={styles.employeeDesignation}>{item?.Edu_year}</Text>
+                    <Text style={styles.employeeName}>Employee Code: <Text style={styles.employeeDesignation}>{item?.Emp_code}</Text></Text>
+                    <Text style={styles.employeeName}>Department: <Text style={styles.employeeDesignation}>{item?.Dept_name}</Text></Text>
+                    <Text style={styles.employeeName}>Designation: <Text style={styles.employeeDesignation}>{item?.employeeDesig}</Text></Text>
                   </View>
                   <View>
-                  <Text style={styles.employeeName}>Employee Code : {item?.Emp_code}</Text> 
-                    <Text style={styles.employeeName}>Department : {item?.Dept_name}</Text> 
-                    <Text style={styles.employeeDesignation}></Text>
-                    <Text style={styles.employeeName}>Institution</Text> 
-                    <Text style={styles.employeeDesignation}>{item?.Institution_Name}</Text>
-                    <Text style={styles.employeeName}>Location</Text> 
-                    <Text style={styles.employeeDesignation}>{item?.Location}</Text> 
+                    <Text style={styles.employeeName}>Employee Name: <Text style={styles.employeeDesignation}>{item?.Emp_name}</Text></Text>
+                    <Text style={styles.employeeName}>Location: <Text style={styles.employeeDesignation}>{item?.Location}</Text></Text>
+                    <Text style={styles.employeeName}> <Text style={styles.employeeDesignation}></Text></Text>
                   </View>
                 </View>
-
-                <View style={styles.detailItem}>
+                <View style={{ marginTop: '50px' }}>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>Institution</Text>
+                    <Text style={styles.tableCell}>Education</Text>
+                    <Text style={styles.tableCell}>Year</Text>
+                    <Text style={styles.tableCell}>Grade</Text>
+                    <Text style={styles.tableCell}>Top flag</Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.tableCell}>{item?.Institution_Name}</Text>
+                    <Text style={styles.tableCell}>{item?.Edu_name}</Text>
+                    <Text style={styles.tableCell}>{item?.Edu_year}</Text>
+                    <Text style={styles.tableCell}>{item?.Edu_Grade}</Text>
+                    <Text style={styles.tableCell}>{item?.Top_flag}</Text>
+                  </View>
                 </View>
-                <Text style={styles.detailItem}>
-                  {/* <Text style={styles.detailLabel}>Education:</Text> {item?.Edu_name} */}
-                </Text>
-                <Text style={styles.detailItem}>
-                  {/* <Text style={styles.detailLabel}>Institution:</Text> {item?.Institution_Name} */}
-                </Text>
-                <Text style={styles.detailItem}>
-                  {/* <Text style={styles.detailLabel}>Year:</Text> {item?.Edu_year} */}
-                </Text>
-                <Text style={styles.detailItem}>
-                  <Text style={styles.detailLabel}>Grade:</Text> {item?.Edu_Grade}
-                </Text>
-                <Text style={styles.detailItem}>
-                  <Text style={styles.detailLabel}>Top flag:</Text> {item?.Top_flag}
-                </Text>
-                <Text style={styles.detailItem}>
-                  <Text style={styles.detailLabel}>Grade Name:</Text> {item?.GradeName}
-                </Text>
-                <Text style={styles.detailItem}>
-                  {/* <Text style={styles.detailLabel}>Location:</Text> {item?.Location} */}
-                </Text>
               </View>
             ))}
           </View>
@@ -262,8 +242,6 @@ function TranEducationReport({
       </Page>
     </Document>
   );
-
-
   useEffect(() => {
     if (isTranEducationReportData.length > 0) {
       handleDownload();
@@ -313,6 +291,7 @@ function TranEducationReport({
               </div>
               <div className="paySlipBtnBox">
                 <SimpleButton type={'submit'} loading={isLoading} title="Download PDF" />
+
               </div>
             </form>
           </div>

@@ -44,7 +44,7 @@ function Experience_Report({
         setValue,
     } = useForm({
         defaultValues: {
-            Emp_Code: 'defaultEmployeeCode', // Set the default employee code here
+            Emp_Code: ' ', // Set the default employee code here
         },
         mode: 'onChange',
         resolver: yupResolver(ExperienceSchema),

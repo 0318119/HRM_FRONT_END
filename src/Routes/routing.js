@@ -108,7 +108,6 @@ import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
-import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation';
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import TAEducationForm2 from '../TransactionAppointForm/TAEducationForm2.js'
 import TASalaryForm2 from '../TransactionAppointForm/TASalaryForm2.js'
@@ -128,6 +127,7 @@ import ServiceLengthReport from '../HrOperations/ServiceLengthReport.js'
 import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Employee_Experience_Report from '../HrOperations/Experience_Report.js'
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
+import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
 
 
 
@@ -215,9 +215,7 @@ const routing = () => {
             <Route path='/New_Appointment_Report' element={<NewAppointmentReport />} />
             <Route path='/Retirement_Due_Report' element={<RetirementDueReport />} />
             <Route path='/Due_For_Confirmation' element={<Due_For_Confirmation />} />
-            <Route path='/ServiceLengthReport' element={<ServiceLengthReport />} />
             <Route path='/TranEducationReport' element={<TranEducationReport />} />
-            <Route path='/Experience_Report' element={<Experience_Report />} />
             <Route path='/Service_Length_Report' element={<ServiceLengthReport />} />
             <Route path='/Employee_Education_Report' element={<TranEducationReport />} />
             <Route path='/Employee_Experience_Report' element={<Employee_Experience_Report />} />
