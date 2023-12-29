@@ -81,7 +81,7 @@ export default function ChartFlow() {
       children: [],
     };
     topLevelData.children = chartData
-      .filter((firstChild) => supervisor?.Emp_code === firstChild?.Supervisor_Code)
+    .filter((firstChild) => supervisor?.Emp_code === firstChild?.Supervisor_Code)
       .map((firstChild) => {
         const firstLevel = {
           ...firstChild,
