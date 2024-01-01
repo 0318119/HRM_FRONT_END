@@ -21,7 +21,7 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isCode2, setCode2] = useState(isCode)
-    const [isUpdate , setUpdate] = useState('')
+    const [isUpdate, setUpdate] = useState('')
     const [isLoading, setLoading] = useState(false)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode2, setMode2] = useState('read')
@@ -32,16 +32,15 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const EditBack = () => {
         cancel('read')
     }
+    useEffect(() => {
+        if(mode2 == "read"){
+            GetEducationSavedData(isCode)
+        }else{
+            GetEducationSavedData(isCode)
+        }
+    }, [mode2])
 
-
-useEffect(() => {
-    GetEducationSavedData(isCode)
-}, [])
-
-
-    console.log(Red_AppointEducation, 'Red_AppointEducation')
-
-const columns = [
+    const columns = [
         {
             title: 'Education',
             dataIndex: 'Edu_Code',
@@ -109,7 +108,6 @@ const columns = [
         }
     }, [page, isSearchVal])
 
-
     async function handleConfirmDelete(id) {
         await fetch(
             `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
@@ -167,9 +165,9 @@ const columns = [
                                 <div className="PositionsFlexBox">
                                     <h4 className="text-dark">Education Information</h4>
                                     <div className="PositionssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
+                                        {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
                                     </div>

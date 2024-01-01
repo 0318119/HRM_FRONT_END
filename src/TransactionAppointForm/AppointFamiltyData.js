@@ -36,14 +36,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     }
 
     useEffect(() => {
-        GetMarriage(isCode)
-        GetChildren(isCode)
-    }, [])
+        if(mode2 == 'read'){
+            GetMarriage(isCode)
+            GetChildren(isCode)
+        }else{
+            GetMarriage(isCode)
+            GetChildren(isCode)
+        }
+    }, [mode2])
 
 
-
-    // console.log(isCode2, 'isCode2')
-    // console.log(Red_AppointFamily, 'Red_AppointFamily')
 
     const columns = [
         {
@@ -135,7 +137,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
     async function handleMarriageDelete(Sequence_no) {
-        console.log(Sequence_no, 'Sequence_no')
+        // console.log(Sequence_no, 'Sequence_no')
         await fetch(
             `${baseUrl.baseUrl}/marriages/DeleteTranMarriages`, {
             method: "POST",
@@ -152,7 +154,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     type: 'success',
                     content: "You have successfully deleted",
                 });
+                // cancel('read')
                 setTimeout(() => {
+
                 }, 3000);
             }
             else {
@@ -188,9 +192,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     type: 'success',
                     content: "You have successfully deleted",
                 });
-                // setTimeout(() => {
+                // cancel('read')
+                setTimeout(() => {
                     
-                // }, 3000);
+                }, 3000);
             }
             else {
                 messageApi.open({

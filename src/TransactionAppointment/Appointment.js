@@ -71,6 +71,16 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         }
     }, [page, isSearchVal]);
 
+    useEffect(() => {
+        if (mode == "read") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        } 
+    }, [mode]);
+
     const columns = [
         {
             title: "Sequence No",

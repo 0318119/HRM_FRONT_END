@@ -41,21 +41,14 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
 
     
 
-    // useEffect(() => {
-    //     if (isSearchVal == '') {
-    //         GetEmployer({
-    //             pageSize: pageSize,
-    //             pageNo: page,
-    //             search: null
-    //         })
-    //     } else {
-    //         GetEmployer({
-    //             pageSize: pageSize,
-    //             pageNo: 1,
-    //             search: isSearchVal
-    //         })
-    //     }
-    // }, [page, isSearchVal])
+    useEffect(() => {
+     if(mode2 == 'read'){
+         GetEmployer(isCode)
+     }else{
+         GetEmployer(isCode)
+
+     }
+    }, [mode2])
 
 
 
@@ -132,6 +125,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
+                    cancel('read')
                     GetEmployer({
                         // pageSize: pageSize,
                         // pageNo: 1,
