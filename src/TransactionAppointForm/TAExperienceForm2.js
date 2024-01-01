@@ -131,7 +131,7 @@ useEffect(() => {
         //     )
         // }
 
-    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]])
+    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]])
     // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0] , 'hgavdfu')
 
 
