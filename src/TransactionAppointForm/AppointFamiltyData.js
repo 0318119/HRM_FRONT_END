@@ -21,6 +21,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     const [page2, setPage2] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isCode2, setCode2] = useState(isCode)
+    const [isLoading, setLoading] = useState(false)
     const [mode2, setMode2] = useState('read')
     const [isSearchVal, setSearchVal] = useState('')
     const [update, setUpdate] = useState('')
@@ -205,6 +206,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
         });
     }
 
+
+    console.log(Red_AppointFamily, 'Red_AppointFamily')
+
+
     return (
         <>
 
@@ -243,7 +248,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 <span>Children Details</span>
                                 <Table 
                                     columns={columns2}
-                                    loading={Red_AppointFamily?.loading}
+                                        loading={Red_AppointFamily?.loading}
                                         dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
                                     pagination={false}
                             />

@@ -99,7 +99,7 @@ const ManualAttendance = ({ Red_ManualAttendence, AllEmployees }) => {
                                                 setSearchVal(e.target.value);
                                             }}
                                         />
-                                        <Button title="Create" onClick={() => setMode("create")} />
+                                        {/* <Button title="Create" onClick={() => setMode("create")} /> */}
                                     </div>
                                 </div>
                                 <hr />

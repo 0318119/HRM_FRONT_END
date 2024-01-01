@@ -16,6 +16,7 @@ import { Link, useLocation } from "react-router-dom";
 
 function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_Appointment }) {
 
+  console.log(isCode, "Please")
 
   var get_access_token = localStorage.getItem("access_token");
   var get_company_code = localStorage.getItem("company_code");
@@ -47,6 +48,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   const [LocationCodeErr, setLocationCodeErr] = message.useMessage();
   const [ReligionCodeErr, setReligionCodeErr] = message.useMessage();
   const [SupervisorCodeErr, setSupervisorCodeErr] = message.useMessage();
+  const [getData , setGetData] =  useState([])
   const [pageSize, setPageSize] = useState(10);
   const currentDate = new Date();
   const EditBack = () => {
@@ -54,7 +56,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   };
   const search = useLocation().search
   var userId = new URLSearchParams(search).get('userId')
-  console.log(isCode , 'usder')
 
  
   async function getEmpTypeCodeData() {
@@ -81,6 +82,33 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       });
     });
   }
+
+  async function getDataByID(isCode) {
+    await fetch(`${baseUrl.baseUrl}/appointments/GetAppointmentBySequenceNo/${isCode}`, {
+      method: "GET",
+      headers: { "content-type": "application/json", accessToken: `Bareer ${get_access_token}` },
+    }
+    ).then((response) => {
+      return response.json();
+    }).then(async (response) => {
+      if (response.success) {
+        setGetData(response.data)
+        // console.log(response, 'response.data')
+      }
+      else {
+        getEmpCodeErr.open({
+          type: 'error',
+          content: "in Emp type code :" + response?.message || response?.messsage,
+        });
+      }
+    }).catch((error) => {
+      getEmpCodeErr.open({
+        type: 'error',
+        content: "in Emp type code :" + error?.message || error?.messsage,
+      });
+    });
+  }
+
   async function EmpCategoryData() {
     await fetch(`${baseUrl.baseUrl}/employment_category/GetEmploymentCategoryWOP`, {
       method: "GET",
@@ -371,6 +399,7 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
   }
 
   useEffect(() => {
+    getDataByID(isCode)
     getEmpTypeCodeData()
     EmpCategoryData()
     LeaveCategoryData()
@@ -407,10 +436,74 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
       console.error(error);
     }
   };
+
+ useEffect(() => {
+   reset({
+     Sequence_no: getData?.Sequence_no,
+     Emp_name: getData?.Emp_name,
+     Emp_Father_name : getData?.Emp_Father_name,
+     Emp_joining_date: getData?.Emp_appointment_date,
+     Emp_confirm_date: getData?.Emp_confirm_date,
+     Emp_email : getData?.Emp_email,
+     Vehicle_Registration_Number: getData?.Vehicle_Registration_Number,
+     Emp_nic_no: getData?.Emp_nic_no,
+     Emp_ntn_no : getData?.Emp_ntn_no,
+     Emp_nic_issue_date: getData?.Emp_nic_issue_date,
+     Emp_nic_expiry_date: getData?.Emp_nic_expiry_date,
+     Emp_Retirement_age: getData?.Emp_Retirement_age,
+     Emp_address_line1: getData?.Emp_address_line1,
+     Emp_address_line2: getData?.Emp_address_line2,
+     Permanent_address: getData?.Permanent_address,
+     Emp_home_tel1 : getData?.Emp_home_tel1,
+     Emp_home_tel2 : getData?.Emp_home_tel2,
+     Emp_office_tel1: getData?.Emp_office_tel1,
+     Emp_office_tel2 : getData?.Emp_office_tel2,
+     Emp_mobile_No: getData?.Emp_mobile_No,
+     Emp_birth_date : getData?.Emp_birth_date,
+     Offer_Letter_date : getData?.Offer_Letter_date,
+     Tentative_Joining_date : getData?.Tentative_Joining_date,
+     ContractExpiryDate : getData?.ContractExpiryDate,
+     Probationary_period_months: getData?.Probationary_period_months,
+     Notice_period_months: getData?.Notice_period_months,
+     RefferedBy: getData?.RefferedBy,
+     Emp_marital_status: getData?.Emp_marital_status,
+     Confirmation_Flag: getData?.Confirmation_Flag,
+     Emp_Blood_Group : getData?.Emp_blood_group,
+     Emp_sex_code : getData?.Emp_sex_code,
+     Religion_Code: getData?.Religion_Code,
+     Nationality: getData?.Nationality,
+     Employment_Type_code: getData?.Employment_Type_code,
+     Emp_category : getData?.Emp_category,
+     Emp_Leave_category: getData?.Emp_Leave_category,
+     Emp_Payroll_category : getData?.Emp_payroll_category,
+     Shift_code : getData?.Shift_code,
+     Desig_code : getData?.Desig_code,
+     Cost_Centre_code : getData?.Cost_Centre_code,
+     Section_code : getData?.Section_code,
+     Grade_code: getData?.Grade_code,
+     Edu_code: getData?.Edu_code,
+     Loc_code: getData?.Loc_code,
+     Supervisor_Code: getData?.Supervisor_Code,
+     Contact_Person_Name : getData?.Contact_Person_Name,
+     Relationship : getData?.Relationship,
+     Contact_address1 : getData?.Contact_address1,
+     Contact_address2 : getData?.Contact_address2,
+     Contact_home_tel1 : getData?.Contact_home_tel1,
+     Contact_home_tel2: getData?.Contact_home_tel2
+
+
+
+   })
+ }, [getData])
+
+    console.log(getData, 'ff')
+ 
+
   const {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     watch,
   } = useForm({
     defaultValues: {
@@ -572,10 +665,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
         setLoading(false)
     });
   }
-
-
-
-
 
 
   return (
@@ -1236,7 +1325,12 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
                 </div>
                 <div className='CountryBtnBox'>
                   <CancelButton onClick={EditBack} title={'Back'} />
-                  <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                  {isCode ? 
+                    <SimpleButton type={'submit'} loading={isLoading} title="Update" />
+                    :
+                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+
+                  }
                 </div>
               </form>
             </div>
