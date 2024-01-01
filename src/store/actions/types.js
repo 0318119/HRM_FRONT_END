@@ -421,3 +421,9 @@ export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_R
 export const GET_Bank_Letter_Report_DATA = "    GET_Bank_Letter_Report_DATA,";
 export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
 export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
+
+// PAYROLL ===> Paysheet_Report === 
+
+export const GET_Paysheet_Report_DATA = "GET_Paysheet_Report_DATA,";
+export const GET_Paysheet_Report_START = "GET_Paysheet_Report_START";
+export const GET_Paysheet_Report_END = "GET_Paysheet_Report_END";

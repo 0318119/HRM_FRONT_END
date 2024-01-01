@@ -75,6 +75,7 @@ import Red_RetirementSeparationReport from './reducers/HrOperations/RetirementSe
 import Red_AppointChecklist from "./reducers/Appointments/AppointChecklist/index"
 import Red_Date_Of_Birth_Inquiry_Report from './reducers/HrOperations/Date_Of_Birth_Inquiry_Report'
 import Red_Bank_Letter_Report from './reducers/payroll/Bank_Letter_Report/index'
+import Red_Paysheet_Report from './reducers/payroll/Paysheet_Report'
 
 const reducers = combineReducers({
   Transition_family,
@@ -157,7 +158,8 @@ const reducers = combineReducers({
   Red_RetirementSeparationReport,
   Red_AppointChecklist,
   Red_Date_Of_Birth_Inquiry_Report,
-  Red_Bank_Letter_Report
+  Red_Bank_Letter_Report,
+  Red_Paysheet_Report
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
