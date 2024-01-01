@@ -665,10 +665,6 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
     });
   }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> cf485642105d520513a2a4a9500b2fcc48aa93ee
   return (
     <>
 
