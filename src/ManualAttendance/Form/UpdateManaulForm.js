@@ -35,13 +35,20 @@ function UpdateManaulForm({
     const year = currentDate.getFullYear().toString();
     const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
     const day = ('0' + currentDate.getDate()).slice(-2);
-
     const formattedDate = `${year}-${month}-${day}`;
+    const [isAttendDate, setAttendDate] = useState(formattedDate)
+
     const currentHours = currentDate.getHours();
+    const [isHours, setHours] = useState(currentHours)
     const currentMinutes = currentDate.getMinutes();
     const currentSeconds = currentDate.getSeconds();
 
-    
+    const HandleDate = (e) =>{
+        setAttendDate(e.target.value)
+    }
+    const HandleHours = (e) =>{
+        setHours(e.target.value)
+    }    
 
     const EditBack = () => {
         cancel("read");
@@ -56,7 +63,6 @@ function UpdateManaulForm({
         Remarks : yup.string().required("remarks is Required"),
     });
 
-    console.log(isCode2, 'isCode2')
 
 
     const submitForm = async (data) => {
@@ -64,7 +70,6 @@ function UpdateManaulForm({
             const isValid = await UdpateAttend.validate(data);
             if (isValid) {
                 UpdateAttend(data)
-                // console.log(data, "data");
             }
         } catch (error) {
             console.error(error, "error message");
@@ -136,20 +141,24 @@ function UpdateManaulForm({
                         placeholder={'Attendance Date'}
                         id="Attendance_Date"
                         name="Attendance_Date"
+                        value={isAttendDate}
                         type="Date"
                         showLabel={true}
                         errors={errors}
                         control={control}
+                        onChange={HandleDate}
                     />
                     <FormInput
                         label={'Time In Hours'}
-                        placeholder={currentHours}
+                        placeholder={isHours}
                         id="Emp_Time_in_HH"
                         name="Emp_Time_in_HH"
+                        value={isHours}
                         type="time"
                         showLabel={true}
                         errors={errors}
                         control={control}
+                        onChange={HandleHours}
                     />
                     <FormInput
                         label={'Time In MM'}

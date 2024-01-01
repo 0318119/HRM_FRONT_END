@@ -45,7 +45,6 @@ function ManualAttendanceForm({ cancel,
         Month: yup.string().required("Month is Required"),
     });
 
-    console.log(isCode, ';isCode')
 
 
     const submitForm = async (data) => {
@@ -53,7 +52,6 @@ function ManualAttendanceForm({ cancel,
             const isValid = await ManualAttend.validate(data);
             if (isValid) {
                 getAttendH(data)  
-                // console.log(data, "data");
             }
         } catch (error) {
             console.error(error, "error message");

@@ -71,6 +71,16 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         }
     }, [page, isSearchVal]);
 
+    useEffect(() => {
+        if (mode == "read") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        } 
+    }, [mode]);
+
     const columns = [
         {
             title: "Sequence No",
@@ -410,6 +420,13 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             });
         });
     }
+
+    const filteredData = Red_Appointment?.data?.[0]?.res?.data1?.filter(
+        (item) => item.Process_Flag !== 'Y'
+    );
+
+    console.log(Red_Appointment?.data?.[0]?.res?.data1, 'filteredData')
+
     return (
         <>
             <div>
@@ -443,7 +460,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                 <Table
                                     columns={columns}
                                     loading={Red_Appointment?.loading}
-                                    dataSource={Red_Appointment?.data?.[0]?.res?.data1}
+                                    dataSource={filteredData}
                                     scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,

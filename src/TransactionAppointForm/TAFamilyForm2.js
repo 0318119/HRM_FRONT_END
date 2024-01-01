@@ -42,6 +42,7 @@ function TAFamilyForm2({
     const [messageApi, contextHolder] = message.useMessage();
 
     const [isLoading, setLoading] = useState(false)
+    const [isLoading2, setLoading2] = useState(false)
     const currentDate = new Date();
     const EditBack = () => {
         cancel('read')
@@ -62,11 +63,6 @@ function TAFamilyForm2({
 
     });
 
-
-
-
-
-    
 
 
     const submitForm = async (data) => {
@@ -91,6 +87,7 @@ function TAFamilyForm2({
             if (isValid) {
                 if (updateChlid){
                     UpdateChildren(data)
+                    console.log(data, "data")
                 }else{
                     SaveChildren(data)
                 }
@@ -150,19 +147,13 @@ function TAFamilyForm2({
 
     }, [Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0]])
     
-    // console.log(Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]?.[0], 'Red_AppointFamily') vvvvvvvv
 
     
 
    
  
 
-    const {
-        control,
-        formState: { errors },
-        handleSubmit,
-        reset
-    } = useForm({
+    const {control,formState: { errors }, handleSubmit, reset } = useForm({
         defaultValues: {
             SpauseDOB: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Spause_DOB,
             MarriageDate: Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]?.[0]?.Marriage_Date,
@@ -176,7 +167,9 @@ function TAFamilyForm2({
 
 
 
+
 const SaveForm = async (data) => {
+    setLoading(true)
         try {
             const response = await SaveMarriageForm({
                 Sequenceno: isCode2,
@@ -203,6 +196,7 @@ const SaveForm = async (data) => {
 
    
 const SaveChildren = async (data) => {
+    setLoading2(true)
         try {
             const response = await SaveChildrenForm({
                 Sequenceno: isCode2,
@@ -229,6 +223,7 @@ const SaveChildren = async (data) => {
 
 
 const UpdateChildren = async (data) => {
+    setLoading2(true)
 
         try {
             const response = await UpdateChildrenForm({
@@ -256,6 +251,7 @@ const UpdateChildren = async (data) => {
     };   
 
 const UpdateMarriage = async (data) => {
+    setLoading(true)
 
         try {
             const response = await UpdateMarriageForm({
@@ -421,8 +417,8 @@ const UpdateMarriage = async (data) => {
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
                                     {updateChlid ? 
-                                    <SimpleButton type={'submit'} loading={isLoading} title="Update" />  :
-                                        <SimpleButton type={'submit'} loading={isLoading} title="Save" /> 
+                                    <SimpleButton type={'submit'} loading={isLoading2} title="Update" />  :
+                                        <SimpleButton type={'submit'} loading={isLoading2} title="Save" /> 
                                      }
                                 </div>
                             </form>

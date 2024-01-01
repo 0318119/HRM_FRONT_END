@@ -22,6 +22,8 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
     const [pageSize, setPageSize] = useState(10);
     const [isCode2, setCode2] = useState(isCode)
     const [mode2, setMode2] = useState('read')
+    const [isUpdate ,setUpdate] = useState('')
+    const [isLoading, setLoading] = useState(false)
     const [isSearchVal, setSearchVal] = useState('')
 
     const EditPage = (mode2, code2) => {
@@ -39,24 +41,16 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
 
 
 
-    // useEffect(() => {
-    //     if (isSearchVal == '') {
-    //         GetEmployer({
-    //             pageSize: pageSize,
-    //             pageNo: page,
-    //             search: null
-    //         })
-    //     } else {
-    //         GetEmployer({
-    //             pageSize: pageSize,
-    //             pageNo: 1,
-    //             search: isSearchVal
-    //         })
-    //     }
-    // }, [page, isSearchVal])
+    useEffect(() => {
+     if(mode2 == 'read'){
+         GetEmployer(isCode)
+     }else{
+         GetEmployer(isCode)
+
+     }
+    }, [mode2])
 
 
-    console.log(Red_AppointExprience, 'Red_AppointExpriencew')
 
     const columns = [
         {
@@ -90,7 +84,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Emp_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit', data?.Emp_Code, setUpdate(data?.ID))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
@@ -131,6 +125,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                     content: "You have successfully deleted",
                 });
                 setTimeout(() => {
+                    cancel('read')
                     GetEmployer({
                         // pageSize: pageSize,
                         // pageNo: 1,
@@ -196,7 +191,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                                 <TAExperienceForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAExperienceForm2 cancel={setMode2} isCode2={isCode2} page2={page2} />
+                                <TAExperienceForm2 cancel={setMode2} isUpdate={isUpdate} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 
