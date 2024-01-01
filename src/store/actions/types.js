@@ -415,3 +415,9 @@ export const GET_CHECKLIST_DATA_END = "GET_CHECKLIST_DATA_END";
 export const GET_Date_Of_Birth_Inquiry_Report_DATA = "Date_Of_Birth_Inquiry_Report_DATA,";
 export const GET_Date_Of_Birth_Inquiry_Report_START = "GET_Date_Of_Birth_Inquiry_Report_START";
 export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_Report_END";
+
+// PAYROLL ===> Bank_Letter_Report === 
+
+export const GET_Bank_Letter_Report_DATA = "    GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
+export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
