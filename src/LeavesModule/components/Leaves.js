@@ -116,10 +116,10 @@ const Leaves = ({
       message.error("To date is should be equal to From Date")
     }
     else { setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves) }
-  }, [balancedDays, appliedDays, halfDayCheck, leaveCalculations,isDate]);
+  }, [balancedDays, appliedDays, halfDayCheck, leaveCalculations, isDate]);
 
   useEffect(() => {
-    if(mode == "read"){
+    if (mode == "read") {
       GET_EMP_LEAVES_APP()
     }
   }, [])
@@ -133,20 +133,20 @@ const Leaves = ({
 
   // SAVE LEAVE APPLICATION API CALL =====================================
   useEffect(() => {
-    if(EditCodeEmp && mode == "Edit"){
+    if (EditCodeEmp && mode == "Edit") {
       setLeaveReq(EditCodeEmp?.Emp_code)
       setLeave(EditCodeEmp?.Leave_type_code)
       sethalfDayCheck(EditCodeEmp?.Leave_Days == 0.5 ? true : false)
       setDate([{ FromDate: EditCodeEmp?.Start_Date }, { ToDate: EditCodeEmp?.End_Date }]);
       setLeaveReasons(EditCodeEmp?.Reason)
-      console.log("run this code...",EditCodeEmp?.Reason)
-    }else{
+      console.log("run this code...", EditCodeEmp?.Reason)
+    } else {
       setLeaveReq(Emp_code)
       setDate([{ FromDate: currentDatees }, { ToDate: currentDatees }]);
       sethalfDayCheck(0)
       setLeaveReasons("")
     }
-  }, [EditCodeEmp,mode])
+  }, [EditCodeEmp, mode])
 
 
   const payLoad = JSON.stringify({
@@ -158,7 +158,9 @@ const Leaves = ({
     "LeaveDays": halfDayCheck == true ? 0.5 : appliedDays?.data?.[0]?.[0]?.Leaves,
     "Reason": isLeaveReasons
   })
-  const checkValidation = async (e) => {
+
+  const saveLeaveApp = async (e) => {
+    e.preventDefault(e)
     if (isDate[0].FromDate == null) {
       message.error("Start Date is required")
     }
@@ -171,29 +173,34 @@ const Leaves = ({
     }
     else if (isLeaveReasons == "") {
       message.error("Leave Reason is required")
-    }else { setValidate(false) }
-  }
-  const saveLeaveApp = async (e) => {
-    e.preventDefault(e)
-    if (isValidate === true) { return checkValidation() }
-    else {
+    } else {
       setSaveLoading(true)
       const isSaveFun = await SAVE_LEAVE_APPLICATION(payLoad)
       if (isSaveFun?.success) {
-        setValidate(true)
         setSaveLoading(false)
         message.success("You have successfully save this leave...")
         setShow(true)
       } else {
         message.error(isSaveFun?.message || isSaveFun?.messsage)
-        setValidate(true)
         setSaveLoading(false)
       }
     }
   }
   const submitLeave = async (e) => {
     e.preventDefault(e)
-    if (isValidate === true) { return checkValidation() }
+    if (isDate[0].FromDate == null) {
+      message.error("Start Date is required")
+    }
+    else if (isDate[1].ToDate == null) {
+      message.error("End Date is required")
+    }
+    else if (isLeave == null) {
+      message.error("Leave Type is required")
+      setValidate(false)
+    }
+    else if (isLeaveReasons == "") {
+      message.error("Leave Reason is required")
+    }
     else {
       setSubmitLoading(true)
       const isSaveFun = await SUBMIT_LEAVE_APPLICATION(payLoad)
@@ -231,18 +238,26 @@ const Leaves = ({
     }).then(async (response) => {
       if (response?.failed == "failed") {
         message.error(response?.message || response?.messsage)
+        setTimeout(() => {
+          setfileLoader(false)
+        }, 3000);
       } else {
-        message.error(response?.message || response?.messsage)
+        message.success(response?.message || response?.messsage)
         setTimeout(() => {
           setIsModalOpen(false);
-        }, 2000);
+        }, 1000);
+        setTimeout(() => {
+          setfileLoader(false)
+        }, 3000);
         GET_EMP_FILES(isCode)
       }
     }).catch((errs) => {
-      message.error(errs?.message || errs?.messsage)
+      message.open(errs?.message || errs?.messsage)
+      setTimeout(() => {
+        setfileLoader(false)
+      }, 3000);
     })
   }
-
 
   const {
     control,
@@ -376,13 +391,18 @@ const Leaves = ({
   useEffect(() => {
     if (isfileLoader == true) {
       message.loading("Please wait...")
-    } else if(isDeleteLoader == true){
-      message.loading("Please wait...")
-    }
-    else {
+    } else {
       message.destroy()
     }
-  }, [isfileLoader, isDeleteLoader])
+  }, [isfileLoader])
+
+  useEffect(() => {
+    if (isDeleteLoader == true) {
+      message.loading("Please wait...")
+    } else {
+      message.destroy()
+    }
+  }, [isDeleteLoader])
 
   return (
     <>
@@ -528,14 +548,22 @@ const Leaves = ({
                     setMode("read")
                     setCode(null)
                   }} title="Cancel" />
-                  {
-                    mode == "create" ?
-                      <Button loading={isSaveLoading} onClick={(e) => saveLeaveApp(e)} title="Save" /> :
-                      <Button loading={isSubmitLoading} onClick={(e) => submitLeave(e)} title="Submit" />
-                  }
+
+                  <Button loading={isSaveLoading} onClick={(e) => saveLeaveApp(e)} title="Save" />
                   {
                     isShow == true ?
-                      <Button title="Uplaod File" onClick={(e) => showModal(e)} /> : null
+                      <>
+                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
+                        <Button loading={isSubmitLoading} onClick={(e) => submitLeave(e)} title="Submit" />
+                      </>
+                      : null
+                  }
+                  {
+                    mode == "Edit" ?
+                      <>
+                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
+                        <Button loading={isSubmitLoading} onClick={(e) => submitLeave(e)} title="Submit" />
+                      </> : null
                   }
                 </div>
               </form>
@@ -561,27 +589,29 @@ const Leaves = ({
             </div>
           )}
 
-          {mode == "Edit" || mode == "create" ?
-            <div className="col-lg-12 mt-5 empLeavesBgColor">
-              <div className='empLeavesTableHead'>
-                <h5 className='text-dark pl-2 mb-3 mt-2'><b>Attachment</b></h5>
-              </div>
-              <div>
-                <Table
-                  columns={filecolumns}
-                  loading={Red_Emp_Leaves?.loading}
-                  dataSource={Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]}
-                  scroll={{ x: 10 }}
-                  pagination={true}
-                />
-              </div>
-            </div> : null
+          {
+            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 ?
+              <div className="col-lg-12 mt-5 empLeavesBgColor">
+                <div className='empLeavesTableHead'>
+                  <h5 className='text-dark pl-2 mb-3 mt-2'><b>Attachment</b></h5>
+                </div>
+                <div>
+                  <Table
+                    columns={filecolumns}
+                    loading={Red_Emp_Leaves?.loading}
+                    dataSource={Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]}
+                    scroll={{ x: 10 }}
+                    pagination={true}
+                  />
+                </div>
+              </div> : null
           }
+
 
         </div>
       </div>
-      <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <input type="file" name="" id=""  onChange={(e) => { setfile(e.target.files[0]) }} accept="image/*" placeholder='Attechments' />
+      <Modal title="Upload Attachments" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <input type="file" name="" id="" onChange={(e) => { setfile(e.target.files[0]) }} accept="image/*" placeholder='Attechments' />
       </Modal>
     </>
   )
