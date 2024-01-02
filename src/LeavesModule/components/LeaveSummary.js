@@ -407,22 +407,22 @@ function LeaveSummary() {
                             <textarea className='form-control' placeholder="Enter the your remarks..." onChange={(e) => {setRemarks(e.target.value)}}></textarea>
                         </div> 
                     </div>
-                    <div className='mx-3 mb-3'>
+                    <div className='mx-3 mb-3 mt-3'>
                         <button className='mx-1' onClick={(e) => {
                             e.preventDefault(e)
                             setStep("StepBack")
                             setmodal(true)
-                        }}>Step Back</button>
+                        }} style={{color: "white"}}>Step Back</button>
                         <button className='mx-1' onClick={(e) => {
                             e.preventDefault(e)
                             setStep("approved")
                             setmodal(true)
-                        }}>Aprove</button>
+                        }} style={{color: "white"}}>Aprove</button>
                         <button className='mx-1' onClick={(e) => {
                             e.preventDefault(e)
                             setStep("reject")
                             setmodal(true)
-                        }}>Reject</button>
+                        }} style={{color: "white"}}>Reject</button>
                     </div>
                 </div>
                 </div>
@@ -430,7 +430,7 @@ function LeaveSummary() {
             </div>
         </div>
         <div className="container px-2 mt-3">
-        <div className="container Leaves_listContainer">
+        <div className="container Leaves_listContainer border p-4">
           <div className="row w-100 mx-0">
             <span className="Leaves_listHeader">
               Attachments
@@ -498,8 +498,8 @@ function LeaveSummary() {
                             )}
                         </ul>
                         <div className='btnBox'>
-                            <button onClick={(e) => step == "StepBack" ? stepBackLeave() : step == "reject" ? rejectLeaveFun() : step == "approved" ? approvedLeaveFun() : false}>yes</button>
-                            <button onClick={() => setmodal(false)}>No</button>
+                            <button onClick={(e) => step == "StepBack" ? stepBackLeave() : step == "reject" ? rejectLeaveFun() : step == "approved" ? approvedLeaveFun() : false} style={{color: "white"}}>yes</button>
+                            <button onClick={() => setmodal(false)} style={{color: "white"}}>No</button>
                         </div>
                     </div>
                 </div>
