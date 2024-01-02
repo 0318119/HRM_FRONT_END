@@ -314,7 +314,10 @@ const Leaves = ({
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button className="editBtn" disabled={data?.Status == "Initialized" ? false : true} onClick={() => EditPage('Edit', data?.Tran_Code)}><FaEdit /></button>
+          {
+            data?.Visible == "true" ?
+            <button className="editBtn" onClick={() => EditPage('Edit', data?.Tran_Code)}><FaEdit /></button> : null
+          }
         </Space>
       ),
     },

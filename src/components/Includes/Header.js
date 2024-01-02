@@ -27,6 +27,7 @@ const Header = (props) => {
   const [isShowIconThree, setisShowIconThree] = useState("")
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
+  var get_Name = localStorage.getItem("Emp_Name")
 
   async function getMultiLevelDropDown() {
     await fetch(`${config['baseUrl']}/dirmenus/GetDirMenus`, {
@@ -108,6 +109,7 @@ const Header = (props) => {
               </div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3 d-flex align-items-center justify-content-end ColMobileRes2">
+              <span style={{color: "white",textTransform: 'capitalize'}}>{get_Name}</span>
               <div className="Header_Settings">
                 <Notify_ico className="notify_ico" />
               </div>
