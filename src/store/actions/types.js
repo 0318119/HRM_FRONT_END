@@ -424,6 +424,9 @@ export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
 
 // PAYROLL ===> Paysheet_Report === 
 
-export const GET_Paysheet_Report_DATA = "GET_Paysheet_Report_DATA,";
-export const GET_Paysheet_Report_START = "GET_Paysheet_Report_START";
-export const GET_Paysheet_Report_END = "GET_Paysheet_Report_END";
+export const GET_PAYSHEET_Report_DATA = "GET_PAYSHEET_Report_DATA,";
+export const GET_PAYSHEET_Report_START = "GET_PAYSHEET_Report_START";
+export const GET_PAYSHEET_Report_PAYROLL = "GET_PAYSHEET_Report_PAYROLL";
+export const GET_PAYSHEET_Report_END = "GET_PAYSHEET_Report_END";
+
+

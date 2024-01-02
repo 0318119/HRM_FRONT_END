@@ -1,17 +1,17 @@
 import {
-    GET_Paysheet_Report_DATA,
-    GET_Paysheet_Report_START,
-    GET_Paysheet_Report_END
+    GET_PAYSHEET_Report_DATA,
+    GET_PAYSHEET_Report_START,
+    GET_PAYSHEET_Report_PAYROLL,
+    GET_PAYSHEET_Report_END
 } from '../../../actions/types.js'
 
 import baseUrl from '../../../../config.json'
 
 
-
-export const GetExperienceAllEmp = () => async (dispatch) => {
+export const GetPaysheet = () => async (dispatch) => {
     try {
         dispatch({
-            type: GET_Paysheet_Report_START,
+            type: GET_PAYSHEET_Report_START,
             payload: true,
             loading: true,
         });
@@ -27,7 +27,7 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_Paysheet_Report_DATA,
+                type: GET_PAYSHEET_Report_PAYROLL,
                 payload: res,
                 loading: false,
             });
@@ -36,7 +36,7 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
         } else {
             const errorRes = await response.json();
             dispatch({
-                type: GET_Paysheet_Report_END,
+                type: GET_PAYSHEET_Report_END,
                 payload: errorRes,
                 loading: false,
             });
@@ -44,7 +44,7 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
         }
     } catch (error) {
         dispatch({
-            type: GET_Paysheet_Report_END,
+            type: GET_PAYSHEET_Report_END,
             payload: false,
             loading: false,
         });
@@ -54,7 +54,7 @@ export const GetExperienceAllEmp = () => async (dispatch) => {
 
 
 
-export const PostExperiencePayload = (data) => async () => {
+export const PostPaysheetPayload = (data) => async () => {
     // console.log(data, 'data')
     const response = await fetch(`${baseUrl.baseUrl}/reports/ExperienceReport`, {
         method: "POST",

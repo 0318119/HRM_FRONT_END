@@ -14,8 +14,9 @@ import LogoUrl from '../../../src/Assets/Images/download.png';
 import * as Red_Bank_Letter_Report_Action from '../../store/actions/payroll/Paysheet_Report';
 
 function Paysheet_Report({
+    GetPaysheet,
     Red_Paysheet_Report,
-    PostExperiencePayload,
+    PostPaysheetPayload
 }) {
     const [isLoading, setLoading] = useState(false);
     const [isFormSubmitted, setFormSubmitted] = useState(false);
@@ -26,14 +27,16 @@ function Paysheet_Report({
     const [selectedEmployee, setSelectedEmployee] = useState('');
 
 
-    useEffect(() => {
-        const currentDate = new Date().toISOString().split('T')[0];
-        setCurrentDate(currentDate);
-        setToDate(currentDate); // Set the initial "To date" value
-    }, []);
+    // useEffect(() => {
+    //     const currentDate = new Date().toISOString().split('T')[0];
+    //     setCurrentDate(currentDate);
+    //     setToDate(currentDate); // Set the initial "To date" value
+    // }, []);
 
     // ===== SCHEMA =================
-    const DOBReportSchema = yup.object().shape({
+    const PaysheetReportSchema = yup.object().shape({
+
+
         Emp_DOB: yup.string().required('Please Select the Birth Month'),
     });
     const {
@@ -46,7 +49,7 @@ function Paysheet_Report({
             Emp_DOB: '', // Set the default employee code here
         },
         mode: 'onChange',
-        resolver: yupResolver(DOBReportSchema),
+        resolver: yupResolver(PaysheetReportSchema),
     });
 
 
@@ -64,9 +67,9 @@ function Paysheet_Report({
     const onSubmit = async (data) => {
         setLoading(true);
         try {
-            const isValid = await DOBReportSchema.validate(data);
+            const isValid = await PaysheetReportSchema.validate(data);
             if (isValid) {
-                const result = await PostExperiencePayload(data.Emp_DOB);
+                const result = await PostPaysheetPayload(data.Emp_DOB);
                 if (result?.success) {
                     message.success('PDF is created, Wait PDF is under downloading...');
                     setFormSubmitted(true);
@@ -84,6 +87,12 @@ function Paysheet_Report({
         }
         setLoading(false);
     };
+
+
+    // GET Paysheet =====================
+    useEffect(() => {
+        GetPaysheet();
+    }, [GetPaysheet]);
 
     const styles = {
         document: {
@@ -216,7 +225,7 @@ function Paysheet_Report({
                 <div className="row justify-content-center">
                     <div className="col-12">
                         <div>
-                            <form onSubmit={handleSubmit} className="paySlipBox">
+                            <form onSubmit={handleSubmit} >
                                 <h4 className="text-dark"> Payslip - Paysheet Report </h4>
                                 <hr />
                                 <div className="form-group formBoxCountry">
@@ -339,5 +348,6 @@ function mapStateToProps({ Red_Paysheet_Report }) {
 }
 
 export default connect(mapStateToProps, {
-    PostExperiencePayload: Red_Bank_Letter_Report_Action.PostExperiencePayload,
+    PostPaysheetPayload: Red_Bank_Letter_Report_Action.PostPaysheetPayload,
+    GetPaysheet: Red_Bank_Letter_Report_Action.GetPaysheet,
 })(Paysheet_Report);
