@@ -181,7 +181,7 @@ const columns = [
                                 <Table
                                     columns={columns}
                                     loading={Red_AppointEducation?.loading}
-                                    dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]}
+                                    dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data}
                                     scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,
