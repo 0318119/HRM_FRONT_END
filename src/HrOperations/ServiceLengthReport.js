@@ -21,14 +21,7 @@ function ServiceLengthReport({
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_ServiceLengthReport?.data?.[0]?.res?.data
   const [isServiceLengthReportData, setServiceLengthReportData] = useState([]);
-  const [currentDate, setCurrentDate] = useState('');
-  const [toDate, setToDate] = useState('');
-
-  useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0];
-    setCurrentDate(currentDate);
-    setToDate(currentDate); // Set the initial "To date" value
-  }, []);
+  const currentDate = new Date().toISOString().split('T')[0]; 
 
   // ===== SCHEMA =================
   const ServiceLengthReportSchema = yup.object().shape({
@@ -45,7 +38,7 @@ function ServiceLengthReport({
   } = useForm({
     defaultValues: {
       Servicefrom: currentDate,
-      Serviceto: toDate, // Set default value for "To date"
+      Serviceto: currentDate, // Set default value for "To date"
     },
     mode: 'onChange',
     resolver: yupResolver(ServiceLengthReportSchema),
@@ -63,7 +56,7 @@ function ServiceLengthReport({
           setServiceLengthReportData(result?.data);
   
           // Now, you can generate the PDF
-          await generatePdf();
+          await handleDownload();
         } else {
           message.error(result?.message || result?.messsage);
         }
@@ -74,32 +67,10 @@ function ServiceLengthReport({
     setLoading(false);
   };
   
-  const generatePdf = async () => {
-    try {
-      // Ensure isServiceLengthReportData is not empty before generating the PDF
-      if (isServiceLengthReportData.length === 0) {
-        message.error('No data available for PDF.');
-        return;
-      }
-  
-      const pdfBlob = await pdf(PdfData).toBlob();
-      saveAs(pdfBlob, 'generated.pdf');
-    } catch (error) {
-      console.error('Error downloading PDF:', error);
-    }
-  };
-  useEffect(() => {
-    if (isFormSubmitted) {
-      handleDownload();
-    }
-  }, [isFormSubmitted]);
 
-  useEffect(() => {
-    // Calculate and set the "To date" whenever "From date" changes
-    const fromDate = getValues('Servicefrom');
-    setToDate(fromDate);
-    setValue('Serviceto', fromDate);
-  }, [getValues, setValue]);
+
+
+
 
   const PdfData = (
     <Document>
@@ -159,17 +130,24 @@ function ServiceLengthReport({
 
   const handleDownload = async () => {
     try {
-      if (isServiceLengthReportData.length === 0) {
+      if (isServiceLengthReportData.length == 0) {
         message.error('No data available for PDF.');
-        return;
+      }else{
+        const pdfBlob = await pdf(PdfData).toBlob();
+        saveAs(pdfBlob, 'generated.pdf');
       }
-
-      const pdfBlob = await pdf(PdfData).toBlob();
-      saveAs(pdfBlob, 'generated.pdf');
     } catch (error) {
       console.error('Error downloading PDF:', error);
     }
   };
+
+  
+  useEffect(() => {
+    if (isFormSubmitted) {
+      handleDownload();
+      setFormSubmitted(false)
+    }
+  }, [isFormSubmitted]);
 
   return (
     <>

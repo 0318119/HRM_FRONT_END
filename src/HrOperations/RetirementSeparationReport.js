@@ -21,15 +21,7 @@ function RetirementSeparationReport({
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_RetirementSeparationReport?.data?.[0]?.res?.data
   const [isRetirementSeparationReportData, setRetirementSeparationReportData] = useState([]);
-  const [currentDate, setCurrentDate] = useState('');
-  const [toDate, setToDate] = useState('');
-
-  useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0];
-    setCurrentDate(currentDate);
-    setToDate(currentDate); // Set the initial "To date" value
-  }, []);
-
+  const currentDate = new Date().toISOString().split('T')[0]; 
   // ===== SCHEMA =================
   const RetirementSeparationReportSchema = yup.object().shape({
     From_Date: yup.string().required('Please Select From Service'),
@@ -45,7 +37,7 @@ function RetirementSeparationReport({
   } = useForm({
     defaultValues: {
       From_Date: currentDate,
-      To_Date: toDate, // Set default value for "To date"
+      To_Date: currentDate, // Set default value for "To date"
     },
     mode: 'onChange',
     resolver: yupResolver(RetirementSeparationReportSchema),
@@ -91,15 +83,9 @@ function RetirementSeparationReport({
   useEffect(() => {
     if (isFormSubmitted) {
       handleDownload();
+      setFormSubmitted(false);
     }
   }, [isFormSubmitted]);
-
-  useEffect(() => {
-    // Calculate and set the "To date" whenever "From date" changes
-    const fromDate = getValues('From_Date');
-    setToDate(fromDate);
-    setValue('To_Date', fromDate);
-  }, [getValues, setValue]);
 
   const PdfData = (
     <Document>
