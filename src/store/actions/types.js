@@ -393,6 +393,8 @@ export const GET_EMP_LEAVES_TYPE_DATA = "GET_EMP_LEAVES_TYPE_DATA"
 export const GET_EMP_LEAVES_APPLIED = "GET_EMP_LEAVES_APPLIED"
 export const GET_EMP_LEAVES_BALANCED_DAYS = "GET_EMP_LEAVES_BALANCED_DAYS"
 export const GET_EMP_LEAVES_APPLICATIONS = "GET_EMP_LEAVES_APPLICATIONS"
+export const GET_EMP_LEAVES_ATTACEMENTS = "GET_EMP_LEAVES_ATTACEMENTS"
+
 
 // HR SETUP ===========> RetirementSeparationReport =========
 export const GET_RetirementSeparationReport_DATA = "GET_RetirementSeparationReport_DATA";
@@ -408,3 +410,19 @@ export const GET_CHECKLIST_DATA = "GET_CHECKLIST_DATA";
 export const GET_CHECKLIST_DATA_START = "GET_CHECKLIST_DATA_START";
 export const GET_CHECKLIST_DATA_CHECK = "GET_CHECKLIST_DATA_SINGLE";
 export const GET_CHECKLIST_DATA_END = "GET_CHECKLIST_DATA_END";
+
+
+// HRSETUPS ===> Date_Of_Birth_Inquiry_Report === 
+
+export const GET_Date_Of_Birth_Inquiry_Report_DATA = "Date_Of_Birth_Inquiry_Report_DATA,";
+export const GET_Date_Of_Birth_Inquiry_Report_START = "GET_Date_Of_Birth_Inquiry_Report_START";
+export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_Report_END";
+
+// Appointment===> check list === >
+
+
+export const GET_MANUAL_ATTENDANCE_DATA = "GET_MANUAL_ATTENDANCE_DATA";
+export const GET_MANUAL_ATTENDANCE_DATA_START = "GET_MANUAL_ATTENDANCE_DATA_START";
+export const GET_MANUAL_ATTENDANCE_DATA_INFO = "GET_MANUAL_ATTENDANCE_DATA_INFO";
+export const GET_MANUAL_ATTENDANCE_DATA_SINGLE = "GET_MANUAL_ATTENDANCE_DATA_SINGLE";
+export const GET_MANUAL_ATTENDANCE_DATA_END = "GET_MANUAL_ATTENDANCE_DATA_END"; 

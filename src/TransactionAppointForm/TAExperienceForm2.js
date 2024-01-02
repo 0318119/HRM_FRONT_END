@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 
 
-function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience, GetEmployeeInfo, GetEmployeeCode, SaveExpForm, GetEmployer }) {
+function TAExperienceForm2({ cancel, mode2, isCode2, page2, isUpdate, Red_AppointExprience, GetEmployeeInfo, GetEmployeeCode, SaveExpForm, GetEmployer, UpdatedExpForm }) {
 
 
     var get_access_token = localStorage.getItem("access_token");
@@ -42,8 +42,8 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
         try {
             const isValid = await AppointExpSchema.validate(data);
             if (isValid) {
-                SaveForm(data)
-                // console.log(data ,'data')
+                isUpdate ? UpdateForm(data) : SaveForm(data)
+                
             }
         } catch (error) {
             console.error(error);
@@ -51,7 +51,6 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
     };
 
 
-    // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0], 'Red_AppointExprience')
 
 
     const {
@@ -85,7 +84,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
 
     const Employers = Red_AppointExprience?.getEmployer?.[0]?.res?.data
 
-    useEffect(() => {
+useEffect(() => {
         if (mode2 == "create") {
             reset({
                 Emp_name: Red_AppointExprience?.data?.[0]?.res?.data?.[0]?.Emp_name,
@@ -104,40 +103,42 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
 
     }, [Red_AppointExprience?.data?.[0]?.res?.data?.[0]])
 
-    const EMPLOYEER = Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]
+    
 
-
-
+    console.log(Red_AppointExprience, 'Red_AppointExprience')
 
     useEffect(() => {
-        if (mode2 == "create") {
+        if (isUpdate) {
             reset({
-                Employer_Code: "",
-                designation: "",
-                department: "",
-                Start_Date: "",
-                End_Date: "",
-                SubmitFlag: "",
+                Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
+                designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.designation,
+                department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
+                Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
+                End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
+                SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
             });
-        } else {
-            reset(
-                {
-                    Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
-                    designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.designation,
-                    department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
-                    Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
-                    End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
-                    SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
-                },
-            )
         }
+        //  else {
+        //     reset(
+        //         {
+        //             Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
+        //             designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.designation,
+        //             department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
+        //             Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
+        //             End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
+        //             SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
+        //         },
+        //     )
+        // }
 
-    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]])
+    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]])
+    // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0] , 'hgavdfu')
 
 
 
 
-    const SaveForm = async (data) => {
+const SaveForm = async (data) => {
+    setLoading(true)
         try {
             const response = await SaveExpForm({
                 Sequence_no: isCode2,
@@ -164,6 +165,41 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
             messageApi.error("An error occurred while Save Exprience");
         }
     };
+
+
+
+
+ const UpdateForm = async (data) => {
+        setLoading(true)
+        try {
+            const response = await UpdatedExpForm({
+                id: isUpdate,
+                EmployerCode: data?.EmployerCode,
+                designation: data?.designation,
+                department: data?.department,
+                Start_Date: data?.Start_Date,
+                End_Date: data?.End_Date,
+                SubmitFlag: data?.SubmitFlag,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Updated Exprience");
+                setTimeout(() => {
+                    cancel('read')
+                    // setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Update Exprience';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Update Exprience:", error);
+            messageApi.error("An error occurred while Update Exprience");
+        }
+    };
+
+
+
 
     return (
         <>
@@ -289,7 +325,9 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, Red_AppointExprience
 
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                                    <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    {isUpdate ? <SimpleButton type={'submit'} loading={isLoading} title="Update" />
+                                    : 
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Save" />}
                                 </div>
                             </form>
                         </div>

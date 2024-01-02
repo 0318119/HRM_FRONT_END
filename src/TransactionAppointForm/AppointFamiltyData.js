@@ -21,6 +21,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     const [page2, setPage2] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isCode2, setCode2] = useState(isCode)
+    const [isLoading, setLoading] = useState(false)
     const [mode2, setMode2] = useState('read')
     const [isSearchVal, setSearchVal] = useState('')
     const [update, setUpdate] = useState('')
@@ -35,14 +36,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
     }
 
     useEffect(() => {
-        GetMarriage(isCode)
-        GetChildren(isCode)
-    }, [])
+        if(mode2 == 'read'){
+            GetMarriage(isCode)
+            GetChildren(isCode)
+        }else{
+            GetMarriage(isCode)
+            GetChildren(isCode)
+        }
+    }, [mode2])
 
 
-
-    // console.log(isCode2, 'isCode2')
-    // console.log(Red_AppointFamily, 'Red_AppointFamily')
 
     const columns = [
         {
@@ -134,7 +137,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
 
 
     async function handleMarriageDelete(Sequence_no) {
-        console.log(Sequence_no, 'Sequence_no')
+        // console.log(Sequence_no, 'Sequence_no')
         await fetch(
             `${baseUrl.baseUrl}/marriages/DeleteTranMarriages`, {
             method: "POST",
@@ -151,7 +154,9 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     type: 'success',
                     content: "You have successfully deleted",
                 });
+                // cancel('read')
                 setTimeout(() => {
+
                 }, 3000);
             }
             else {
@@ -187,9 +192,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                     type: 'success',
                     content: "You have successfully deleted",
                 });
-                // setTimeout(() => {
+                // cancel('read')
+                setTimeout(() => {
                     
-                // }, 3000);
+                }, 3000);
             }
             else {
                 messageApi.open({
@@ -204,6 +210,10 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             });
         });
     }
+
+
+    console.log(Red_AppointFamily, 'Red_AppointFamily')
+
 
     return (
         <>
@@ -233,16 +243,16 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                         <div>
                             {mode2 == "read" && (
                                 <>
-                                    <span>Marriage Details</span>
-                                    <Table columns={columns}
-                                        loading={Red_AppointFamily?.loading}
-                                        dataSource={Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]}
-                                        pagination={false}
-                                    />
-                                    <hr className="py-2" />
-                                    <span>Children Details</span>
-                                    <Table
-                                        columns={columns2}
+                                <span>Marriage Details</span>
+                                <Table columns={columns}
+                                    loading={Red_AppointFamily?.loading}
+                                    dataSource={Red_AppointFamily?.getMarrige?.[0]?.res?.data?.[0]}
+                                    pagination={false}
+                                />
+                                <hr className="py-2" />
+                                <span>Children Details</span>
+                                <Table 
+                                    columns={columns2}
                                         loading={Red_AppointFamily?.loading}
                                         dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
                                         pagination={false}

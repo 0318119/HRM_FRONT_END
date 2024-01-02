@@ -13,7 +13,7 @@ export const GetAllEmp = () => async (dispatch) => {
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeesNameWOP`, {
+        const response = await fetch(`${baseUrl.baseUrl}/leaves/GetEmployeeDetaillsUnderSupervision`, {
             method: "GET",
             headers: {
                 'accessToken': 'Bareer ' + localStorage.getItem('access_token'),

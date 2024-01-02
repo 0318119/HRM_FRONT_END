@@ -1,6 +1,7 @@
 {
   "name": "hrmlogomish",
   "version": "0.1.0",
+  "homepage": "https://hrmfrontend.logomish.com",
   "private": true,
   "dependencies": {
     "@ant-design/plots": "^1.2.5",

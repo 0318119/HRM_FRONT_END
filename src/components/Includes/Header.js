@@ -202,7 +202,7 @@ const Header = (props) => {
                                                 window.location.href = `/${stringWithoutSpaces}`
                                               }
                                             }}
-                                            className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
+                                            className='singleItem'>{three.menulabel}</Link> : ""}
                                         </div>
 
                                         {isShowIconThree == three.menulabel && (
@@ -222,7 +222,7 @@ const Header = (props) => {
                                                       window.location.href = `/${stringWithoutSpaces}`
                                                     }
                                                   }}
-                                                  target='_blank'>{four.menulabel}</Link>
+                                                  >{four.menulabel}</Link>
                                               </li>
                                             )) : ""}
                                           </div>
@@ -243,6 +243,10 @@ const Header = (props) => {
 
                 <li>
                   <div className='flexLinks'>
+                    <MdLogout className='d-lg-block d-none' style={{
+                      margin:"0 5px",
+                      fontSize: "18px"
+                    }}/>
                     <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
                   </div>
                 </li>

@@ -4,12 +4,9 @@ import Header from "../components/Includes/Header";
 import { Link } from "react-router-dom";
 import { BsPlus as Plus_ico } from 'react-icons/bs'
 import { RxDashboard as RxDashboard_ico } from 'react-icons/rx'
-import { Space, Table,} from 'antd';
+import { Space, Table, } from 'antd';
 import { message } from 'antd';
 import baseUrl from "../config.json";
-import {getToken} from "../Token/index";
-// import { validateToken } from '../Token/index';
-
 const config = require('../config.json')
 
 
@@ -17,6 +14,7 @@ const config = require('../config.json')
 function TAShortsCut() {
   const [isTaskData, setTaskData] = useState([])
   const [isLoading, setLoading] = useState(false)
+  const Emp_code = localStorage.getItem("Emp_code")
 
   async function GetTask() {
     setLoading(true)
@@ -79,19 +77,6 @@ function TAShortsCut() {
   useEffect(() => {
     GetTask()
   }, [])
-
-  
-  useEffect(() => {
-    const checkTokenValidity = async () => {
-      try {
-        const tokenValidationResult = await getToken();
-        console.log("token here....", tokenValidationResult)
-      } catch (error) {
-        console.error("Error checking token validity:", error);
-      }
-    };
-    checkTokenValidity();
-  }, []);
   return (
     <>
       <div>
@@ -101,7 +86,7 @@ function TAShortsCut() {
         <div className="row">
           <div className="col-md-6 p-0"><h5 className="text-dark"><b>Dashboard</b></h5></div>
           <div className="col-md-6 d-flex justify-content-end align-item-center">
-            {
+            {/* {
               localStorage.getItem("User_Type") == 2 ?
                 <Link to="/payroll/report/attendanceReport" className="text-dark" style={{
                   background: "rgb(229 221 221)",
@@ -111,7 +96,7 @@ function TAShortsCut() {
                   textDecoration: "none",
                   marginRight: "5px"
                 }}><b>Attendance excel report</b></Link> : null
-            }
+            } */}
             <Link to="/Get_Attendance" className="text-dark" style={{
               background: "rgb(229 221 221)",
               padding: "6px 6px",
@@ -126,13 +111,13 @@ function TAShortsCut() {
           <div className="col-lg-3 mt-5">
             <Link to={'/Dashboard'} className="dashBoxes">
               <RxDashboard_ico />
-              <span>Attendance</span>
+              <span style={{color: "white"}}>Attendance</span>
             </Link>
           </div>
           <div className="col-lg-3 mt-5">
             <Link to="/Leave_Applications" className="dashBoxes">
               <Plus_ico />
-              <span>Leave</span>
+              <span style={{color: "white"}}>Leave</span>
             </Link>
           </div>
           {/* <div className="col-lg-3 mt-5">
@@ -149,20 +134,26 @@ function TAShortsCut() {
           </div> */}
         </div>
         <hr />
-        <div className="row mt-5"><h5 className="text-dark"><b>Leave Applications</b></h5></div>
-        <div className="row">
-          <div className="col-lg-12">
-            <div>
-              <Table
-                columns={columns}
-                loading={isLoading}
-                dataSource={isTaskData}
-                scroll={{ x: 10 }}
-                pagination={false}
-              />
-            </div>
-          </div>
-        </div>
+        {/* {
+          Emp_code == 1042 ? null : */}
+            <>
+              <div className="row mt-5"><h5 className="text-dark"><b>Leave Applications</b></h5></div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div>
+                    <Table
+                      columns={columns}
+                      loading={isLoading}
+                      dataSource={isTaskData}
+                      scroll={{ x: 10 }}
+                      pagination={false}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+        {/* } */}
+
       </div>
     </>
   );

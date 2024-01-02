@@ -132,7 +132,6 @@ export const GetEmployeeCode = (params) => async (dispatch) => {
 };
 
 export const SaveExpForm = (body) => async (dispatch) => {
-    console.log(body, 'body')
     const response = await fetch(`${baseUrl.baseUrl}/employement_experience/CreateTranExperience`, {
         method: "POST",
         headers: {
@@ -166,7 +165,7 @@ export const UpdatedExpForm = (body) => async (dispatch) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "id": body?.Sequence_no,
+            "id": body?.id,
             "EmployerCode": body?.EmployerCode,
             "designation": body?.designation,
             "department": body?.department,

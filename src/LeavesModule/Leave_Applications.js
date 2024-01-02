@@ -5,7 +5,6 @@ import Tabs from '../dashboard/tabs/tabs'
 import Approvals from './components/Approvals'
 import Reports from './components/Reports'
 const Leave_Applications = () => {
-
    const tabs = [
      { title: "Leave", content: <LeaveCategoryList  /> },
      { title: "Approval", content: <Approvals /> },

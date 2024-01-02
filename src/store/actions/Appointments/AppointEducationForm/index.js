@@ -245,30 +245,31 @@ export const GetEducationSavedData = (params) => async (dispatch) => {
 
 
 
-// export const UpdateEducation = (body) => async (dispatch) => {
+export const UpdateEducation = (body) => async (dispatch) => {
+    console.log(body, 'body')
 
-// const response = await fetch(`${baseUrl.baseUrl}/education_code/InsertTranEducation`, {
-//         method: "POST",
-//         headers: {
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             "Sequence_no": body?.Sequence_no,
-//             "EduCode": body?.EduCode,
-//             "EduYear": body?.EduYear,
-//             "EduGrade": body?.EduGrade,
-//             "Topflag": body?.Topflag,
-//             "institutecode": body?.institutecode
+    const response = await fetch(`${baseUrl.baseUrl}/eduation_code/UpdateTranEducation`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "srNo": body?.srNo,
+            "EduCode": body?.EduCode,
+            "EduYear": body?.EduYear,
+            "EduGrade": body?.EduGrade,
+            "Topflag": body?.Topflag,
+            "institutecode": body?.institutecode
 
-//         })
-//     });
-//     const res = await response.json();
-//     if (res?.success) {
-//         return res;
-//     } else {
-//         return res;
-//     }
-// }
+        })
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
 
 

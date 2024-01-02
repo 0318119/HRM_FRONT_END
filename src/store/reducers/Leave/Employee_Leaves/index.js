@@ -8,7 +8,8 @@ import {
     GET_EMP_LEAVES_TYPE_DATA,
     GET_EMP_LEAVES_APPLIED,
     GET_EMP_LEAVES_BALANCED_DAYS,
-    GET_EMP_LEAVES_APPLICATIONS
+    GET_EMP_LEAVES_APPLICATIONS,
+    GET_EMP_LEAVES_ATTACEMENTS
 } from '../../../actions/types'
 
 const initState = {
@@ -17,7 +18,8 @@ const initState = {
     APPLIED:[],
     BALANCED_DAYS: [],
     GET_LEAVES_APP : [],
-
+    dataSingle: [],
+    ATTACEMENTS_DATA : []
 }
 
 const Red_Emp_Leaves = (state = initState, action) => {
@@ -57,6 +59,18 @@ const Red_Emp_Leaves = (state = initState, action) => {
                 GET_LEAVES_APP: action.payload,
                 loading: action.loading,
             };
+        case GET_EMP_LEAVE_DATA_SINGLE:
+            return {
+                ...state,
+                dataSingle: action.payload,
+                loading: action.loading,
+            };
+        case GET_EMP_LEAVES_ATTACEMENTS:
+            return {
+                ...state,
+                ATTACEMENTS_DATA: action.payload,
+                loading: action.loading,
+            };
         case GET_EMP_LEAVE_DATA_END:
             return {
                 ...state,
@@ -65,6 +79,8 @@ const Red_Emp_Leaves = (state = initState, action) => {
                 APPLIED: action.payload,
                 BALANCED_DAYS: action.payload,
                 GET_LEAVES_APP: action.payload,
+                dataSingle: action.payload,
+                ATTACEMENTS_DATA: action.payload,
                 loading: action.loading,
             };
         default:

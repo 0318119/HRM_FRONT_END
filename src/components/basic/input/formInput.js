@@ -114,6 +114,7 @@ const FormSelect = ({
     deduction,
     showLabel = true,
     defaultValue,
+    disabled,
     ...rest
 }) => {
     const options2 = [];
@@ -151,6 +152,7 @@ const FormSelect = ({
                             style={{width: "100% !important" }}
                             {...field}
                             {...rest}
+                            disabled={disabled}
                             name={name} id={name}
                             placeholder={placeholder}
                             defaultValue={defaultValue}

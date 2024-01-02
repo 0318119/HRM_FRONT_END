@@ -139,7 +139,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
 
 
 
-
+    console.log(Red_Master_Personal, "Red_Master_Personal")
 
     useEffect(() => {
         if (mode == "Edit") {
@@ -159,6 +159,7 @@ function MasterPersonalForm({ cancel, isCode, page, Get_Master_Personal_By_Id, G
                     Emp_address_line2: data?.Emp_address_line2,
                     Emp_home_tel1: data?.Emp_home_tel1,
                     Emp_home_tel2: data?.Emp_home_tel2,
+                    Emp_office_tel1: data?.Emp_office_tel1,
                     Emp_office_tel2: data?.Emp_office_tel2,
                     Emp_mobile_No: data?.Emp_mobile_No,
                     Emp_nic_no: data?.Emp_nic_no,
