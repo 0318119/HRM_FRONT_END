@@ -131,8 +131,8 @@ const Manual_leave_posting = ({
         "Tran_Code": 0,
         "Emp_code": isLeaveReq,
         "Leave_type_code": isLeave,
-        "startDate": isDate[0].FromDate,
-        "endDate": isDate[1].FromDate,
+        "start_date": isDate[0].FromDate,
+        "end_date": isDate[1].ToDate,
         "LeaveDays": halfDayCheck == true ? 0.5 : emp_leaves_applied?.data?.[0]?.[0]?.Leaves,
         "reason": isLeaveReason
     })
@@ -155,10 +155,6 @@ const Manual_leave_posting = ({
             message.error("Leave Reason is required") 
             setLoading(false)
         }
-        else if (halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate) { 
-            message.error("To date is should be equal to From Date") 
-            setLoading(false)
-        }
         else {
             const isSaveFun = await SAVE_LEAVE_APPLICATION(payLoad)
             if (isSaveFun?.success) {
@@ -166,13 +162,14 @@ const Manual_leave_posting = ({
                 if (isSubmitFun?.success) {
                     message.success("Submit : You have applied leave!")
                     setLeaveReason(null)
+                    GET_LEAVES_APPLICATIONS()
                     setTimeout(() => {
-                        navigate("/Dashboard")
+                        navigate("/TAShortsCut")
                     }, 2000);
                 }
                 else { 
-                        message.error(isSubmitFun?.message || isSubmitFun?.messsage)
-                        setLoading(false)
+                    message.error(isSubmitFun?.message || isSubmitFun?.messsage)
+                    setLoading(false)
                 }
             } else {
                 message.error(isSaveFun?.message || isSaveFun?.messsage)
@@ -227,15 +224,15 @@ const Manual_leave_posting = ({
           ),
         },
     ];
-
-      const onConfirmDeleteFun = async (payLoad) => {
-        const isWaitFun = await DELETE_LEAVE_APPLICATION(payLoad)
-        if(isWaitFun?.success){
-            message.success("You have been deleted Leave!")
-        }else{
-          message.error(isWaitFun?.message || isWaitFun?.messsage)
-        }
-      }
+    const onConfirmDeleteFun = async (payLoad) => {
+    const isWaitFun = await DELETE_LEAVE_APPLICATION(payLoad)
+    if(isWaitFun?.success){
+        message.success("You have been deleted Leave!")
+        GET_LEAVES_APPLICATIONS()
+    }else{
+        message.error(isWaitFun?.message || isWaitFun?.messsage)
+    }
+    }
 
     return (
         <>
