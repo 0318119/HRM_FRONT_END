@@ -1,0 +1,23 @@
+.SecondaryHeaderMain{
+    padding-top: 80px;
+}
+.SecondaryHeaderMain h4{
+    font-weight: 600;
+    margin: 0px;
+    color: black;
+}
+.SecondaryHeaderMain p{
+    margin-left: 10px;
+}
+.editButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.SecondaryHeaderMain button{
+    background-color: #014f86;
+    padding-block:7px;
+    border-radius: 5px;
+    padding-inline: 15px;
+}

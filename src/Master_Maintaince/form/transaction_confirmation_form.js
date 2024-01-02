@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../assets/css/transaction_confirmation_form.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import secureLocalStorage from 'react-secure-storage'
 import Header from '../../components/Includes/Header'
 const config = require('../../config.json')
 

@@ -8,6 +8,8 @@ import './assets/css/EmployeeTypeList.css'
 import * as EMPLOYEE_TYPE_ACTIONS from "../store/actions/HrOperations/EmployeeType/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
@@ -63,17 +65,19 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
       key: 'action',
       render: (data) => (
         <Space size="middle">
-          <button onClick={() => EditPage('Edit',data?.Empt_Type_code)} className="editBtn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+          <button onClick={() => EditPage('Edit',data?.Empt_Type_code)} className="editBtn">
+            <FaEdit />
+          </button>
           <Popconfirm
             title="Delete the Employee Type"
             description="Are you sure to delete the Employee Type?"
             okText="Yes"
             cancelText="No"
             onConfirm={() => {
-              // handleConfirmDelete(data?.Empt_Type_code)
+              handleConfirmDelete(data?.Empt_Type_code)
             }}
           >
-            <button className="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <button className="deleteBtn"><MdDeleteOutline /></button>
           </Popconfirm>
         </Space>
       ),
@@ -81,9 +85,22 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
   ];
 
   useEffect(() => {
-    GetEmployeeTypeData()
-  }, [])
-  // EDUCATION LEVEL DATA DELETE API CALL ===========================
+    if (isSearchVal == '') {
+      GetEmployeeTypeData({
+        pageSize: pageSize,
+        pageNo: page,
+        search: null
+      })
+    } else {
+      GetEmployeeTypeData({
+        pageSize: pageSize,
+        pageNo: 1,
+        search: isSearchVal
+      })
+    }
+  }, [page, isSearchVal])
+
+  // EMPLOYEE TYPE DATA DELETE API CALL ===========================
   async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_type_code/DeleteEmploymentType`, {
@@ -102,11 +119,11 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
           content: "You have successfully deleted",
         });
         setTimeout(() => {
-          // GetEducationData({
-          //   pageSize: pageSize,
-          //   pageNo: 1,
-          //   search: null
-          // })
+          GetEmployeeTypeData({
+            pageSize: pageSize,
+            pageNo: page,
+            search: null
+          })
         }, 3000);
       }
       else {
@@ -122,7 +139,7 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
       });
     });
   }
-  console.log("Red_Employee_type table page",Red_Employee_type?.data?.[0]?.res?.data)
+  
   return (
     <>
       <div>
@@ -138,7 +155,9 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
                 <div className="EmployeeTypeFlexBox">
                   <h4 className="text-dark">Employee  Type</h4>
                   <div className="EmployeeTypesearchBox">
-                    <Input placeholder={'Search Here...'} type="search" />
+                    <Input placeholder={'Search Here...'} type="search"
+                      onChange={(e) => { setSearchVal(e.target.value) }}
+                    />
                     <Button title="Create" onClick={() => setMode("create")} />
                   </div>
                 </div>
@@ -148,17 +167,26 @@ const Employment_Type = ({Red_Employee_type,GetEmployeeTypeData}) => {
 
             <div>
               {mode == "read" && (
-                <Table columns={columns} 
-                  loading={Red_Employee_type?.loading}
-                  dataSource={Red_Employee_type?.data?.[0]?.res?.data?.[0]} 
-                  scroll={{ x: 10 }}
+                <Table 
+                    columns={columns} 
+                    loading={Red_Employee_type?.loading}
+                    dataSource={Red_Employee_type?.data?.[0]?.res?.data1}
+                    scroll={{ x: 10 }}
+                    pagination={{
+                      defaultCurrent: page,
+                      total: Red_Employee_type?.data?.[0]?.res?.data3,
+                      onChange: (p) => {
+                        setPage(p);
+                      },
+                      pageSize: pageSize,
+                    }}
                 />
               )}
               {mode == "create" && (
-                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={null}/>
+                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={null} page={page}/>
               )}
               {mode == "Edit" && (
-                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={isCode}/>
+                <EmployeeTypeForm cancel={setMode} mode={mode} isCode={isCode} page={page}/>
               )}
             </div>
 

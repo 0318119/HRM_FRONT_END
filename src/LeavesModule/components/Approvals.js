@@ -82,7 +82,6 @@ const Approvals = () => {
                 setApprovalDataErr(error.message);
             });
     }
-
     const approveRejectStep = async (e, code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/ApproveLeave`,
@@ -150,7 +149,6 @@ const Approvals = () => {
         });
 
     }
-
     const StepBack = async (code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/StepBackLeave`,
@@ -219,7 +217,6 @@ const Approvals = () => {
         });
 
     }
-
     const RejectLeave = async (code) => {
         await fetch(
             `${config["baseUrl"]}/leaveApprovals/RejectLeave`,
@@ -289,9 +286,6 @@ const Approvals = () => {
 
     }
 
-
-    
-
     useEffect(() => {
         GetApprovalInfo()
     }, [])
@@ -354,16 +348,16 @@ const Approvals = () => {
                                                         <td>{item?.Status ? item?.Status : "Not Found"}</td>
                                                         <td>{item?.Posting_date ? item?.Posting_date : "Not Found"}</td>
                                                         <td>
-                                                            <button className='mx-1' onClick={() => {
+                                                            <button className='mx-1 buttonSet' onClick={() => {
                                                                 setRemarkModal(true)
                                                                 settrancode(item?.Tran_Code)
                                                             }}>Step Back</button>
-                                                            <button className='mx-1' onClick={() => {
+                                                            <button className='mx-1 buttonSet' onClick={() => {
                                                                 setStep("approve")
                                                                 settrancode(item?.Tran_Code)
                                                                 setmodal(true)
                                                             }}>Aprove</button>
-                                                            <button className='mx-1' onClick={() => {
+                                                            <button className='mx-1 buttonSet' onClick={() => {
                                                                 settrancode(item?.Tran_Code)
                                                                 setRejectModal(true)
                                                             }}>Reject</button>

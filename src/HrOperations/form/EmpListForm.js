@@ -178,6 +178,7 @@ const CreateEmpDesignationData = JSON.stringify({
     "SatAllowance": numberInput.Sat_Allowance,
     "EveAllowance": numberInput.Eve_Allowance,
     "JD_Desig_Code": numberInput.JD_Designation_Code
+
 })
 const CreateEmpDesignation = async (e) => {
     e.preventDefault();
@@ -778,6 +779,7 @@ const EducatData = JSON.stringify({
     "Edu_abbr": textInput.Education_Abbrivation,
     "Edu_level_code": numberInput.Education_Level_Code,
     "Sort_key": textInput.Sort_key
+
 })
 const CreateEducation = async (e) => {
     e.preventDefault();

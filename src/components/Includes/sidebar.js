@@ -12,7 +12,6 @@ const Sidebar = (props) => {
         className="sideBarMainBox"
         id={props.isActiveSideBar == true ? "showSideBar" : ""}
       >
-        
         <div
           className="sideBarInnerBox"
           id={props.isActiveSideBar == true ? "showbar" : ""}

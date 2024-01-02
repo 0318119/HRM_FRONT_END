@@ -108,3 +108,12 @@
     color: white;
     margin-left: 4px;
 }
+
+.forgetPassword{
+        padding: 2px 15px 18px 15px;
+}
+
+.forgetPassword a{
+    text-decoration: none;
+    color: white;
+}

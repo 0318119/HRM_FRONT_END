@@ -1,7 +1,7 @@
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import './assets/css/LeaveReport.css'
 import Header from '../components/Includes/Header'
-import {RiFileExcel2Fill} from 'react-icons/ri'
+import { RiFileExcel2Fill } from 'react-icons/ri'
 import secureLocalStorage from 'react-secure-storage';
 import { Link, json, useLocation, useNavigate } from 'react-router-dom';
 import * as FileSaver from 'file-saver'
@@ -26,19 +26,19 @@ const Leave_Report_Detail = () => {
 
 
   const [fromDate, SetFromDate] = useState('')
-  const [toDate, SetToDate] = useState('')  
+  const [toDate, SetToDate] = useState('')
   const [leaveCat, setLeaveCat] = useState('')
   const [leaveType, setLeaveType] = useState('')
   const [Emp_Code, setEmp_Code] = useState('')
   const [Emp_name, setEmp_Name] = useState('')
   const [dataLoader, setDataLoader] = useState(false);
-  const [Leave_Report,  setLeave_Report] = useState([])
+  const [Leave_Report, setLeave_Report] = useState([])
 
-  
-  
+
+
   const LeaveReport = async (e) => {
     e.preventDefault();
-   
+
     await fetch(`${config['baseUrl']}/GetLeaveReportdata/GetLeaveReport`, {
       method: "POST",
       headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
@@ -66,13 +66,13 @@ const Leave_Report_Detail = () => {
         }).then(response => {
           return response.json()
         }).then(response => {
-          localStorage.setItem("refresh",  response.referesh_token);
+          localStorage.setItem("refresh", response.referesh_token);
           localStorage.setItem("access_token", response.access_token);
           setLeave_Report(response.data[0])
           showAlert(response.messsage[0], "success")
           DownloadExcel(response.data[0])
 
-          
+
         }).catch((errs) => {
           setLoading(false);
           setBtnEnaledAndDisabled(false);
@@ -81,12 +81,12 @@ const Leave_Report_Detail = () => {
       }
       else if (response.messsage == "timeout error") { navigate('/') }
       else {
-        if (response.success){
+        if (response.success) {
           setLeave_Report(response.data[0])
           console.log(response.data[0], 'hhhhhh')
           showAlert("File Downloaded Successfully", "success")
           DownloadExcel(response.data[0])
-          
+
         }
       }
     }).catch((errs) => {
@@ -94,7 +94,7 @@ const Leave_Report_Detail = () => {
       setBtnEnaledAndDisabled(false);
       showAlert(errs.messsage, "warning")
     })
-  } 
+  }
 
   const [EmployeesName, setEmployeesName] = useState([])
   const [SearchEmployeesName, setSearchEmployeesName] = useState([])
@@ -149,7 +149,7 @@ const Leave_Report_Detail = () => {
 
   async function GetLeaveCat() {
     await fetch(
-      `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategory`,
+      `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategoryWOP`,
       {
         method: "GET",
         headers: {
@@ -164,7 +164,7 @@ const Leave_Report_Detail = () => {
       .then(async (response) => {
         if (response.messsage == "unauthorized") {
           await fetch(
-            `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategory`,
+            `${config["baseUrl"]}/employment_leave_category/GetEmploymentLeaveCategoryWOP`,
             {
               method: "GET",
               headers: {
@@ -180,8 +180,8 @@ const Leave_Report_Detail = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
-                localStorage.setItem("refresh",  response.referesh_token);
-                localStorage.setItem("access_token",response.access_token);
+                localStorage.setItem("refresh", response.referesh_token);
+                localStorage.setItem("access_token", response.access_token);
                 setGetLeaveCat(response.data[0]);
 
               }
@@ -190,8 +190,7 @@ const Leave_Report_Detail = () => {
               setInfoErr(error.message);
             });
         } else {
-          setGetLeaveCat(response.data[0]);
-          console.log(response.data[0], "leavecat")
+          setGetLeaveCat(response.data);
         }
       })
       .catch((error) => {
@@ -204,7 +203,7 @@ const Leave_Report_Detail = () => {
 
   async function GetLeaveType() {
     await fetch(
-      `${config["baseUrl"]}/employment_leave_type/GetLeaveType`,
+      `${config["baseUrl"]}/employment_leave_type/GetLeaveTypeWOP`,
       {
         method: "GET",
         headers: {
@@ -219,7 +218,7 @@ const Leave_Report_Detail = () => {
       .then(async (response) => {
         if (response.messsage == "unauthorized") {
           await fetch(
-            `${config["baseUrl"]}/employment_leave_type/GetLeaveType`,
+            `${config["baseUrl"]}/employment_leave_type/GetLeaveTypeWOP`,
             {
               method: "GET",
               headers: {
@@ -235,7 +234,7 @@ const Leave_Report_Detail = () => {
               if (response.messsage == "timeout error") {
                 navigate("/");
               } else {
-                localStorage.setItem("refresh",  response.referesh_token);
+                localStorage.setItem("refresh", response.referesh_token);
                 localStorage.setItem("access_token", response.access_token);
                 setGetLeaveType(response.data);
 
@@ -245,8 +244,8 @@ const Leave_Report_Detail = () => {
               setInfoErr(error.message);
             });
         } else {
-          setGetLeaveType(response.data[0]);
-          console.log(response.data[0], "Response")
+          setGetLeaveType(response.data);
+
         }
       })
       .catch((error) => {
@@ -306,7 +305,6 @@ const Leave_Report_Detail = () => {
   const [FromDate, setFromDate] = useState(currentDate)
   const [ToDate, setToDate] = useState(currentDate)
 
-
   return (
     <>
       <div>
@@ -320,89 +318,89 @@ const Leave_Report_Detail = () => {
             </span>
           </div>
           <form action="" >
-          <div className="row px-3 mt-2 p-2">
-            <div className="col-lg-3">
-              <div className="form-group">
-                <label htmlFor="">From Date</label>
-                  <input type="date" name="" id="" className='form-control' defaultValue={FromDate}  onChange={(e) => SetFromDate(e.target.value)} />
+            <div className="row px-3 mt-2 p-2">
+              <div className="col-lg-3">
+                <div className="form-group">
+                  <label htmlFor="">From Date</label>
+                  <input type="date" name="" id="" className='form-control' defaultValue={FromDate} onChange={(e) => SetFromDate(e.target.value)} />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="form-group">
-                <label htmlFor="">To Date</label>
-                <input type="Date" name="" id="" className='form-control' defaultValue={ToDate} onChange={(e) => SetToDate(e.target.value)} />
+              <div className="col-lg-3">
+                <div className="form-group">
+                  <label htmlFor="">To Date</label>
+                  <input type="Date" name="" id="" className='form-control' defaultValue={ToDate} onChange={(e) => SetToDate(e.target.value)} />
+                </div>
               </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="form-group">
-                <label htmlFor="">Leave Catergory</label>
-                  <select name="" id="" className='form-select'  onChange={(e) => setLeaveCat(e.target.value) } >
-                <option value="" selected disabled>select</option>
+              <div className="col-lg-3">
+                <div className="form-group">
+                  <label htmlFor="">Leave Catergory</label>
+                  <select name="" id="" className='form-select' onChange={(e) => setLeaveCat(e.target.value)} >
+                    <option value="" selected disabled>select</option>
                     {getLeaveCat?.map((item) => {
-                      return(                    
+                      return (
                         <option value={item.Leave_Category_code}>{item.Leave_Category_name}</option>
                       )
                     })}
-                </select>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="form-group">
-                <label htmlFor="">Leave Type</label>
-                  <select name="" id="" className='form-select'  onChange={(e) => setLeaveType(e.target.value)}>
+              <div className="col-lg-3">
+                <div className="form-group">
+                  <label htmlFor="">Leave Type</label>
+                  <select name="" id="" className='form-select' onChange={(e) => setLeaveType(e.target.value)}>
                     <option value="" selected disabled>Select</option>
                     {getLeaveType?.map((item) => {
                       return (
                         <option value={item.Leave_type_code}>{item.Leave_name}</option>
                       )
                     })}
-                </select>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="row px-3 mt-2 p-2 ">
-            <div className="col-lg-3">
-              <div className="form-group">
-                <label htmlFor="">Employee Code</label>
-                  <input type="text" name="" id="" className='form-control' value={isVal}  onChange={SearchFunctionality} />
-                {/* <select name="" id="" className='form-select' onChange={(e) => setEmp_Code(e.target.value)} > */}
-                    {/* {EmployeesName?.map((item) => {
+            <div className="row px-3 mt-2 p-2 ">
+              <div className="col-lg-3">
+                <div className="form-group">
+                  <label htmlFor="">Employee Code</label>
+                  <input type="text" name="" id="" className='form-control' value={isVal} onChange={SearchFunctionality} />
+                  {/* <select name="" id="" className='form-select' onChange={(e) => setEmp_Code(e.target.value)} > */}
+                  {/* {EmployeesName?.map((item) => {
                       return (
                         <option value={item.Emp_code}>{item.Emp_code}</option>
                       )
                     })} */}
-                {/* </select> */}
+                  {/* </select> */}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-4">
-              <div className="form-group">
-                <label htmlFor="">Employee Name</label>
+              <div className="col-lg-4">
+                <div className="form-group">
+                  <label htmlFor="">Employee Name</label>
                   {/* <input type="text" name="" id="" className='form-control'   /> */}
                   {/* <button className='searchemployeebtn'>Search</button> */}
                   {dataLoader &&
-                    (<select name="" id="" className='form-control'  onChange={(e) => setVal(e.target.value)}>
-                    {SearchEmployeesName?.map((item) => {
-                      return (
-                       
-                        <option value={item.Emp_code} >{item.Emp_name}</option>
-                        
-                         
-                      )
-                    })}
+                    (<select name="" id="" className='form-control' onChange={(e) => setVal(e.target.value)}>
+                      {SearchEmployeesName?.map((item) => {
+                        return (
 
-                  </select> ) }   
-                
+                          <option value={item.Emp_code} >{item.Emp_name}</option>
 
+
+                        )
+                      })}
+
+                    </select>)}
+
+
+                </div>
+              </div>
+
+            </div>
+            <div className="row px-3 mt-2 p-2">
+              <div className="col-1">
+                <button className='excelbtn' onClick={LeaveReport} ><RiFileExcel2Fill /> Excel</button>
               </div>
             </div>
-          
-          </div>
-          <div className="row px-3 mt-2 p-2">
-             <div className="col-1">
-                <button className='excelbtn' onClick={LeaveReport} ><RiFileExcel2Fill /> Excel</button>
-             </div>
-          </div>
-          </form> 
+          </form>
         </div>
       </section>
       {
@@ -412,7 +410,7 @@ const Leave_Report_Detail = () => {
           )}
         </ul>
       }
-      
+
     </>
   )
 }

@@ -1,0 +1,24 @@
+/* .editButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: teal;
+}
+.TableBody{
+    padding-inline: 80px;
+}
+
+.deleteButton {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    color: red;
+} */
+.AttendanceReportBg{
+    background: #F7F5F5;
+    padding: 30px;
+    border-radius: 10px;
+}
+.AttendanceReportBg h5{
+    padding: 0 10px;
+}

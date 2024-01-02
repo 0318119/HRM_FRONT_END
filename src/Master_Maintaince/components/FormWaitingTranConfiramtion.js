@@ -19,7 +19,7 @@ function FormWaitingTranConfiramtion() {
 
     // GET CONFIRMATION DATA API CALL ==========================================
     async function getConfirmationProcessData() {
-        await fetch(`${config["baseUrl"]}/tranConfirmation/GetTranConfirmationListWaiting`, {
+        await fetch(`${config["baseUrl"]}/tranConfirmation/GetTranConfirmationListWaitingWOP`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",

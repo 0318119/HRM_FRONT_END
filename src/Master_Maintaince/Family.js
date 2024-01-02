@@ -2,29 +2,31 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Includes/Header";
 import style from "./assets/css/TransactionFamily.module.css"
 import Input from "../components/basic/input/index"
-import { Table, Tooltip, Space } from 'antd';
-
+import { Table, Tooltip, Space, Popconfirm } from 'antd';
 import TransactionFamilyForm from './form/TransactionFamilyForm'
-
 import * as Transaction_Family_Actions from "../store/actions/Transition/transition_family/index";
-
+import { getToken } from "../Token/index";
 import { connect } from "react-redux";
 
 
-const Transaction_Family = ({ Transition_Family, Transition_family }) => {
+const Transaction_Family = ({ Transition_Family_Get_Byid, Transition_Family, Transition_family, Transition_Family_Delete }) => {
     useEffect(() => {
         Transition_Family()
     }, [])
-
-    const [mode, setMode] = useState('read')
-    const [detailData, setDetailData] = useState({ControlNo:"",Emp_code:""})
-
-    const EditPage=(mode,ControlNo,Emp_code)=>{
-        setDetailData({
-            ControlNo:ControlNo,
-            Emp_code:Emp_code
+    const [mode, setMode] = useState('Edit')
+    const EditPage = (mode, ControlNo, Emp_code) => {
+        Transition_Family_Get_Byid({
+            ControlNo: ControlNo,
+            Emp_code: Emp_code
         })
-        setMode(mode)   
+        setMode(mode)
+    }
+    const DeletePage = async (ControlNo, Emp_code) => {
+        await Transition_Family_Delete({
+            ControlNo: ControlNo,
+            Emp_code: Emp_code
+        })
+        Transition_Family()
     }
     const columns = [
         {
@@ -62,12 +64,31 @@ const Transaction_Family = ({ Transition_Family, Transition_family }) => {
             key: 'action',
             render: (_, record) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit',_.ControlNo,_.Emp_code)} className={style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <button className={style.DeleteButton}><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    <button onClick={() => EditPage('Edit', _.ControlNo, _.Emp_code)} className={style.editButton}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <Popconfirm
+                        title="Delete the record"
+                        description="Are you sure to delete this record?"
+                        onConfirm={() => DeletePage(_.ControlNo, _.Emp_code)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <button className={style.DeleteButton}><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    </Popconfirm>
                 </Space>
             ),
         },
     ];
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+          try {
+            const tokenValidationResult = await getToken();
+            console.log("token here....",tokenValidationResult)
+          } catch (error) {
+            console.error("Error checking token validity:", error);
+          }
+        };
+        checkTokenValidity();
+      }, []);
     return (
         <>
             <div>
@@ -76,7 +97,7 @@ const Transaction_Family = ({ Transition_Family, Transition_family }) => {
             <div className={style.SecondaryMainBody}>
                 <div className={style.SecondaryHeader}>
                     <div style={{ display: 'flex', alignItems: 'end' }}>
-                        <h2 >Transaction Family</h2>
+                        <h2>Transaction Family</h2>
                         {mode == 'Edit' ? null :
                             <p style={{ marginLeft: '10px' }}>Total 1,000</p>}
                     </div>
@@ -93,7 +114,7 @@ const Transaction_Family = ({ Transition_Family, Transition_family }) => {
                     {mode !== 'Edit' && mode !== 'Create' ?
                         <Table loading={Transition_family?.loading} columns={columns} dataSource={Transition_family?.data[0]} />
                         :
-                        <TransactionFamilyForm detailData={detailData}  mode={mode} cancel={setMode} />
+                        <TransactionFamilyForm mode={mode} cancel={setMode} />
                     }
                 </div>
             </div>
