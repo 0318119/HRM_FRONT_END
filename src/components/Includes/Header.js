@@ -202,7 +202,7 @@ const Header = (props) => {
                                                 window.location.href = `/${stringWithoutSpaces}`
                                               }
                                             }}
-                                            className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
+                                            className='singleItem'>{three.menulabel}</Link> : ""}
                                         </div>
 
                                         {isShowIconThree == three.menulabel && (
@@ -222,7 +222,7 @@ const Header = (props) => {
                                                       window.location.href = `/${stringWithoutSpaces}`
                                                     }
                                                   }}
-                                                  target='_blank'>{four.menulabel}</Link>
+                                                  >{four.menulabel}</Link>
                                               </li>
                                             )) : ""}
                                           </div>

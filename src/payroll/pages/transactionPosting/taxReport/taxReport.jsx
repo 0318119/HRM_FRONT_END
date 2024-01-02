@@ -606,8 +606,11 @@ const TaxPayslip = ({ TaxPdfData, GetAllEmp, GetAllEmpPass, GetCompanyLogo }) =>
                                     placeholder={'Pay slip year'}
                                     label={'Pay slip year'}
                                     options={[
+                                        { value: 2021, label: '2021' },
                                         { value: 2022, label: '2022' },
                                         { value: 2023, label: '2023' },
+                                        { value: 2024, label: '2024' },
+                                        { value: 2025, label: '2025' },
                                     ]}
                                 />
                             </div>

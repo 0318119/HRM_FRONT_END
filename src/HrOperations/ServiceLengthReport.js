@@ -54,7 +54,6 @@ function ServiceLengthReport({
           message.success('PDF is created, Wait PDF is under downloading...');
           setFormSubmitted(true);
           setServiceLengthReportData(result?.data);
-  
           // Now, you can generate the PDF
           await handleDownload();
         } else {
@@ -67,11 +66,6 @@ function ServiceLengthReport({
     setLoading(false);
   };
   
-
-
-
-
-
   const PdfData = (
     <Document>
       <Page size="A4">
@@ -140,7 +134,6 @@ function ServiceLengthReport({
       console.error('Error downloading PDF:', error);
     }
   };
-
   
   useEffect(() => {
     if (isFormSubmitted) {
