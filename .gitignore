@@ -3,11 +3,13 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# Ignore build artifacts
+/build
+
 # Node artifact files
 node_modules/
 package-lock.json
 dist/
-build/
 
 # Compiled Java class files
 *.class
