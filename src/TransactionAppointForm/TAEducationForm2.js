@@ -66,7 +66,7 @@ function TAEducationForm2({
         GetGradeData()
         GetEducationSavedData(isCode2)
     }, [])
-  
+
 
     useEffect(() => {
         if (mode2 == "create") {
@@ -91,30 +91,19 @@ function TAEducationForm2({
 
 
     useEffect(() => {
-        // if (mode2 == "create") {
-        //     reset({
-        //         srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
-        //         EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
-        //         EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
-        //         EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
-        //         Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
-        //         institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
-        //     });
-        // } else {
-            reset(
-                {
-                    // srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
-                    EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
-                    EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
-                    EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
-                    Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
-                    institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
-                },
-            )
-        // }
+        if (isUpdate) {
+            reset({
+                EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.Edu_Code,
+                EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Year,
+                EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Grade,
+                Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Top_flag,
+                institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institute_code,
+            });
+        } 
+            
 
     }, [Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]])
-    console.log(Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0], 'Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]')
+    console.log(Red_AppointEducation, 'R')
 
     const EduData = Red_AppointEducation?.getEdu?.[0]?.res?.data
     const InsData = Red_AppointEducation?.getInsti?.[0]?.res?.data
@@ -167,7 +156,7 @@ function TAEducationForm2({
                 messageApi.success("Save Education Information");
                 setTimeout(() => {
                     cancel('read')
-                    setSavedEdu(true)   
+                    setSavedEdu(true)
                 }, 3000);
             } else {
                 const errorMessage = response?.message || 'Failed to Save Information';
@@ -180,7 +169,9 @@ function TAEducationForm2({
     };
 
 
-    // console.log(isUpdate, 'isUpdate')
+    
+
+
 
 const UdpateForm = async (data) => {
     setLoading(true)

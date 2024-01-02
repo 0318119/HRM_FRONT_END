@@ -99,7 +99,7 @@ const CostCentersList = ({ Red_Cost_centre, GetCostCentreData }) => {
   ];
 
   // COST CENTRE FORM DATA DELETE API CALL =========================== 
-async function handleConfirmDelete(id) {
+  async function handleConfirmDelete(id) {
     await fetch(
       `${baseUrl.baseUrl}/employment_cost_center/DeleteCostCenter`, {
       method: "POST",
@@ -173,7 +173,7 @@ async function handleConfirmDelete(id) {
             <div>
               {mode == "read" && (
                 <>
-                  <Table 
+                  <Table
                     columns={columns} loading={Red_Cost_centre?.loading}
                     dataSource={Red_Cost_centre?.data?.[0]?.res?.data1}
                     scroll={{ x: 10 }}
@@ -189,10 +189,10 @@ async function handleConfirmDelete(id) {
                 </>
               )}
               {mode == "create" && (
-                <CostCenterForm cancel={setMode} mode={mode} isCode={null} page={page}/>
+                <CostCenterForm cancel={setMode} mode={mode} isCode={null} page={page} />
               )}
               {mode == "Edit" && (
-                <CostCenterForm cancel={setMode} isCode={isCode} page={page}/>
+                <CostCenterForm cancel={setMode} isCode={isCode} page={page} />
               )}
             </div>
           </div>

@@ -337,7 +337,7 @@ export const GET_ServiceLengthReport_DATA_END = "GET_ServiceLengthReport_DATA_EN
 
 
 
-// HR APPOINTMENT EXPRIENCE FORM //
+// HR APPOINTMENT EXPRIENCE FORM =======
 export const GET_EXPRIENCE_INFO_DATA = "GET_EXPRIENCE_INFO_DATA";
 export const GET_EXPRIENCE_INFO_START = "GET_EXPRIENCE_INFO_START";
 export const GET_EXPRIENCE_EMP_DATA = "GET_EXPRIENCE_EMP_DATA";
@@ -345,7 +345,7 @@ export const GET_EXPRIENCE_EMPlOYER_DATA = "GET_EXPRIENCE_EMPlOYER_DATA";
 export const GET_EXPRIENCE_INFO_SINGLE = "GET_EXPRIENCE_INFO_END";
 export const GET_EXPRIENCE_INFO_END = "GET_EXPRIENCE_INFO_END";
 
-// HR APPOINTMENT SALARY FORM //
+// HR APPOINTMENT SALARY FORM =======
 export const GET_SALARY_DATA = "GET_SALARY_DATA";
 export const GET_SALARY_START = "GET_SALARY_START";
 export const GET_SALARY_ALLOWANCE_DATA = "GET_SALARY_ALLOWANCE_DATA";
@@ -354,8 +354,7 @@ export const GET_SALARY_SINGLE = "GET_SALARY_SINGLE";
 export const GET_SALARY_END = "GET_SALARY_END";
 
 
-// APPOINTMENT Payroll  FORM //
-
+// APPOINTMENT Payroll  FORM ========
 export const GET_APPOIN_PAYROLL_DATA = "GET_APPOIN_PAYROLL_DATA";
 export const GET_APPOIN_PAYROLL_DATA_START = "GET_APPOIN_PAYROLL_DATA_START";
 export const GET_APPOIN_PAYROLL_INFO_DATA = "GET_APPOIN_PAYROLL_INFO_DATA";
@@ -364,26 +363,43 @@ export const GET_APPOIN_PAYROLL_DATA_SINGLE = "GET_APPOIN_PAYROLL_DATA_SINGLE";
 export const GET_APPOIN_PAYROLL_DATA_END = "GET_APPOIN_PAYROLL_DATA_END";
 
 
-// APPOINTMENT Family Form//
-
-
+// APPOINTMENT Family Form =====================
 export const GET_FAMILY_DATA_START = "GET_FAMILY_DATA_START";
 export const GET_FAMILY_DATA = "GET_FAMILY_DATA";
 export const GET_FAMILY_MARRIAGE_DATA = "GET_FAMILY_MARRIAGE_DATA";
 export const GET_FAMILY_CHILDREN_DATA = "GET_FAMILY_CHILDREN_DATA";
 export const GET_FAMILY_DATA_SINGLE = "GET_FAMILY_DATA_SINGLE";
 export const GET_FAMILY_DATA_END = "GET_FAMILY_DATA_END";
-// HR SETUP ===========> TranEducationReport =========
 
+// HR SETUP ===========> TranEducationReport =========
 export const GET_TranEducationReport_DATA = "GET_TranEducationReport_DATA";
 export const GET_TranEducationReport_DATA_START = "GET_TranEducationReport_DATA_START";
 export const GET_TranEducationReport_DATA_SINGLE = "GET_TranEducationReport_DATA_SINGLE";
 export const GET_TranEducationReport_DATA_END = "GET_TranEducationReport_DATA_END";
-// HRSETUPS ===> Experience_Report === 
 
+
+// HRSETUPS ===> Experience_Report === 
 export const GET_Experience_Report_DATA = "GET_Experience_Report_DATA";
 export const GET_Experience_Report_START = "GET_Experience_Report_START";
 export const GET_Experience_Report_END = "GET_Experience_Report_END";
+
+// EMPOLYEE LEAVES ================================================
+export const GET_EMP_LEAVE_DATA_START = "GET_EMP_LEAVE_DATA_START";
+export const GET_EMP_LEAVES_DATA = "GET_EMP_LEAVES_DATA";
+export const GET_EMP_LEAVE_DATA_END = "GET_EMP_LEAVE_DATA_END";
+export const GET_EMP_LAVES_NAME_DATA = "GET_EMP_LAVES_NAME_DATA";
+export const GET_EMP_LEAVE_DATA_SINGLE = "GET_EMP_LEAVE_DATA_SINGLE";
+export const GET_EMP_LEAVES_TYPE_DATA = "GET_EMP_LEAVES_TYPE_DATA"
+export const GET_EMP_LEAVES_APPLIED = "GET_EMP_LEAVES_APPLIED"
+export const GET_EMP_LEAVES_BALANCED_DAYS = "GET_EMP_LEAVES_BALANCED_DAYS"
+export const GET_EMP_LEAVES_APPLICATIONS = "GET_EMP_LEAVES_APPLICATIONS"
+
+// HR SETUP ===========> RetirementSeparationReport =========
+export const GET_RetirementSeparationReport_DATA = "GET_RetirementSeparationReport_DATA";
+export const GET_RetirementSeparationReport_DATA_START = "GET_RetirementSeparationReport_DATA_START";
+export const GET_RetirementSeparationReport_DATA_SINGLE = "GET_RetirementSeparationReport_DATA_SINGLE";
+export const GET_RetirementSeparationReport_DATA_END = "GET_RetirementSeparationReport_DATA_END";
+
 
 
 // Appointment===> check list === >
@@ -394,12 +410,14 @@ export const GET_CHECKLIST_DATA_CHECK = "GET_CHECKLIST_DATA_SINGLE";
 export const GET_CHECKLIST_DATA_END = "GET_CHECKLIST_DATA_END";
 
 
+// HRSETUPS ===> Date_Of_Birth_Inquiry_Report === 
 
-// Appointment===> check list === >
+export const GET_Date_Of_Birth_Inquiry_Report_DATA = "Date_Of_Birth_Inquiry_Report_DATA,";
+export const GET_Date_Of_Birth_Inquiry_Report_START = "GET_Date_Of_Birth_Inquiry_Report_START";
+export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_Report_END";
 
+// PAYROLL ===> Bank_Letter_Report === 
 
-export const GET_MANUAL_ATTENDANCE_DATA = "GET_MANUAL_ATTENDANCE_DATA";
-export const GET_MANUAL_ATTENDANCE_DATA_START = "GET_MANUAL_ATTENDANCE_DATA_START";
-export const GET_MANUAL_ATTENDANCE_DATA_INFO = "GET_MANUAL_ATTENDANCE_DATA_INFO";
-export const GET_MANUAL_ATTENDANCE_DATA_SINGLE = "GET_MANUAL_ATTENDANCE_DATA_SINGLE";
-export const GET_MANUAL_ATTENDANCE_DATA_END = "GET_MANUAL_ATTENDANCE_DATA_END"; 
+export const GET_Bank_Letter_Report_DATA = "    GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
+export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";

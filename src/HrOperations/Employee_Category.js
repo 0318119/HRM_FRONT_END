@@ -14,7 +14,6 @@ import baseUrl from '../../src/config.json'
 import { message } from 'antd';
 
 
-
 const Employee_Category = ({ Red_Employee_Cat, GetEmployeeCatData }) => {
   const [messageApi, contextHolder] = message.useMessage();
   var get_access_token = localStorage.getItem("access_token");
@@ -136,7 +135,6 @@ const Employee_Category = ({ Red_Employee_Cat, GetEmployeeCatData }) => {
       }, 5000);
     });
   }
-
 
   return (
     <>

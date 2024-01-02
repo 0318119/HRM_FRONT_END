@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Includes/Header'
 import LeaveCategoryList from './components/Leaves'
 import Tabs from '../dashboard/tabs/tabs'

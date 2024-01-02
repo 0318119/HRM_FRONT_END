@@ -39,7 +39,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
     }, [])
 
 
-    
+
 
     useEffect(() => {
      if(mode2 == 'read'){
@@ -73,7 +73,7 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
             dataIndex: 'Department',
             key: 'Department',
         },
-     
+
         {
             title: 'Submit Flag',
             dataIndex: 'Submit_Flag',
@@ -146,10 +146,9 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
             });
         });
     }
-
     return (
         <>
-            
+
             {contextHolder}
             <div className="container">
                 <div className="row">

@@ -276,9 +276,6 @@ const UpdateMarriage = async (data) => {
         }
     };    
   
-
-
-
     return (
         <>
             {contextHolder}

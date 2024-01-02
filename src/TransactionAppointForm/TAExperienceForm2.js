@@ -26,7 +26,7 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, isUpdate, Red_Appoin
     const EditBack = () => {
         cancel('read')
     }
-    
+
     const AppointExpSchema = yup.object().shape({
         EmployerCode: yup.string().required("EmployerCode required"),
         designation: yup.string().required("designation is required"),
@@ -74,13 +74,13 @@ function TAExperienceForm2({ cancel, mode2, isCode2, page2, isUpdate, Red_Appoin
 
 
 
-  
+
 
     useEffect(() => {
         GetEmployer(isCode2)
         GetEmployeeInfo(isCode2)
         GetEmployeeCode()
-    },[])
+    }, [])
 
     const Employers = Red_AppointExprience?.getEmployer?.[0]?.res?.data
 
@@ -110,12 +110,12 @@ useEffect(() => {
     useEffect(() => {
         if (isUpdate) {
             reset({
-                Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
-                designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.designation,
-                department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
-                Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
-                End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
-                SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
+                EmployerCode: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Employer_Code,
+                designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Designation,
+                department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Department,
+                Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.StartDate,
+                End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.EndDate,
+                SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Submit_Flag,
             });
         }
         //  else {
@@ -132,7 +132,7 @@ useEffect(() => {
         // }
 
     }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]])
-    // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0] , 'hgavdfu')
+    console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0], 'hgavdfu')
 
 
 
@@ -245,8 +245,8 @@ const SaveForm = async (data) => {
                                         errors={errors}
                                         control={control}
                                     />
-                                  </div>  
-                                  <hr />
+                                </div>
+                                <hr />
                                 <div className="form-group formBoxCountry">
                                     <FormSelect
                                         label={'Employer Name'}

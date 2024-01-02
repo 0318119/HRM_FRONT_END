@@ -86,7 +86,6 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
     const [showPassword2, setShowPassword2] = useState(false);
     const [showPassword3, setShowPassword3] = useState(false);
 
-
     return (
         <>
             <Header />
@@ -105,7 +104,7 @@ function Change_Password({ Red_ChangePassword, GetChangePassword }) {
                         control={control}
                     />
                     <button type="button" className="Showbtn" onClick={() => setShowPassword(!showPassword)}>
-                        {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />} 
+                        {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
                     </button>
                     <FormInput
                         label={'New Password'}

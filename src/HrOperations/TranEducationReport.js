@@ -286,6 +286,7 @@ function TranEducationReport({
       console.error('Error downloading PDF:', error);
     }
   };
+
   return (
     <>
       <Header />

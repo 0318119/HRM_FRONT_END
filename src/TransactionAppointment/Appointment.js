@@ -48,7 +48,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [isFileData, setFileData] = useState([])
     // console.log(isTryData , "kkkokokokok")
 
-    const EditPage = (mode, code ) => {
+    const EditPage = (mode, code) => {
         setCode(code);
         setMode(mode);
         // setCode2(code2);
@@ -218,7 +218,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
-    
+
 
     async function AppointLetter(id) {
         await fetch(
@@ -472,7 +472,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                     }}
                                 />
                             )}
-                            {mode == "create" ?<AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
+                            {mode == "create" ? <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}

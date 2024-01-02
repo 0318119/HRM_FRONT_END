@@ -127,11 +127,7 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
                 });
                 setTimeout(() => {
                     messageApi.destroy()
-                    GetEducationSavedData({
-                        pageSize: pageSize,
-                        pageNo: page,
-                        search: null
-                    })
+                    GetEducationSavedData(isCode)
                 }, 3000);
             }
             else {

@@ -17,9 +17,11 @@ import { OrganizationChart } from 'primereact/organizationchart';
 export default function ChartFlow() {
   const [isChartData, setChartData] = useState([])
   const [user, setuser] = useState(localStorage.getItem('Emp_code'))
+  const [loading,setLoading] = useState(false)
 
   
-  const testData = async () => {
+  const ChartData = async () => {
+    setLoading(true)
     fetch(`${baseUrl.baseUrl}/allemployees/GetEmployeeTree_Organizational_Chart`, {
       method: "POST",
       headers: {
@@ -32,14 +34,16 @@ export default function ChartFlow() {
     }).then((response) => { return response.json() })
       .then((response) => {
         if (response?.data?.length > 0 && response?.success) {
-          const combineArrays = (currentArray, prevArrays) => {
-            return [...prevArrays, ...currentArray];
+          if(response?.data?.length === 1 && response?.success){
+            message.error(`don't exits Employee against this - Emp_code ${user}`)
+            setuser(null)
+          }else{
+              const combineArrays = (currentArray, prevArrays) => {
+              return [...prevArrays, ...currentArray];
           };
-          setChartData(combineArrays(response?.data, isChartData));
-          console.log("if",response)
-        }else if(response?.data?.length == 0 && response?.success){
-          console.log("else",response)
-          message.error(`don't exits Employee against this - Emp_code ${user}`)
+            setChartData(combineArrays(response?.data, isChartData));
+            setuser(null)
+          }
         }
         else {
           message.error(response?.message || response?.messsage)
@@ -47,14 +51,21 @@ export default function ChartFlow() {
       }).catch((error) => {
         message.error(error?.message || error?.messsage)
       })
-    // .finally(() => { setLoading(false) })
+    .finally(() => { setLoading(false) })
   }
 
   useEffect(() => {
     if(user !== null){
-      testData()
+      ChartData()
     }
   }, [user])
+
+  useEffect(() => {
+    if(loading == true){
+      message.loading("Please wait...")
+    }
+  },[loading])
+
 
 
   const ParentSupervisor = isChartData.find(data => data.Supervisor_Code == null)
@@ -65,11 +76,12 @@ export default function ChartFlow() {
       image: false,
       parent: "parent",
       expanded: true,
+      show: supervisor?.show,
       Emp_code: supervisor?.Emp_code,
       children: [],
     };
     topLevelData.children = chartData
-      .filter((firstChild) => supervisor?.Emp_code === firstChild?.Supervisor_Code)
+    .filter((firstChild) => supervisor?.Emp_code === firstChild?.Supervisor_Code)
       .map((firstChild) => {
         const firstLevel = {
           ...firstChild,
@@ -141,16 +153,12 @@ export default function ChartFlow() {
 
   };
 
+
   return (
     <>
       <div>
         <Header />
       </div>
-      {/* {loading &&
-          <div className='orgLoader'>
-            <Spin size="large" style={{ marginTop: "180px" }} />
-          </div>
-      } */}
       <div className="mainBox">
         <OrganizationChart value={data} nodeTemplate={nodeTemplate} />
       </div>

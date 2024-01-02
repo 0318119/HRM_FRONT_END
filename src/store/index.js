@@ -69,9 +69,12 @@ import Red_TranEducationReport from "./reducers/HrOperations/TranEducationReport
 import Red_AppointSalary from './reducers/Appointments/AppointSalary/index'
 import Red_AppointPayroll from "./reducers/Appointments/AppointPayroll/index";
 import Red_AppointFamily from "./reducers/Appointments/AppointFamily/index";
-import Red_Experience_Report from './reducers/HrOperations/Experience_Report'
+import Red_Experience_Report from './reducers/HrOperations/Employee_Experience_Report'
+import Red_Emp_Leaves from './reducers/Leave/Employee_Leaves/index'
+import Red_RetirementSeparationReport from './reducers/HrOperations/RetirementSeparationReport'
 import Red_AppointChecklist from "./reducers/Appointments/AppointChecklist/index"
-import Red_ManualAttendence from "./reducers/ManualAttendance/index"
+import Red_Date_Of_Birth_Inquiry_Report from './reducers/HrOperations/Date_Of_Birth_Inquiry_Report'
+import Red_Bank_Letter_Report from './reducers/payroll/Bank_Letter_Report/index'
 
 const reducers = combineReducers({
   Transition_family,
@@ -150,8 +153,11 @@ const reducers = combineReducers({
   Red_TranEducationReport,
   Red_AppointSalary,
   Red_Experience_Report,
+  Red_Emp_Leaves,
+  Red_RetirementSeparationReport,
   Red_AppointChecklist,
-  Red_ManualAttendence
+  Red_Date_Of_Birth_Inquiry_Report,
+  Red_Bank_Letter_Report
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

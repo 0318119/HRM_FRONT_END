@@ -138,7 +138,6 @@ const Institution = ({ Red_Institution, GetInstitutionData }) => {
         });
     });
   }
-
   return (
     <>
       <div>

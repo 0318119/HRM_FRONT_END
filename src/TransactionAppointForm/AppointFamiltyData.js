@@ -63,7 +63,7 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             dataIndex: 'Marriage_Date',
             key: 'Marriage_Date',
         },
-       
+
         {
             title: 'Action',
             key: 'action',
@@ -255,8 +255,8 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                     columns={columns2}
                                         loading={Red_AppointFamily?.loading}
                                         dataSource={Red_AppointFamily?.getChlidren?.[0]?.res?.data?.[0]}
-                                    pagination={false}
-                            />
+                                        pagination={false}
+                                    />
                                 </>
                             )}
                             {mode2 == "create" && (
