@@ -69,27 +69,47 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
 
     const DownloadExcel = async (hjh) => {
         try {
-            const uniqueEmployeeNames = [... new Set(hjh.map(x => x.Emp_name))];
+            const uniqueEmployeeNames = [...new Set(hjh.map(x => x.Emp_name))];
             const attendances = uniqueEmployeeNames.map(name => {
                 let attendanceRow = [name];
                 const employeeAttendances = hjh.filter(x => x.Emp_name === name);
+                function convertMinutesToHours(minutes) {
+                    if (typeof minutes !== 'number' || minutes < 0) {
+                        throw new Error('Invalid input. Please provide a non-negative number of minutes.');
+                    }
+
+                    const hours = Math.floor(minutes / 60);
+                    const remainingMinutes = minutes % 60;
+
+                    return `${hours}:${remainingMinutes}`;
+                }
                 for (let i = 0; i < employeeAttendances.length; i++) {
                     const attendance = employeeAttendances[i];
-                    attendanceRow.push(`${attendance.Emp_Time_In_HH}:${attendance.Emp_Time_In_MM}`, `${attendance.Emp_Time_Out_HH}:${attendance.Emp_Time_Out_MM}`, `${attendance.Total_Shift_MM}`);
+                    attendanceRow.push(
+                        `${attendance.Emp_Time_In_HH}:${attendance.Emp_Time_In_MM}`,
+                        `${attendance.Emp_Time_Out_HH}:${attendance.Emp_Time_Out_MM}`,
+                        `${convertMinutesToHours(attendance.Total_Shift_MM)}`
+                    );
                 }
                 return attendanceRow;
             });
-            const numberOfDays = [... new Set(hjh.map(x => x.Attendance_Date))];
+            const numberOfDays = [...new Set(hjh.map(x => x.Attendance_Date))];
             const ws = XLSX.utils.json_to_sheet([]);
             let merges = [];
             for (let i = 0; i < numberOfDays.length * 3; i++) {
-                merges.push({ s: { r: 0, c: 1 + i }, e: { r: 0, c: 3 + i } })
+                merges.push({ s: { r: 0, c: 1 + i }, e: { r: 0, c: 3 + i } });
+            }
+            for (let i = 0; i < numberOfDays.length * 3; i++) {
+                merges.push({ s: { r: 1, c: 1 + i }, e: { r: 1, c: 3 + i} });
             }
             ws['!merges'] = merges;
             XLSX.utils.sheet_add_aoa(ws, [["Employee Name", ...numberOfDays.map(x => [DateTime.fromSQL(x).toFormat("EEEE"), "", ""])].flat()], { origin: "A1" });
             XLSX.utils.sheet_add_aoa(ws, [["", ...numberOfDays.map(x => [DateTime.fromSQL(x).toFormat("yyyy LLL dd"), "", ""])].flat()], { origin: "A2" });
-            XLSX.utils.sheet_add_aoa(ws, [['', ...Array(numberOfDays.length).fill(["In", "Out", "Total"]).flat()]], { origin: "A3" });
+            XLSX.utils.sheet_add_aoa(ws, [["", ...Array(numberOfDays.length).fill(["In", "Out", "Total"]).flat()]], { origin: "A3" });
             XLSX.utils.sheet_add_aoa(ws, attendances, { origin: "A4" });
+
+            
+
             const wb = { Sheets: { 'data': ws }, SheetNames: ['data'] };
             const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
             const data = new Blob([excelBuffer], { type: fileType });
