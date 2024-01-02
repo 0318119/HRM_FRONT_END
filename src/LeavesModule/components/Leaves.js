@@ -607,7 +607,7 @@ const Leaves = ({
           )}
 
           {
-            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 ?
+            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 && mode == "Edit" ?
               <div className="col-lg-12 mt-5 empLeavesBgColor">
                 <div className='empLeavesTableHead'>
                   <h5 className='text-dark pl-2 mb-3 mt-2'><b>Attachment</b></h5>
