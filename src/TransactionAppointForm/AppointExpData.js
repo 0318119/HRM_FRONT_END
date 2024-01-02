@@ -159,9 +159,9 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                                 <div className="AppointExpFlexBox">
                                     <h4 className="text-dark">Exprience List</h4>
                                     <div className="AppointExpSearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
+                                        {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
 

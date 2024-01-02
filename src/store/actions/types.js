@@ -418,6 +418,10 @@ export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_R
 
 // PAYROLL ===> Bank_Letter_Report === 
 
-export const GET_Bank_Letter_Report_DATA = "    GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_DATA = "GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_Payroll_Data = "GET_Bank_Letter_Report_Payroll_Data";
+export const GET_Bank_Letter_Report_Region_Data = "GET_Bank_Letter_Report_Region_Data";
+export const GET_Bank_Letter_Report_Bank_Data = "GET_Bank_Letter_Report_Bank_Data";
+export const GET_Bank_Letter_Report_Type_Data = "GET_Bank_Letter_Report_Bank_Data";
 export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
 export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
