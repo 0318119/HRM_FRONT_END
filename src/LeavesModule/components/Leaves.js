@@ -149,7 +149,7 @@ const Leaves = ({
 
 
   const savePayLoad = JSON.stringify({
-    "Tran_Code": 0,
+    "Tran_Code": isCode !==null ? isCode : 0,
     "Emp_code": isLeaveReq,
     "LeaveTypeCode": isLeave,
     "FromDate": isDate[0].FromDate,
@@ -564,23 +564,21 @@ const Leaves = ({
                     saveLeaveApp(e)
                   }} title="Save" />
                   {
+                    isCode !== null ?
+                    <>
+                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
+                        <Button loading={isSubmitLoading} onClick={(e) => {
+                          submitLeave(e)
+                        }} title="Submit" />
+                    </> : 
                     isShow == true ?
-                      <>
-                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                        <Button loading={isSubmitLoading} onClick={(e) => {
-                          submitLeave(e)
-                        }} title="Submit" />
-                      </>
-                      : null
-                  }
-                  {
-                    mode == "Edit" ?
-                      <>
-                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                        <Button loading={isSubmitLoading} onClick={(e) => {
-                          submitLeave(e)
-                        }} title="Submit" />
-                      </> : null
+                    <>
+                      <Button title="Uplaod File" onClick={(e) => showModal(e)} />
+                      <Button loading={isSubmitLoading} onClick={(e) => {
+                        submitLeave(e)
+                      }} title="Submit" />
+                    </>
+                    : null
                   }
                 </div>
               </form>
