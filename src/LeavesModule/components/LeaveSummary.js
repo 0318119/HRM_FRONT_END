@@ -447,6 +447,7 @@ function LeaveSummary() {
                 </div>
               </div>
             )}
+            {console.log("isAttachmentsData",isAttachmentsData)}
             {dataLoader2 && (
               <div className='col-12 attachmenttable'>
                 {isAttachmentsData.length > 0 ?
@@ -457,7 +458,6 @@ function LeaveSummary() {
                         <th scope="col">View</th>
                         <th scope="col">Posting Date</th>
                         <th scope="col">Reason</th>
-                        <th scope="col">Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -466,11 +466,9 @@ function LeaveSummary() {
                           return (
                             <tr>
                               <td>{items?.FileName ? items?.FileName.slice(0, 8) : "Not Found"}</td>
-                              <td>{items?.FileName ? <a href={`${config["baseUrl"]}/${items?.File_Path}`} download target='_blank'> {items?.FileName.slice(0, 8)}</a> : "Not Found"}</td>
+                              <td>{items?.FileName ? <a href={`${config["baseUrl"]}/${items?.ConstructedPath}`} download target='_blank'> {items?.FileName.slice(0, 8)}</a> : "Not Found"}</td>
                               <td>{items?.Posting_date ? items?.Posting_date.slice(0, 10) : "Not Found"}</td>
                               <td>{items?.Reason ? items?.Reason : "Not Found"}</td>
-                              <td><button className="editBtnTable" onClick={(e) => {
-                              }}>Delete</button></td>
                             </tr>
                           )
                         })

@@ -58,6 +58,7 @@ const Leaves = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isfile, setfile] = useState()
   const [isfileLoader, setfileLoader] = useState(false)
+  const [isTranCode,setTranCode] = useState()
 
   const showModal = (e) => {
     e.preventDefault(e)
@@ -78,7 +79,6 @@ const Leaves = ({
       GET_EMP_FILES(isCode)
     }
   }, [isCode])
-
 
   useEffect(() => {
     if (isLeaveReq !== null) {
@@ -120,8 +120,8 @@ const Leaves = ({
   useEffect(() => {
     if (mode == "read") {
       GET_EMP_LEAVES_APP()
-    }
-  }, [])
+    }else{GET_EMP_LEAVES_APP()}
+  }, [mode])
   const changeBox = (e) => {
     if (e.target.checked == true) {
       sethalfDayCheck(e.target.checked)
@@ -148,8 +148,8 @@ const Leaves = ({
   }, [EditCodeEmp, mode])
 
 
-  const payLoad = JSON.stringify({
-    "Tran_Code": isCode !== null ? EditLeavebyId?.data?.[0]?.[0]?.Tran_Code : "0",
+  const savePayLoad = JSON.stringify({
+    "Tran_Code": 0,
     "Emp_code": isLeaveReq,
     "LeaveTypeCode": isLeave,
     "FromDate": isDate[0].FromDate,
@@ -157,7 +157,6 @@ const Leaves = ({
     "LeaveDays": halfDayCheck == true ? 0.5 : appliedDays?.data?.[0]?.[0]?.Leaves,
     "Reason": isLeaveReasons
   })
-
   const saveLeaveApp = async (e) => {
     e.preventDefault(e)
     if (isDate[0].FromDate == null) {
@@ -174,10 +173,11 @@ const Leaves = ({
       message.error("Leave Reason is required")
     } else {
       setSaveLoading(true)
-      const isSaveFun = await SAVE_LEAVE_APPLICATION(payLoad)
+      const isSaveFun = await SAVE_LEAVE_APPLICATION(savePayLoad)
       if (isSaveFun?.success) {
         setSaveLoading(false)
         message.success("You have successfully save this leave...")
+        setTranCode(isSaveFun?.data?.[0]?.[0]?.p_Tran_Code)
         setShow(true)
       } else {
         message.error(isSaveFun?.message || isSaveFun?.messsage)
@@ -185,6 +185,15 @@ const Leaves = ({
       }
     }
   }
+  const submitPayLoad = JSON.stringify({
+    "Tran_Code": isTranCode ? isTranCode : isCode,
+    "Emp_code": isLeaveReq,
+    "LeaveTypeCode": isLeave,
+    "FromDate": isDate[0].FromDate,
+    "ToDate": isDate[1].ToDate,
+    "LeaveDays": halfDayCheck == true ? 0.5 : appliedDays?.data?.[0]?.[0]?.Leaves,
+    "Reason": isLeaveReasons
+  })
   const submitLeave = async (e) => {
     e.preventDefault(e)
     if (isDate[0].FromDate == null) {
@@ -202,7 +211,7 @@ const Leaves = ({
     }
     else {
       setSubmitLoading(true)
-      const isSaveFun = await SUBMIT_LEAVE_APPLICATION(payLoad)
+      const isSaveFun = await SUBMIT_LEAVE_APPLICATION(submitPayLoad)
       if (isSaveFun?.success) {
         setValidate(true)
         setSubmitLoading(false)
@@ -225,7 +234,7 @@ const Leaves = ({
     if (isfile !== '') {
       formData.append("file", isfile);
     }
-    formData.append("Tran_Code", EditCodeEmp?.Tran_Code);
+    formData.append("Tran_Code", isTranCode ? isTranCode : isCode);
     formData.append("Emp_Code", isLeaveReq);
     formData.append("company_code", Company_code)
     await fetch(`https://hrm-api.logomish.com/leaves/AddLeaveApplicationAttachment`, {
@@ -248,7 +257,7 @@ const Leaves = ({
         setTimeout(() => {
           setfileLoader(false)
         }, 3000);
-        GET_EMP_FILES(isCode)
+        GET_EMP_FILES(isTranCode ? isTranCode : isCode)
       }
     }).catch((errs) => {
       message.open(errs?.message || errs?.messsage)
@@ -338,8 +347,8 @@ const Leaves = ({
         <Space size="middle">
           <td>{data?.FileName ?
             <a style={{ background: "#014f86", cursor: "pointer" }} className='text-white text-center py-1 px-3 rounded'
-              onClick={(e) => {
-                const imageSource = `${config["baseUrl"]}/${data?.File_Path}`;
+            onClick={(e) => {
+                const imageSource = `${config["baseUrl"]}/${data?.ConstructedPath}`;
                 saveAs(imageSource, "employeesAttachments");
               }}
             >Download</a> : "Not Found"}</td>
@@ -482,7 +491,7 @@ const Leaves = ({
                       errors={errors}
                       control={control}
                     />
-                    <Input placeholder={false} label={"Half Day"} defaultChecked={halfDayCheck} type="checkbox" id="inputBox" className="half_day"
+                    <Input placeholder={false} label={"Half Day"} checked={halfDayCheck} type="checkbox" id="inputBox" className="half_day"
                       onChange={(e) => { changeBox(e) }}
                     />
                   </div>
@@ -551,12 +560,16 @@ const Leaves = ({
                     setCode(null)
                   }} title="Cancel" />
 
-                  <Button loading={isSaveLoading} onClick={(e) => saveLeaveApp(e)} title="Save" />
+                  <Button loading={isSaveLoading} onClick={(e) => {
+                    saveLeaveApp(e)
+                  }} title="Save" />
                   {
                     isShow == true ?
                       <>
                         <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                        <Button loading={isSubmitLoading} onClick={(e) => submitLeave(e)} title="Submit" />
+                        <Button loading={isSubmitLoading} onClick={(e) => {
+                          submitLeave(e)
+                        }} title="Submit" />
                       </>
                       : null
                   }
@@ -564,7 +577,9 @@ const Leaves = ({
                     mode == "Edit" ?
                       <>
                         <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                        <Button loading={isSubmitLoading} onClick={(e) => submitLeave(e)} title="Submit" />
+                        <Button loading={isSubmitLoading} onClick={(e) => {
+                          submitLeave(e)
+                        }} title="Submit" />
                       </> : null
                   }
                 </div>

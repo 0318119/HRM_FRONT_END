@@ -1,9 +1,6 @@
 import baseUrl from "../config.json";
-import { useNavigate } from 'react-router-dom'
-
 
 export const getToken = async () => {
-    // const navigate = useNavigate()
     try {
         const response = await fetch(
             `${baseUrl.baseUrl}/auth/Authorization`,
@@ -19,7 +16,7 @@ export const getToken = async () => {
         if (response.status == 200) {
             return res
         } else {
-            if (res?.messsage === "timeout error" || res?.messsage == "unauthorized") {
+                if (res?.messsage == "timeout error" || res?.messsage == "unauthorized") {
                 const response = await fetch(
                 `${baseUrl.baseUrl}/auth/Authorization`,{
                     method: "GET",
@@ -28,7 +25,7 @@ export const getToken = async () => {
                         "Content-Type": "application/json",
                     }}
                 );
-                if(response.status === 200) {
+                if(response.status == 200) {
                     const res = await response.json();
                     localStorage.setItem("refresh", res?.refresh_token)
                     localStorage.setItem("access_token", res?.access_token)
@@ -36,11 +33,8 @@ export const getToken = async () => {
                     return res
                 }
                 else{
-                    if (window.location.pathname !== '/') {
-                        window.location.href = '/';
-                        localStorage.clear()
-                        return res
-                    }
+                    // window.location.href = '/';
+                    // localStorage.clear()
                 }
             }
         }

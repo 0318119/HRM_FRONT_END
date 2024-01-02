@@ -101,7 +101,7 @@ const Header = (props) => {
               </h4>
               <div className="form-group">
                 <div className="Header_Search">
-                  <Link to="/TAShortsCut"> 
+                  <Link to="/TAShortsCut" className='d-block'> 
                       <img src={LogoHeader} alt="" className='ImgLogo' />
                   </Link>
                 
