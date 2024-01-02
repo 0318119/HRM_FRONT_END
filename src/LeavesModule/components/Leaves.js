@@ -6,7 +6,6 @@ import { saveAs } from "file-saver";
 import { connect } from "react-redux";
 import { Space, Table, Pagination, Tag, Tooltip } from 'antd';
 import * as EMP_LEAVES_ACTIONS from "../../../src/store/actions/Leave/Employee_Leaves/index";
-import * as yup from "yup";
 import { message } from 'antd';
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

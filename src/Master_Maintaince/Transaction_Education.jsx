@@ -5,7 +5,6 @@ import Input from "../components/basic/input/index"
 import { Button } from "../components/basic/button/index"
 import { Space, Table, Tag, Tooltip } from 'antd';
 import Transaction_Form from './form/Transaction_Education_Form'
-import {getToken} from "../Token/index";
 
 const Transaction_Education = () => {
     const [mode, setMode] = useState('read')
@@ -81,17 +80,6 @@ const Transaction_Education = () => {
         },
         
     ];
-    useEffect(() => {
-        const checkTokenValidity = async () => {
-          try {
-            const tokenValidationResult = await getToken();
-            console.log("token here....",tokenValidationResult)
-          } catch (error) {
-            console.error("Error checking token validity:", error);
-          }
-        };
-        checkTokenValidity();
-      }, []);
     return (
         <>
             <div>

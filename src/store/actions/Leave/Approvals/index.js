@@ -9,7 +9,7 @@ import {
 } from '../../../actions/types'
 import baseUrl from '../../../../config.json'
 
-export const GET_ALL_EMP_DATA = () => async (dispatch) => {
+export const GET_ALL_EMP_APPROVAL_DATA = () => async (dispatch) => {
     try {
         dispatch({
             type: GET_EMP_APPROVALS_DATA_START,

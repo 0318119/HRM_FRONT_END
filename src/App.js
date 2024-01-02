@@ -16,16 +16,16 @@ import {getToken} from "../src/Token/index";
 
 
 function App() {
+  const checkTokenValidity = async () => {
+    try {
+      const tokenValidationResult = await getToken();
+      console.log("token here....", tokenValidationResult)
+    } catch (error) {
+      console.error("Error checking token validity:", error);
+    }
+  };
   useEffect(() => {
-    const checkTokenValidity = async () => {
-      try {
-        const tokenValidationResult = await getToken();
-        console.log("token here....", tokenValidationResult)
-      } catch (error) {
-        console.error("Error checking token validity:", error);
-      }
-    };
-    // checkTokenValidity();
+    checkTokenValidity();
   }, []);
 
   return (

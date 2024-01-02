@@ -103,7 +103,7 @@ const Manual_leave_posting = ({
             setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)
         }
         else if (halfDayCheck == true && isDateScd[0].FromDate == isDateScd[1].ToDate) {
-            setleaveCalculations(emp_balanced_days - 0.5)
+            setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - 0.5)
         }
         else if (halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate) {
             message.error("To date is should be equal to From Date")

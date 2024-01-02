@@ -1,86 +1,58 @@
 import {
-    GET_EMP_LEAVE_DATA_START,
-    GET_EMP_LEAVES_DATA,
-    GET_EMP_LEAVE_DATA_END,
-    GET_EMP_LEAVE_DATA_SINGLE,
+    GET_EMP_APPROVALS_DATA_START,
+    GET_EMP_APPROVALS_DATA_END,
     // =================================================================
-    GET_EMP_LAVES_NAME_DATA,
-    GET_EMP_LEAVES_TYPE_DATA,
-    GET_EMP_LEAVES_APPLIED,
-    GET_EMP_LEAVES_BALANCED_DAYS,
-    GET_EMP_LEAVES_APPLICATIONS,
-    GET_EMP_LEAVES_ATTACEMENTS
+    GET_EMP_APPROVALS_ALL_DATA,
+    GET_EMP_APPROVALS_REJECT_LEAVE,
+    GET_EMP_APPROVALS_STEP_BACK_LEAVE,
+    GET_EMP_APPROVALS_APPROVED_LEAVE,
 } from '../../../actions/types'
 
 const initState = {
-    AllEmployees: [],
-    LEAVE_TYPE: [],
-    APPLIED:[],
-    BALANCED_DAYS: [],
-    GET_LEAVES_APP : [],
-    dataSingle: [],
-    ATTACEMENTS_DATA : []
+    GET_ALL_APPROVALS_DATA: [],
+    GET_ALL_REJECTED_LEAVES: [],
+    GET_ALL_STEP_BACK_LEAVES: [],
+    GET_ALL_APPROVED_LEAVES:[],
 }
 
-const Red_Emp_Leaves = (state = initState, action) => {
+const Red_Emp_Leaves_Approvals = (state = initState, action) => {
     switch (action.type) {
-        case GET_EMP_LEAVE_DATA_START:
+        case GET_EMP_APPROVALS_DATA_START:
             return {
                 ...state,
                 loading: action.loading,
             };
-        case GET_EMP_LAVES_NAME_DATA:
+        case GET_EMP_APPROVALS_ALL_DATA:
             return {
                 ...state,
-                AllEmployees: action.payload,
+                GET_ALL_APPROVALS_DATA: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_LEAVES_TYPE_DATA:
+        case GET_EMP_APPROVALS_REJECT_LEAVE:
             return {
                 ...state,
-                LEAVE_TYPE: action.payload,
+                GET_ALL_REJECTED_LEAVES: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_LEAVES_APPLIED:
+        case GET_EMP_APPROVALS_STEP_BACK_LEAVE:
             return {
                 ...state,
-                APPLIED: action.payload,
+                GET_ALL_STEP_BACK_LEAVES: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_LEAVES_BALANCED_DAYS:
+        case GET_EMP_APPROVALS_APPROVED_LEAVE:
             return {
                 ...state,
-                BALANCED_DAYS: action.payload,
+                GET_ALL_APPROVED_LEAVES: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_LEAVES_APPLICATIONS:
+        case GET_EMP_APPROVALS_DATA_END:
             return {
                 ...state,
-                GET_LEAVES_APP: action.payload,
-                loading: action.loading,
-            };
-        case GET_EMP_LEAVE_DATA_SINGLE:
-            return {
-                ...state,
-                dataSingle: action.payload,
-                loading: action.loading,
-            };
-        case GET_EMP_LEAVES_ATTACEMENTS:
-            return {
-                ...state,
-                ATTACEMENTS_DATA: action.payload,
-                loading: action.loading,
-            };
-        case GET_EMP_LEAVE_DATA_END:
-            return {
-                ...state,
-                AllEmployees: action.payload,
-                LEAVE_TYPE: action.payload,
-                APPLIED: action.payload,
-                BALANCED_DAYS: action.payload,
-                GET_LEAVES_APP: action.payload,
-                dataSingle: action.payload,
-                ATTACEMENTS_DATA: action.payload,
+                GET_ALL_APPROVALS_DATA: action.payload,
+                GET_ALL_REJECTED_LEAVES: action.payload,
+                GET_ALL_STEP_BACK_LEAVES: action.payload,
+                GET_ALL_APPROVED_LEAVES: action.payload,
                 loading: action.loading,
             };
         default:
@@ -88,4 +60,4 @@ const Red_Emp_Leaves = (state = initState, action) => {
     }
 };
 
-export default Red_Emp_Leaves
+export default Red_Emp_Leaves_Approvals

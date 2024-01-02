@@ -75,6 +75,7 @@ import Red_RetirementSeparationReport from './reducers/HrOperations/RetirementSe
 import Red_AppointChecklist from "./reducers/Appointments/AppointChecklist/index"
 import Red_Date_Of_Birth_Inquiry_Report from './reducers/HrOperations/Date_Of_Birth_Inquiry_Report'
 import Red_ManualAttendence from "./reducers/ManualAttendance/index"
+import Red_Emp_Leaves_Approvals from "./reducers/Leave/Approvals/index"
 
 const reducers = combineReducers({
   Transition_family,
@@ -158,7 +159,8 @@ const reducers = combineReducers({
   Red_AppointChecklist,
   Red_Date_Of_Birth_Inquiry_Report,
   Red_AppointChecklist,
-  Red_ManualAttendence
+  Red_ManualAttendence,
+  Red_Emp_Leaves_Approvals
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
