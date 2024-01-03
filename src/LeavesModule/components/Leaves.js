@@ -415,6 +415,18 @@ const Leaves = ({
     }
   }, [isDeleteLoader])
 
+  useEffect(() => {
+    // Scroll down to the bottom of the page
+    if(isModalOpen){
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth', // Optional: Add smooth scrolling effect
+      });
+    }
+    
+  }, [isModalOpen]);
+
+
   return (
     <>
       <div className="container">

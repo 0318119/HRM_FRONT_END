@@ -3,16 +3,14 @@ import {
     GET_EMP_APPROVALS_DATA_END,
     // =================================================================
     GET_EMP_APPROVALS_ALL_DATA,
-    GET_EMP_APPROVALS_REJECT_LEAVE,
-    GET_EMP_APPROVALS_STEP_BACK_LEAVE,
-    GET_EMP_APPROVALS_APPROVED_LEAVE,
+    GET_LEAVE_SUMMERY_BY_ID,
+    GET_LEAVE_SUMMERY_FILE_BY_ID
 } from '../../../actions/types'
 
 const initState = {
     GET_ALL_APPROVALS_DATA: [],
-    GET_ALL_REJECTED_LEAVES: [],
-    GET_ALL_STEP_BACK_LEAVES: [],
-    GET_ALL_APPROVED_LEAVES:[],
+    LEAVE_SUMMERY_DATA: [],
+    LEAVE_SUMMERY_FILE: []
 }
 
 const Red_Emp_Leaves_Approvals = (state = initState, action) => {
@@ -28,31 +26,24 @@ const Red_Emp_Leaves_Approvals = (state = initState, action) => {
                 GET_ALL_APPROVALS_DATA: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_APPROVALS_REJECT_LEAVE:
+        case GET_LEAVE_SUMMERY_BY_ID:
             return {
                 ...state,
-                GET_ALL_REJECTED_LEAVES: action.payload,
+                LEAVE_SUMMERY_DATA: action.payload,
                 loading: action.loading,
             };
-        case GET_EMP_APPROVALS_STEP_BACK_LEAVE:
+        case GET_LEAVE_SUMMERY_FILE_BY_ID:
             return {
                 ...state,
-                GET_ALL_STEP_BACK_LEAVES: action.payload,
-                loading: action.loading,
-            };
-        case GET_EMP_APPROVALS_APPROVED_LEAVE:
-            return {
-                ...state,
-                GET_ALL_APPROVED_LEAVES: action.payload,
+                LEAVE_SUMMERY_FILE: action.payload,
                 loading: action.loading,
             };
         case GET_EMP_APPROVALS_DATA_END:
             return {
                 ...state,
                 GET_ALL_APPROVALS_DATA: action.payload,
-                GET_ALL_REJECTED_LEAVES: action.payload,
-                GET_ALL_STEP_BACK_LEAVES: action.payload,
-                GET_ALL_APPROVED_LEAVES: action.payload,
+                LEAVE_SUMMERY_DATA: action.payload,
+                LEAVE_SUMMERY_FILE: action.payload,
                 loading: action.loading,
             };
         default:

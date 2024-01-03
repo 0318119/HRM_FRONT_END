@@ -151,3 +151,10 @@ select:focus {
 .month{
     width: 200px !important;
 }
+
+/* NOT FOUND CSS ================= */
+.notFound{
+    background: #F7F5F5;
+    padding: 4px 7px;
+    border-radius: 5px;
+}

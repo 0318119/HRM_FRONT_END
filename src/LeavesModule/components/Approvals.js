@@ -335,12 +335,14 @@ const Approvals = () => {
                                                         <td>{item?.LocationName ? item?.LocationName : "Not Found"}</td>
                                                         <td>{item?.Leave_name ? item?.Leave_name : "Not Found"}</td>
                                                         {/* <td>{item?.FileName !==null ? "Downlaod" : "Not Found"}</td> */}
-                                                        <td>{item?.FileName ? <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
+                                                        <td>{item?.FileName ? 
+                                                        <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
                                                             onClick={(e) => {
                                                                 const imageSource = `${config["baseUrl"]}/${item?.File_Path}`;
                                                                 saveAs(imageSource, "employeesAttachments");
                                                             }}
-                                                        >Download</a> : "Not Found"}</td>
+                                                        >Download</a> 
+                                                        : "Not Found"}</td>
                                                         <td>{item?.Reason ? item?.Reason : "Not Found"}</td>
                                                         <td>{item?.StartDate ? item?.StartDate : "Not Found"}</td>
                                                         <td>{item?.EndDate ? item?.EndDate  :"Not Found"}</td>
