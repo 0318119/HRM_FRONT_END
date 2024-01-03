@@ -208,10 +208,7 @@ function Approvalsss({
 
     return (
         <>
-            <div>
-                <Header />
-            </div>
-            <div className="container" style={{ marginTop: "100px" }}>
+            <div className="container">
                 <div className="row justif">
                     <div className="col-lg-12">
                         <div className='leaveApprovalBox'>

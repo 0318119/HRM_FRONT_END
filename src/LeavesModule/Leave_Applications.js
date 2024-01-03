@@ -4,10 +4,11 @@ import LeaveCategoryList from './components/Leaves'
 import Tabs from '../dashboard/tabs/tabs'
 import Approvals from './components/Approvals'
 import Reports from './components/Reports'
+import Approvalsss from './components/Approvalsss'
 const Leave_Applications = () => {
    const tabs = [
      { title: "Leave", content: <LeaveCategoryList  /> },
-     { title: "Approval", content: <Approvals /> },
+     { title: "Approval", content: <Approvalsss /> },
      { title: "Reports", content: <Reports /> },
    ];
   return (
