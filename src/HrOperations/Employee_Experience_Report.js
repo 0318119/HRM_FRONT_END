@@ -185,7 +185,7 @@ function Experience_Report({
                                 </Text>
                             )}
                         </View>
-    
+
                         <Text style={{ fontSize: 12, fontWeight: 'bold' }}>
                             DATED: {currentDate}
                         </Text>

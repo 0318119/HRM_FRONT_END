@@ -11,6 +11,8 @@ import baseUrl from "../../../../config.json";
 
 
 export const GenerateLateArrivals = (body) => async (dispatch) => {
+    console.log(body , 'body')
+    
     const response = await fetch(`${baseUrl.baseUrl}/lateArrival/CreateAndGetLateArrivalData`, {
             method: "POST",
             headers: {

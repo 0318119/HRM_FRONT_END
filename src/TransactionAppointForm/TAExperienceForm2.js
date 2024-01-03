@@ -110,12 +110,12 @@ useEffect(() => {
     useEffect(() => {
         if (isUpdate) {
             reset({
-                Employer_Code: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Employer_Code,
-                designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.designation,
-                department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.department,
-                Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.Start_Date,
-                End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.End_Date,
-                SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.SubmitFlag,
+                EmployerCode: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Employer_Code,
+                designation: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Designation,
+                department: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Department,
+                Start_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.StartDate,
+                End_Date: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.EndDate,
+                SubmitFlag: Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]?.Submit_Flag,
             });
         }
         //  else {
@@ -131,8 +131,8 @@ useEffect(() => {
         //     )
         // }
 
-    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0]])
-    // console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]?.[0] , 'hgavdfu')
+    }, [Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0]])
+    console.log(Red_AppointExprience?.getEmp?.[0]?.res?.data?.[0], 'hgavdfu')
 
 
 

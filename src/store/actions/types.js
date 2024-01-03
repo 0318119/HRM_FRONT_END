@@ -418,9 +418,19 @@ export const GET_Date_Of_Birth_Inquiry_Report_DATA = "Date_Of_Birth_Inquiry_Repo
 export const GET_Date_Of_Birth_Inquiry_Report_START = "GET_Date_Of_Birth_Inquiry_Report_START";
 export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_Report_END";
 
-// Appointment===> check list === >
+// PAYROLL ===> Bank_Letter_Report === 
+
+export const GET_Bank_Letter_Report_DATA = "GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_Payroll_Data = "GET_Bank_Letter_Report_Payroll_Data";
+export const GET_Bank_Letter_Report_Region_Data = "GET_Bank_Letter_Report_Region_Data";
+export const GET_Bank_Letter_Report_Bank_Data = "GET_Bank_Letter_Report_Bank_Data";
+export const GET_Bank_Letter_Report_Type_Data = "GET_Bank_Letter_Report_Bank_Data";
+export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
+export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
 
 
+
+// ========== ======= ===== MANUAL ATTENDANCE======== ===== === /
 export const GET_MANUAL_ATTENDANCE_DATA = "GET_MANUAL_ATTENDANCE_DATA";
 export const GET_MANUAL_ATTENDANCE_DATA_START = "GET_MANUAL_ATTENDANCE_DATA_START";
 export const GET_MANUAL_ATTENDANCE_DATA_INFO = "GET_MANUAL_ATTENDANCE_DATA_INFO";
@@ -435,5 +445,3 @@ export const GET_EMP_APPROVALS_DATA_END = "GET_EMP_APPROVALS_DATA_END"
 // ==========================================================
 export const GET_LEAVE_SUMMERY_BY_ID = "GET_LEAVE_SUMMERY_BY_ID"
 export const GET_LEAVE_SUMMERY_FILE_BY_ID = "GET_LEAVE_SUMMERY_FILE_BY_ID"
-
-

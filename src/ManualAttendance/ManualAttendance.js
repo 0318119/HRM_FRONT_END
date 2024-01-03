@@ -58,7 +58,7 @@ const ManualAttendance = ({ Red_ManualAttendence, AllEmployees }) => {
     ];
 
 
-
+    // console.log(Red_ManualAttendence, 'Red_ManualAttendence')
 
 
     useEffect(() => {
@@ -76,6 +76,9 @@ const ManualAttendance = ({ Red_ManualAttendence, AllEmployees }) => {
             });
         }
     }, [page, isSearchVal]);
+    useEffect(() =>{
+        AllEmployees()
+    }, [])
 
 
     return (

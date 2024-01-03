@@ -5,11 +5,18 @@
 
 # Ignore build artifacts
 /build
+<<<<<<< HEAD
 
+=======
+>>>>>>> 736597166424add344242e5a8df59c6a26b14bcb
 # Node artifact files
 node_modules/
 package-lock.json
 dist/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 736597166424add344242e5a8df59c6a26b14bcb
 
 # Compiled Java class files
 *.class

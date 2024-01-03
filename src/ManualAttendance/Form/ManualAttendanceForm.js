@@ -176,6 +176,15 @@ function ManualAttendanceForm({ cancel,
     ];
 
 
+    // useEffect(() => {
+    //   if(mode2 == 'read'){
+    //       getAtttendanceHisss()
+    //   }
+ 
+    // }, [mode2])
+    
+
+
 
     return (
         <>

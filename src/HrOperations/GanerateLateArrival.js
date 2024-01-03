@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Includes/Header";
 import { FormInput, FormSelect } from "../components/basic/input/formInput";
-import { PrimaryButton } from "../components/basic/button";
-import "./assets/css/InstitutionsList.css";
+import { Button } from "../components/basic/button";
+import "./assets/css/GenerateLateArrival.css";
 import * as LATEArrival from "../store/actions/HrOperations/Late_Arrivals/index";
 import { connect } from "react-redux";
 import { message } from "antd";
@@ -24,8 +24,13 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
   const [isGeneratedData, setGeneratedData] = useState([]);
   const [GenerateTable, setGenerateTable] = useState(false)
   const [useSubmitForm, setUseSubmitForm] = useState();
+  // console.log(useSubmitForm == 'one' ? 'yes' : "No" , 'useSubmitForm')
 
-  console.log(useSubmitForm, 'check')
+  // const [GenrateLateArrival, setGenerateLateArrival] = useState('')
+  // const [ExcelReport, setExcelReport] = useState('')
+  
+
+
 
   const EditPage = (mode) => {
     setGenerateTable(mode)
@@ -37,15 +42,13 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
     try {
       const isValid = await GeneratedDataSchema.validate(data);
       if (isValid) {
-        useSubmitForm === 'one' ? console.log("one") : console.log("two")
-
-        // if (useSubmitForm === 'one'){
-        //     // GenerateData(data);
-        //   // console.log("one", useSubmitForm)
-        // } else if (useSubmitForm === 'two'){
-        //     // GenerateExcelData(data);
-        //   // console.log("two", useSubmitForm)
-        // }
+        if (useSubmitForm == 'one'){
+            GenerateData(data);  
+          console.log(useSubmitForm) 
+        } else {
+            GenerateExcelData(data);
+          console.log( useSubmitForm)
+        }
       }
     } catch (error) {
       console.error(error);
@@ -56,12 +59,12 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
 
 
   const GeneratedDataSchema = yup.object().shape({
-    Div_code: yup.number().required("Div Code is required"),
-    Dept_code: yup.number().required("Dept Code is required"),
-    Section_code: yup.number().required("Section Code is required"),
-    Loc_code: yup.number().required("Loc code is required"),
-    Payroll_Year: yup.number().required("Payroll Year is required"),
-    Payroll_Month: yup.number().required("Payroll Month is required")
+    Div_code: yup.string().required("Div Code is required"),
+    Dept_code: yup.string().required("Dept Code is required"),
+    Section_code: yup.string().required("Section Code is required"),
+    Loc_code: yup.string().required("Loc code is required"),
+    Payroll_Year: yup.string().required("Payroll Year is required"),
+    Payroll_Month: yup.string().required("Payroll Month is required")
   });
 
   const {
@@ -83,7 +86,7 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
 
 
 
-  const GenerateData = async (data, e) => {
+  const GenerateData = async (data) => {
     const GenerateCreate = await GenerateLateArrivals({
       Div_code: data?.Div_code,
       Dept_code: data?.Dept_code,
@@ -177,11 +180,9 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
       </div>
       {contextHolder}
       <div className="container">
-        <div className="row">
-          <form className="col-lg-12 maringClass"
-           onSubmit={handleSubmit(submitForm)}
-          //  onSubmit={(e) => handleSubmit(() => submitForm(useSubmitForm ,e))}
-           >
+        <div className="row d-flex justify-content-center">
+          <form className="col-lg-8 maringClass Boxform"
+           onSubmit={handleSubmit(submitForm)}>
             <h4 className="text-dark">Generate Late Arrivals</h4>
             <div className="d-flex align-items-center">
               <FormInput
@@ -279,13 +280,8 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
             </div>
 
             <div className="d-flex" >
-              <PrimaryButton title="Generate Data" id='one'  type="submit" 
-                onClick={() => setUseSubmitForm()} 
-              
-              />
-              <PrimaryButton title={'ExportToExcel'} id='two' type="submit"
-                onClick={() => setUseSubmitForm()} 
-               />
+              <Button title={"Generate Data"} id='one' type="submit" onClick={() => setUseSubmitForm('one')} />
+              <Button title={'ExportToExcel'} id='two' type="submit" onClick={() => setUseSubmitForm('two')}  />
             </div>
           </form>
           {GenerateTable ? <div>
