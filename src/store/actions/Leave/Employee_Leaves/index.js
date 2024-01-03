@@ -358,3 +358,21 @@ export const DELETE_FILE_OF_EMP_LEAVE= (body) => async (dispatch) => {
       return res;
     }
 }
+export const DELETE_LEAVE_APPLICATION = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/leaves/DeleteESS_TranLeaves`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Tran_Code":body
+          })
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+}

@@ -57,6 +57,11 @@ function TAShortsCut() {
       key: 'Emp_Code',
     },
     {
+      title: 'Requester Name',
+      dataIndex: 'Initiated_by',
+      key: 'Initiated_by',
+    },
+    {
       title: 'Created Date',
       dataIndex: 'Created_Date',
       key: 'Created_Date',

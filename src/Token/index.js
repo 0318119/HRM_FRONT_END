@@ -16,7 +16,7 @@ export const getToken = async () => {
         if (response.status == 200) {
             return res
         } else {
-                if (res?.messsage == "timeout error" || res?.messsage == "unauthorized") {
+            if (res?.messsage == "timeout error" || res?.messsage == "unauthorized") {
                 const response = await fetch(
                 `${baseUrl.baseUrl}/auth/Authorization`,{
                     method: "GET",
@@ -33,8 +33,11 @@ export const getToken = async () => {
                     return res
                 }
                 else{
-                    // window.location.href = '/';
-                    // localStorage.clear()
+                    console.log("window.location.pathname",window.location.pathname)
+                    if (window.location.pathname !== '/') {
+                        window.location.href = '/';
+                        localStorage.clear()
+                    }
                 }
             }
         }

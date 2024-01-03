@@ -29,7 +29,8 @@ const Leaves = ({
   GET_EMP_LEAVE_EDIT,
   SUBMIT_LEAVE_APPLICATION,
   GET_EMP_FILES,
-  DELETE_FILE_OF_EMP_LEAVE
+  DELETE_FILE_OF_EMP_LEAVE,
+  DELETE_LEAVE_APPLICATION
 }) => {
 
   var Emp_code = localStorage.getItem("Emp_code");
@@ -58,7 +59,7 @@ const Leaves = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isfile, setfile] = useState()
   const [isfileLoader, setfileLoader] = useState(false)
-  const [isTranCode,setTranCode] = useState()
+  const [isTranCode, setTranCode] = useState()
 
   const showModal = (e) => {
     e.preventDefault(e)
@@ -105,22 +106,33 @@ const Leaves = ({
   }, [isDateScd, leaveTypeCode?.data?.[0]?.[0]?.leave_type_code, isLeaveReq])
 
   useEffect(() => {
-    if (halfDayCheck == false && balancedDays) {
-      setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves)
+    if (halfDayCheck == false) {
+      if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
+        setSaveLoading(false);
+        setSubmitLoading(false);
+      } else {
+        message.error("To date should not be less than From Date");
+        setSaveLoading(true);
+        setSubmitLoading(true)
+      }
+    } else if (halfDayCheck == true) {
+      if (isDate[0].FromDate == isDate[1].ToDate) {
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+        setSaveLoading(false)
+        setSubmitLoading(false)
+      } else {
+        message.error("To date is should be equal to From Date")
+        setSaveLoading(true)
+        setSubmitLoading(true)
+      }
     }
-    else if (halfDayCheck == true && isDateScd[0].FromDate == isDateScd[1].ToDate) {
-      setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
-    }
-    else if (halfDayCheck == true && isDate[0].FromDate !== isDate[1].ToDate) {
-      message.error("To date is should be equal to From Date")
-    }
-    else { setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves) }
-  }, [balancedDays, appliedDays, halfDayCheck, leaveCalculations, isDate]);
+  }, [halfDayCheck, leaveCalculations, isDate]);
 
   useEffect(() => {
     if (mode == "read") {
       GET_EMP_LEAVES_APP()
-    }else{GET_EMP_LEAVES_APP()}
+    } else { GET_EMP_LEAVES_APP() }
   }, [mode])
   const changeBox = (e) => {
     if (e.target.checked == true) {
@@ -149,7 +161,7 @@ const Leaves = ({
 
 
   const savePayLoad = JSON.stringify({
-    "Tran_Code": isCode !==null ? isCode : 0,
+    "Tran_Code": isCode !== null ? isCode : 0,
     "Emp_code": isLeaveReq,
     "LeaveTypeCode": isLeave,
     "FromDate": isDate[0].FromDate,
@@ -267,6 +279,21 @@ const Leaves = ({
     })
   }
 
+  const [isDeleteLeave,setDeleteLeave] = useState(false)
+  const handleConfirmDeleteLeave = async (data) => {
+    setDeleteLeave(true)
+    message.loading("Please wait...")
+    const isCheck = await DELETE_LEAVE_APPLICATION(data)
+    if(isCheck?.success){
+      message.success(isCheck?.message || isCheck?.messsage)
+      setDeleteLeave(false)
+    }else{
+      message.success(isCheck?.message || isCheck?.messsage)
+      message.destroy()
+      setDeleteLeave(false)
+    }
+  }
+
   const {
     control,
     formState: { errors },
@@ -324,7 +351,7 @@ const Leaves = ({
         <Space size="middle">
           {
             data?.Visible == "true" ?
-            <button className="editBtn" onClick={() => EditPage('Edit', data?.Tran_Code)}><FaEdit /></button> : null
+              <button className="editBtn" onClick={() => EditPage('Edit', data?.Tran_Code)}><FaEdit /></button> : null
           }
         </Space>
       ),
@@ -347,7 +374,7 @@ const Leaves = ({
         <Space size="middle">
           <td>{data?.FileName ?
             <a style={{ background: "#014f86", cursor: "pointer" }} className='text-white text-center py-1 px-3 rounded'
-            onClick={(e) => {
+              onClick={(e) => {
                 const imageSource = `${config["baseUrl"]}/${data?.ConstructedPath}`;
                 saveAs(imageSource, "employeesAttachments");
               }}
@@ -417,13 +444,13 @@ const Leaves = ({
 
   useEffect(() => {
     // Scroll down to the bottom of the page
-    if(isModalOpen){
+    if (isModalOpen) {
       window.scrollTo({
         top: document.body.scrollHeight,
         behavior: 'smooth', // Optional: Add smooth scrolling effect
       });
     }
-    
+
   }, [isModalOpen]);
 
 
@@ -576,21 +603,29 @@ const Leaves = ({
                     saveLeaveApp(e)
                   }} title="Save" />
                   {
-                    isCode !== null ?
-                    <>
+                    isShow == true || isCode ?
+                      <>
+                        {/* <Button title="Delete" onClick={(e) => showModal(e)} /> */}
+
+                        <Space size="middle">
+                          <Popconfirm
+                            title="Delete the leave"
+                            description="Are you sure to delete this leave?"
+                            okText="Yes"
+                            cancelText="No"
+                            onConfirm={() => {
+                              handleConfirmDeleteLeave(isTranCode ? isTranCode : isCode)
+                            }}
+                          >
+                            <Button title="Delete" loading={isDeleteLeave} onClick={(e) => e.preventDefault(e)} />
+                          </Popconfirm>
+                        </Space>
                         <Button title="Uplaod File" onClick={(e) => showModal(e)} />
                         <Button loading={isSubmitLoading} onClick={(e) => {
                           submitLeave(e)
                         }} title="Submit" />
-                    </> : 
-                    isShow == true ?
-                    <>
-                      <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                      <Button loading={isSubmitLoading} onClick={(e) => {
-                        submitLeave(e)
-                      }} title="Submit" />
-                    </>
-                    : null
+                      </>
+                      : null
                   }
                 </div>
               </form>
