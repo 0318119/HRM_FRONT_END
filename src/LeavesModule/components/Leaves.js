@@ -287,6 +287,9 @@ const Leaves = ({
     if(isCheck?.success){
       message.success(isCheck?.message || isCheck?.messsage)
       setDeleteLeave(false)
+      setTimeout(() => {
+        setMode("read")
+      }, 1000);
     }else{
       message.success(isCheck?.message || isCheck?.messsage)
       message.destroy()
