@@ -63,21 +63,14 @@ const ManualAttendHistory = ({ Red_ManualAttendence, getAtttendanceHisss }) => {
 
 
 
-    // useEffect(() => {
-    //     if (isSearchVal == "") {
-    //         getAtttendanceHisss({
-    //             pageSize: pageSize,
-    //             pageNo: page,
-    //             search: null,
-    //         });
-    //     } else {
-    //         getAtttendanceHisss({
-    //             pageSize: pageSize,
-    //             pageNo: 1,
-    //             search: isSearchVal,
-    //         });
-    //     }
-    // }, [page, isSearchVal]);
+    useEffect(() => {
+        if (mode == "read"){
+            getAtttendanceHisss()
+        } else{
+            getAtttendanceHisss()
+
+        }
+    }, [mode]);
 
 
     return (

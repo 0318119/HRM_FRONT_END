@@ -90,6 +90,7 @@ function UpdateManaulForm({
 
 
     const UpdateAttend = async (data) => {
+        setLoading(true)
         try {
             const response = await UpdateAttendance({
                 Emp_code: isCode2,
@@ -109,8 +110,8 @@ function UpdateManaulForm({
             if (response && response.success) {
                 messageApi.success("Successfully created");
                 setTimeout(() => {
-                    setAttendHistory(true)
-                    cancel('read')
+                    window.location.href = '/ManualAttendance'
+                    // cancel('read')
                 }, 3000);
             } else {
                 const errorMessage = response?.messsage || 'Failed to Get Attendance';
@@ -141,24 +142,24 @@ function UpdateManaulForm({
                         placeholder={'Attendance Date'}
                         id="Attendance_Date"
                         name="Attendance_Date"
-                        value={isAttendDate}
+                        // value={isAttendDate}
                         type="Date"
                         showLabel={true}
                         errors={errors}
                         control={control}
-                        onChange={HandleDate}
+                        // onChange={HandleDate}
                     />
                     <FormInput
                         label={'Time In Hours'}
                         placeholder={isHours}
                         id="Emp_Time_in_HH"
                         name="Emp_Time_in_HH"
-                        value={isHours}
+                        // value={isHours}
                         type="time"
                         showLabel={true}
                         errors={errors}
                         control={control}
-                        onChange={HandleHours}
+                        // onChange={HandleHours}
                     />
                     <FormInput
                         label={'Time In MM'}

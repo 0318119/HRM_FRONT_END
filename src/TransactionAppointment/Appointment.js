@@ -337,7 +337,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             <span>
                 <span>Sincerely:</span>
                 <span>___________</span>
-                <p></p>Syed Musrufa zaidi <br /> Head of Human Resource Division</p>
+                <p></p>Syed Mustufa zaidi <br /> Head of Human Resource Division</p>
             </span>
             
             <span style="float:right; margin-top:15px;">
@@ -425,7 +425,7 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         (item) => item.Process_Flag !== 'Y'
     );
 
-    console.log(Red_Appointment?.data?.[0]?.res?.data1, 'filteredData')
+    // console.log(Red_Appointment?.data?.[0]?.res?.data1, 'filteredData')
 
     return (
         <>

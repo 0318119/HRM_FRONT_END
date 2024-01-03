@@ -130,6 +130,7 @@ import Employee_Experience_Report from '../HrOperations/Employee_Experience_Repo
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 import Date_Of_Birth_Inquiry_Report from '../HrOperations/Date_Of_Birth_Inquiry_Report.js'
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
+import ManualAttendance from '../ManualAttendance/ManualAttendance'
 
 
 
@@ -265,6 +266,7 @@ const routing = () => {
               <Route path="/Access_Control" element={<Access_Control />} />
               <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
               <Route path='/Bank_Letter_Report' element={<Bank_Letter_Report />} />
+              <Route path='/ManualAttendance' element={<ManualAttendance />} />
 
             </> :
             <>

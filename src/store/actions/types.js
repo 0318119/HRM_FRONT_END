@@ -425,3 +425,12 @@ export const GET_Bank_Letter_Report_Bank_Data = "GET_Bank_Letter_Report_Bank_Dat
 export const GET_Bank_Letter_Report_Type_Data = "GET_Bank_Letter_Report_Bank_Data";
 export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
 export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
+
+
+
+// ========== ======= ===== MANUAL ATTENDANCE======== ===== === /
+export const GET_MANUAL_ATTENDANCE_DATA = "GET_MANUAL_ATTENDANCE_DATA";
+export const GET_MANUAL_ATTENDANCE_DATA_START = "GET_MANUAL_ATTENDANCE_DATA_START";
+export const GET_MANUAL_ATTENDANCE_DATA_INFO = "GET_MANUAL_ATTENDANCE_DATA_INFO";
+export const GET_MANUAL_ATTENDANCE_DATA_SINGLE = "GET_MANUAL_ATTENDANCE_DATA_SINGLE";
+export const GET_MANUAL_ATTENDANCE_DATA_END = "GET_MANUAL_ATTENDANCE_DATA_END";

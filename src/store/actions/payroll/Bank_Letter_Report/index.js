@@ -140,23 +140,26 @@ export const GetRegion = () => async (dispatch) => {
     }
 };
 
-// export const PostExperiencePayload = (data) => async () => {
-//     // console.log(data, 'data')
-//     const response = await fetch(`${baseUrl.baseUrl}/reports/ExperienceReport`, {
-//         method: "POST",
-//         headers: {
-//             accessToken: "Bareer " + localStorage.getItem("access_token"),
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//             "Emp_code": data
-//         }),
-//     });
-//     const res = await response.json();
-//     console.log(res, 'rtes')
-//     if (res?.success) {
-//         return res;
-//     } else {
-//         return res;
-//     }
-// };
+export const ExportExcel = (data) => async () => {
+    console.log(data, 'data')
+    const response = await fetch(`${baseUrl.baseUrl}/reports/Bank_payment_report`, {
+        method: "POST",
+        headers: {
+            accessToken: "Bareer " + localStorage.getItem("access_token"),
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "payslip_year": data?.payslip_year,
+            "payslip_month": data?.payslip_month,
+            "payroll_category_code": data?.payroll_category_code,
+            "Bank_code": data?.Bank_code,
+            "Region": data?.Region,
+        }),
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+};

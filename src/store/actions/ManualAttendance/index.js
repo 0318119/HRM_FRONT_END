@@ -4,7 +4,7 @@ import {
     GET_MANUAL_ATTENDANCE_DATA_INFO,
     GET_MANUAL_ATTENDANCE_DATA_SINGLE,
     GET_MANUAL_ATTENDANCE_DATA_END
-} from "../types";
+} from "../../actions/types";
 import baseUrl from "../../../config.json";
 
 
@@ -24,6 +24,7 @@ export const AllEmployees = (params) => async (dispatch) => {
         });
         if (response.status === 200) {
             const res = await response.json();
+            // console.log(res , 'res')
             dispatch({
                 type: GET_MANUAL_ATTENDANCE_DATA,
                 payload: [{ res }],
@@ -94,7 +95,7 @@ export const GetEmployeeInfo = (params) => async (dispatch) => {
 
 
 export const getAtttendanceHisss = (body) => async (dispatch) => {
-    console.log(body, 'body')
+    // console.log(body, 'body')
 
     const response = await fetch(`${baseUrl.baseUrl}/attendance/ManualAttendance/GetMonthlyAttendanceByEmpCode`, {
         method: "POST",
@@ -127,7 +128,7 @@ export const getAtttendanceHisss = (body) => async (dispatch) => {
 
 
 export const UpdateAttendance = (body) => async (dispatch) => {
-    console.log(body, 'body')
+    // console.log(body, 'body')
 
     const response = await fetch(`${baseUrl.baseUrl}/attendance/ManualAttendance/UpdateMonthlyAttendance`, {
         method: "POST",

@@ -24,8 +24,11 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
   const [isGeneratedData, setGeneratedData] = useState([]);
   const [GenerateTable, setGenerateTable] = useState(false)
   const [useSubmitForm, setUseSubmitForm] = useState();
-  const [GenrateLateArrival, setGenerateLateArrival] = useState('')
-  const [ExcelReport, setExcelReport] = useState('')
+  // console.log(useSubmitForm == 'one' ? 'yes' : "No" , 'useSubmitForm')
+
+  // const [GenrateLateArrival, setGenerateLateArrival] = useState('')
+  // const [ExcelReport, setExcelReport] = useState('')
+  
 
 
 
@@ -39,12 +42,12 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
     try {
       const isValid = await GeneratedDataSchema.validate(data);
       if (isValid) {
-        if (GenrateLateArrival){
-            GenerateData(data);
-          console.log(data, 'data')
+        if (useSubmitForm == 'one'){
+            GenerateData(data);  
+          console.log(useSubmitForm) 
         } else {
-            // GenerateExcelData(data);
-          console.log("two", ExcelReport)
+            GenerateExcelData(data);
+          console.log( useSubmitForm)
         }
       }
     } catch (error) {
@@ -277,8 +280,8 @@ const GanerateLateArrival = ({ Red_LateArrival, GenerateLateArrivals, GetGenerat
             </div>
 
             <div className="d-flex" >
-              <Button title="Generate Data" id='one'  type="submit"  onClick={() => setGenerateLateArrival('one')} />
-              <Button title={'ExportToExcel'} id='two' type="submit" onClick={() => setExcelReport('two')}  />
+              <Button title={"Generate Data"} id='one' type="submit" onClick={() => setUseSubmitForm('one')} />
+              <Button title={'ExportToExcel'} id='two' type="submit" onClick={() => setUseSubmitForm('two')}  />
             </div>
           </form>
           {GenerateTable ? <div>

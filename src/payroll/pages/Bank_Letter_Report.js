@@ -19,25 +19,19 @@ function Bank_Letter_Report({
     GetPayroll,
     GetBank,
     GetRegion,
-    
+    ExportExcel
+
 }) {
     const [isLoading, setLoading] = useState(false);
     const [isFormSubmitted, setFormSubmitted] = useState(false);
-    // const empData = Red_Bank_Letter_Report?.data?.[0]?.res?.data;
-    const [currentDate, setCurrentDate] = useState('');
-    const [toDate, setToDate] = useState('');
-    const [selectedEmployee, setSelectedEmployee] = useState('');
+    const [messageApi, contextHolder] = message.useMessage();
 
-
-    useEffect(() => {
-        const currentDate = new Date().toISOString().split('T')[0];
-        setCurrentDate(currentDate);
-        setToDate(currentDate); 
-    }, []);
-
-    // ===== SCHEMA =================
     const BankLetterSchema = yup.object().shape({
-        Emp_DOB: yup.string().required('Please Select the Birth Month'),
+        payslip_year: yup.string().required('Please Select Year'),
+        payslip_month: yup.string().required('Please Select Month'),
+        payroll_category_code: yup.string().required('Please Select payroll'),
+        Bank_code: yup.string().required('Please Select BanK'),
+        Region: yup.string().required('Please Select Region'),
     });
     const {
         control,
@@ -51,29 +45,47 @@ function Bank_Letter_Report({
 
     const onSubmit = async (data) => {
         setLoading(true);
-        // try {
-        //     const isValid = await DOBReportSchema.validate(data);
-        //     if (isValid) {
-        //         const result = await PostExperiencePayload(data.Emp_DOB);
-        //         if (result?.success) {
-        //             message.success('PDF is created, Wait PDF is under downloading...');
-        //             setFormSubmitted(true);
-        //             setDOBReportData(result?.data);
-        //             console.log(result?.data, 'ugsfosdj')
-
-        //             setSelectedEmployee(data.Emp_DOB);
-        //             // console.log("data.Emp_DOB", data.Emp_DOB)
-        //         } else {
-        //             message.error(result?.message || result?.messsage);
-        //         }
-        //     }
-        // } catch (error) {
-        //     console.error(error);
-        // }
-        // setLoading(false);
+        try {
+            const isValid = await BankLetterSchema.validate(data);
+            if (isValid) {
+                Download(data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+        setLoading(false);
     };
 
-    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+
+
+    const Download = async (data) => {
+        setLoading(true)
+        try {
+            const response = await ExportExcel({
+                payslip_year: data?.payslip_year,
+                payslip_month: data?.payslip_month,
+                payroll_category_code: data?.payroll_category_code,
+                Bank_code: data?.Bank_code,
+                Region: data?.Region,
+            });
+            if (response && response.success) {
+                messageApi.success("Waiting For Excel File Successfully Download");
+                setTimeout(() => {
+                    DownloadExcel(response?.data)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Download Excel';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Download Excel:", error);
+            messageApi.error("An error occurred while Download Excel");
+        }
+    };
+
+
+
+    const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
     const fileExtension = '.xlsx';
 
     const DownloadExcel = async (hjh) => {
@@ -89,8 +101,8 @@ function Bank_Letter_Report({
         GetPayroll()
         GetBank()
         GetRegion()
-    },[])
-    
+    }, [])
+
     const payroll = Red_Bank_Letter_Report?.getPayroll?.data
     const Bank = Red_Bank_Letter_Report?.getBank?.data
     const Region = Red_Bank_Letter_Report?.getRegion?.data
@@ -98,61 +110,39 @@ function Bank_Letter_Report({
     return (
         <>
             <Header />
+            {contextHolder}
             <div className="container">
                 <div className="row">
                     <div className="col-12 maringClass2">
                         <div>
                             <h2 className="text-dark mb-4"> Report Bank Letter </h2>
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <h4 className="text-dark"> Report Bank Letter </h4>
                                 <hr />
                                 <div className="form-group formBoxCountry">
                                     <FormSelect
                                         label={'Year'}
                                         placeholder='Select Year'
-                                        id="year"
-                                        name="year"
+                                        id="payslip_year"
+                                        name="payslip_year"
                                         options={[
                                             {
-                                                value: 1,
+                                                value: 2021,
                                                 label: '2021'
                                             },
                                             {
-                                                value: 2,
+                                                value: 2022,
                                                 label: '2022'
                                             },
                                             {
-                                                value: 3,
+                                                value: 2023,
                                                 label: '2023'
                                             },
                                             {
-                                                value: 4,
+                                                value: 2024,
                                                 label: '2024'
                                             },
-                                            {
-                                                value: 5,
-                                                label: '2025'
-                                            },
-                                            {
-                                                value: 6,
-                                                label: '2026'
-                                            },
-                                            {
-                                                value: 7,
-                                                label: '2027'
-                                            },
-                                            {
-                                                value: 8,
-                                                label: '2028'
-                                            },
-                                            {
-                                                value: 9,
-                                                label: '2029'
-                                            },
-                                            {
-                                                value: 10,
-                                                label: '2030'
-                                            },
+
                                         ]}
                                         showLabel={true}
                                         errors={errors}
@@ -164,7 +154,8 @@ function Bank_Letter_Report({
                                         placeholder='Select Month'
                                         errors={errors}
                                         control={control}
-                                        name={'Emp_DOB'}
+                                        id="payslip_month"
+                                        name="payslip_month"
                                         type="Month"
                                         options={[
                                             {
@@ -220,28 +211,31 @@ function Bank_Letter_Report({
                                     <FormSelect
                                         label={'Payroll Category'}
                                         placeholder='Select Payroll Category'
-                                        id="payrollCategory"
-                                        name="payrollCategory"
+                                        id="payroll_category_code"
+                                        name="payroll_category_code"
                                         options={payroll?.map((item) => ({
                                             value: item?.Payroll_Category_code,
                                             label: item.Payroll_Category_name
 
-                                        }) )}
+                                        }))}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
                                     />
-                               
+
 
                                     <FormSelect
                                         label={'Region'}
                                         placeholder='Select Region'
-                                        id="region"
-                                        name="region"
-                                        options={Region?.map((item) =>({
-                                            value: item.Loc_code,
-                                            label: item.Loc_name
-                                        }))}
+                                        id="Region"
+                                        name="Region"
+                                        options={[
+                                            {value : -1, label:'All'},
+                                            ...(Region ? Region.map((item) => ({
+                                                value: item.Loc_code,
+                                                label: item.Loc_name
+                                            })) : [])
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
@@ -249,13 +243,15 @@ function Bank_Letter_Report({
                                     <FormSelect
                                         label={'Bank'}
                                         placeholder='Select Bank'
-                                        id="bank"
-                                        name="bank"
-                                        options={Bank?.map((item) => ({
-                                            value: item.Bank_code,
-                                            label: item.Bank_name
-
-                                        }))}
+                                        id="Bank_code"
+                                        name="Bank_code"
+                                        options={[
+                                            { value: -1, label: 'All' },
+                                            ...(Bank ? Bank.map((item) => ({
+                                                value: item.Bank_code,
+                                                label: item.Bank_name
+                                            })) : [])
+                                        ]}
                                         showLabel={true}
                                         errors={errors}
                                         control={control}
