@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef  } from 'react'
 import '../assets/css/Leaves.css'
 import { Link, json, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -33,6 +33,7 @@ const Leaves = ({
   DELETE_LEAVE_APPLICATION
 }) => {
 
+  const inputRef = useRef(null);
   var Emp_code = localStorage.getItem("Emp_code");
   var Company_code = localStorage.getItem("company_code");
   const allEmpData = Red_Emp_Leaves?.AllEmployees?.[0]?.res
@@ -241,7 +242,7 @@ const Leaves = ({
       }
     }
   }
-  const [isFileShow,setFileShow] = useState(false)
+  const [isFileShow, setFileShow] = useState(false)
   const handleOk = async (e) => {
     e.preventDefault();
     setfileLoader(true)
@@ -275,6 +276,9 @@ const Leaves = ({
           setfileLoader(false)
         }, 3000);
         GET_EMP_FILES(isTranCode ? isTranCode : isCode)
+        if (inputRef.current) {
+          inputRef.current.value = '';
+        }
       }
     }).catch((errs) => {
       message.open(errs?.message || errs?.messsage)
@@ -332,6 +336,17 @@ const Leaves = ({
       dataIndex: "LeaveDays",
       key: "LeaveDays",
     },
+    {
+      title: 'Step Back Reason',
+      key: 'Reason',
+      render: (data) => (
+          <Space size="middle">
+              <div className='ApprovalsActionBox'>
+                  <button onClick={() => ShowReason(data)}>View</button>
+              </div>
+          </Space>
+      ),
+  },
     {
       title: "From Date",
       dataIndex: "StartDate",
@@ -434,6 +449,21 @@ const Leaves = ({
     }
   }
 
+  const ShowReason = (e) => {
+    Modal.info({
+        title: 'Reason',
+        content: (
+            <div className='approvalsReasonModal'>
+              {
+                e?.StepbackReason ? 
+                <p>{e?.StepbackReason}</p> :
+                <span className='notFound'>Not Found</span>
+              }
+            </div>
+        ),
+        onOk() { },
+    });
+};
   useEffect(() => {
     if (isfileLoader == true) {
       message.loading("Please wait...")
@@ -612,10 +642,18 @@ const Leaves = ({
                     saveLeaveApp(e)
                   }} title="Save" />
                   {
+                    isShow == true ?
+                      <>
+                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
+                        <Button loading={isSubmitLoading} onClick={(e) => {
+                          submitLeave(e)
+                        }} title="Submit" />
+                      </>
+                      : null
+                  }
+                  {
                     isShow == true || isCode !== null ?
                       <>
-                        {/* <Button title="Delete" onClick={(e) => showModal(e)} /> */}
-
                         <Space size="middle">
                           <Popconfirm
                             title="Delete the leave"
@@ -629,10 +667,6 @@ const Leaves = ({
                             <Button title="Delete" loading={isDeleteLeave} onClick={(e) => e.preventDefault(e)} />
                           </Popconfirm>
                         </Space>
-                        <Button title="Uplaod File" onClick={(e) => showModal(e)} />
-                        <Button loading={isSubmitLoading} onClick={(e) => {
-                          submitLeave(e)
-                        }} title="Submit" />
                       </>
                       : null
                   }
@@ -656,6 +690,7 @@ const Leaves = ({
                   scroll={{ x: 10 }}
                   pagination={true}
                 />
+                {console.log("hamza",Red_Emp_Leaves?.GET_LEAVES_APP?.[0]?.res?.data)}
               </div>
             </div>
           )}
@@ -681,7 +716,7 @@ const Leaves = ({
         </div>
       </div>
       <Modal title="Upload Attachments" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <input type="file" name="" id="" onChange={(e) => { setfile(e.target.files[0]) }} accept="image/*" placeholder='Attechments' />
+        <input type="file" name="" id="" ref={inputRef} onChange={(e) => { setfile(e.target.files[0]) }} accept="image/*" placeholder='Attechments' />
       </Modal>
     </>
   )
