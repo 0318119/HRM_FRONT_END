@@ -106,28 +106,28 @@ const Leaves = ({
   }, [isDateScd, leaveTypeCode?.data?.[0]?.[0]?.leave_type_code, isLeaveReq])
 
   useEffect(() => {
-    if (halfDayCheck == false) {
+    if (halfDayCheck == false && balancedDays) {
       if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
-        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
-        setSaveLoading(false);
-        setSubmitLoading(false);
+            setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
+            setSaveLoading(false);
+            setSubmitLoading(false);
       } else {
-        message.error("To date should not be less than From Date");
-        setSaveLoading(true);
-        setSubmitLoading(true)
+            message.error("To date should not be less than From Date");
+            setSaveLoading(true);
+            setSubmitLoading(true)
       }
-    } else if (halfDayCheck == true) {
+    } else if (halfDayCheck == true && balancedDays) {
       if (isDate[0].FromDate == isDate[1].ToDate) {
-        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
-        setSaveLoading(false)
-        setSubmitLoading(false)
+            setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+            setSaveLoading(false)
+            setSubmitLoading(false)
       } else {
-        message.error("To date is should be equal to From Date")
-        setSaveLoading(true)
-        setSubmitLoading(true)
+            message.error("To date is should be equal to From Date")
+            setSaveLoading(true)
+            setSubmitLoading(true)
       }
     }
-  }, [halfDayCheck, leaveCalculations, isDate]);
+  }, [halfDayCheck, leaveCalculations, isDate],balancedDays,appliedDays);
 
   useEffect(() => {
     if (mode == "read") {
