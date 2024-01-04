@@ -129,7 +129,7 @@ const Manual_leave_posting = ({
                 setLoading(true)
             }
         }
-    },[emp_balanced_days, emp_leaves_applied, halfDayCheck,isDate])
+    },[emp_balanced_days, emp_leaves_applied, halfDayCheck,isDate,leaveCalculations])
 
 
     if (emp_all_data?.res?.message == "failed") { message.error("in all Employee :" + emp_all_data?.res?.message) }

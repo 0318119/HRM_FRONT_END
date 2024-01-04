@@ -60,7 +60,7 @@ const Leaves = ({
   const [isfile, setfile] = useState()
   const [isfileLoader, setfileLoader] = useState(false)
   const [isTranCode, setTranCode] = useState()
-  const [isDeleteLeave,setDeleteLeave] = useState(false)
+  const [isDeleteLeave, setDeleteLeave] = useState(false)
 
   const showModal = (e) => {
     e.preventDefault(e)
@@ -109,26 +109,26 @@ const Leaves = ({
   useEffect(() => {
     if (halfDayCheck == false && balancedDays) {
       if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
-            setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
-            setSaveLoading(false);
-            setSubmitLoading(false);
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
+        setSaveLoading(false);
+        setSubmitLoading(false);
       } else {
-            message.error("To date should not be less than From Date");
-            setSaveLoading(true);
-            setSubmitLoading(true)
+        message.error("To date should not be less than From Date");
+        setSaveLoading(true);
+        setSubmitLoading(true)
       }
     } else if (halfDayCheck == true && balancedDays) {
       if (isDate[0].FromDate == isDate[1].ToDate) {
-            setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
-            setSaveLoading(false)
-            setSubmitLoading(false)
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+        setSaveLoading(false)
+        setSubmitLoading(false)
       } else {
-            message.error("To date is should be equal to From Date")
-            setSaveLoading(true)
-            setSubmitLoading(true)
+        message.error("To date is should be equal to From Date")
+        setSaveLoading(true)
+        setSubmitLoading(true)
       }
     }
-  }, [halfDayCheck, leaveCalculations, isDate],balancedDays,appliedDays);
+  }, [halfDayCheck, leaveCalculations, isDate], balancedDays, appliedDays);
 
   useEffect(() => {
     if (mode == "read") {
@@ -241,6 +241,7 @@ const Leaves = ({
       }
     }
   }
+  const [isFileShow,setFileShow] = useState(false)
   const handleOk = async (e) => {
     e.preventDefault();
     setfileLoader(true)
@@ -263,8 +264,10 @@ const Leaves = ({
         setTimeout(() => {
           setfileLoader(false)
         }, 3000);
+        setFileShow(false)
       } else {
         message.success(response?.message || response?.messsage)
+        setFileShow(true)
         setTimeout(() => {
           setIsModalOpen(false);
         }, 1000);
@@ -275,6 +278,7 @@ const Leaves = ({
       }
     }).catch((errs) => {
       message.open(errs?.message || errs?.messsage)
+      setFileShow(false)
       setTimeout(() => {
         setfileLoader(false)
       }, 3000);
@@ -285,13 +289,13 @@ const Leaves = ({
     setDeleteLeave(true)
     message.loading("Please wait...")
     const isCheck = await DELETE_LEAVE_APPLICATION(data)
-    if(isCheck?.success){
+    if (isCheck?.success) {
       message.success(isCheck?.message || isCheck?.messsage)
       setDeleteLeave(false)
       setTimeout(() => {
         setMode("read")
       }, 1000);
-    }else{
+    } else {
       message.success(isCheck?.message || isCheck?.messsage)
       message.destroy()
       setDeleteLeave(false)
@@ -600,13 +604,15 @@ const Leaves = ({
                   <CancelButton onClick={() => {
                     setMode("read")
                     setCode(null)
+                    setShow(false)
+                    setFileShow(false)
                   }} title="Cancel" />
 
                   <Button loading={isSaveLoading} onClick={(e) => {
                     saveLeaveApp(e)
                   }} title="Save" />
                   {
-                    isShow == true || isCode ?
+                    isShow == true || isCode !== null ?
                       <>
                         {/* <Button title="Delete" onClick={(e) => showModal(e)} /> */}
 
@@ -655,7 +661,8 @@ const Leaves = ({
           )}
 
           {
-            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 && mode == "Edit" ?
+            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 && isFileShow == true || mode == "Edit" &&
+            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 ?
               <div className="col-lg-12 mt-5 empLeavesBgColor">
                 <div className='empLeavesTableHead'>
                   <h5 className='text-dark pl-2 mb-3 mt-2'><b>Attachment</b></h5>
