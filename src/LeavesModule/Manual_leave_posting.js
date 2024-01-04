@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../components/basic/input";
 import { FormInput, FormSelect } from '../components/basic/input/formInput';
-import { PrimaryButton } from '../components/basic/button';
+import { Button } from '../components/basic/button';
 import { Popconfirm } from "antd";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -98,18 +98,38 @@ const Manual_leave_posting = ({
     }, [isLeave, emp_leave_type_data?.data?.[0]?.[0]?.leave_type_code])
 
 
+    // useEffect(() => {
+    //     if (halfDayCheck == false && emp_balanced_days) {
+            // setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)
+    //     }
+    //     else if (halfDayCheck == true && isDateScd[0].FromDate == isDateScd[1].ToDate) {
+    //         setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+    //     }
+    //     else if (halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate) {
+    //         message.error("To date is should be equal to From Date")
+    //     }
+    //     else { setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves) }
+    // }, [emp_balanced_days, emp_leaves_applied, halfDayCheck])
+
     useEffect(() => {
-        if (halfDayCheck == false && emp_balanced_days) {
-            setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)
+        if(halfDayCheck == false && emp_balanced_days){
+            if(isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate){
+                setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves)
+                setLoading(false)
+            }else{
+                message.error("To date should not be less than From Date");
+                setLoading(true)
+            }
+        }else if(halfDayCheck == true && emp_balanced_days){
+            if(isDate[0].FromDate == isDate[1].ToDate){
+                setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+                setLoading(false)
+            }else{
+                message.error("To date is should be equal to From Date")
+                setLoading(true)
+            }
         }
-        else if (halfDayCheck == true && isDateScd[0].FromDate == isDateScd[1].ToDate) {
-            setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - 0.5)
-        }
-        else if (halfDayCheck == true && isDateScd[0].FromDate !== isDateScd[1].ToDate) {
-            message.error("To date is should be equal to From Date")
-        }
-        else { setleaveCalculations(emp_balanced_days?.data?.[0]?.[0]?.Leave_Balance - emp_leaves_applied?.data?.[0]?.[0]?.Leaves) }
-    }, [emp_balanced_days, emp_leaves_applied, halfDayCheck])
+    },[emp_balanced_days, emp_leaves_applied, halfDayCheck,isDate])
 
 
     if (emp_all_data?.res?.message == "failed") { message.error("in all Employee :" + emp_all_data?.res?.message) }
@@ -156,6 +176,7 @@ const Manual_leave_posting = ({
             setLoading(false)
         }
         else {
+            setLoading(true)
             const isSaveFun = await SAVE_LEAVE_APPLICATION(payLoad)
             if (isSaveFun?.success) {
                 const isSubmitFun = await SUBMIT_LEAVE_APPLICATION(payLoad)
@@ -163,17 +184,19 @@ const Manual_leave_posting = ({
                     message.success("Submit : You have applied leave!")
                     setLeaveReason(null)
                     GET_LEAVES_APPLICATIONS()
+                    setLoading(false)
                     setTimeout(() => {
                         navigate("/TAShortsCut")
                     }, 2000);
+
                 }
                 else { 
-                    message.error(isSubmitFun?.message || isSubmitFun?.messsage)
+                    message.error(`in submit : ${isSubmitFun?.message || isSubmitFun?.messsage}`)
                     setLoading(false)
                 }
             } else {
-                message.error(isSaveFun?.message || isSaveFun?.messsage)
-                setLoading(false)
+                    message.error(`in save : ${isSaveFun?.message || isSaveFun?.messsage}`)
+                    setLoading(false)
             }
         }
     }
@@ -372,7 +395,7 @@ const Manual_leave_posting = ({
                                 />
                             </div>
                             <div className='CountryBtnBox'>
-                                <PrimaryButton type={'submit'} loading={isLoading} title="Save" />
+                                <Button type={'submit'} loading={isLoading} title="Submit" />
                             </div>
                         </form>
                     </div>

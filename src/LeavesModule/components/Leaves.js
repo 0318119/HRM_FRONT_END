@@ -60,6 +60,7 @@ const Leaves = ({
   const [isfile, setfile] = useState()
   const [isfileLoader, setfileLoader] = useState(false)
   const [isTranCode, setTranCode] = useState()
+  const [isDeleteLeave,setDeleteLeave] = useState(false)
 
   const showModal = (e) => {
     e.preventDefault(e)
@@ -134,6 +135,7 @@ const Leaves = ({
       GET_EMP_LEAVES_APP()
     } else { GET_EMP_LEAVES_APP() }
   }, [mode])
+
   const changeBox = (e) => {
     if (e.target.checked == true) {
       sethalfDayCheck(e.target.checked)
@@ -279,7 +281,6 @@ const Leaves = ({
     })
   }
 
-  const [isDeleteLeave,setDeleteLeave] = useState(false)
   const handleConfirmDeleteLeave = async (data) => {
     setDeleteLeave(true)
     message.loading("Please wait...")
@@ -453,7 +454,6 @@ const Leaves = ({
         behavior: 'smooth', // Optional: Add smooth scrolling effect
       });
     }
-
   }, [isModalOpen]);
 
 
@@ -671,8 +671,6 @@ const Leaves = ({
                 </div>
               </div> : null
           }
-
-
         </div>
       </div>
       <Modal title="Upload Attachments" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
