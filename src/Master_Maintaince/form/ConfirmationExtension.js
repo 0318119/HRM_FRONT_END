@@ -14,7 +14,7 @@ const ConfirmationExtension = () => {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
     const now = new Date();
-    const year = now.getFullYear();
+    const year = now.getFullYear(); 
     const month = (now.getMonth() + 1).toString().padStart(2, '0');
     const day = now.getDate().toString().padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;

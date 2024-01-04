@@ -57,11 +57,11 @@ const Leave_Types = ({ Red_Leave_Type, GetLeaveTypeData,DeleteFunLeaveType }) =>
       dataIndex: "Leave_name",
       key: "Leave_name",
     },
-    {
-      title: "Contact Name",
-      dataIndex: "Contact_Name",
-      key: "Contact_Name",
-    },
+    // {
+    //   title: "Contact Name",
+    //   dataIndex: "Contact_Name",
+    //   key: "Contact_Name",
+    // },
     {
       title: "Abbrevation",
       dataIndex: "Leave_type_abbr",

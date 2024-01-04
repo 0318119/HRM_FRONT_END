@@ -21,6 +21,8 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isCode2, setCode2] = useState(isCode)
+    const [isUpdate, setUpdate] = useState('')
+    const [isLoading, setLoading] = useState(false)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode2, setMode2] = useState('read')
     const EditPage = (mode2, code2) => {
@@ -30,16 +32,15 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const EditBack = () => {
         cancel('read')
     }
+    useEffect(() => {
+        if(mode2 == "read"){
+            GetEducationSavedData(isCode)
+        }else{
+            GetEducationSavedData(isCode)
+        }
+    }, [mode2])
 
-
-useEffect(() => {
-    GetEducationSavedData(isCode)
-}, [])
-
-
-    console.log(Red_AppointEducation, 'Red_AppointEducation')
-
-const columns = [
+    const columns = [
         {
             title: 'Education',
             dataIndex: 'Edu_Code',
@@ -70,7 +71,7 @@ const columns = [
             key: 'action',
             render: (data) => (
                 <Space size="middle">
-                    <button onClick={() => EditPage('Edit', data?.Edu_Code)} className="editBtn">
+                    <button onClick={() => EditPage('Edit', data?.Emp_Code, setUpdate(data?.Sr_No))} className="editBtn">
                         <FaEdit />
                     </button>
                     <Popconfirm
@@ -107,7 +108,6 @@ const columns = [
         }
     }, [page, isSearchVal])
 
-
     async function handleConfirmDelete(id) {
         await fetch(
             `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
@@ -127,11 +127,7 @@ const columns = [
                 });
                 setTimeout(() => {
                     messageApi.destroy()
-                    GetEducationSavedData({
-                        pageSize: pageSize,
-                        pageNo: page,
-                        search: null
-                    })
+                    GetEducationSavedData(isCode)
                 }, 3000);
             }
             else {
@@ -165,9 +161,9 @@ const columns = [
                                 <div className="PositionsFlexBox">
                                     <h4 className="text-dark">Education Information</h4>
                                     <div className="PositionssearchBox">
-                                        <Input placeholder={'Search Here...'} type="search"
+                                        {/* <Input placeholder={'Search Here...'} type="search"
                                             onChange={(e) => { setSearchVal(e.target.value) }}
-                                        />
+                                        /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
                                     </div>
@@ -181,7 +177,7 @@ const columns = [
                                 <Table
                                     columns={columns}
                                     loading={Red_AppointEducation?.loading}
-                                    dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]}
+                                    dataSource={Red_AppointEducation?.getSavedData?.[0]?.res?.data}
                                     scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,
@@ -197,7 +193,7 @@ const columns = [
                                 <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
+                                <TAEducationForm2 cancel={setMode2} isUpdate={isUpdate} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                         </div>
 

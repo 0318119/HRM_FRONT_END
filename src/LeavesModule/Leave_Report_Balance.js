@@ -315,8 +315,11 @@ const Leave_Report_Balance = () => {
               <div className="form-group">
                 <label htmlFor="">Year</label>
                 <select name="" id="" className='form-select' onChange={(e) => SetLeaveYear(e.target.value)} >
+                <option value="2021">2021</option>
                   <option value="2022">2022</option>
                   <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
                 </select>
               </div>
             </div>

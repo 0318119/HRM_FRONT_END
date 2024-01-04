@@ -1,4 +1,5 @@
 import baseUrl from "../config.json";
+
 export const getToken = async () => {
     try {
         const response = await fetch(
@@ -12,7 +13,7 @@ export const getToken = async () => {
             }
         );
         const res = await response.json();
-        if (response.status === 200) {
+        if (response.status == 200) {
             return res
         } else {
             if (res?.messsage == "timeout error" || res?.messsage == "unauthorized") {
@@ -24,15 +25,19 @@ export const getToken = async () => {
                         "Content-Type": "application/json",
                     }}
                 );
-                if(response.status === 200) {
+                if(response.status == 200) {
                     const res = await response.json();
                     localStorage.setItem("refresh", res?.refresh_token)
                     localStorage.setItem("access_token", res?.access_token)
+                    console.log("res",res)
                     return res
                 }
                 else{
-                    window.location.href = '/'
-                    localStorage.clear()
+                    console.log("window.location.pathname",window.location.pathname)
+                    if (window.location.pathname !== '/') {
+                        window.location.href = '/';
+                        localStorage.clear()
+                    }
                 }
             }
         }

@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import * as MASTEREARNING_ACTIONS from "../store/actions/MasterMaintaince/MasterEarning/index";
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
-import { getToken } from "../Token/index";
 
 const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
     const [mode, setMode] = useState("read");
@@ -74,28 +73,6 @@ const Earning_Master = ({ GetMasterEarningData, Red_MasterEarning }) => {
             });
         }
     }, [page, isSearchVal]);
-
-    // useEffect(() => {
-    //     if (mode == "read") {
-    //         GetMasterEarningData({
-    //             pageSize: pageSize,
-    //             pageNo: 1,
-    //             search: null,
-    //         });
-    //     }
-    // }, [mode]);
-
-    useEffect(() => {
-        const checkTokenValidity = async () => {
-            try {
-                const tokenValidationResult = await getToken();
-                console.log("token here....", tokenValidationResult)
-            } catch (error) {
-                console.error("Error checking token validity:", error);
-            }
-        };
-        checkTokenValidity();
-    }, []);
     return (
         <>
             <div>

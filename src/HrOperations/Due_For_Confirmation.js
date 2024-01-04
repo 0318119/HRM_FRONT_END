@@ -21,17 +21,14 @@ function Due_For_Confirmation({
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_Due_For_Confirmation?.data?.[0]?.res?.data
   const [isDueCOnfirmationData, setDueCOnfirmationData] = useState([])
-  const [currentDate, setCurrentDate] = useState('');
+  const currentDate = new Date().toISOString().split('T')[0]; 
 
-  useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0];
-    setCurrentDate(currentDate);
-  }, []);
 
   const Due_For_ConfirmationSchema = yup.object().shape({
     FromDate: yup.string().required('Please Select From Date'),
     ToDate: yup.string().required('Please Select To Date'),
   });
+
 
   const {
     control,
@@ -39,8 +36,8 @@ function Due_For_Confirmation({
     handleSubmit,
   } = useForm({
     defaultValues: {
-      FromDate: '',
-      ToDate: '',
+      FromDate: currentDate,
+      ToDate: currentDate,
     },
     mode: 'onChange',
     resolver: yupResolver(Due_For_ConfirmationSchema),
@@ -70,8 +67,10 @@ function Due_For_Confirmation({
   useEffect(() => {
     if (isFormSubmitted) {
       handleDownload();
+      setFormSubmitted(false)
     }
   }, [isFormSubmitted]);
+  
 
   const PdfData =
     (<Document>

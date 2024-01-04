@@ -6,7 +6,7 @@ function Button({ title,onClick,loading,type }) {
     return (
         <>
             <div className={style.PrimaryButton}>
-                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
+                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={(e)=>{onClick(e)}}>{loading?'Loading..':title}</button>
             </div>
         </>
     )

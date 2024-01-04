@@ -5,9 +5,14 @@ h1,h2,h3,h4,h5,h6,p,a,select,span,text,option,textarea,input,label,ul,li,button,
     font-family: 'Poppins', sans-serif;
     outline: none;
     text-decoration: none;
+    color: black;
 }
 button,h1,h2,h3,h4,h5,h6{
-    color: white;
+    color: black;
+}
+button{
+    border: none;
+    background: #014f86;
 }
 ul,li{
     list-style: none;
@@ -145,4 +150,11 @@ select:focus {
 
 .month{
     width: 200px !important;
+}
+
+/* NOT FOUND CSS ================= */
+.notFound{
+    background: #F7F5F5;
+    padding: 4px 7px;
+    border-radius: 5px;
 }

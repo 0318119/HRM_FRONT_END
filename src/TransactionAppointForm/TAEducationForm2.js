@@ -26,6 +26,7 @@ function TAEducationForm2({
     mode2,
     isCode2,
     page,
+    isUpdate,
     Red_AppointEducation,
     GetEmployeeInfo,
     GetEducationData,
@@ -64,7 +65,6 @@ function TAEducationForm2({
         GetInstituteData()
         GetGradeData()
         GetEducationSavedData(isCode2)
-        // GetEducationSavedData(isCode)
     }, [])
 
 
@@ -86,32 +86,24 @@ function TAEducationForm2({
         }
 
     }, [Red_AppointEducation?.data?.[0]?.res?.data?.[0]])
+    
 
 
-    // useEffect(() => {
-    //     if (mode2 == "create") {
-    //         reset({
-    //             srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
-    //             EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
-    //             EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
-    //             EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
-    //             Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
-    //             institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
-    //         });
-    //     } else {
-    //         reset(
-    //             {
-    //                 srNo: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.srNo,
-    //                 EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduCode,
-    //                 EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduYear,
-    //                 EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.EduGrade,
-    //                 Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Topflag,
-    //                 institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institutecode,
-    //             },
-    //         )
-    //     }
 
-    // }, [Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]])
+    useEffect(() => {
+        if (isUpdate) {
+            reset({
+                EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.Edu_Code,
+                EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Year,
+                EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Grade,
+                Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Top_flag,
+                institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institute_code,
+            });
+        } 
+            
+
+    }, [Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]])
+    console.log(Red_AppointEducation, 'R')
 
     const EduData = Red_AppointEducation?.getEdu?.[0]?.res?.data
     const InsData = Red_AppointEducation?.getInsti?.[0]?.res?.data
@@ -123,7 +115,12 @@ function TAEducationForm2({
         try {
             const isValid = await AppointEducationSchema.validate(data);
             if (isValid) {
-                SaveForm(data)
+                isUpdate ? UdpateForm(data) : SaveForm(data);
+                // if(isUpdate){
+                //     UdpateForm(data)
+                // }else{
+                //     SaveForm(data)
+                // }
             }
         } catch (error) {
             console.error(error);
@@ -144,6 +141,7 @@ function TAEducationForm2({
 
 
     const SaveForm = async (data) => {
+        setLoading(true)
         try {
             const response = await SaveFormEdu({
                 Sequence_no: isCode2,
@@ -169,6 +167,44 @@ function TAEducationForm2({
             messageApi.error("An error occurred while Save Information");
         }
     };
+
+
+    
+
+
+
+const UdpateForm = async (data) => {
+    setLoading(true)
+        try {
+            const response = await UpdateEducation({
+                srNo: isUpdate,
+                EduCode: data?.EduCode,
+                EduYear: data?.EduYear,
+                EduGrade: data?.EduGrade,
+                Topflag: data?.Topflag,
+                institutecode: data?.institutecode,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Updated Education Information");
+                
+                setTimeout(() => {
+                    cancel('read')
+                    setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Updated Education ';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Updated Education:", error);
+            messageApi.error("An error occurred while Updated Education");
+        }
+    };
+
+
+
+
 
     return (
         <>
@@ -293,7 +329,7 @@ function TAEducationForm2({
                                 </div>
                                 <div className='CountryBtnBox'>
                                     <CancelButton onClick={EditBack} title={'Cancel'} />
-                                    {isUpdateBtn ?
+                                    {isUpdate ?
                                         <SimpleButton type={'submit'} loading={isLoading} title="Update" />
                                         :
                                         <SimpleButton type={'submit'} loading={isLoading} title="Save" />

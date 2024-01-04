@@ -335,12 +335,14 @@ const Approvals = () => {
                                                         <td>{item?.LocationName ? item?.LocationName : "Not Found"}</td>
                                                         <td>{item?.Leave_name ? item?.Leave_name : "Not Found"}</td>
                                                         {/* <td>{item?.FileName !==null ? "Downlaod" : "Not Found"}</td> */}
-                                                        <td>{item?.FileName ? <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
+                                                        <td>{item?.FileName ? 
+                                                        <a style={{background: "#014f86",cursor: "pointer"}} className='text-white text-center py-1 px-3 rounded'
                                                             onClick={(e) => {
                                                                 const imageSource = `${config["baseUrl"]}/${item?.File_Path}`;
                                                                 saveAs(imageSource, "employeesAttachments");
                                                             }}
-                                                        >Download</a> : "Not Found"}</td>
+                                                        >Download</a> 
+                                                        : "Not Found"}</td>
                                                         <td>{item?.Reason ? item?.Reason : "Not Found"}</td>
                                                         <td>{item?.StartDate ? item?.StartDate : "Not Found"}</td>
                                                         <td>{item?.EndDate ? item?.EndDate  :"Not Found"}</td>
@@ -348,19 +350,26 @@ const Approvals = () => {
                                                         <td>{item?.Status ? item?.Status : "Not Found"}</td>
                                                         <td>{item?.Posting_date ? item?.Posting_date : "Not Found"}</td>
                                                         <td>
-                                                            <button className='mx-1' onClick={() => {
-                                                                setRemarkModal(true)
-                                                                settrancode(item?.Tran_Code)
-                                                            }}>Step Back</button>
-                                                            <button className='mx-1' onClick={() => {
-                                                                setStep("approve")
-                                                                settrancode(item?.Tran_Code)
-                                                                setmodal(true)
-                                                            }}>Aprove</button>
-                                                            <button className='mx-1' onClick={() => {
-                                                                settrancode(item?.Tran_Code)
-                                                                setRejectModal(true)
-                                                            }}>Reject</button>
+                                                            {
+                                                                item?.Status == "Step Back" || item?.Status == "Rejected" ?
+                                                                null : 
+                                                                <>
+                                                                    <button className='mx-1 buttonSet' onClick={() => {
+                                                                    setRemarkModal(true)
+                                                                    settrancode(item?.Tran_Code)
+                                                                    }}>Step Back</button>
+                                                                    <button className='mx-1 buttonSet' onClick={() => {
+                                                                        setStep("approve")
+                                                                        settrancode(item?.Tran_Code)
+                                                                        setmodal(true)
+                                                                    }}>Aprove</button>
+                                                                    <button className='mx-1 buttonSet' onClick={() => {
+                                                                        settrancode(item?.Tran_Code)
+                                                                        setRejectModal(true)
+                                                                    }}>Reject</button>
+                                                                </>
+                                                            }
+                                                            
                                                         </td>
 
                                                     </tr>

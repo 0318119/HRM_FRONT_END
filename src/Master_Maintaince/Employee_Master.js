@@ -11,7 +11,6 @@ import { MdDeleteOutline } from 'react-icons/md';
 import MasterPersonalForm from './form/MasterPersonalForm'
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
-import { getToken } from "../Token/index";
 import baseUrl from '../config.json'
 
 const Employee_Master = ({ GetMasterPersonalData, Red_Master_Personal }) => {
@@ -79,18 +78,6 @@ const Employee_Master = ({ GetMasterPersonalData, Red_Master_Personal }) => {
       ),
     },
   ];
-
-  useEffect(() => {
-    const checkTokenValidity = async () => {
-      try {
-        const tokenValidationResult = await getToken();
-        console.log("token here....",tokenValidationResult)
-      } catch (error) {
-        console.error("Error checking token validity:", error);
-      }
-    };
-    checkTokenValidity();
-  }, []);
 
   return (
     <>

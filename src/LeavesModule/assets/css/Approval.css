@@ -135,3 +135,29 @@
 .DataANotFound{
     text-align: center;
 }
+
+/* ===================== */
+.buttonSet{
+    border: none;
+    color: white;
+    margin: 3px 0;
+    background: #014f86;
+    line-height: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+
+/* ================================= */
+.approvalsReasonModal{
+    height: 200px;
+    overflow-x: auto;
+}
+.ApprovalsActionBox button{
+    color: white;
+    margin: 5px 0;
+    font-size: 13px;
+    border-radius: 5px;
+    padding: 6px 10px;
+    line-height: 1.5;
+}

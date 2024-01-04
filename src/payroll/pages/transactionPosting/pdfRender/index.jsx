@@ -16,70 +16,9 @@ import { message } from 'antd'
 
 const PdfData = ({ PdfRender, ListPdfData }) => {
     const [loading, setLoading] = useState(false)
-    const [monthList, setmonthList] = useState([
-        {
-            "value": 1,
-            "label": "January"
-        },
-        {
-            "value": 2,
-            "label": "February"
-        },
-        {
-            "value": 3,
-            "label": "March"
-        },
-        {
-            "value": 4,
-            "label": "April"
-        },
-        {
-            "value": 5,
-            "label": "May"
-        },
-        {
-            "value": 6,
-            "label": "June"
-        },
-        {
-            "value": 7,
-            "label": "July"
-        },
-        {
-            "value": 8,
-            "label": "August"
-        },
-        {
-            "value": 9,
-            "label": "September"
-        },
-        {
-            "value": 10,
-            "label": "October"
-        },
-        {
-            "value": 11,
-            "label": "November"
-        },
-        {
-            "value": 12,
-            "label": "December"
-        }
-    ])
-    const [monthSalary, setMonthSalary] = useState([
-        {
-            "value": 2021,
-            "label": "2021"
-        },
-        {
-            "value": 2022,
-            "label": "2022"
-        },
-        {
-            "value": 2023,
-            "label": "2023"
-        }
-    ])
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1;
+    const currentYear = currentDate.getFullYear(); 
 
     const fileType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     const fileExtension = '.xlsx';
@@ -96,17 +35,12 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
         setValue
     } = useForm({
         defaultValues: {
-            month: "",
-            year: "",
+            month: currentDate,
+            year: currentDate,
         },
         mode: "onChange",
         resolver: yupResolver(AddLoans),
     });
-
-    useEffect(() => {
-        setValue("month",monthList)
-        setValue("year",monthSalary)
-    },[setValue,monthList,monthSalary])
 
 
     const Request = async (data) => {
@@ -165,6 +99,11 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
             console.error(error);
         }
     }
+    
+    useEffect(() => {
+        setValue('month', currentMonth);
+        setValue('year', currentYear);
+    }, [setValue, currentMonth, currentYear]);
 
     return (
         <>
@@ -182,14 +121,86 @@ const PdfData = ({ PdfRender, ListPdfData }) => {
                                     errors={errors}
                                     control={control}
                                     placeholder={"Attendance month"}
-                                    name={'month'} label={'Attendance month'} options={monthList}
+                                    name={'month'} label={'Attendance month'}
+                                    options={[
+                                        {
+                                            "value": 1,
+                                            "label": "January"
+                                        },
+                                        {
+                                            "value": 2,
+                                            "label": "February"
+                                        },
+                                        {
+                                            "value": 3,
+                                            "label": "March"
+                                        },
+                                        {
+                                            "value": 4,
+                                            "label": "April"
+                                        },
+                                        {
+                                            "value": 5,
+                                            "label": "May"
+                                        },
+                                        {
+                                            "value": 6,
+                                            "label": "June"
+                                        },
+                                        {
+                                            "value": 7,
+                                            "label": "July"
+                                        },
+                                        {
+                                            "value": 8,
+                                            "label": "August"
+                                        },
+                                        {
+                                            "value": 9,
+                                            "label": "September"
+                                        },
+                                        {
+                                            "value": 10,
+                                            "label": "October"
+                                        },
+                                        {
+                                            "value": 11,
+                                            "label": "November"
+                                        },
+                                        {
+                                            "value": 12,
+                                            "label": "December"
+                                        }
+                                    ]}
                                 />
                                 <FormSelect
                                     deduction={'deductionFlag'}
                                     errors={errors}
                                     control={control}
                                     placeholder={"Attendance year"}
-                                    name={'year'} label={'Attendance year'} options={monthSalary}
+                                    name={'year'} label={'Attendance year'}
+                                    options={[
+                                        {
+                                            "value": 2021,
+                                            "label": "2021"
+                                        },
+                                        {
+                                            "value": 2022,
+                                            "label": "2022"
+                                        },
+                                        {
+                                            "value": 2023,
+                                            "label": "2023"
+                                        },
+                                        {
+                                            "value": 2024,
+                                            "label": "2024"
+                                        },
+                                        {
+                                            "value": 2025,
+                                            "label": "2025"
+                                        }
+                                    ]}
                                 />
                             </div>
                             <div><SimpleButton loading={loading} type={'submit'} title={'Submit'} /></div>

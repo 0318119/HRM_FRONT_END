@@ -393,6 +393,8 @@ export const GET_EMP_LEAVES_TYPE_DATA = "GET_EMP_LEAVES_TYPE_DATA"
 export const GET_EMP_LEAVES_APPLIED = "GET_EMP_LEAVES_APPLIED"
 export const GET_EMP_LEAVES_BALANCED_DAYS = "GET_EMP_LEAVES_BALANCED_DAYS"
 export const GET_EMP_LEAVES_APPLICATIONS = "GET_EMP_LEAVES_APPLICATIONS"
+export const GET_EMP_LEAVES_ATTACEMENTS = "GET_EMP_LEAVES_ATTACEMENTS"
+
 
 // HR SETUP ===========> RetirementSeparationReport =========
 export const GET_RetirementSeparationReport_DATA = "GET_RetirementSeparationReport_DATA";
@@ -418,7 +420,11 @@ export const GET_Date_Of_Birth_Inquiry_Report_END = "GET_Date_Of_Birth_Inquiry_R
 
 // PAYROLL ===> Bank_Letter_Report === 
 
-export const GET_Bank_Letter_Report_DATA = "    GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_DATA = "GET_Bank_Letter_Report_DATA,";
+export const GET_Bank_Letter_Report_Payroll_Data = "GET_Bank_Letter_Report_Payroll_Data";
+export const GET_Bank_Letter_Report_Region_Data = "GET_Bank_Letter_Report_Region_Data";
+export const GET_Bank_Letter_Report_Bank_Data = "GET_Bank_Letter_Report_Bank_Data";
+export const GET_Bank_Letter_Report_Type_Data = "GET_Bank_Letter_Report_Bank_Data";
 export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
 export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
 
@@ -429,4 +435,27 @@ export const GET_PAYSHEET_Report_START = "GET_PAYSHEET_Report_START";
 export const GET_PAYSHEET_Report_PAYROLL = "GET_PAYSHEET_Report_PAYROLL";
 export const GET_PAYSHEET_Report_END = "GET_PAYSHEET_Report_END";
 
+
+// ========== ======= ===== MANUAL ATTENDANCE======== ===== === /
+export const GET_MANUAL_ATTENDANCE_DATA = "GET_MANUAL_ATTENDANCE_DATA";
+export const GET_MANUAL_ATTENDANCE_DATA_START = "GET_MANUAL_ATTENDANCE_DATA_START";
+export const GET_MANUAL_ATTENDANCE_DATA_INFO = "GET_MANUAL_ATTENDANCE_DATA_INFO";
+export const GET_MANUAL_ATTENDANCE_DATA_SINGLE = "GET_MANUAL_ATTENDANCE_DATA_SINGLE";
+export const GET_MANUAL_ATTENDANCE_DATA_END = "GET_MANUAL_ATTENDANCE_DATA_END"; 
+
+
+// EMP LEAVES APPROVALS TYPES =========================
+export const GET_EMP_APPROVALS_DATA_START = "GET_EMP_APPROVALS_DATA_START"
+export const GET_EMP_APPROVALS_ALL_DATA = "GET_EMP_APPROVALS_ALL_DATA"
+export const GET_EMP_APPROVALS_DATA_END = "GET_EMP_APPROVALS_DATA_END"
+// ==========================================================
+export const GET_LEAVE_SUMMERY_BY_ID = "GET_LEAVE_SUMMERY_BY_ID"
+export const GET_LEAVE_SUMMERY_FILE_BY_ID = "GET_LEAVE_SUMMERY_FILE_BY_ID"
+
+// ========== MasterMaintaince ======= ===== Confirmation_Extensio2======== ===== === /
+export const GET_Confirmation_Extensio2_DATA = "GET_Confirmation_Extensio2_DATA";
+export const GET_Confirmation_Extensio2_START = "GET_Confirmation_Extensio2_START";
+export const GET_Confirmation_Extensio2_Confirmation = "GET_Confirmation_Extensio2_Confirmation";
+export const GET_Confirmation_Extensio2_Designation = "GET_Confirmation_Extensio2_Designation";
+export const GET_Confirmation_Extensio2_END = "GET_Confirmation_Extensio2_END"; 
 

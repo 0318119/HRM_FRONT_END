@@ -27,6 +27,7 @@ const Header = (props) => {
   const [isShowIconThree, setisShowIconThree] = useState("")
   var get_refresh_token = localStorage.getItem("refresh");
   var get_access_token = localStorage.getItem("access_token");
+  var get_Name = localStorage.getItem("Emp_Name")
 
   async function getMultiLevelDropDown() {
     await fetch(`${config['baseUrl']}/dirmenus/GetDirMenus`, {
@@ -100,7 +101,7 @@ const Header = (props) => {
               </h4>
               <div className="form-group">
                 <div className="Header_Search">
-                  <Link to="/TAShortsCut"> 
+                  <Link to="/TAShortsCut" className='d-block'> 
                       <img src={LogoHeader} alt="" className='ImgLogo' />
                   </Link>
                 
@@ -108,6 +109,7 @@ const Header = (props) => {
               </div>
             </div>
             <div className="col-lg-3 col-md-3 col-sm-3 d-flex align-items-center justify-content-end ColMobileRes2">
+              <span style={{color: "white",textTransform: 'capitalize'}}>{get_Name}</span>
               <div className="Header_Settings">
                 <Notify_ico className="notify_ico" />
               </div>
@@ -202,7 +204,7 @@ const Header = (props) => {
                                                 window.location.href = `/${stringWithoutSpaces}`
                                               }
                                             }}
-                                            className='singleItem' target='_blank'>{three.menulabel}</Link> : ""}
+                                            className='singleItem'>{three.menulabel}</Link> : ""}
                                         </div>
 
                                         {isShowIconThree == three.menulabel && (
@@ -222,7 +224,7 @@ const Header = (props) => {
                                                       window.location.href = `/${stringWithoutSpaces}`
                                                     }
                                                   }}
-                                                  target='_blank'>{four.menulabel}</Link>
+                                                  >{four.menulabel}</Link>
                                               </li>
                                             )) : ""}
                                           </div>
@@ -243,6 +245,10 @@ const Header = (props) => {
 
                 <li>
                   <div className='flexLinks'>
+                    <MdLogout className='d-lg-block d-none' style={{
+                      margin:"0 5px",
+                      fontSize: "18px"
+                    }}/>
                     <Link className='LogOutLinkDesktop' onClick={logOutHandler}>Logout</Link>
                   </div>
                 </li>

@@ -1,0 +1,75 @@
+.maringClass {
+    margin-top: 80px;
+}
+.Boxform {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f5f5;
+    padding: 15px;
+    border-radius: 10px;
+}
+.InstitutionFlexBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.InstitutionFlexBox .InstitutionsearchBox {
+    display: flex;
+    align-items: center;
+}
+
+.InstitutionFlexBox .InstitutionsearchBox input {
+    min-width: 300px;
+}
+
+.formBoxInstitution {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.InstitutionBtnBox {
+    display: flex;
+    justify-content: end;
+}
+
+.formBoxInstitution div {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .InstitutionFlexBox {
+        flex-wrap: wrap;
+    }
+
+    .InstitutionFlexBox .InstitutionsearchBox {
+        width: 100%;
+    }
+
+    .InstitutionFlexBox .InstitutionsearchBox #inputBox {
+        width: 100%;
+    }
+
+    .InstitutionFlexBox .InstitutionsearchBox #inputBox input {
+        min-width: unset !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .formBoxInstitution div {
+        width: 100%;
+    }
+
+    .InstitutionFlexBox .InstitutionsearchBox {
+        flex-wrap: wrap;
+    }
+}
+
+
+.FormSelectGF {
+    width: 220px !important;
+}

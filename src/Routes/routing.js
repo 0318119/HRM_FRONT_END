@@ -108,7 +108,6 @@ import OutstandingRecoveries from '../payroll/pages/Setup/OutstandingRecoveries'
 import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
-import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation';
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
 import TAEducationForm2 from '../TransactionAppointForm/TAEducationForm2.js'
 import TASalaryForm2 from '../TransactionAppointForm/TASalaryForm2.js'
@@ -129,8 +128,14 @@ import TranEducationReport from '../HrOperations/TranEducationReport.js'
 import Employee_Experience_Report from '../HrOperations/Employee_Experience_Report.js'
 import RetirementSeparationReport from '../HrOperations/RetirementSeparationReport.js'
 import Date_Of_Birth_Inquiry_Report from '../HrOperations/Date_Of_Birth_Inquiry_Report.js'
+import OfferLeter from '../TransactionAppointment/AppointmentLetter/index.js'
+import ManualAttendance from '../ManualAttendance/ManualAttendance.js';
+import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
+import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
+import Approvalsss from '../LeavesModule/components/Approvalsss.js';
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
 import Paysheet_Report from '../payroll/pages/Paysheet_Report.js'
+import Confirmation_Extensio2 from '../Master_Maintaince/components/Confirmation_Extensio2.js'
 
 
 
@@ -242,7 +247,7 @@ const routing = () => {
               <Route path="/payroll/addDeduction" element={<AddDeduction />} />
               <Route path="/payroll/addPayroll" element={<AddPayroll />} />
               <Route path="/payroll/addPayrollMethod" element={<AddPayrollMethod />} />
-              <Route path="/payroll/report/attendanceReport" element={<AddPayrollMethodPdf />} />
+              <Route path="/Attendance_Excel_Report" element={<AddPayrollMethodPdf />} />
               <Route path="/payroll/report/taxReport" element={<TaxReport />} />
               <Route path="/payroll/report/SalaryOnHold" element={<SalaryOnHold />} />
               <Route path="/Earning_Master" element={<Earning_Master />} />
@@ -265,9 +270,14 @@ const routing = () => {
               <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
               <Route path="/Access_Control" element={<Access_Control />} />
               <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
+              <Route path="/OfferLeter" element={<OfferLeter />} />
+              <Route path="/ManualAttendance" element={<ManualAttendance />} />
+              <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
+              {/* JUST FOR TESTING PORPOSE ROUTES, DON'T REMOVE THIS COMMENT ========================== */}
+              <Route path="/Approvalsss" element={<Approvalsss />} />
               <Route path='/Bank_Letter_Report' element={<Bank_Letter_Report />} />
               <Route path='/Paysheet_Report' element={<Paysheet_Report />} />
-
+              <Route path='/Confirmation_Extensio2' element={<Confirmation_Extensio2 />} />
 
             </> :
             <>
