@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef  } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../assets/css/Leaves.css'
 import { Link, json, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -62,6 +62,8 @@ const Leaves = ({
   const [isfileLoader, setfileLoader] = useState(false)
   const [isTranCode, setTranCode] = useState()
   const [isDeleteLeave, setDeleteLeave] = useState(false)
+  const [isDeleteLoader, setDeleteLoader] = useState(false)
+  const [isFileShow, setFileShow] = useState(false)
 
   const showModal = (e) => {
     e.preventDefault(e)
@@ -76,67 +78,6 @@ const Leaves = ({
     setMode(mode)
   }
 
-  useEffect(() => {
-    if (isCode !== null) {
-      GET_EMP_LEAVE_EDIT(isCode)
-      GET_EMP_FILES(isCode)
-    }
-  }, [isCode])
-
-  useEffect(() => {
-    if (isLeaveReq !== null) {
-      GET_APPLIED_DAYS({
-        code: isLeaveReq,
-        startDate: isDate[0].FromDate,
-        endDate: isDate[1].ToDate
-      })
-      GET_EMP_LEAVE_TYPE(isLeaveReq)
-    }
-    GET_ALL_EMP_DATA()
-  }, [isDate, isLeaveReq])
-
-  useEffect(() => {
-    if (leaveTypeCode?.data?.[0]?.[0]?.leave_type_code) {
-      GET_BALANCED_DAYS({
-        code: isLeaveReq,
-        leave_code: leaveTypeCode?.data?.[0]?.[0]?.leave_type_code,
-        startDate: isDateScd[0].FromDate,
-        endDate: isDateScd[1].ToDate
-      })
-      setLeave(leaveTypeCode?.data?.[0]?.[0]?.leave_type_code)
-    }
-  }, [isDateScd, leaveTypeCode?.data?.[0]?.[0]?.leave_type_code, isLeaveReq])
-
-  useEffect(() => {
-    if (halfDayCheck == false && balancedDays) {
-      if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
-        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
-        setSaveLoading(false);
-        setSubmitLoading(false);
-      } else {
-        message.error("To date should not be less than From Date");
-        setSaveLoading(true);
-        setSubmitLoading(true)
-      }
-    } else if (halfDayCheck == true && balancedDays) {
-      if (isDate[0].FromDate == isDate[1].ToDate) {
-        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
-        setSaveLoading(false)
-        setSubmitLoading(false)
-      } else {
-        message.error("To date is should be equal to From Date")
-        setSaveLoading(true)
-        setSubmitLoading(true)
-      }
-    }
-  }, [halfDayCheck, leaveCalculations, isDate], balancedDays, appliedDays);
-
-  useEffect(() => {
-    if (mode == "read") {
-      GET_EMP_LEAVES_APP()
-    } else { GET_EMP_LEAVES_APP() }
-  }, [mode])
-
   const changeBox = (e) => {
     if (e.target.checked == true) {
       sethalfDayCheck(e.target.checked)
@@ -145,23 +86,34 @@ const Leaves = ({
     }
   }
 
-  // SAVE LEAVE APPLICATION API CALL =====================================
-  useEffect(() => {
-    if (EditCodeEmp && mode == "Edit") {
-      setLeaveReq(EditCodeEmp?.Emp_code)
-      setLeave(EditCodeEmp?.Leave_type_code)
-      sethalfDayCheck(EditCodeEmp?.Leave_Days == 0.5 ? true : false)
-      setDate([{ FromDate: EditCodeEmp?.Start_Date }, { ToDate: EditCodeEmp?.End_Date }]);
-      setLeaveReasons(EditCodeEmp?.Reason)
-      console.log("run this code...", EditCodeEmp?.Reason)
+  const handleConfirmDelete = async (e) => {
+    setDeleteLoader(true)
+    const isSaveFun = await DELETE_FILE_OF_EMP_LEAVE(e)
+    if (isSaveFun?.success) {
+      message.success("You have been deleted successfully...")
+      setDeleteLoader(false)
+      GET_EMP_FILES(isCode)
     } else {
-      setLeaveReq(Emp_code)
-      setDate([{ FromDate: currentDatees }, { ToDate: currentDatees }]);
-      sethalfDayCheck(0)
-      setLeaveReasons("")
+      message.error(isSaveFun?.message || isSaveFun?.messsage)
+      setDeleteLoader(false)
     }
-  }, [EditCodeEmp, mode])
+  }
 
+  const ShowReason = (e) => {
+    Modal.info({
+      title: 'Reason',
+      content: (
+        <div className='approvalsReasonModal'>
+          {
+            e?.StepbackReason ?
+              <p>{e?.StepbackReason}</p> :
+              <span className='notFound'>Not Found</span>
+          }
+        </div>
+      ),
+      onOk() { },
+    });
+  };
 
   const savePayLoad = JSON.stringify({
     "Tran_Code": isCode !== null ? isCode : 0,
@@ -242,7 +194,6 @@ const Leaves = ({
       }
     }
   }
-  const [isFileShow, setFileShow] = useState(false)
   const handleOk = async (e) => {
     e.preventDefault();
     setfileLoader(true)
@@ -340,13 +291,13 @@ const Leaves = ({
       title: 'Step Back Reason',
       key: 'Reason',
       render: (data) => (
-          <Space size="middle">
-              <div className='ApprovalsActionBox'>
-                  <button onClick={() => ShowReason(data)}>View</button>
-              </div>
-          </Space>
+        <Space size="middle">
+          <div className='ApprovalsActionBox'>
+            <button className="btnBg" onClick={() => ShowReason(data)}>View</button>
+          </div>
+        </Space>
       ),
-  },
+    },
     {
       title: "From Date",
       dataIndex: "StartDate",
@@ -435,35 +386,85 @@ const Leaves = ({
       ),
     },
   ];
-  const [isDeleteLoader, setDeleteLoader] = useState(false)
-  const handleConfirmDelete = async (e) => {
-    setDeleteLoader(true)
-    const isSaveFun = await DELETE_FILE_OF_EMP_LEAVE(e)
-    if (isSaveFun?.success) {
-      message.success("You have been deleted successfully...")
-      setDeleteLoader(false)
-      GET_EMP_FILES(isCode)
-    } else {
-      message.error(isSaveFun?.message || isSaveFun?.messsage)
-      setDeleteLoader(false)
-    }
-  }
 
-  const ShowReason = (e) => {
-    Modal.info({
-        title: 'Reason',
-        content: (
-            <div className='approvalsReasonModal'>
-              {
-                e?.StepbackReason ? 
-                <p>{e?.StepbackReason}</p> :
-                <span className='notFound'>Not Found</span>
-              }
-            </div>
-        ),
-        onOk() { },
-    });
-};
+  useEffect(() => {
+    if (EditCodeEmp && mode == "Edit") {
+      setLeaveReq(EditCodeEmp?.Emp_code)
+      setLeave(EditCodeEmp?.Leave_type_code)
+      sethalfDayCheck(EditCodeEmp?.Leave_Days == 0.5 ? true : false)
+      setDate([{ FromDate: EditCodeEmp?.Start_Date }, { ToDate: EditCodeEmp?.End_Date }]);
+      setLeaveReasons(EditCodeEmp?.Reason)
+      console.log("run this code...", EditCodeEmp?.Reason)
+    } else {
+      setLeaveReq(Emp_code)
+      setDate([{ FromDate: currentDatees }, { ToDate: currentDatees }]);
+      sethalfDayCheck(0)
+      setLeaveReasons("")
+    }
+  }, [EditCodeEmp, mode])
+
+  useEffect(() => {
+    if (isCode !== null) {
+      GET_EMP_LEAVE_EDIT(isCode)
+      GET_EMP_FILES(isCode)
+    }
+  }, [isCode])
+
+  useEffect(() => {
+    if (isLeaveReq !== null) {
+      GET_APPLIED_DAYS({
+        code: isLeaveReq,
+        startDate: isDate[0].FromDate,
+        endDate: isDate[1].ToDate
+      })
+      GET_EMP_LEAVE_TYPE(isLeaveReq)
+    }
+    GET_ALL_EMP_DATA()
+  }, [isDate, isLeaveReq])
+
+  useEffect(() => {
+    if (leaveTypeCode?.data?.[0]?.[0]?.leave_type_code) {
+      GET_BALANCED_DAYS({
+        code: isLeaveReq,
+        leave_code: leaveTypeCode?.data?.[0]?.[0]?.leave_type_code,
+        startDate: isDateScd[0].FromDate,
+        endDate: isDateScd[1].ToDate
+      })
+      setLeave(leaveTypeCode?.data?.[0]?.[0]?.leave_type_code)
+    }
+  }, [isDateScd, leaveTypeCode?.data?.[0]?.[0]?.leave_type_code, isLeaveReq])
+
+  useEffect(() => {
+    if (halfDayCheck == false && balancedDays) {
+      if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
+        setSaveLoading(false);
+        setSubmitLoading(false);
+      } else {
+        message.error("To date should not be less than From Date");
+        setSaveLoading(true);
+        setSubmitLoading(true)
+      }
+    } else if (halfDayCheck == true && balancedDays) {
+      if (isDate[0].FromDate == isDate[1].ToDate) {
+        setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
+        setSaveLoading(false)
+        setSubmitLoading(false)
+      } else {
+        message.error("To date is should be equal to From Date")
+        setSaveLoading(true)
+        setSubmitLoading(true)
+      }
+    }
+  }, [halfDayCheck, leaveCalculations, isDate], balancedDays, appliedDays);
+
+  useEffect(() => {
+    if (mode == "read") {
+      GET_EMP_LEAVES_APP()
+    } else { GET_EMP_LEAVES_APP() }
+  }, [mode])
+
+
   useEffect(() => {
     if (isfileLoader == true) {
       message.loading("Please wait...")
@@ -690,14 +691,14 @@ const Leaves = ({
                   scroll={{ x: 10 }}
                   pagination={true}
                 />
-                {console.log("hamza",Red_Emp_Leaves?.GET_LEAVES_APP?.[0]?.res?.data)}
+                {console.log("hamza", Red_Emp_Leaves?.GET_LEAVES_APP?.[0]?.res?.data)}
               </div>
             </div>
           )}
 
           {
             Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 && isFileShow == true || mode == "Edit" &&
-            Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 ?
+              Red_Emp_Leaves?.ATTACEMENTS_DATA?.[0]?.res?.data?.[0]?.length > 0 ?
               <div className="col-lg-12 mt-5 empLeavesBgColor">
                 <div className='empLeavesTableHead'>
                   <h5 className='text-dark pl-2 mb-3 mt-2'><b>Attachment</b></h5>

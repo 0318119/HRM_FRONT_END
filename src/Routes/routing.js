@@ -132,7 +132,6 @@ import OfferLeter from '../TransactionAppointment/AppointmentLetter/index.js'
 import ManualAttendance from '../ManualAttendance/ManualAttendance.js';
 import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
-import Approvalsss from '../LeavesModule/components/Approvalsss.js';
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
 
 
@@ -271,8 +270,6 @@ const routing = () => {
               <Route path="/OfferLeter" element={<OfferLeter />} />
               <Route path="/ManualAttendance" element={<ManualAttendance />} />
               <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
-              {/* JUST FOR TESTING PORPOSE ROUTES, DON'T REMOVE THIS COMMENT ========================== */}
-              <Route path="/Approvalsss" element={<Approvalsss />} />
               <Route path='/Bank_Letter_Report' element={<Bank_Letter_Report />} />
               <Route path='/ManualAttendance' element={<ManualAttendance />} />
 

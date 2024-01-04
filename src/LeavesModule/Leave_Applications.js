@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Header from '../components/Includes/Header'
 import LeaveCategoryList from './components/Leaves'
 import Tabs from '../dashboard/tabs/tabs'
-import Approvals from './components/Approvals'
 import Reports from './components/Reports'
 import Approvalsss from './components/Approvalsss'
 const Leave_Applications = () => {

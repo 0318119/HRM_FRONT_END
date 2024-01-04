@@ -104,6 +104,19 @@ function LeaveSummary({
             }
         }
     }
+   
+    const ShowReason = (e) => {
+        Modal.info({
+            title: 'Reason',
+            content: (
+                <div className='approvalsReasonModal'>
+                    <p>{e?.Reason}</p>
+                </div>
+            ),
+            onOk() { },
+        });
+    };
+
     const filecolumns = [
         {
             title: 'File Name',
@@ -150,19 +163,6 @@ function LeaveSummary({
             ),
         },
     ];
-
-    const ShowReason = (e) => {
-        Modal.info({
-            title: 'Reason',
-            content: (
-                <div className='approvalsReasonModal'>
-                    <p>{e?.Reason}</p>
-                </div>
-            ),
-            onOk() { },
-        });
-    };
-
 
 
     useEffect(() => {

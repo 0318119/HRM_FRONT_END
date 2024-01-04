@@ -81,6 +81,7 @@
     ]
   },
   "devDependencies": {
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "@babel/plugin-proposal-private-property-in-object": "^4.0.6"
   }
 }
