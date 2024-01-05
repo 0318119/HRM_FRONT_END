@@ -134,6 +134,7 @@ import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
 import Approvalsss from '../LeavesModule/components/Approvalsss.js';
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
+import Promotion2 from '../Master_Maintaince/Promotion2.js';
 
 
 
@@ -309,6 +310,12 @@ const routing = () => {
               }
             </>
         }
+
+        {/* =====Temporary routing ======= */}
+        <Route path="/Promotion2" element={<Promotion2 />} />
+        {/* =====Temporary routing ======= */}
+
+
       </Routes>
     </Router>
 

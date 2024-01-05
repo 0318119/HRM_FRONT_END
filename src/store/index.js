@@ -77,6 +77,7 @@ import Red_Date_Of_Birth_Inquiry_Report from './reducers/HrOperations/Date_Of_Bi
 import Red_ManualAttendence from "./reducers/ManualAttendance/index"
 import Red_Emp_Leaves_Approvals from "./reducers/Leave/Approvals/index"
 import Red_Bank_Letter_Report from './reducers/payroll/Bank_Letter_Report/index'
+import Red_Promotion from "./reducers/HrOperations/Master_Maintaince/Promotion/index";
 
 const reducers = combineReducers({
   Transition_family,
@@ -162,7 +163,8 @@ const reducers = combineReducers({
   Red_AppointChecklist,
   Red_ManualAttendence,
   Red_Emp_Leaves_Approvals,
-  Red_Bank_Letter_Report
+  Red_Bank_Letter_Report,
+  Red_Promotion
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
