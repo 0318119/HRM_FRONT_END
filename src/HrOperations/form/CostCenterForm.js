@@ -15,9 +15,6 @@ function CostCenterForm({cancel, isCode,page, GetCostCentreData, Get_Cost_Centre
   const [isLoading,setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(10);
 
-
-  
-
 // FORM CANCEL FUNCTION =================================================================
 const EditBack=()=>{
     cancel('read')
@@ -445,7 +442,7 @@ async function POST_COST_CENTRE_FORM(body) {
               />
           </div>
           <div className='CountryBtnBox'>
-              <CancelButton onClick={EditBack} title={'Cancel'}/> :
+              <CancelButton onClick={EditBack} title={'Cancel'}/> 
               <PrimaryButton type={'submit'} loading={isLoading} title="Save"/>
           </div>
         </form>

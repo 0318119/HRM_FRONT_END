@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from "react-redux";
+import '../../../src/LeavesModule/assets/css/Approval.css'
 import { Space, Table, Pagination, Tag, Tooltip, message, Modal, Input } from 'antd';
 import * as EMP_LEAVES_APPROVALS_ACTIONS from "../../../src/store/actions/Leave/Approvals/index"
 import { saveAs } from "file-saver";

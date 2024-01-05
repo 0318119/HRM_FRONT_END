@@ -265,7 +265,7 @@ const Manual_leave_posting = ({
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-lg-9 maringClass manual_Leaves_bg">
-                        <form onSubmit={saveLeaveApplication}>
+                        <form>
                             <h5 className='text-dark pl-2 mb-3 mt-2'><b>Manual Leave Application</b></h5>
                             <div>
                                 <FormSelect
@@ -395,7 +395,7 @@ const Manual_leave_posting = ({
                                 />
                             </div>
                             <div className='CountryBtnBox'>
-                                <Button type={'submit'} loading={isLoading} title="Submit" />
+                                <Button type={'submit'} onClick={(e) => saveLeaveApplication(e)}loading={isLoading} title="Submit" />
                             </div>
                         </form>
                     </div>

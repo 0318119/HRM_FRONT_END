@@ -681,7 +681,7 @@ const Leaves = ({
             <div className="col-lg-12 mt-5 empLeavesBgColor">
               <div className='empLeavesTableHead'>
                 <h5 className='text-dark pl-2 mb-3 mt-2'><b>Leave Application</b></h5>
-                <Button title="Create" onClick={() => setMode("create")} />
+                <Button title="Apply" onClick={() => setMode("create")} />
               </div>
               <div>
                 <Table
