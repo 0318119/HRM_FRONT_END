@@ -15,7 +15,7 @@ const initState = {
     YEAR_DATA:[]
 }
 
-const Red_Leave_Report_Balance = (state = initState, action) => {
+const Red_Leave_Reports = (state = initState, action) => {
     switch (action.type) {
         case GET_LEAVE_REPORT_BALANCE_DATA_START:
             return {
@@ -60,4 +60,4 @@ const Red_Leave_Report_Balance = (state = initState, action) => {
     }
 };
 
-export default Red_Leave_Report_Balance
+export default Red_Leave_Reports

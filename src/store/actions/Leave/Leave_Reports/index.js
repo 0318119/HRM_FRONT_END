@@ -6,7 +6,7 @@ import {
     GET_LEAVE_REPORT_BALANCE_LEAVE_CAT,
     GET_LEAVE_REPORT_BALANCE_LEAVE_EMP,
     GET_LEAVE_REPORT_BALANCE_LEAVE_YEAR
-} from '../../../actions/types'
+} from '../../types'
 import baseUrl from '../../../../config.json'
 
 export const GET_ALL_EMP_DATA = () => async (dispatch) => {
@@ -165,8 +165,7 @@ export const GET_LEAVE_YEARS = () => async (dispatch) => {
         console.log(error)
     }
 }
-
-export const DOWNLOAD_LEAVE_EXCEL_FILE = (body) => async (dispatch) => {
+export const DOWNLOAD_LEAVE_BALANCED_EXCEL_FILE = (body) => async (dispatch) => {
     const response = await fetch(`${baseUrl.baseUrl}/reportBalance/GetLeaveReportBalance`, {
         method: "POST",
         headers: {
@@ -182,3 +181,21 @@ export const DOWNLOAD_LEAVE_EXCEL_FILE = (body) => async (dispatch) => {
       return res;
     }
 }
+export const DOWNLOAD_LEAVE_DETAILS_EXCEL_FILE = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/GetLeaveReportdata/GetLeaveReport`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: body
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+}
+
+

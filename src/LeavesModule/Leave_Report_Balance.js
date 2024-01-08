@@ -5,7 +5,7 @@ import * as FileSaver from 'file-saver'
 import XLSX from 'sheetjs-style'
 import { connect } from "react-redux";
 import { message } from 'antd';
-import * as LEAVE_REPORT_BALANCED_ACTIONS from "../store/actions/Leave/Leave_Report_Balance/index"
+import * as LEAVE_REPORTS from "../store/actions/Leave/Leave_Reports/index"
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormSelect } from '../components/basic/input/formInput';
@@ -13,18 +13,18 @@ import { PrimaryButton } from "../components/basic/button";
 import * as yup from "yup";
 
 const Leave_Report_Balance = ({
-  Red_Leave_Report_Balance,
+  Red_Leave_Reports,
   GET_ALL_EMP_DATA,
   GET_LEAVE_CAT,
   GET_LEAVE_TYPES,
   GET_LEAVE_YEARS,
-  DOWNLOAD_LEAVE_EXCEL_FILE
+  DOWNLOAD_LEAVE_BALANCED_EXCEL_FILE
 }) => {
 
-  const EmpData = Red_Leave_Report_Balance?.EMP_DATA?.[0]?.res
-  const leaveCatData = Red_Leave_Report_Balance?.LEAVE_CAT?.[0]?.res
-  const leaveTypeData  = Red_Leave_Report_Balance?.LEAVE_TYPES?.[0]?.res
-  const yearData = Red_Leave_Report_Balance?.YEAR_DATA?.[0]?.res
+  const EmpData = Red_Leave_Reports?.EMP_DATA?.[0]?.res
+  const leaveCatData = Red_Leave_Reports?.LEAVE_CAT?.[0]?.res
+  const leaveTypeData  = Red_Leave_Reports?.LEAVE_TYPES?.[0]?.res
+  const yearData = Red_Leave_Reports?.YEAR_DATA?.[0]?.res
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
 
@@ -60,14 +60,12 @@ const Leave_Report_Balance = ({
     control,
     formState: { errors },
     handleSubmit,
-    reset,
-    setValue
   } = useForm({
     defaultValues: {
-      YearNo: "",
-      Leave_category_code: "",
-      Leave_type_code: "",
-      Emp_Code: "",
+      Emp_Code: "-1",
+      Leave_category_code: 23,
+      Leave_type_code: 21,
+      YearNo: currentYear,
     },
     mode: "onChange",
     resolver: yupResolver(Sheme),
@@ -83,7 +81,7 @@ const Leave_Report_Balance = ({
       "Leave_type_code": data?.Leave_type_code,
       "Emp_Code": data?.Emp_Code
     })
-    const isCheckResponse = await DOWNLOAD_LEAVE_EXCEL_FILE(paylaod)
+    const isCheckResponse = await DOWNLOAD_LEAVE_BALANCED_EXCEL_FILE(paylaod)
     if(isCheckResponse?.success){
       DownloadExcel(isCheckResponse?.data?.[0])
     }else{
@@ -119,14 +117,6 @@ const Leave_Report_Balance = ({
     GET_LEAVE_TYPES()
     GET_LEAVE_YEARS()
   }, [])
-
-  useEffect(() => {
-    setValue("Emp_Code","-1")
-    setValue("Leave_category_code",23)
-    setValue("Leave_type_code",21)
-    setValue("YearNo",currentYear)
-  }, [setValue,currentYear])
-
 
 
   return (
@@ -196,7 +186,7 @@ const Leave_Report_Balance = ({
   )
 }
 
-function mapStateToProps({ Red_Leave_Report_Balance }) {
-  return { Red_Leave_Report_Balance };
+function mapStateToProps({ Red_Leave_Reports }) {
+  return { Red_Leave_Reports };
 }
-export default connect(mapStateToProps, LEAVE_REPORT_BALANCED_ACTIONS)(Leave_Report_Balance) 
+export default connect(mapStateToProps, LEAVE_REPORTS)(Leave_Report_Balance) 
