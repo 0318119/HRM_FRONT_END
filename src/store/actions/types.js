@@ -453,9 +453,8 @@ export const GET_LEAVE_SUMMERY_BY_ID = "GET_LEAVE_SUMMERY_BY_ID"
 export const GET_LEAVE_SUMMERY_FILE_BY_ID = "GET_LEAVE_SUMMERY_FILE_BY_ID"
 
 // ========== MasterMaintaince ======= ===== Confirmation_Extensio2======== ===== === /
-export const GET_Confirmation_Extensio2_DATA = "GET_Confirmation_Extensio2_DATA";
-export const GET_Confirmation_Extensio2_START = "GET_Confirmation_Extensio2_START";
-export const GET_Confirmation_Extensio2_Confirmation = "GET_Confirmation_Extensio2_Confirmation";
-export const GET_Confirmation_Extensio2_Designation = "GET_Confirmation_Extensio2_Designation";
-export const GET_Confirmation_Extensio2_END = "GET_Confirmation_Extensio2_END"; 
+export const GET_Confirmation_Extension_DATA = "GET_Confirmation_Extension_DATA";
+export const GET_Confirmation_Extension_START = "GET_Confirmation_Extension_START";
+export const GET_Confirmation_Extension_Confirmation = "GET_Confirmation_Extension_Confirmation";
+export const GET_Confirmation_Extension_END = "GET_Confirmation_Extension_END"; 
 

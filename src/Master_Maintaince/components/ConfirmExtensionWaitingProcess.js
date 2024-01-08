@@ -20,7 +20,7 @@ function ConfirmExtensionWaitingProcess() {
 
     // GET CONFIRMATION EXTENSION WAITING PROCESS DATA API CALL ==========================================
     async function getConfirmationExProcessData() {
-        await fetch(`${config["baseUrl"]}/ConfirmationExtension/GetTranConfirmationExtensionListWaiting`, {
+        await fetch(`${config["baseUrl"]}/ConfirmationExtension/GetTranConfirmationExtensionListWaiting/1/1/null`, {
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -31,7 +31,7 @@ function ConfirmExtensionWaitingProcess() {
             return response.json();
         }).then(async (response) => {
             if (response.messsage == "unauthorized") {
-                await fetch(`${config["baseUrl"]}/ConfirmationExtension/GetTranConfirmationExtensionListWaiting`, {
+                await fetch(`${config["baseUrl"]}/ConfirmationExtension/GetTranConfirmationExtensionListWaiting/1/1/null`, {
                     method: "GET",
                     headers: {
                         "content-type": "application/json",
@@ -126,7 +126,7 @@ function ConfirmExtensionWaitingProcess() {
                 <div className="confirmationTableBox">
                     <div className="confirmationTableBoxScroll">
                         {
-                            isGetConfirmationData.length > 0 ?
+                            isGetConfirmationData ?
                             <table class="table table-striped ">
                                 <thead>
                                     <tr>

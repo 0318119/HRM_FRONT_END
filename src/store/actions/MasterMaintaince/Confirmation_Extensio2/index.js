@@ -1,22 +1,20 @@
 import {
-    GET_Confirmation_Extensio2_DATA,
-    GET_Confirmation_Extensio2_START,
-    GET_Confirmation_Extensio2_Confirmation,
-    GET_Confirmation_Extensio2_Designation,
-    GET_Confirmation_Extensio2_END
-} from "../../../actions/types";
+    GET_Confirmation_Extension_DATA,
+    GET_Confirmation_Extension_START,
+    GET_Confirmation_Extension_Confirmation,
+    GET_Confirmation_Extension_END
+} from "../../types";
 import baseUrl from "../../../../config.json";
 
 
-// Get Employee Name and Code API
-export const AllEmployees = () => async (dispatch) => {
+export const AllEmployees = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_Confirmation_Extensio2_START,
+            type: GET_Confirmation_Extension_START,
             payload: true,
             loading: true,
         });
-        const response = await fetch(`${baseUrl.baseUrl}/tranConfirmation/GetEmployeeTranConfirmationListWOP`, {
+        const response = await fetch(`${baseUrl.baseUrl}/tranConfirmation/GetEmployeeTranConfirmationList/${params.pageNo}/${params.pageSize}/${params.search}`, {
             method: "GET",
             headers: {
                 accessToken: "Bareer " + localStorage.getItem("access_token"),
@@ -25,16 +23,15 @@ export const AllEmployees = () => async (dispatch) => {
         });
         if (response.status === 200) {
             const res = await response.json();
-            // console.log(res, 'res')
             dispatch({
-                type: GET_Confirmation_Extensio2_DATA,
+                type: GET_Confirmation_Extension_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_Confirmation_Extensio2_END,
+                type: GET_Confirmation_Extension_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -42,18 +39,14 @@ export const AllEmployees = () => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_Confirmation_Extensio2_END,
+            type: GET_Confirmation_Extension_END,
             payload: false,
             loading: false,
         });
-        // console.log(error);
+        console.log(error);
     }
 };
-
-// GET CONFIRMATION EXTENSION INFO API CALL =================================================================
-export const GetEmployeeInfo = (isCode) => async (dispatch) => {
-    console.log(isCode, 'isCode')
-
+export const getAtttendanceHisss = (body) => async (dispatch) => {
     const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/ME_ExtendedConfirmationListByCode`, {
         method: "POST",
         headers: {
@@ -61,12 +54,12 @@ export const GetEmployeeInfo = (isCode) => async (dispatch) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "Emp_code": isCode,
+            "Emp_code": body,
         })
     });
     const res = await response.json();
     dispatch({
-        type: GET_Confirmation_Extensio2_Confirmation,
+        type: GET_Confirmation_Extension_Confirmation,
         payload: [{ res }],
         loading: false,
     });
@@ -77,73 +70,95 @@ export const GetEmployeeInfo = (isCode) => async (dispatch) => {
         return res;
     }
 }
+export const SaveConfirmationExInfo = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Save`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: body
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+export const SaveConfirmationExInFoProcess = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Process`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: body
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
+export const Delete_Confirmation = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Delete`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            "Emp_code": body,
+        }),
+    });
+    const res = await response.json();
+    if (res?.success) {
+        return res;
+    } else {
+        return res;
+    }
+}
 
-// // SAVE CONFIRMATION EXTENSION API CALL =================================
-// export const SaveConfirmationExInfo = (body) => async (dispatch) => {
-//     // console.log(body, 'body')
+export const getConfirmationExProcessData = (params) => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_Confirmation_Extension_START,
+            payload: true,
+            loading: true,
+        });
+        const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/GetTranConfirmationExtensionListWaiting/${params.pageNo}/${params.pageSize}/${params.search}`, {
+            method: "GET",
+            headers: {
+                accessToken: "Bareer " + localStorage.getItem("access_token"),
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.status === 200) {
+            const res = await response.json();
+            dispatch({
+                type: GET_Confirmation_Extension_DATA,
+                payload: [{ res }],
+                loading: false,
+            });
+            console.log("Data:", res);
+        } else {
+            const res = await response.json();
+            dispatch({
+                type: GET_Confirmation_Extension_END,
+                payload: [{ res }],
+                loading: false,
+            });
+            console.log("res:", res);
+        }
 
-//     const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Save`, {
-//         method: "POST",
-//         headers: {
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             "Emp_code": body?.Emp_code,
-//             "Transaction_Date": body?.Transaction_Date,
-//             "Confirmation_Date": body?.Confirmation_Date,
-//             "Remarks": body?.Remarks
-//         })
-//     });
-//     const res = await response.json();
-//     dispatch({
-//         type: GET_Confirmation_Extensio2_Designation,
-//         payload: [{ res }],
-//         loading: false,
-//     });
-
-//     if (res?.success) {
-//         return res;
-//     } else {
-//         return res;
-//     }
-// }
-
-// PROCESS CONFIRMATION EXTENSION API CALL =================================
-// export const processConfirmationEx = (body) => async (dispatch) => {
-//     // console.log(body, 'body')
-
-//     const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Process`, {
-//         method: "POST",
-//         headers: {
-//             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-//             'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//             "Emp_code": body?.Emp_code,
-//             "Date": [{
-//                 "Attendance_Date": body?.Date?.[0]?.Attendance_Date,
-//                 "Emp_Time_in_HH": body?.Date?.[0]?.Emp_Time_in_HH,
-//                 "Emp_Time_In_MM": body?.Date?.[0]?.Emp_Time_In_MM,
-//                 "Emp_Time_Out_HH": body?.Date?.[0]?.Emp_Time_Out_HH,
-//                 "Emp_Time_Out_MM": body?.Date?.[0]?.Emp_Time_Out_MM,
-//                 "Remarks": body?.Date?.[0]?.Remarks
-
-//             }]
-
-
-//         })
-//     });
-//     const res = await response.json();
-//     dispatch({
-//         type: GET_Confirmation_Extensio2_Designation,
-//         payload: [{ res }],
-//         loading: false,
-//     });
-
-//     if (res?.success) {
-//         return res;
-//     } else {
-//         return res;
-//     }
-// }
+    } catch (error) {
+        dispatch({
+            type: GET_Confirmation_Extension_END,
+            payload: false,
+            loading: false,
+        });
+        console.log(error);
+    }
+};

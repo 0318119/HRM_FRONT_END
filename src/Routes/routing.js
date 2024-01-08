@@ -136,7 +136,7 @@ import Approvalsss from '../LeavesModule/components/Approvalsss.js';
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
 import Paysheet_Report from '../payroll/pages/Paysheet_Report.js'
 import Confirmation_Extensio2 from '../Master_Maintaince/components/Confirmation_Extensio2.js'
-
+import ConfirmExtensionFormProcessing from '../Master_Maintaince/components/ConfirmExtensionFormProcessing.js';
 
 
 const routing = () => {
@@ -278,6 +278,8 @@ const routing = () => {
               <Route path='/Bank_Letter_Report' element={<Bank_Letter_Report />} />
               <Route path='/Paysheet_Report' element={<Paysheet_Report />} />
               <Route path='/Confirmation_Extensio2' element={<Confirmation_Extensio2 />} />
+              <Route path="/ConfirmExtensionFormProcessing" element={<ConfirmExtensionFormProcessing />} />
+
 
             </> :
             <>

@@ -14,15 +14,15 @@ const ConfirmationExtension = () => {
     var get_refresh_token = localStorage.getItem("refresh");
     var get_access_token = localStorage.getItem("access_token");
     const now = new Date();
-    const year = now.getFullYear(); 
+    const year = now.getFullYear();
     const month = (now.getMonth() + 1).toString().padStart(2, '0');
     const day = now.getDate().toString().padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
     const [currentDate, setCurrentDate] = useState(formattedDate);
     const navigate = useNavigate()
-    const [whichAction, setwhichAction] = useState(Already_Process!==null? "DeleteAndProcess" : "save")
+    const [whichAction, setwhichAction] = useState(Already_Process !== null ? "DeleteAndProcess" : "save")
     const [isConfirmationDate, setConfirmationDate] = useState(null)
-    const [isRemarks,setRemarks] = useState(null)
+    const [isRemarks, setRemarks] = useState(null)
     const [isBtn, setBtn] = useState({
         saveBtnLoading: false,
         saveBtnDisabled: false,
@@ -86,7 +86,7 @@ const ConfirmationExtension = () => {
             } else {
                 if (response.success) {
                     setGetInfo(response?.data[0]?.[0])
-                    console.log("response?.data[0]?.[0]",response?.data[0])
+                    console.log("response?.data[0]?.[0]", response?.data[0])
                 } else {
                     setGetInfoErr(response.message)
                 }
@@ -111,7 +111,7 @@ const ConfirmationExtension = () => {
                 "Emp_code": ConfirmExId,
                 "Transaction_Date": currentDate,
                 "Confirmation_Date": isConfirmationDate !== null ? isConfirmationDate : currentDate,
-                "Remarks": isRemarks !==null ? isRemarks : ""
+                "Remarks": isRemarks !== null ? isRemarks : ""
             }),
         }
         ).then((response) => {
@@ -129,7 +129,7 @@ const ConfirmationExtension = () => {
                         "Emp_code": ConfirmExId,
                         "Transaction_Date": currentDate,
                         "Confirmation_Date": isConfirmationDate !== null ? isConfirmationDate : currentDate,
-                        "Remarks": isRemarks !==null ? isRemarks : ""
+                        "Remarks": isRemarks !== null ? isRemarks : ""
                     }),
                 }
                 ).then((response) => {
@@ -226,8 +226,8 @@ const ConfirmationExtension = () => {
                 "Emp_code": ConfirmExId,
                 "Transaction_Date": currentDate,
                 "Confirmation_Date": isConfirmationDate !== null ? isConfirmationDate : currentDate,
-                "Remarks": isRemarks !==null ? isRemarks : "",
-                "PF": "N" 
+                "Remarks": isRemarks !== null ? isRemarks : "",
+                "PF": "N"
             }),
         }
         ).then((response) => {
@@ -245,8 +245,8 @@ const ConfirmationExtension = () => {
                         "Emp_code": ConfirmExId,
                         "Transaction_Date": currentDate,
                         "Confirmation_Date": isConfirmationDate !== null ? isConfirmationDate : currentDate,
-                        "Remarks": isRemarks !==null ? isRemarks : "",
-                        "PF": "N" 
+                        "Remarks": isRemarks !== null ? isRemarks : "",
+                        "PF": "N"
                     }),
                 }
                 ).then((response) => {
@@ -460,7 +460,7 @@ const ConfirmationExtension = () => {
                     </div>
                     <form onSubmit={
                         whichAction == "save" ? SaveConfirmationExInfo :
-                        whichAction == "DeleteAndProcess" ? processConfirmationEx : false
+                            whichAction == "DeleteAndProcess" ? processConfirmationEx : false
                     }>
                         <div className='confirmationFormScrollBox'>
                             <div className="row">
@@ -510,7 +510,7 @@ const ConfirmationExtension = () => {
                                     </div>
                                     <div className="form-group w-100">
                                         <label htmlFor="">Remarks</label>
-                                        <textarea className='form-control' defaultValue={isGetInfo?.remarks !==null? isGetInfo?.remarks : ""} placeholder='Enter a remarks...' onChange={(e) => { setRemarks(e.target.value) }} required></textarea>
+                                        <textarea className='form-control' defaultValue={isGetInfo?.remarks !== null ? isGetInfo?.remarks : ""} placeholder='Enter a remarks...' onChange={(e) => { setRemarks(e.target.value) }} required></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -518,14 +518,14 @@ const ConfirmationExtension = () => {
                         <div className="TAFormBtn">
                             {
                                 whichAction == "save" ?
-                                <>
-                                    <button type="submit" className="btn btn-dark" disabled={isBtn.saveBtnDisabled}>{isBtn.saveBtnLoading ? "Please wait..." : "Save"}</button>
-                                </>
-                                : whichAction == "DeleteAndProcess" ?
-                                <>
-                                    <button type="button" className="ml-2 btn btn-dark" onClick={deleteConfirmationEx} disabled={isBtn.deleteBtnDisabled}>{isBtn.deleteBtnLoading ? "Please wait..." : "Delete"}</button>
-                                    <button type="submit" className="ml-2 btn btn-dark" disabled={isBtn.processBtnDisabled} > {isBtn.processBtnLoading ? "Please wait..." : "Process"}</button>
-                                </> : false
+                                    <>
+                                        <button type="submit" className="btn btn-dark" disabled={isBtn.saveBtnDisabled}>{isBtn.saveBtnLoading ? "Please wait..." : "Save"}</button>
+                                    </>
+                                    : whichAction == "DeleteAndProcess" ?
+                                        <>
+                                            <button type="button" className="ml-2 btn btn-dark" onClick={deleteConfirmationEx} disabled={isBtn.deleteBtnDisabled}>{isBtn.deleteBtnLoading ? "Please wait..." : "Delete"}</button>
+                                            <button type="submit" className="ml-2 btn btn-dark" disabled={isBtn.processBtnDisabled} > {isBtn.processBtnLoading ? "Please wait..." : "Process"}</button>
+                                        </> : false
                             }
                         </div>
                     </form>
