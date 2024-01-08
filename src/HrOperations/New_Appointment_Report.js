@@ -13,36 +13,71 @@ import * as yup from 'yup';
 import LogoUrl from "../../src/Assets/Images/download.png"
 import Item from 'antd/es/list/Item';
 
+// function New_Appointment_Report({
+//   Red_New_Appointment_Report,
+//   PostAppointmentPayload,
+// }) {
+//   const [isLoading, setLoading] = useState(false);
+//   const [isFormSubmitted, setFormSubmitted] = useState(false);
+//   const empData = Red_New_Appointment_Report?.data?.[0]?.res?.data
+//   const [isAppointmentData, setAppointmentData] = useState([])
+//   const [currentDate, setCurrentDate] = useState('')
+
+//   useEffect(() => {
+//     const currentDate = new Date().toISOString().split('T')[0];
+//     setCurrentDate(currentDate);
+//   }, [])
+
+
+//   const AppointmentSchema = yup.object().shape({
+//     FromDate: yup.string().required('Please Select From Date'),
+//     ToDate: yup.string().required('Please Select To Date'),
+//   });
+
+//   const {
+//     control,
+//     formState: { errors },
+//     handleSubmit,
+//   } = useForm({
+//     defaultValues: {
+//       FromDate: '',
+//       ToDate: '',
+//     },
+//     mode: 'onChange',
+//     resolver: yupResolver(AppointmentSchema),
+//   });
 function New_Appointment_Report({
   Red_New_Appointment_Report,
   PostAppointmentPayload,
 }) {
   const [isLoading, setLoading] = useState(false);
   const [isFormSubmitted, setFormSubmitted] = useState(false);
-  const empData = Red_New_Appointment_Report?.data?.[0]?.res?.data
-  const [isAppointmentData, setAppointmentData] = useState([])
-  const [currentDate, setCurrentDate] = useState('')
+  const empData = Red_New_Appointment_Report?.data?.[0]?.res?.data;
+  const [isAppointmentData, setAppointmentData] = useState([]);
+  const [currentDate, setCurrentDate] = useState('');
 
   useEffect(() => {
     const currentDate = new Date().toISOString().split('T')[0];
     setCurrentDate(currentDate);
-  }, [])
-
+  }, []);
 
   const AppointmentSchema = yup.object().shape({
     FromDate: yup.string().required('Please Select From Date'),
     ToDate: yup.string().required('Please Select To Date'),
   });
 
+  const defaultFromDate = new Date().toISOString().split('T')[0]; // Set default date
+  const defaultValues = {
+    FromDate: defaultFromDate,
+    ToDate: '',
+  };
+
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      FromDate: '',
-      ToDate: '',
-    },
+    defaultValues,
     mode: 'onChange',
     resolver: yupResolver(AppointmentSchema),
   });

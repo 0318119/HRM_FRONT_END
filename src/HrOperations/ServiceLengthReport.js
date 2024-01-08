@@ -21,7 +21,7 @@ function ServiceLengthReport({
   const [isFormSubmitted, setFormSubmitted] = useState(false);
   const empData = Red_ServiceLengthReport?.data?.[0]?.res?.data
   const [isServiceLengthReportData, setServiceLengthReportData] = useState([]);
-  const currentDate = new Date().toISOString().split('T')[0]; 
+  const currentDate = new Date().toISOString().split('T')[0];
 
   // ===== SCHEMA =================
   const ServiceLengthReportSchema = yup.object().shape({
@@ -65,7 +65,7 @@ function ServiceLengthReport({
     }
     setLoading(false);
   };
-  
+
   const PdfData = (
     <Document>
       <Page size="A4">
@@ -126,7 +126,7 @@ function ServiceLengthReport({
     try {
       if (isServiceLengthReportData.length == 0) {
         message.error('No data available for PDF.');
-      }else{
+      } else {
         const pdfBlob = await pdf(PdfData).toBlob();
         saveAs(pdfBlob, 'generated.pdf');
       }
@@ -134,7 +134,7 @@ function ServiceLengthReport({
       console.error('Error downloading PDF:', error);
     }
   };
-  
+
   useEffect(() => {
     if (isFormSubmitted) {
       handleDownload();
