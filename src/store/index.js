@@ -78,6 +78,7 @@ import Red_ManualAttendence from "./reducers/ManualAttendance/index"
 import Red_Emp_Leaves_Approvals from "./reducers/Leave/Approvals/index"
 import Red_Bank_Letter_Report from './reducers/payroll/Bank_Letter_Report/index'
 import Red_Leave_Reports from './reducers/Leave/Leave_Reports/index'
+import Red_Leave_Balanced_Upload from './reducers/Leave/Leave_Balance_Upalod/index'
 
 
 const reducers = combineReducers({
@@ -165,7 +166,8 @@ const reducers = combineReducers({
   Red_ManualAttendence,
   Red_Emp_Leaves_Approvals,
   Red_Bank_Letter_Report,
-  Red_Leave_Reports
+  Red_Leave_Reports,
+  Red_Leave_Balanced_Upload
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

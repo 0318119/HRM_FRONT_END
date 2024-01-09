@@ -435,7 +435,7 @@ const Leaves = ({
   }, [isDateScd, leaveTypeCode?.data?.[0]?.[0]?.leave_type_code, isLeaveReq])
 
   useEffect(() => {
-    if (halfDayCheck == false && balancedDays) {
+    if (halfDayCheck == false) {
       if (isDate[0].FromDate == isDate[1].ToDate || isDate[0].FromDate < isDate[1].ToDate) {
         setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - appliedDays?.data?.[0]?.[0]?.Leaves);
         setSaveLoading(false);
@@ -445,7 +445,7 @@ const Leaves = ({
         setSaveLoading(true);
         setSubmitLoading(true)
       }
-    } else if (halfDayCheck == true && balancedDays) {
+    } else if (halfDayCheck == true) {
       if (isDate[0].FromDate == isDate[1].ToDate) {
         setleaveCalculations(balancedDays?.data?.[0]?.[0]?.Leave_Balance - 0.5)
         setSaveLoading(false)
@@ -456,7 +456,7 @@ const Leaves = ({
         setSubmitLoading(true)
       }
     }
-  }, [halfDayCheck, leaveCalculations, isDate], balancedDays, appliedDays);
+  }, [halfDayCheck, leaveCalculations, isDate, balancedDays, appliedDays]);
 
   useEffect(() => {
     if (mode == "read") {
