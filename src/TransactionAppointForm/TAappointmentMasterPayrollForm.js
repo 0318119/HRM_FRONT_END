@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 
 
-function TAappointmentMasterPayrollForm2({
+function TAappointmentMasterPayrollForm({
     cancel,
     mode,
     isCode,
@@ -457,4 +457,4 @@ function TAappointmentMasterPayrollForm2({
 function mapStateToProps({ Red_AppointPayroll }) {
     return { Red_AppointPayroll };
 }
-export default connect(mapStateToProps, AppointPayroll_Action)(TAappointmentMasterPayrollForm2)
+export default connect(mapStateToProps, AppointPayroll_Action)(TAappointmentMasterPayrollForm)

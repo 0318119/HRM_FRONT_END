@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 
 
-function TAExperienceForm2({ cancel, mode2, isCode2, page2, isUpdate, Red_AppointExprience, GetEmployeeInfo, GetEmployeeCode, SaveExpForm, GetEmployer, UpdatedExpForm }) {
+function TAExperienceForm({ cancel, mode2, isCode2, page2, isUpdate, Red_AppointExprience, GetEmployeeInfo, GetEmployeeCode, SaveExpForm, GetEmployer, UpdatedExpForm }) {
 
 
     var get_access_token = localStorage.getItem("access_token");
@@ -341,4 +341,4 @@ const SaveForm = async (data) => {
 function mapStateToProps({ Red_AppointExprience }) {
     return { Red_AppointExprience };
 }
-export default connect(mapStateToProps, AppointExp_Actions)(TAExperienceForm2)
+export default connect(mapStateToProps, AppointExp_Actions)(TAExperienceForm)

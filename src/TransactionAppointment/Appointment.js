@@ -6,11 +6,11 @@ import { Space, Table, Tag, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import AppointmentForm from "../TransactionAppointForm/TAPersonalform";
 import AppointEduData from "../TransactionAppointForm/AppointEduData";
-import TASalary2 from '../TransactionAppointForm/TASalaryForm2';
+import TASalaryForm from '../TransactionAppointForm/TASalaryForm';
 import AppointExpData from "../TransactionAppointForm/AppointExpData";
 import AppointFamiltyData from "../TransactionAppointForm/AppointFamiltyData";
-import CheckList from '../TransactionAppointForm/TACheckListForm2';
-import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm2";
+import AppointPayroll from "../TransactionAppointForm/TAappointmentMasterPayrollForm";
+import CheckList from '../TransactionAppointForm/TACheckListForm';
 import "./assets/css/Appointment.css";
 import { connect } from "react-redux";
 import * as Appointment_Actions from "../store/actions/Appointments/Appointment/index";
@@ -31,55 +31,22 @@ const config = require("../config.json");
 
 
 
-const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
+const Appointment = ({ GetAppointStatusCall, Red_Appointment }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [mode, setMode] = useState("read");
-    const [mode2, setMode2] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
     const [isCode, setCode] = useState(null);
-    const [isCode2, setCode2] = useState(null);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isSearchVal, setSearchVal] = useState("");
     const [isLoading, setLoading] = useState(false)
     const [AppointData, setAppointData] = useState([])
-    const [getAppointStatus, setgetAppointStatus] = useState([]);
-    const [isTryData , setTryData] = useState('')
     const [isFileData, setFileData] = useState([])
-    // console.log(isTryData , "kkkokokokok")
 
     const EditPage = (mode, code) => {
         setCode(code);
         setMode(mode);
-        // setCode2(code2);
-        // setMode2(mode2);
     };
-
-    useEffect(() => {
-        if (isSearchVal == "") {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null,
-            });
-        } else {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: 1,
-                search: isSearchVal,
-            });
-        }
-    }, [page, isSearchVal]);
-
-    useEffect(() => {
-        if (mode == "read") {
-            GetAppointStatusCall({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null,
-            });
-        } 
-    }, [mode]);
 
     const columns = [
         {
@@ -102,8 +69,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Personal",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TAPersonalform?userId=${data.Sequence_no}`}>
-                    </Link> */}
                     <Link onClick={() => EditPage("Edit", data?.Sequence_no)} >
                         <Person_ico className="List_ico" />
                     </Link>
@@ -115,9 +80,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Education",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TAEducationForm?userId=${data.Sequence_no}`} >
-                    <LibraryBooksIcon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditEdu", data?.Sequence_no)} >
                         <LibraryBooksIcon className="List_ico" />
                     </Link>
@@ -128,9 +90,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Salary",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TASalaryForm?userId=${data.Sequence_no}`}>
-                        <LocalAtmIcon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditSalary", data?.Sequence_no)} >
                         <LocalAtmIcon className="List_ico" />
                     </Link>
@@ -141,11 +100,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Exprience",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link
-                        to={`/TAExprienceForm?userId=${data.Sequence_no}`}
-                    >
-                        <BusinessCenterIcon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditExprience", data?.Sequence_no)} >
                         <BusinessCenterIcon className="List_ico" />
                     </Link>
@@ -156,9 +110,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Payroll",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TAppointmentMasterPayroll?userId=${data.Sequence_no}`}>
-                        <WbSunnyIcon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditPayroll", data?.Sequence_no)} >
                         <WbSunnyIcon className="List_ico" />
                     </Link>
@@ -169,9 +120,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "CheckList",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TACheckList?userId=${data.Sequence_no}`} >
-                        <CheckBoxRoundedIcon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditCheckList", data?.Sequence_no)} >
                         <CheckBoxRoundedIcon className="List_ico" />
                     </Link>
@@ -182,9 +130,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             title: "Family",
             render: (data) => (
                 <Space size="middle">
-                    {/* <Link to={`/TAFamilyForm?userId=${data.Sequence_no}`}>
-                        <Diversity3Icon className="List_ico" />
-                    </Link> */}
                     <Link onClick={() => EditPage("EditFamily", data?.Sequence_no)} >
                         <Diversity3Icon className="List_ico" />
                     </Link>
@@ -218,7 +163,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         },
 
     ];
-
 
     async function AppointLetter(id) {
         await fetch(
@@ -282,7 +226,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             <p>We are pleased to offer you the position of ${DataR?.[0].Desig_name ? DataR?.[0].Desig_name : "Not Found"} - ${DataR?.[0].Department ? DataR?.[0].Department : "Not Found"} <br />
             in the cadre of ${DataR?.[0].grade_name ? DataR?.[0].grade_name : "Not Found"} at Summit Bank Limited-(SMBL). The position will be based in ${DataR?.[0].loc_name ? DataR?.[0].loc_name : "Not Found"}.</p>
             `;
-                // })
                 htmlContent += `
         <p>Your remuneration will be as follows:</p>
         <table>
@@ -358,7 +301,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
     </html>
     `;
 
-                // console.log("first", htmlContent)
                 const blob = new Blob([htmlContent], { type: 'application/msword' });
                 saveAs(blob, response?.data?.[0]?.FileName);
             }
@@ -400,10 +342,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                     content: response?.message || response?.messsage,
                 });
                 setLoading(false)
-                setTimeout(() => {
-                    // cancel('read')
-
-                }, 3000);
             }
             else {
                 setLoading(false)
@@ -420,12 +358,36 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
             });
         });
     }
-
     const filteredData = Red_Appointment?.data?.[0]?.res?.data1?.filter(
         (item) => item.Process_Flag !== 'Y'
     );
 
-    // console.log(Red_Appointment?.data?.[0]?.res?.data1, 'filteredData')
+    useEffect(() => {
+        if (isSearchVal == "") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        } else {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal,
+            });
+        }
+    }, [page, isSearchVal]);
+
+    useEffect(() => {
+        if (mode == "read") {
+            GetAppointStatusCall({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null,
+            });
+        }
+    }, [mode]);
+
 
     return (
         <>
@@ -454,7 +416,6 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                                 <hr />
                             </>
                         )}
-
                         <div>
                             {mode == "read" && (
                                 <Table
@@ -475,11 +436,11 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
                             {mode == "create" ? <AppointmentForm cancel={setMode} mode={mode} isCode={null} /> : null}
                             {mode == "Edit" && <AppointmentForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditEdu" && <AppointEduData cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditSalary" && <TASalary2 cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditSalary" && <TASalaryForm cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditExprience" && <AppointExpData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditPayroll" && <AppointPayroll cancel={setMode} mode={mode} isCode={isCode} />}
-                            {mode == "EditFamily" && <AppointFamiltyData cancel={setMode} mode={mode} isCode={isCode} />}
                             {mode == "EditCheckList" && <CheckList cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "EditFamily" && <AppointFamiltyData cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>
@@ -487,8 +448,10 @@ const Appointment2 = ({ GetAppointStatusCall, Red_Appointment }) => {
         </>
     );
 };
+
+
+
 function mapStateToProps({ Red_Appointment }) {
     return { Red_Appointment };
 }
-
-export default connect(mapStateToProps, Appointment_Actions)(Appointment2);
+export default connect(mapStateToProps, Appointment_Actions)(Appointment);

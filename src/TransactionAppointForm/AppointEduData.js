@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
-import TAEducationForm2 from './TAEducationForm2';
+import TAEducationForm from './TAEducationForm';
 import "../HrOperations/assets/css/Positions.css"
 import { message } from 'antd';
 import { Popconfirm } from 'antd';
@@ -25,6 +25,7 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const [isLoading, setLoading] = useState(false)
     const [isSearchVal, setSearchVal] = useState('')
     const [mode2, setMode2] = useState('read')
+
     const EditPage = (mode2, code2) => {
         setCode2(code2)
         setMode2(mode2)
@@ -32,13 +33,7 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
     const EditBack = () => {
         cancel('read')
     }
-    useEffect(() => {
-        if(mode2 == "read"){
-            GetEducationSavedData(isCode)
-        }else{
-            GetEducationSavedData(isCode)
-        }
-    }, [mode2])
+
 
     const columns = [
         {
@@ -92,22 +87,6 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
         },
     ];
 
-    useEffect(() => {
-        if (isSearchVal == '') {
-            GetEducationSavedData({
-                pageSize: pageSize,
-                pageNo: page,
-                search: null
-            })
-        } else {
-            GetEducationSavedData({
-                pageSize: pageSize,
-                pageNo: 1,
-                search: isSearchVal
-            })
-        }
-    }, [page, isSearchVal])
-
     async function handleConfirmDelete(id) {
         await fetch(
             `${baseUrl.baseUrl}/eduation_code/deleteTranEducation`, {
@@ -149,6 +128,31 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
             }, 5000);
         });
     }
+
+    useEffect(() => {
+        if (isSearchVal == '') {
+            GetEducationSavedData({
+                pageSize: pageSize,
+                pageNo: page,
+                search: null
+            })
+        } else {
+            GetEducationSavedData({
+                pageSize: pageSize,
+                pageNo: 1,
+                search: isSearchVal
+            })
+        }
+    }, [page, isSearchVal])
+    useEffect(() => {
+        if (mode2 == "read") {
+            GetEducationSavedData(isCode)
+        } else {
+            GetEducationSavedData(isCode)
+        }
+    }, [mode2])
+
+
     return (
         <>
             {contextHolder}
@@ -190,10 +194,10 @@ const AppointEduData = ({ Red_AppointEducation, GetEducationSavedData, isCode, c
                                 />
                             )}
                             {mode2 == "create" && (
-                                <TAEducationForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
+                                <TAEducationForm cancel={setMode2} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAEducationForm2 cancel={setMode2} isUpdate={isUpdate} mode2={mode2} isCode2={isCode2} page={page} />
+                                <TAEducationForm cancel={setMode2} isUpdate={isUpdate} mode2={mode2} isCode2={isCode2} page={page} />
                             )}
                         </div>
 

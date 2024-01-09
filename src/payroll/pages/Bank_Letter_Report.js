@@ -142,7 +142,6 @@ function Bank_Letter_Report({
                                                 value: 2024,
                                                 label: '2024'
                                             },
-
                                         ]}
                                         showLabel={true}
                                         errors={errors}

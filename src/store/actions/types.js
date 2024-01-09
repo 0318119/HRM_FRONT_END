@@ -428,6 +428,12 @@ export const GET_Bank_Letter_Report_Type_Data = "GET_Bank_Letter_Report_Bank_Dat
 export const GET_Bank_Letter_Report_START = "GET_Bank_Letter_Report_START";
 export const GET_Bank_Letter_Report_END = "GET_Bank_Letter_Report_END";
 
+// PAYROLL ===> Paysheet_Report === 
+
+export const GET_PAYSHEET_Report_DATA = "GET_PAYSHEET_Report_DATA,";
+export const GET_PAYSHEET_Report_START = "GET_PAYSHEET_Report_START";
+export const GET_PAYSHEET_Report_PAYROLL = "GET_PAYSHEET_Report_PAYROLL";
+export const GET_PAYSHEET_Report_END = "GET_PAYSHEET_Report_END";
 
 
 // ========== ======= ===== MANUAL ATTENDANCE======== ===== === /
@@ -460,11 +466,6 @@ export const GET_LEAVE_BALANCE_UPLOAD_DATA_START = "GET_LEAVE_BALANCE_UPLOAD_DAT
 export const GET_LEAVE_BALANCE_UPLOAD_DATA_END = "GET_LEAVE_BALANCE_UPLOAD_DATA_END"
 export const GET_LEAVE_BALANCE_UPLOAD_YEAR_DATA = "GET_LEAVE_BALANCE_UPLOAD_YEAR_DATA"
 
-
-
-
-
-
 // Promotion =========================
 export const GET_PROMOTION_DATA_START = "GET_PROMOTION_DATA_START"
 export const GET_PROMOTION_DATA = "GET_PROMOTION_DATA"
@@ -475,3 +476,9 @@ export const GET_PROMOTION_GRADE_DATA = "GET_PROMOTION_GRADE_DATA"
 export const GET_PROMOTION_SUPERVISOR_DATA = "GET_PROMOTION_SUPERVISOR_DATA"
 export const GET_PROMOTION_COSTCENTER_DATA = "GET_PROMOTION_COSTCENTER_DATA"
 export const GET_PROMOTION_DATA_END = "GET_PROMOTION_DATA_END"
+// ========== MasterMaintaince ======= ===== Confirmation_Extensio2======== ===== === /
+export const GET_Confirmation_Extension_DATA = "GET_Confirmation_Extension_DATA";
+export const GET_Confirmation_Extension_START = "GET_Confirmation_Extension_START";
+export const GET_Confirmation_Extension_Confirmation = "GET_Confirmation_Extension_Confirmation";
+export const GET_Confirmation_Extension_END = "GET_Confirmation_Extension_END"; 
+

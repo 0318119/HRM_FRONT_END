@@ -1,603 +1,350 @@
-import React, { useEffect, useState } from 'react'
-import './assets/css/TAEducationForm.css'
-import { BsFillCheckSquareFill as FormCheck_ico } from "react-icons/bs";
-import Header from '../components/Includes/Header'
-import secureLocalStorage from 'react-secure-storage';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import DeleteModal from '../components/Modals/Delete_Modals/DeleteModal';
-const config = require('../config.json')
+import React, { useEffect, useState } from "react";
+import "./assets/css/TAPersonalform.css";
+import Header from "../components/Includes/Header";
+import Country from "./Country.json"
+import { Space, Table, Tag, Tooltip } from 'antd';
+import { Popconfirm } from 'antd';
+import { MdDeleteOutline } from 'react-icons/md';
+import { PrimaryButton, SimpleButton } from "../components/basic/button";
+import { CancelButton } from '../components/basic/button/index'
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormInput, FormSelect } from '../components/basic/input/formInput';
+import * as AppointmentEducation_Actions from "../store/actions/Appointments/AppointEducationForm/index";
+import { connect } from "react-redux";
+import { FaEdit } from 'react-icons/fa';
+import * as yup from "yup";
+import { message } from 'antd';
+import { Link } from "react-router-dom";
+import baseUrl from '../config.json'
 
 
 
-function TAEducationForm() {
-  const [loading, setLoading] = useState(false);
-  const [btnEnaledAndDisabled, setBtnEnaledAndDisabled] = useState(false);
-  var get_refresh_token = localStorage.getItem("refresh");
-  var get_access_token = localStorage.getItem("access_token");
-  var get_company_code = localStorage.getItem("company_code");
-  var get_Emp_code = localStorage.getItem("Emp_code");
-  const search = useLocation().search
-  const navigate = useNavigate()
-  var userId = new URLSearchParams(search).get('userId')
-    // const [loading, setLoading] = useState(true);
-  // const [dataLoader, setDataLoader] = useState(false);
+
+function TAEducationForm2({
+    cancel,
+    mode2,
+    isCode2,
+    page,
+    isUpdate,
+    Red_AppointEducation,
+    GetEmployeeInfo,
+    GetEducationData,
+    GetInstituteData,
+    GetGradeData,
+    GetEducationSavedData,
+    SaveFormEdu,
+    UpdateEducation
+}) {
+
+    var get_access_token = localStorage.getItem("access_token");
+    var get_company_code = localStorage.getItem("company_code");
+    const [messageApi, contextHolder] = message.useMessage();
+    const [isUpdateBtn, setUpdatebtn] = useState(false)
+    // const [pageSize, setPageSize] = useState(10);
+    const [isLoading, setLoading] = useState(false)
+    const [isSavedEdu, setSavedEdu] = useState(false)
 
 
-  const [getinstitute, setgetinstitute] = useState([])
-  const [getinstituteErr, setgetinstituteErr] = useState(false)
-  const [getinstituteVal, setgetinstituteVal] = useState("")
-  const [topFlag, settopFlag] = useState(null);
-  const [eduYear, seteduYear] = useState("")
-  const [EduCodeData, setEduCodeData] = useState([])
-  const [EduCodeDataErr, setEduCodeDataErr] = useState(false)
-  const [EduCodeDataVal, setEduCodeDataVal] = useState("")
-  const [getInfo, setInfo] = useState([])
-  const [getInfoErr, setInfoErr] = useState(false)
-  const [formErr, setformErr] = useState(false)
-  const [getGradeData, setgetGradeData] = useState([])
-  const [getGradeDataErr, setgetGradeDataErr] = useState(false)
-  const [eduGrade, seteduGrade] = useState("")
+    const EditBack = () => {
+        cancel('read')
+    }
+
+    const AppointEducationSchema = yup.object().shape({
+        EduCode: yup.string().required("EduCode is required"),
+        EduYear: yup.string().required("EduYear is required"),
+        EduGrade: yup.string().required("EduGrade is required"),
+        Topflag: yup.string().required("Topflag is required"),
+        institutecode: yup.string().required("institutecode is required"),
+
+    });
+
+    useEffect(() => {
+        GetEmployeeInfo(isCode2)
+        GetEducationData()
+        GetInstituteData()
+        GetGradeData()
+        GetEducationSavedData(isCode2)
+    }, [])
 
 
-  const showAlert = (message, type) => {
-    setformErr({
-      message: message,
-      type: type,
-    })
-  }
-  async function getinstituteCall() {
-    await fetch(`${config['baseUrl']}/institutions/GetwithoutPaginationInstitution`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/institutions/GetwithoutPaginationInstitution`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setgetinstitute(response.data[0])
-          }
-        }).catch((error) => {
-          setgetinstituteErr(error.message)
-        })
-      }
-      else {
-        setgetinstitute(response.data)
-
-      }
-    }).catch((error) => {
-      setgetinstituteErr(error.message)
-    })
-  }
-  async function getGradeDataCall() {
-    await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/grade_code/GetGradeCodeWOP`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setgetGradeData(response.data[0])
-          }
-        }).catch((error) => {
-          setgetGradeDataErr(error.message)
-        })
-      }
-      else {
-        setgetGradeData(response.data)
-
-      }
-    }).catch((error) => {
-      setgetGradeDataErr(error.message)
-    })
-  }
-  async function EduCodeDataCall() {
-    await fetch(`${config['baseUrl']}/education_code/GetEducationCodeWOP`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/education_code/GetEducationCodeWOP`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setEduCodeData(response.data[0])
-          }
-        }).catch((error) => {
-          setEduCodeDataErr(error.message)
-        })
-      }
-      else {
-        setEduCodeData(response.data)
-      }
-    }).catch((error) => {
-      setEduCodeDataErr(error.message)
-    })
-  }
-  async function getInfoCall() {
-    await fetch(`${config['baseUrl']}/appointments/GetAppointmentsBySeqNo/${userId}`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/appointments/GetAppointmentsBySeqNo/${userId}`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setInfo(response.data[0][0])
-          }
-        }).catch((error) => {
-          setInfoErr(error.message)
-        })
-      }
-      else {
-        setInfo(response.data[0][0])
-      }
-    }).catch((error) => {
-      setInfoErr(error.message)
-    })
-  }
-  const [GetTranEducation, setGetTranEducation] = useState([])
-  const [GetTranEducationErr, setGetTranEducationErr] = useState(false)
-  async function GetTranEducationCall() {
-    await fetch(`${config['baseUrl']}/eduation_code/GetTranEducationByEmpCode/${userId}`, {
-      method: "GET",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` }
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/eduation_code/GetTranEducationByEmpCode/${userId}`, {
-          method: "GET",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` }
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setGetTranEducation(response.data[0])
-          }
-        }).catch((error) => {
-          setGetTranEducationErr(error.message)
-        })
-      }
-      else {
-        setGetTranEducation(response.data[0])
-
-      }
-    }).catch((error) => {
-      setGetTranEducationErr(error.message)
-    })
-  }
-  const createEduHandler = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setBtnEnaledAndDisabled(true);
-    await fetch(`${config['baseUrl']}/education_code/InsertTranEducation`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Sequence_no": userId,
-        "EduCode": EduCodeDataVal,
-        "EduYear": eduYear,
-        "EduGrade": eduGrade,
-        "Topflag": topFlag,
-        "institutecode": getinstituteVal
-      })
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/education_code/InsertTranEducation`, {
-          method: "POST",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
-          body: JSON.stringify({
-            "Sequence_no": userId,
-            "EduCode": EduCodeDataVal,
-            "EduYear": eduYear,
-            "EduGrade": eduGrade,
-            "Topflag": topFlag,
-            "institutecode": getinstituteVal
-          })
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setLoading(false);
-            setBtnEnaledAndDisabled(false);
-            showAlert(response.messsage, "success")
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000)
-          }
-        }).catch((errs) => { showAlert(errs.messsage, "warning") })
-      }
-      else {
-        setLoading(false);
-        setBtnEnaledAndDisabled(false);
-        showAlert(response.messsage, "success")
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000)
-      }
-    }).catch((errs) => {
-      showAlert(errs.messsage, "warning")
-    })
-  }
-
-  const updateHandler = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setBtnEnaledAndDisabled(true);
-    await fetch(`${config['baseUrl']}/eduation_code/UpdateTranEducation`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "srNo": getUpdateId,
-        "EduCode": EduCodeDataVal,
-        "EduYear": eduYear,
-        "EduGrade": eduGrade,
-        "Topflag": topFlag,
-        "institutecode": getinstituteVal
-      })
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/eduation_code/UpdateTranEducation`, {
-          method: "POST",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
-          body: JSON.stringify({
-            "srNo": getUpdateId,
-            "EduCode": EduCodeDataVal,
-            "EduYear": eduYear,
-            "EduGrade": eduGrade,
-            "Topflag": topFlag,
-            "institutecode": getinstituteVal
-          })
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            if (response.success == "success") {
-              setLoading(false);
-              setBtnEnaledAndDisabled(false);
-              showAlert(response.messsage, "success")
-              setTimeout(() => {
-                window.location.reload();
-              }, 1000)
-            } else {
-              setLoading(false);
-              setBtnEnaledAndDisabled(false);
-              showAlert(response.messsage, "warning")
-            }
-          }
-        }).catch((errs) => { showAlert(errs.messsage, "warning") })
-      }
-      else {
-        if (response.success ==  "success"){
-          setLoading(false);
-          setBtnEnaledAndDisabled(false);
-          showAlert(response.messsage, "success")
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000)
-        }else{
-          setLoading(false);
-          setBtnEnaledAndDisabled(false);
-          showAlert(response.messsage, "warning")
+    useEffect(() => {
+        if (mode2 == "create") {
+            reset({
+                Emp_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                Desig_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                Dept_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Dept_name,
+            });
+        } else {
+            reset(
+                {
+                    Emp_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Emp_name,
+                    Desig_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Desig_name,
+                    Dept_name: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Dept_name,
+                },
+            )
         }
-      }
-    }).catch((errs) => {
-      showAlert(errs.messsage, "warning")
-    })
-  }
 
-  const [getUpdateId, setgetUpdateId] = useState(null)
-  const setValue = async (e) => {
-    setgetUpdateId(e.currentTarget.getAttribute('data-id'))
-    setEduCodeDataVal(GetTranEducation.filter(data => data.Sr_No == e.currentTarget.getAttribute('data-id'))[0].Edu_Code)
-    seteduGrade(GetTranEducation.filter(data => data.Sr_No == e.currentTarget.getAttribute('data-id'))[0].Edu_Grade)
-    setgetinstituteVal(GetTranEducation.filter(data => data.Sr_No == e.currentTarget.getAttribute('data-id'))[0].institute_code)
-    seteduYear(GetTranEducation.filter(data => data.Sr_No == e.currentTarget.getAttribute('data-id'))[0].Edu_Year)
-    settopFlag(GetTranEducation.filter(data => data.Sr_No == e.currentTarget.getAttribute('data-id'))[0].Top_flag)
-  }
-
-  const [showDeleteModal, setshowDeleteModal] = useState(false)
-  const [deleteID, setdeleteID] = useState("")
-  const DeleteEduAlert = async (e) => {
-    setshowDeleteModal(!showDeleteModal)
-    setdeleteID(e.currentTarget.getAttribute('data-row'))
-  }
-
-  const deleteSaveEdu = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setBtnEnaledAndDisabled(true);
-    await fetch(`${config['baseUrl']}/eduation_code/deleteTranEducation`, {
-      method: "POST",
-      headers: { "content-type": "application/json", "accessToken": `Bareer ${get_access_token}` },
-      body: JSON.stringify({
-        "Sr_No": deleteID,
-      })
-    }).then((response) => {
-      return response.json()
-    }).then(async (response) => {
-      if (response.messsage == "unauthorized") {
-        await fetch(`${config['baseUrl']}/eduation_code/deleteTranEducation`, {
-          method: "POST",
-          headers: { "content-type": "application/json", "refereshToken": `Bareer ${get_refresh_token}` },
-          body: JSON.stringify({
-            "Sr_No": deleteID,
-          })
-        }).then(response => {
-          return response.json()
-        }).then(response => {
-          if (response.messsage == "timeout error") { navigate('/') }
-          else {
-            localStorage.setItem("refresh",  response.referesh_token);
-            localStorage.setItem("access_token", response.access_token);
-            setLoading(false);
-            setBtnEnaledAndDisabled(false);
-            showAlert(response.messsage, "success")
-            setTimeout(() => {
-              window.location.reload();
-            }, 1000)
-          }
-        }).catch((errs) => { })
-      }
-      else {
-        setLoading(false);
-        setBtnEnaledAndDisabled(false);
-        showAlert(response.messsage, "success")
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000)
-      }
-    }).catch((errs) => {
-      showAlert(errs.messsage, "warning")
-    })
-
-  }
-
-  useEffect(() => {
-    getinstituteCall()
-    EduCodeDataCall()
-    getInfoCall()
-    getGradeDataCall()
-    GetTranEducationCall()
-  }, [])
-
-  return (
-    <>
+    }, [Red_AppointEducation?.data?.[0]?.res?.data?.[0]])
     
-      <div className="container-fluid mt-5 TaEduformContainer ">
-        <div className="col-lg-12 p-2 TAEDHeading">
-          <span className="TaEduFormHeading">
-            Transaction - Appointment(education)
-            <Link to="/Appointment" className="backLink">Back to  Appointment List</Link>
-          </span>
-        </div>
-     
-        <form onSubmit={getUpdateId == null ? createEduHandler : updateHandler} className="p-2">
-          <div className="row p-2">
-            <ul className='p-0'>
-              {formErr && (
-                <li className={`alert alert-${formErr.type}` + " " + "mt-1"}>{`${formErr.message}`}</li>
-              )}
-              {GetTranEducationErr && (
-                <li className={`alert alert-warning` + " " + "mt-1"}>{`${GetTranEducationErr}`}</li>
-              )}
-            </ul>
-            <span className="TaEduform">Employee Information</span>
-            <div className="col-lg-4 col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Employee Name</label>
-                <input type="text" name="" id="" className='form-control' readOnly value={getInfo?.Emp_name ? getInfo.Emp_name : "Not Found"}/>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Designation</label>
-                <input type="text" name="" readOnly id="" className='form-control' value={getInfo?.Desig_name ? getInfo.Desig_name : "Not Found"}/>
-              </div>
-            </div>
-            <div className="col-lg-4 col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Department</label>
-                <input type="text" name="" className='form-control'  id="" readOnly value={getInfo?.Dept_name ? getInfo.Dept_name : "Not Found"}/>
-              </div>
-            </div>
-            <span className="TaEduformHIstoy mt-1">Education History</span>
-            <div className="col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Education</label>
-                <h6 className="m-0 p-0" style={{fontSize: "12px",color: "red"}}>{EduCodeDataErr? EduCodeDataErr : false}</h6>
-                  <select name="" required={EduCodeDataVal==""?true:false} id="" className='form-select'  onChange={(e) => {setEduCodeDataVal(e.target.value)}}>
-                    <option  value="">{EduCodeDataVal==""? "select Education" :EduCodeData.length>0?EduCodeData.filter(data=>data.Edu_code==EduCodeDataVal)[0].Edu_name:"select Education"}</option>
-                     {EduCodeData?.map((items) => {
-                          return(
-                            items.Edu_code==EduCodeDataVal?""
-                            :<option value={items.Edu_code}>{items.Edu_name}</option>
-                          )
-                      })}
-                    </select>
-                <label htmlFor="">Year</label>
-                <input type="number" value={eduYear} required className='form-control' onChange={(e)=> {seteduYear(e.target.value)}}/>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Institute</label>
-                <h6 className="m-0 p-0" style={{fontSize: "12px",color: "red"}}>{getinstituteErr? getinstituteErr : false}</h6>
-                <select name="" id="" required={getinstituteVal==""?true:false} className='form-select'  onChange={(e) => {setgetinstituteVal(e.target.value)}}>
-                  <option  value="">{getinstituteVal==""?"select institute":getinstitute.length>0?getinstitute.filter(data=>data.Inst_code==getinstituteVal)[0].Inst_name:"select institute"}</option>
-                  {getinstitute.map((items) => {
-                    return (
-                      items.Inst_code == getinstituteVal ? ""
-                        : <option value={items.Inst_code}>{items.Inst_name}</option>
-                    )
-                  })}
-                </select>
-                <label htmlFor="">Grade</label>
-                <h6 className="m-0 p-0" style={{fontSize: "12px",color: "red"}}>{getGradeDataErr? getGradeDataErr : false}</h6>
-                <select name="" id="" required={eduGrade==""?true:false} className='form-select'  onChange={(e) => {seteduGrade(e.target.value)}}>
-                  <option  value="">{eduGrade==""?"select Grade":getGradeData.length>0?getGradeData.filter(data=>data.Grade_code==eduGrade)[0].Grade_name:"select Grade"}</option>
-                  {getGradeData.map((items) => {
-                    return (
-                      items.Grade_code == eduGrade ? ""
-                        : <option value={items.Grade_code}>{items.Grade_name}</option>
-                    )
-                  })}
-                </select>
-              </div>
-            </div>
-            <div className="col-md-4">
-              <div className="form-group d-flex flex-column taEduformgroup">
-                <label htmlFor="">Top flag</label>
-                <div className="form-control d-flex align-items-center taEduformgroupControl">
-                  <label htmlFor="Yes">Yes</label>
-                  <input type="radio" id="Yes" name="select_flag" value="Y" checked={topFlag !== null ? topFlag == 'N' ? false : true : false} required onChange={(e) => { settopFlag(e.target.checked == true ? e.target.value : "null") }} />
-                  <label htmlFor="No">No</label>
-                  <input type="radio" id="No" name="select_flag" value="N" checked={topFlag !== null ? topFlag == 'N' ? true : false : false} onChange={(e) => { settopFlag(e.target.checked == true ? e.target.value : "null") }} />
-                </div>
-              </div>
-            </div>
-            <div className="col-12 mt-2">
-              <div className="col-md-4 col-sm-4 mt-2">
-                <button
-                  type="submit"
-                  disabled={btnEnaledAndDisabled}
-                  className="TaEduFormBtn btn btn-dark"
-                >
-                  {loading ? "A moment please..." : getUpdateId !== null ? "Update" : "Save"}
-                </button>
-              </div>
-            </div>
 
 
-            {GetTranEducation.length > 0 ?
-              <div className="col-lg-12">
-                <h5 className='tableDataHead'>Employee Information</h5>
-                <div className="">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th scope="col">Education</th>
-                          <th scope="col">Institute</th>
-                          <th scope="col">Top Flag</th>
-                          <th scope="col">Year</th>
-                          <th scope="col">Grade</th>
-                          <th scope="col">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {GetTranEducation.map((items) => {
-                          return (
-                            <tr>
-                              {
 
-                                EduCodeData.filter(data => data.Edu_code == items.Edu_Code).map((items) => {
-                                  return (
-                                    <td>{items.Edu_name}</td>
-                                  )
-                                })
-                              }
-                              {
-                                getinstitute.filter(data => data.Inst_code == items.institute_code).map((items) => {
-                                  return (
-                                    <td>{items.Inst_name}</td>
-                                  )
-                                })
-                              }
-                              <td>
-                                {items.Top_flag == "Y" ? "Yes" : "NO"}
-                              </td>
-                              <td>
-                                {items.Edu_Year}
-                              </td>
-                              {
-                                getGradeData.filter(data => data.Grade_code == items.Edu_Grade).map(ii => (
-                                  <td>{ii.Grade_name}</td>
-                                ))
-                              }
-                              <td className='tabletdRow'>
-                                <span onClick={setValue} className="editBtnTable" data-id={items.Sr_No}>Edit</span>
-                                <span onClick={DeleteEduAlert} className="deleteBtnTable" data-row={items.Sr_No}>Delete</span>
-                              </td>
-                            </tr>
-                          )
-                        })}
+    useEffect(() => {
+        if (isUpdate) {
+            reset({
+                EduCode: Red_AppointEducation?.data?.[0]?.res?.data?.Edu_Code,
+                EduYear: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Year,
+                EduGrade: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Edu_Grade,
+                Topflag: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.Top_flag,
+                institutecode: Red_AppointEducation?.data?.[0]?.res?.data?.[0]?.institute_code,
+            });
+        } 
+            
 
-                      </tbody>
-                    </table>
-                  </div>
+    }, [Red_AppointEducation?.getSavedData?.[0]?.res?.data?.[0]])
+    console.log(Red_AppointEducation, 'R')
 
-                </div>
-              </div> : ""
+    const EduData = Red_AppointEducation?.getEdu?.[0]?.res?.data
+    const InsData = Red_AppointEducation?.getInsti?.[0]?.res?.data
+    const GradeData = Red_AppointEducation?.getGrade?.[0]?.res?.data
+
+
+    // ==================================================
+    const submitForm = async (data) => {
+        try {
+            const isValid = await AppointEducationSchema.validate(data);
+            if (isValid) {
+                isUpdate ? UdpateForm(data) : SaveForm(data);
+                // if(isUpdate){
+                //     UdpateForm(data)
+                // }else{
+                //     SaveForm(data)
+                // }
             }
-          </div>
-        </form>
-      </div>
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-      {showDeleteModal && (
+
+    const {
+        control,
+        formState: { errors },
+        handleSubmit,
+        reset,
+    } = useForm({
+        defaultValues: {},
+        mode: "onChange",
+        resolver: yupResolver(AppointEducationSchema),
+    });
+
+
+    const SaveForm = async (data) => {
+        setLoading(true)
+        try {
+            const response = await SaveFormEdu({
+                Sequence_no: isCode2,
+                EduCode: data?.EduCode,
+                EduYear: data?.EduYear,
+                EduGrade: data?.EduGrade,
+                Topflag: data?.Topflag,
+                institutecode: data?.institutecode,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Save Education Information");
+                setTimeout(() => {
+                    cancel('read')
+                    setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Save Information';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while changing password:", error);
+            messageApi.error("An error occurred while Save Information");
+        }
+    };
+
+
+    
+
+
+
+const UdpateForm = async (data) => {
+    setLoading(true)
+        try {
+            const response = await UpdateEducation({
+                srNo: isUpdate,
+                EduCode: data?.EduCode,
+                EduYear: data?.EduYear,
+                EduGrade: data?.EduGrade,
+                Topflag: data?.Topflag,
+                institutecode: data?.institutecode,
+            });
+
+            if (response && response.success) {
+                messageApi.success("Updated Education Information");
+                
+                setTimeout(() => {
+                    cancel('read')
+                    setSavedEdu(true)
+                }, 3000);
+            } else {
+                const errorMessage = response?.message || 'Failed to Updated Education ';
+                messageApi.error(errorMessage);
+            }
+        } catch (error) {
+            console.error("Error occurred while Updated Education:", error);
+            messageApi.error("An error occurred while Updated Education");
+        }
+    };
+
+
+
+
+
+    return (
         <>
-          <DeleteModal
-            {...{
-              setshowDeleteModal, deleteSaveEdu,
-              loading, setLoading, btnEnaledAndDisabled,
-              setBtnEnaledAndDisabled, formErr
-            }}
-            warningMsg="Opps!"
-            descriptionOne="Are you sure!!!" descriptionTwo="You want to delete this Education"
-          />
-        </>
-      )}
-    </>
-  );
-}
+            {contextHolder}
 
-export default TAEducationForm
+            <div className="container">
+                <div className="row">
+                    <div className="col-12 maringClass">
+                        <div>
+                            <h2 className="text-dark">Education</h2>
+                            <form onSubmit={handleSubmit(submitForm)}>
+                                <h4 className="text-dark">Employee Information</h4>
+                                <Link to="/Appointment" className="backLink text-dark">Back</Link>
+                                <hr />
+
+                                <div className="form-group formBoxCountry">
+                                    <FormInput
+                                        label={'Employee Name'}
+                                        placeholder={'Employee Name'}
+                                        id="Emp_name"
+                                        name="Emp_name"
+                                        type="text"
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormInput
+                                        label={'Designation'}
+                                        placeholder={'Designation'}
+                                        id="Desig_name"
+                                        name="Desig_name"
+                                        type="text"
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormInput
+                                        label={'Department'}
+                                        placeholder={'Department'}
+                                        id="Dept_name"
+                                        name="Dept_name"
+                                        type="text"
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                </div>
+                                <h4 className="text-dark">Education History</h4>
+                                <hr />
+                                <div className="form-group formBoxCountry">
+                                    <FormSelect
+                                        label={'Education'}
+                                        placeholder='select Education'
+                                        id="EduCode"
+                                        name="EduCode"
+                                        options={EduData?.map((item,) => ({
+                                            value: item.Edu_code,
+                                            label: item.Edu_name,
+                                        })
+                                        )}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormSelect
+                                        label={'Institute'}
+                                        placeholder='select institute'
+                                        id="institutecode"
+                                        name="institutecode"
+                                        options={InsData?.map((item,) => ({
+                                            value: item.Inst_code,
+                                            label: item.Inst_name,
+                                        })
+                                        )}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormSelect
+                                        label={'Top flag'}
+                                        placeholder='select top flag'
+                                        id="Topflag"
+                                        name="Topflag"
+                                        options={[
+                                            {
+                                                value: 'Y',
+                                                label: 'Yes',
+                                            },
+                                            {
+                                                value: "N",
+                                                label: 'No',
+                                            },
+                                        ]}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormInput
+                                        label={'Year'}
+                                        placeholder='select year'
+                                        id="EduYear"
+                                        name="EduYear"
+                                        type="number"
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                    <FormSelect
+                                        label={'Grade'}
+                                        placeholder={'Select grade'}
+                                        id="EduGrade"
+                                        name="EduGrade"
+                                        options={GradeData?.map((item,) => ({
+                                            value: item.Grade_code,
+                                            label: item.Grade_name,
+                                        })
+                                        )}
+                                        showLabel={true}
+                                        errors={errors}
+                                        control={control}
+                                    />
+                                </div>
+                                <div className='CountryBtnBox'>
+                                    <CancelButton onClick={EditBack} title={'Cancel'} />
+                                    {isUpdate ?
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Update" />
+                                        :
+                                        <SimpleButton type={'submit'} loading={isLoading} title="Save" />
+                                    }
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+function mapStateToProps({ Red_AppointEducation }) {
+    return { Red_AppointEducation };
+}
+export default connect(mapStateToProps, AppointmentEducation_Actions)(TAEducationForm2);

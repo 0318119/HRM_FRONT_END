@@ -49,8 +49,6 @@ export const AllEmployees = (params) => async (dispatch) => {
     }
 };
 
-
-
 export const GetEmployeeInfo = (params) => async (dispatch) => {
     console.log(params, 'params')
     try {

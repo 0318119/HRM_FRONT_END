@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/Includes/Header";
-import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
-import TAExperienceForm2 from "../TransactionAppointForm/TAExperienceForm2";
+import TAExperienceForm from "../TransactionAppointForm/TAExperienceForm";
 import * as AppointExp_Actions from "../store/actions/Appointments/AppointmentExprience/index"
 import "./assets/css/AppointExpData.css";
 import { connect } from "react-redux";
@@ -188,10 +186,10 @@ const AppointExpData = ({ Red_AppointExprience, GetEmployer, page, isCode, mode,
                                 />
                             )}
                             {mode2 == "create" && (
-                                <TAExperienceForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
+                                <TAExperienceForm cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAExperienceForm2 cancel={setMode2} isUpdate={isUpdate} isCode2={isCode2} page2={page2} />
+                                <TAExperienceForm cancel={setMode2} isUpdate={isUpdate} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 
