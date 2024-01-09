@@ -6,8 +6,8 @@ import { PrimaryButton } from "../../components/basic/button";
 import { Table, Space } from "antd";
 import { connect } from "react-redux";
 import { FaEdit } from 'react-icons/fa';
-import Confirmation_Extensio2Form from "../form/Confirmation_Extensio2Form";
-import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extensio2/index";
+import Confirmation_Extensio2Form from "../form/Confirmation_ExtensionForm";
+import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
 
 const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirmationExProcessData }) => {
     const [isGetConfirmationData, setGetConfirmationData] = useState([]);
@@ -18,6 +18,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
     const [page, setPage] = useState(1);
     const [isSearchVal, setSearchVal] = useState("");
     const [loading, setLoading] = useState(true);
+    const [isCheckStatus, setCheckStatus] = useState("Process")
 
 
     // Search data function
@@ -65,7 +66,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
             render: (data) => (
                 <Space size="middle">
                     <button
-                        onClick={() => EditPage("Edit",data?.Emp_code)}
+                        onClick={() => EditPage("Edit", data?.Emp_code)}
                         className="editBtn"
                     >
                         <FaEdit />
@@ -103,39 +104,44 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 maringClass">
-                        <>
-                            <div className="Base_CityFlexBox">
-                                <h4 className="text-dark">Form Processing</h4>
-                                <div className="Base_CitysearchBox">
-                                    <Input
+                        {
+                            mode == "read" ? <>
+                                <div className="Base_CityFlexBox">
+                                    <h4 className="text-dark">Form Processing</h4>
+                                    <div className="Base_CitysearchBox">
+                                        <Input
 
-                                        placeholder={"Search Here..."}
-                                        type="search"
-                                        onChange={(e) => {
-                                            setSearchVal(e.target.value);
-                                        }}
-                                    />
+                                            placeholder={"Search Here..."}
+                                            type="search"
+                                            onChange={(e) => {
+                                                setSearchVal(e.target.value);
+                                            }}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <hr />
-                        </>
+                                <hr />
+                            </> : ""
+                        }
 
                         <div>
-                            <Table
-                                columns={columns}
-                                loading={Red_Confirmation_Extension?.loading}
-                                dataSource={Red_Confirmation_Extension?.data?.[0]?.res?.data1}
-                                scroll={{ x: 10 }}
-                                pagination={{
-                                    defaultCurrent: page,
-                                    total: Red_Confirmation_Extension?.data?.[0]?.res?.data3,
-                                    onChange: (p) => {
-                                        setPage(p);
-                                    },
-                                    pageSize: pageSize,
-                                }}
-                            />
-                            {mode == "Edit" && <Confirmation_Extensio2Form cancel={setMode} mode={mode} isCode={isCode} />}
+                            {
+                                mode == "read" ?
+                                    <Table
+                                        columns={columns}
+                                        loading={Red_Confirmation_Extension?.loading}
+                                        dataSource={Red_Confirmation_Extension?.data?.[0]?.res?.data1}
+                                        scroll={{ x: 10 }}
+                                        pagination={{
+                                            defaultCurrent: page,
+                                            total: Red_Confirmation_Extension?.data?.[0]?.res?.data3,
+                                            onChange: (p) => {
+                                                setPage(p);
+                                            },
+                                            pageSize: pageSize,
+                                        }}
+                                    /> : ""
+                            }
+                            {mode == "Edit" && <Confirmation_Extensio2Form cancel={setMode} status={isCheckStatus} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>

@@ -78,7 +78,7 @@ import Red_ManualAttendence from "./reducers/ManualAttendance/index"
 import Red_Emp_Leaves_Approvals from "./reducers/Leave/Approvals/index"
 import Red_Bank_Letter_Report from './reducers/payroll/Bank_Letter_Report/index'
 import Red_Paysheet_Report from './reducers/payroll/Paysheet_Report'
-import Red_Confirmation_Extension from './reducers/MasterMaintaince/Confirmation_Extensio2'
+import Red_Confirmation_Extension from './reducers/MasterMaintaince/Confirmation_Extension/index'
 
 const reducers = combineReducers({
   Transition_family,

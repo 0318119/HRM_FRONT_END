@@ -3,21 +3,22 @@ import { CancelButton, PrimaryButton, Button } from "../../components/basic/butt
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extensio2/index";
+import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
 import { FormInput, FormSelect } from "../../components/basic/input/formInput";
 import { message } from "antd";
 import { Popconfirm, Space } from "antd";
 import * as yup from "yup";
 
-function Confirmation_Extensio2Form({
+function Confirmation_ExtensionForm({
     cancel,
     mode,
     isCode,
+    status,
     Red_Confirmation_Extension,
     getAtttendanceHisss,
     SaveConfirmationExInfo,
     SaveConfirmationExInFoProcess,
-    Delete_Confirmation,status
+    Delete_Confirmation
 }) {
     const [messageApi, contextHolder] = message.useMessage();
     const [isLoading, setLoading] = useState(false);
@@ -27,32 +28,33 @@ function Confirmation_Extensio2Form({
     const currentDate = new Date().toISOString().split('T')[0]
     const empInfo = Red_Confirmation_Extension?.GetInfo?.[0]?.res
     const [isProcessbtn, setProcessbtn] = useState(false)
-    const [Processpayload, setProcesspayload] = useState()
     const [isDeleteLeave, setDeleteLeave] = useState(false)
-
 
     const EditBack = () => {
         cancel("read");
     };
-
     const ConfirmationExtension = yup.object().shape({
         Transaction_Date: yup.string().required("Transaction Date is Required"),
         Confirmation_Date: yup.string().required("Confirmation Date is Required"),
         Remarks: yup.string().required("Remarks is Required"),
     });
-
     const submitForm = async (data) => {
         try {
             const isValid = await ConfirmationExtension.validate(data);
             if (isValid) {
-                console.log("data", data)
-                confirm(data)
+                if(status == "Process"){
+                    processConfirm(data)
+                }else if(isProcessbtn == true){
+                    processConfirm(data)
+                }
+                else{
+                    saveConfirm(data)
+                }
             }
         } catch (error) {
             console.error(error, "error message");
         }
     };
-
     const {
         control,
         formState: { errors },
@@ -65,7 +67,7 @@ function Confirmation_Extensio2Form({
     });
 
 
-    const confirm = async (data) => {
+    const saveConfirm = async (data) => {
         setLoading(true)
         const Savepayload = JSON.stringify({
             "Emp_code": isCode,
@@ -73,18 +75,9 @@ function Confirmation_Extensio2Form({
             "Confirmation_Date": data?.Confirmation_Date,
             "Remarks": data?.Remarks
         })
-        setProcesspayload(
-            JSON.stringify({
-                "Emp_code": isCode,
-                "Transaction_Date": data?.Transaction_Date,
-                "Confirmation_Date": data?.Confirmation_Date,
-                "Remarks": data?.Remarks,
-                "PF": "N"
-            })
-        )
         const response = await SaveConfirmationExInfo(Savepayload);
         if (response.success) {
-            messageApi.success("Confirmation has been successfully Edited!");
+            messageApi.success(response?.message || response?.messssage);
             setProcessbtn(true)
             setLoading(false)
         } else {
@@ -92,19 +85,27 @@ function Confirmation_Extensio2Form({
             setLoading(false)
         }
     }
-    const processFun = async (e) => {
-        e.preventDefault()
+    const processConfirm = async (data) => {
         setLoading(true)
+        const Processpayload = JSON.stringify({
+            "Emp_code": isCode,
+            "Transaction_Date": data?.Transaction_Date,
+            "Confirmation_Date": data?.Confirmation_Date,
+            "Remarks": data?.Remarks,
+            "PF": "N"
+        })
         const isCheck = await SaveConfirmationExInFoProcess(Processpayload);
         if (isCheck?.success) {
-            message.success("Confirmation has been successfully processed!")
+            message.success(isCheck?.message || isCheck?.messsage)
             setLoading(false)
+            setTimeout(() => {
+                cancel("read")
+            }, 1000);
         } else {
             message.success(isCheck?.message || isCheck?.messsage)
             setLoading(false)
         }
     }
-
     const DeleteConfrim = async (data) => {
         setDeleteLeave(true)
         message.loading("Please wait...")
@@ -121,13 +122,11 @@ function Confirmation_Extensio2Form({
             setDeleteLeave(false)
         }
     }
-
     useEffect(() => {
         if (isCode !== null) {
             getAtttendanceHisss(isCode)
         }
     }, [isCode])
-
     useEffect(() => {
         if (mode == "Edit") {
             reset({
@@ -142,13 +141,11 @@ function Confirmation_Extensio2Form({
             })
         }
     }, [empInfo])
-
     useEffect(() => {
         if (empInfo?.message == "failed" || empInfo?.messsage == "failed") {
             message.error(`In info Api call: ${empInfo?.message || empInfo?.messsage}`)
         }
     }, [empInfo])
-    console.log("empInfo", empInfo)
 
     return (
         <>
@@ -244,26 +241,26 @@ function Confirmation_Extensio2Form({
                 </div>
                 <div className="BaseCItyBtnBox">
                     <CancelButton onClick={EditBack} title={"Cancel"} />
-                    {isProcessbtn == false ? <PrimaryButton type={"submit"} loading={isLoading} title="Save" /> : ""}
-                    {isProcessbtn && (
+                    {status == "Process" || isProcessbtn == true ? "" : <PrimaryButton type={"submit"} loading={isLoading} title="Save" />}
+                    {isProcessbtn == true || status == "Process" ?
                         <>
-                            <Button title="Delete" loading={isDeleteLeave} onClick={(e) => e.preventDefault(e)} />
-                            <Button title="Process" loading={isLoading} onClick={(e) => processFun(e)} />
-
+                            {/* <Button title="Process" loading={isLoading} onClick={(e) => processFun(e)} /> */}
+                            <PrimaryButton type={"submit"} loading={isLoading} title="Process" />
                             <Space size="middle">
                                 <Popconfirm
-                                    title="Delete the leave"
-                                    description="Are you sure to delete this leave?"
+                                    title="Delete the Confirmation Extension"
+                                    description="Are you sure you want to delete this Confirmation Extension?"
                                     okText="Yes"
                                     cancelText="No"
                                     onConfirm={() => {
                                         DeleteConfrim(isCode)
                                     }}
                                 >
+                                    <Button title="Delete" loading={isDeleteLeave} onClick={(e) => e.preventDefault(e)} />
                                 </Popconfirm>
                             </Space>
-                        </>
-                    )}
+                        </> : ""
+                    }
                 </div>
             </form> : ""}
 
@@ -274,4 +271,4 @@ function Confirmation_Extensio2Form({
 function mapStateToProps({ Red_Confirmation_Extension }) {
     return { Red_Confirmation_Extension };
 }
-export default connect(mapStateToProps, ACTIONS)(Confirmation_Extensio2Form);
+export default connect(mapStateToProps, ACTIONS)(Confirmation_ExtensionForm);

@@ -4,14 +4,14 @@ import Header from "../../components/Includes/Header";
 import Input from "../../components/basic/input";
 import { PrimaryButton } from "../../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
-import Confirmation_Extensio2Form from "../form/Confirmation_Extensio2Form";
+import Confirmation_ExtensionForm from "../form/Confirmation_ExtensionForm";
 import { connect } from "react-redux";
-import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extensio2/index";
+import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 
 
-const Confirmation_Extensio2 = ({ Red_Confirmation_Extension, AllEmployees }) => {
+const Confirmation_Extension = ({ Red_Confirmation_Extension, AllEmployees }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [mode, setMode] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
@@ -115,7 +115,7 @@ const Confirmation_Extensio2 = ({ Red_Confirmation_Extension, AllEmployees }) =>
                                     }}
                                 />
                             )}
-                            {mode == "Edit" && <Confirmation_Extensio2Form cancel={setMode} mode={mode} isCode={isCode} />}
+                            {mode == "Edit" && <Confirmation_ExtensionForm cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>
@@ -127,4 +127,4 @@ function mapStateToProps({ Red_Confirmation_Extension }) {
     return { Red_Confirmation_Extension };
 }
 
-export default connect(mapStateToProps, ACTIONS)(Confirmation_Extensio2);
+export default connect(mapStateToProps, ACTIONS)(Confirmation_Extension);
