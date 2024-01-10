@@ -82,6 +82,7 @@ import Red_Leave_Balanced_Upload from './reducers/Leave/Leave_Balance_Upalod/ind
 import Red_Promotion from "./reducers/HrOperations/Master_Maintaince/Promotion/index";
 import Red_Paysheet_Report from './reducers/payroll/Paysheet_Report'
 import Red_Confirmation_Extension from './reducers/MasterMaintaince/Confirmation_Extension/index'
+import Red_Increment from './reducers/MasterMaintaince/Increment/index'
 
 const reducers = combineReducers({
   Transition_family,
@@ -173,6 +174,7 @@ const reducers = combineReducers({
   Red_Leave_Balanced_Upload,
   Red_Promotion,
   Red_Confirmation_Extension,
+  Red_Increment
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;

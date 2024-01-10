@@ -1,16 +1,16 @@
 import {
-    GET_Confirmation_Extension_DATA,
-    GET_Confirmation_Extension_START,
-    GET_Confirmation_Extension_Confirmation,
-    GET_Confirmation_Extension_END
+    GET_Increment_DATA,
+    GET_Increment_START,
+    GET_Increment_Confirmation,
+    GET_Increment_END
 } from "../../types";
 import baseUrl from "../../../../config.json";
 
 
-export const AllEmployees = (params) => async (dispatch) => {
+export const GetIncrementOfAllEmployees = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_Confirmation_Extension_START,
+            type: GET_Increment_START,
             payload: true,
             loading: true,
         });
@@ -24,14 +24,14 @@ export const AllEmployees = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_Confirmation_Extension_DATA,
+                type: GET_Increment_DATA,
                 payload: [{ res }],
                 loading: false,
             });
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_Confirmation_Extension_END,
+                type: GET_Increment_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -39,39 +39,47 @@ export const AllEmployees = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_Confirmation_Extension_END,
+            type: GET_Increment_END,
             payload: false,
             loading: false,
         });
         console.log(error);
     }
 };
-export const getAtttendanceHisss = (body) => async (dispatch) => {
-    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/ME_ExtendedConfirmationListByCode`, {
-        method: "POST",
-        headers: {
-            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            "Emp_code": body,
-        })
-    });
-    const res = await response.json();
-    dispatch({
-        type: GET_Confirmation_Extension_Confirmation,
-        payload: [{ res }],
-        loading: false,
-    });
+export const getEmployeeInfo = (body) => async (dispatch) => {
+    try {
+        const response = await fetch(`${baseUrl.baseUrl}/tranIncrement/TranIncrements_List_By_Code`, {
+            method: "POST",
+            headers: {
+                'accessToken': 'Bearer ' + localStorage.getItem('access_token'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "Emp_code": body,
+            })
+        });
 
-    if (res?.success) {
-        return res;
-    } else {
-        return res;
+        const res = await response.json();
+ 
+
+        dispatch({
+            type: GET_Increment_Confirmation,
+            payload: [{ res }],
+            loading: false,
+        });
+
+        if (res?.success) {
+            return res;
+        } else {
+            return res;
+        }
+    } catch (error) {
+        console.error('Error fetching employee information:', error);
+        return error;
     }
-}
-export const SaveConfirmationExInfo = (body) => async (dispatch) => {
-    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Save`, {
+};
+export const SaveIncrementExInfo = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/tranIncrement/TranIncrementsSave`, {
         method: "POST",
         headers: {
             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -87,7 +95,7 @@ export const SaveConfirmationExInfo = (body) => async (dispatch) => {
     }
 }
 export const SaveConfirmationExInFoProcess = (body) => async (dispatch) => {
-    const response = await fetch(`${baseUrl.baseUrl}/ConfirmationExtension/TranConfirmationExtended_Process`, {
+    const response = await fetch(`${baseUrl.baseUrl}/tranIncrement/TranIncrementsProcess`, {
         method: "POST",
         headers: {
             'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
@@ -123,7 +131,7 @@ export const Delete_Confirmation = (body) => async (dispatch) => {
 export const getConfirmationExProcessData = (params) => async (dispatch) => {
     try {
         dispatch({
-            type: GET_Confirmation_Extension_START,
+            type: GET_Increment_START,
             payload: true,
             loading: true,
         });
@@ -137,7 +145,7 @@ export const getConfirmationExProcessData = (params) => async (dispatch) => {
         if (response.status === 200) {
             const res = await response.json();
             dispatch({
-                type: GET_Confirmation_Extension_DATA,
+                type: GET_Increment_DATA,
                 payload: [{ res }],
                 loading: false,
             });
@@ -145,7 +153,7 @@ export const getConfirmationExProcessData = (params) => async (dispatch) => {
         } else {
             const res = await response.json();
             dispatch({
-                type: GET_Confirmation_Extension_END,
+                type: GET_Increment_END,
                 payload: [{ res }],
                 loading: false,
             });
@@ -154,7 +162,7 @@ export const getConfirmationExProcessData = (params) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: GET_Confirmation_Extension_END,
+            type: GET_Increment_END,
             payload: false,
             loading: false,
         });

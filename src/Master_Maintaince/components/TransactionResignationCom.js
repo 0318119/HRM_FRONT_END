@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import '../assets/css/TransactionResignationCom.css'
-import Transaction_increment_form from '../form/Transaction_Increment_form'
+import Incrementform from '../../Master_Maintaince/form/Incrementform'
 import secureLocalStorage from "react-secure-storage";
 const config = require('../../config.json')
 

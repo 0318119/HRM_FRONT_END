@@ -476,9 +476,18 @@ export const GET_PROMOTION_GRADE_DATA = "GET_PROMOTION_GRADE_DATA"
 export const GET_PROMOTION_SUPERVISOR_DATA = "GET_PROMOTION_SUPERVISOR_DATA"
 export const GET_PROMOTION_COSTCENTER_DATA = "GET_PROMOTION_COSTCENTER_DATA"
 export const GET_PROMOTION_DATA_END = "GET_PROMOTION_DATA_END"
+
 // ========== MasterMaintaince ======= ===== Confirmation_Extensio2======== ===== === /
 export const GET_Confirmation_Extension_DATA = "GET_Confirmation_Extension_DATA";
 export const GET_Confirmation_Extension_START = "GET_Confirmation_Extension_START";
 export const GET_Confirmation_Extension_Confirmation = "GET_Confirmation_Extension_Confirmation";
 export const GET_Confirmation_Extension_END = "GET_Confirmation_Extension_END"; 
+
+// ========== MasterMaintaince ======= ===== Increment ======== ===== === /
+export const GET_Increment_DATA = "GET_Increment_DATA";
+export const GET_Increment_START = "GET_Increment_START";
+export const GET_Increment_Confirmation = "GET_Increment_Confirmation";
+export const GET_Increment_END = "GET_Increment_END"; 
+
+
 
