@@ -6,12 +6,6 @@ import { Login } from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
-import TAEducationForm from '../TransactionAppointForm/TAEducationForm';
-import TAExprienceForm from '../TransactionAppointForm/TAExprienceForm';
-import TASalaryForm from '../TransactionAppointForm/TASalaryForm';
-import TAppointmentMasterPayroll from '../TransactionAppointForm/TAppointmentMasterPayroll';
-import TACheckList from '../TransactionAppointForm/TACheckList'
-import TAFamilyForm from '../TransactionAppointForm/TAFamilyForm';
 import TAShortsCut from '../TransactionAppointForm/TAShortsCut'
 import Employment_Type from '../HrOperations/Employment_Type';
 import Divisions from '../HrOperations/Divisions'
@@ -39,7 +33,6 @@ import Employee_List_Active from '../Master_Maintaince/Employee_List_Active'
 import Employee_List_InActive from '../Master_Maintaince/Employee_List_InActive';
 import Employee_Master from '../Master_Maintaince/Employee_Master'
 import Confirmation from '../Master_Maintaince/Confirmation';
-import Confirmation_Extensio from '../Master_Maintaince/Confirmation_Extensio';
 import Increment from '../Master_Maintaince/Increment'
 import Get_Attendance from '../Attendance/Get_Attendance'
 import Attendance_Check from '../Attendance/Attendance_Check'
@@ -59,8 +52,6 @@ import LeaveSummary from '../LeavesModule/components/LeaveSummary';
 import Transaction_Increment_form from '../Master_Maintaince/form/Transaction_Increment_form';
 import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
 import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
-import ConfirmationExtension from '../Master_Maintaince/form/ConfirmationExtension';
-import ConfirmExtensionWaitingProcess from '../Master_Maintaince/components/ConfirmExtensionWaitingProcess';
 import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
 import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
 import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
@@ -109,12 +100,9 @@ import FLow from '../DesignationsFlow/ChartFlow'
 import PayrollCategoryAccess from '../payroll/pages/Setup/PayrollCategoryAccess'
 import Change_Password from '../Addministration/pages/Change_Password'
 import NewAppointmentReport from '../HrOperations/New_Appointment_Report'
-import TAEducationForm2 from '../TransactionAppointForm/TAEducationForm2.js'
-import TASalaryForm2 from '../TransactionAppointForm/TASalaryForm2.js'
-import TAExperienceForm2 from '../TransactionAppointForm/TAExperienceForm2.js'
-import TAappointmentMasterPayrollForm2 from '../TransactionAppointForm/TAappointmentMasterPayrollForm2.js'
-import TAFamilyForm2 from '../TransactionAppointForm/TAFamilyForm2.js'
-import TACheckListForm2 from '../TransactionAppointForm/TACheckListForm2.js'
+import TAExperienceForm from '../TransactionAppointForm/TAExperienceForm.js'
+import TAFamilyForm from '../TransactionAppointForm/TAFamilyForm.js'
+import TACheckListForm from '../TransactionAppointForm/TACheckListForm.js'
 import NotFound from '../Error_Pages';
 import Access_Control from '../Addministration/pages/Access_Control'
 import Forgetpassword from '../LoginScreens/ForgetPassword/forgetpassword';
@@ -134,7 +122,9 @@ import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
 import Promotion2 from '../Master_Maintaince/Promotion2.js';
-
+import Paysheet_Report from '../payroll/pages/Paysheet_Report.js'
+import Confirmation_Extension from '../Master_Maintaince/components/Confirmation_Extension.js'
+import ConfirmExtensionFormProcessing from '../Master_Maintaince/components/ConfirmExtensionFormProcessing.js';
 
 
 const routing = () => {
@@ -150,12 +140,6 @@ const routing = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/Appointment" element={<Appointment />} />
               <Route path="/TAPersonalform" element={<TAPersonalform />} />
-              <Route path="/TAEducationForm" element={<TAEducationForm />} />
-              <Route path="/TAExprienceForm" element={<TAExprienceForm />} />
-              <Route path="/TASalaryForm" element={<TASalaryForm />} />
-              <Route path="/TAppointmentMasterPayroll" element={<TAppointmentMasterPayroll />} />
-              <Route path="/TACheckList" element={<TACheckList />} />
-              <Route path="/TAFamilyForm" element={<TAFamilyForm />} />
               <Route path="/TAShortsCut" element={<TAShortsCut />} />
               <Route path="/Employment_Type" element={<Employment_Type />} />
               <Route path="/Divisions" element={<Divisions />} />
@@ -185,7 +169,6 @@ const routing = () => {
               <Route path="/Increment" element={<Increment />} />
               <Route path="/Get_Attendance" element={<Get_Attendance />} />
               <Route path="/Attendance_Check" element={<Attendance_Check />} />
-              <Route path="/Confirmation_Extensio" element={<Confirmation_Extensio />} />
               <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
               <Route path="/Promotion" element={<Promotion />} />
               <Route path="/Holidays" element={<Holidays />} />
@@ -201,8 +184,6 @@ const routing = () => {
               {/* <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} /> */}
               <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
               <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
-              <Route path="/ConfirmationExtension" element={<ConfirmationExtension />} />
-              <Route path="/ConfirmExtensionWaitingProcess" element={<ConfirmExtensionWaitingProcess />} />
               <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
               <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
               <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
@@ -260,20 +241,18 @@ const routing = () => {
               <Route path="/report/ConfirmationReport" element={<ConfirmationReport />} />
               <Route path="/Pay/PaySlip" element={<PaySlip />} />
               <Route path="/flow/DesignationsFlowChart" element={<FLow />} />
-              <Route path="/TAEducationForm2" element={<TAEducationForm2 />} />
-              <Route path="/TASalaryForm2" element={<TASalaryForm2 />} />
-              <Route path="/TAExperienceForm2" element={<TAExperienceForm2 />} />
-              <Route path="/TAappointmentMasterPayrollForm2" element={<TAappointmentMasterPayrollForm2 />} />
-              <Route path="/TAFamilyForm2" element={< TAFamilyForm2 />} />
-              <Route path="/TACheckListForm2" element={<TACheckListForm2 />} />
+              <Route path="/TAExperienceForm" element={<TAExperienceForm />} />
+              <Route path="/TAFamilyForm" element={<TAFamilyForm />} />
+              <Route path="/TACheckListForm" element={<TACheckListForm />} />
               <Route path="/Access_Control" element={<Access_Control />} />
               <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
               <Route path="/OfferLeter" element={<OfferLeter />} />
               <Route path="/ManualAttendance" element={<ManualAttendance />} />
               <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
               <Route path='/Bank_Letter_Report' element={<Bank_Letter_Report />} />
-              <Route path='/ManualAttendance' element={<ManualAttendance />} />
-
+              <Route path='/Paysheet_Report' element={<Paysheet_Report />} />
+              <Route path='/Confirmation_Extension' element={<Confirmation_Extension />} />
+              <Route path="/ConfirmExtensionFormProcessing" element={<ConfirmExtensionFormProcessing />} />
             </> :
             <>
               <Route path="*" element={<NotFound />} />
@@ -311,11 +290,8 @@ const routing = () => {
         {/* =====Temporary routing ======= */}
         <Route path="/Promotion2" element={<Promotion2 />} />
         {/* =====Temporary routing ======= */}
-
-
       </Routes>
     </Router>
-
   );
 }
 

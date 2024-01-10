@@ -3,7 +3,7 @@ import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
 import { Button } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from 'antd';
-import TAFamilyForm2 from "../TransactionAppointForm/TAFamilyForm2";
+import TAFamilyForm from "./TAFamilyForm";
 import * as AppointFamily_Actions from "../store/actions/Appointments/AppointFamily/index"
 import "./assets/css/AppointFamily.css";
 import { connect } from "react-redux";
@@ -133,9 +133,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
         },
     ];
 
-
-
-
     async function handleMarriageDelete(Sequence_no) {
         // console.log(Sequence_no, 'Sequence_no')
         await fetch(
@@ -172,7 +169,6 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
             });
         });
     }
-
     async function handleChlidDelete(S_no, Sequence_no) {
         console.log(S_no, Sequence_no , 'asdfasdfef')
         await fetch(
@@ -211,18 +207,12 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
         });
     }
 
-
-    console.log(Red_AppointFamily, 'Red_AppointFamily')
-
-
     return (
         <>
-
             {contextHolder}
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 maringClass2">
-
                         {mode2 == "read" && (
                             <>
                                 <div className="AppointFamilyFlexBox">
@@ -233,13 +223,11 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                         /> */}
                                         <Button title="Create" onClick={() => setMode2("create")} />
                                         <Button title="Cancel" onClick={EditBack} />
-
                                     </div>
                                 </div>
                                 <hr />
                             </>
                         )}
-
                         <div>
                             {mode2 == "read" && (
                                 <>
@@ -260,13 +248,13 @@ const AppointFamilyData = ({ Red_AppointFamily, GetMarriage, GetChildren, page, 
                                 </>
                             )}
                             {mode2 == "create" && (
-                                <TAFamilyForm2 cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
+                                <TAFamilyForm cancel={setMode2} mode2={mode2} isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit" && (
-                                <TAFamilyForm2 cancel={setMode2} update={update}  isCode2={isCode2} page2={page2} />
+                                <TAFamilyForm cancel={setMode2} update={update}  isCode2={isCode2} page2={page2} />
                             )}
                             {mode2 == "Edit2" && (
-                                <TAFamilyForm2 cancel={setMode2} updateChlid={updateChlid} isCode2={isCode2} page2={page2} />
+                                <TAFamilyForm cancel={setMode2} updateChlid={updateChlid} isCode2={isCode2} page2={page2} />
                             )}
                         </div>
 

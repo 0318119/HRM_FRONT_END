@@ -5,14 +5,14 @@ import { PrimaryButton, SimpleButton } from "../components/basic/button";
 import * as Appoint_Checklist from "../store/actions/Appointments/AppointChecklist/index"
 import { connect } from "react-redux";
 import { Popconfirm } from 'antd';
-import baseUrl from '../../src/config.json'
+import baseUrl from '../config.json'
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import { message } from 'antd';
 import { Check, Undo } from "@mui/icons-material";
 
 
-const TACheckListForm2 = ({ Red_AppointChecklist, getCheckList, isCode, mode, cancel, getCheckedList, CheckList }) => {
+const TACheckListForm = ({ Red_AppointChecklist, getCheckList, isCode, mode, cancel, getCheckedList, CheckList }) => {
     const [messageApi, contextHolder] = message.useMessage();
     var get_access_token = localStorage.getItem("access_token");
     const [isCode2, setCode2] = useState(null)
@@ -156,5 +156,5 @@ const TACheckListForm2 = ({ Red_AppointChecklist, getCheckList, isCode, mode, ca
 function mapStateToProps({ Red_AppointChecklist }) {
     return { Red_AppointChecklist };
 }
-export default connect(mapStateToProps, Appoint_Checklist)(TACheckListForm2)
+export default connect(mapStateToProps, Appoint_Checklist)(TACheckListForm)
 
