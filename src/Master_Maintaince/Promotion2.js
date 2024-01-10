@@ -13,10 +13,10 @@ import { Popconfirm } from 'antd';
 import { message } from 'antd';
 import baseUrl from '../../src/config.json'
 
-const Promotion2 = ({ 
+const Promotion2 = ({
     Red_Promotion,
     AllEmployeeData,
- }) => {
+}) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [mode, setMode] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
@@ -41,16 +41,16 @@ const Promotion2 = ({
             dataIndex: "Emp_name",
             key: "Emp_name",
         },
-        
+
         {
             title: "Action",
             key: "action",
             render: (data) => (
                 <Space size="middle">
                     <button onClick={() => EditPage("Edit", data?.Emp_code)} className="editBtn" >
-                    <FaEdit />
+                        <FaEdit />
                     </button>
-                </Space>    
+                </Space>
             ),
         },
     ];
@@ -109,7 +109,7 @@ const Promotion2 = ({
                                     columns={columns}
                                     loading={Red_Promotion?.loading}
                                     dataSource={Red_Promotion?.data?.[0]?.res?.data1}
-                                    scroll={{ x: 10}}
+                                    scroll={{ x: 10 }}
                                     pagination={{
                                         defaultCurrent: page,
                                         total: Red_Promotion?.data?.[0]?.res?.data3,
@@ -121,7 +121,7 @@ const Promotion2 = ({
                                 />
                             )}
                             {mode == "create" && <Transaction_PromotionForm cancel={setMode} mode={mode} isCode={null} />}
-                            {mode == "Edit" && <Transaction_PromotionForm cancel={setMode} mode={mode} isCode={isCode} />} 
+                            {mode == "Edit" && <Transaction_PromotionForm cancel={setMode} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>
@@ -133,4 +133,4 @@ function mapStateToProps({ Red_Promotion }) {
     return { Red_Promotion };
 }
 
-export default connect(mapStateToProps, Promotion_Action )(Promotion2);
+export default connect(mapStateToProps, Promotion_Action)(Promotion2);

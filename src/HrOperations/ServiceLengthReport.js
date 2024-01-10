@@ -134,7 +134,6 @@ function ServiceLengthReport({
       console.error('Error downloading PDF:', error);
     }
   };
-
   useEffect(() => {
     if (isFormSubmitted) {
       handleDownload();
