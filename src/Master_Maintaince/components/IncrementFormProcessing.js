@@ -5,8 +5,7 @@ import { Table, Space } from "antd";
 import { connect } from "react-redux";
 import Incrementform from "../form/Incrementform";
 import * as ACTIONS from "../../store/actions/MasterMaintaince/Increment/index";
-import { CiEdit } from "react-icons/ci";
-import { message } from "antd";
+import { FaEdit } from 'react-icons/fa';
 
 
 const IncrementFormProcessing = ({ Red_Increment, GetIncrementProcess }) => {
@@ -44,7 +43,7 @@ const IncrementFormProcessing = ({ Red_Increment, GetIncrementProcess }) => {
                         onClick={() => EditPage("Edit", data?.Emp_code)}
                         className="editBtn"
                     >
-                        <CiEdit />
+                         <FaEdit />
                     </button>
 
                 </Space>

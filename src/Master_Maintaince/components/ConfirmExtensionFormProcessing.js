@@ -7,7 +7,7 @@ import { Table, Space } from "antd";
 import { connect } from "react-redux";
 import Confirmation_Extensio2Form from "../form/Confirmation_ExtensionForm";
 import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
-import { CiEdit } from "react-icons/ci";
+import { FaEdit } from 'react-icons/fa';
 
 const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirmationExProcessData }) => {
     const [isGetConfirmationData, setGetConfirmationData] = useState([]);
@@ -64,7 +64,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                         onClick={() => EditPage("Edit", data?.Emp_code)}
                         className="editBtn"
                     >
-                        <CiEdit />
+                         <FaEdit />
                     </button>
 
                 </Space>
