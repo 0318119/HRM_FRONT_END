@@ -49,7 +49,6 @@ import Leave_Balance_Upload from '../LeavesModule/Leave_Balance_Upload';
 import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
 import Transaction_Education_form from '../Master_Maintaince/form/Transaction_Education';
 import LeaveSummary from '../LeavesModule/components/LeaveSummary';
-import Incrementform from '../Master_Maintaince/form/Incrementform';
 import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
 import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
 import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
@@ -183,11 +182,10 @@ const routing = () => {
               <Route path="/LeaveSummary" element={<LeaveSummary />} />
               <Route path="/Transaction_confirmation_form" element={<Transaction_confirmation_form />} />
               <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
-              <Route path="/Incrementform" element={<Incrementform />} />
               <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
               <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
               <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
-              <Route path="/IncrementFormProcessing" element={<IncrementFormProcessing />} />
+              <Route path="IncrementFormProcessing" element={<IncrementFormProcessing />} />
               <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
               <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
               <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
