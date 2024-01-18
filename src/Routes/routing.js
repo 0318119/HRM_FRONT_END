@@ -124,7 +124,8 @@ import Promotion2 from '../Master_Maintaince/Promotion2.js';
 import Paysheet_Report from '../payroll/pages/Paysheet_Report.js'
 import Confirmation_Extension from '../Master_Maintaince/components/Confirmation_Extension.js'
 import ConfirmExtensionFormProcessing from '../Master_Maintaince/components/ConfirmExtensionFormProcessing.js';
-
+import PaySlip_Employee_Wise from '../payroll/pages/PaySlip_Employee_Wise.js'
+import PaySlip_Employee_WiseForm from '../payroll/form/transactionPosting/PaySlip_Employee_WiseForm.js'
 
 const routing = () => {
   return (
@@ -251,6 +252,9 @@ const routing = () => {
               <Route path='/Paysheet_Report' element={<Paysheet_Report />} />
               <Route path='/Confirmation_Extension' element={<Confirmation_Extension />} />
               <Route path="/ConfirmExtensionFormProcessing" element={<ConfirmExtensionFormProcessing />} />
+              <Route path="/PaySlip_Employee_Wise" element={<PaySlip_Employee_Wise />} />
+              <Route path="/PaySlip_Employee_WiseForm" element={<PaySlip_Employee_WiseForm />} />
+
             </> :
             <>
               <Route path="*" element={<NotFound />} />

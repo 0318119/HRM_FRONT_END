@@ -489,5 +489,14 @@ export const GET_Increment_START = "GET_Increment_START";
 export const GET_Increment_Confirmation = "GET_Increment_Confirmation";
 export const GET_Increment_END = "GET_Increment_END"; 
 
+// PAYROLL ===> PaySlip === 
+
+export const GET_PaySlip_Employee_Wise_DATA = "GET_PaySlip_Employee_Wise_DATA,";
+export const GET_PaySlip_Employee_Wise_Employee = "GET_PaySlip_Employee_Wise_Employee";
+export const GET_PaySlip_Employee_Wise_Payroll = "GET_PaySlip_Employee_Wise_Payroll";
+export const GET_PaySlip_Employee_Wise_Employee_Category = "GET_PaySlip_Employee_Wise_Employee_Category";
+export const GET_PaySlip_Employee_Wise_START = "GET_PaySlip_Employee_Wise_START";
+export const GET_PaySlip_Employee_Wise_END = "GET_PaySlip_Employee_Wise_END";
+
 
 
