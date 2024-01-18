@@ -486,9 +486,27 @@ export const GET_PROMOTION_COSTCENTER_DATA = "GET_PROMOTION_COSTCENTER_DATA"
 export const GET_PROMOTION_WAITING_DATA = "GET_PROMOTION_WAITING_DATA"
 export const GET_PROMOTION_BYID_DATA = "GET_PROMOTION_BYID_DATA"
 export const GET_PROMOTION_DATA_END = "GET_PROMOTION_DATA_END"
+
 // ========== MasterMaintaince ======= ===== Confirmation_Extensio2======== ===== === /
 export const GET_Confirmation_Extension_DATA = "GET_Confirmation_Extension_DATA";
 export const GET_Confirmation_Extension_START = "GET_Confirmation_Extension_START";
 export const GET_Confirmation_Extension_Confirmation = "GET_Confirmation_Extension_Confirmation";
 export const GET_Confirmation_Extension_END = "GET_Confirmation_Extension_END"; 
+
+// ========== MasterMaintaince ======= ===== Increment ======== ===== === /
+export const GET_Increment_DATA = "GET_Increment_DATA";
+export const GET_Increment_START = "GET_Increment_START";
+export const GET_Increment_Confirmation = "GET_Increment_Confirmation";
+export const GET_Increment_END = "GET_Increment_END"; 
+
+// PAYROLL ===> PaySlip === 
+
+export const GET_PaySlip_Employee_Wise_DATA = "GET_PaySlip_Employee_Wise_DATA,";
+export const GET_PaySlip_Employee_Wise_Employee = "GET_PaySlip_Employee_Wise_Employee";
+export const GET_PaySlip_Employee_Wise_Payroll = "GET_PaySlip_Employee_Wise_Payroll";
+export const GET_PaySlip_Employee_Wise_Employee_Category = "GET_PaySlip_Employee_Wise_Employee_Category";
+export const GET_PaySlip_Employee_Wise_START = "GET_PaySlip_Employee_Wise_START";
+export const GET_PaySlip_Employee_Wise_END = "GET_PaySlip_Employee_Wise_END";
+
+
 

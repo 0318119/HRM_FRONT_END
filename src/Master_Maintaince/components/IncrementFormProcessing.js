@@ -3,13 +3,14 @@ import Header from "../../components/Includes/Header";
 import Input from "../../components/basic/input";
 import { Table, Space } from "antd";
 import { connect } from "react-redux";
-import Confirmation_Extensio2Form from "../form/Confirmation_ExtensionForm";
-import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
+import Incrementform from "../form/Incrementform";
+import * as ACTIONS from "../../store/actions/MasterMaintaince/Increment/index";
 import { FaEdit } from 'react-icons/fa';
 
-const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirmationExProcessData }) => {
-    const [isCode, setCode] = useState(null);
+
+const IncrementFormProcessing = ({ Red_Increment, GetIncrementProcess }) => {
     const [mode, setMode] = useState("read");
+    const [isCode, setCode] = useState(null);
     const [pageSize, setPageSize] = useState(10);
     const [page, setPage] = useState(1);
     const [isSearchVal, setSearchVal] = useState("");
@@ -32,24 +33,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
             dataIndex: "Emp_name",
             key: "Emp_name",
         },
-        {
-            title: "Transaction Date",
-            dataIndex: "Transaction_Date",
-            key: "Transaction_Date",
-            render: (text) => text ? text.slice(0, 10) : "Not Found",
-        },
-        {
-            title: "Confirmation Date",
-            dataIndex: "Confirmation_Date",
-            key: "Confirmation_Date",
-            render: (text) => text ? text.slice(0, 10) : "Not Found",
-        },
-        {
-            title: "Posting Date",
-            dataIndex: "Posting_date",
-            key: "Posting_date",
-            render: (text) => text ? text.slice(0, 10) : "Not Found",
-        },
+
         {
             title: "Process",
             key: "action",
@@ -63,23 +47,25 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                     </button>
 
                 </Space>
+
             ),
         },
     ];
 
     useEffect(() => {
-        getConfirmationExProcessData()
+        GetIncrementProcess()
     }, [])
+    console.log("red", Red_Increment?.data?.[0]?.res?.data?.[0])
 
     useEffect(() => {
         if (isSearchVal == "") {
-            getConfirmationExProcessData({
+            GetIncrementProcess({
                 pageSize: pageSize,
                 pageNo: page,
                 search: null,
             });
         } else {
-            getConfirmationExProcessData({
+            GetIncrementProcess({
                 pageSize: pageSize,
                 pageNo: 1,
                 search: isSearchVal,
@@ -100,6 +86,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                                     <h4 className="text-dark">Form Processing</h4>
                                     <div className="Base_CitysearchBox">
                                         <Input
+
                                             placeholder={"Search Here..."}
                                             type="search"
                                             onChange={(e) => {
@@ -117,12 +104,12 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                                 mode == "read" ?
                                     <Table
                                         columns={columns}
-                                        loading={Red_Confirmation_Extension?.loading}
-                                        dataSource={Red_Confirmation_Extension?.data?.[0]?.res?.data1}
+                                        loading={Red_Increment?.loading}
+                                        dataSource={Red_Increment?.data?.[0]?.res?.data?.[0]}
                                         scroll={{ x: 10 }}
                                         pagination={{
                                             defaultCurrent: page,
-                                            total: Red_Confirmation_Extension?.data?.[0]?.res?.data3,
+                                            total: Red_Increment?.data?.[0]?.res?.data3,
                                             onChange: (p) => {
                                                 setPage(p);
                                             },
@@ -130,7 +117,7 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                                         }}
                                     /> : ""
                             }
-                            {mode == "Edit" && <Confirmation_Extensio2Form cancel={setMode} status={isCheckStatus} mode={mode} isCode={isCode} />}
+                               {mode == "Edit" && <Incrementform cancel={setMode} status={isCheckStatus} mode={mode} isCode={isCode} />}
                         </div>
                     </div>
                 </div>
@@ -139,9 +126,8 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
     );
 };
 
-function mapStateToProps({ Red_Confirmation_Extension }) {
-    return { Red_Confirmation_Extension };
+function mapStateToProps({ Red_Increment }) {
+    return { Red_Increment };
 }
 
-export default connect(mapStateToProps, ACTIONS)(ConfirmExtensionFormProcessing);
-
+export default connect(mapStateToProps, ACTIONS)(IncrementFormProcessing);
