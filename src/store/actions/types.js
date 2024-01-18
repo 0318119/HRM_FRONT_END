@@ -509,4 +509,10 @@ export const GET_PaySlip_Employee_Wise_START = "GET_PaySlip_Employee_Wise_START"
 export const GET_PaySlip_Employee_Wise_END = "GET_PaySlip_Employee_Wise_END";
 
 
+// ========== MasterMaintaince ======= ===== TransactionResignation======== ===== === /
+export const GET_TransactionResignation_DATA = "GET_TransactionResignation_DATA";
+export const GET_TransactionResignation_START = "GET_TransactionResignation_START";
+export const GET_TransactionResignation_Confirmation = "GET_TransactionResignation_Confirmation";
+export const GET_TransactionResignation_Waiting = "GET_TransactionResignation_Waiting";
+export const GET_TransactionResignation_END = "GET_TransactionResignation_END"; 
 

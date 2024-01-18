@@ -84,6 +84,7 @@ import Red_Promotion from "./reducers/HrOperations/Master_Maintaince/Promotion/i
 import Red_Paysheet_Report from './reducers/payroll/Paysheet_Report'
 import Red_Confirmation_Extension from './reducers/MasterMaintaince/Confirmation_Extension/index'
 import Red_Increment from './reducers/MasterMaintaince/Increment/index'
+import Red_Transaction_Resignation from './reducers/MasterMaintaince/Transaction_Resignation/index'
 
 const reducers = combineReducers({
   Red_Login,
@@ -176,7 +177,9 @@ const reducers = combineReducers({
   Red_Leave_Balanced_Upload,
   Red_Promotion,
   Red_Confirmation_Extension,
-  Red_Increment
+  Red_Increment,
+  Red_Transaction_Resignation
+
 });
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
