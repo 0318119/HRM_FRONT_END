@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "../../src/Assets/css/bootstrap.css";
 import '../../src/Assets/css/main.css'
-import { Login } from '../LoginScreens/Login';
+import Login from '../LoginScreens/Login';
 import Dashboard from '../dashboard/dashboard';
 import Appointment from '../TransactionAppointment/Appointment';
 import TAPersonalform from '../TransactionAppointForm/TAPersonalform';
@@ -33,6 +33,7 @@ import Employee_List_Active from '../Master_Maintaince/Employee_List_Active'
 import Employee_List_InActive from '../Master_Maintaince/Employee_List_InActive';
 import Employee_Master from '../Master_Maintaince/Employee_Master'
 import Confirmation from '../Master_Maintaince/Confirmation';
+import ConfirmationWaiting from '../Master_Maintaince/Waiting/ConfirmatioWaiting.js';
 import Increment from '../Master_Maintaince/Increment'
 import Get_Attendance from '../Attendance/Get_Attendance'
 import Attendance_Check from '../Attendance/Attendance_Check'
@@ -132,7 +133,6 @@ const routing = () => {
     <Router>
       <Routes>
         {
-          "access_token" in localStorage &&
             localStorage.getItem('access_token') !== undefined &&
             localStorage.getItem('access_token') !== null &&
             localStorage.getItem('access_token') !== "" ?
@@ -166,6 +166,7 @@ const routing = () => {
               <Route path="/Employee_List_InActive" element={<Employee_List_InActive />} />
               <Route path="/Employee_Master" element={<Employee_Master />} />
               <Route path="/Confirmation" element={<Confirmation />} />
+              <Route path="/ConfirmationWaiting" element={<ConfirmationWaiting />} />
               <Route path="/Increment" element={<Increment />} />
               <Route path="/Get_Attendance" element={<Get_Attendance />} />
               <Route path="/Attendance_Check" element={<Attendance_Check />} />

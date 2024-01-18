@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Header from "../../components/Includes/Header";
 import Input from "../../components/basic/input";
-import { PrimaryButton } from "../../components/basic/button";
 import { Table, Space } from "antd";
 import { connect } from "react-redux";
 import { FaEdit } from 'react-icons/fa';
@@ -10,8 +8,6 @@ import Confirmation_Extensio2Form from "../form/Confirmation_ExtensionForm";
 import * as ACTIONS from "../../store/actions/MasterMaintaince/Confirmation_Extension/index";
 
 const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirmationExProcessData }) => {
-    const [isGetConfirmationData, setGetConfirmationData] = useState([]);
-    const [isGetConfirmationDataErr, setGetConfirmationDataErr] = useState("");
     const [isCode, setCode] = useState(null);
     const [mode, setMode] = useState("read");
     const [pageSize, setPageSize] = useState(10);
@@ -19,12 +15,6 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
     const [isSearchVal, setSearchVal] = useState("");
     const [loading, setLoading] = useState(true);
     const [isCheckStatus, setCheckStatus] = useState("Process")
-
-
-    // Search data function
-    const searchConfirmationData = () => {
-        // Implement search functionality
-    }
 
     const EditPage = (mode, code) => {
         setCode(code)
@@ -110,7 +100,6 @@ const ConfirmExtensionFormProcessing = ({ Red_Confirmation_Extension, getConfirm
                                     <h4 className="text-dark">Form Processing</h4>
                                     <div className="Base_CitysearchBox">
                                         <Input
-
                                             placeholder={"Search Here..."}
                                             type="search"
                                             onChange={(e) => {

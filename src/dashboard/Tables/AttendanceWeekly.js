@@ -24,7 +24,6 @@ function AttendanceWeekly() {
       if (response.success) {
         setLoading(false)
         setAttendanceWeekly(response?.data)
-        console.log("weekly",response?.data)
       }
       else {
         setLoading(false)
@@ -85,7 +84,7 @@ function AttendanceWeekly() {
           columns={columns}
           loading={isLoading}
           pagination={false}
-          dataSource={isAttendanceWeekly}
+          dataSource={isAttendanceWeekly?isAttendanceWeekly : ""}
           scroll={{ x: 10, y: 385 }}
         />
       </div>

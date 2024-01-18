@@ -1,5 +1,6 @@
 import { combineReducers, compose, createStore, applyMiddleware } from "redux";
 import ReduxThunk from "redux-thunk";
+import Red_Login from './reducers/Login/index'
 import Transition_family from "./reducers/Transition/transition_family/index";
 import Red_Cost_centre from "./reducers/HrOperations/Cost_Centre/index";
 import Red_Country from "./reducers/HrOperations/Country/index";
@@ -84,6 +85,7 @@ import Red_Paysheet_Report from './reducers/payroll/Paysheet_Report'
 import Red_Confirmation_Extension from './reducers/MasterMaintaince/Confirmation_Extension/index'
 
 const reducers = combineReducers({
+  Red_Login,
   Transition_family,
   Red_Cost_centre,
   Red_Country,

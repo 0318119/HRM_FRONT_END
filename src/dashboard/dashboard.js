@@ -41,7 +41,7 @@ const Dashboard = (props) => {
           <AttendanceSmmy />
         </div>
         <div className="col-12 mt-4">
-          <RequestTable />
+          {/* <RequestTable /> */}
         </div>
       </div>
     </div>

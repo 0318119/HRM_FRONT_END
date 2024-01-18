@@ -82,7 +82,6 @@ export default function Attendancechart() {
             });
         } else {
           setGetAttendData(response.data[0]);
-          console.log("test data", response.data[0])
           setDataLoader(true);
         }
       })
@@ -118,14 +117,14 @@ export default function Attendancechart() {
     }
   };
 
-  const labels = getAttendData.map((items) => items.Date + " " + items.Month);
+  const labels = getAttendData?.map((items) => items.Date + " " + items.Month);
   const data = {
     labels,
     datasets: [
       {
         id: 1,
         label: "Present",
-        data: getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time" ? items.Progress : null),
+        data: getAttendData?.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "On Time" ? items.Progress : null),
         backgroundColor: "#1587E7",
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 2,
@@ -133,7 +132,7 @@ export default function Attendancechart() {
       {
         id: 2,
         label: 'Absent',
-        data: getAttendData.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late" ? 5.10 : null),
+        data: getAttendData?.map((items) => items?.Attendance_Status == 'Absent' && items?.Remarks == "Late" ? 5.10 : null),
         backgroundColor: "red",
         borderColor: '#bd1b1b',
         borderWidth: 2,
@@ -141,7 +140,7 @@ export default function Attendancechart() {
       {
         id: 3,
         label: 'Late',
-        data: getAttendData.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late" ? items?.Progress : null),
+        data: getAttendData?.map((items) => items?.Attendance_Status == 'Present' && items?.Remarks == "Late" ? items?.Progress : null),
         backgroundColor: "#d7d730",
         borderColor: '#cfcf09',
         borderWidth: 2,
@@ -149,7 +148,7 @@ export default function Attendancechart() {
       {
         id: 4,
         label: 'Off',
-        data: getAttendData.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday" ? 9.10 : null),
+        data: getAttendData?.map((items) => items?.DayType == 'Holiday' && items?.DayName == "Saturday" || items?.DayName == "Sunday" ? 9.10 : null),
         backgroundColor: "black",
         borderColor: 'black',
         borderWidth: 2,

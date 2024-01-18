@@ -191,9 +191,9 @@ const RequestTable = () => {
         <h5 className="text-dark mb-2 text-uppercase">My Leave Request</h5>
         <Table
           columns={MyReq}
-          loading={isLoading.myReqLoad}
+          loading={isLoading?.myReqLoad}
           pagination={false}
-          dataSource={isGetMyRequest}
+          dataSource={isGetMyRequest?isGetMyRequest : ""}
           scroll={{ x: 10, y: 300 }}
         />
       </div>,
@@ -205,9 +205,9 @@ const RequestTable = () => {
         <h5 className="text-dark mb-2 text-uppercase">My Leaves Approvals</h5>
         <Table
           columns={MyReqAppovals}
-          loading={isLoading.myApprovalLaod}
+          loading={isLoading?.myApprovalLaod}
           pagination={false}
-          dataSource={isGetMyApprovalsRequest}
+          dataSource={isGetMyApprovalsRequest ? isGetMyApprovalsRequest : ""}
           scroll={{ x: 10, y: 300 }}
         />
       </div>,
@@ -215,16 +215,17 @@ const RequestTable = () => {
   ];
 
 
+  console.log("first",isGetMyRequest)
 
   return (
     <>
       {contextHolder}
       <div className="border p-3 rounded bgTables">
-        <Tabs
+        {/* <Tabs
           defaultActiveKey="1"
           items={items}
           indicatorSize={(origin) => origin - 16}
-        />
+        /> */}
       </div>
     </>
   );

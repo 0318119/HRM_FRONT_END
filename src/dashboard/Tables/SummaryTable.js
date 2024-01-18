@@ -102,7 +102,7 @@ const SummaryTable = () => {
           columns={misEntrycolumns}
           loading={isLoading.missingEntry}
           pagination={false}
-          dataSource={isMisEntry}
+          dataSource={isMisEntry?isMisEntry : ""}
           scroll={{ x: 10, y: 300 }}
         />
       </div>,
@@ -116,7 +116,7 @@ const SummaryTable = () => {
           columns={misEntrycolumns}
           loading={0}
           pagination={false}
-          dataSource={isMisEntry}
+          dataSource={isMisEntry?isMisEntry : ""}
           scroll={{ x: 10, y: 300 }}
         />
       </div>,
@@ -131,7 +131,7 @@ const SummaryTable = () => {
       <div className="border p-3 rounded bgTables">
         <Tabs
           defaultActiveKey="1"
-          items={items}
+          items={items ? items : ""}
           indicatorSize={(origin) => origin - 16}
         />
       </div>

@@ -75,7 +75,7 @@ const AttendanceSmmy = () => {
                           columns={columns}
                           loading={isLoading}
                           pagination={false}
-                          dataSource={isSummry}
+                          dataSource={isSummry?isSummry : ""}
                       />
                     </div>
                 </div>

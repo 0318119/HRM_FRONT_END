@@ -8,7 +8,6 @@ import {
 import baseUrl from '../../../../../config.json'
 
 
-
 export const Get_Conformation_Data = (params) => async (dispatch) => {
     try {
         dispatch({
@@ -87,7 +86,6 @@ export const Get_Conformation_Data_Waiting = (params) => async (dispatch) => {
         console.log(error)
     }
 }
-
 export const Get_confirmation_By_ID = (isCode) => async (dispatch) => {
     try {
         dispatch({
@@ -131,6 +129,53 @@ export const Get_confirmation_By_ID = (isCode) => async (dispatch) => {
     }
 
 }
-
+export const SAVE_CONFIRMATION = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/tranConfirmation/TranConfirmations_save`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: body
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+}
+export const PROCESS_CONFIRMATION = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/tranConfirmation/TranConfirmations_Process`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: body
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+}
+export const DELETE_CONFIRMATION = (body) => async (dispatch) => {
+    const response = await fetch(`${baseUrl.baseUrl}/tranConfirmation/TranConfirmations_delete`, {
+        method: "POST",
+        headers: {
+            'accessToken': 'Bareer ' + localStorage.getItem('access_token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "Emp_code": body,})
+    });
+    const res = await response.json();
+    if (res?.success) {
+      return res;
+    }else{
+      return res;
+    }
+}
 
 
