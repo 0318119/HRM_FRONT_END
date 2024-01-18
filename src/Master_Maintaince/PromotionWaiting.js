@@ -14,14 +14,14 @@ import { Popconfirm } from 'antd';
 import { message } from 'antd';
 import baseUrl from '../../src/config.json'
 
-const PromotionWaiting = ({ 
+const PromotionWaiting = ({
     Red_Promotion,
     cancel,
     mode,
     isCode,
     AllEmployeeData,
     WaitingPromotion,
- }) => {
+}) => {
     const [messageApi, contextHolder] = message.useMessage();
     const [mode2, setMode2] = useState("read");
     var get_access_token = localStorage.getItem("access_token");
@@ -50,29 +50,23 @@ const PromotionWaiting = ({
             dataIndex: "Emp_name",
             key: "Emp_name",
         },
-        
+
         {
             title: "Action",
             key: "action",
             render: (data) => (
                 <Space size="middle">
                     <button onClick={() => EditPage("Edit", data?.Emp_code)} className="editBtn" >
-                    <FaEdit />
+                        <FaEdit />
                     </button>
-                </Space>    
+                </Space>
             ),
         },
     ];
 
-
-
-    // console.log(Red_Promotion, "waiting")
-
-
-
-useEffect(() =>{
-    WaitingPromotion()
-},[])
+    useEffect(() => {
+        WaitingPromotion()
+    }, [])
 
     // useEffect(() => {
     //     if (isSearchVal == "") {
@@ -126,19 +120,19 @@ useEffect(() =>{
                                     columns={columns}
                                     loading={Red_Promotion?.loading}
                                     dataSource={Red_Promotion?.dataWaitings?.[0]?.res?.data?.[0]}
-                                    // scroll={{ x: 10}}
-                                    // pagination={{
-                                    //     defaultCurrent: page,
-                                    //     total: Red_Promotion?.data?.[0]?.res?.data3,
-                                    //     onChange: (p) => {
-                                    //         setPage(p);
-                                    //     },
-                                    //     pageSize: pageSize,
-                                    // }}
+                                // scroll={{ x: 10}}
+                                // pagination={{
+                                //     defaultCurrent: page,
+                                //     total: Red_Promotion?.data?.[0]?.res?.data3,
+                                //     onChange: (p) => {
+                                //         setPage(p);
+                                //     },
+                                //     pageSize: pageSize,
+                                // }}
                                 />
                             )}
                             {/* {mode == "create" && <PromotionWaiting cancel={setMode} mode={mode} isCode={null} />} */}
-                            {mode2 == "Edit" && <Transaction_PromotionForm cancel2={setMode2} mode2={mode2} isCode2={isCode2} />} 
+                            {mode2 == "Edit" && <Transaction_PromotionForm cancel2={setMode2} mode2={mode2} isCode2={isCode2} />}
                         </div>
                     </div>
                 </div>

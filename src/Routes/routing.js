@@ -38,7 +38,6 @@ import Increment from '../Master_Maintaince/components/Increment.js'
 import Get_Attendance from '../Attendance/Get_Attendance'
 import Attendance_Check from '../Attendance/Attendance_Check'
 import Manual_Leave_Deletio from '../Master_Maintaince/Manual_Leave_Deletio';
-import Promotion from '../Master_Maintaince/Promotion'
 import Holidays from '../HrOperations/Holidays'
 import Leave_Applications from '../LeavesModule/Leave_Applications'
 import Transaction_Leave from '../LeavesModule/Transaction_Leave';
@@ -51,14 +50,10 @@ import Manual_leave_posting from '../LeavesModule/Manual_leave_posting'
 import Transaction_Education_form from '../Master_Maintaince/form/Transaction_Education';
 import LeaveSummary from '../LeavesModule/components/LeaveSummary';
 import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
-import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
 import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
-import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
 import IncrementFormProcessing from '../Master_Maintaince/components/IncrementFormProcessing';
 import Transation_Resignation_Process from '../Master_Maintaince/form/Transation_Resignation_Process.js';
-import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
-import Transaction_Resignation_process from '../Master_Maintaince/components/Transaction_Resignation_process';
-import PromotionWaitingForm from '../Master_Maintaince/components/PromotionWaitingForm';
+import ProccessIncrement from '../Master_Maintaince/components/Increment.js';
 import Transaction_Experience from '../Master_Maintaince/Transaction_Experience';
 import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
@@ -123,7 +118,7 @@ import ManualAttendance from '../ManualAttendance/ManualAttendance.js';
 import ManualAttendHistory from '../ManualAttendance/ManualAttendHistory.js';
 import Due_For_Confirmation from '../HrOperations/Due_For_Confirmation.js'
 import Bank_Letter_Report from '../payroll/pages/Bank_Letter_Report.js'
-import Promotion2 from '../Master_Maintaince/Promotion2.js';
+import Promotion from '../Master_Maintaince/Promotion.js';
 import Paysheet_Report from '../payroll/pages/Paysheet_Report.js'
 import Confirmation_Extension from '../Master_Maintaince/components/Confirmation_Extension.js'
 import ConfirmExtensionFormProcessing from '../Master_Maintaince/components/ConfirmExtensionFormProcessing.js';
@@ -173,7 +168,6 @@ const routing = () => {
               <Route path="/Get_Attendance" element={<Get_Attendance />} />
               <Route path="/Attendance_Check" element={<Attendance_Check />} />
               <Route path="/Manual_Leave_Deletio" element={<Manual_Leave_Deletio />} />
-              <Route path="/Promotion" element={<Promotion />} />
               <Route path="/Holidays" element={<Holidays />} />
               <Route path="/Leave_Applications" element={<Leave_Applications />} />
               <Route path="/Transaction_Leave" element={<Transaction_Leave />} />
@@ -188,12 +182,9 @@ const routing = () => {
               <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
               <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
               <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
-              <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
               <Route path="IncrementFormProcessing" element={<IncrementFormProcessing />} />
               <Route path="/Transation_Resignation_Process" element={<Transation_Resignation_Process />} />
               <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
-              <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
-              <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
               <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
               <Route path="/Transaction_Experience" element={<Transaction_Experience />} />
               <Route path="/Transaction_Marriage" element={<Transaction_Marriage />} />
@@ -295,7 +286,7 @@ const routing = () => {
         }
 
         {/* =====Temporary routing ======= */}
-        <Route path="/Promotion2" element={<Promotion2 />} />
+        <Route path="/Promotion" element={<Promotion />} />
         {/* =====Temporary routing ======= */}
       </Routes>
     </Router>
