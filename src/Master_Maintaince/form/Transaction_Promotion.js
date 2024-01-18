@@ -154,7 +154,7 @@ const Transaction_Promotion_form = (props) => {
                     body: JSON.stringify({
                         "Emp_code": PromotionId,
                         "Date_of_promotion" : isIncrementDate !==null ? isIncrementDate : currentDate,
-                        "Transaction_Date": currentDate,
+                        "Transaction_Date": currentDate,    
                         "Position_Code_to": getEmploymentCategoryVal,
                         "Desig_code_to": GetEmploymentDesigVal,
                         "Grade_code_to": grade_codeVal,

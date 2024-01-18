@@ -60,6 +60,11 @@
     display: flex;
     justify-content: end;
 }
+.BaseCItyBtnBox2 {
+    display: flex;
+    position: relative;
+    justify-content: end;
+}
 
 .formBoxBase_City div {
     width: 50%;

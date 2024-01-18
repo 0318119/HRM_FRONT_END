@@ -2,37 +2,41 @@ import React, { useEffect } from "react";
 import style from './button.module.css'
 import { message } from 'antd';
 
-function Button({ title,onClick,loading,type }) {
+function Button({ title, onClick, loading, type }) {
     return (
         <>
             <div className={style.PrimaryButton}>
-                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={(e)=>{onClick(e)}}>{loading?'Loading..':title}</button>
+                <button type={type} disabled={loading} style={{ cursor: loading ? 'no-drop' : 'pointer' }} onClick={(e) => { onClick(e) }}>
+                    {loading ? 'Loading..' : title}
+                </button>
             </div>
         </>
     )
 }
 
-function SimpleButton({ title,loading,type }) {
+
+
+function SimpleButton({ title, loading, type }) {
     return (
         <>
             <div className={style.PrimaryButton}>
-                <button type={type} disabled={loading} style={{cursor:loading?'no-drop':'pointer'}}>{loading?'Loading..':title}</button>
+                <button type={type} disabled={loading} style={{ cursor: loading ? 'no-drop' : 'pointer' }}>{loading ? 'Loading..' : title}</button>
             </div>
         </>
     )
 }
 
-function PrimaryButton({ title, loading, type, id, className}) {
+function PrimaryButton({ title, loading, type, id, className }) {
     const [messageApi, contextHolder] = message.useMessage();
     useEffect(() => {
-        if(loading){
+        if (loading) {
             messageApi.open({
                 type: 'loading',
                 content: 'Please Wait..',
                 duration: 0,
             });
         }
-        else{
+        else {
             messageApi.destroy()
         }
     }, [loading])
@@ -47,24 +51,24 @@ function PrimaryButton({ title, loading, type, id, className}) {
     )
 }
 
-function CancelButton({ title,onClick }) {
+function CancelButton({ title, onClick }) {
     return (
         <>
             <div className={style.cancelButton}>
-                <button onClick={()=>onClick()}>{title}</button>
+                <button onClick={() => onClick()}>{title}</button>
             </div>
         </>
     )
 }
 
-function DeleteButton({ title,onClick,loading }) {
+function DeleteButton({ title, onClick, loading }) {
     return (
         <>
             <div className={style.deleteBtn}>
-                <button disabled={loading} style={{cursor:loading?'no-drop':'pointer'}} onClick={()=>{onClick()}}>{loading?'Loading..':title}</button>
+                <button disabled={loading} style={{ cursor: loading ? 'no-drop' : 'pointer' }} onClick={() => { onClick() }}>{loading ? 'Loading..' : title}</button>
             </div>
         </>
     )
 }
 
-export {PrimaryButton,CancelButton,Button,DeleteButton,SimpleButton}
+export { PrimaryButton, CancelButton, Button, DeleteButton, SimpleButton }

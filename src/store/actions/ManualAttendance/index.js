@@ -128,7 +128,6 @@ export const getAtttendanceHisss = (body) => async (dispatch) => {
 
 
 export const UpdateAttendance = (body) => async (dispatch) => {
-    // console.log(body, 'body')
 
     const response = await fetch(`${baseUrl.baseUrl}/attendance/ManualAttendance/UpdateMonthlyAttendance`, {
         method: "POST",
@@ -140,10 +139,8 @@ export const UpdateAttendance = (body) => async (dispatch) => {
             "Emp_code": body?.Emp_code,
             "Date": [{
                 "Attendance_Date": body?.Date?.[0]?.Attendance_Date,
-                "Emp_Time_in_HH": body?.Date?.[0]?.Emp_Time_in_HH,
-                "Emp_Time_In_MM": body?.Date?.[0]?.Emp_Time_In_MM,
-                "Emp_Time_Out_HH": body?.Date?.[0]?.Emp_Time_Out_HH,
-                "Emp_Time_Out_MM": body?.Date?.[0]?.Emp_Time_Out_MM,
+                "Emp_Time_in": body?.Date?.[0]?.Emp_Time_in,
+                "Emp_Time_Out": body?.Date?.[0]?.Emp_Time_Out,
                 "Remarks": body?.Date?.[0]?.Remarks
 
             }]
@@ -152,6 +149,7 @@ export const UpdateAttendance = (body) => async (dispatch) => {
         })
     });
     const res = await response.json();
+    // console.log(res , "res")
     dispatch({
         type: GET_MANUAL_ATTENDANCE_DATA_SINGLE,
         payload: [{ res }],

@@ -270,7 +270,7 @@ const routing = () => {
               <Route path="/Access_Control" element={<Access_Control />} />
               <Route path='/Date_Of_Birth_Inquiry_Report' element={<Date_Of_Birth_Inquiry_Report />} />
               <Route path="/OfferLeter" element={<OfferLeter />} />
-              <Route path="/ManualAttendance" element={<ManualAttendance />} />
+              <Route path="/Manual_Attendance" element={<ManualAttendance />} />
               <Route path="/ManualAttendHistory" element={<ManualAttendHistory />} />
               {/* JUST FOR TESTING PORPOSE ROUTES, DON'T REMOVE THIS COMMENT ========================== */}
               <Route path="/Approvalsss" element={<Approvalsss />} />
