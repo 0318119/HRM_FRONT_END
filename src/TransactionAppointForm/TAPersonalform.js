@@ -1009,8 +1009,8 @@ function TAPersonalform({ cancel, mode, isCode, page, GetAppointStatusCall, Red_
                         label: 'A+',
                       },
                       {
-                        value: "-A",
-                        label: '-A',
+                        value: "A-",
+                        label: 'A-',
                       },
                       {
                         value: "B+",

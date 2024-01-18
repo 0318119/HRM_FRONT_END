@@ -7,6 +7,8 @@ import {
     GET_PROMOTION_COSTCENTER_DATA,
     GET_PROMOTION_INFO_DATA,
     GET_PROMOTION_SUPERVISOR_DATA,
+    GET_PROMOTION_WAITING_DATA,
+    GET_PROMOTION_BYID_DATA,
     GET_PROMOTION_DATA_END
 } from '../../../../actions/types'
 
@@ -16,6 +18,8 @@ const initState = {
     dataCategory: [],
     dataDesignation: [],
     dataGrade: [],
+    dataById:[],
+    dataWaitings: [],
     dataSupervisor: [],
     dataCostCenter: [],
     loading: false,
@@ -62,6 +66,18 @@ const Red_Promotion = (state = initState, action) => {
             return {
                 ...state,
                 dataCostCenter: action.payload,
+                loading: action.loading,
+            };
+        case GET_PROMOTION_WAITING_DATA:
+            return {
+                ...state,
+                dataWaitings: action.payload,
+                loading: action.loading,
+            };
+        case GET_PROMOTION_BYID_DATA:
+            return {
+                ...state,
+                dataById: action.payload,
                 loading: action.loading,
             };
         case GET_PROMOTION_SUPERVISOR_DATA:

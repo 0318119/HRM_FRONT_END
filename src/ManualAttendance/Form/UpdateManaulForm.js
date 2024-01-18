@@ -31,24 +31,9 @@ function UpdateManaulForm({
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [isSearchVal, setSearchVal] = useState("");
-    const currentDate = new Date();
-    const year = currentDate.getFullYear().toString();
-    const month = ('0' + (currentDate.getMonth() + 1)).slice(-2);
-    const day = ('0' + currentDate.getDate()).slice(-2);
-    const formattedDate = `${year}-${month}-${day}`;
-    const [isAttendDate, setAttendDate] = useState(formattedDate)
+    const currentDate = new Date().toISOString().split('T')[0];
 
-    const currentHours = currentDate.getHours();
-    const [isHours, setHours] = useState(currentHours)
-    const currentMinutes = currentDate.getMinutes();
-    const currentSeconds = currentDate.getSeconds();
-
-    const HandleDate = (e) =>{
-        setAttendDate(e.target.value)
-    }
-    const HandleHours = (e) =>{
-        setHours(e.target.value)
-    }    
+    
 
     const EditBack = () => {
         cancel("read");
@@ -56,11 +41,9 @@ function UpdateManaulForm({
 
     const UdpateAttend = yup.object().shape({
         Attendance_Date: yup.string().required("Attendance_Date is Required"),
-        Emp_Time_in_HH: yup.string().required("Emp_Time_In_HH is Required"),
-        Emp_Time_In_MM: yup.string().required("Emp_Time_In_MM is Required"),
-        Emp_Time_Out_HH: yup.string().required("Emp_Time_Out_HH is Required"),
-        Emp_Time_Out_MM: yup.string().required("Emp_Time_Out_MM is Required"),
-        Remarks : yup.string().required("remarks is Required"),
+        Emp_Time_in: yup.string().required("Emp_Time_in is Required"),
+        Emp_Time_Out: yup.string().required("Emp_Time_Out is Required"),
+        Remarks: yup.string().required("remarks is Required"),
     });
 
 
@@ -90,22 +73,21 @@ function UpdateManaulForm({
 
 
     const UpdateAttend = async (data) => {
-        setLoading(true)
+        // setLoading(true)
         try {
             const response = await UpdateAttendance({
                 Emp_code: isCode2,
-                Date : [
+                Date: [
                     {
-                     Attendance_Date : data?.Attendance_Date,
-                     Emp_Time_in_HH  : data?.Emp_Time_in_HH,
-                     Emp_Time_In_MM : data?.Emp_Time_In_MM,
-                     Emp_Time_Out_HH : data?.Emp_Time_Out_HH,
-                     Emp_Time_Out_MM : data?.Emp_Time_Out_MM,
-                     Remarks : data?.Remarks,
+                        Attendance_Date: data?.Attendance_Date,
+                        Emp_Time_in: data?.Emp_Time_in,
+                        Emp_Time_Out: data?.Emp_Time_Out,
+                        Remarks: data?.Remarks,
                     }
                 ]
 
             });
+            console.log(response, 'response')
 
             if (response && response.success) {
                 messageApi.success("Successfully created");
@@ -131,7 +113,7 @@ function UpdateManaulForm({
 
             {contextHolder}
             <form onSubmit={handleSubmit(submitForm)}>
-               
+
                 <h4 className="text-dark">Update Attendance</h4>
                 <hr />
                 <div className="form-group formBoxCountry">
@@ -139,29 +121,28 @@ function UpdateManaulForm({
 
                     <FormInput
                         label={'Attendance Date'}
-                        placeholder={'Attendance Date'}
+                        // placeholder={currentDate}
                         id="Attendance_Date"
                         name="Attendance_Date"
-                        // value={isAttendDate}
+                        // value={currentDate}
                         type="Date"
                         showLabel={true}
                         errors={errors}
                         control={control}
-                        // onChange={HandleDate}
+                    // onChange={HandleDate}
                     />
                     <FormInput
-                        label={'Time In Hours'}
-                        placeholder={isHours}
-                        id="Emp_Time_in_HH"
-                        name="Emp_Time_in_HH"
-                        // value={isHours}
+                        label={'Time In'}
+                        placeholder={'Time In'}
+                        id="Emp_Time_in"
+                        name="Emp_Time_in"
                         type="time"
                         showLabel={true}
                         errors={errors}
                         control={control}
-                        // onChange={HandleHours}
+                    // onChange={HandleHours}
                     />
-                    <FormInput
+                    {/* <FormInput
                         label={'Time In MM'}
                         placeholder={'Time In MM'}
                         id="Emp_Time_In_MM"
@@ -170,18 +151,18 @@ function UpdateManaulForm({
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    />
+                    /> */}
                     <FormInput
-                        label={'Time Out HH'}
-                        placeholder={'Time Out HH'}
-                        id="Emp_Time_Out_HH"
-                        name="Emp_Time_Out_HH"
+                        label={'Time Out'}
+                        placeholder={'Time Out '}
+                        id="Emp_Time_Out"
+                        name="Emp_Time_Out"
                         type="time"
                         showLabel={true}
                         errors={errors}
                         control={control}
                     />
-                    <FormInput
+                    {/* <FormInput
                         label={'Time Out MM'}
                         placeholder={'Time Out MM'}
                         id="Emp_Time_Out_MM"
@@ -190,7 +171,7 @@ function UpdateManaulForm({
                         showLabel={true}
                         errors={errors}
                         control={control}
-                    />
+                    /> */}
                     <FormInput
                         label={'Remarks'}
                         placeholder={'Remarks'}
@@ -201,7 +182,7 @@ function UpdateManaulForm({
                         errors={errors}
                         control={control}
                     />
-                   
+
 
 
                 </div>
