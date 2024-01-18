@@ -53,7 +53,7 @@ import Transaction_Increment_form from '../Master_Maintaince/form/Transaction_In
 import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
 import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
 import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
-import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
+import Transation_Resignation_Process from '../Master_Maintaince/form/Transation_Resignation_Process.js';
 import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
 import Transaction_Resignation_process from '../Master_Maintaince/components/Transaction_Resignation_process';
 import PromotionWaitingForm from '../Master_Maintaince/components/PromotionWaitingForm';
@@ -186,7 +186,7 @@ const routing = () => {
               <Route path="/Transaction_Increment_form" element={<Transaction_Increment_form />} />
               <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
               <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
-              <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
+              <Route path="/Transation_Resignation_Process" element={<Transation_Resignation_Process />} />
               <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
               <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
               <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
