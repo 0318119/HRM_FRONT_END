@@ -203,19 +203,20 @@ const routing = () => {
               <Route path='/Employee_Education_Report' element={<TranEducationReport />} />
               <Route path='/Employee_Experience_Report' element={<Employee_Experience_Report />} />
               <Route path='/RetirementSeparationReport' element={<RetirementSeparationReport />} />
+
               <Route path="/payroll/oneTimeAllowance" element={<OneTimeAllowance />} />
               <Route path="/payroll/FixedAllowance" element={<FixedAllowance />} />
               <Route path="/payroll/CashAllowance" element={<CashAllowance />} />
               <Route path="/payroll/oneTimeDeduction" element={<OneTimeDeduction />} />
               <Route path="/payroll/fixedDeduction" element={<FixedDeduction />} />
-              <Route path="/payroll/advancesalary" element={<AdvanceSalary />} />
-              <Route path="/payroll/advanceSalaryInstallment" element={<AdvanceSalaryInstallment />} />
-              <Route path="/payroll/salaryHold" element={<SalaryHold />} />
+              <Route path="/Advance_Salary" element={<AdvanceSalary />} />
+              <Route path="Advance_Salary_Installment" element={<AdvanceSalaryInstallment />} />
+              <Route path="/Salary_Hold" element={<SalaryHold />} />
               <Route path="/payroll/payrollUpload" element={<PayrollUpload />} />
-              <Route path="/payroll/hrStop" element={<HrStop />} />
-              <Route path="/payroll/hrRelease" element={<HrRelease />} />
-              <Route path="/payroll/undoPayrollCalculation" element={<UndoPayrollCalculation />} />
-              <Route path="/payroll/closingPayrollMonth" element={<ClosingPayrollMonth />} />
+              <Route path="/Stop_HR_Entry" element={<HrStop />} />
+              <Route path="/Release_HR_Entry" element={<HrRelease />} />
+              <Route path="/Undo_Monthly_Payroll_Calculatio" element={<UndoPayrollCalculation />} />
+              <Route path="/Closing_Payroll_Month" element={<ClosingPayrollMonth />} />
               <Route path="/payroll/addLoans" element={<AddLoans />} />
               <Route path="/payroll/addallowance" element={<AddAllowance />} />
               <Route path="/payroll/addDeduction" element={<AddDeduction />} />
