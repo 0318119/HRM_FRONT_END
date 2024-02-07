@@ -95,12 +95,12 @@ useEffect(() =>{
     return (
         <>
             <div>
-                {/* <Header /> */}
+                <Header />
             </div>
             {contextHolder}
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-12 maringClass3">
+                    <div className="col-lg-12 maringClass">
                         {mode2 == "read" && (
                             <>
                                 <div className="PromotionFlexBox">
@@ -113,7 +113,7 @@ useEffect(() =>{
                                                 setSearchVal(e.target.value);
                                             }}
                                         /> */}
-                                        <Button title="Cancel" onClick={EditBack} />
+                                        {/* <Button title="Cancel" onClick={EditBack} /> */}
                                     </div>
                                 </div>
                                 <hr />

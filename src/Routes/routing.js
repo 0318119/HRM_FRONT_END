@@ -53,13 +53,13 @@ import LeaveSummary from '../LeavesModule/components/LeaveSummary';
 import Transaction_Promotion from '../Master_Maintaince/form/Transaction_Promotion';
 import FormWaitingTranConfiramtion from '../Master_Maintaince/components/FormWaitingTranConfiramtion';
 import Transaction_Resignation from '../Master_Maintaince/Transaction_Resignation';
-import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
+// import Transation_Resignation_Form from '../Master_Maintaince/form/Transation_Resignation_Form';
 import IncrementFormProcessing from '../Master_Maintaince/components/IncrementFormProcessing';
 import Transation_Resignation_Process from '../Master_Maintaince/form/Transation_Resignation_Process.js';
-import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
+// import ProccessIncrement from '../Master_Maintaince/components/ProccessIncrement';
 import Transaction_Resignation_process from '../Master_Maintaince/components/Transaction_Resignation_process';
 import PromotionWaitingForm from '../Master_Maintaince/components/PromotionWaitingForm';
-import Transaction_Experience from '../Master_Maintaince/Transaction_Experience';
+import Transaction_Experience from '../Master_Maintaince/Transaction_Experience'; 
 import Transaction_Marriage from '../Master_Maintaince/Transaction_Marriage';
 import Transaction_Education from '../Master_Maintaince/Transaction_Education';
 import Family from '../Master_Maintaince/Family'
@@ -129,6 +129,7 @@ import Confirmation_Extension from '../Master_Maintaince/components/Confirmation
 import ConfirmExtensionFormProcessing from '../Master_Maintaince/components/ConfirmExtensionFormProcessing.js';
 import PaySlip_Employee_Wise from '../payroll/pages/PaySlip_Employee_Wise.js'
 import PaySlip_Employee_WiseForm from '../payroll/form/transactionPosting/PaySlip_Employee_WiseForm.js'
+import PromotionWaiting from '../Master_Maintaince/PromotionWaiting.js';
 
 const routing = () => {
   return (
@@ -188,10 +189,10 @@ const routing = () => {
               <Route path="/ConfirmatioWaiting" element={<ConfirmatioWaiting />} />
               <Route path="/Transaction_Promotion" element={<Transaction_Promotion />} />
               <Route path="/Transaction_Resignation" element={<Transaction_Resignation />} />
-              <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} />
+              {/* <Route path="/Transation_Resignation_Form" element={<Transation_Resignation_Form />} /> */}
               <Route path="IncrementFormProcessing" element={<IncrementFormProcessing />} />
               <Route path="/Transation_Resignation_Process" element={<Transation_Resignation_Process />} />
-              <Route path="/ProccessIncrement" element={<ProccessIncrement />} />
+              {/* <Route path="/ProccessIncrement" element={<ProccessIncrement />} /> */}
               <Route path="/Transaction_Resignation_process" element={<Transaction_Resignation_process />} />
               <Route path="/PromotionWaitingForm" element={<PromotionWaitingForm />} />
               <Route path="/Transaction_Eduction" element={<Transaction_Education />} />
@@ -259,6 +260,7 @@ const routing = () => {
               <Route path="/ConfirmExtensionFormProcessing" element={<ConfirmExtensionFormProcessing />} />
               <Route path="/PaySlip_Employee_Wise" element={<PaySlip_Employee_Wise />} />
               <Route path="/PaySlip_Employee_WiseForm" element={<PaySlip_Employee_WiseForm />} />
+              <Route path="/PromotionWaiting" element={<PromotionWaiting />} />
 
             </> :
             <>

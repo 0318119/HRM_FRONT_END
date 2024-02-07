@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/Includes/Header";
 import Input from "../components/basic/input";
-import { Button } from "../components/basic/button";
+import { Button, PrimaryButton } from "../components/basic/button";
 import { Space, Table, Tag, Tooltip } from "antd";
 import Transaction_PromotionForm from "./form/Transaction_PromotionForm";
 import "./assets/css/Transaction_Promotion.css";
@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import * as Promotion_Action from "../store/actions/HrOperations/Master_Maintaince/Promotion/index";
 import { MdDeleteOutline } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 import { Popconfirm } from 'antd';
 import PromotionWaiting from "./PromotionWaiting";
 import { message } from 'antd';
@@ -101,7 +102,8 @@ const Promotion2 = ({
                                                 setSearchVal(e.target.value);
                                             }}
                                         />
-                                        <Button title="Process..." onClick={() => setMode("create")} />
+                                        {/* <Button title="Process..." onClick={() => setMode("create")} /> */}
+                                        <Link to='/PromotionWaiting'><PrimaryButton title="Process..." /></Link>
                                     </div>
                                 </div>
                                 <hr />

@@ -8,7 +8,7 @@ import { FormInput, FormSelect } from '../components/basic/input/formInput';
 import { PrimaryButton } from "../components/basic/button";
 import * as yup from "yup";
 import { message } from "antd";
-import logo from '../Assets/Images/hrm-logo.png'
+import logo from '../Assets/Images/temLogo.png'
 
 
 function Login({
